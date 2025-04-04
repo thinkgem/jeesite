@@ -21,8 +21,7 @@
       SessionTimeoutLogin,
     },
     setup() {
-      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } =
-        useRootSetting();
+      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } = useRootSetting();
       const userStore = useUserStoreWithOut();
       const { prefixCls } = useDesign('setting-drawer-fearure');
       const { getShowHeader } = useHeaderSetting();

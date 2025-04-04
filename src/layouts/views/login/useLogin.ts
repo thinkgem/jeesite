@@ -86,9 +86,7 @@ export function useFormRules(formData?: Recordable) {
           validCode: smsFormRule,
           regValidCode: smsFormRule,
           password: passwordFormRule,
-          confirmPassword: [
-            { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
-          ],
+          confirmPassword: [{ validator: validateConfirmPassword(formData?.password), trigger: 'change' }],
           policy: [{ validator: validatePolicy, trigger: 'change' }],
         } as any;
 
@@ -99,9 +97,7 @@ export function useFormRules(formData?: Recordable) {
           validCode: smsFormRule,
           fpValidCode: smsFormRule,
           password: passwordFormRule,
-          confirmPassword: [
-            { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
-          ],
+          confirmPassword: [{ validator: validateConfirmPassword(formData?.password), trigger: 'change' }],
           pwdQuestionAnswer: pwdQuestionAnswerFormRule,
           pwdQuestionAnswer2: pwdQuestionAnswerFormRule,
           pwdQuestionAnswer3: pwdQuestionAnswerFormRule,

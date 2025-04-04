@@ -17,27 +17,15 @@
     >
       <template #title>
         <div :class="`${prefixCls}__popover-title`">
-          <Checkbox
-            :indeterminate="indeterminate"
-            v-model:checked="checkAll"
-            @change="onCheckAllChange"
-          >
+          <Checkbox :indeterminate="indeterminate" v-model:checked="checkAll" @change="onCheckAllChange">
             {{ t('component.table.settingColumnShow') }}
           </Checkbox>
 
-          <Checkbox
-            v-model:checked="checkIndex"
-            @change="handleIndexCheckChange"
-            v-if="!isTreeTable"
-          >
+          <Checkbox v-model:checked="checkIndex" @change="handleIndexCheckChange" v-if="!isTreeTable">
             {{ t('component.table.settingIndexColumnShow') }}
           </Checkbox>
 
-          <Checkbox
-            v-model:checked="checkSelect"
-            @change="handleSelectCheckChange"
-            :disabled="!defaultRowSelection"
-          >
+          <Checkbox v-model:checked="checkSelect" @change="handleSelectCheckChange" :disabled="!defaultRowSelection">
             {{ t('component.table.settingSelectColumnShow') }}
           </Checkbox>
 
@@ -55,11 +43,7 @@
                 <Checkbox :value="item.value">
                   {{ item.label }}
                 </Checkbox>
-                <Tooltip
-                  placement="left"
-                  :mouseLeaveDelay="0.4"
-                  :getPopupContainer="getPopupContainer"
-                >
+                <Tooltip placement="left" :mouseLeaveDelay="0.4" :getPopupContainer="getPopupContainer">
                   <template #title>
                     {{ t('component.table.settingFixedLeft') }}
                   </template>
@@ -76,11 +60,7 @@
                   />
                 </Tooltip>
                 <Divider type="vertical" />
-                <Tooltip
-                  placement="right"
-                  :mouseLeaveDelay="0.4"
-                  :getPopupContainer="getPopupContainer"
-                >
+                <Tooltip placement="right" :mouseLeaveDelay="0.4" :getPopupContainer="getPopupContainer">
                   <template #title>
                     {{ t('component.table.settingFixedRight') }}
                   </template>
@@ -106,17 +86,7 @@
   </Tooltip>
 </template>
 <script lang="ts">
-  import {
-    defineComponent,
-    ref,
-    reactive,
-    toRefs,
-    watchEffect,
-    nextTick,
-    unref,
-    computed,
-    watch,
-  } from 'vue';
+  import { defineComponent, ref, reactive, toRefs, watchEffect, nextTick, unref, computed, watch } from 'vue';
   import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue';
   import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface';
   import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue';
@@ -197,17 +167,11 @@
         }, 0);
       });
 
-      watch(
-        [
-          () => unref(table?.getBindValues).showIndexColumn,
-          () => unref(table?.getBindValues).rowSelection,
-        ],
-        () => {
-          const values = unref(table?.getBindValues) || {};
-          state.checkIndex = !!values.showIndexColumn;
-          state.checkSelect = !!values.rowSelection;
-        },
-      );
+      watch([() => unref(table?.getBindValues).showIndexColumn, () => unref(table?.getBindValues).rowSelection], () => {
+        const values = unref(table?.getBindValues) || {};
+        state.checkIndex = !!values.showIndexColumn;
+        state.checkSelect = !!values.rowSelection;
+      });
 
       const isTreeTable = computed(() => unref(table?.getBindValues).isTreeTable);
 
@@ -338,9 +302,7 @@
               state.checkOptions = columns;
 
               setColumns(
-                columns
-                  .map((col: Options) => col.value)
-                  .filter((value: string) => state.checkedList.includes(value)),
+                columns.map((col: Options) => col.value).filter((value: string) => state.checkedList.includes(value)),
               );
             },
           });
@@ -388,8 +350,7 @@
         const data: ColumnChangeParam[] = state.checkOptions.map((col) => {
           const open =
             columns.findIndex(
-              (c: BasicColumn | string) =>
-                c === col.value || (typeof c !== 'string' && c.dataIndex_ === col.value),
+              (c: BasicColumn | string) => c === col.value || (typeof c !== 'string' && c.dataIndex_ === col.value),
             ) !== -1;
           return { dataIndex_: col.value, fixed: col.fixed, open };
         });
@@ -397,9 +358,7 @@
       }
 
       function getPopupContainer() {
-        return isFunction(attrs.getPopupContainer)
-          ? attrs.getPopupContainer()
-          : getParentContainer();
+        return isFunction(attrs.getPopupContainer) ? attrs.getPopupContainer() : getParentContainer();
       }
 
       return {

@@ -25,17 +25,14 @@ export interface Menu extends TreeModel<Menu> {
   moduleCodes?: string; // 归属模块（多个用逗号隔开）
 }
 
-export const menuIndex = (params?: Menu | any) =>
-  defHttp.get<Menu>({ url: adminPath + '/sys/menu/index', params });
+export const menuIndex = (params?: Menu | any) => defHttp.get<Menu>({ url: adminPath + '/sys/menu/index', params });
 
-export const menuList = (params?: Menu | any) =>
-  defHttp.get<Menu>({ url: adminPath + '/sys/menu/list', params });
+export const menuList = (params?: Menu | any) => defHttp.get<Menu>({ url: adminPath + '/sys/menu/list', params });
 
 export const menuListData = (params?: Menu | any) =>
   defHttp.post<Menu[]>({ url: adminPath + '/sys/menu/listData', params });
 
-export const menuForm = (params?: Menu | any) =>
-  defHttp.get<Menu>({ url: adminPath + '/sys/menu/form', params });
+export const menuForm = (params?: Menu | any) => defHttp.get<Menu>({ url: adminPath + '/sys/menu/form', params });
 
 export const menuCreateNextNode = (params?: Menu | any) =>
   defHttp.get<Menu>({ url: adminPath + '/sys/menu/createNextNode', params });
@@ -43,14 +40,11 @@ export const menuCreateNextNode = (params?: Menu | any) =>
 export const menuSave = (params?: any, data?: Menu | any) =>
   defHttp.postJson<Menu>({ url: adminPath + '/sys/menu/save', params, data });
 
-export const menuDisable = (params?: Menu | any) =>
-  defHttp.get<Menu>({ url: adminPath + '/sys/menu/disable', params });
+export const menuDisable = (params?: Menu | any) => defHttp.get<Menu>({ url: adminPath + '/sys/menu/disable', params });
 
-export const menuEnable = (params?: Menu | any) =>
-  defHttp.get<Menu>({ url: adminPath + '/sys/menu/enable', params });
+export const menuEnable = (params?: Menu | any) => defHttp.get<Menu>({ url: adminPath + '/sys/menu/enable', params });
 
-export const menuDelete = (params?: Menu | any) =>
-  defHttp.get<Menu>({ url: adminPath + '/sys/menu/delete', params });
+export const menuDelete = (params?: Menu | any) => defHttp.get<Menu>({ url: adminPath + '/sys/menu/delete', params });
 
 export const menuTreeData = (params?: any) =>
   defHttp.get<TreeDataModel[]>({ url: adminPath + '/sys/menu/treeData', params });

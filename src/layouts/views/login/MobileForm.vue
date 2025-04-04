@@ -1,9 +1,7 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <div class="gp mb-2 mt-4" v-if="demoMode">
-      Tip：演示系统未开放手机登录，请联系官方人员获取账号密码。
-    </div>
+    <div class="gp mb-2 mt-4" v-if="demoMode"> Tip：演示系统未开放手机登录，请联系官方人员获取账号密码。 </div>
     <Form class="enter-x p-4" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="mobile" class="enter-x">
         <Input
@@ -14,11 +12,7 @@
         />
       </FormItem>
       <FormItem name="validCode" class="enter-x valid-code">
-        <ValidCode
-          size="large"
-          v-model:value="formData.validCode"
-          :refreshTime="validCodeRefreshTime"
-        />
+        <ValidCode size="large" v-model:value="formData.validCode" :refreshTime="validCodeRefreshTime" />
       </FormItem>
       <FormItem name="loginValidCode" class="enter-x">
         <CountdownInput

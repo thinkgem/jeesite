@@ -9,11 +9,7 @@ import { changeTheme } from '/@/logics/theme';
 import { updateDarkTheme } from '/@/logics/theme/dark';
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 import { MenuTypeEnum } from '/@/enums/menuEnum';
-import {
-  APP_PRESET_COLOR_LIST,
-  HEADER_PRESET_BG_COLOR_LIST,
-  SIDE_BAR_BG_COLOR_LIST,
-} from '/@/settings/designSetting';
+import { APP_PRESET_COLOR_LIST, HEADER_PRESET_BG_COLOR_LIST, SIDE_BAR_BG_COLOR_LIST } from '/@/settings/designSetting';
 import { ThemeEnum } from '/@/enums/appEnum';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -22,9 +18,7 @@ export function baseHandler(event: HandlerEnum, value: any) {
   const { getDarkMode } = useRootSetting();
   if (
     getDarkMode.value === ThemeEnum.DARK &&
-    (event === HandlerEnum.MENU_THEME ||
-      event === HandlerEnum.HEADER_THEME ||
-      event === HandlerEnum.CHANGE_THEME_COLOR)
+    (event === HandlerEnum.MENU_THEME || event === HandlerEnum.HEADER_THEME || event === HandlerEnum.CHANGE_THEME_COLOR)
   ) {
     const { showMessage } = useMessage();
     const { t } = useI18n();

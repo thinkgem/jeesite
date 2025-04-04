@@ -11,11 +11,7 @@ const { showMessageModal, showMessage } = useMessage();
 // const error = createMessage.error!;
 const stp = projectSetting.sessionTimeoutProcessing;
 
-export function checkStatus(
-  status: number,
-  msg: string,
-  errorMessageMode: ErrorMessageMode = 'message',
-): void {
+export function checkStatus(status: number, msg: string, errorMessageMode: ErrorMessageMode = 'message'): void {
   const { t } = useI18n();
   const userStore = useUserStoreWithOut();
   let errMessage = '';

@@ -7,9 +7,7 @@ export function useTableScrollTo(tableRef: Ref<ComponentRef>, getDataSourceRef: 
 
   async function findTargetRowToScroll(targetRowData: Recordable) {
     const { id } = targetRowData;
-    const targetRowEl: HTMLElement | null | undefined = bodyEl?.querySelector(
-      `[data-row-key="${id}"]`,
-    );
+    const targetRowEl: HTMLElement | null | undefined = bodyEl?.querySelector(`[data-row-key="${id}"]`);
     //Add a delay to get new dataSource
     await nextTick();
     bodyEl?.scrollTo({

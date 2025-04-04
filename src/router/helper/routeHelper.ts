@@ -132,11 +132,7 @@ function promoteRouteLevel(routeModule: AppRouteModule) {
 }
 
 // Add all sub-routes to the secondary route
-function addToChildren(
-  routes: RouteRecordNormalized[],
-  children: AppRouteRecordRaw[],
-  routeModule: AppRouteModule,
-) {
+function addToChildren(routes: RouteRecordNormalized[], children: AppRouteRecordRaw[], routeModule: AppRouteModule) {
   for (let index = 0; index < children.length; index++) {
     const child = children[index];
     const route = routes.find((item) => item.name === child.name);

@@ -9,12 +9,7 @@
 </template>
 <script lang="ts" setup>
   import { computed, unref } from 'vue';
-  import {
-    StyleProvider,
-    legacyLogicalPropertiesTransformer,
-    ConfigProvider,
-    theme,
-  } from 'ant-design-vue';
+  import { StyleProvider, legacyLogicalPropertiesTransformer, ConfigProvider, theme } from 'ant-design-vue';
   import { AppProvider } from '/@/components/Application';
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
   import { ThemeEnum } from '/@/enums/appEnum';
@@ -46,7 +41,7 @@
   body {
     line-height: 1.5715;
     font-family:
-      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
-      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   }
 </style>

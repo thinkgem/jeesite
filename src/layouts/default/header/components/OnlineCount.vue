@@ -1,16 +1,6 @@
 <template>
-  <Tooltip
-    :title="t('在线用户')"
-    placement="bottom"
-    :mouseEnterDelay="0.5"
-    @click="handleToOnlineList"
-  >
-    <Badge
-      :count="count"
-      :offset="[-6, 11]"
-      :overflowCount="99"
-      :number-style="{ backgroundColor: '#00a65a' }"
-    >
+  <Tooltip :title="t('在线用户')" placement="bottom" :mouseEnterDelay="0.5" @click="handleToOnlineList">
+    <Badge :count="count" :offset="[-6, 11]" :overflowCount="99" :number-style="{ backgroundColor: '#00a65a' }">
       <Icon icon="i-simple-line-icons:people" />
     </Badge>
   </Tooltip>

@@ -23,10 +23,7 @@ export function useGo(_router?: Router) {
     router = useRouter();
   }
   const { push, replace } = _router || router;
-  async function go(
-    opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME,
-    isReplace = false,
-  ) {
+  async function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {
     if (!opt) {
       return;
     }

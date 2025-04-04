@@ -9,12 +9,7 @@
   >
     <slot name="menuBefore"></slot>
     <template v-for="item in items" :key="item.path">
-      <SimpleSubMenu
-        :item="item"
-        :parent="true"
-        :collapsedShowTitle="collapsedShowTitle"
-        :collapse="collapse"
-      />
+      <SimpleSubMenu :item="item" :parent="true" :collapsedShowTitle="collapsedShowTitle" :collapse="collapse" />
     </template>
     <slot name="menuAfter"></slot>
   </Menu>
@@ -80,13 +75,7 @@
         collapse: Ref<boolean>;
       };
 
-      const { setOpenKeys, getOpenKeys } = useOpenKeys(
-        menuState,
-        items,
-        accordion,
-        mixSider,
-        collapse,
-      );
+      const { setOpenKeys, getOpenKeys } = useOpenKeys(menuState, items, accordion, mixSider, collapse);
 
       const getBindValues = computed(() => ({ ...attrs, ...props }));
 

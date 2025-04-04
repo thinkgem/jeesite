@@ -10,11 +10,7 @@
     </template>
 
     <template #title v-if="!$slots.title">
-      <ModalHeader
-        :helpMessage="getProps.helpMessage"
-        :title="getMergeProps.title"
-        @dblclick="handleTitleDbClick"
-      >
+      <ModalHeader :helpMessage="getProps.helpMessage" :title="getMergeProps.title" @dblclick="handleTitleDbClick">
         <template #[item]="data" v-for="item in Object.keys($slots)">
           <slot :name="item" v-bind="data || {}"></slot>
         </template>
@@ -54,17 +50,7 @@
 </template>
 <script lang="ts" setup name="BasicModal">
   import type { ModalProps, ModalMethods } from './typing';
-  import {
-    computed,
-    ref,
-    watch,
-    unref,
-    watchEffect,
-    toRef,
-    getCurrentInstance,
-    nextTick,
-    useAttrs,
-  } from 'vue';
+  import { computed, ref, watch, unref, watchEffect, toRef, getCurrentInstance, nextTick, useAttrs } from 'vue';
   import Modal from './components/Modal';
   import ModalWrapper from './components/ModalWrapper.vue';
   import ModalClose from './components/ModalClose.vue';
@@ -81,14 +67,7 @@
   });
 
   const props = defineProps(basicProps);
-  const emit = defineEmits([
-    'open-change',
-    'height-change',
-    'cancel',
-    'ok',
-    'register',
-    'update:open',
-  ]);
+  const emit = defineEmits(['open-change', 'height-change', 'cancel', 'ok', 'register', 'update:open']);
   const attrs = useAttrs();
   const openRef = ref(false);
   const propsRef = ref<Partial<ModalProps> | null>(null);

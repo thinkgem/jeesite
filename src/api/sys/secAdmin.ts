@@ -19,8 +19,7 @@ export const secAdminListData = (params?: User | any) =>
 export const secAdminForm = (params?: User | any) =>
   defHttp.get<User>({ url: adminPath + '/sys/secAdmin/form', params });
 
-export const secAdminSave = (params?: any) =>
-  defHttp.post<User>({ url: adminPath + '/sys/secAdmin/save', params });
+export const secAdminSave = (params?: any) => defHttp.post<User>({ url: adminPath + '/sys/secAdmin/save', params });
 
 export const secAdminDelete = (params?: User | any) =>
   defHttp.get<User>({ url: adminPath + '/sys/secAdmin/delete', params });

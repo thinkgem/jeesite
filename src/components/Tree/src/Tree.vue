@@ -358,8 +358,7 @@
           searchState.startSearch = false;
           return;
         }
-        const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch } =
-          unref(props);
+        const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch } = unref(props);
         searchState.startSearch = true;
         const { title: titleField, key: keyField } = unref(getFieldNames);
 
@@ -520,18 +519,13 @@
         eachTree(data, (item, _parent) => {
           const searchText = searchState.searchText;
           const { highlight } = unref(props);
-          const {
-            title: titleField,
-            key: keyField,
-            children: childrenField,
-          } = unref(getFieldNames);
+          const { title: titleField, key: keyField, children: childrenField } = unref(getFieldNames);
 
           const icon = getIcon(item, item.icon);
           const title = get(item, titleField);
 
           const searchIdx = searchText ? title.indexOf(searchText) : -1;
-          const isHighlight =
-            searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
+          const isHighlight = searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
           const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
 
           const titleDom = isHighlight ? (
@@ -622,11 +616,7 @@
               />
             </ScrollContainer>
             <Spin spinning={unref(loading)}>
-              <Empty
-                v-show={unref(getNotFound)}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                class="!mt-4"
-              />
+              <Empty v-show={unref(getNotFound)} image={Empty.PRESENTED_IMAGE_SIMPLE} class="!mt-4" />
             </Spin>
           </div>
         );

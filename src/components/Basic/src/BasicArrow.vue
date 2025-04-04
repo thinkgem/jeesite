@@ -50,11 +50,7 @@
 
   const getIcon = computed(() => {
     const { leaf, double } = props;
-    return leaf
-      ? 'i-radix-icons:dot'
-      : double
-        ? 'i-ant-design:double-right-outlined'
-        : 'i-ion:chevron-forward';
+    return leaf ? 'i-radix-icons:dot' : double ? 'i-ant-design:double-right-outlined' : 'i-ion:chevron-forward';
   });
 
   // get component class

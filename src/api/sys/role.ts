@@ -25,14 +25,12 @@ export interface Role extends BasicModel<Role> {
   userCode?: string; // 根据用户编号查询授权的角色列表
 }
 
-export const roleList = (params?: Role | any) =>
-  defHttp.get<Role>({ url: adminPath + '/sys/role/list', params });
+export const roleList = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/list', params });
 
 export const roleListData = (params?: Role | any) =>
   defHttp.post<Page<Role>>({ url: adminPath + '/sys/role/listData', params });
 
-export const roleForm = (params?: Role | any) =>
-  defHttp.get<Role>({ url: adminPath + '/sys/role/form', params });
+export const roleForm = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/form', params });
 
 export const roleMenuTreeData = (params?: any) =>
   defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeData', params });
@@ -49,14 +47,11 @@ export const checkRoleName = (oldRoleName: string, roleName: string) =>
     params: { oldRoleName, roleName },
   });
 
-export const roleDisable = (params?: Role | any) =>
-  defHttp.get<Role>({ url: adminPath + '/sys/role/disable', params });
+export const roleDisable = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/disable', params });
 
-export const roleEnable = (params?: Role | any) =>
-  defHttp.get<Role>({ url: adminPath + '/sys/role/enable', params });
+export const roleEnable = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/enable', params });
 
-export const roleDelete = (params?: Role | any) =>
-  defHttp.get<Role>({ url: adminPath + '/sys/role/delete', params });
+export const roleDelete = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/delete', params });
 
 export const roleFormAuthDataScope = (params?: Role | any) =>
   defHttp.get<Role>({ url: adminPath + '/sys/role/formAuthDataScope', params });

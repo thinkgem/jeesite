@@ -16,14 +16,7 @@ interface UseAdvancedContext {
   defaultValueRef: Ref<Recordable>;
 }
 
-export default function ({
-  advanceState,
-  emit,
-  getProps,
-  getSchema,
-  formModel,
-  defaultValueRef,
-}: UseAdvancedContext) {
+export default function ({ advanceState, emit, getProps, getSchema, formModel, defaultValueRef }: UseAdvancedContext) {
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint();
 
   function BASIC_COL_LEN(): number {
@@ -158,10 +151,7 @@ export default function ({
       }
 
       if (isShow && (colProps || baseColProps)) {
-        const { itemColSum: sum, isAdvanced } = getAdvanced(
-          { ...baseColProps, ...colProps },
-          itemColSum,
-        );
+        const { itemColSum: sum, isAdvanced } = getAdvanced({ ...baseColProps, ...colProps }, itemColSum);
 
         itemColSum = sum || 0;
         if (isAdvanced) {

@@ -22,9 +22,7 @@
         </a-button>
       </template>
       <template #firstColumn="{ record }">
-        <span class="cursor-pointer" @click="expandCollapse(record)">
-          ( {{ record.areaCode }} )
-        </span>
+        <span class="cursor-pointer" @click="expandCollapse(record)"> ( {{ record.areaCode }} ) </span>
         <a @click="handleForm({ areaCode: record.areaCode })">
           {{ record.areaName }}
         </a>

@@ -49,9 +49,7 @@
       const appStore = useAppStore();
 
       function handleCopy() {
-        const { isSuccessRef } = useCopyToClipboard(
-          JSON.stringify(unref(appStore.getProjectConfig), null, 2),
-        );
+        const { isSuccessRef } = useCopyToClipboard(JSON.stringify(unref(appStore.getProjectConfig), null, 2));
         unref(isSuccessRef) &&
           createSuccessModal({
             title: t('layout.setting.operatingTitle'),

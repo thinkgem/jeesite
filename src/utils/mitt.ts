@@ -7,10 +7,7 @@ export type EventType = string | symbol;
 // An event handler can take an optional event argument
 // and should not return a value
 export type Handler<T = unknown> = (event: T) => void;
-export type WildcardHandler<T = Record<string, unknown>> = (
-  type: keyof T,
-  event: T[keyof T],
-) => void;
+export type WildcardHandler<T = Record<string, unknown>> = (type: keyof T, event: T[keyof T]) => void;
 
 // An array of all currently registered event handlers for a type
 export type EventHandlerList<T = unknown> = Array<Handler<T>>;
@@ -41,9 +38,7 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
  * @name mitt
  * @returns {Mitt}
  */
-export function mitt<Events extends Record<EventType, unknown>>(
-  all?: EventHandlerMap<Events>,
-): Emitter<Events> {
+export function mitt<Events extends Record<EventType, unknown>>(all?: EventHandlerMap<Events>): Emitter<Events> {
   type GenericEventHandler = Handler<Events[keyof Events]> | WildcardHandler<Events>;
   all = all || new Map();
 

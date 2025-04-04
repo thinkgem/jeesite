@@ -1,10 +1,5 @@
 <template>
-  <BasicModal
-    v-bind="$attrs"
-    :title="t('sys.errorLog.tableActionDesc')"
-    :showOkBtn="false"
-    :width="800"
-  >
+  <BasicModal v-bind="$attrs" :title="t('sys.errorLog.tableActionDesc')" :showOkBtn="false" :width="800">
     <Description :data="info" @register="register" />
   </BasicModal>
 </template>

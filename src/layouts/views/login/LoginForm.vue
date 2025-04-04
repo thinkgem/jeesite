@@ -27,11 +27,7 @@
       />
     </FormItem>
     <FormItem v-if="validCodeRefreshTime" name="validCode" class="enter-x valid-code">
-      <ValidCode
-        size="large"
-        v-model:value="formData.validCode"
-        :refreshTime="validCodeRefreshTime"
-      />
+      <ValidCode size="large" v-model:value="formData.validCode" :refreshTime="validCodeRefreshTime" />
     </FormItem>
 
     <div class="gp" v-if="demoMode">

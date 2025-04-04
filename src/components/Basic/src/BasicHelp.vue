@@ -46,9 +46,7 @@
     setup(props, { slots }) {
       const { prefixCls } = useDesign('basic-help');
 
-      const getTooltipStyle = computed(
-        (): CSSProperties => ({ color: props.color, fontSize: props.fontSize }),
-      );
+      const getTooltipStyle = computed((): CSSProperties => ({ color: props.color, fontSize: props.fontSize }));
 
       const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
 
@@ -84,9 +82,7 @@
             placement={props.placement as 'right'}
             getPopupContainer={() => getPopupContainer()}
           >
-            <span class={prefixCls}>
-              {getSlot(slots) || <Icon icon="i-ant-design:question-circle-outlined" />}
-            </span>
+            <span class={prefixCls}>{getSlot(slots) || <Icon icon="i-ant-design:question-circle-outlined" />}</span>
           </Tooltip>
         );
       };

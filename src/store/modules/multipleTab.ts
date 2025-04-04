@@ -161,9 +161,7 @@ export const useMultipleTabStore = defineStore({
         if (affix) {
           return;
         }
-        const index = this.tabList.findIndex(
-          (item) => (item.fullPath || item.path) === (fullPath || path),
-        );
+        const index = this.tabList.findIndex((item) => (item.fullPath || item.path) === (fullPath || path));
         index !== -1 && this.tabList.splice(index, 1);
       };
 
@@ -179,9 +177,7 @@ export const useMultipleTabStore = defineStore({
       // Closed is activated atb
       let toTarget: RouteLocationRaw = {};
 
-      const index = this.tabList.findIndex(
-        (item) => (item.fullPath || item.path) === (fullPath || path),
-      );
+      const index = this.tabList.findIndex((item) => (item.fullPath || item.path) === (fullPath || path));
 
       // If the current is the leftmost tab
       if (index === 0) {
@@ -219,9 +215,7 @@ export const useMultipleTabStore = defineStore({
 
     // Close the tab on the right and jump
     async closeLeftTabs(route: RouteLocationNormalized, router: Router) {
-      const index = this.tabList.findIndex(
-        (item) => (item.fullPath || item.path) === (route.fullPath || route.path),
-      );
+      const index = this.tabList.findIndex((item) => (item.fullPath || item.path) === (route.fullPath || route.path));
 
       if (index > 0) {
         const leftTabs = this.tabList.slice(0, index);
@@ -240,9 +234,7 @@ export const useMultipleTabStore = defineStore({
 
     // Close the tab on the left and jump
     async closeRightTabs(route: RouteLocationNormalized, router: Router) {
-      const index = this.tabList.findIndex(
-        (item) => (item.fullPath || item.path) === (route.fullPath || route.path),
-      );
+      const index = this.tabList.findIndex((item) => (item.fullPath || item.path) === (route.fullPath || route.path));
 
       if (index >= 0 && index < this.tabList.length - 1) {
         const rightTabs = this.tabList.slice(index + 1, this.tabList.length);

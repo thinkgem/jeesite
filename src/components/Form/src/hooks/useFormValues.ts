@@ -16,12 +16,7 @@ interface UseFormValuesContext {
   getProps: ComputedRef<FormProps>;
   formModel: Recordable;
 }
-export function useFormValues({
-  defaultValueRef,
-  getSchema,
-  formModel,
-  getProps,
-}: UseFormValuesContext) {
+export function useFormValues({ defaultValueRef, getSchema, formModel, getProps }: UseFormValuesContext) {
   /**
    * Processing form values
    */

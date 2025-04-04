@@ -18,11 +18,7 @@
     </template>
     <BasicForm @register="registerForm">
       <template #dataScopeTrees>
-        <CustomDataScope
-          ref="customDataScopeRef"
-          :api="ctrlDataTreeData"
-          :ctrlPermis="['0', '2']"
-        />
+        <CustomDataScope ref="customDataScopeRef" :api="ctrlDataTreeData" :ctrlPermis="['0', '2']" />
       </template>
     </BasicForm>
   </BasicDrawer>

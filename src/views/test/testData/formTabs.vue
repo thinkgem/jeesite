@@ -32,10 +32,7 @@
       <Tabs.TabPane key="2" :forceRender="true" tab="详细信息">
         <BasicForm @register="registerForm2">
           <template #testDataChildList>
-            <BasicTable
-              @register="registerTestDataChildTable"
-              @row-click="handleTestDataChildRowClick"
-            >
+            <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
               <template #testDataChildUpload="{ record: childRecord }">
                 <BasicUpload
                   v-model:value="childRecord.dataMap"

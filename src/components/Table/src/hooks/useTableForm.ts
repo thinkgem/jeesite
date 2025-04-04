@@ -26,9 +26,7 @@ export function useTableForm(
 
   const getFormSlotKeys: ComputedRef<string[]> = computed(() => {
     const keys = Object.keys(slots);
-    return keys
-      .map((item) => (item.startsWith('form-') ? item : null))
-      .filter((item) => !!item) as string[];
+    return keys.map((item) => (item.startsWith('form-') ? item : null)).filter((item) => !!item) as string[];
   });
 
   function replaceFormSlotKey(key: string) {

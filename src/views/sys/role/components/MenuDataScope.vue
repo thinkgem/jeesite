@@ -23,11 +23,7 @@
           </Dropdown>
         </template>
         <template #icon="{ dataRef, isLeaf, expanded }">
-          <Icon
-            v-if="dataRef.hasDataScope"
-            icon="i-ant-design:unordered-list-outlined"
-            color="#f00"
-          />
+          <Icon v-if="dataRef.hasDataScope" icon="i-ant-design:unordered-list-outlined" color="#f00" />
           <Icon v-else-if="isLeaf" icon="ant-design:file-outlined" />
           <Icon v-else-if="expanded" icon="i-ant-design:folder-open-outlined" />
           <Icon v-else icon="ant-design:folder-outlined" />
@@ -35,11 +31,7 @@
       </BasicTree>
     </ACol>
     <ACol :span="15" :style="getMainStyle">
-      <Tabs
-        class="jeesite-role-auth-data-scope-tabs"
-        v-model:activeKey="ruleType"
-        @change="handleTabChange"
-      >
+      <Tabs class="jeesite-role-auth-data-scope-tabs" v-model:activeKey="ruleType" @change="handleTabChange">
         <Tabs.TabPane key="1" :forceRender="true">
           <template #tab>
             <Icon v-if="ruleType == '1'" icon="i-ant-design:check-circle-outlined" />

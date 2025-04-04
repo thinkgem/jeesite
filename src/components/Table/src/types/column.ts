@@ -71,10 +71,7 @@ export interface ColumnProps<T> {
    * Customized filter overlay
    * @type any (slot)
    */
-  filterDropdown?:
-    | VNodeChild
-    | JSX.Element
-    | ((props: FilterDropdownProps) => VNodeChild | JSX.Element);
+  filterDropdown?: VNodeChild | JSX.Element | ((props: FilterDropdownProps) => VNodeChild | JSX.Element);
 
   /**
    * Whether filterDropdown is open

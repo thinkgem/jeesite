@@ -17,26 +17,21 @@ export interface Post extends BasicModel<Post> {
   viewCode?: string; // 岗位代码
 }
 
-export const postList = (params?: Post | any) =>
-  defHttp.get<Post>({ url: adminPath + '/sys/post/list', params });
+export const postList = (params?: Post | any) => defHttp.get<Post>({ url: adminPath + '/sys/post/list', params });
 
 export const postListData = (params?: Post | any) =>
   defHttp.post<Page<Post>>({ url: adminPath + '/sys/post/listData', params });
 
-export const postForm = (params?: Post | any) =>
-  defHttp.get<Post>({ url: adminPath + '/sys/post/form', params });
+export const postForm = (params?: Post | any) => defHttp.get<Post>({ url: adminPath + '/sys/post/form', params });
 
-export const postDisable = (params?: Post | any) =>
-  defHttp.get<Post>({ url: adminPath + '/sys/post/disable', params });
+export const postDisable = (params?: Post | any) => defHttp.get<Post>({ url: adminPath + '/sys/post/disable', params });
 
-export const postEnable = (params?: Post | any) =>
-  defHttp.get<Post>({ url: adminPath + '/sys/post/enable', params });
+export const postEnable = (params?: Post | any) => defHttp.get<Post>({ url: adminPath + '/sys/post/enable', params });
 
 export const postSave = (params?: any, data?: Post | any) =>
   defHttp.postJson<Post>({ url: adminPath + '/sys/post/save', params, data });
 
-export const postDelete = (params?: Post | any) =>
-  defHttp.get<Post>({ url: adminPath + '/sys/post/delete', params });
+export const postDelete = (params?: Post | any) => defHttp.get<Post>({ url: adminPath + '/sys/post/delete', params });
 
 export const postTreeData = (params?: any) =>
   defHttp.get<TreeDataModel[]>({ url: adminPath + '/sys/post/treeData', params });

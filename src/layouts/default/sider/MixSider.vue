@@ -62,18 +62,9 @@
         />
       </div>
       <ScrollContainer :class="`${prefixCls}-menu-list__content`">
-        <SimpleMenu
-          :items="childrenMenus"
-          :theme="getMenuTheme"
-          mixSider
-          @menu-click="handleMenuClick"
-        />
+        <SimpleMenu :items="childrenMenus" :theme="getMenuTheme" mixSider @menu-click="handleMenuClick" />
       </ScrollContainer>
-      <div
-        v-show="getShowDragBar && openMenu"
-        :class="`${prefixCls}-drag-bar`"
-        ref="dragBarRef"
-      ></div>
+      <div v-show="getShowDragBar && openMenu" :class="`${prefixCls}-drag-bar`" ref="dragBarRef"></div>
     </div>
   </div>
 </template>
@@ -286,8 +277,7 @@
             onMouseenter: () => handleModuleClick(item.path, getItem, true),
             onClick: async () => {
               const children = await getChildrenMenus(item.path);
-              if (item.path && (!children || children.length === 0))
-                handleMenuClick(item.path, getItem);
+              if (item.path && (!children || children.length === 0)) handleMenuClick(item.path, getItem);
             },
           };
         }

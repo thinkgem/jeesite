@@ -18,10 +18,7 @@
     </template>
     <BasicForm @register="registerForm">
       <template #userRoleString>
-        <BasicTable
-          @register="registerUserRoleTable"
-          @selection-change="handleUserRoleSelectionChange"
-        />
+        <BasicTable @register="registerUserRoleTable" @selection-change="handleUserRoleSelectionChange" />
       </template>
     </BasicForm>
   </BasicDrawer>

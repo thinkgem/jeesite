@@ -21,10 +21,7 @@
         </a>
       </template>
       <template #corpColumn="{ record }">
-        <a
-          @click="reload({ searchInfo: { corpCode_: record.corpCode_ } })"
-          :title="record.corpCode_"
-        >
+        <a @click="reload({ searchInfo: { corpCode_: record.corpCode_ } })" :title="record.corpCode_">
           {{ record.corpCode_ }}
         </a>
       </template>

@@ -26,16 +26,8 @@
     </span>
     <template #overlay>
       <Menu @click="handleMenuClick">
-        <MenuItem
-          value="accountCenter"
-          :text="t('sys.account.center')"
-          icon="i-ion:person-outline"
-        />
-        <MenuItem
-          value="modifyPwd"
-          :text="t('sys.account.modifyPwd')"
-          icon="i-ant-design:key-outlined"
-        />
+        <MenuItem value="accountCenter" :text="t('sys.account.center')" icon="i-ion:person-outline" />
+        <MenuItem value="modifyPwd" :text="t('sys.account.modifyPwd')" icon="i-ant-design:key-outlined" />
         <MenuDivider />
         <MenuItem
           value="doc"
@@ -50,17 +42,9 @@
           :text="t('layout.header.tooltipLock')"
           icon="i-ion:lock-closed-outline"
         />
-        <MenuItem
-          value="logout"
-          :text="t('layout.header.dropdownItemLoginOut')"
-          icon="i-ion:power-outline"
-        />
+        <MenuItem value="logout" :text="t('layout.header.dropdownItemLoginOut')" icon="i-ion:power-outline" />
         <MenuDivider v-if="sysListRef.length > 0" />
-        <MenuItem
-          v-if="sysListRef.length > 0"
-          :class="`${prefixCls}-menu-subtitle`"
-          :text="t('系统切换：')"
-        />
+        <MenuItem v-if="sysListRef.length > 0" :class="`${prefixCls}-menu-subtitle`" :text="t('系统切换：')" />
         <MenuItem
           v-for="item in sysListRef"
           :key="item.value"
@@ -86,9 +70,7 @@
             :key="item.postCode"
             :value="'postCode-' + item.postCode"
             :text="item.postName"
-            :icon="
-              postCodeRef == item.postCode ? 'i-ant-design:check-outlined' : 'i-radix-icons:dot'
-            "
+            :icon="postCodeRef == item.postCode ? 'i-ant-design:check-outlined' : 'i-radix-icons:dot'"
           />
         </template>
         <template v-else-if="getUserInfo.roleList.length > 0">
@@ -109,9 +91,7 @@
             :key="item.roleCode"
             :value="'roleCode-' + item.roleCode"
             :text="item.roleName"
-            :icon="
-              roleCodeRef == item.roleCode ? 'i-ant-design:check-outlined' : 'i-radix-icons:dot'
-            "
+            :icon="roleCodeRef == item.roleCode ? 'i-ant-design:check-outlined' : 'i-radix-icons:dot'"
           />
         </template>
       </Menu>
@@ -170,13 +150,7 @@
       const postCodeRef = ref<string>('');
 
       const getUserInfo = computed(() => {
-        const {
-          userName = '',
-          avatarUrl,
-          remarks,
-          roleList,
-          postList,
-        } = userStore.getUserInfo || {};
+        const { userName = '', avatarUrl, remarks, roleList, postList } = userStore.getUserInfo || {};
         return {
           userName,
           avatarUrl,
@@ -201,8 +175,7 @@
                 }
               }
             }
-            sysListRef.value =
-              sysCodes.length === 0 ? sysList : sysList.filter((e) => sysCodes.includes(e.value));
+            sysListRef.value = sysCodes.length === 0 ? sysList : sysList.filter((e) => sysCodes.includes(e.value));
           }
         });
       }

@@ -1,14 +1,7 @@
 import { defineComponent, computed, unref } from 'vue';
 import { BasicDrawer } from '/@/components/Drawer';
 import { Divider } from 'ant-design-vue';
-import {
-  TypePicker,
-  ThemeColorPicker,
-  SettingFooter,
-  SwitchItem,
-  SelectItem,
-  InputNumberItem,
-} from './components';
+import { TypePicker, ThemeColorPicker, SettingFooter, SwitchItem, SelectItem, InputNumberItem } from './components';
 
 import { AppDarkModeToggle } from '/@/components/Application';
 
@@ -30,11 +23,7 @@ import {
   mixSidebarTriggerOptions,
 } from './enum';
 
-import {
-  HEADER_PRESET_BG_COLOR_LIST,
-  SIDE_BAR_BG_COLOR_LIST,
-  APP_PRESET_COLOR_LIST,
-} from '/@/settings/designSetting';
+import { HEADER_PRESET_BG_COLOR_LIST, SIDE_BAR_BG_COLOR_LIST, APP_PRESET_COLOR_LIST } from '/@/settings/designSetting';
 
 const { t } = useI18n();
 
@@ -278,17 +267,9 @@ export default defineComponent({
             disabled={!unref(getShowHeader)}
           />
 
-          <SwitchItem
-            title={t('layout.setting.grayMode')}
-            event={HandlerEnum.GRAY_MODE}
-            def={unref(getGrayMode)}
-          />
+          <SwitchItem title={t('layout.setting.grayMode')} event={HandlerEnum.GRAY_MODE} def={unref(getGrayMode)} />
 
-          <SwitchItem
-            title={t('layout.setting.colorWeak')}
-            event={HandlerEnum.COLOR_WEAK}
-            def={unref(getColorWeak)}
-          />
+          <SwitchItem title={t('layout.setting.colorWeak')} event={HandlerEnum.COLOR_WEAK} def={unref(getColorWeak)} />
         </>
       );
     }

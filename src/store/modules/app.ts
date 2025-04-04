@@ -1,10 +1,4 @@
-import type {
-  ProjectConfig,
-  HeaderSetting,
-  MenuSetting,
-  TransitionSetting,
-  MultiTabsSetting,
-} from '/#/config';
+import type { ProjectConfig, HeaderSetting, MenuSetting, TransitionSetting, MultiTabsSetting } from '/#/config';
 import type { BeforeMiniState } from '/#/store';
 
 import { defineStore } from 'pinia';

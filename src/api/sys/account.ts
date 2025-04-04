@@ -36,10 +36,7 @@ export const savePwdByPwdQuestion = (params?: any) => {
     params.password = encryptByBase64(params.password);
     params.confirmPassword = encryptByBase64(params.confirmPassword);
   }
-  return defHttp.post(
-    { url: '/account/savePwdByPwdQuestion', params },
-    { errorMessageMode: 'none' },
-  );
+  return defHttp.post({ url: '/account/savePwdByPwdQuestion', params }, { errorMessageMode: 'none' });
 };
 
 export const getRegValidCode = (params?: any) =>

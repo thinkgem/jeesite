@@ -66,9 +66,7 @@ export const createStorage = ({
         time: Date.now(),
         expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null,
       });
-      const stringifyValue = this.hasEncrypt
-        ? this.encryption.encryptByAES(stringData)
-        : stringData;
+      const stringifyValue = this.hasEncrypt ? this.encryption.encryptByAES(stringData) : stringData;
       this.storage.setItem(this.getKey(key), stringifyValue);
     }
 

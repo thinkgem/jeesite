@@ -28,9 +28,7 @@
         </a-button>
       </template>
       <template #firstColumn="{ record }">
-        <span class="cursor-pointer" @click="expandCollapse(record)">
-          ( {{ record.viewCode }} )
-        </span>
+        <span class="cursor-pointer" @click="expandCollapse(record)"> ( {{ record.viewCode }} ) </span>
         <a @click="handleForm({ officeCode: record.officeCode })">
           {{ record.officeName }}
         </a>

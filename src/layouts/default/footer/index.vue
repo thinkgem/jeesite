@@ -3,11 +3,7 @@
     <div :class="`${prefixCls}__links`">
       <a @click="openWindow(SITE_URL)">{{ t('layout.footer.onlinePreview') }}</a>
 
-      <Icon
-        icon="i-ant-design:github-filled"
-        @click="openWindow(GITHUB_URL)"
-        :class="`${prefixCls}__github`"
-      />
+      <Icon icon="i-ant-design:github-filled" @click="openWindow(GITHUB_URL)" :class="`${prefixCls}__github`" />
 
       <a @click="openWindow(DOC_URL)">{{ t('layout.footer.onlineDocument') }}</a>
     </div>

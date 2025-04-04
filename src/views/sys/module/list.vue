@@ -21,11 +21,7 @@
         </a>
       </template>
       <template #statusColumn="{ column, record }">
-        <DictLabel
-          v-if="record.isLoader"
-          :dictType="column.dictType"
-          :dictValue="record[column.dataIndex]"
-        />
+        <DictLabel v-if="record.isLoader" :dictType="column.dictType" :dictValue="record[column.dataIndex]" />
         <span v-else style="color: red">{{ t('未安装') }}</span>
       </template>
     </BasicTable>

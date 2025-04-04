@@ -6,17 +6,7 @@ import type {
   UseDrawerInnerReturnType,
 } from './typing';
 
-import {
-  ref,
-  onUnmounted,
-  unref,
-  getCurrentInstance,
-  reactive,
-  watchEffect,
-  nextTick,
-  toRaw,
-  computed,
-} from 'vue';
+import { ref, onUnmounted, unref, getCurrentInstance, reactive, watchEffect, nextTick, toRaw, computed } from 'vue';
 import { isProdMode } from '/@/utils/env';
 import { isFunction } from '/@/utils/is';
 import { isEqual } from 'lodash-es';

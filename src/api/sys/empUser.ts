@@ -60,10 +60,7 @@ export const resetpwd = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/resetpwd', params });
 
 export const empUserDelete = (params?: EmpUser | any) =>
-  defHttp.get<EmpUser>(
-    { url: adminPath + '/sys/empUser/delete', params },
-    { errorMessageMode: 'none' },
-  );
+  defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/delete', params }, { errorMessageMode: 'none' });
 
 export const formAuthDataScope = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/formAuthDataScope', params });

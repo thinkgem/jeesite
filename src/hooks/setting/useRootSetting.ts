@@ -5,10 +5,7 @@ import { computed } from 'vue';
 import { useAppStore } from '/@/store/modules/app';
 import { ContentEnum, ThemeEnum } from '/@/enums/appEnum';
 
-type RootSetting = Omit<
-  ProjectConfig,
-  'locale' | 'headerSetting' | 'menuSetting' | 'multiTabsSetting'
->;
+type RootSetting = Omit<ProjectConfig, 'locale' | 'headerSetting' | 'menuSetting' | 'multiTabsSetting'>;
 
 export function useRootSetting() {
   const appStore = useAppStore();
@@ -54,9 +51,7 @@ export function useRootSetting() {
   const getDarkMode = computed(() => appStore.getDarkMode);
 
   const getLayoutContentMode = computed(() =>
-    appStore.getProjectConfig.contentMode === ContentEnum.FULL
-      ? ContentEnum.FULL
-      : ContentEnum.FIXED,
+    appStore.getProjectConfig.contentMode === ContentEnum.FULL ? ContentEnum.FULL : ContentEnum.FIXED,
   );
 
   function setRootSetting(setting: Partial<RootSetting>) {

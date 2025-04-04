@@ -19,13 +19,9 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   const throttleHandleSplitLeftMenu = useThrottleFn(handleSplitLeftMenu, 50);
 
-  const getSplitNotLeft = computed(
-    () => unref(splitType) !== MenuSplitTyeEnum.LEFT && unref(getSplit),
-  );
+  const getSplitNotLeft = computed(() => unref(splitType) !== MenuSplitTyeEnum.LEFT && unref(getSplit));
 
-  const getSplitLeft = computed(
-    () => !unref(getSplit) || unref(splitType) !== MenuSplitTyeEnum.LEFT,
-  );
+  const getSplitLeft = computed(() => !unref(getSplit) || unref(splitType) !== MenuSplitTyeEnum.LEFT);
 
   const getSpiltTop = computed(() => unref(splitType) === MenuSplitTyeEnum.TOP);
 

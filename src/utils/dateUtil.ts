@@ -14,10 +14,7 @@ export function formatToDateTime(
   return dayjs(date).format(format);
 }
 
-export function formatToDate(
-  date: dayjs.ConfigType | undefined = undefined,
-  format = DATE_FORMAT,
-): string | undefined {
+export function formatToDate(date: dayjs.ConfigType | undefined = undefined, format = DATE_FORMAT): string | undefined {
   if (!date) return undefined;
   return dayjs(date).format(format);
 }

@@ -89,10 +89,7 @@ export const switchSkin = (name = '') => {
 };
 
 export const userInfoApi = (mode: ErrorMessageMode = 'message') =>
-  defHttp.get<LoginResult>(
-    { url: adminPath + '/index', timeout: 10 * 1000 },
-    { errorMessageMode: mode },
-  );
+  defHttp.get<LoginResult>({ url: adminPath + '/index', timeout: 10 * 1000 }, { errorMessageMode: mode });
 
 export const authInfoApi = () => defHttp.get<AuthInfo>({ url: adminPath + '/authInfo' });
 

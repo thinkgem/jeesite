@@ -63,13 +63,7 @@
     mode: propTypes.string,
   });
 
-  const emit = defineEmits([
-    'change',
-    'update:value',
-    'update:labelValue',
-    'options-change',
-    'click',
-  ]);
+  const emit = defineEmits(['change', 'update:value', 'update:labelValue', 'options-change', 'click']);
 
   const { t } = useI18n();
   const attrs = useAttrs();

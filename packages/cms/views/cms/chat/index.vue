@@ -27,10 +27,7 @@
                 <span v-else class="flex-1 truncate">{{ item.title }}</span>
                 <span v-if="item.id == conversationIds[0]" class="c-gray">
                   <Icon icon="i-ant-design:edit" class="pt-3" @click="handleEdit(item, true)" />
-                  <Popconfirm
-                    :title="t('是否确认删除该对话吗？')"
-                    @confirm="handleDelete(item, index)"
-                  >
+                  <Popconfirm :title="t('是否确认删除该对话吗？')" @confirm="handleDelete(item, index)">
                     <Icon icon="i-ant-design:delete" class="pt-3" />
                   </Popconfirm>
                 </span>
@@ -54,14 +51,9 @@
           <div class="h-[90%] flex justify-center items-center text-center">
             <div class="text-xl c-gray-4">
               {{ t('我是你的 AI 助手，我可以帮你解答一些问题') }}
-              <div
-                v-if="userStore.getPageCacheByKey('demoMode')"
-                class="text-sm mt-20 line-height-loose"
-              >
-                提示：当前对接的是 DeepSeek 蒸馏过的 7B 超小模型，仅作为演示使用，AI
-                回答结果可能不够理想，<br />
-                可在自己本地部署，或对接其它大模型。此外当前向量库中只含了几篇关于 jeesite
-                的文章，<br />
+              <div v-if="userStore.getPageCacheByKey('demoMode')" class="text-sm mt-20 line-height-loose">
+                提示：当前对接的是 DeepSeek 蒸馏过的 7B 超小模型，仅作为演示使用，AI 回答结果可能不够理想，<br />
+                可在自己本地部署，或对接其它大模型。此外当前向量库中只含了几篇关于 jeesite 的文章，<br />
                 知识库文章来源，可进入菜单查看：扩展功能 -> 内容管理 -> 内容发布<br />
                 提问举例：jeesite 简介、jeesite 优势、jeesite 技术栈，体验一下。
               </div>
@@ -90,11 +82,7 @@
         </a-button>
       </div>
       <div class="pt-2 pr-8 c-gray-4 text-xs text-center">
-        {{
-          t(
-            '服务生成的所有内容均由人工智能模型生成，准确和完整性无法保证，不代表我们的态度或观点。',
-          )
-        }}
+        {{ t('服务生成的所有内容均由人工智能模型生成，准确和完整性无法保证，不代表我们的态度或观点。') }}
       </div>
     </div>
   </PageWrapper>
@@ -107,13 +95,7 @@
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { ScrollContainer } from '@jeesite/core/components/Container';
-  import {
-    cmsChatDelete,
-    cmsChatList,
-    cmsChatMessage,
-    cmsChatSave,
-    cmsChatStream,
-  } from '@jeesite/cms/api/cms/chat';
+  import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
   import { ChatMessage } from '@jeesite/cms';
   import { useUserStore } from '/@/store/modules/user';
 

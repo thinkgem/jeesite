@@ -22,9 +22,7 @@
         </a-button>
       </template>
       <template #firstColumn="{ record }">
-        <span class="cursor-pointer" @click="expandCollapse(record)">
-          ( {{ record.treeCode }} )
-        </span>
+        <span class="cursor-pointer" @click="expandCollapse(record)"> ( {{ record.treeCode }} ) </span>
         <a @click="handleForm({ treeCode: record.treeCode })">
           {{ record.treeName }}
         </a>

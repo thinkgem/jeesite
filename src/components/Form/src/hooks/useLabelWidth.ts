@@ -10,11 +10,7 @@ export function useItemLabelWidth(schemaItemRef: Ref<FormSchema>, propsRef: Ref<
     const { labelCol = {}, wrapperCol = {} } = schemaItem.itemProps || {};
     const { labelWidth, disabledLabelWidth } = schemaItem;
 
-    const {
-      labelWidth: globalLabelWidth,
-      labelCol: globalLabelCol,
-      wrapperCol: globWrapperCol,
-    } = unref(propsRef);
+    const { labelWidth: globalLabelWidth, labelCol: globalLabelCol, wrapperCol: globWrapperCol } = unref(propsRef);
 
     // If labelWidth is set globally, all items setting
     if ((!globalLabelWidth && !labelWidth && !globalLabelCol) || disabledLabelWidth) {

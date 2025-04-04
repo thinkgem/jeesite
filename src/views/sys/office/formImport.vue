@@ -13,12 +13,7 @@
     :minHeight="120"
     :width="400"
   >
-    <Upload
-      accept=".xls,.xlsx"
-      :file-list="fileList"
-      :before-upload="beforeUpload"
-      @remove="handleRemove"
-    >
+    <Upload accept=".xls,.xlsx" :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
       <a-button> <Icon icon="i-ant-design:upload-outlined" /> {{ t('选择文件') }} </a-button>
       <span class="ml-4">{{ uploadInfo }}</span>
     </Upload>

@@ -16,12 +16,6 @@ export const SlideXReverseTransition = createSimpleTransition('slide-x-reverse-t
 export const ScrollXReverseTransition = createSimpleTransition('scroll-x-reverse-transition');
 export const ScaleRotateTransition = createSimpleTransition('scale-rotate-transition');
 
-export const ExpandXTransition = createJavascriptTransition(
-  'expand-x-transition',
-  ExpandTransitionGenerator('', true),
-);
+export const ExpandXTransition = createJavascriptTransition('expand-x-transition', ExpandTransitionGenerator('', true));
 
-export const ExpandTransition = createJavascriptTransition(
-  'expand-transition',
-  ExpandTransitionGenerator(''),
-);
+export const ExpandTransition = createJavascriptTransition('expand-transition', ExpandTransitionGenerator(''));

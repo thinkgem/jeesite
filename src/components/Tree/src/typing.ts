@@ -21,9 +21,7 @@ export interface FieldNames {
 }
 
 export type Keys = (string | number)[];
-export type CheckKeys =
-  | (string | number)[]
-  | { checked: (string | number)[]; halfChecked: (string | number)[] };
+export type CheckKeys = (string | number)[] | { checked: (string | number)[]; halfChecked: (string | number)[] };
 
 export interface TreeActionType {
   checkAll: (checkAll: boolean) => void;

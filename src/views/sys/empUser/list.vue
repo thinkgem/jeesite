@@ -10,16 +10,8 @@
         <Icon :icon="getTitle.icon" class="m-1 pr-1" />
         <span> {{ getTitle.value }} </span>
         <Popconfirm :title="t('是否确认删除选中的用户吗？')" @confirm="handleDeleteSelected()">
-          <a-button
-            danger
-            class="ml-4"
-            type="default"
-            v-if="selectedRowKeysRef.length > 0"
-            v-auth="'sys:empUser:edit'"
-          >
-            <Icon icon="i-ant-design:delete-outlined" color="error" /> {{ t('删除') }} ({{
-              selectedRowKeysRef.length
-            }})
+          <a-button danger class="ml-4" type="default" v-if="selectedRowKeysRef.length > 0" v-auth="'sys:empUser:edit'">
+            <Icon icon="i-ant-design:delete-outlined" color="error" /> {{ t('删除') }} ({{ selectedRowKeysRef.length }})
           </a-button>
         </Popconfirm>
       </template>

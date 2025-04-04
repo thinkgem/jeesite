@@ -9,13 +9,7 @@
             </template>
             <template #title>
               {{ item.title }}
-              <a-button
-                type="link"
-                size="small"
-                v-if="item.extra"
-                class="extra"
-                @click="handleBind(item.title)"
-              >
+              <a-button type="link" size="small" v-if="item.extra" class="extra" @click="handleBind(item.title)">
                 {{ item.extra }}
               </a-button>
             </template>

@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="prefixCls"
-    class="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black"
-  >
+  <div :class="prefixCls" class="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black">
     <div
       :class="`${prefixCls}__unlock`"
       class="sm:text-md absolute left-1/2 top-0 h-16 flex flex-col translate-x-1/2 transform cursor-pointer items-center justify-center pt-5 text-white xl:text-xl"
@@ -33,11 +30,7 @@
               {{ userinfo.userName }}
             </p>
           </div>
-          <InputPassword
-            :placeholder="t('sys.lock.placeholder')"
-            class="enter-x"
-            v-model:value="password"
-          />
+          <InputPassword :placeholder="t('sys.lock.placeholder')" class="enter-x" v-model:value="password" />
           <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
             {{ t('sys.lock.alert') }}
           </span>
@@ -51,13 +44,7 @@
             >
               {{ t('common.back') }}
             </a-button>
-            <a-button
-              type="link"
-              size="small"
-              class="enter-x mr-2 mt-2"
-              :disabled="loading"
-              @click="goLogin"
-            >
+            <a-button type="link" size="small" class="enter-x mr-2 mt-2" :disabled="loading" @click="goLogin">
               {{ t('sys.lock.backToLogin') }}
             </a-button>
             <a-button class="mt-2" type="link" size="small" @click="unLock()" :loading="loading">

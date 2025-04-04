@@ -40,10 +40,7 @@
     </BasicForm>
     <slot v-if="$slots.tableTop" name="tableTop"></slot>
     <div v-if="showSelectionBar" class="m-3 mt-0">
-      <TableSelectionBar
-        :clearSelectedRowKeys="getHeaderProps.clearSelectedRowKeys!"
-        :count="getHeaderProps.count"
-      />
+      <TableSelectionBar :clearSelectedRowKeys="getHeaderProps.clearSelectedRowKeys!" :count="getHeaderProps.count" />
     </div>
     <FormItemRest>
       <ATable
@@ -64,9 +61,7 @@
             <TableAction
               v-if="data.column.slot === 'tableActions'"
               :actions="tableActions.actions && tableActions.actions(data.record)"
-              :dropDownActions="
-                tableActions.dropDownActions && tableActions.dropDownActions(data.record)
-              "
+              :dropDownActions="tableActions.dropDownActions && tableActions.dropDownActions(data.record)"
             />
             <DictLabel
               v-else-if="data.column.slot === 'dictLabelColumn'"
@@ -74,11 +69,7 @@
               :dictValue="getColumnValue(data)"
               :defaultValue="data.column.defaultValue"
             />
-            <slot
-              v-else-if="data.column.slot"
-              :name="data.column.slot"
-              v-bind="getSlotData(data)"
-            ></slot>
+            <slot v-else-if="data.column.slot" :name="data.column.slot" v-bind="getSlotData(data)"></slot>
           </template>
           <slot v-else name="bodyCell" v-bind="getSlotData(data)"></slot>
         </template>
@@ -87,12 +78,7 @@
   </div>
 </template>
 <script lang="ts" setup name="BasicTable">
-  import type {
-    BasicTableProps,
-    TableActionType,
-    SizeType,
-    ColumnChangeParam,
-  } from './types/table';
+  import type { BasicTableProps, TableActionType, SizeType, ColumnChangeParam } from './types/table';
   import { ref, computed, unref, toRaw, inject, watchEffect, useSlots } from 'vue';
   import { Table, Form } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form';
@@ -177,9 +163,7 @@
   watchEffect(() => {
     unref(isFixedHeightPage) &&
       props.canResize &&
-      warn(
-        "'canResize' of BasicTable may not work in PageWrapper with 'fixedHeight' (especially in hot updates)",
-      );
+      warn("'canResize' of BasicTable may not work in PageWrapper with 'fixedHeight' (especially in hot updates)");
   });
 
   const { getLoading, setLoading } = useLoading(getProps);
@@ -297,10 +281,8 @@
 
   // const { getHeaderProps } = useTableHeader(getProps, slots, handlers, methods);
   const getHeaderProps = computed(() => {
-    const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } =
-      unref(getProps);
-    const hideTitle =
-      !title && !slots.tableTitle && !slots.toolbar && !slots.headerTop && !showTableSetting;
+    const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } = unref(getProps);
+    const hideTitle = !title && !slots.tableTitle && !slots.toolbar && !slots.headerTop && !showTableSetting;
     if (hideTitle && !isString(title)) {
       return { class: 'hidden' };
     }
@@ -319,8 +301,12 @@
 
   const { getFooterProps } = useTableFooter(getProps, getScrollRef, tableRef, getDataSourceRef);
 
-  const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } =
-    useTableForm(getProps, slots, reload, getLoading);
+  const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } = useTableForm(
+    getProps,
+    slots,
+    reload,
+    getLoading,
+  );
 
   const getBindValues = computed(() => {
     const { isTreeTable } = unref(getProps);

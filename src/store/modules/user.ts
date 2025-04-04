@@ -60,9 +60,7 @@ export const useUserStore = defineStore({
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(): RoleEnum[] | string[] {
-      return this.roleList.length > 0
-        ? this.roleList
-        : getAuthCache<RoleEnum[] | string[]>(ROLES_KEY);
+      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[] | string[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!(this.sessionTimeout || getAuthCache<boolean>(SESSION_TIMEOUT_KEY));

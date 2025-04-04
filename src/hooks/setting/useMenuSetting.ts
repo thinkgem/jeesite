@@ -53,9 +53,7 @@ export function useMenuSetting() {
 
   const getTopMenuAlign = computed(() => appStore.getMenuSetting.topMenuAlign);
 
-  const getCloseMixSidebarOnChange = computed(
-    () => appStore.getMenuSetting.closeMixSidebarOnChange,
-  );
+  const getCloseMixSidebarOnChange = computed(() => appStore.getMenuSetting.closeMixSidebarOnChange);
 
   const getIsSidebarType = computed(() => unref(getMenuType) === MenuTypeEnum.SIDEBAR);
 
@@ -68,11 +66,7 @@ export function useMenuSetting() {
   });
 
   const getShowHeaderTrigger = computed(() => {
-    if (
-      unref(getMenuType) === MenuTypeEnum.TOP_MENU ||
-      !unref(getShowMenu) ||
-      unref(getMenuHidden)
-    ) {
+    if (unref(getMenuType) === MenuTypeEnum.TOP_MENU || !unref(getShowMenu) || unref(getMenuHidden)) {
       return false;
     }
 
@@ -93,9 +87,7 @@ export function useMenuSetting() {
 
   const getRealWidth = computed(() => {
     if (unref(getIsMixSidebar)) {
-      return unref(getCollapsed) && !unref(getMixSideFixed)
-        ? unref(getMiniWidthNumber)
-        : unref(getMenuWidth);
+      return unref(getCollapsed) && !unref(getMixSideFixed) ? unref(getMiniWidthNumber) : unref(getMenuWidth);
     }
     return unref(getCollapsed) ? unref(getMiniWidthNumber) : unref(getMenuWidth);
   });

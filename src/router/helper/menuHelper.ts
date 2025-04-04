@@ -34,11 +34,7 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
   return menuList[0];
 }
 
-export function transformRouteToMenu(
-  routeModuleList: AppRouteModule[],
-  routerMapping = false,
-  parentPath = '',
-) {
+export function transformRouteToMenu(routeModuleList: AppRouteModule[], routerMapping = false, parentPath = '') {
   const routeList: AppRouteRecordRaw[] = [];
 
   routeModuleList.forEach((node) => {

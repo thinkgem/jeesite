@@ -19,15 +19,7 @@
 
 <script lang="ts">
   import '@wangeditor/editor/dist/css/style.css'; // 引入 css
-  import {
-    defineComponent,
-    computed,
-    watch,
-    onBeforeUnmount,
-    shallowRef,
-    nextTick,
-    onMounted,
-  } from 'vue';
+  import { defineComponent, computed, watch, onBeforeUnmount, shallowRef, nextTick, onMounted } from 'vue';
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
   import { i18nChangeLanguage, IDomEditor } from '@wangeditor/editor';
   import { useDesign } from '/@/hooks/web/useDesign';

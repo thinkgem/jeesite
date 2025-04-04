@@ -15,14 +15,12 @@ export interface Area extends TreeModel<Area> {
   areaType?: string; // 区域类型
 }
 
-export const areaList = (params?: Area | any) =>
-  defHttp.get<Area>({ url: adminPath + '/sys/area/list', params });
+export const areaList = (params?: Area | any) => defHttp.get<Area>({ url: adminPath + '/sys/area/list', params });
 
 export const areaListData = (params?: Area | any) =>
   defHttp.post<Page<Area>>({ url: adminPath + '/sys/area/listPageData', params });
 
-export const areaForm = (params?: Area | any) =>
-  defHttp.get<Area>({ url: adminPath + '/sys/area/form', params });
+export const areaForm = (params?: Area | any) => defHttp.get<Area>({ url: adminPath + '/sys/area/form', params });
 
 export const areaCreateNextNode = (params?: Area | any) =>
   defHttp.get<Area>({ url: adminPath + '/sys/area/createNextNode', params });
@@ -30,14 +28,11 @@ export const areaCreateNextNode = (params?: Area | any) =>
 export const areaSave = (params?: any, data?: Area | any) =>
   defHttp.postJson<Area>({ url: adminPath + '/sys/area/save', params, data });
 
-export const areaDisable = (params?: Area | any) =>
-  defHttp.get<Area>({ url: adminPath + '/sys/area/disable', params });
+export const areaDisable = (params?: Area | any) => defHttp.get<Area>({ url: adminPath + '/sys/area/disable', params });
 
-export const areaEnable = (params?: Area | any) =>
-  defHttp.get<Area>({ url: adminPath + '/sys/area/enable', params });
+export const areaEnable = (params?: Area | any) => defHttp.get<Area>({ url: adminPath + '/sys/area/enable', params });
 
-export const areaDelete = (params?: Area | any) =>
-  defHttp.get<Area>({ url: adminPath + '/sys/area/delete', params });
+export const areaDelete = (params?: Area | any) => defHttp.get<Area>({ url: adminPath + '/sys/area/delete', params });
 
 export const areaTreeData = (params?: any) =>
   defHttp.get<TreeDataModel[]>({ url: adminPath + '/sys/area/treeData', params });

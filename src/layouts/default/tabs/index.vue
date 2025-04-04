@@ -104,9 +104,7 @@
         }
 
         if (isHide) {
-          const findParentRoute = router
-            .getRoutes()
-            .find((item) => item.path === currentActiveMenu);
+          const findParentRoute = router.getRoutes().find((item) => item.path === currentActiveMenu);
 
           findParentRoute && tabStore.addTab(findParentRoute as unknown as RouteLocationNormalized);
         } else {

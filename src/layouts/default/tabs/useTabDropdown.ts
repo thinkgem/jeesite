@@ -47,8 +47,7 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
     const disabled = tabStore.getTabList.length === 1;
 
     // Close right
-    const closeRightDisabled =
-      index === tabStore.getTabList.length - 1 && tabStore.getLastDragEndIndex >= 0;
+    const closeRightDisabled = index === tabStore.getTabList.length - 1 && tabStore.getLastDragEndIndex >= 0;
     const dropMenuList: DropMenu[] = [
       {
         icon: 'i-ant-design:reload-outlined',

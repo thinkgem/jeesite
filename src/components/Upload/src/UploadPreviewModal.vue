@@ -8,12 +8,7 @@
     @register="register"
     :showOkBtn="false"
   >
-    <FileList
-      :dataSource="fileList"
-      :columns="columns"
-      :actionColumn="actionColumn"
-      :readonly="readonly"
-    />
+    <FileList :dataSource="fileList" :columns="columns" :actionColumn="actionColumn" :readonly="readonly" />
   </BasicModal>
 </template>
 <script lang="ts" setup>

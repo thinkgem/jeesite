@@ -41,9 +41,7 @@ export const fakeCodeList: any = {
 export default class UserService {
   async login(ctx) {
     const { username, password } = ctx.request.query;
-    const checkUser = fakeUserList.find(
-      (item) => item.username === username && password === item.password,
-    );
+    const checkUser = fakeUserList.find((item) => item.username === username && password === item.password);
     if (!checkUser) {
       return Result.error('Incorrect account or password！');
     }

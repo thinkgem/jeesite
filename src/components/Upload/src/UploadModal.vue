@@ -84,15 +84,12 @@
 
   const getIsSelectFile = computed(() => {
     return (
-      fileItemList.value.length > 0 &&
-      !fileItemList.value.every((item) => item.status === UploadResultStatus.SUCCESS)
+      fileItemList.value.length > 0 && !fileItemList.value.every((item) => item.status === UploadResultStatus.SUCCESS)
     );
   });
 
   const getOkButtonProps = computed(() => {
-    const someSuccess = fileItemList.value.some(
-      (item) => item.status === UploadResultStatus.SUCCESS,
-    );
+    const someSuccess = fileItemList.value.some((item) => item.status === UploadResultStatus.SUCCESS);
     return {
       disabled: uploading.value || fileItemList.value.length === 0 || !someSuccess,
     };
@@ -239,8 +236,7 @@
     uploading.value = true;
     try {
       // 只上传不是成功状态的
-      const uploadFileList =
-        fileItemList.value.filter((item) => item.status !== UploadResultStatus.SUCCESS) || [];
+      const uploadFileList = fileItemList.value.filter((item) => item.status !== UploadResultStatus.SUCCESS) || [];
       const data = await Promise.all(
         uploadFileList.map((item) => {
           return uploadApiByItem(item);

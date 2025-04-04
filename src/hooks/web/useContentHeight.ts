@@ -50,10 +50,7 @@ export function useContentHeight(
     });
   }
 
-  function calcSubtractSpace(
-    element: Element | null | undefined,
-    direction: 'all' | 'top' | 'bottom' = 'all',
-  ): number {
+  function calcSubtractSpace(element: Element | null | undefined, direction: 'all' | 'top' | 'bottom' = 'all'): number {
     function numberPx(px: string) {
       return Number(px.replace(/[^\d]/g, ''));
     }

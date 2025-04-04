@@ -15,27 +15,17 @@
         />
       </FormItem>
       <FormItem name="loginCode" class="enter-x">
-        <Input
-          size="large"
-          v-model:value="formData.loginCode"
-          :placeholder="t('sys.login.account')"
-        />
+        <Input size="large" v-model:value="formData.loginCode" :placeholder="t('sys.login.account')" />
       </FormItem>
       <FormItem name="validCode" class="enter-x valid-code">
-        <ValidCode
-          size="large"
-          v-model:value="formData.validCode"
-          :refreshTime="validCodeRefreshTime"
-        />
+        <ValidCode size="large" v-model:value="formData.validCode" :refreshTime="validCodeRefreshTime" />
       </FormItem>
       <FormItem name="fpValidCode" class="enter-x" v-if="formData.validType != 'question'">
         <CountdownInput
           size="large"
           class="fix-auto-fill"
           v-model:value="formData.fpValidCode"
-          :placeholder="
-            formData.validType == 'mobile' ? t('sys.login.smsCode') : t('sys.login.emailCode')
-          "
+          :placeholder="formData.validType == 'mobile' ? t('sys.login.smsCode') : t('sys.login.emailCode')"
           :sendCodeApi="handleSendCodeApi"
         />
       </FormItem>
@@ -69,11 +59,7 @@
         />
       </FormItem>
       <FormItem name="password" class="enter-x">
-        <StrengthMeter
-          size="large"
-          v-model:value="formData.password"
-          :placeholder="t('sys.account.newPassword')"
-        />
+        <StrengthMeter size="large" v-model:value="formData.password" :placeholder="t('sys.account.newPassword')" />
       </FormItem>
       <FormItem name="confirmPassword" class="enter-x">
         <Input.Password
@@ -100,12 +86,7 @@
   import { Form, Input, Button } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useLoginState, useFormRules, LoginStateEnum, useFormValid } from './useLogin';
-  import {
-    getFpValidCode,
-    getPwdQuestion,
-    savePwdByPwdQuestion,
-    savePwdByValidCode,
-  } from '/@/api/sys/account';
+  import { getFpValidCode, getPwdQuestion, savePwdByPwdQuestion, savePwdByValidCode } from '/@/api/sys/account';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { CountdownInput } from '/@/components/CountDown';
   import { StrengthMeter } from '/@/components/StrengthMeter';

@@ -59,10 +59,7 @@
       componentProps: {
         maxlength: 100,
       },
-      rules: [
-        { required: true },
-        { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') },
-      ],
+      rules: [{ required: true }, { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') }],
     },
     {
       label: t('区域名称'),

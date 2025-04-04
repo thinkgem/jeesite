@@ -1,12 +1,7 @@
 <template>
   <Drawer v-bind="getBindValues" :closable="false" @close="onClose">
     <template #title v-if="!$slots.title">
-      <DrawerHeader
-        :title="getMergeProps.title"
-        :isDetail="isDetail"
-        :showDetailBack="showDetailBack"
-        @close="onClose"
-      >
+      <DrawerHeader :title="getMergeProps.title" :isDetail="isDetail" :showDetailBack="showDetailBack" @close="onClose">
         <template #titleToolbar>
           <slot name="titleToolbar"></slot>
         </template>
@@ -17,11 +12,7 @@
     </template>
     <template #extra>
       <Tooltip :title="t('component.drawer.cancelText')" placement="bottom">
-        <Icon
-          icon="i-ant-design:close-outlined"
-          class="anticon-close cursor-pointer"
-          @click="onClose"
-        />
+        <Icon icon="i-ant-design:close-outlined" class="anticon-close cursor-pointer" @click="onClose" />
       </Tooltip>
     </template>
     <div v-if="widthResize" class="ew-resize" @mousedown="onMousedown"></div>
@@ -41,16 +32,7 @@
 </template>
 <script lang="ts" setup name="BasicDrawer">
   import type { DrawerInstance, DrawerProps } from './typing';
-  import {
-    ref,
-    computed,
-    watch,
-    unref,
-    toRaw,
-    getCurrentInstance,
-    CSSProperties,
-    watchEffect,
-  } from 'vue';
+  import { ref, computed, watch, unref, toRaw, getCurrentInstance, CSSProperties, watchEffect } from 'vue';
   import { Drawer } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isFunction, isNumber } from '/@/utils/is';

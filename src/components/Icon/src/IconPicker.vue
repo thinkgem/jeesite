@@ -12,19 +12,10 @@
     v-model:value="currentSelect"
   >
     <template #addonAfter>
-      <a-popover
-        placement="bottom"
-        trigger="click"
-        v-model="open"
-        :overlayClassName="`${prefixCls}-popover`"
-      >
+      <a-popover placement="bottom" trigger="click" v-model="open" :overlayClassName="`${prefixCls}-popover`">
         <template #title>
           <div class="flex justify-between">
-            <a-input
-              :placeholder="t('component.icon.search')"
-              @change="debounceHandleSearchChange"
-              allowClear
-            />
+            <a-input :placeholder="t('component.icon.search')" @change="debounceHandleSearchChange" allowClear />
           </div>
         </template>
         <template #content>
@@ -114,10 +105,7 @@
   const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
   const { createMessage } = useMessage();
 
-  const { getPaginationList, getTotal, setCurrentPage } = usePagination(
-    currentList,
-    props.pageSize,
-  );
+  const { getPaginationList, getTotal, setCurrentPage } = usePagination(currentList, props.pageSize);
 
   watchEffect(() => {
     currentSelect.value = props.value;
