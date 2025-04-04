@@ -30,11 +30,9 @@ export interface Log extends BasicModel<Log> {
   executeTime?: number; // 响应时间
 }
 
-export const logList = (params?: Log | any) =>
-  defHttp.get<Log>({ url: adminPath + '/sys/log/list', params });
+export const logList = (params?: Log | any) => defHttp.get<Log>({ url: adminPath + '/sys/log/list', params });
 
 export const logListData = (params?: Log | any) =>
   defHttp.post<Page<Log>>({ url: adminPath + '/sys/log/listData', params });
 
-export const logForm = (params?: Log | any) =>
-  defHttp.get<Log>({ url: adminPath + '/sys/log/form', params });
+export const logForm = (params?: Log | any) => defHttp.get<Log>({ url: adminPath + '/sys/log/form', params });

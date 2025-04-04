@@ -5,13 +5,7 @@
 -->
 <template>
   <div :class="getClass" ref="wrapperRef">
-    <PageHeader
-      ref="headerRef"
-      v-if="getShowHeader"
-      v-bind="omit($attrs, 'class')"
-      :ghost="ghost"
-      :title="title"
-    >
+    <PageHeader ref="headerRef" v-if="getShowHeader" v-bind="omit($attrs, 'class')" :ghost="ghost" :title="title">
       <template #title v-if="$slots.headerTitle">
         <slot name="headerTitle"></slot>
       </template>
@@ -79,11 +73,7 @@
           @breakpoint="onBreakpointRight"
         >
           <template v-if="!sidebarResizerRight">
-            <div
-              class="sidebar-close right"
-              v-if="!collapsedRight"
-              @click="collapsedRight = !collapsedRight"
-            >
+            <div class="sidebar-close right" v-if="!collapsedRight" @click="collapsedRight = !collapsedRight">
               <Icon icon="i-fa:angle-right" />
             </div>
             <div class="sidebar-open right" v-else @click="collapsedRight = !collapsedRight">
@@ -213,8 +203,7 @@
 
   const getShowHeader = computed(
     () =>
-      props.title !== 'false' &&
-      (props.content || slots.headerContent || props.title || getHeaderSlots.value.length),
+      props.title !== 'false' && (props.content || slots.headerContent || props.title || getHeaderSlots.value.length),
   );
 
   const getShowFooter = computed(() => slots?.leftFooter || slots?.rightFooter);

@@ -63,12 +63,7 @@
 
       const { currentRoute } = useRouter();
 
-      const { handleOpenChange, setOpenKeys, getOpenKeys } = useOpenKeys(
-        menuState,
-        items,
-        mode as any,
-        accordion,
-      );
+      const { handleOpenChange, setOpenKeys, getOpenKeys } = useOpenKeys(menuState, items, mode as any, accordion);
 
       const getIsTopMenu = computed(() => {
         const { type, mode } = props;

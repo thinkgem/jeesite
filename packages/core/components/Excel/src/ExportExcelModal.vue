@@ -1,16 +1,6 @@
 <template>
-  <BasicModal
-    v-bind="$attrs"
-    :title="t('component.excel.exportModalTitle')"
-    @ok="handleOk"
-    @register="registerModal"
-  >
-    <BasicForm
-      :labelWidth="100"
-      :schemas="schemas"
-      :showActionButtonGroup="false"
-      @register="registerForm"
-    />
+  <BasicModal v-bind="$attrs" :title="t('component.excel.exportModalTitle')" @ok="handleOk" @register="registerModal">
+    <BasicForm :labelWidth="100" :schemas="schemas" :showActionButtonGroup="false" @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts">

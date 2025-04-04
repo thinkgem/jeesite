@@ -19,23 +19,14 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <template #centerFooter>
-      <a-button
-        color="success"
-        v-if="!record.status || record.status == '9'"
-        @click="handleSubmit('9')"
-      >
+      <a-button color="success" v-if="!record.status || record.status == '9'" @click="handleSubmit('9')">
         <Icon icon="i-ant-design:save-outlined" />
         {{ t('草稿') }}
       </a-button>
     </template>
     <BasicForm @register="registerForm">
       <template #msgContent="{ model, field }">
-        <WangEditor
-          v-model:value="model[field]"
-          :bizKey="record.id"
-          :bizType="'msgInner_' + field"
-          :height="300"
-        />
+        <WangEditor v-model:value="model[field]" :bizKey="record.id" :bizType="'msgInner_' + field" :height="300" />
       </template>
       <template #receiveCodes="{ model }">
         <Form.ItemRest>
@@ -249,11 +240,7 @@
     const res = await msgInnerForm(data);
     record.value = (res.msgInner || {}) as MsgInner;
     record.value.__t = new Date().getTime();
-    onReceiversChange(
-      record.value.receiveType,
-      record.value.receiveCodes,
-      record.value.receiveNames,
-    );
+    onReceiversChange(record.value.receiveType, record.value.receiveCodes, record.value.receiveNames);
     setFieldsValue(record.value);
     setDrawerProps({ loading: false });
   });

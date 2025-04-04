@@ -94,9 +94,7 @@
       const menuDataScope = await menuDataScopeRef.value?.getDataScopeFormData();
       const params: any = {
         ...omit(roleDataScope, ['roleDataScopeList']),
-        roleDataScopeListJson: JSON.stringify(
-          roleDataScope.roleDataScopeList.concat(menuDataScope.roleDataScopeList),
-        ),
+        roleDataScopeListJson: JSON.stringify(roleDataScope.roleDataScopeList.concat(menuDataScope.roleDataScopeList)),
         menuDataScopeListJson: JSON.stringify(menuDataScope.menuDataScopeList),
         isNewRecord: record.value.isNewRecord,
         roleCode: record.value.roleCode,

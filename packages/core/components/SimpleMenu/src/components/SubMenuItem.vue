@@ -3,11 +3,7 @@
     <template v-if="!getCollapse">
       <div :class="`${prefixCls}-submenu-title`" @click.stop="handleClick" :style="getItemStyle">
         <slot name="title"></slot>
-        <Icon
-          icon="i-eva:arrow-ios-downward-outline"
-          :size="14"
-          :class="`${prefixCls}-submenu-title-icon`"
-        />
+        <Icon icon="i-eva:arrow-ios-downward-outline" :size="14" :class="`${prefixCls}-submenu-title-icon`" />
       </div>
       <CollapseTransition>
         <ul :class="prefixCls" v-show="opened">
@@ -112,8 +108,7 @@
         isChild: false,
       });
 
-      const { getParentSubMenu, getItemStyle, getParentMenu, getParentList } =
-        useMenuItem(instance);
+      const { getParentSubMenu, getItemStyle, getParentMenu, getParentList } = useMenuItem(instance);
 
       const { prefixCls } = useDesign('menu');
 
@@ -268,29 +263,26 @@
           clearTimeout(data.timeout!);
         });
 
-        rootMenuEmitter.on(
-          'on-update-opened',
-          (data: boolean | (string | number)[] | Recordable) => {
-            if (unref(getCollapse)) return;
-            if (isBoolean(data)) {
-              state.opened = data;
-              return;
+        rootMenuEmitter.on('on-update-opened', (data: boolean | (string | number)[] | Recordable) => {
+          if (unref(getCollapse)) return;
+          if (isBoolean(data)) {
+            state.opened = data;
+            return;
+          }
+          if (isObject(data) && rootProps.accordion) {
+            const { opend, parent, uidList } = data as Recordable;
+            if (parent === instance?.parent) {
+              state.opened = opend;
+            } else if (!uidList.includes(instance?.uid)) {
+              state.opened = false;
             }
-            if (isObject(data) && rootProps.accordion) {
-              const { opend, parent, uidList } = data as Recordable;
-              if (parent === instance?.parent) {
-                state.opened = opend;
-              } else if (!uidList.includes(instance?.uid)) {
-                state.opened = false;
-              }
-              return;
-            }
+            return;
+          }
 
-            if (props.name && Array.isArray(data)) {
-              state.opened = (data as (string | number)[]).includes(props.name);
-            }
-          },
-        );
+          if (props.name && Array.isArray(data)) {
+            state.opened = (data as (string | number)[]).includes(props.name);
+          }
+        });
 
         rootMenuEmitter.on('on-update-active-name:submenu', (data: number[]) => {
           if (instance?.uid) {

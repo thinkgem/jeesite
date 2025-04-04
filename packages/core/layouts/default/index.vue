@@ -34,12 +34,8 @@
   export default defineComponent({
     name: 'DefaultLayout',
     components: {
-      LayoutFeatures: createAsyncComponent(
-        () => import('@jeesite/core/layouts/default/feature/index.vue'),
-      ),
-      LayoutFooter: createAsyncComponent(
-        () => import('@jeesite/core/layouts/default/footer/index.vue'),
-      ),
+      LayoutFeatures: createAsyncComponent(() => import('@jeesite/core/layouts/default/feature/index.vue')),
+      LayoutFooter: createAsyncComponent(() => import('@jeesite/core/layouts/default/footer/index.vue')),
       LayoutHeader,
       LayoutContent,
       LayoutSideBar,

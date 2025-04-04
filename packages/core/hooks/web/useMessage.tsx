@@ -130,8 +130,7 @@ function contains(str, searchs) {
 function showMessageModal(options: ModalOptionsPartial, type?: string) {
   const { t } = useI18n();
   if (typeof options.content === 'string' && options.content.startsWith('posfull:')) {
-    options.content =
-      '<div class="modal-posfull-content">' + options.content.substring(8) + '</div>';
+    options.content = '<div class="modal-posfull-content">' + options.content.substring(8) + '</div>';
     options.width = '80%';
   }
   if (type === 'error' || contains(options.content, t('sys.message.error'))) {

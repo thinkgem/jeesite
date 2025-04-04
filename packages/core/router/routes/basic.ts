@@ -1,11 +1,6 @@
 import type { AppRouteRecordRaw } from '@jeesite/core/router/types';
 import { t } from '@jeesite/core/hooks/web/useI18n';
-import {
-  REDIRECT_NAME,
-  LAYOUT,
-  EXCEPTION_COMPONENT,
-  PAGE_NOT_FOUND_NAME,
-} from '@jeesite/core/router/constant';
+import { REDIRECT_NAME, LAYOUT, EXCEPTION_COMPONENT, PAGE_NOT_FOUND_NAME } from '@jeesite/core/router/constant';
 
 // 404 on a page
 export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {

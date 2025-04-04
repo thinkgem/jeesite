@@ -5,12 +5,7 @@ import { useRouter } from 'vue-router';
 import { MenuSplitTyeEnum } from '@jeesite/core/enums/menuEnum';
 import { useThrottleFn } from '@vueuse/core';
 import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
-import {
-  getChildrenMenus,
-  getCurrentParentPath,
-  getMenus,
-  getShallowMenus,
-} from '@jeesite/core/router/menus';
+import { getChildrenMenus, getCurrentParentPath, getMenus, getShallowMenus } from '@jeesite/core/router/menus';
 import { usePermissionStore } from '@jeesite/core/store/modules/permission';
 import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
 
@@ -24,13 +19,9 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   const throttleHandleSplitLeftMenu = useThrottleFn(handleSplitLeftMenu, 50);
 
-  const getSplitNotLeft = computed(
-    () => unref(splitType) !== MenuSplitTyeEnum.LEFT && unref(getSplit),
-  );
+  const getSplitNotLeft = computed(() => unref(splitType) !== MenuSplitTyeEnum.LEFT && unref(getSplit));
 
-  const getSplitLeft = computed(
-    () => !unref(getSplit) || unref(splitType) !== MenuSplitTyeEnum.LEFT,
-  );
+  const getSplitLeft = computed(() => !unref(getSplit) || unref(splitType) !== MenuSplitTyeEnum.LEFT);
 
   const getSpiltTop = computed(() => unref(splitType) === MenuSplitTyeEnum.TOP);
 

@@ -4,13 +4,7 @@
  * @author ThinkGem
 -->
 <template>
-  <BasicDrawer
-    v-bind="$attrs"
-    :showFooter="true"
-    :showOkBtn="false"
-    @register="registerDrawer"
-    width="80%"
-  >
+  <BasicDrawer v-bind="$attrs" :showFooter="true" :showOkBtn="false" @register="registerDrawer" width="80%">
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>

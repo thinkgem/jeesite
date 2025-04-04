@@ -21,10 +21,7 @@
         </a>
       </template>
       <template #corpColumn="{ record }">
-        <a
-          @click="reload({ searchInfo: { corpCode_: record.corpCode_ } })"
-          :title="record.corpCode_"
-        >
+        <a @click="reload({ searchInfo: { corpCode_: record.corpCode_ } })" :title="record.corpCode_">
           {{ record.corpCode_ }}
         </a>
       </template>
@@ -39,16 +36,8 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import {
-    corpAdminDelete,
-    corpAdminListData,
-    corpAdminList,
-  } from '@jeesite/core/api/sys/corpAdmin';
-  import {
-    corpAdminResetpwd,
-    corpAdminDisable,
-    corpAdminEnable,
-  } from '@jeesite/core/api/sys/corpAdmin';
+  import { corpAdminDelete, corpAdminListData, corpAdminList } from '@jeesite/core/api/sys/corpAdmin';
+  import { corpAdminResetpwd, corpAdminDisable, corpAdminEnable } from '@jeesite/core/api/sys/corpAdmin';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
   import InputForm from './form.vue';

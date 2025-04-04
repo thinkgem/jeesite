@@ -17,9 +17,7 @@
       </template>
       <template #action="{ record }">
         <TableAction
-          :actions="[
-            { label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) },
-          ]"
+          :actions="[{ label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) }]"
         />
       </template>
     </BasicTable>

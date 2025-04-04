@@ -64,14 +64,7 @@
   import vClickOutside from '@jeesite/core/directives/clickOutsideSimple';
 
   import { propTypes } from '@jeesite/core/utils/propTypes';
-  import {
-    isArray,
-    isBoolean,
-    isDef,
-    isFunction,
-    isNumber,
-    isObject,
-  } from '@jeesite/core/utils/is';
+  import { isArray, isBoolean, isDef, isFunction, isNumber, isObject } from '@jeesite/core/utils/is';
   import { createPlaceholderMessage } from './helper';
   import { omit, pick, set } from 'lodash-es';
   // import { treeToList } from '@jeesite/core/utils/helper/treeHelper';
@@ -126,9 +119,7 @@
 
   const getIsDateComp = computed(() => {
     const component = unref(getComponent);
-    return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(
-      component,
-    );
+    return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(component);
   });
 
   const getEditComponentProps = computed(() => {
@@ -183,13 +174,7 @@
       return labelValue;
     }
     if (props.column?.format && isDef(value)) {
-      return formatCell(
-        value,
-        props.column.format,
-        props.record as Recordable,
-        props.index,
-        props.column,
-      );
+      return formatCell(value, props.column.format, props.record as Recordable, props.index, props.column);
     }
     if (typeof value == 'object') {
       return '\u00A0';
@@ -337,9 +322,7 @@
 
       if (beforeEditSubmit && isFunction(beforeEditSubmit)) {
         spinning.value = true;
-        const keys: string[] = columns
-          .map((_column) => _column.dataIndex)
-          .filter((field) => !!field) as string[];
+        const keys: string[] = columns.map((_column) => _column.dataIndex).filter((field) => !!field) as string[];
         let result: any = true;
         try {
           result = await beforeEditSubmit({

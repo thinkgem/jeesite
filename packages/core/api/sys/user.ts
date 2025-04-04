@@ -52,11 +52,9 @@ export const checkLoginCode = (oldLoginCode: string, loginCode: string) =>
     params: { oldLoginCode, loginCode },
   });
 
-export const userInfo = (params?: any) =>
-  defHttp.post<User>({ url: adminPath + '/sys/user/info', params });
+export const userInfo = (params?: any) => defHttp.post<User>({ url: adminPath + '/sys/user/info', params });
 
-export const infoSaveBase = (params?: any) =>
-  defHttp.post<User>({ url: adminPath + '/sys/user/infoSaveBase', params });
+export const infoSaveBase = (params?: any) => defHttp.post<User>({ url: adminPath + '/sys/user/infoSaveBase', params });
 
 export const infoSavePwd = (params?: any) => {
   params.oldPassword = encryptByBase64(params.oldPassword);

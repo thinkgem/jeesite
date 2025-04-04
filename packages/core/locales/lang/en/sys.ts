@@ -57,8 +57,7 @@ export default {
     subTitle500: 'Sorry, the server is reporting an error.',
     noDataTitle: 'No data on the current page.',
     networkErrorTitle: 'Network Error',
-    networkErrorSubTitle:
-      'Sorry，Your network connection has been disconnected, please check your network!',
+    networkErrorSubTitle: 'Sorry，Your network connection has been disconnected, please check your network!',
   },
   lock: {
     unlock: 'Click to unlock',

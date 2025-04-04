@@ -1,10 +1,6 @@
 <template>
   <div class="jeesite-resizer" :style="getWrapStyleRef" @mousedown="onMouseDown">
-    <div
-      class="resiezer-toggler"
-      :title="`${t('common.hideText')}/${t('common.showText')}`"
-      @click="toggle"
-    >
+    <div class="resiezer-toggler" :title="`${t('common.hideText')}/${t('common.showText')}`" @click="toggle">
       <span class="resizer-content">
         <slot v-if="$slots.default"></slot>
         <span v-else>

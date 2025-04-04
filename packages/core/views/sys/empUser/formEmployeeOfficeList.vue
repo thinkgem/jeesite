@@ -80,11 +80,7 @@
     return tableList;
   }
 
-  async function setTableData(
-    data: Recordable,
-    ctrlPermi: Ref<string>,
-    postListOptions: Recordable,
-  ) {
+  async function setTableData(data: Recordable, ctrlPermi: Ref<string>, postListOptions: Recordable) {
     tableAction.setColumns([
       {
         title: t('附属机构'),

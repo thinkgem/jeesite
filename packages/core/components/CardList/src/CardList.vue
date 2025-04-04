@@ -15,12 +15,7 @@
             <Tooltip>
               <template #title>
                 <div class="w-50">每行显示数量</div>
-                <Slider
-                  id="slider"
-                  v-bind="sliderProp"
-                  v-model:value="grid"
-                  @change="sliderChange"
-                />
+                <Slider id="slider" v-bind="sliderProp" v-model:value="grid" @change="sliderChange" />
               </template>
               <a-button><TableOutlined /></a-button>
             </Tooltip>
@@ -77,12 +72,7 @@
 </template>
 <script lang="ts" setup>
   import { computed, onMounted, ref } from 'vue';
-  import {
-    EditOutlined,
-    EllipsisOutlined,
-    RedoOutlined,
-    TableOutlined,
-  } from '@ant-design/icons-vue';
+  import { EditOutlined, EllipsisOutlined, RedoOutlined, TableOutlined } from '@ant-design/icons-vue';
   import { List, Card, Image, Typography, Tooltip, Slider, Avatar } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Dropdown } from '@jeesite/core/components/Dropdown';

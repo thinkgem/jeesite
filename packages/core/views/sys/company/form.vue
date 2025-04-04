@@ -27,12 +27,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    Company,
-    companySave,
-    companyForm,
-    companyTreeData,
-  } from '@jeesite/core/api/sys/company';
+  import { Company, companySave, companyForm, companyTreeData } from '@jeesite/core/api/sys/company';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { areaTreeData } from '@jeesite/core/api/sys/area';
 
@@ -79,10 +74,7 @@
       componentProps: {
         maxlength: 64,
       },
-      rules: [
-        { required: true },
-        { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') },
-      ],
+      rules: [{ required: true }, { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') }],
     },
     {
       label: t('公司全称'),

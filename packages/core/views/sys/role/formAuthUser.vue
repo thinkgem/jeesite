@@ -44,12 +44,7 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    BasicTable,
-    BasicColumn,
-    useTable,
-    TableRowSelection,
-  } from '@jeesite/core/components/Table';
+  import { BasicTable, BasicColumn, useTable, TableRowSelection } from '@jeesite/core/components/Table';
   import { FormProps } from '@jeesite/core/components/Form';
   import { ListSelect } from '@jeesite/core/components/ListSelect';
   import { formAuthUser, saveAuthUser, deleteAuthUser } from '@jeesite/core/api/sys/role';

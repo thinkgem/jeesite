@@ -11,13 +11,7 @@ import { deepMerge } from '@jeesite/core/utils';
 import { error } from '@jeesite/core/utils/log';
 import { cloneDeep, isEqual, uniqBy } from 'lodash-es';
 import { formatToDate } from '@jeesite/core/utils/dateUtil';
-import {
-  ACTION_COLUMN_FLAG,
-  DEFAULT_ALIGN,
-  INDEX_COLUMN_FLAG,
-  DRAG_COLUMN_FLAG,
-  PAGE_SIZE,
-} from '../const';
+import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, DRAG_COLUMN_FLAG, PAGE_SIZE } from '../const';
 import { Icon } from '@jeesite/core/components/Icon';
 
 function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
@@ -70,11 +64,7 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
   }
 }
 
-function handleChildren(
-  children: BasicColumn[] | undefined,
-  ellipsis: boolean,
-  dictTypes: Set<string>,
-) {
+function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean, dictTypes: Set<string>) {
   if (!children) return;
   children.forEach((item) => {
     const { children } = item;
@@ -198,9 +188,7 @@ export function useColumns(
       handleItem(
         item,
         // Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
-        Reflect.has(item, 'ellipsis')
-          ? !!item.ellipsis
-          : !!ellipsis && item.dataIndex !== 'actions', // 自定义渲染列应和非自定义的省略条件一样
+        Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && item.dataIndex !== 'actions', // 自定义渲染列应和非自定义的省略条件一样
         dictTypes,
       );
     });
@@ -317,10 +305,7 @@ export function useColumns(
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {
-          return (
-            columnKeys.indexOf(prev.dataIndex_ as string) -
-            columnKeys.indexOf(next.dataIndex_ as string)
-          );
+          return columnKeys.indexOf(prev.dataIndex_ as string) - columnKeys.indexOf(next.dataIndex_ as string);
         });
       }
       columnsRef.value = newColumns;
@@ -335,9 +320,7 @@ export function useColumns(
     if (isArray(data)) {
       updateData = [...data];
     }
-    const hasDataIndex = updateData.every(
-      (item) => Reflect.has(item, 'dataIndex') && item.dataIndex,
-    );
+    const hasDataIndex = updateData.every((item) => Reflect.has(item, 'dataIndex') && item.dataIndex);
     if (!hasDataIndex) {
       error('必须包含 dataIndex 字段。');
       return;
@@ -403,19 +386,11 @@ function sortFixedColumn(columns: BasicColumn[]) {
     }
     defColumns.push(column);
   }
-  return [...fixedLeftColumns, ...defColumns, ...fixedRightColumns].filter(
-    (item) => !item.defaultHidden,
-  );
+  return [...fixedLeftColumns, ...defColumns, ...fixedRightColumns].filter((item) => !item.defaultHidden);
 }
 
 // format cell
-export function formatCell(
-  text: string,
-  format: CellFormat,
-  record: Recordable,
-  index: number,
-  column: BasicColumn,
-) {
+export function formatCell(text: string, format: CellFormat, record: Recordable, index: number, column: BasicColumn) {
   if (!format) {
     return text;
   }

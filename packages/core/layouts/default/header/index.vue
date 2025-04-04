@@ -10,9 +10,7 @@
         :style="getLogoWidth"
       />
       <LayoutTrigger
-        v-if="
-          (getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar) || getIsMobile
-        "
+        v-if="(getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar) || getIsMobile"
         :theme="getHeaderTheme"
         :sider="false"
       />
@@ -22,12 +20,7 @@
 
     <!-- menu start -->
     <div :class="`${prefixCls}-menu`" v-if="getIsInitMenu && getShowTopMenu && !getIsMobile">
-      <LayoutMenu
-        :isHorizontal="true"
-        :theme="getHeaderTheme"
-        :splitType="getSplitType"
-        :menuMode="getMenuMode"
-      />
+      <LayoutMenu :isHorizontal="true" :theme="getHeaderTheme" :splitType="getSplitType" :menuMode="getMenuMode" />
     </div>
     <!-- menu-end -->
 
@@ -106,16 +99,9 @@
           getIsInitMenu.value = true;
         }, 100);
       });
-      const {
-        getShowTopMenu,
-        getShowHeaderTrigger,
-        getSplit,
-        getIsMixMode,
-        getMenuWidth,
-        getIsMixSidebar,
-      } = useMenuSetting();
-      const { getUseErrorHandle, getShowSettingButton, getSettingButtonPosition } =
-        useRootSetting();
+      const { getShowTopMenu, getShowHeaderTrigger, getSplit, getIsMixMode, getMenuWidth, getIsMixSidebar } =
+        useMenuSetting();
+      const { getUseErrorHandle, getShowSettingButton, getSettingButtonPosition } = useRootSetting();
 
       const {
         getHeaderTheme,
@@ -147,9 +133,7 @@
       const getUseCorpModel = computed(() => {
         const userStore = useUserStore();
         const { hasPermission } = usePermission();
-        return (
-          userStore.getPageCacheByKey('useCorpModel', false) && hasPermission('sys:corpAdmin:edit')
-        );
+        return userStore.getPageCacheByKey('useCorpModel', false) && hasPermission('sys:corpAdmin:edit');
       });
 
       const getShowSetting = computed(() => {

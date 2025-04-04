@@ -144,10 +144,7 @@ export interface FormSchema {
   // 辅助标签名，使用浅色显示在标签右侧
   subLabel?: string;
   // 帮助信息，显示在标签右侧的问号里
-  helpMessage?:
-    | string
-    | string[]
-    | ((renderCallbackParams: RenderCallbackParams) => string | string[]);
+  helpMessage?: string | string[] | ((renderCallbackParams: RenderCallbackParams) => string | string[]);
   // BaseHelp component props
   helpComponentProps?: Partial<HelpComponentProps>;
   // Label width, if it is passed, the labelCol and WrapperCol configured by itemProps will be invalid
@@ -169,12 +166,7 @@ export interface FormSchema {
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
 
   // 组件后缀
-  suffix?:
-    | string
-    | number
-    | VNode
-    | VNode[]
-    | ((values: RenderCallbackParams) => string | number | VNode | VNode[]);
+  suffix?: string | number | VNode | VNode[] | ((values: RenderCallbackParams) => string | number | VNode | VNode[]);
 
   // Validation rules
   rules?: Rule[];
@@ -206,11 +198,7 @@ export interface FormSchema {
   // Rendering col content requires outer wrapper form-item
   renderColContent?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
 
-  renderComponentContent?:
-    | ((renderCallbackParams: RenderCallbackParams) => any)
-    | VNode
-    | VNode[]
-    | string;
+  renderComponentContent?: ((renderCallbackParams: RenderCallbackParams) => any) | VNode | VNode[] | string;
 
   // Custom slot, in from-item
   slot?: string;

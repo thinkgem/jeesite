@@ -1,12 +1,5 @@
 <template>
-  <transition-group
-    class="h-full w-full"
-    v-bind="$attrs"
-    ref="elRef"
-    :name="transitionName"
-    :tag="tag"
-    mode="out-in"
-  >
+  <transition-group class="h-full w-full" v-bind="$attrs" ref="elRef" :name="transitionName" :tag="tag" mode="out-in">
     <div key="component" v-if="isInit">
       <slot :loading="loading"></slot>
     </div>

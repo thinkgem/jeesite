@@ -171,11 +171,7 @@
       if (codesArr && namesArr && codesArr.length == namesArr.length) {
         for (var i = 0; i < codesArr.length; i++) {
           const json =
-            '{' +
-            keysToJsonPart(itemCode.value, codesArr[i]) +
-            ',' +
-            keysToJsonPart(itemName.value, namesArr[i]) +
-            '}';
+            '{' + keysToJsonPart(itemCode.value, codesArr[i]) + ',' + keysToJsonPart(itemName.value, namesArr[i]) + '}';
           selectList.push(JSON.parse(json));
         }
       }

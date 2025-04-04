@@ -20,10 +20,7 @@
       <template #menuTrees>
         <div class="flex flex-row flex-wrap">
           <template v-for="item in sysCodeRef" :key="item.id">
-            <div
-              class="mb-5 mr-5"
-              v-show="sysCodesRef.length == 0 || sysCodesRef.includes(item.value)"
-            >
+            <div class="mb-5 mr-5" v-show="sysCodesRef.length == 0 || sysCodesRef.includes(item.value)">
               <BasicTree
                 class="bg-gray"
                 style="width: 500px"
@@ -52,13 +49,7 @@
   import { BasicTree, TreeActionType } from '@jeesite/core/components/Tree';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    Role,
-    roleSave,
-    checkRoleName,
-    roleForm,
-    roleMenuTreeData,
-  } from '@jeesite/core/api/sys/role';
+  import { Role, roleSave, checkRoleName, roleForm, roleMenuTreeData } from '@jeesite/core/api/sys/role';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -68,11 +59,7 @@
   const record = ref<Role>({} as Role);
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
-    value: record.value.isNewRecord
-      ? t('新增角色')
-      : op.value === 'auth'
-        ? t('授权菜单')
-        : t('编辑角色'),
+    value: record.value.isNewRecord ? t('新增角色') : op.value === 'auth' ? t('授权菜单') : t('编辑角色'),
   }));
   const op = ref<string>('');
   const sysCodeRef = ref<Array<Recordable>>([]);

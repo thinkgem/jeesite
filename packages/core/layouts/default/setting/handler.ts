@@ -1,8 +1,5 @@
 import { HandlerEnum } from './enum';
-import {
-  updateHeaderBgColor,
-  updateSidebarBgColor,
-} from '@jeesite/core/logics/theme/updateBackground';
+import { updateHeaderBgColor, updateSidebarBgColor } from '@jeesite/core/logics/theme/updateBackground';
 import { updateColorWeak } from '@jeesite/core/logics/theme/updateColorWeak';
 import { updateGrayMode } from '@jeesite/core/logics/theme/updateGrayMode';
 
@@ -25,9 +22,7 @@ export function baseHandler(event: HandlerEnum, value: any) {
   const { getDarkMode } = useRootSetting();
   if (
     getDarkMode.value === ThemeEnum.DARK &&
-    (event === HandlerEnum.MENU_THEME ||
-      event === HandlerEnum.HEADER_THEME ||
-      event === HandlerEnum.CHANGE_THEME_COLOR)
+    (event === HandlerEnum.MENU_THEME || event === HandlerEnum.HEADER_THEME || event === HandlerEnum.CHANGE_THEME_COLOR)
   ) {
     const { showMessage } = useMessage();
     const { t } = useI18n();

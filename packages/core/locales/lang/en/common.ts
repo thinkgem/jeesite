@@ -24,8 +24,7 @@ export default {
   dark: 'Dark',
 
   notYetRealized: 'Not yet realized',
-  validateError:
-    'The information you have filled in is incorrect, please correct it according to the prompt.',
+  validateError: 'The information you have filled in is incorrect, please correct it according to the prompt.',
 
   settingsSave: 'Your Settings have cached locally',
   settingsReset: 'Your Settings have been reset',

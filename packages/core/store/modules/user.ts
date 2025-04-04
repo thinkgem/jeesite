@@ -9,20 +9,9 @@ import { defineStore } from 'pinia';
 import { store } from '@jeesite/core/store';
 import { RoleEnum } from '@jeesite/core/enums/roleEnum';
 import { PageEnum } from '@jeesite/core/enums/pageEnum';
-import {
-  TOKEN_KEY,
-  ROLES_KEY,
-  USER_INFO_KEY,
-  SESSION_TIMEOUT_KEY,
-} from '@jeesite/core/enums/cacheEnum';
+import { TOKEN_KEY, ROLES_KEY, USER_INFO_KEY, SESSION_TIMEOUT_KEY } from '@jeesite/core/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '@jeesite/core/utils/auth';
-import {
-  loginApi,
-  logoutApi,
-  userInfoApi,
-  LoginParams,
-  LoginResult,
-} from '@jeesite/core/api/sys/login';
+import { loginApi, logoutApi, userInfoApi, LoginParams, LoginResult } from '@jeesite/core/api/sys/login';
 // import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { useMessage } from '@jeesite/core/hooks/web/useMessage';
 import { router } from '@jeesite/core/router';
@@ -71,9 +60,7 @@ export const useUserStore = defineStore({
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(): RoleEnum[] | string[] {
-      return this.roleList.length > 0
-        ? this.roleList
-        : getAuthCache<RoleEnum[] | string[]>(ROLES_KEY);
+      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[] | string[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!(this.sessionTimeout || getAuthCache<boolean>(SESSION_TIMEOUT_KEY));

@@ -5,11 +5,7 @@
 -->
 <template>
   <div class="jeesite-collapse-form-page">
-    <ScrollContainer
-      ref="contentRef"
-      :style="{ height: contentHeight + 'px' }"
-      v-loading="props.loading"
-    >
+    <ScrollContainer ref="contentRef" :style="{ height: contentHeight + 'px' }" v-loading="props.loading">
       <div v-for="item in configList" :key="item.value">
         <Collapse
           :class="item.value"
@@ -64,8 +60,7 @@
     const parentElement = contentRef.value?.$el.parentElement;
     const actionsElement = parentElement?.querySelector('.jeesite-collapse-form-actions');
     if (parentElement && actionsElement) {
-      contentHeight.value =
-        document.body.clientHeight - headerHeightRef.value - actionsElement.scrollHeight - 32;
+      contentHeight.value = document.body.clientHeight - headerHeightRef.value - actionsElement.scrollHeight - 32;
     }
   }
 

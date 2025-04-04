@@ -10,10 +10,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
-  import {
-    updateHeaderBgColor,
-    updateSidebarBgColor,
-  } from '@jeesite/core/logics/theme/updateBackground';
+  import { updateHeaderBgColor, updateSidebarBgColor } from '@jeesite/core/logics/theme/updateBackground';
   import { updateDarkTheme } from '@jeesite/core/logics/theme/dark';
   import { ThemeEnum } from '@jeesite/core/enums/appEnum';
 

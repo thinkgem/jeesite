@@ -6,10 +6,7 @@ import type { ProjectConfig } from '@jeesite/types/config';
 import { PROJ_CFG_KEY } from '@jeesite/core/enums/cacheEnum';
 import projectSetting from '@jeesite/core/settings/projectSetting';
 
-import {
-  updateHeaderBgColor,
-  updateSidebarBgColor,
-} from '@jeesite/core/logics/theme/updateBackground';
+import { updateHeaderBgColor, updateSidebarBgColor } from '@jeesite/core/logics/theme/updateBackground';
 import { updateColorWeak } from '@jeesite/core/logics/theme/updateColorWeak';
 import { updateGrayMode } from '@jeesite/core/logics/theme/updateGrayMode';
 import { updateDarkTheme } from '@jeesite/core/logics/theme/dark';

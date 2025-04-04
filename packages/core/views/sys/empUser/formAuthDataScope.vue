@@ -32,11 +32,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    formAuthDataScope,
-    ctrlDataTreeData,
-    saveAuthDataScope,
-  } from '@jeesite/core/api/sys/empUser';
+  import { formAuthDataScope, ctrlDataTreeData, saveAuthDataScope } from '@jeesite/core/api/sys/empUser';
   import CustomDataScope from '../role/components/CustomDataScope.vue';
 
   const emit = defineEmits(['success', 'register']);

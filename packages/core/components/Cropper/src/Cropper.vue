@@ -1,13 +1,6 @@
 <template>
   <div :class="getClass" :style="getWrapperStyle">
-    <img
-      v-show="isReady"
-      ref="imgElRef"
-      :src="src"
-      :alt="alt"
-      :crossorigin="crossorigin"
-      :style="getImageStyle"
-    />
+    <img v-show="isReady" ref="imgElRef" :src="src" :alt="alt" :crossorigin="crossorigin" :style="getImageStyle" />
   </div>
 </template>
 <script lang="ts">

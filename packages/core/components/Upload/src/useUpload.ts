@@ -26,11 +26,7 @@ export function useUploadType({
     imageAllowSuffixes.value = params.imageAllowSuffixes.split(',');
     mediaAllowSuffixes.value = params.mediaAllowSuffixes.split(',');
     fileAllowSuffixes.value = params.fileAllowSuffixes.split(',');
-    allowSuffixes.value = [
-      ...unref(imageAllowSuffixes),
-      ...unref(mediaAllowSuffixes),
-      ...unref(fileAllowSuffixes),
-    ];
+    allowSuffixes.value = [...unref(imageAllowSuffixes), ...unref(mediaAllowSuffixes), ...unref(fileAllowSuffixes)];
   });
 
   // 文件类型限制

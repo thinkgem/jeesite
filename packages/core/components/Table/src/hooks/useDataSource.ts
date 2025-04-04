@@ -5,17 +5,7 @@
  */
 import type { BasicTableProps, FetchParams, SorterResult } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
-import {
-  ref,
-  unref,
-  ComputedRef,
-  computed,
-  onMounted,
-  watch,
-  reactive,
-  Ref,
-  watchEffect,
-} from 'vue';
+import { ref, unref, ComputedRef, computed, onMounted, watch, reactive, Ref, watchEffect } from 'vue';
 import { useTimeoutFn } from '@jeesite/core/hooks/core/useTimeout';
 import { buildUUID } from '@jeesite/core/utils/uuid';
 import { isFunction, isBoolean, isArray } from '@jeesite/core/utils/is';
@@ -166,10 +156,7 @@ export function useDataSource(
     return dataSourceRef.value[index];
   }
 
-  function updateTableDataRecord(
-    rowKey: string | number,
-    record: Recordable,
-  ): Recordable | undefined {
+  function updateTableDataRecord(rowKey: string | number, record: Recordable): Recordable | undefined {
     const row = findTableDataRecord(rowKey);
     if (row) {
       for (const field in record) {
@@ -269,33 +256,16 @@ export function useDataSource(
   }
 
   async function fetch(opt?: FetchParams): Promise<any> {
-    const {
-      api,
-      searchInfo,
-      defSort,
-      fetchSetting,
-      beforeFetch,
-      afterFetch,
-      useSearchForm,
-      pagination,
-      isTreeTable,
-    } = unref(propsRef);
+    const { api, searchInfo, defSort, fetchSetting, beforeFetch, afterFetch, useSearchForm, pagination, isTreeTable } =
+      unref(propsRef);
 
     if (!api || !isFunction(api)) return;
     try {
       setLoading(true);
-      const { pageField, sizeField, listField, totalField } = Object.assign(
-        {},
-        FETCH_SETTING,
-        fetchSetting,
-      );
+      const { pageField, sizeField, listField, totalField } = Object.assign({}, FETCH_SETTING, fetchSetting);
       let pageParams: Recordable = {};
 
-      const {
-        current = 1,
-        pageSize: pageSizeVal,
-        defaultPageSize,
-      } = unref(getPaginationInfo) as PaginationProps;
+      const { current = 1, pageSize: pageSizeVal, defaultPageSize } = unref(getPaginationInfo) as PaginationProps;
       const pageSize = pageSizeVal || defaultPageSize || PAGE_SIZE;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
@@ -406,12 +376,7 @@ export function useDataSource(
       clearSelectedRowKeys();
     }
     // 如果是树表，则刷新上一个父节点和要转移到目标的父节点下的数据 v5.6.0+
-    if (
-      unref(propsRef).isTreeTable &&
-      opt?.record &&
-      opt?.record.parentCode &&
-      opt?.record.parentCode != '0'
-    ) {
+    if (unref(propsRef).isTreeTable && opt?.record && opt?.record.parentCode && opt?.record.parentCode != '0') {
       // 刷新移动前的父节点 v5.6.0+
       if (opt?.record.oldParentCode && opt?.record.oldParentCode != '0') {
         const row = findTableDataRecord(opt?.record.oldParentCode);

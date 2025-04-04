@@ -72,21 +72,11 @@ export function createTableColumns(): BasicColumn[] {
       customRender: ({ text, record }) => {
         const { responseData } = (record as FileItem) || {};
         if (text === UploadResultStatus.SUCCESS) {
-          return (
-            <Tag color="green">
-              {() => responseData?.message || t('component.upload.uploadSuccess')}
-            </Tag>
-          );
+          return <Tag color="green">{() => responseData?.message || t('component.upload.uploadSuccess')}</Tag>;
         } else if (text === UploadResultStatus.ERROR) {
-          return (
-            <Tag color="red">
-              {() => responseData?.message || t('component.upload.uploadError')}
-            </Tag>
-          );
+          return <Tag color="red">{() => responseData?.message || t('component.upload.uploadError')}</Tag>;
         } else if (text === UploadResultStatus.UPLOADING) {
-          return (
-            <Tag color="blue">{() => responseData?.message || t('component.upload.uploading')}</Tag>
-          );
+          return <Tag color="blue">{() => responseData?.message || t('component.upload.uploading')}</Tag>;
         }
         return text;
       },

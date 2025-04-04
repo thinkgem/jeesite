@@ -3,16 +3,7 @@
 </template>
 <script lang="ts">
   import type { Ref } from 'vue';
-  import {
-    defineComponent,
-    ref,
-    unref,
-    nextTick,
-    computed,
-    watch,
-    onBeforeUnmount,
-    onDeactivated,
-  } from 'vue';
+  import { defineComponent, ref, unref, nextTick, computed, watch, onBeforeUnmount, onDeactivated } from 'vue';
   import Vditor from 'vditor';
   import 'vditor/dist/index.css';
   import { useLocale } from '@jeesite/core/locales/useLocale';

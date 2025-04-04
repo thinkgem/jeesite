@@ -6,12 +6,7 @@
 -->
 <template>
   <div class="jeesite-tree-select">
-    <TreeSelect
-      v-bind="getAttrs"
-      v-model:value="state"
-      :treeData="treeDataRef"
-      @click="handleFetch"
-    >
+    <TreeSelect v-bind="getAttrs" v-model:value="state" :treeData="treeDataRef" @click="handleFetch">
       <template #[item]="data" v-for="item in Object.keys($slots)">
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
@@ -74,13 +69,7 @@
     returnFullNameSplit: propTypes.string.def('/'),
   });
 
-  const emit = defineEmits([
-    'change',
-    'update:value',
-    'update:labelValue',
-    'options-change',
-    'click',
-  ]);
+  const emit = defineEmits(['change', 'update:value', 'update:labelValue', 'options-change', 'click']);
 
   const { t } = useI18n();
   const attrs = useAttrs();

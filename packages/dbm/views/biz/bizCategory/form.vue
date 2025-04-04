@@ -27,12 +27,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
-  import {
-    BizCategory,
-    bizCategorySave,
-    bizCategoryForm,
-    bizCategoryTreeData,
-  } from '@jeesite/dbm/api/biz/bizCategory';
+  import { BizCategory, bizCategorySave, bizCategoryForm, bizCategoryTreeData } from '@jeesite/dbm/api/biz/bizCategory';
 
   const emit = defineEmits(['success', 'register']);
 

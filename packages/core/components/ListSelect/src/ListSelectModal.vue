@@ -62,11 +62,7 @@
           v-if="selectList && selectList.length > 0"
           :style="`height:${treeHeight}px`"
         >
-          <Tag
-            v-for="(item, index) in selectList"
-            :key="item[props.config.itemCode]"
-            color="processing"
-          >
+          <Tag v-for="(item, index) in selectList" :key="item[props.config.itemCode]" color="processing">
             <span
               :title="
                 item[props.config.itemName] +
@@ -74,9 +70,7 @@
               "
             >
               {{ item[props.config?.itemName] }}
-              {{
-                props.config?.isShowCode !== false ? ' (' + item[props.config?.itemCode] + ')' : ''
-              }}
+              {{ props.config?.isShowCode !== false ? ' (' + item[props.config?.itemCode] + ')' : '' }}
             </span>
             <Icon icon="i-ant-design:close-outlined" @click="closeTag(index)" />
           </Tag>
@@ -92,12 +86,7 @@
   import { BasicTree } from '@jeesite/core/components/Tree';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicModal, useModal, useModalInner } from '@jeesite/core/components/Modal';
-  import {
-    BasicTable,
-    useTable,
-    BasicTableProps,
-    TableRowSelection,
-  } from '@jeesite/core/components/Table';
+  import { BasicTable, useTable, BasicTableProps, TableRowSelection } from '@jeesite/core/components/Table';
   import { useWindowSizeFn } from '@jeesite/core/hooks/event/useWindowSizeFn';
   import { onMountedOrActivated } from '@jeesite/core/hooks/core/onMountedOrActivated';
   import { dynamicImport } from '@jeesite/core/router/helper/routeHelper';

@@ -1,10 +1,5 @@
 import type { ProjectConfig } from '@jeesite/types/config';
-import {
-  MenuTypeEnum,
-  MenuModeEnum,
-  TriggerEnum,
-  MixSidebarTriggerEnum,
-} from '@jeesite/core/enums/menuEnum';
+import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '@jeesite/core/enums/menuEnum';
 import { CacheTypeEnum } from '@jeesite/core/enums/cacheEnum';
 import {
   ContentEnum,

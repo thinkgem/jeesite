@@ -1,22 +1,8 @@
 import type { Component } from 'vue';
 import type { ComponentType } from './types/componentType';
-import {
-  Input,
-  Checkbox,
-  InputNumber,
-  Switch,
-  DatePicker,
-  TimePicker,
-  AutoComplete,
-} from 'ant-design-vue';
+import { Input, Checkbox, InputNumber, Switch, DatePicker, TimePicker, AutoComplete } from 'ant-design-vue';
 
-import {
-  Select,
-  TreeSelect,
-  RadioButtonGroup,
-  RadioGroup,
-  CheckboxGroup,
-} from '@jeesite/core/components/Form';
+import { Select, TreeSelect, RadioButtonGroup, RadioGroup, CheckboxGroup } from '@jeesite/core/components/Form';
 import { ListSelect } from '@jeesite/core/components/ListSelect';
 import { BasicUpload } from '@jeesite/core/components/Upload';
 

@@ -1,9 +1,7 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <div class="gp mb-2 mt-4" v-if="demoMode">
-      Tip：演示系统无需注册，请联系官方人员获取账号密码。
-    </div>
+    <div class="gp mb-2 mt-4" v-if="demoMode"> Tip：演示系统无需注册，请联系官方人员获取账号密码。 </div>
     <Form class="enter-x p-4" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="validType" class="enter-x">
         <Select
@@ -41,37 +39,22 @@
         />
       </FormItem>
       <FormItem name="email" class="enter-x" v-if="formData.validType == 'email'">
-        <Input
-          size="large"
-          v-model:value="formData.email"
-          :placeholder="t('sys.login.email')"
-          class="fix-auto-fill"
-        />
+        <Input size="large" v-model:value="formData.email" :placeholder="t('sys.login.email')" class="fix-auto-fill" />
       </FormItem>
       <FormItem name="validCode" class="enter-x valid-code">
-        <ValidCode
-          size="large"
-          v-model:value="formData.validCode"
-          :refreshTime="validCodeRefreshTime"
-        />
+        <ValidCode size="large" v-model:value="formData.validCode" :refreshTime="validCodeRefreshTime" />
       </FormItem>
       <FormItem name="regValidCode" class="enter-x">
         <CountdownInput
           size="large"
           class="fix-auto-fill"
           v-model:value="formData.regValidCode"
-          :placeholder="
-            formData.validType == 'mobile' ? t('sys.login.smsCode') : t('sys.login.emailCode')
-          "
+          :placeholder="formData.validType == 'mobile' ? t('sys.login.smsCode') : t('sys.login.emailCode')"
           :sendCodeApi="handleSendCodeApi"
         />
       </FormItem>
       <FormItem name="password" class="enter-x">
-        <StrengthMeter
-          size="large"
-          v-model:value="formData.password"
-          :placeholder="t('sys.login.password')"
-        />
+        <StrengthMeter size="large" v-model:value="formData.password" :placeholder="t('sys.login.password')" />
       </FormItem>
       <FormItem name="confirmPassword" class="enter-x">
         <InputPassword
@@ -90,14 +73,7 @@
         </Checkbox>
       </FormItem>
 
-      <Button
-        type="primary"
-        class="enter-x"
-        size="large"
-        block
-        @click="handleRegister"
-        :loading="loading"
-      >
+      <Button type="primary" class="enter-x" size="large" block @click="handleRegister" :loading="loading">
         {{ t('sys.login.registerButton') }}
       </Button>
       <Button size="large" block class="enter-x mt-4" @click="handleBackLogin">

@@ -9,11 +9,7 @@
       </Tooltip>
     </template>
     <Tooltip :title="t('component.modal.close')" placement="bottom">
-      <Icon
-        icon="i-ant-design:close-outlined"
-        class="anticon-close cursor-pointer"
-        @click="handleCancel"
-      />
+      <Icon icon="i-ant-design:close-outlined" class="anticon-close cursor-pointer" @click="handleCancel" />
     </Tooltip>
   </div>
 </template>

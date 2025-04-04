@@ -1,15 +1,5 @@
 <script lang="tsx">
-  import {
-    defineComponent,
-    computed,
-    ref,
-    unref,
-    reactive,
-    onMounted,
-    watch,
-    nextTick,
-    CSSProperties,
-  } from 'vue';
+  import { defineComponent, computed, ref, unref, reactive, onMounted, watch, nextTick, CSSProperties } from 'vue';
   import { useEventListener } from '@jeesite/core/hooks/event/useEventListener';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
 

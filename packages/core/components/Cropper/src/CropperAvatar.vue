@@ -11,12 +11,7 @@
       </div>
       <img :src="sourceValue" v-if="sourceValue" alt="avatar" />
     </div>
-    <a-button
-      :class="`${prefixCls}-upload-btn`"
-      @click="openModal"
-      v-if="showBtn"
-      v-bind="btnProps"
-    >
+    <a-button :class="`${prefixCls}-upload-btn`" @click="openModal" v-if="showBtn" v-bind="btnProps">
       {{ btnText ? btnText : t('component.cropper.selectImage') }}
     </a-button>
 
@@ -29,16 +24,7 @@
   </div>
 </template>
 <script lang="ts">
-  import {
-    defineComponent,
-    computed,
-    CSSProperties,
-    unref,
-    ref,
-    watchEffect,
-    watch,
-    PropType,
-  } from 'vue';
+  import { defineComponent, computed, CSSProperties, unref, ref, watchEffect, watch, PropType } from 'vue';
   import CopperModal from './CopperModal.vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useModal } from '@jeesite/core/components/Modal';
@@ -76,9 +62,7 @@
 
       const getStyle = computed((): CSSProperties => ({ width: unref(getWidth) }));
 
-      const getImageWrapperStyle = computed(
-        (): CSSProperties => ({ width: unref(getWidth), height: unref(getWidth) }),
-      );
+      const getImageWrapperStyle = computed((): CSSProperties => ({ width: unref(getWidth), height: unref(getWidth) }));
 
       watchEffect(() => {
         sourceValue.value = props.value || '';

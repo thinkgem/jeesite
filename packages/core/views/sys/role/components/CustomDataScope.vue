@@ -6,10 +6,7 @@
 <template>
   <div class="flex flex-row flex-wrap">
     <template v-for="item in dataScopes" :key="item.moduleCode">
-      <div
-        class="mb-5 mr-5"
-        v-if="moduleCodes.includes(item.moduleCode) && ctrlPermis.includes(item.ctrlPermi)"
-      >
+      <div class="mb-5 mr-5" v-if="moduleCodes.includes(item.moduleCode) && ctrlPermis.includes(item.ctrlPermi)">
         <BasicTree
           class="bg-gray"
           style="min-width: 300px"
@@ -91,9 +88,7 @@
         if (!checkedKeys[item.ctrlType]) {
           checkedKeys[item.ctrlType] = [];
         }
-        checkedKeys[item.ctrlType].push(
-          (isLoadUser.value.includes(item.ctrlType) ? 'u_' : '') + item.ctrlData,
-        );
+        checkedKeys[item.ctrlType].push((isLoadUser.value.includes(item.ctrlType) ? 'u_' : '') + item.ctrlData);
       });
       for (const key of keys) {
         treeRefs[key].setCheckedKeys(checkedKeys[key] || []);

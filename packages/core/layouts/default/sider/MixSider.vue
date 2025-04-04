@@ -62,18 +62,9 @@
         />
       </div>
       <ScrollContainer :class="`${prefixCls}-menu-list__content`">
-        <SimpleMenu
-          :items="childrenMenus"
-          :theme="getMenuTheme"
-          mixSider
-          @menu-click="handleMenuClick"
-        />
+        <SimpleMenu :items="childrenMenus" :theme="getMenuTheme" mixSider @menu-click="handleMenuClick" />
       </ScrollContainer>
-      <div
-        v-show="getShowDragBar && openMenu"
-        :class="`${prefixCls}-drag-bar`"
-        ref="dragBarRef"
-      ></div>
+      <div v-show="getShowDragBar && openMenu" :class="`${prefixCls}-drag-bar`" ref="dragBarRef"></div>
     </div>
   </div>
 </template>
@@ -94,11 +85,7 @@
   import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '@jeesite/core/enums/appEnum';
   import clickOutside from '@jeesite/core/directives/clickOutside';
-  import {
-    getChildrenMenus,
-    getCurrentParentPath,
-    getShallowMenus,
-  } from '@jeesite/core/router/menus';
+  import { getChildrenMenus, getCurrentParentPath, getShallowMenus } from '@jeesite/core/router/menus';
   import { listenerRouteChange } from '@jeesite/core/logics/mitt/routeChange';
   import LayoutTrigger from '../trigger/index.vue';
   import { omit } from 'lodash-es';
@@ -290,8 +277,7 @@
             onMouseenter: () => handleModuleClick(item.path, getItem, true),
             onClick: async () => {
               const children = await getChildrenMenus(item.path);
-              if (item.path && (!children || children.length === 0))
-                handleMenuClick(item.path, getItem);
+              if (item.path && (!children || children.length === 0)) handleMenuClick(item.path, getItem);
             },
           };
         }

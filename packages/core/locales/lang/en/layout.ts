@@ -57,8 +57,7 @@ export default {
     minute: 'Minute',
 
     operatingTitle: 'Successful!',
-    operatingContent:
-      'The copy is successful, please go to projectSetting.ts to modify the configuration!',
+    operatingContent: 'The copy is successful, please go to projectSetting.ts to modify the configuration!',
     resetSuccess: 'Successfully reset!',
 
     copyBtn: 'Copy',

@@ -40,8 +40,7 @@
   const getValidCodeImg = ref('');
 
   function refreshValidCodeImg() {
-    getValidCodeImg.value =
-      ctxPath + '/validCode' + '?__sid=' + userStore.getToken + '&t=' + new Date().getTime();
+    getValidCodeImg.value = ctxPath + '/validCode' + '?__sid=' + userStore.getToken + '&t=' + new Date().getTime();
   }
 
   watch(

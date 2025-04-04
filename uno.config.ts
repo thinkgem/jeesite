@@ -1,10 +1,4 @@
-import {
-  defineConfig,
-  UserConfig,
-  presetTypography,
-  presetIcons,
-  transformerDirectives,
-} from 'unocss';
+import { defineConfig, UserConfig, presetTypography, presetIcons, transformerDirectives } from 'unocss';
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
 import { presetWind3 } from '@unocss/preset-wind3';
 

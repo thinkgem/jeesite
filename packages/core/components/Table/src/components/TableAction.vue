@@ -8,33 +8,19 @@
     <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
       <Tooltip v-if="action.tooltip" v-bind="getTooltip(action.tooltip)">
         <PopConfirmButton v-bind="action">
-          <Icon
-            :icon="action.icon"
-            :class="{ 'mr-1': !!action.label }"
-            :title="action.iconTitle"
-            v-if="action.icon"
-          />
+          <Icon :icon="action.icon" :class="{ 'mr-1': !!action.label }" :title="action.iconTitle" v-if="action.icon" />
           <template v-if="action.label">
             <span :title="action.iconTitle">{{ action.label }}</span>
           </template>
         </PopConfirmButton>
       </Tooltip>
       <PopConfirmButton v-else v-bind="action">
-        <Icon
-          :icon="action.icon"
-          :class="{ 'mr-1': !!action.label }"
-          :title="action.iconTitle"
-          v-if="action.icon"
-        />
+        <Icon :icon="action.icon" :class="{ 'mr-1': !!action.label }" :title="action.iconTitle" v-if="action.icon" />
         <template v-if="action.label">
           <span :title="action.iconTitle">{{ action.label }}</span>
         </template>
       </PopConfirmButton>
-      <Divider
-        type="vertical"
-        class="action-divider"
-        v-if="props.divider && index < getActions.length - 1"
-      />
+      <Divider type="vertical" class="action-divider" v-if="props.divider && index < getActions.length - 1" />
     </template>
     <Popover
       v-if="props.dropDownActions && getDropdownList.length > 0"

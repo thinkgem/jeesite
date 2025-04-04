@@ -35,11 +35,7 @@ export function useTrigger(getIsMobile: Ref<boolean>) {
   const getShowTrigger = computed(() => {
     const trigger = unref(getTrigger);
 
-    return (
-      trigger !== TriggerEnum.NONE &&
-      !unref(getIsMobile) &&
-      (trigger === TriggerEnum.FOOTER || unref(getSplit))
-    );
+    return trigger !== TriggerEnum.NONE && !unref(getIsMobile) && (trigger === TriggerEnum.FOOTER || unref(getSplit));
   });
 
   const getTriggerAttr = computed(() => {
@@ -104,9 +100,7 @@ export function useDragLine(siderRef: Ref<any>, dragBarRef: Ref<any>, mix = fals
       if (!mix) {
         const miniWidth = unref(getMiniWidthNumber);
         if (!unref(getCollapsed)) {
-          width > miniWidth + 20
-            ? setMenuSetting({ menuWidth: width })
-            : setMenuSetting({ collapsed: true });
+          width > miniWidth + 20 ? setMenuSetting({ menuWidth: width }) : setMenuSetting({ collapsed: true });
         } else {
           width > miniWidth && setMenuSetting({ collapsed: false, menuWidth: width });
         }

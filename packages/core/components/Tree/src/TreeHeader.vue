@@ -4,18 +4,10 @@
     <BasicTitle :helpMessage="helpMessage" v-if="!$slots.headerTitle && title">
       {{ title }}
     </BasicTitle>
-    <div
-      class="flex flex-1 cursor-pointer items-center justify-self-stretch"
-      v-if="search || toolbar"
-    >
+    <div class="flex flex-1 cursor-pointer items-center justify-self-stretch" v-if="search || toolbar">
       <div :class="getInputSearchCls" v-if="search">
         <FormItemRest>
-          <AInput
-            :placeholder="t('common.searchText')"
-            size="small"
-            allowClear
-            v-model:value="searchValue"
-          />
+          <AInput :placeholder="t('common.searchText')" size="small" allowClear v-model:value="searchValue" />
         </FormItemRest>
       </div>
       <Dropdown @click.prevent v-if="toolbar">

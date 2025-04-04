@@ -37,11 +37,7 @@ function genType() {
 
 export const dateItemType = genType();
 
-export function setComponentRuleType(
-  rule: RuleObject,
-  component: ComponentType,
-  valueFormat: string,
-) {
+export function setComponentRuleType(rule: RuleObject, component: ComponentType, valueFormat: string) {
   if (['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'].includes(component)) {
     rule.type = valueFormat ? 'string' : 'object';
   } else if (['RangePicker', 'Upload', 'CheckboxGroup', 'TimePicker'].includes(component)) {
@@ -51,11 +47,7 @@ export function setComponentRuleType(
   }
 }
 
-export function processDateValue(
-  value: Recordable | any,
-  component: ComponentType,
-  componentProps: any,
-) {
+export function processDateValue(value: Recordable | any, component: ComponentType, componentProps: any) {
   if (!value || !component) return value;
   const { valueFormat } = componentProps;
   if (dateItemType.includes(component)) {

@@ -9,10 +9,7 @@ import { useBreakpoint } from '@jeesite/core/hooks/event/useBreakpoint';
 import echarts from '@jeesite/core/utils/lib/echarts';
 import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
 
-export function useECharts(
-  elRef: Ref<HTMLDivElement>,
-  theme: 'light' | 'dark' | 'default' = 'default',
-) {
+export function useECharts(elRef: Ref<HTMLDivElement>, theme: 'light' | 'dark' | 'default' = 'default') {
   const { getDarkMode: getSysDarkMode } = useRootSetting();
 
   const getDarkMode = computed(() => {

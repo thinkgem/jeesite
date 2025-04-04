@@ -24,10 +24,7 @@
             :disabled="item.disabled"
             :title="item.iconTitle"
           >
-            <Popconfirm
-              v-if="popconfirm && item.popConfirm"
-              v-bind="getPopConfirmAttrs(item.popConfirm)"
-            >
+            <Popconfirm v-if="popconfirm && item.popConfirm" v-bind="getPopConfirmAttrs(item.popConfirm)">
               <template #icon v-if="item.popConfirm.icon">
                 <Icon :icon="item.popConfirm.icon" />
               </template>
@@ -127,10 +124,8 @@
       const getPopConfirmAttrs = computed(() => {
         return (attrs) => {
           const originAttrs = omit(attrs, ['confirm', 'cancel', 'icon']);
-          if (!attrs.onConfirm && attrs.confirm && isFunction(attrs.confirm))
-            originAttrs['onConfirm'] = attrs.confirm;
-          if (!attrs.onCancel && attrs.cancel && isFunction(attrs.cancel))
-            originAttrs['onCancel'] = attrs.cancel;
+          if (!attrs.onConfirm && attrs.confirm && isFunction(attrs.confirm)) originAttrs['onConfirm'] = attrs.confirm;
+          if (!attrs.onCancel && attrs.cancel && isFunction(attrs.cancel)) originAttrs['onCancel'] = attrs.cancel;
           return originAttrs;
         };
       });

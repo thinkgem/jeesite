@@ -27,12 +27,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    DictType,
-    checkDictType,
-    dictTypeSave,
-    dictTypeForm,
-  } from '@jeesite/core/api/sys/dictType';
+  import { DictType, checkDictType, dictTypeSave, dictTypeForm } from '@jeesite/core/api/sys/dictType';
 
   const emit = defineEmits(['success', 'register']);
 

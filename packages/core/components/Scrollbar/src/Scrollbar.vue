@@ -17,16 +17,7 @@
   </div>
 </template>
 <script lang="ts" setup name="Scrollbar">
-  import {
-    ref,
-    onMounted,
-    onBeforeUnmount,
-    nextTick,
-    provide,
-    unref,
-    watch,
-    type PropType,
-  } from 'vue';
+  import { ref, onMounted, onBeforeUnmount, nextTick, provide, unref, watch, type PropType } from 'vue';
   import type { StyleValue } from './types';
   import { addResizeListener, removeResizeListener } from '@jeesite/core/utils/event';
   import componentSetting from '@jeesite/core/settings/componentSetting';

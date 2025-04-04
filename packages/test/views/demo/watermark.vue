@@ -1,12 +1,8 @@
 <template>
   <PageWrapper title="页面水印示例">
-    <a-button type="primary" class="mr-2" @click="setWatermark('Hello JeeSite !')">
-      创建水印 1
-    </a-button>
+    <a-button type="primary" class="mr-2" @click="setWatermark('Hello JeeSite !')"> 创建水印 1 </a-button>
     <a-button color="error" class="mr-2" @click="clear"> 清理水印 1 </a-button>
-    <a-button type="primary" class="mr-2" @click="setWatermark2('https://jeesite.com')">
-      创建水印 2
-    </a-button>
+    <a-button type="primary" class="mr-2" @click="setWatermark2('https://jeesite.com')"> 创建水印 2 </a-button>
     <a-button color="error" class="mr-2" @click="clearAll"> 清理全部 </a-button>
   </PageWrapper>
 </template>

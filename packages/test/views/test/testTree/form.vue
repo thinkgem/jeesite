@@ -27,12 +27,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    TestTree,
-    testTreeSave,
-    testTreeForm,
-    testTreeTreeData,
-  } from '@jeesite/test/api/test/testTree';
+  import { TestTree, testTreeSave, testTreeForm, testTreeTreeData } from '@jeesite/test/api/test/testTree';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -62,10 +57,7 @@
       componentProps: {
         maxlength: 64,
       },
-      rules: [
-        { required: true },
-        { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') },
-      ],
+      rules: [{ required: true }, { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') }],
     },
     {
       label: t('节点名称'),

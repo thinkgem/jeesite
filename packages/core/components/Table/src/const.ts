@@ -2,14 +2,7 @@ import componentSetting from '@jeesite/core/settings/componentSetting';
 
 const { table } = componentSetting;
 
-const {
-  pageSizeOptions,
-  defaultPageSize,
-  fetchSetting,
-  defaultSize,
-  defaultSortFn,
-  defaultFilterFn,
-} = table;
+const { pageSizeOptions, defaultPageSize, fetchSetting, defaultSize, defaultSortFn, defaultFilterFn } = table;
 
 export const ROW_KEY = 'key';
 

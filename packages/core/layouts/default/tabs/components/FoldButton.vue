@@ -20,14 +20,10 @@
       const { getShowMenu, getShowSidebar, setMenuSetting } = useMenuSetting();
       const { getShowHeader, setHeaderSetting } = useHeaderSetting();
 
-      const getIsUnFold = computed(
-        () => !unref(getShowMenu) && !unref(getShowHeader) && !unref(getShowSidebar),
-      );
+      const getIsUnFold = computed(() => !unref(getShowMenu) && !unref(getShowHeader) && !unref(getShowSidebar));
 
       const getIcon = computed(() =>
-        unref(getIsUnFold)
-          ? 'i-ant-design:fullscreen-exit-outlined'
-          : 'i-ant-design:fullscreen-outlined',
+        unref(getIsUnFold) ? 'i-ant-design:fullscreen-exit-outlined' : 'i-ant-design:fullscreen-outlined',
       );
 
       function handleFold(isUnFold: boolean) {

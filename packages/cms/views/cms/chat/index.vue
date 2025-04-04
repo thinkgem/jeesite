@@ -27,10 +27,7 @@
                 <span v-else class="flex-1 truncate">{{ item.title }}</span>
                 <span v-if="item.id == conversationIds[0]" class="c-gray">
                   <Icon icon="i-ant-design:edit" class="pt-3" @click="handleEdit(item, true)" />
-                  <Popconfirm
-                    :title="t('是否确认删除该对话吗？')"
-                    @confirm="handleDelete(item, index)"
-                  >
+                  <Popconfirm :title="t('是否确认删除该对话吗？')" @confirm="handleDelete(item, index)">
                     <Icon icon="i-ant-design:delete" class="pt-3" />
                   </Popconfirm>
                 </span>
@@ -51,10 +48,7 @@
         v-model:loading="loading"
       >
         <template #header>
-          <div
-            v-if="messages.length == 0"
-            class="h-[90%] flex justify-center items-center c-gray-4 text-xl"
-          >
+          <div v-if="messages.length == 0" class="h-[90%] flex justify-center items-center c-gray-4 text-xl">
             {{ t('我是你的 AI 助手，我可以帮你解答一些问题') }}
           </div>
         </template>
@@ -80,11 +74,7 @@
         </a-button>
       </div>
       <div class="pt-2 pr-8 c-gray-4 text-xs text-center">
-        {{
-          t(
-            '服务生成的所有内容均由人工智能模型生成，准确和完整性无法保证，不代表我们的态度或观点。',
-          )
-        }}
+        {{ t('服务生成的所有内容均由人工智能模型生成，准确和完整性无法保证，不代表我们的态度或观点。') }}
       </div>
     </div>
   </PageWrapper>
@@ -97,13 +87,7 @@
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { ScrollContainer } from '@jeesite/core/components/Container';
-  import {
-    cmsChatDelete,
-    cmsChatList,
-    cmsChatMessage,
-    cmsChatSave,
-    cmsChatStream,
-  } from '@jeesite/cms/api/cms/chat';
+  import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
   import { ChatMessage } from '@jeesite/cms';
 
   const { t } = useI18n('cms.chat');

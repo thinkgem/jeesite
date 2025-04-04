@@ -24,10 +24,7 @@
         <div>编号: {{ record.id }}（这里生成内容自定义，也可以加载子表）</div>
       </template>
       <template #customFilterIcon="filter">
-        <Icon
-          icon="i-ant-design:search-outlined"
-          :style="{ color: filter.filtered ? '#108ee9' : undefined }"
-        />
+        <Icon icon="i-ant-design:search-outlined" :style="{ color: filter.filtered ? '#108ee9' : undefined }" />
       </template>
       <template #customFilterDropdown="filter">
         <div class="p-2" v-if="filter.column.dataIndex == 'testInput'">

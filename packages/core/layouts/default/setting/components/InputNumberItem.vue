@@ -1,12 +1,7 @@
 <template>
   <div :class="prefixCls">
     <span> {{ title }}</span>
-    <InputNumber
-      v-bind="$attrs"
-      size="small"
-      :class="`${prefixCls}-input-number`"
-      @change="handleChange"
-    />
+    <InputNumber v-bind="$attrs" size="small" :class="`${prefixCls}-input-number`" @change="handleChange" />
   </div>
 </template>
 <script lang="ts">

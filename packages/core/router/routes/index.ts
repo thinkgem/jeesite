@@ -47,11 +47,4 @@ const ModPwdRoute: AppRouteModule = {
 };
 
 // Basic routing without permission
-export const basicRoutes = [
-  LoginRoute,
-  ModPwdRoute,
-  RootRoute,
-  ...mainOutRoutes,
-  REDIRECT_ROUTE,
-  PAGE_NOT_FOUND_ROUTE,
-];
+export const basicRoutes = [LoginRoute, ModPwdRoute, RootRoute, ...mainOutRoutes, REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE];

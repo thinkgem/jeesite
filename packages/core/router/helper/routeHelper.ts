@@ -8,12 +8,7 @@ import type { Router, RouteRecordNormalized } from 'vue-router';
 
 import { cloneDeep, omit } from 'lodash-es';
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
-import {
-  LAYOUT,
-  IFRAME_BLANK,
-  IFRAME_SIMPLE,
-  EXCEPTION_COMPONENT,
-} from '@jeesite/core/router/constant';
+import { LAYOUT, IFRAME_BLANK, IFRAME_SIMPLE, EXCEPTION_COMPONENT } from '@jeesite/core/router/constant';
 import { warn, env } from '@jeesite/core/utils/log';
 
 // Dynamic introduction
@@ -137,11 +132,7 @@ function promoteRouteLevel(routeModule: AppRouteModule) {
 }
 
 // Add all sub-routes to the secondary route
-function addToChildren(
-  routes: RouteRecordNormalized[],
-  children: AppRouteRecordRaw[],
-  routeModule: AppRouteModule,
-) {
+function addToChildren(routes: RouteRecordNormalized[], children: AppRouteRecordRaw[], routeModule: AppRouteModule) {
   for (let index = 0; index < children.length; index++) {
     const child = children[index];
     const route = routes.find((item) => item.name === child.name);

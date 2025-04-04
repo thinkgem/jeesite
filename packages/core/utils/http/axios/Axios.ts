@@ -68,12 +68,8 @@ export class VAxios {
     if (!transform) {
       return;
     }
-    const {
-      requestInterceptors,
-      requestInterceptorsCatch,
-      responseInterceptors,
-      responseInterceptorsCatch,
-    } = transform;
+    const { requestInterceptors, requestInterceptorsCatch, responseInterceptors, responseInterceptorsCatch } =
+      transform;
 
     const axiosCanceler = new AxiosCanceler();
 
@@ -83,9 +79,7 @@ export class VAxios {
       const ignoreCancelToken = config.headers?.ignoreCancelToken;
 
       const ignoreCancel =
-        ignoreCancelToken !== undefined
-          ? ignoreCancelToken === 'true'
-          : this.options.requestOptions?.ignoreCancelToken;
+        ignoreCancelToken !== undefined ? ignoreCancelToken === 'true' : this.options.requestOptions?.ignoreCancelToken;
 
       !ignoreCancel && axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {

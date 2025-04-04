@@ -10,9 +10,7 @@
                 :style="{ cursor: isTitleClickable ? 'pointer' : '' }"
                 :delete="!!item.titleDelete"
                 :ellipsis="
-                  $props.titleRows && $props.titleRows > 0
-                    ? { rows: $props.titleRows, tooltip: !!item.title }
-                    : false
+                  $props.titleRows && $props.titleRows > 0 ? { rows: $props.titleRows, tooltip: !!item.title } : false
                 "
                 :content="item.title"
               />
@@ -25,15 +23,8 @@
           </template>
 
           <template #avatar>
-            <a-avatar
-              v-if="item.avatar && item.avatar.indexOf('://') != -1"
-              class="avatar"
-              :src="item.avatar"
-            />
-            <a-avatar
-              v-else-if="item.avatar && item.avatar.indexOf(':') != -1"
-              class="avatar avatar-icon"
-            >
+            <a-avatar v-if="item.avatar && item.avatar.indexOf('://') != -1" class="avatar" :src="item.avatar" />
+            <a-avatar v-else-if="item.avatar && item.avatar.indexOf(':') != -1" class="avatar avatar-icon">
               <Icon :icon="item.avatar" />
             </a-avatar>
             <span v-else> {{ item.avatar }}</span>

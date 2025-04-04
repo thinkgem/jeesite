@@ -16,17 +16,12 @@
     name: 'LayoutFeatures',
     components: {
       ABackTop: FloatButton.BackTop,
-      LayoutLockPage: createAsyncComponent(
-        () => import('@jeesite/core/layouts/views/lock/index.vue'),
-      ),
-      SettingDrawer: createAsyncComponent(
-        () => import('@jeesite/core/layouts/default/setting/index.vue'),
-      ),
+      LayoutLockPage: createAsyncComponent(() => import('@jeesite/core/layouts/views/lock/index.vue')),
+      SettingDrawer: createAsyncComponent(() => import('@jeesite/core/layouts/default/setting/index.vue')),
       SessionTimeoutLogin,
     },
     setup() {
-      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } =
-        useRootSetting();
+      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } = useRootSetting();
       const userStore = useUserStoreWithOut();
       const { prefixCls } = useDesign('setting-drawer-fearure');
       const { getShowHeader } = useHeaderSetting();
