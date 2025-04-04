@@ -58,6 +58,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 
 	public static final Boolean POST_ROLE_PERMI = Global.getConfigToBoolean("user.postRolePermi", "false");
 	public static final Boolean SWITCH_OFFICE = Global.getConfigToBoolean("user.switchOffice", "false");
+	public static final Boolean LOGIN_AFTER_ACTIVE_MAIN_OFFICE = Global.getConfigToBoolean("user.loginAfterActiveMainOffice", "false");
 
 	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
 
@@ -497,7 +498,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		if (SWITCH_OFFICE && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
 			data.put("switchOffice", "true");
-			data.put("officeCode", session.getAttribute("officeCode"));
+			// 登录后指定当前部门，即当前部门权限，否则为混合权限
+			data.put("officeCode", LOGIN_AFTER_ACTIVE_MAIN_OFFICE ? EmpUtils.getCurrentOfficeCode()
+					: session.getAttribute("officeCode"));
 			data.put("officeName", EmpUtils.getCurrentOfficeName());
 		}
 		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
