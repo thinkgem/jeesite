@@ -20,7 +20,7 @@
   "devDependencies": {
     "vite-plugin-compression": "0.5.1",
     "vite-plugin-html": "3.2.2",
-    "vite-plugin-mkcert": "1.17.6",
+    "vite-plugin-mkcert": "1.17.8",
     "vite-plugin-theme-vite3": "1.0.5",
     "vite-plugin-vue-setup-extend": "0.4.0"
   },

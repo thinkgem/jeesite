@@ -6,11 +6,11 @@
   "scripts": {
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "uninstall": "rimraf node_modules",
-    "update": "ncu -u -x codemirror,pinia"
+    "update": "ncu -u -x codemirror,pinia,cropperjs"
   },
   "dependencies": {
-    "@vueuse/core": "12.7.0",
-    "@vueuse/shared": "12.7.0",
+    "@vueuse/core": "13.0.0",
+    "@vueuse/shared": "13.0.0",
     "@wangeditor/editor": "5.1.23",
     "@wangeditor/editor-for-vue": "5.1.12",
     "@zxcvbn-ts/core": "3.0.4",
@@ -29,7 +29,7 @@
     "sortablejs": "1.15.6",
     "spark-md5": "3.0.2",
     "vditor": "3.10.9",
-    "vue-i18n": "11.1.1",
+    "vue-i18n": "11.1.2",
     "vue-json-pretty": "2.4.0",
     "vue-types": "6.0.0",
     "xlsx": "0.18.5"
@@ -43,9 +43,9 @@
     "@types/qs": "6.9.18",
     "@types/showdown": "2.0.6",
     "@types/sortablejs": "1.15.8",
-    "@vitejs/plugin-vue": "5.2.1",
+    "@vitejs/plugin-vue": "5.2.3",
     "rollup-plugin-visualizer": "5.14.0",
-    "vite-plugin-dts": "4.5.0",
+    "vite-plugin-dts": "4.5.3",
     "vite-plugin-theme-vite3": "1.0.5"
   },
   "homepage": "https://jeesite.com",
