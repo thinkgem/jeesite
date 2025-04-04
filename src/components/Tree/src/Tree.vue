@@ -636,25 +636,27 @@
       background-color: transparent;
 
       .ant-tree-checkbox {
-        margin-top: 1px;
+        margin-top: -2px;
       }
 
-      .ant-tree-switcher-icon svg {
+      .ant-tree-switcher {
         margin-top: -1px;
       }
 
       .ant-tree-node-content-wrapper {
         position: relative;
-        margin-top: 3px !important;
+        display: flex;
+        padding: 0 !important;
+        margin-bottom: 2px;
 
-        .ant-tree-title {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
+        //.ant-tree-title {
+        //  position: absolute;
+        //  left: 0;
+        //  width: 100%;
+        //  overflow: hidden;
+        //  text-overflow: ellipsis;
+        //  white-space: nowrap;
+        //}
       }
 
       &.ant-tree-directory {
