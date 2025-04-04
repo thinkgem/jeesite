@@ -202,6 +202,12 @@
 				<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 				<div class="form-unit">${text('分配角色')}</div>
 				<div class="form-unit-wrap table-form">
+					<% if(postRolePermi!) { %>
+					<div class="alert alert-dismissible callout callout-info mb20" id="alert">
+						<button type="button" class="close" data-dismiss="alert" id="alertClose">×</button>
+						<p><i class="icon fa fa-info"></i> 启用岗位角色权限权限后，角色不会保存，请在用户关联岗位中关联角色。</p>
+					</div>
+					<% } %>
 					<table id="roleGrid"></table>
 					<#form:hidden name="userRoleString"/>
 				</div>
