@@ -384,6 +384,9 @@ user:
 #
 #  # 是否启用切换部门功能，再开启启用岗位角色后可支持 用户->附属部门->岗位->关联角色，纳入菜单和权限管理 v5.10.1
 #  switchOffice: false
+#
+#  # 登录后激活当前用户所在的主部门，默认为不激活即混合权限
+#  loginAfterActiveMainOffice: false
 
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
