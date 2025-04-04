@@ -79,8 +79,8 @@ export default [
       },
     },
     rules: {
-      ...vuePlugin.configs['vue3-recommended'].rules,
-      'vue/script-setup-uses-vars': 'error',
+      // ...vuePlugin.configs['vue3-recommended'].rules,
+      // 'vue/script-setup-uses-vars': 'error',
       'vue/no-reserved-component-names': 'off',
       'vue/custom-event-name-casing': 'off',
       'vue/attributes-order': 'off',
