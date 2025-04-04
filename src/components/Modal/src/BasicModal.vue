@@ -249,13 +249,14 @@
 
         > .scrollbar {
           > .scrollbar__wrap {
-            margin: 12px 15px 0;
-            padding: 1px;
+            > .scrollbar__view {
+              margin: 12px 15px 1px;
 
-            > .scrollbar__view > div {
-              > form:first-child {
-                margin-top: 13px;
-                margin-right: 5px;
+              > div {
+                > form:first-child {
+                  margin-top: 13px;
+                  margin-right: 5px;
+                }
               }
             }
           }

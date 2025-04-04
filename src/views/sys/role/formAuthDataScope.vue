@@ -118,9 +118,10 @@
 <style lang="less">
   .jeesite-role-auth-data-scope {
     .scroll-container {
-      .scrollbar__wrap {
-        margin: 6px !important;
-        padding-bottom: 0 !important;
+      > .scrollbar__wrap {
+        > .scrollbar__view {
+          margin: 6px !important;
+        }
       }
     }
 
