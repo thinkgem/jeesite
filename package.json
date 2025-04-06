@@ -7,6 +7,7 @@
     "bootstrap": "pnpm install",
     "serve": "npm run dev",
     "dev": "cross-env VITE_CJS_IGNORE_WARNING=true vite dev",
+    "preinstall": "npx only-allow pnpm",
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",
