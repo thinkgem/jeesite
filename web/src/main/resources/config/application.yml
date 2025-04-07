@@ -164,6 +164,7 @@ jdbc:
 #    loadBalancerAlgorithm: RANDOM
 #
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
+#  # v5.11.1+ 支持 dataSourceNames 免配置，自动读取 jdbc.数据源名.type 的属性
 #  dataSourceNames: ds_read_01, ds_read_02
 #
 #  # 默认数据源的从库01
@@ -193,6 +194,7 @@ jdbc:
 #      maxActive: 20
 
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
+#  # v5.11.1+ 支持 dataSourceNames 免配置，自动读取 jdbc.数据源名.type 的属性
 #  dataSourceNames: ds2
 #
 #  # 多数据源配置：ds2
