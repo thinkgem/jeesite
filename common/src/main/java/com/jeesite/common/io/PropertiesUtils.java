@@ -4,7 +4,6 @@
  */
 package com.jeesite.common.io;
 
-import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -17,6 +16,8 @@ import org.springframework.core.io.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -64,9 +65,7 @@ public class PropertiesUtils {
 			//configSet.add("classpath:config/jeesite.yml");
 			// 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
 			Set<String> set = SetUtils.newLinkedHashSet();
-			for (String configFile : DEFAULT_CONFIG_FILE){
-				set.add(configFile);
-			}
+			set.addAll(Arrays.asList(DEFAULT_CONFIG_FILE));
 			// 获取 spring.config.location 外部自定义的配置文件
 			String customConfigs = System.getProperty("spring.config.location");
 			if (StringUtils.isNotBlank(customConfigs)){
@@ -81,7 +80,7 @@ public class PropertiesUtils {
 				}
 			}
 			// 获取 spring.profiles.active 活动环境名称的配置文件
-			String[] configFiles = set.toArray(new String[set.size()]);
+			String[] configFiles = set.toArray(new String[0]);
 			String profiles = System.getProperty("spring.profiles.active");
 			if (StringUtils.isBlank(profiles)){
 				PropertiesUtils propsTemp = new PropertiesUtils(configFiles);
@@ -101,7 +100,7 @@ public class PropertiesUtils {
 					}
 				}
 			}
-			configFiles = configSet.toArray(new String[configSet.size()]);
+			configFiles = configSet.toArray(new String[0]);
 			logger.debug("Trying: {}", (Object)configFiles);
 			INSTANCE = new PropertiesUtils(configFiles);
 		}
@@ -115,12 +114,11 @@ public class PropertiesUtils {
 			Resource resource = ResourceUtils.getResource(location);
 			if (resource.exists()){
     			if (location.endsWith(".properties")){
-    				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), EncodeUtils.UTF_8)){
+    				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)){
     					properties.load(is);
     					configSet.add(location);
         			} catch (IOException e) {
-            			System.err.println("Load " + location + " failure.");
-            			e.printStackTrace();
+						logger.error("Load {} failure.", location, e);
         			}
     			}
     			else if (location.endsWith(".yml")){
@@ -133,8 +131,7 @@ public class PropertiesUtils {
         				}
     					configSet.add(location);
     				} catch (Exception e) {
-    	    			System.err.println("Load " + location + " failure.");
-    	    			e.printStackTrace();
+						logger.error("Load {} failure.", location, e);
     				}
     			}
 			}
@@ -316,7 +313,6 @@ public class PropertiesUtils {
 	
 	/**
 	 * 设置环境属性
-	 * @param environment
 	 */
 	public static void setEnvironment(Environment environment) {
 		PropertiesUtils.environment = environment;
