@@ -131,6 +131,13 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 		if (${ClassName}.STATUS_NORMAL.equals(${className}.getStatus())){
 			throw new ServiceException(text("非法操作，前端数据被劫持！"));
 		}
+
+		// 如果是重启流程操作，则恢复审核状态，并标记重启状态
+		boolean isRestart = false;
+		if (${ClassName}.STATUS_RESTART.equals(${className}.getStatus())) {
+			${className}.setStatus(${ClassName}.STATUS_AUDIT);
+			isRestart = true;
+		}
 		
 		// 如果状态为草稿或审核状态，才可以保存业务数据
 		if (${ClassName}.STATUS_DRAFT.equals(${className}.getStatus())
@@ -140,15 +147,28 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 
 		// 如果为审核状态，则进行审批流操作
 		if (${ClassName}.STATUS_AUDIT.equals(${className}.getStatus())){
-			
+
+			// 流程定义中的表单Key，不是流程Key
+			String formKey = "${table.optionMap['bpmFormKey']}";
+
 			// 指定流程变量，作为流程条件，决定流转方向
 			Map<String, Object> variables = MapUtils.newHashMap();
 			//variables.put("leaveDays", ${className}.getLeaveDays());
+
+			// 如果是流程重启，则先检查流程状态
+			if (isRestart) {
+				if (BpmUtils.getRunProcIns(${className}, formKey) != null) {
+					throw new ServiceException(text("重启失败，流程已经启动！"));
+				}
+				if (StringUtils.isNotBlank(${className}.getBpm().getProcInsId())) {
+					variables.put("parentProcInsId", ${className}.getBpm().getProcInsId());
+				}
+			}
 			
 			// 如果流程实例为空，任务编号也为空，则：启动流程
-			if (StringUtils.isBlank(${className}.getBpm().getProcInsId())
-					&& StringUtils.isBlank(${className}.getBpm().getTaskId())){
-				BpmUtils.start(${className}, "${table.optionMap['bpmFormKey']}", variables, null);
+			if (isRestart || (StringUtils.isBlank(${className}.getBpm().getProcInsId())
+					&& StringUtils.isBlank(${className}.getBpm().getTaskId()))){
+				BpmUtils.start(${className}, formKey, variables, null);
 			}
 			// 如果有任务信息，则：提交任务
 			else{

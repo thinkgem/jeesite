@@ -95,6 +95,12 @@ BpmButton.init = function(task){
 BpmButton.complete = function($this, task){
 	$('#status').val(Global.STATUS_AUDIT);
 };
+BpmButton.restart = function($this, task){
+	js.confirm('\${text("确认要重启流程吗？")}', function(){
+		$('#status').val("6");
+		$('#inputForm').submit();
+	});
+};
 // 表单验证提交事件
 <% } %>
 $('#inputForm').validate({
