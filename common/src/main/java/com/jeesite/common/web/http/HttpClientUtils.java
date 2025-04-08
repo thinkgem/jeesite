@@ -13,6 +13,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509ExtendedTrustManager;
+import java.io.InputStream;
 import java.net.Socket;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -177,6 +178,41 @@ public class HttpClientUtils {
 	public static String executeRequest(HttpRequest request) {
 		try {
 			return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+	}
+
+	/**
+	 * HTTP 的 GET 请求，返回文件流
+	 */
+	public static InputStream getInputStream(String url) {
+        return getInputStream(url, null);
+	}
+
+	/**
+	 * HTTP 的 GET 请求，传递 Map 格式参数，返回文件流
+	 */
+	public static InputStream getInputStream(String url, Map<String, String> dataMap) {
+		HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(buildUrl(url, dataMap, EncodeUtils.UTF_8)))
+                .GET()
+                .build();
+        return executeRequestInputStream(request);
+	}
+
+	/**
+	 * 执行一个 http 请求，传递 HttpRequest 参数，返回文件流
+	 */
+	public static InputStream executeRequestInputStream(HttpRequest request) {
+		try {
+			 HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+			 if (response.statusCode() == 200) {
+				 return response.body();
+			 } else {
+				 logger.info("URL: {} statusCode: {}", request.uri().toString(), response.statusCode());
+				 return null;
+			 }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
