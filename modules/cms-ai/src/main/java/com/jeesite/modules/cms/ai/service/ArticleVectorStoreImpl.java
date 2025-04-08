@@ -6,13 +6,26 @@ package com.jeesite.modules.cms.ai.service;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.io.IOUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.utils.PageUtils;
+import com.jeesite.common.web.http.HttpClientUtils;
 import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.service.ArticleVectorStore;
 import com.jeesite.modules.cms.utils.CmsUtils;
+import com.vladsch.flexmark.html.renderer.LinkType;
+import com.vladsch.flexmark.html.renderer.ResolvedLink;
 import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter;
+import com.vladsch.flexmark.html2md.converter.HtmlLinkResolver;
+import com.vladsch.flexmark.html2md.converter.HtmlLinkResolverFactory;
+import com.vladsch.flexmark.html2md.converter.HtmlNodeConverterContext;
+import org.apache.tika.Tika;
+import org.apache.tika.config.TikaConfig;
+import org.apache.tika.exception.TikaException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -22,8 +35,11 @@ import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * CMS 文章向量库存储
@@ -58,11 +74,68 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 		metadata.put("createDate", article.getCreateDate());
 		metadata.put("updateBy", article.getUpdateBy());
 		metadata.put("updateDate", article.getUpdateDate());
+		List<String> attachmentList = ListUtils.newArrayList();
+		HtmlLinkResolverFactory linkResolverFactory = new HtmlLinkResolverFactory() {
+			@Override
+			public @Nullable Set<Class<?>> getAfterDependents() {
+				return Set.of();
+			}
+			@Override
+			public @Nullable Set<Class<?>> getBeforeDependents() {
+				return Set.of();
+			}
+			@Override
+			public boolean affectsGlobalScope() {
+				return false;
+			}
+			@Override
+			public HtmlLinkResolver apply(HtmlNodeConverterContext htmlNodeConverterContext) {
+				return (node, context, resolvedLink) -> {
+					if ("a".equalsIgnoreCase(node.nodeName())) {
+						String href = node.attributes().get("href"); String url = href;
+						if (StringUtils.contains(url, "://")) {
+							try (InputStream is = HttpClientUtils.getInputStream(url, null)) {
+								String text = getDocumentText(is);
+								attachmentList.add(url + text);
+							} catch (IOException | TikaException e) {
+								logger.error(e.getMessage(), e);
+							}
+						} else {
+							String ctxPath = Global.getCtxPath();
+							if (StringUtils.isNotBlank(ctxPath) && StringUtils.startsWith(url, ctxPath)){
+								url = url.substring(ctxPath.length());
+							}
+							try (InputStream is = IOUtils.getFileInputStream(Global.getUserfilesBaseDir(url))){
+								String text = getDocumentText(is);
+								attachmentList.add(url + text);
+							} catch (IOException | TikaException e) {
+								logger.error(e.getMessage(), e);
+							}
+						}
+						return new ResolvedLink(LinkType.LINK, href);
+					}
+					return resolvedLink;
+				};
+			}
+			/**
+			 * 获取文章附件中的内容
+			 * @author ThinkGem
+			 */
+			private static @NotNull String getDocumentText(InputStream is) throws IOException, TikaException {
+				TikaConfig config = TikaConfig.getDefaultConfig();
+				String content = new Tika(config).parseToString(is);
+				return content.lines()
+					.map(String::strip).filter(line -> !line.isEmpty())
+					.reduce((a, b) -> a + System.lineSeparator() + b)
+					.orElse(StringUtils.EMPTY);
+			}
+		};
 		String content = article.getTitle() + ", " + article.getKeywords() + ", "
-				+ article.getDescription() + ", " + StringUtils.toMobileHtml(
-						article.getArticleData().getContent());
-        String markdown = FlexmarkHtmlConverter.builder().build().convert(content);
-		List<Document> documents = List.of(new Document(article.getId(), markdown, metadata));
+				+ article.getDescription() + ", " + FlexmarkHtmlConverter.builder()
+					.linkResolverFactory(linkResolverFactory).build()
+					.convert(article.getArticleData().getContent())
+				+ ", attachment: " + attachmentList;
+		List<Document> documents = List.of(new Document(article.getId(), content, metadata));
 		List<Document> splitDocuments = new TokenTextSplitter().apply(documents);
 		this.delete(article); // 删除原数据
 		ListUtils.pageList(splitDocuments, 64, params -> {

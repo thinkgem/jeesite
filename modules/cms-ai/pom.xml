@@ -94,6 +94,23 @@
 			<artifactId>flexmark-html2md-converter</artifactId>
 			<version>0.64.8</version>
 		</dependency>
+
+		<!-- 解析文档内容库 -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers-standard-package</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-compress</artifactId>
+		  <version>1.27.1</version>
+		</dependency>
 		
 	</dependencies>
 
