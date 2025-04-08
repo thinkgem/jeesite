@@ -13,9 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
-
 /**
  * AI 聊天配置类
  * @author ThinkGem
@@ -55,10 +52,9 @@ public class CmsAiChatConfig {
 	@Bean
 	@Primary
 	@ConditionalOnProperty(name = "jdbc.ds_pgvector.type")
-	public JdbcTemplate pgVectorStoreJdbcTemplate() throws SQLException {
-		DataSource dataSource = DataSourceHolder.getRoutingDataSource()
-				.createDataSource("ds_pgvector");
-		return new JdbcTemplate(dataSource);
+	public JdbcTemplate pgVectorStoreJdbcTemplate() {
+		return DataSourceHolder.getRoutingDataSource()
+				.getJdbcTemplate("ds_pgvector");
 	}
 
 }

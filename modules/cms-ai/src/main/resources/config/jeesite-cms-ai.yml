@@ -115,6 +115,10 @@ spring:
 #    username: postgres
 #    password: postgres
 #    testSql: SELECT 1
+#    pool:
+#      init: 0
+#      minIdle: 0
+#      breakAfterAcquireFailure: true
 
 # ========= ES 向量数据库连接配置 =========
 
