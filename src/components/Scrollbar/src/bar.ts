@@ -39,13 +39,6 @@ export default defineComponent({
 
       wrap.value[bar.value.scroll] = (thumbPositionPercentage * wrap.value[bar.value.scrollSize]) / 100;
     };
-    const startDrag = (e: any) => {
-      e.stopImmediatePropagation();
-      cursorDown.value = true;
-      on(document, 'mousemove', mouseMoveDocumentHandler);
-      on(document, 'mouseup', mouseUpDocumentHandler);
-      document.onselectstart = () => false;
-    };
 
     const mouseMoveDocumentHandler = (e: any) => {
       if (cursorDown.value === false) return;
@@ -65,6 +58,14 @@ export default defineComponent({
       off(document, 'mousemove', mouseMoveDocumentHandler);
       document.onselectstart = null;
     }
+
+    const startDrag = (e: any) => {
+      e.stopImmediatePropagation();
+      cursorDown.value = true;
+      on(document, 'mousemove', mouseMoveDocumentHandler);
+      on(document, 'mouseup', mouseUpDocumentHandler);
+      document.onselectstart = () => false;
+    };
 
     onUnmounted(() => {
       off(document, 'mouseup', mouseUpDocumentHandler);
