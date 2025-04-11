@@ -8,6 +8,8 @@ import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 export function configMonacoEditorPlugin(): PluginOption {
   return (monacoEditorPlugin as any).default({
-    languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html'],
+    languageWorkers: ['editorWorkerService', 'json', 'html'],
+    customDistPath: (root, buildOutDir) => `${buildOutDir}/monaco`,
+    publicPath: 'monaco',
   });
 }

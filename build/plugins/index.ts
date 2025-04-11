@@ -14,11 +14,10 @@ import { configHtmlPlugin } from './html';
 import { configLegacyPlugin } from './legacy';
 import { configThemePlugin } from '../theme';
 import { configUnoCSSPlugin } from './unocss';
-// import { configMonacoEditorPlugin } from './monacoEditor';
+import { configMonacoEditorPlugin } from './monacoEditor';
 import { configVisualizerPlugin } from './visualizer';
-import { PackageJson } from 'pkg-types';
 
-export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: PackageJson) {
+export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv) {
   const vitePlugins: PluginOption[] = [
     vue(),
     vueJsx(),
@@ -29,7 +28,7 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
   ];
 
   // app-config-plugin
-  vitePlugins.push(appConfigPlugin(isBuild, viteEnv, pkg));
+  vitePlugins.push(appConfigPlugin(isBuild, viteEnv));
 
   // UnoCSS-vite-plugin
   vitePlugins.push(configUnoCSSPlugin());
@@ -62,6 +61,6 @@ export {
   configLegacyPlugin,
   configThemePlugin,
   configUnoCSSPlugin,
-  // configMonacoEditorPlugin,
+  configMonacoEditorPlugin,
   configVisualizerPlugin,
 };

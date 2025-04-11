@@ -3,10 +3,13 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
-import { PackageJson } from 'pkg-types';
+import { PackageJson, readPackageJSON } from 'pkg-types';
 import dayjs from 'dayjs';
 
-export function createDefineOptions(pkg: PackageJson): Record<string, any> {
+export async function createDefineOptions(): Promise<Record<string, any>> {
+  const root = process.cwd() + '/../../';
+  const pkg: PackageJson = await readPackageJSON();
+
   try {
     const { dependencies, devDependencies, name, version } = pkg;
     const __APP_INFO__ = {
