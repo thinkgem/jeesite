@@ -45,6 +45,6 @@ export const basicProps = {
   ...footerProps,
   // eslint check
   width: { type: [Number, String] },
-  mask: { type: Boolean },
+  mask: { type: Boolean, default: true },
   maskStyle: { type: Object },
 };
