@@ -44,6 +44,9 @@
      * 是否加载状态
      */
     loading: { type: Boolean, defaultValue: false },
+    // eslint check
+    onClick: { type: Function, default: (_e: Event) => {} },
+    onDblclick: { type: Function, default: (_e: Event) => {} },
   });
 
   const { prefixCls } = useDesign('basic-arrow');
