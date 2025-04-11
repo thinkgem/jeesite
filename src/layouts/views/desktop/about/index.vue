@@ -96,7 +96,7 @@
       data: dependencies,
       schema: schema,
       column: 3,
-    });
+    })[0];
   }
 
   let registerDev: any;
@@ -109,6 +109,6 @@
       data: devDependencies,
       schema: devSchema,
       column: 3,
-    });
+    })[0];
   }
 </script>
