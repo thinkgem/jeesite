@@ -99,6 +99,7 @@
     } else {
       validCodeRefreshTime.value = new Date().getTime();
     }
+    return data.result == 'true';
   }
 
   async function handleLogin() {

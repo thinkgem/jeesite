@@ -132,6 +132,7 @@
     if (data.result != 'true') {
       validCodeRefreshTime.value = new Date().getTime();
     }
+    return data.result == 'true';
   }
 
   async function handleGetPwdQuestion() {
