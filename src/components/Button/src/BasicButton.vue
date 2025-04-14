@@ -7,23 +7,19 @@
     </template>
   </Button>
 </template>
-
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  export default defineComponent({
-    name: 'AButton',
-    inheritAttrs: false,
-  });
-</script>
-<script lang="ts" setup>
+<script lang="ts" setup name="AButton">
   import { computed, unref } from 'vue';
   import { Button } from 'ant-design-vue';
   import Icon from '/@/components/Icon/src/Icon.vue';
   import { buttonProps } from './props';
   import { useAttrs } from '/@/hooks/core/useAttrs';
 
+  defineOptions({
+    inheritAttrs: false,
+  });
+
   const props = defineProps(buttonProps);
-  // get component class
+
   const attrs = useAttrs({ excludeDefaultKeys: false });
   const getButtonClass = computed(() => {
     const { color, disabled } = props;
@@ -35,6 +31,5 @@
     ];
   });
 
-  // get inherit binding value
   const getBindValue = computed(() => ({ ...unref(attrs), ...props }));
 </script>
