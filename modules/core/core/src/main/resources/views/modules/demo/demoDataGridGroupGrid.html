@@ -8,7 +8,7 @@
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
 				<% if(hasPermi('test:testData:edit')){ %>
-					<a href="${ctx}/test1/testData/form" class="btn btn-default btnTool" title="新增数据"><i class="fa fa-plus"></i> 新增</a>
+					<a href="${ctx}/test1/testData/form" class="btn btn-primary btnTool" title="新增数据"><i class="fa fa-plus"></i> 新增</a>
 				<% } %>
 				<a href="${ctx}/demo/dataGrid/stateGrid" class="btn btn-default btnTool" title="统计表样例"><i class="fa fa-hand-lizard-o"></i> 统计表样例</a>
 			</div>
@@ -122,7 +122,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'单行文本', name:'testInput', index:'a.test_input', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			if(obj.rowId == ''){ return '小计:'; }
@@ -163,11 +163,11 @@ $('#dataGrid').dataGrid({
 		{header:'操作', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('test:testData:edit')){
-				actions.push('<a href="${ctx}/test1/testData/form?id='+row.id+'" class="btnList" title="编辑数据"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/test1/testData/form?id='+row.id+'" class="btnList" title="编辑数据"><i class="fa icon-note"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/test1/testData/disable?id='+row.id+'" class="btnList" title="停用数据" data-confirm="确认要停用该数据吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/test1/testData/disable?id='+row.id+'" class="btnList" title="停用数据" data-confirm="确认要停用该数据吗？"><i class="fa icon-ban"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/test1/testData/enable?id='+row.id+'" class="btnList" title="启用数据" data-confirm="确认要启用该数据吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/test1/testData/enable?id='+row.id+'" class="btnList" title="启用数据" data-confirm="确认要启用该数据吗？"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/test1/testData/delete?id='+row.id+'" class="btnList" title="删除数据" data-confirm="确认要删除该数据吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			//# }

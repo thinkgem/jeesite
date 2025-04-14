@@ -9,10 +9,10 @@
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<a href="#" class="btn btn-default" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a>
 				<% if(hasPermi('test:testData:edit')){ %>
-					<a href="${ctx}/test1/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/test1/testData/form" class="btn btn-primary btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 				<a href="#" class="btn btn-default" id="btnTrunsTest" title="事务测试"><i class="fa fa-refresh"></i> 事务测试</a>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -66,7 +66,7 @@
 						<label class="control-label">${text('用户选择')}：</label>
 						<div class="control-inline width-120" >
 							<#form:treeselect id="testUser" title="${text('用户选择')}"
-								path="testUser.userCode" labelPath="testUser.userName"
+								path="testUser.userCode" labelPath="testUser.userName" 
 								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
 						</div>
 					</div>
@@ -74,7 +74,7 @@
 						<label class="control-label">${text('机构选择')}：</label>
 						<div class="control-inline width-120" >
 							<#form:treeselect id="testOffice" title="${text('机构选择')}"
-								path="testOffice.officeCode" labelPath="testOffice.officeName"
+								path="testOffice.officeCode" labelPath="testOffice.officeName" 
 								url="${ctx}/sys/office/treeData" allowClear="true"/>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 						<label class="control-label">${text('区域选择')}：</label>
 						<div class="control-inline width-120" >
 							<#form:treeselect id="testAreaCode" title="${text('区域选择')}"
-								path="testAreaCode" labelPath="testAreaName"
+								path="testAreaCode" labelPath="testAreaName" 
 								url="${ctx}/sys/area/treeData" allowClear="true"/>
 						</div>
 					</div>
@@ -152,14 +152,14 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', firstsortorder:'desc', width:150, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
-		{header:'${text("操作")}', name:'actions', width:100, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:110, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('test:testData:edit')){
-				actions.push('<a href="${ctx}/test1/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/test1/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa icon-note"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/test1/testData/disable?id='+row.id+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/test1/testData/disable?id='+row.id+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/test1/testData/enable?id='+row.id+'" class="btnList" title="${text("启用数据")}" data-confirm="${text("确认要启用该数据吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/test1/testData/enable?id='+row.id+'" class="btnList" title="${text("启用数据")}" data-confirm="${text("确认要启用该数据吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/test1/testData/delete?id='+row.id+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			//# }
@@ -170,7 +170,7 @@ $('#dataGrid').dataGrid({
 	ondblClickRow: function(id, rownum, colnum, event){
 		js.addTabPage(null, '编辑数据', '${ctx}/test1/testData/form?id='+id);
 	},
-
+	
 	// 子表格支持演示
 	subGrid: true,
 	subGridRowExpanded: function (subgridId, rowId) {
@@ -212,7 +212,7 @@ $('#dataGrid').dataGrid({
 
 	multiSort: true,		// 是否支持多列排序，给列指定 firstsortorder 可设定初次排序方式
 	emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
-
+	
 	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 //		// 无数据显示，v4.1.7 之前版本
@@ -235,7 +235,7 @@ $('#dataGrid').dataGrid({
 .on('jqGridRemapColumns',function(){
 	log($('#dataGrid').dataGrid('getParam', 'columnModel'));
 });
-$("#btnTrunsTest").click(function(){
+$("#btnTrunsTest").click(function(){ 
 	js.ajaxSubmit("${ctx}/test1/testData/transTest", function(data){
 		js.showMessage(data.message);
 		page();

@@ -22,7 +22,7 @@
             </div>
             <div class="box-tools pull-right">
                 <a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
-                <a href="${ctx}/psi/wechatUser/form" class="btn btn-default btnTool" title="${text('新增微信用户表')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+                <a href="${ctx}/psi/wechatUser/form" class="btn btn-primary btnTool" title="${text('新增微信用户表')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
             </div>
         </div>
         <div class="box-body">
@@ -84,9 +84,9 @@ function formatter(val, obj, row, act) {
 
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-    searchForm: $("#searchForm"),
+    searchForm: $('#searchForm'),
     data: dataGridData.data,
-    datatype: "local", // 设置本地数据
+    datatype: 'local', // 设置本地数据
     columnModel: [
         {
             header: '大区', name: 'parentArea', align: 'center', width: 150, sortable: false, formatter: formatter,
