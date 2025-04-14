@@ -203,7 +203,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 ::-webkit-scrollbar {background:#2a2a2a;}
 ::-webkit-scrollbar-thumb {background:#6a6a6a;}
 
-.btn-default {background-color:#323232;border-color:#323232;color:#b5b5b5;}
+.btn-default {background-color:#323232;border-color:#323232;color:#b5b5b5;} .btn-default i {color:#dfdfdf;}
 .btn-default.active, .btn-default:active {background-color:#3e3e3e;border-color:#3e3e3e;color:#dfdfdf;}
 .btn-default:hover, .btn-default:active, .btn-default.hover, .btn-default:focus,
 .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus,
