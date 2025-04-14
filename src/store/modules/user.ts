@@ -34,8 +34,7 @@ interface UserState {
   emitter: Emitter<any>;
 }
 
-export const useUserStore = defineStore({
-  id: 'app-user',
+export const useUserStore = defineStore('app-user', {
   state: (): UserState => ({
     // user info
     userInfo: null,

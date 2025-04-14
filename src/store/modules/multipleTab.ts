@@ -28,8 +28,7 @@ export interface MultipleTabState {
 
 const cacheTab = projectSetting.multiTabsSetting.cache;
 
-export const useMultipleTabStore = defineStore({
-  id: 'app-multiple-tab',
+export const useMultipleTabStore = defineStore('app-multiple-tab', {
   state: (): MultipleTabState => ({
     // Tabs that need to be cached
     cacheTabList: new Set(),
@@ -142,7 +141,7 @@ export const useMultipleTabStore = defineStore({
         // Add tab
         this.tabList.push(route);
       }
-      this.updateCacheTab();
+      await this.updateCacheTab();
       cacheTab && Persistent.setLocal(MULTIPLE_TABS_KEY, this.tabList);
     },
 
@@ -196,7 +195,7 @@ export const useMultipleTabStore = defineStore({
         toTarget = getToTarget(page);
       }
       close(currentRoute.value);
-      replace(toTarget);
+      await replace(toTarget);
     },
 
     // Close according to key
@@ -226,9 +225,9 @@ export const useMultipleTabStore = defineStore({
             pathList.push(item.fullPath || item.path);
           }
         }
-        this.bulkCloseTabs(pathList);
+        await this.bulkCloseTabs(pathList);
       }
-      this.updateCacheTab();
+      await this.updateCacheTab();
       // handleGotoPage(router);
     },
 
@@ -246,9 +245,9 @@ export const useMultipleTabStore = defineStore({
             pathList.push(item.fullPath || item.path);
           }
         }
-        this.bulkCloseTabs(pathList);
+        await this.bulkCloseTabs(pathList);
       }
-      this.updateCacheTab();
+      await this.updateCacheTab();
       // handleGotoPage(router);
     },
 
@@ -278,8 +277,8 @@ export const useMultipleTabStore = defineStore({
           }
         }
       }
-      this.bulkCloseTabs(pathList);
-      this.updateCacheTab();
+      await this.bulkCloseTabs(pathList);
+      await this.updateCacheTab();
       // handleGotoPage(router);
     },
 
