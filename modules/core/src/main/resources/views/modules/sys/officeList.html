@@ -13,9 +13,9 @@
 				<a href="#" class="btn btn-default" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a>
 				<% if(hasPermi('sys:office:edit')){ %>
 					<a href="#" class="btn btn-default" id="btnImport"><i class="glyphicon glyphicon-import"></i> ${text('导入')}</a>
-					<a href="${ctx}/sys/office/form" class="btn btn-default btnTool" title="${text('新增机构')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/office/form" class="btn btn-primary btnTool" title="${text('新增机构')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -81,17 +81,17 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '${text("未知")}', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:140, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('sys:office:edit')){
-				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="${text("编辑机构")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="${text("编辑机构")}"><i class="fa icon-note"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="${text("停用机构")}" data-confirm="${text("确认要停用该机构吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="${text("停用机构")}" data-confirm="${text("确认要停用该机构吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="${text("启用机构")}" data-confirm="${text("确认要启用该机构吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="${text("启用机构")}" data-confirm="${text("确认要启用该机构吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="${text("删除机构")}" data-confirm="${text("确认要删除该机构及所有子机构吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/sys/office/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级机构")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级机构")}"><i class="fa icon-plus"></i></a>&nbsp;');
 			//# }
 			return actions.join('');
 		}}

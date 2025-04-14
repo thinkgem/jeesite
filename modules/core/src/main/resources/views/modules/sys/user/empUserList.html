@@ -10,9 +10,9 @@
 				<a href="#" class="btn btn-default" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a>
 				<% if(hasPermi('sys:empUser:edit')){ %>
 					<a href="#" class="btn btn-default" id="btnImport"><i class="glyphicon glyphicon-import"></i> ${text('导入')}</a>
-					<a href="${ctx}/sys/empUser/form?op=add" class="btn btn-default btnTool" title="${text('新增用户')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/empUser/form?op=add" class="btn btn-primary btnTool" title="${text('新增用户')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 				<!-- <div class="btn-group">
 					<a href="javascript:" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-navicon"></i> <span class="caret"></span>
@@ -139,25 +139,25 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:60, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:140, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('sys:empUser:edit')){
-				actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa icon-note"></i></a>&nbsp;');
 			//# }
 			//# if(hasPermi('sys:empUser:updateStatus')){
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_AUDIT){
-					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}else if (row.status == Global.STATUS_FREEZE){
-					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'&freeze=true" class="btnList" title="${text("解冻用户")}" data-confirm="${text("确认要解冻该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'&freeze=true" class="btnList" title="${text("解冻用户")}" data-confirm="${text("确认要解冻该用户吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 			//# }
 			//# if(hasPermi('sys:empUser:edit')){
 				actions.push('<a href="${ctx}/sys/empUser/delete?userCode='+row.userCode+'" class="btnList" title="${text("删除用户")}" data-confirm="${text("确认要删除该用户吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			//# }
 			//# if(hasPermi('sys:empUser:authRole,sys:empUser:authDataScope,sys:empUser:resetpwd', 'or')){
-				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa icon-options"></i></a>&nbsp;');
 				actions.push('<div class="moreItems">');
 				//# if(hasPermi('sys:empUser:authRole')){
 					actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=auth" class="btn btn-default btn-xs btnList" title="${text("用户分配角色")}"><i class="fa fa-check-square-o"></i> ${text("分配角色")}</a>&nbsp;');
@@ -170,7 +170,7 @@ $('#dataGrid').dataGrid({
 				//# }
 				//# if(hasPermi('sys:empUser:updateStatus')){
 				// 	if (row.status == Global.STATUS_NORMAL){
-				// 		actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'&freeze=true" class="btn btn-default btn-xs btnList" title="${text("冻结用户")}" data-confirm="${text("确认要冻结该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i> ${text("冻结用户")}</a>&nbsp;');
+				// 		actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'&freeze=true" class="btn btn-default btn-xs btnList" title="${text("冻结用户")}" data-confirm="${text("确认要冻结该用户吗？")}"><i class="fa icon-ban"></i> ${text("冻结用户")}</a>&nbsp;');
 				// 	}
 				//# }
 				actions.push('</div>');

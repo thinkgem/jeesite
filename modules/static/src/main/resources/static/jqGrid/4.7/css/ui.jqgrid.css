@@ -306,6 +306,7 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 /* .ui-jqgrid .ui-jqgrid-btable .cbox {margin-top:3px;margin-left:2px;} 复选框 */
 .ui-jqgrid-table-striped > tbody > tr:nth-of-type(odd) {background-color:#fafafa;opacity:1;} /* 斑马线 */
 .ui-jqgrid tr.ui-state-highlight td {background-color:#e3edf5;} /* 当前行 */
+.ui-jqgrid .badge {font-weight:normal;}
 
 /* footer */
 .ui-jqgrid tr.jqgroup td {height:32px;padding:0 2px;background:#fff;} /* 分组标题 */
@@ -346,16 +347,23 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid .treeclick {margin-top:2px;}
 
 /* 更多操作列 */
+.ui-jqgrid .actions > a {padding:0;}
 .ui-jqgrid .actions > a i {display:inline-block;width:15px;float:none;position:static;
 	text-align:center;opacity:0.85;-webkit-transition:all 0.12s;-o-transition:all 0.12s;
-	transition:all 0.12s;margin:0 0 2px 3px;vertical-align:middle;cursor:pointer;font-size:14px;}
+	transition:all 0.12s;margin:0 0 2px 8px;vertical-align:middle;cursor:pointer;font-size:14px;}
 .ui-jqgrid .actions > a i:hover, .ui-jqgrid .actions > a.open i {
-	-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);
-	-ms-transform:scale(1.2);transform:scale(1.2);opacity:1;position:static;margin:0 0 2px 3px;}
+	-moz-transform:scale(1.1);-webkit-transform:scale(1.1);-o-transform:scale(1.1);
+	-ms-transform:scale(1.1);transform:scale(1.1);opacity:1;position:static;}
 .ui-jqgrid .actions > a i.glyphicon {font-size:13px;}
 .ui-jqgrid .actions > a i.fa-check {color:#1e5edb;}
-.ui-jqgrid .actions > a i.fa-pencil, .ui-jqgrid .actions > a i.glyphicon-ok-circle {color:#108c53;}
-.ui-jqgrid .actions > a i.fa-trash-o, .ui-jqgrid .actions > a i.glyphicon-ban-circle {color:#dd5a43;}
+.ui-jqgrid .actions > a i.fa-chevron-circle-right {color: #4773ca;}
+.ui-jqgrid .actions > a i.fa-pencil, .ui-jqgrid .actions > a i.glyphicon-ok-circle,
+.ui-jqgrid .actions > a i.icon-check {color:#108c53;}
+.ui-jqgrid .actions > a i.fa-trash-o, .ui-jqgrid .actions > a i.glyphicon-ban-circle,
+.ui-jqgrid .actions > a i.icon-ban, .ui-jqgrid .actions > a i.icon-trash {color:#dd5a43;}
+.ui-jqgrid .actions > a i.icon-ban, .ui-jqgrid .actions > a i.icon-check, .ui-jqgrid .actions > a i.icon-trash {font-weight:bold;}
+.ui-jqgrid .actions > a i.icon-list {font-size:16px;font-weight:bold;margin-top:1px}
+.ui-jqgrid .actions > a i.fa-trash-o {font-size:15px;}
 .ui-jqgrid .actions .moreItems {padding:5px 0 0 5px;background:#fff;border:1px solid #ddd;border-radius:4px;box-shadow:2px 2px 15px #ccc;position:absolute;z-index:5;display:none;}
 .ui-jqgrid .actions .moreItems a {padding:1px 5px 2px;margin:0 0 4px 0;font-size:13px;}
 

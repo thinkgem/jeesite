@@ -8,9 +8,9 @@
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('app:appUpgrade:edit')){ %>
-					<a href="${ctx}/app/appUpgrade/form" class="btn btn-default btnTool" title="${text('新增版本')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/app/appUpgrade/form" class="btn btn-primary btnTool" title="${text('新增版本')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -82,11 +82,11 @@ $('#dataGrid').dataGrid({
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('app:appUpgrade:edit')){
-				actions.push('<a href="${ctx}/app/appUpgrade/form?id='+row.id+'" class="btnList" title="${text("编辑版本")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/app/appUpgrade/form?id='+row.id+'" class="btnList" title="${text("编辑版本")}"><i class="fa icon-note"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/app/appUpgrade/disable?id='+row.id+'" class="btnList" title="${text("停用版本")}" data-confirm="${text("确认要停用该版本吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/app/appUpgrade/disable?id='+row.id+'" class="btnList" title="${text("停用版本")}" data-confirm="${text("确认要停用该版本吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/app/appUpgrade/enable?id='+row.id+'" class="btnList" title="${text("启用版本")}" data-confirm="${text("确认要启用该版本吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/app/appUpgrade/enable?id='+row.id+'" class="btnList" title="${text("启用版本")}" data-confirm="${text("确认要启用该版本吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/app/appUpgrade/delete?id='+row.id+'" class="btnList" title="${text("删除版本")}" data-confirm="${text("确认要删除该版本吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			//# }

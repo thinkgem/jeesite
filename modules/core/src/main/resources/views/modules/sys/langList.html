@@ -10,10 +10,10 @@
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:lang:edit')){ %>
-					<a href="${ctx}/sys/lang/form" class="btn btn-default btnTool" title="${text('新增语言')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/lang/form" class="btn btn-primary btnTool" title="${text('新增语言')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 					<a href="#" class="btn btn-default" id="btnUpdateCache" title="${text('清理国际化缓存')}"><i class="fa fa-refresh"></i> ${text('清理缓存')}</a>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -34,13 +34,13 @@
 				<div class="form-group">
 					<label class="control-label">${text('语言类型')}：</label>
 					<div class="control-inline width-90">
-						<#form:select path="langType" dictType="sys_lang_type" blankOption="true" class="form-control isQuick"/>
+						<#form:select path="langType" dictType="sys_lang_type" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('归属模块')}：</label>
 					<div class="control-inline width-120">
-						<#form:select path="module.moduleCode" items="${moduleList}" itemLabel="moduleName" 
+						<#form:select path="module.moduleCode" items="${moduleList}" itemLabel="moduleNameText"
 							itemValue="moduleCode" class="form-control" blankOption="true"/>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("语言编码")}', name:'langCode', index:'a.lang_code', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" data-title="${text("编辑语言")}">'+(val||row.id)+'</a>';
@@ -67,13 +67,13 @@ $('#dataGrid').dataGrid({
 		{header:'${text("语言类型")}', name:'langType', index:'a.lang_type', width:200, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_lang_type')}", val, '未知', true);
 		}},
-		{header:'${text("归属模块")}', name:'module.moduleNameText', index:'a.module_code', width:200, align:"center"},
+		{header:'${text("归属模块")}', name:'module.moduleName', index:'a.module_code', width:200, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('sys:lang:edit')){
-				actions.push('<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" title="${text("编辑语言")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" title="${text("编辑语言")}"><i class="fa icon-note"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/sys/lang/delete?id='+row.id+'" class="btnList" title="${text("删除语言")}" data-confirm="${text("确认要删除该语言吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			//# }
 			return actions.join('');

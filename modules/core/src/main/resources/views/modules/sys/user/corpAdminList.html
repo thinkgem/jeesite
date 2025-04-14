@@ -9,12 +9,12 @@
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:corpAdmin:edit')){ %>
 					<% if(useCorpModel){ %>
-					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title=" ${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-primary btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 					<% }else{ %>
-					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${currentCorpCode}&corpName_=${currentCorpName}&op=addAdmin" class="btn btn-default btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${currentCorpCode}&corpName_=${currentCorpName}&op=addAdmin" class="btn btn-primary btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 					<% } %>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -64,7 +64,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text("编辑用户")}">'+(val||row.id)+'</a>';
@@ -83,20 +83,20 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:160, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('sys:corpAdmin:edit')){
-				actions.push('<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa icon-note"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/corpAdmin/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/corpAdmin/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/corpAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("删除用户")}" data-confirm="${text("确认要删除该用户吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 				//# if(useCorpModel){
-				actions.push('<a href="${ctx}/sys/corpAdmin/form?corpCode_='+row.corpCode_+'&corpName_='+row.corpName_+'&op=addAdmin" class="btnList" title="${text("新增管理员")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/corpAdmin/form?corpCode_='+row.corpCode_+'&corpName_='+row.corpName_+'&op=addAdmin" class="btnList" title="${text("新增管理员")}"><i class="fa icon-plus"></i></a>&nbsp;');
 				//# }
-				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa icon-options"></i></a>&nbsp;');
 				actions.push('<div class="moreItems">');
 				actions.push('<a href="${ctx}/sys/corpAdmin/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户密码重置")}" data-confirm="${text("确认要将该用户密码重置到初始状态吗？")}"><i class="fa fa-reply-all"></i> ${text("重置密码")}</a>&nbsp;');
 				actions.push('</div>');

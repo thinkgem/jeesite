@@ -10,9 +10,9 @@
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:role:edit')){ %>
-					<a href="${ctx}/sys/role/form?op=add" class="btn btn-default btnTool" title="${text('新增角色')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/role/form?op=add" class="btn btn-primary btnTool" title="${text('新增角色')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -96,17 +96,17 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:110, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:140, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('sys:role:edit')){
-				actions.push('<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" title="${text("编辑角色")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" title="${text("编辑角色")}"><i class="fa icon-note"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/role/disable?roleCode='+row.roleCode+'" class="btnList" title="${text("停用角色")}" data-confirm="${text("确认要停用该角色吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/role/disable?roleCode='+row.roleCode+'" class="btnList" title="${text("停用角色")}" data-confirm="${text("确认要停用该角色吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				}else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/role/enable?roleCode='+row.roleCode+'" class="btnList" title="${text("启用角色")}" data-confirm="${text("确认要启用该角色吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/role/enable?roleCode='+row.roleCode+'" class="btnList" title="${text("启用角色")}" data-confirm="${text("确认要启用该角色吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/role/delete?roleCode='+row.roleCode+'" class="btnList" title="${text("删除角色")}" data-confirm="${text("确认要删除该角色吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa icon-options"></i></a>&nbsp;');
 				actions.push('<div class="moreItems">');
 				actions.push('<a href="${ctx}/sys/role/form?roleCode='+row.id+'&op=auth" class="btn btn-default btn-xs btnList" title="${text("角色分配功能权限")}"><i class="fa fa-check-square-o"></i> ${text("授权菜单")}</a>&nbsp;');
 				actions.push('<a href="${ctx}/sys/role/formAuthDataScope?roleCode='+row.id+'" class="btn btn-default btn-xs btnList" title="${text("角色分配数据权限")}"><i class="fa fa-check-circle-o"></i> ${text("数据权限")}</a>&nbsp;');

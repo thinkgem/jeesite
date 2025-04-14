@@ -4,7 +4,7 @@
 		<div class="box-header">
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<ul class="nav nav-tabs">
@@ -134,7 +134,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("浏览器名")}', name:'browserName', index:'a.browser_name', width:100, align:"center"},
 		{header:'${text("响应时间")}', name:'executeTimeFormat', index:'a.execute_time', width:100, align:"center"}/* ,
 		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa fa-pencil"></i></a>&nbsp;';
+			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa icon-note"></i></a>&nbsp;';
 		}} */
 	],
 	//# // 加载成功后执行事件

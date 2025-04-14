@@ -76,19 +76,19 @@ $('#dataGrid').dataGrid({
 			actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("查看${functionNameSimple}")}"><i class="fa fa-file-text-o"></i></a>&nbsp;');
 		<% }else{ %>
 			\//# if(hasPermi('${permissionPrefix}:edit')){
-				actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("编辑${functionNameSimple}")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("编辑${functionNameSimple}")}"><i class="fa icon-note"></i></a>&nbsp;');
 				<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="\${ctx}/${urlPrefix}/disable?${idParam}" class="btnList" title="\${text("停用${functionNameSimple}")}" data-confirm="\${text("确认要停用该${functionNameSimple}吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="\${ctx}/${urlPrefix}/disable?${idParam}" class="btnList" title="\${text("停用${functionNameSimple}")}" data-confirm="\${text("确认要停用该${functionNameSimple}吗？")}"><i class="fa icon-ban"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="\${ctx}/${urlPrefix}/enable?${idParam}" class="btnList" title="\${text("启用${functionNameSimple}")}" data-confirm="\${text("确认要启用该${functionNameSimple}吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="\${ctx}/${urlPrefix}/enable?${idParam}" class="btnList" title="\${text("启用${functionNameSimple}")}" data-confirm="\${text("确认要启用该${functionNameSimple}吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				<% } %>
 				<% if(toBoolean(table.optionMap['isHaveDelete'])){ %>
 				actions.push('<a href="\${ctx}/${urlPrefix}/delete?${idParam}" class="btnList" title="\${text("删除${functionNameSimple}")}" data-confirm="\${text("确认要删除该${functionNameSimple}<% if(table.isTreeEntity){ %>及所有子${functionNameSimple}<% } %>吗？")}"<% if(table.isTreeEntity){ %> data-deltreenode="'+row.id+'"<% } %>><i class="fa fa-trash-o"></i></a>&nbsp;');
 				<% } %>
 				<% if(table.isTreeEntity){ %>
-				actions.push('<a href="\${ctx}/${urlPrefix}/form?parentCode='+row.id+'" class="btnList" title="\${text("新增下级${functionNameSimple}")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="\${ctx}/${urlPrefix}/form?parentCode='+row.id+'" class="btnList" title="\${text("新增下级${functionNameSimple}")}"><i class="fa icon-plus"></i></a>&nbsp;');
 				<% } %>
 			\//# }
 			<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
