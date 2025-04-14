@@ -1,23 +1,33 @@
 import type { AppRouteRecordRaw } from '/@/router/types';
 
-import { computed, toRaw, unref } from 'vue';
+import { computed, toRaw, ref, unref } from 'vue';
 
 import { useMultipleTabStore } from '/@/store/modules/multipleTab';
 
 import { uniqBy } from 'lodash-es';
 
 import { useMultipleTabSetting } from '/@/hooks/setting/useMultipleTabSetting';
+import { useFullContent } from '/@/hooks/web/useFullContent';
 
-import { useRouter } from 'vue-router';
+import { RouteRecordRaw, useRouter } from 'vue-router';
+import { LAYOUT, IFRAME_BLANK } from '/@/router/constant';
+import { router } from '/@/router';
+
+const framePages = ref<AppRouteRecordRaw[]>();
+const tempFramePages = ref<AppRouteRecordRaw[]>();
 
 export function useFrameKeepAlive() {
   const router = useRouter();
   const { currentRoute } = router;
   const { getShowMultipleTab } = useMultipleTabSetting();
+  const { getFullContent } = useFullContent();
   const tabStore = useMultipleTabStore();
+
   const getFramePages = computed(() => {
-    const ret = getAllFramePages(toRaw(router.getRoutes()) as unknown as AppRouteRecordRaw[]) || [];
-    return ret;
+    if (!unref(framePages.value)) {
+      framePages.value = getAllFramePages(toRaw(router.getRoutes()) as AppRouteRecordRaw[]);
+    }
+    return [...(framePages.value || []), ...(tempFramePages.value || [])];
   });
 
   const getOpenTabList = computed((): string[] => {
@@ -33,7 +43,7 @@ export function useFrameKeepAlive() {
     let res: AppRouteRecordRaw[] = [];
     for (const route of routes) {
       const { meta: { frameSrc } = {}, children } = route;
-      if (frameSrc) {
+      if (frameSrc && !route.name.startsWith('JeeSite')) {
         res.push(route);
       }
       if (children && children.length) {
@@ -41,7 +51,7 @@ export function useFrameKeepAlive() {
       }
     }
     res = uniqBy(res, 'name');
-    return res;
+    return (res || []) as AppRouteRecordRaw[];
   }
 
   function showIframe(item: AppRouteRecordRaw) {
@@ -49,11 +59,45 @@ export function useFrameKeepAlive() {
   }
 
   function hasRenderFrame(name: string) {
-    if (!unref(getShowMultipleTab)) {
+    if (!unref(getShowMultipleTab) || unref(getFullContent)) {
       return router.currentRoute.value.name === name;
     }
     return unref(getOpenTabList).includes(name);
   }
 
   return { hasRenderFrame, getFramePages, showIframe, getAllFramePages };
+}
+
+export function initFramePage() {
+  tempFramePages.value = JSON.parse(sessionStorage.getItem('temp-frame-pages') || '[]');
+  tempFramePages.value?.forEach((r) => addFramePage(r, false));
+  return addFramePage;
+}
+
+function addFramePage(route: AppRouteRecordRaw, store = true) {
+  if (store) {
+    let array = tempFramePages.value || [];
+    if (array.length > 10) {
+      array = array.slice(-10);
+    }
+    for (let i = array.length - 1; i >= 0; i--) {
+      if (array[i].name === route.name) {
+        array.splice(i, 1);
+      }
+    }
+    array.push(route);
+    tempFramePages.value = array;
+    sessionStorage.setItem('temp-frame-pages', JSON.stringify(array));
+  }
+  router.addRoute({
+    component: LAYOUT,
+    meta: { single: true, affix: false },
+    name: `${route.name}Parent`,
+    children: [
+      {
+        component: IFRAME_BLANK,
+        ...route,
+      },
+    ],
+  } as unknown as RouteRecordRaw);
 }
