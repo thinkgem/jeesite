@@ -155,6 +155,7 @@ function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: Bas
       title: t('操作'),
       fixed: 'right',
       slot: 'tableActions',
+      align: 'left',
       ...actionColumn,
       flag: ACTION_COLUMN_FLAG,
     });
