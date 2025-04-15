@@ -11,9 +11,10 @@
 				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="${text('展开一级')}"><i class="fa fa-angle-double-down"></i> ${text('展开')}</a>
 				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a>
 				<% if(hasPermi('test:testTree:edit')){ %>
-					<a href="${ctx}/test/testTree/form" class="btn btn-primary btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 					<a href="#" class="btn btn-default" id="btnFixTreeData" title="修复树表数据（包含字段：parentCodes、treeLeaf、treeLevel、treeSorts、treeNames）"><i class="fa fa-refresh"></i> 修复</a>
+					<a href="${ctx}/test/testTree/form" class="btn btn-primary btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">

@@ -7,10 +7,11 @@
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<a href="${ctx}/demo/dataGrid/stateGrid" class="btn btn-default btnTool" title="统计表样例"><i class="fa fa-hand-lizard-o"></i> 统计表样例</a>
 				<% if(hasPermi('test:testData:edit')){ %>
 					<a href="${ctx}/test/testData/form" class="btn btn-primary btnTool" title="新增数据"><i class="fa fa-plus"></i> 新增</a>
 				<% } %>
-				<a href="${ctx}/demo/dataGrid/stateGrid" class="btn btn-default btnTool" title="统计表样例"><i class="fa fa-hand-lizard-o"></i> 统计表样例</a>
+				<a href="#" class="btn-setting" id="btnSetting" title="${text('设置')}"><i class="fa icon-settings"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
