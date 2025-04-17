@@ -4,7 +4,7 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <span :class="getClass">
+  <span :class="getClass" @click="handleClick" @dblclick="handleDblClick">
     <Spin v-if="props.loading" size="small" :style="$attrs.iconStyle" />
     <Icon v-else :icon="getIcon" :style="$attrs.iconStyle" />
   </span>
@@ -45,9 +45,11 @@
      */
     loading: { type: Boolean, defaultValue: false },
     // eslint check
-    // onClick: { type: Function, default: (_e: Event) => {} },
-    // onDblclick: { type: Function, default: (_e: Event) => {} },
+    onClick: { type: Function, default: (_e: Event) => {} },
+    onDblclick: { type: Function, default: (_e: Event) => {} },
   });
+
+  const emit = defineEmits(['click', 'dblclick']);
 
   const { prefixCls } = useDesign('basic-arrow');
 
@@ -69,6 +71,14 @@
       },
     ];
   });
+
+  function handleClick(event) {
+    emit('click', event);
+  }
+
+  function handleDblClick(event) {
+    emit('dblclick', event);
+  }
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-arrow';
