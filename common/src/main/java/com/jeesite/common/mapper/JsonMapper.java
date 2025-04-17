@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonParser.Feature;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
@@ -152,7 +151,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return this.writeValueAsString(object);
 		} catch (IOException e) {
-			logger.warn("write to json string error:" + object, e);
+			logger.warn("write to json string error: {}", object, e);
 			return null;
 		}
 	}
@@ -166,7 +165,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return this.writerWithView(jsonView).writeValueAsString(object);
 		} catch (IOException e) {
-			logger.warn("write to json string error:" + object, e);
+			logger.warn("write to json string error: {}", object, e);
 			return null;
 		}
 	}
@@ -192,7 +191,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return this.readValue(jsonString, clazz);
 		} catch (IOException e) {
-			logger.warn("parse json string error:" + jsonString, e);
+			logger.warn("parse json string error: {}", jsonString, e);
 			return null;
 		}
 	}
@@ -209,7 +208,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return (T) this.readValue(jsonString, javaType);
 		} catch (IOException e) {
-			logger.warn("parse json string error:" + jsonString, e);
+			logger.warn("parse json string error: {}", jsonString, e);
 			return null;
 		}
 	}
@@ -230,10 +229,8 @@ public class JsonMapper extends ObjectMapper {
 	public <T> T update(String jsonString, T object) {
 		try {
 			return (T) this.readerForUpdating(object).readValue(jsonString);
-		} catch (JsonProcessingException e) {
-			logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
 		} catch (Exception e) {
-			logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
+			logger.warn("update json string: {} to object: {} error.", jsonString, object, e);
 		}
 		return null;
 	}
