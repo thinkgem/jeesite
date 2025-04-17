@@ -36,8 +36,8 @@ public class PropertiesUtils {
 	
 	// 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
 	public static final String[] DEFAULT_CONFIG_FILE = new String[]{
-		"classpath:application.yml", "classpath:config/application.yml",
-		"file:application.yml", "file:config/application.yml",
+		"classpath:config/application.yml", "classpath:application.yml",
+		"file:config/application.yml", "file:application.yml",
 	};
 
 	private static final Logger logger = PropertiesUtils.initLogger();
