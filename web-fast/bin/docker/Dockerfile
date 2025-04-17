@@ -1,4 +1,4 @@
-FROM openjdk:17-slim
+FROM docker.m.daocloud.io/openjdk:17
 LABEL maintainer="ThinkGem@163.com"
 ENV TZ "Asia/Shanghai"
 ENV LANG C.UTF-8
