@@ -53,7 +53,7 @@ jdbc:
   # H2 数据库配置（请修改 /modules/core/pom.xml 文件，打开 H2 DB 依赖）
   type: h2
   driver: org.h2.Driver
-  url: jdbc:h2:~/jeesite-db/jeesite5101
+  url: jdbc:h2:~/jeesite-db/jeesite5110
   username: jeesite
   password: jeesite
   testSql: SELECT 1
@@ -99,9 +99,20 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
     
-# 日志配置
+# 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
+#  level:
+#    root: warn
+#    com.jeesite: debug
+
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
   
 #======================================#
 #========== System settings ===========#
@@ -189,14 +200,6 @@ session:
   # 会话唯一标识SessionId在Cookie中的名称。
   sessionIdCookieName: h2db.jeesite.session.id
   sessionIdCookiePath: ${server.servlet.context-path}
-
-# MyBatis 相关
-mybatis:
-  
-  # Mapper文件刷新线程
-  mapper:
-    refresh:
-      enabled: true
   
 # Web 相关
 web:
