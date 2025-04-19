@@ -24,7 +24,7 @@
 				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="${text('展开一级')}"><i class="fa fa-angle-double-down"></i>${text('展开')}</a>
 				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a> <%
 				if(hasPermi('cms:category:edit')){ %>
-					<a href="${ctx}/cms/category/form?site.siteCode=${category.site.siteCode}" class="btn btn-default btnTool" title="${text('栏目添加')}"><i class="fa fa-plus"></i>${text('新增')}</a>
+					<a href="${ctx}/cms/category/form?site.siteCode=${category.site.siteCode}" class="btn btn-primary btnTool" title="${text('新增栏目')}"><i class="fa fa-plus"></i>${text('新增')}</a>
 				<% } %>
 			</div>
 		</div>

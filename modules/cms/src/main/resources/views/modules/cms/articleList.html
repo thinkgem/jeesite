@@ -6,8 +6,8 @@
 				<i class="fa icon-note"></i> ${text('内容管理')}
 			</div>
 			<div class="box-tools pull-right">
-				<a href="${ctxFront}/index" target="_blank" class="btn btn-default" title="${text('访问站点')}"><i class="fa fa-globe"></i> ${text('访问网站')}</a>
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="${ctxFront}/index" target="_blank" class="btn btn-default" title="${text('访问站点')}"><i class="fa fa-globe"></i> ${text('访问网站')}</a>
 				<% if(hasPermi('cms:article:edit')){ %>
 					<a href="${ctx}/cms/article/form" onclick="$(this).data('href', this.href+'?category.categoryCode='+$('#categoryCode').val())" class="btn btn-primary btnTool" title="${text('新增文章')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
