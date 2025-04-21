@@ -17,6 +17,7 @@
 		<module>../common</module>
 		<module>../modules</module>
 		<module>../web</module>
+		<module>../web-ai</module>
 		<module>../web-api</module>
 		<module>../web-fast</module>
 		<module>../web-mini</module>

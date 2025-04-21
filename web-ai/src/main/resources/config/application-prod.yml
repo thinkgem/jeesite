@@ -1,0 +1,41 @@
+
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod
+
+server:
+
+  port: 8980
+  servlet:
+    context-path: /js
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://192.168.56.1:3306/jeesite?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+  username: jeesite
+  password: jeesite
+  testSql: SELECT 1
+
+  # 数据库连接池配置
+  pool:
+  
+    # 初始化连接数
+    init: 1
+    # 最小连接数
+    minIdle: 3
+    # 最大连接数
+    maxActive: 20
+
+# 日志配置
+logging:
+  config: classpath:config/logback-spring-prod.xml
+
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: false

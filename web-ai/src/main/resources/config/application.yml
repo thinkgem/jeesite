@@ -1,0 +1,239 @@
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
+
+# 产品或项目名称、软件开发公司名称
+productName: JeeSite Demo
+companyName: ThinkGem
+
+# 产品版本、版权年份
+productVersion: V5.11
+copyrightYear: 2025
+
+# 是否演示模式
+demoMode: false
+
+# 专为分离端提供接口服务
+apiMode: false
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8980
+  servlet:
+    context-path: /js
+    register-default-servlet: false
+#    encoding.enabled: true
+  tomcat:
+    uri-encoding: UTF-8
+    # 表单请求数据的最大大小
+    max-http-form-post-size: 20MB
+#    # 进程的最大连接数
+#    max-connections: 8192
+#    # 连接数满后的排队个数
+#    accept-count: 100
+#    # 线程数最大和最小个数
+#    threads:
+#      max: 200
+#      min-spare: 10
+
+  # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
+  schemeHttps: false
+
+#======================================#
+#========== Database sttings ==========#
+#======================================#
+
+# 数据库连接
+jdbc:
+
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+  username: root
+  password: 123456
+  testSql: SELECT 1
+
+  # 连接信息加密
+  encrypt:
+
+    # 加密连接用户名
+    username: false
+    # 加密连接密码
+    password: false
+
+  # 数据库连接池配置
+  pool:
+
+    # 初始化连接数
+    init: 1
+    # 最小空闲连接数
+    minIdle: 3
+    # 最大激活连接数
+    maxActive: 20
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+
+  # 应用程序名称
+  application:
+    name: jeesite-web-ai
+
+  # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+
+  # 打印横幅
+  main:
+    bannerMode: "off"
+
+  # MVC 映射匹配策略
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+# 日志配置（fatal、error、warn、info、debug）
+logging:
+  config: classpath:config/logback-spring.xml
+#  level:
+#    root: warn
+#    com.jeesite: debug
+
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
+
+#======================================#
+#========== System settings ===========#
+#======================================#
+
+# 管理基础路径
+adminPath: /a
+
+# 前端基础路径
+frontPath: /f
+
+# Vue 资源文件路径，与 VITE_PUBLIC_PATH 一致。
+# 映射到 src/main/resources/{vuePath} 文件夹
+vuePath: /vue
+
+# 用户相关
+user:
+
+  # 多租户模式（SAAS模式）（专业版）
+  useCorpModel: false
+
+# 国际化管理（专业版）
+lang:
+  enabled: true
+
+# 任务调度（标准版）
+job:
+  enabled: true
+
+# 代码生成
+gen:
+  enabled: true
+
+# 系统监控
+state:
+  enabled: true
+
+#======================================#
+#========= Framework settings =========#
+#======================================#
+
+# Shiro 相关
+shiro:
+
+  #  defaultPath: ${shiro.loginUrl}
+  defaultPath: ${vuePath}/login
+
+  # 登录相关设置
+  loginUrl: ${adminPath}/login
+  logoutUrl: ${shiro.loginUrl}
+  successUrl: ${adminPath}/index
+
+  # 简单 SSO 登录相关配置
+  sso:
+    # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
+    secretKey: ~
+    # 是否加密单点登录安全Key
+    encryptKey: true
+    # token 时效性，如：1天：yyyyMMdd、1小时：yyyyMMddHH、1分钟：yyyyMMddHHmm
+    encryptKeyDateFormat: yyyyMMdd
+
+  # 登录提交信息加密（如果不需要加密，设置为空即可）
+  loginSubmit:
+    # 加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）加密方式：DES（4.1.9及之前版本默认设置）
+    # v4.2.0+ 开始支持 Base64 加密方式，方便移动端及第三方系统处理认证，可直接设置 Key 为 Base64（4.2.0+默认设置）
+    #secretKey: thinkgem,jeesite,com
+    secretKey: Base64
+    #secretKey: ~
+
+  # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
+  # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
+  rememberMe:
+    secretKey: ~
+
+  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
+  accessControlAllowOrigin: '*'
+
+  # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
+  accessControlAllowMethods: GET, POST, OPTIONS
+  accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
+  accessControlExposeHeaders: x-token, x-remember
+
+# Session 相关
+session:
+  # 会话唯一标识SessionId在Cookie中的名称。
+  sessionIdCookieName: ai.jeesite.session.id
+  sessionIdCookiePath: ${server.servlet.context-path}
+
+# Web 相关
+web:
+
+  # 核心模块的Web功能开启（其它微服务时设为false）
+  core:
+    enabled: true
+
+  # 在线API文档工具
+  swagger:
+    enabled: true
+
+# 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
+error:
+  page:
+    printErrorInfo: true
+
+#======================================#
+#======== FileUpload settings =========#
+#======================================#
+
+# 文件上传
+file:
+  enabled: true
+
+#======================================#
+#========== Message settings ==========#
+#======================================#
+
+# 消息提醒中心（专业版）
+msg:
+  enabled: true
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
