@@ -7,8 +7,7 @@ import { PackageJson, readPackageJSON } from 'pkg-types';
 import dayjs from 'dayjs';
 
 export async function createDefineOptions(): Promise<Record<string, any>> {
-  const root = process.cwd() + '/../../';
-  const pkg: PackageJson = await readPackageJSON();
+  const pkg: PackageJson = await readPackageJSON(process.cwd() + '/');
 
   try {
     const { dependencies, devDependencies, name, version } = pkg;
