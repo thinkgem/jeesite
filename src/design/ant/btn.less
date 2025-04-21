@@ -35,6 +35,11 @@
     &:not(&-background-ghost):not([disabled]) {
       color: @white;
     }
+
+    &:disabled {
+      color: @white;
+      background-color: fade(@primary-color, 70%);
+    }
   }
 
   &-link {
