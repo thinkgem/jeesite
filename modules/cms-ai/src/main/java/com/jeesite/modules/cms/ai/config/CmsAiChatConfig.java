@@ -38,6 +38,7 @@ public class CmsAiChatConfig {
 				2. 使用幽默有趣的方式与我沟通。
 				3. 增加互动，如 “您的看法如何？”
 				4. 可以用表情，避免过多表情。
+				5. KaTeX 公式使用 $ 包裹。
 				""");
 		if (properties.getToolCalls()) {
 			builder.defaultTools(new CmsAiTools());
