@@ -37,7 +37,7 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 云上大模型 -->
+		<!-- 在线大模型 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-model-openai</artifactId>

@@ -40,8 +40,8 @@ import java.util.Map;
 public class CmsAiChatService extends BaseService {
 
 	private static final String CMS_CHAT_CACHE = "cmsChatCache";
-	private static final String[] USER_MESSAGE_SEARCH = new String[]{"{", "}", "$", "%"};
-	private static final String[] USER_MESSAGE_REPLACE = new String[]{"\\{", "\\}", "\\$", "\\%"};
+	private static final String[] USER_MESSAGE_SEARCH = new String[]{"{", "}"};
+	private static final String[] USER_MESSAGE_REPLACE = new String[]{"\\{", "\\}"};
 
 	@Autowired
     private ChatClient chatClient;
