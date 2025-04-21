@@ -27,6 +27,7 @@ server:
   servlet:
     context-path: ~
     register-default-servlet: false
+#    encoding.enabled: true
   tomcat:
     uri-encoding: UTF-8
     # 表单请求数据的最大大小
@@ -38,11 +39,11 @@ server:
 #    # 线程数最大和最小个数
 #    threads:
 #      max: 200
-#      min-spare: 10 
-    
+#      min-spare: 10
+
   # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
   schemeHttps: false
-  
+
 #======================================#
 #========== Database sttings ==========#
 #======================================#
@@ -60,7 +61,7 @@ jdbc:
   
   # 连接信息加密
   encrypt:
-  
+
     # 加密连接用户名
     username: false
     # 加密连接密码
@@ -68,7 +69,7 @@ jdbc:
 
   # 数据库连接池配置
   pool:
-  
+
     # 初始化连接数
     init: 1
     # 最小空闲连接数
@@ -81,15 +82,15 @@ jdbc:
 #======================================#
 
 spring:
-  
+
   # 应用程序名称
   application:
     name: jeesite-web-h2db
-    
+
   # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
     active: default
-    
+
   # 打印横幅
   main:
     bannerMode: "off"
@@ -98,7 +99,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-    
+
 # 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
@@ -113,7 +114,7 @@ mybatis:
   mapper:
     refresh:
       enabled: true
-  
+
 #======================================#
 #========== System settings ===========#
 #======================================#
@@ -130,14 +131,14 @@ vuePath: /vue
 
 # 用户相关
 user:
-  
+
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
-  
+
 # 国际化管理（专业版）
 lang:
   enabled: true
-  
+
 # 任务调度（标准版）
 job:
   enabled: true
@@ -145,7 +146,7 @@ job:
 # 代码生成
 gen:
   enabled: true
-  
+
 # 系统监控
 state:
   enabled: true
@@ -156,7 +157,7 @@ state:
 
 # Shiro 相关
 shiro:
-  
+
   #  defaultPath: ${shiro.loginUrl}
   defaultPath: ${vuePath}/login
 
@@ -181,15 +182,15 @@ shiro:
     #secretKey: thinkgem,jeesite,com
     secretKey: Base64
     #secretKey: ~
-  
+
   # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
   # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
   rememberMe:
     secretKey: ~
-  
+
   # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
   accessControlAllowOrigin: '*'
-  
+
   # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
   accessControlAllowMethods: GET, POST, OPTIONS
   accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
@@ -200,16 +201,16 @@ session:
   # 会话唯一标识SessionId在Cookie中的名称。
   sessionIdCookieName: h2db.jeesite.session.id
   sessionIdCookiePath: ${server.servlet.context-path}
-  
+
 # Web 相关
 web:
 
   # 核心模块的Web功能开启（其它微服务时设为false）
-  core: 
+  core:
     enabled: true
-  
+
   # 在线API文档工具
-  swagger: 
+  swagger:
     enabled: true
 
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
@@ -224,7 +225,7 @@ error:
 # 文件上传
 file:
   enabled: true
-  
+
 #======================================#
 #========== Message settings ==========#
 #======================================#
@@ -232,7 +233,7 @@ file:
 # 消息提醒中心（专业版）
 msg:
   enabled: true
-  
+
 #======================================#
 #========== Project settings ==========#
 #======================================#

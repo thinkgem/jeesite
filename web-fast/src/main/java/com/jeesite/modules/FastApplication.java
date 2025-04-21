@@ -42,9 +42,9 @@ public class FastApplication extends SpringBootServletInitializer {
 		if (StringUtils.isNoneBlank(vuePath, ctxPath)) {
 			logger.info(
 				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   存在此提示：因为您修改了 server.servlet.context-path 参数，需要您"
-				+ "\r\n   同步修改 jeesite-vue/.env.tomcat 中的 VITE_PUBLIC_PATH 并重新打包 "
-				+ "\r\n   如：context-path: " + ctxPath +" 即对应为 VITE_PUBLIC_PATH = " + ctxPath + vuePath
+				+ "\r\n   提示：您修改了 server.servlet.context-path 参数，需要您"
+				+ "\r\n   同步修改 _app.config.js 中的 VITE_GLOB_API_URL_PREFIX 参数 "
+				+ "\r\n   请修改为 VITE_GLOB_API_URL_PREFIX=\"" + ctxPath + "\""
 				+ "\r\n\r\n==============================================================\r\n");
 		}
 		logger.info(
