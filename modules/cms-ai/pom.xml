@@ -101,7 +101,7 @@
 			<version>0.64.8</version>
 		</dependency>
 
-		<!-- 解析文档内容库 -->
+		<!-- Office、zip 等文件内容解析 -->
 		<dependency>
 			<groupId>org.apache.tika</groupId>
 			<artifactId>tika-core</artifactId>
