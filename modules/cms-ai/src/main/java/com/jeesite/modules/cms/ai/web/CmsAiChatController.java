@@ -7,6 +7,7 @@ package com.jeesite.modules.cms.ai.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.cms.ai.service.CmsAiChatService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +78,8 @@ public class CmsAiChatController extends BaseController {
 	 * @author ThinkGem
 	 */
     @RequestMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ChatResponse> stream(String id, String message) {
-		return cmsAiChatService.chatStream(id, message);
+    public Flux<ChatResponse> stream(String id, String message, HttpServletRequest request) {
+		return cmsAiChatService.chatStream(id, message, request);
     }
 
 }

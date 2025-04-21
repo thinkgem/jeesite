@@ -13,19 +13,17 @@ spring:
       #api-key: ${BAILIAN_APP_KEY}
       # 聊天对话模型
       chat:
-        enabled: false
         options:
           model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
           #model: DeepSeek-R1-Distill-Qwen-14B
           #model: deepseek-r1-distill-llama-8b
           max-tokens: 1024
           temperature: 0.6
-          top-p: 0.7
+          top-p: 0.9
           frequency-penalty: 0
-          logprobs: true
+          #logprobs: true
       # 向量库知识库模型（注意：不同的模型维度不同）
       embedding:
-        enabled: false
         options:
           model: BAAI/bge-m3
           #model: bge-large-zh-v1.5
@@ -33,12 +31,14 @@ spring:
           #model: text-embedding-v3
           #dimensions: 1024
 
+    # 是否启用工具调用
+    tool-calls: false
+
     # 本地大模型配置（使用该模型，请开启 enabled 参数）
     ollama:
       base-url: http://localhost:11434
       # 聊天对话模型
       chat:
-        enabled: true
         options:
           model: qwen2.5
           #model: deepseek-r1:7b
@@ -48,7 +48,6 @@ spring:
           frequency-penalty: 0
       # 向量库知识库模型（注意：不同的模型维度不同）
       embedding:
-        enabled: true
         # 维度 dimensions 设置为 384
         #model: all-minilm:33m
         # 维度 dimensions 设置为 768
@@ -68,67 +67,64 @@ spring:
         #collection-name: vector_store
         collection-name: vector_store_1024
 
-#      # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）
-#      pgvector:
-#        id-type: TEXT
-#        index-type: HNSW
-#        distance-type: COSINE_DISTANCE
-#        initialize-schema: false
-#        #table-name: vector_store_384
-#        #dimensions: 384
-#        #table-name: vector_store_786
-#        #dimensions: 768
-#        table-name: vector_store_1024
-#        dimensions: 1024
-#        batching-strategy: TOKEN_COUNT
-#        max-document-batch-size: 10000
+      # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）
+      pgvector:
+        id-type: TEXT
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        initialize-schema: false
+        #table-name: vector_store_384
+        #dimensions: 384
+        #table-name: vector_store_786
+        #dimensions: 768
+        table-name: vector_store_1024
+        dimensions: 1024
+        max-document-batch-size: 10000
 
-#      # ES 向量数据库（ES 连接配置，见下文）
-#      elasticsearch:
-#        index-name: vector-index
-#        initialize-schema: true
-#        dimensions: 1024
-#        similarity: cosine
-#        batching-strategy: TOKEN_COUNT
+      # ES 向量数据库（ES 连接配置，见下文）
+      elasticsearch:
+        index-name: vector-index
+        initialize-schema: true
+        dimensions: 1024
+        similarity: cosine
 
-#      # Milvus 向量数据库（字符串长度不超过65535）
-#      milvus:
-#        client:
-#          host: "localhost"
-#          port: 19530
-#          username: "root"
-#          password: "milvus"
-#        initialize-schema: true
-#        database-name: "default2"
-#        collection-name: "vector_store2"
-#        embedding-dimension: 384
-#        index-type: HNSW
-#        metric-type: COSINE
+      # Milvus 向量数据库
+      milvus:
+        client:
+          host: "localhost"
+          port: 19530
+          username: "root"
+          password: "milvus"
+        initialize-schema: true
+        database-name: "default"
+        collection-name: "vector_store"
+        embedding-dimension: 384
+        index-type: HNSW
+        metric-type: COSINE
 
 # ========= Postgresql 向量数据库数据源 =========
 
-#jdbc:
-#  ds_pgvector:
-#    type: postgresql
-#    driver: org.postgresql.Driver
-#    url: jdbc:postgresql://127.0.0.1:5433/jeesite-ai
-#    username: postgres
-#    password: postgres
-#    testSql: SELECT 1
-#    pool:
-#      init: 0
-#      minIdle: 0
-#      breakAfterAcquireFailure: true
+jdbc:
+  ds_pgvector:
+    type: postgresql
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5433/jeesite-ai
+    username: postgres
+    password: postgres
+    testSql: SELECT 1
+    pool:
+      init: 0
+      minIdle: 0
+      breakAfterAcquireFailure: true
 
 # ========= ES 向量数据库连接配置 =========
 
-#spring.elasticsearch:
-#    enabled: true
-#    socket-timeout: 120s
-#    connection-timeout: 120s
-#    uris: http://127.0.0.1:9200
-#    username: elastic
-#    password: elastic
+spring.elasticsearch:
+    socket-timeout: 120s
+    connection-timeout: 120s
+    uris: http://127.0.0.1:9200
+    username: elastic
+    password: elastic
 
 # 对话消息存缓存，可自定义存数据库
 j2cache:
