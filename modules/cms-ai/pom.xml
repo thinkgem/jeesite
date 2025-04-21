@@ -19,7 +19,7 @@
 
 	<properties>
 
-		<spring-ai.version>1.0.0-M6</spring-ai.version>
+		<spring-ai.version>1.0.0-M7</spring-ai.version>
 
 	</properties>
 	
@@ -40,19 +40,25 @@
 		<!-- 云上大模型 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+			<artifactId>spring-ai-starter-model-openai</artifactId>
 		</dependency>
 
-		<!-- 本地大模型 -->
+		<!-- 本地大模型
 		<dependency>
 		   <groupId>org.springframework.ai</groupId>
-		   <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+		   <artifactId>spring-ai-starter-model-ollama</artifactId>
+		</dependency> -->
+
+		<!-- 向量数据库 -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-advisors-vector-store</artifactId>
 		</dependency>
 
 		<!-- Chroma 向量数据库 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-chroma-store-spring-boot-starter</artifactId>
+			<artifactId>spring-ai-starter-vector-store-chroma</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
@@ -62,19 +68,19 @@
 		<!-- PG 向量数据库
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
+            <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
         </dependency> -->
 
 		<!-- ES 向量数据库
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-elasticsearch-store-spring-boot-starter</artifactId>
+			<artifactId>spring-ai-starter-vector-store-elasticsearch</artifactId>
 		</dependency> -->
 
 		<!-- Milvus 向量数据库
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-milvus-store-spring-boot-starter</artifactId>
+			<artifactId>spring-ai-starter-vector-store-milvus</artifactId>
 			<exclusions>
 				<exclusion>
 					<artifactId>slf4j-reload4j</artifactId>
