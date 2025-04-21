@@ -7,14 +7,14 @@
   <PageWrapper :sidebarWidth="230" :contentFullHeight="true">
     <template #sidebar>
       <div class="p-2 pt-1">
-        <a-button type="primary" class="w-full" @click="handleAdd">
+        <a-button type="primary" class="w-full" @click="handleAdd" :disabled="loading">
           <Icon icon="i-ant-design:plus-outlined" /> {{ t('新建对话') }}
         </a-button>
       </div>
-      <ScrollContainer class="p-2 bg-white rounded-2 h-full">
-        <Menu style="border-right: 0; padding: 2px" v-model:selectedKeys="conversationIds">
+      <ScrollContainer class="jeesite-cms-ai p-2 bg-white rounded-2 h-full">
+        <Menu class="jeesite-cms-ai-menu" v-model:selectedKeys="conversationIds" :disabled="loading">
           <template v-for="(item, index) in chatList" :key="item.id">
-            <Menu.Item @click="handleSelect(item)" style="padding-right: 8px">
+            <Menu.Item @click="handleSelect(item)">
               <div class="flex justify-end">
                 <span v-if="item.edit" class="flex-1 mr-2">
                   <a-input
@@ -90,7 +90,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
-  import { useUserStore } from '/@/store/modules/user';
+  import { useUserStore } from '@jeesite/core/store/modules/user';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
@@ -115,7 +115,9 @@
       chatList.value.unshift(res);
     }
     await nextTick(async () => {
-      await handleSelect(chatList.value[0]);
+      setTimeout(async () => {
+        await handleSelect(chatList.value[0]);
+      }, 100);
     });
   });
 
@@ -166,26 +168,21 @@
     }
   }
 
-  function handleInputMessage(value: string) {
-    if (inputMessageRef.value) {
-      inputMessageRef.value.value = value;
-      inputMessageRef.value.style.height = 'auto';
-    }
-  }
-
   function handleEnter(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      handleSend();
+      if (!loading.value) {
+        handleSend();
+      }
     }
   }
 
   async function handleSend() {
     if (inputMessageRef.value && inputMessageRef.value.value) {
-      loading.value = true;
       if (!conversationIds.value[0]) {
         await handleAdd();
       }
+      loading.value = true;
       const params = {
         id: conversationIds.value[0],
         message: inputMessageRef.value.value,
@@ -193,6 +190,14 @@
       inputMessageRef.value.value = '';
       inputMessageRef.value.style.height = 'auto';
       try {
+        chatList.value
+          .filter((item) => item.id == params.id)
+          .forEach((item) => {
+            if (item.title.startsWith('新对话')) {
+              item.title = params.message.substring(0, 30);
+              cmsChatSave(item);
+            }
+          });
         await messageRef.value?.sendMessage(params);
       } finally {
         loading.value = false;
@@ -201,8 +206,35 @@
       showMessage(t('请填写你的问题'));
     }
   }
-
-  function handleStopLoading() {
-    loading.value = false;
-  }
 </script>
+<style lang="less">
+  .jeesite-cms-ai {
+    &-menu.ant-menu.ant-menu-light {
+      border-right: 0 !important;
+      padding: 2px !important;
+
+      .ant-menu-item {
+        padding-right: 8px;
+        color: #333 !important;
+
+        &-selected {
+          background-color: #f0f5ff !important;
+          color: #333 !important;
+        }
+      }
+    }
+  }
+
+  html[data-theme='dark'] {
+    .jeesite-cms-ai {
+      .ant-menu-light .ant-menu-item {
+        color: #ddd !important;
+
+        &-selected {
+          background-color: #333 !important;
+          color: #ddd !important;
+        }
+      }
+    }
+  }
+</style>
