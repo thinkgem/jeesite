@@ -18,7 +18,12 @@
 
 ## 在线演示
 
-<https://vue.jeesite.com/cms/chat/index>
+* 地址：<https://vue.jeesite.com/cms/chat/index>
+
+## 源码下载
+
+* 后端：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/modules/cms-ai>
+* 前端：<https://gitee.com/thinkgem/jeesite-vue/tree/main/packages/cms>
 
 ## AI 模型配置
 
@@ -30,7 +35,7 @@
 
 * 模型类型包括：聊天对话模型和嵌入式向量库模型，需注意 dimensions 维度参数，要和模型要求的匹配。
 
-具体配置项详见 `jeesite-cms-ai.yml` 文件，有注释。
+具体配置项详见 [jeesite-cms-ai.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/resources/config/jeesite-cms-ai.yml) 文件，有注释。
 
 ## 向量数据库配置
 
@@ -42,7 +47,7 @@
 * Milvus
 * ...
 
-具体配置项详见 `jeesite-cms-ai.yml` 文件，有注释。
+具体配置项详见 [jeesite-cms-ai.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/resources/config/jeesite-cms-ai.yml) 文件，有注释。
 
 ### 安装 Chroma
 
@@ -118,7 +123,7 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 
 工具调用 Tool Calling（也称 Function Calling）是人工智能应用程序中的常见模式，允许模型与一组 API 或工具交互，从而增强其功能。
 
-实例代码，详见 `CmsAiTools.java` 让 AI 调用你的 java 实现你的业务联动。
+实例代码，详见 [CmsAiTools.java](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/java/com/jeesite/modules/cms/ai/tools/CmsAiTools.java) 让 AI 调用你的 java 实现你的业务联动。
 
 ## 授权协议声明
 
