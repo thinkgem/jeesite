@@ -7,16 +7,13 @@ import { type PluginOption } from 'vite';
 import { PackageJson } from 'pkg-types';
 import { getEnvConfig } from './index';
 import { getEnvConfigName } from './getEnvConfigName';
+import { version } from '../package.json';
 import colors from 'picocolors';
 
 const PLUGIN_NAME = 'app-config';
 const APP_CONFIG_FILE_NAME = '_app.config.js';
 
-export function appConfigPlugin(
-  isBuild: boolean,
-  viteEnv: ViteEnv,
-  pkg: PackageJson,
-): PluginOption {
+export function appConfigPlugin(isBuild: boolean, viteEnv: ViteEnv): PluginOption {
   if (!isBuild) {
     return {
       name: PLUGIN_NAME,
@@ -34,7 +31,7 @@ export function appConfigPlugin(
     },
     async transformIndexHtml(html) {
       publicPath = (publicPath.endsWith('/') ? publicPath : `${publicPath}/`) || '/';
-      const src = `${publicPath}${APP_CONFIG_FILE_NAME}?v=${pkg.version}-${new Date().getTime()}`;
+      const src = `${publicPath}${APP_CONFIG_FILE_NAME}?v=${version}-${new Date().getTime()}`;
       return { html, tags: [{ tag: 'script', attrs: { src } }] };
     },
     async generateBundle() {

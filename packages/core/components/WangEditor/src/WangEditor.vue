@@ -114,7 +114,7 @@
                   bizKey: props.bizKey,
                   bizType: props.bizType + '_editor_image',
                   uploadType: 'image',
-                  fileMd5: buildUUID(), // 专业版支持 MD5 秒传
+                  fileMd5: buildUUID(), // 专业版支持 MD5 校验
                   fileName: file.name,
                   file,
                 },

@@ -6,9 +6,10 @@ import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@ant-des
 import { NotificationArgsProps, ConfigProps } from 'ant-design-vue/lib/notification';
 import { useI18n } from './useI18n';
 import { isString } from '@jeesite/core/utils/is';
+import { Icon } from '@jeesite/core/components/Icon';
 
-import type { VNodeTypes } from 'vue';
-import type { MessageArgsProps, ConfigOnClose } from 'ant-design-vue/lib/message';
+import type { ConfigOnClose, MessageType } from 'ant-design-vue/lib/message';
+import type { JointContent } from 'ant-design-vue/es/message/interface';
 
 export interface NotifyApi {
   info(config: NotificationArgsProps): void;
@@ -127,8 +128,9 @@ function contains(str, searchs) {
   return false;
 }
 
-function showMessageModal(options: ModalOptionsPartial, type?: string) {
+function showMessageModal(options: ModalOptionsPartial | string, type?: string) {
   const { t } = useI18n();
+  if (typeof options === 'string') options = { content: options };
   if (typeof options.content === 'string' && options.content.startsWith('posfull:')) {
     options.content = '<div class="modal-posfull-content">' + options.content.substring(8) + '</div>';
     options.width = '80%';
@@ -139,32 +141,37 @@ function showMessageModal(options: ModalOptionsPartial, type?: string) {
     return Modal.warning(createModalOptions(options, 'warning'));
   } else if (type === 'success' || contains(options.content, t('sys.message.success'))) {
     return Modal.success(createModalOptions(options, 'success'));
+  } else {
+    return Modal.info(createModalOptions(options, 'info'));
   }
-  return Modal.info(createModalOptions(options, 'info'));
 }
 
-declare type JointContent = VNodeTypes | MessageArgsProps;
-declare type ConfigDuration = number | (() => void);
-
-function showMessage(
-  content: JointContent | any,
-  type?: string,
-  duration?: ConfigDuration | any,
-  onClose?: ConfigOnClose,
-) {
+function showMessage(content: JointContent, type?: string, duration?: number, onClose?: ConfigOnClose) {
   const { t } = useI18n();
+  let messageRemove = () => {};
   if (typeof content === 'string' && content.startsWith('posfull:')) {
-    // content = { content: h('div', { class: 'text-left', innerHTML: content.substring(8) }) };
-    return showMessageModal({ content });
+    content = {
+      content: (
+        <div style="position: relative;" onMouseout={() => setTimeout(messageRemove, 1000)}>
+          <div style="position: absolute; right: -6px; top: -20px;" onClick={() => messageRemove()}>
+            <Icon icon="i-ant-design:close-outlined" color="#555" class="cursor-pointer" />
+          </div>
+          <div class="text-left" innerHTML={content.substring(8)}></div>
+        </div>
+      ),
+      duration,
+    };
   }
   if (type === 'error' || contains(content, t('sys.message.error'))) {
-    return Message.error(content, duration, onClose);
+    messageRemove = Message.error(content, duration, onClose);
   } else if (type === 'warning' || contains(content, t('sys.message.warning'))) {
-    return Message.warning(content, duration, onClose);
+    messageRemove = Message.warning(content, duration, onClose);
   } else if (type === 'success' || contains(content, t('sys.message.success'))) {
-    return Message.success(content, duration, onClose);
+    messageRemove = Message.success(content, duration, onClose);
+  } else {
+    messageRemove = Message.info(content, duration, onClose);
   }
-  return Message.info(content, duration, onClose);
+  return messageRemove;
 }
 
 notification.config({

@@ -15,6 +15,7 @@
         :params="{ ctrlPermi }"
         :immediate="immediate"
         :defaultExpandLevel="2"
+        v-model:selectedKeys="treeCodes"
         @select="handleSelect"
       >
         <!--<template #icon="item">
@@ -23,7 +24,7 @@
         </template>-->
       </BasicTree>
     </template>
-    <ListView :treeCode="treeCode" :treeName="treeName" />
+    <ListView v-model:treeCodes="treeCodes" :treeName="treeName" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserIndex">
@@ -37,7 +38,7 @@
   import ListView from './list.vue';
 
   const { t } = useI18n('sys.empUser');
-  const treeCode = ref<string>('');
+  const treeCodes = ref<string[]>([]);
   const treeName = ref<string>('');
   const ctrlPermi = ref('');
   const immediate = ref(false);
@@ -48,8 +49,7 @@
     immediate.value = true;
   });
 
-  function handleSelect(keys: string[], { node }) {
-    treeCode.value = keys[0];
+  function handleSelect(_keys: string[], { node }) {
     treeName.value = node._name;
   }
 </script>

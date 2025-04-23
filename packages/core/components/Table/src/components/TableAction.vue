@@ -20,7 +20,7 @@
           <span :title="action.iconTitle">{{ action.label }}</span>
         </template>
       </PopConfirmButton>
-      <Divider type="vertical" class="action-divider" v-if="props.divider && index < getActions.length - 1" />
+      <!--<Divider type="vertical" class="action-divider" v-if="props.divider && index < getActions.length - 1" />-->
     </template>
     <Popover
       v-if="props.dropDownActions && getDropdownList.length > 0"
@@ -182,18 +182,14 @@
       justify-content: flex-end;
     }
 
-    button {
+    button.ant-btn,
+    button.ant-btn.ant-btn-sm {
       display: flex;
       align-items: center;
+      padding: 3px 6px;
 
-      span {
-        margin-left: 0 !important;
-      }
-    }
-
-    button.ant-btn-circle {
-      span {
-        margin: auto !important;
+      .anticon {
+        opacity: 0.9;
       }
     }
 

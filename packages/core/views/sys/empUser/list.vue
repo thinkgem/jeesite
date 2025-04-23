@@ -54,6 +54,7 @@
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { useModal } from '@jeesite/core/components/Modal';
   import { FormProps } from '@jeesite/core/components/Form';
+  import { isEmpty } from '@jeesite/core/utils/is';
   import InputForm from './form.vue';
   import FormAuthDataScope from './formAuthDataScope.vue';
   import FormImport from './formImport.vue';
@@ -61,9 +62,11 @@
   import { LOCALE } from '@jeesite/core/settings/localeSetting';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
     treeName: String,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
@@ -163,6 +166,9 @@
         },
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -350,13 +356,15 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     async () => {
-      await getForm().setFieldsValue({
-        'employee.office.officeCode': props.treeCode,
-        'employee.office.officeName': props.treeName,
-      });
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        await getForm().setFieldsValue({
+          'employee.office.officeCode': props.treeCodes[0],
+          'employee.office.officeName': props.treeName,
+        });
+        await reload();
+      }
     },
   );
 

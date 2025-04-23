@@ -1,12 +1,13 @@
 {
   "name": "@jeesite/root",
-  "version": "5.11.0",
+  "version": "5.11.1-dev",
   "type": "module",
   "private": true,
   "scripts": {
     "bootstrap": "pnpm install",
     "serve": "npm run dev",
     "dev": "cd web && pnpm run dev",
+    "preinstall": "npx only-allow pnpm",
     "build": "turbo build --concurrency 20",
     "build:tomcat": "cd web && npm run build:tomcat",
     "build:preview": "cd web && npm run build:preview",
@@ -30,6 +31,7 @@
     "@jeesite/cms": "workspace:*",
     "@jeesite/core": "workspace:*",
     "@jeesite/dbm": "workspace:*",
+    "@jeesite/dfm": "workspace:*",
     "@jeesite/test": "workspace:*",
     "@jeesite/types": "workspace:*",
     "@jeesite/web": "workspace:*",
@@ -83,7 +85,7 @@
     "turbo": "2.5.0",
     "typescript": "5.8.2",
     "unocss": "66.0.0",
-    "vite": "6.2.5"
+    "vite": "6.2.6"
   },
   "keywords": [
     "typescript",

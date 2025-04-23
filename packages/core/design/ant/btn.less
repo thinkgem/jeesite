@@ -1,28 +1,23 @@
 // button reset
-.ant-btn {
-  // display: inline-flex;
-  // justify-content: center;
-  // align-items: center;
-  // &.ant-btn-success:not(.ant-btn-link),
-  // &.ant-btn-error:not(.ant-btn-link),
-  // &.ant-btn-warning:not(.ant-btn-link),
-  // &.ant-btn-primary:not(.ant-btn-link) {
-  //   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08) !important;
-  // }
-  // &-group {
-  //   .ant-btn:not(:first-child) {
-  //     bottom: 1px;
-  //   }
-  // }
-  &-link {
+.ant-btn.ant-btn {
+  [data-theme='light'] &-default {
+    color: @button-default-color;
+    background-color: @button-default-bg-color;
+    border-color: @button-default-border-color;
+
     &:hover,
     &:focus,
-    &:active,
     &:not(:disabled):hover,
-    &:not(:disabled):focus,
-    &:not(:disabled):active {
-      border-color: transparent !important;
+    &:not(:disabled):focus {
+      color: @button-default-hover-color;
+      background-color: @button-default-hover-bg-color;
+      border-color: @button-default-hover-border-color;
     }
+
+    //&.active {
+    //  background-color: @button-default-hover-bg-color;
+    //  border-color: @button-default-hover-border-color;
+    //}
   }
 
   &-primary {
@@ -40,20 +35,21 @@
     &:not(&-background-ghost):not([disabled]) {
       color: @white;
     }
+
+    &:disabled {
+      color: @white;
+      background-color: fade(@primary-color, 70%);
+    }
   }
 
-  &-default {
-    color: @button-cancel-color;
-    background-color: @button-cancel-bg-color;
-    border-color: @button-cancel-border-color;
-
+  &-link {
     &:hover,
     &:focus,
+    &:active,
     &:not(:disabled):hover,
-    &:not(:disabled):focus {
-      color: @button-cancel-hover-color;
-      background-color: @button-cancel-hover-bg-color;
-      border-color: @button-cancel-hover-border-color;
+    &:not(:disabled):focus,
+    &:not(:disabled):active {
+      border-color: transparent !important;
     }
   }
 

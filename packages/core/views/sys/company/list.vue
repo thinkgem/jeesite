@@ -42,11 +42,14 @@
   import { companyDisable, companyEnable } from '@jeesite/core/api/sys/company';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
+  import { isEmpty } from '@jeesite/core/utils/is';
   import InputForm from './form.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.company');
   const { showMessage } = useMessage();
@@ -62,7 +65,7 @@
     schemas: [
       {
         label: t('公司代码'),
-        field: 'viewCode',
+        field: 'viewCode_like',
         component: 'Input',
       },
       {
@@ -86,6 +89,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -192,7 +198,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable({
     api: companyListData,
     beforeFetch: (params) => {
-      params.companyCode = props.treeCode;
+      params.companyCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -206,14 +212,16 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     () => {
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

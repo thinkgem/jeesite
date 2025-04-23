@@ -32,7 +32,7 @@ html {
 @border-color-shallow-dark: #cececd;
 
 // Light-dark
-@border-color-light: @border-color-base;
+@border-color-light: #ccc;
 
 // =================================
 // =============message=============
@@ -110,6 +110,14 @@ html {
 // =============button==============
 // =================================
 
+@button-default-color: @text-color-base;
+@button-default-bg-color: #fff;
+@button-default-border-color: @border-color-light;
+
+@button-default-hover-color: #333333;
+@button-default-hover-bg-color: #f1f1f1;
+@button-default-hover-border-color: #bfbfbf;
+
 @button-primary-color: @primary-color;
 @button-primary-hover-color: fade(@primary-color, 90%);
 @button-primary-active-color: fade(@primary-color, 90%);
@@ -130,12 +138,3 @@ html {
 @button-error-color: @error-color;
 @button-error-hover-color: lighten(@error-color, 10%);
 @button-error-active-color: darken(@error-color, 10%);
-
-@button-cancel-color: @text-color-call-out;
-@button-cancel-bg-color: @white;
-@button-cancel-border-color: @border-color-shallow-dark;
-
-// Mouse over
-@button-cancel-hover-color: @primary-color;
-@button-cancel-hover-bg-color: @white;
-@button-cancel-hover-border-color: @primary-color;

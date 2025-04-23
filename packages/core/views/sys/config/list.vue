@@ -55,7 +55,7 @@
       },
       {
         label: t('参数键名'),
-        field: 'configKey',
+        field: 'configKey_like',
         component: 'Input',
       },
       {

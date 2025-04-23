@@ -42,7 +42,7 @@
 
       const getSetting = computed((): TableSetting => {
         return {
-          redo: true,
+          redo: false,
           size: true,
           setting: true,
           fullScreen: false,
@@ -63,22 +63,28 @@
   });
 </script>
 <style lang="less">
-  html[data-theme='dark'] {
-    .table-settings {
-      color: rgb(255 255 255 / 75%);
-    }
-  }
-
   .table-settings {
     & > * {
       margin-left: 4px;
-      margin-right: 8px;
+      margin-right: 5px;
       margin-top: 6px;
+      font-size: 13px;
+      color: #666;
     }
 
     svg {
       width: 1.3em;
       height: 1.3em;
+    }
+  }
+
+  html[data-theme='dark'] {
+    .table-settings {
+      color: #c9d1d9;
+
+      svg {
+        color: #afafaf;
+      }
     }
   }
 </style>

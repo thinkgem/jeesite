@@ -1,5 +1,16 @@
 <script lang="tsx">
-  import { defineComponent, computed, ref, unref, reactive, onMounted, watch, nextTick, CSSProperties } from 'vue';
+  import {
+    defineComponent,
+    computed,
+    ref,
+    unref,
+    reactive,
+    onMounted,
+    watch,
+    nextTick,
+    CSSProperties,
+    PropType,
+  } from 'vue';
   import { useEventListener } from '@jeesite/core/hooks/event/useEventListener';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
 
@@ -12,10 +23,6 @@
     minHeight: [Number, String] as NumberOrNumberString,
     minWidth: [Number, String] as NumberOrNumberString,
     width: [Number, String] as NumberOrNumberString,
-    scrollToBottom: {
-      type: Boolean as PropType<boolean>,
-      default: true,
-    },
     bench: {
       type: [Number, String] as NumberOrNumberString,
       default: 0,
@@ -25,7 +32,7 @@
       required: true,
     },
     items: {
-      type: Array as PropType<any[]>,
+      type: Array,
       default: () => [],
     },
   };
@@ -45,7 +52,7 @@
   export default defineComponent({
     name: 'VirtualScroll',
     props,
-    setup(props, { slots }) {
+    setup(props, { slots, expose }) {
       const wrapElRef = ref<HTMLDivElement | null>(null);
       const state = reactive({
         first: 0,
@@ -76,7 +83,7 @@
       });
 
       const getWrapStyleRef = computed((): CSSProperties => {
-        const styles: Recordable<string> = {};
+        const styles: Record<string, any> = {};
         const height = convertToUnit(props.height);
         const minHeight = convertToUnit(props.minHeight);
         const minWidth = convertToUnit(props.minWidth);
@@ -96,21 +103,6 @@
       watch([() => props.itemHeight, () => props.height], () => {
         onScroll();
       });
-
-      watch(
-        () => props.items.length,
-        () => {
-          if (props.scrollToBottom) {
-            nextTick(() => {
-              const wrapEl = unref(wrapElRef);
-              if (!wrapEl) {
-                return;
-              }
-              wrapEl.scrollTop = (props.items || []).length * unref(getItemHeightRef);
-            });
-          }
-        },
-      );
 
       function getLast(first: number): number {
         const wrapEl = unref(wrapElRef);
@@ -136,6 +128,31 @@
         state.last = getLast(state.first);
       }
 
+      function scrollToTop() {
+        const wrapEl = unref(wrapElRef);
+        if (!wrapEl) {
+          return;
+        }
+        wrapEl.scrollTop = 0;
+      }
+
+      function scrollToBottom() {
+        const wrapEl = unref(wrapElRef);
+        if (!wrapEl) {
+          return;
+        }
+        wrapEl.scrollTop = wrapEl.scrollHeight;
+      }
+
+      function scrollToItem(index: number) {
+        const wrapEl = unref(wrapElRef);
+        if (!wrapEl) {
+          return;
+        }
+        const i = index - 1 > 0 ? index - 1 : 0;
+        wrapEl.scrollTop = i * unref(getItemHeightRef);
+      }
+
       function renderChildren() {
         const { items = [] } = props;
         return items.slice(unref(getFirstToRenderRef), unref(getLastToRenderRef)).map(genChild);
@@ -150,6 +167,13 @@
           </div>
         );
       }
+
+      expose({
+        wrapElRef,
+        scrollToTop,
+        scrollToItem,
+        scrollToBottom,
+      });
 
       onMounted(() => {
         state.last = getLast(0);
@@ -179,12 +203,12 @@
 </script>
 <style scoped lang="less">
   .virtual-scroll {
-    position: relative;
     display: block;
+    position: relative;
+    flex: 1 1 auto;
     width: 100%;
     max-width: 100%;
     overflow: auto;
-    flex: 1 1 auto;
 
     &__container {
       display: block;

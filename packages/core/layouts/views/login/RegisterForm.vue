@@ -1,14 +1,14 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <div class="gp mb-2 mt-4" v-if="demoMode"> Tip：演示系统无需注册，请联系官方人员获取账号密码。 </div>
+    <div class="gp mb-2 mt-4 c-red" v-if="demoMode"> Tip：演示系统无需注册，返回登录页，点击免密登录。 </div>
     <Form class="enter-x p-4" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="validType" class="enter-x">
         <Select
           :showSearch="false"
           :options="[
-            { label: '使用手机号码找回您的密码', value: 'mobile' },
-            { label: '使用电子邮箱找回您的密码', value: 'email' },
+            { label: '使用手机号码注册账号', value: 'mobile' },
+            { label: '使用电子邮箱注册账号', value: 'email' },
           ]"
           v-model:value="formData.validType"
           size="large"
@@ -142,6 +142,7 @@
     if (data.result != 'true') {
       validCodeRefreshTime.value = new Date().getTime();
     }
+    return data.result == 'true';
   }
 
   async function handleRegister() {

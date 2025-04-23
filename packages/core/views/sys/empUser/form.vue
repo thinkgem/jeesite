@@ -21,6 +21,14 @@
         <FormEmployeeOfficeList ref="formEmployeeOfficeListRef" />
       </template>
       <template #userRoleString>
+        <div v-if="postRolePermi" class="mb-3">
+          <Alert
+            :message="`启用岗位角色权限权限后，角色不会保存，请在用户关联岗位中关联角色。`"
+            type="info"
+            banner
+            closable
+          />
+        </div>
         <FormUserRoleList ref="formUserRoleListRef" />
       </template>
     </BasicForm>
@@ -28,6 +36,7 @@
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserForm">
   import { ref, unref, computed } from 'vue';
+  import { Alert } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -55,6 +64,7 @@
     value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
   }));
   const ctrlPermi = ref<string>('');
+  const postRolePermi = ref<boolean>(false);
   const op = ref<string>('');
 
   const inputFormSchemas: FormSchema[] = [
@@ -270,6 +280,7 @@
     const res = await empUserForm(data);
     record.value = (res.empUser || {}) as EmpUser;
     ctrlPermi.value = res.ctrlPermi || '2';
+    postRolePermi.value = res.postRolePermi || false;
     setFieldsValue(record.value);
     updateSchema([
       {

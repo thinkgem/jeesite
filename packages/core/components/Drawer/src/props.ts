@@ -43,4 +43,8 @@ export const basicProps = {
   // 是否允许拖拽调整抽屉宽度
   widthResize: { type: Boolean, default: true },
   ...footerProps,
+  // eslint check
+  width: { type: [Number, String] },
+  mask: { type: Boolean, default: true },
+  maskStyle: { type: Object },
 };

@@ -210,17 +210,14 @@
 
   const getContentStyle = computed((): CSSProperties => {
     const { contentFullHeight, contentStyle, fixedHeight } = props;
-    let offsetHeight = !getShowHeader.value && !getShowFooter.value ? -15 : 0;
-    const height = `${(unref(contentHeight) || 800) - offsetHeight}px`;
+    const height = `${(unref(contentHeight) || 800) - (!sidebar ? -15 : 0)}px`;
 
     if (sidebar) {
       return {
         ...contentStyle,
         minHeight: height,
       };
-    }
-
-    if (contentFullHeight) {
+    } else if (contentFullHeight) {
       return {
         ...contentStyle,
         minHeight: height,

@@ -58,6 +58,7 @@
       componentProps: {
         maxlength: 500,
       },
+      required: true,
     },
     {
       label: t('岗位分类'),

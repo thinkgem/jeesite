@@ -1,0 +1,27 @@
+{
+  "name": "@jeesite/dfm",
+  "version": "5.11.1-dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "uninstall": "rimraf node_modules",
+    "update": "ncu -u"
+  },
+  "dependencies": {
+    "@jeesite/dfm-lib": "5.11.0-rc.1",
+    "@vueuse/core": "13.0.0",
+    "dayjs": "1.11.13",
+    "less": "4.2.2",
+    "lodash-es": "4.17.21",
+    "monaco-editor": "0.50.0",
+    "vuedraggable": "4.1.0",
+    "vue-i18n": "11.1.2",
+    "vue-types": "6.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "5.2.3",
+    "vite-plugin-dts": "4.5.3",
+    "vitest": "3.1.1"
+  }
+}

@@ -10,11 +10,8 @@
         <slot name="tableTitle"></slot>
       </template>
       <template #toolbar v-if="$slots.tableTitle || $slots.toolbar">
-        <a-button v-if="getBindValues.useSearchForm && !formShow" @click="handleFormShowToggle()">
-          <Icon icon="i-ant-design:filter-twotone" /> {{ t('common.queryText') }}
-        </a-button>
-        <a-button v-if="getBindValues.useSearchForm && formShow" @click="handleFormShowToggle()">
-          <Icon icon="i-ant-design:filter-outlined" /> {{ t('common.hideText') }}
+        <a-button v-if="getBindValues.useSearchForm" @click="handleFormShowToggle()" :class="{ active: formShow }">
+          <Icon icon="i-ant-design:filter-outlined" /> {{ formShow ? t('common.hideText') : t('common.queryText') }}
         </a-button>
         <slot v-if="$slots.toolbar" name="toolbar"></slot>
       </template>

@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
-import type { App, Plugin } from 'vue';
+import type { App, Events, HTMLAttributes, Plugin } from 'vue';
 
 import { unref, Component } from 'vue';
 import { isObject } from '@jeesite/core/utils/is';
@@ -107,12 +107,11 @@ export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormal
 }
 
 export const withInstall = <T extends Component>(component: T, alias?: string) => {
-  const comp = component as any;
-  comp.install = (app: App) => {
-    app.component(comp.name || comp.displayName, component);
+  component['install'] = (app: App) => {
+    app.component(component.name || component['displayName'], component);
     if (alias) {
       app.config.globalProperties[alias] = component;
     }
   };
-  return component as T & Plugin & any;
+  return component as T & Plugin & HTMLAttributes & Events;
 };

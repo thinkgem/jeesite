@@ -42,11 +42,14 @@
   import { areaDisable, areaEnable } from '@jeesite/core/api/sys/area';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
+  import { isEmpty } from '@jeesite/core/utils/is';
   import InputForm from './form.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.area');
   const { showMessage } = useMessage();
@@ -61,13 +64,13 @@
     labelWidth: 90,
     schemas: [
       {
-        label: t('区域名称'),
-        field: 'areaName',
+        label: t('区域代码'),
+        field: 'areaCode_like',
         component: 'Input',
       },
       {
-        label: t('区域代码'),
-        field: 'areaCode',
+        label: t('区域名称'),
+        field: 'areaName',
         component: 'Input',
       },
       {
@@ -86,6 +89,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -187,7 +193,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable({
     api: areaListData,
     beforeFetch: (params) => {
-      params.areaCode = props.treeCode;
+      params.areaCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -201,14 +207,16 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     () => {
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

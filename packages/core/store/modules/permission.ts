@@ -39,8 +39,7 @@ interface PermissionState {
   backMenuList: Menu[];
   frontMenuList: Menu[];
 }
-export const usePermissionStore = defineStore({
-  id: 'app-permission',
+export const usePermissionStore = defineStore('app-permission', {
   state: (): PermissionState => ({
     permCodeList: [],
     // Whether the route has been dynamically added

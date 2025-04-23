@@ -48,11 +48,14 @@
   import { dictDataDisable, dictDataEnable } from '@jeesite/core/api/sys/dictData';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
+  import { isEmpty } from '@jeesite/core/utils/is';
   import InputForm from './form.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.dictData');
   const { showMessage } = useMessage();
@@ -98,6 +101,9 @@
         },
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -212,7 +218,7 @@
     api: dictDataListData,
     beforeFetch: (params) => {
       params.dictType = dictType.value || 'unknown';
-      params.dictCode = props.treeCode;
+      params.dictCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -226,14 +232,16 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     () => {
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

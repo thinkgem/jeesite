@@ -52,12 +52,15 @@
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { useModal } from '@jeesite/core/components/Modal';
   import { FormProps } from '@jeesite/core/components/Form';
+  import { isEmpty } from '@jeesite/core/utils/is';
   import InputForm from './form.vue';
   import FormImport from './formImport.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.office');
   const { showMessage } = useMessage();
@@ -74,7 +77,7 @@
     schemas: [
       {
         label: t('机构代码'),
-        field: 'viewCode',
+        field: 'viewCode_like',
         component: 'Input',
       },
       {
@@ -117,6 +120,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -254,7 +260,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse, getForm }] = useTable({
     api: officeListData,
     beforeFetch: (params) => {
-      params.officeCode = props.treeCode;
+      params.officeCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -268,14 +274,16 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     () => {
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

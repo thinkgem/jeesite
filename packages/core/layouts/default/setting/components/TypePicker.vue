@@ -56,6 +56,7 @@
 
   .@{prefix-cls} {
     display: flex;
+    justify-content: space-evenly;
 
     &__item {
       position: relative;

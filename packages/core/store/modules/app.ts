@@ -29,8 +29,7 @@ interface AppState {
 }
 
 let timeId: TimeoutHandle;
-export const useAppStore = defineStore({
-  id: 'app',
+export const useAppStore = defineStore('app', {
   state: (): AppState => ({
     darkMode: undefined,
     pageLoading: false,

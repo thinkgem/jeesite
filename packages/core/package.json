@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/core",
-  "version": "5.11.0",
+  "version": "5.11.1-dev",
   "private": true,
   "type": "module",
   "scripts": {

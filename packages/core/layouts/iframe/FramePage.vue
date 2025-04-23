@@ -73,7 +73,7 @@
     },
   );
 
-  const padding = 15; // jee site default padding
+  const padding = 13; // jee site default padding
 
   const getWrapStyle = computed((): CSSProperties => {
     return {

@@ -80,7 +80,6 @@
 
     .scrollbar__view {
       box-sizing: border-box;
-      height: 100%;
     }
   }
 </style>

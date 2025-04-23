@@ -41,6 +41,7 @@
 </template>
 <script lang="ts" setup name="ViewsSysSecAdminList">
   import { onMounted, watch, ref, unref } from 'vue';
+  import { Alert } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -49,12 +50,14 @@
   import { secAdminDelete, secAdminListData, secAdminList } from '@jeesite/core/api/sys/secAdmin';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
+  import { isEmpty } from '@jeesite/core/utils/is';
   import InputForm from './form.vue';
-  import { Alert } from 'ant-design-vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
@@ -128,6 +131,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -233,16 +239,18 @@
       value: item.roleCode,
     }));
     ctrlPermi.value = res.ctrlPermi || '2';
-    reload();
+    await reload();
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     async () => {
-      await getForm().setFieldsValue({
-        'employee.office.officeCode': props.treeCode,
-      });
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        await getForm().setFieldsValue({
+          'employee.office.officeCode': props.treeCodes[0],
+        });
+        await reload();
+      }
     },
   );
 

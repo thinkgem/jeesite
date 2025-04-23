@@ -173,6 +173,7 @@
   const onMousedown = function (e) {
     const wrapper = e.target.closest('.ant-drawer-content-wrapper') as HTMLElement;
     if (!wrapper) return;
+    wrapper.style.transition = 'none';
     const w = wrapper.clientWidth;
     const x = e.clientX;
     const l = e.target.offsetLeft;
@@ -237,12 +238,13 @@
       position: absolute;
       left: 0;
       height: 90%;
-      width: 5px;
+      width: 3px;
       z-index: 1000;
       user-select: none;
 
       &:hover {
         cursor: ew-resize;
+        background: @border-color-light;
       }
     }
 
@@ -254,10 +256,9 @@
 
         > .scrollbar {
           > .scrollbar__wrap {
-            margin: 16px 16px 5px;
-            padding-bottom: 30px;
-
             > .scrollbar__view {
+              margin: 16px 16px 5px;
+
               > form:first-child,
               > .ant-tabs:first-child {
                 margin-top: 13px;
@@ -304,9 +305,10 @@
         padding: 0 !important;
 
         > .scrollbar {
-          .scrollbar__wrap {
-            margin: 10px;
-            padding-bottom: 10px;
+          > .scrollbar__wrap {
+            > .scrollbar__view {
+              margin: 10px;
+            }
           }
 
           .is-horizontal {
