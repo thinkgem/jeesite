@@ -9,7 +9,7 @@
     "update": "ncu -u"
   },
   "dependencies": {
-    "@jeesite/dfm-lib": "5.11.0-rc.1",
+    "@jeesite/dfm-lib": "5.11.1-rc.1",
     "@vueuse/core": "13.0.0",
     "dayjs": "1.11.13",
     "less": "4.2.2",

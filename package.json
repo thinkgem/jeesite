@@ -11,7 +11,7 @@
     "build": "turbo build --concurrency 20",
     "build:tomcat": "cd web && npm run build:tomcat",
     "build:preview": "cd web && npm run build:preview",
-    "build:deploy": "turbo build:deploy && pnpm -r publish",
+    "build:deploy": "turbo build:deploy && pnpm publish",
     "preview": "cd web && npm run preview",
     "preview:dist": "cd web && npm run preview:dist",
     "type:check": "turbo type:check --concurrency 20",
