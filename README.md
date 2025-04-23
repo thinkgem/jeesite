@@ -97,9 +97,9 @@
 
 ## 技术选型
 
-* 主框架：Spring Boot 3.3、Spring Framework 6.1、Apache Shiro 2.0、J2Cache
-* 持久层：Apache MyBatis 3.5、Hibernate Validator 8.0、Alibaba Druid 1.2
-* 视图层：Spring MVC 6.1、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
+* 主框架：Spring Boot 3.4、Spring Framework 6、Apache Shiro 2、J2Cache
+* 持久层：Apache MyBatis 3.5、Hibernate Validator 8、Alibaba Druid 1.2
+* 视图层：Spring MVC 6、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.7、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
 * 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
@@ -119,7 +119,7 @@
 
 ## 生态系统
 
-* AI 模块：<https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai>
+* AI + RAG + CMS 人工智能助手：<https://jeesite.com/docs/cms-ai>
 * 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
 * Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
 * 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
