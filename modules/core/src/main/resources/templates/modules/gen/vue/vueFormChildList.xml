@@ -57,7 +57,7 @@
   <% } %>
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
-  const record = ref<TestData>({} as ${ParentClassName});
+  const record = ref<${ParentClassName}>({} as ${ParentClassName});
 
   const tableColumns: BasicColumn[] = [
 <%
