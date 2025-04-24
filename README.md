@@ -99,15 +99,15 @@
 
 * 主框架：Spring Boot 3.4、Spring Framework 6、Apache Shiro 2、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 8、Alibaba Druid 1.2
-* 视图层：Spring MVC 6、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
-* 前端组件：jQuery 3.7、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
-* 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
+* 分离版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
+* 经典版：Beetl 3.10（HTML）、jQuery 3.7、Bootstrap 3.3、AdminLTE 2.4
+* 分离版：支持所有现代浏览器，如：谷歌 Chrome 86+、微软 Edge、火狐、国产浏览器 等
+* 经典版：支持 IE10 和以上版本，以及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
-* Bootstrap 版 支持 IE10 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
-* Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
-* 技术选型（详细）：<http://jeesite.com/docs/technology/>
-* JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
-* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.9>
+* 技术选型（详细）已支持数据库：<http://jeesite.com/docs/technology/>
+* JeeSite Vue 前后分离版：<https://gitee.com/thinkgem/jeesite-vue>
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2/>
 
 ## 更多介绍
 
@@ -136,16 +136,16 @@
 
 ### 在线演示
 
-1. Vue3版地址：<https://vue.jeesite.com>
-2. 全栈版地址：<https://demo.jeesite.com>
+1. 分离版地址：<https://vue.jeesite.com>
+2. 经典版地址：<https://demo.jeesite.com>
 
 ### 本地运行
 
 1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 5.7 or 8.x` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
 2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
-3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
-4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
-5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
+3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接（建立一个新库）
+4. 执行脚本：`/web/bin/init-data.bat(sh)` 初始化数据库（自动往新库里创建表和初始数据）
+5. 执行脚本：`/web/bin/run-tomcat.bat(sh)` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
 8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
@@ -154,7 +154,7 @@
 
 1. 环境准备：`JDK 17+`、`Maven 3.8+`、无需准备数据库（使用内嵌 H2 DB、Vue资源包）
 2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
-3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
+3. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
 4. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
 5. 全栈版本地址：<http://127.0.0.1:8980/a/login>
 6. 初始登录账号：超级管理员：system  密码：admin
@@ -162,7 +162,7 @@
 
 ### 容器运行
 
-- 拉取 Docker 镜像（演示使用，JeeSite版本较久）：
+- 拉取 Docker 镜像（JeeSite版本不是最新）：
 ```sh
 docker pull thinkgem/jeesite-web
 ```
@@ -178,7 +178,8 @@ docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
 
 1. 部署运行文档：<https://jeesite.com/docs/install-deploy/>
 2. 部署常见问题：<https://jeesite.com/docs/faq/>
-3. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
+3. 分离端运行文档：<https://jeesite.com/docs/vue-install-deploy/>
+4. 分离端常见问题：<https://jeesite.com/docs/vue-jeesite-vue/>
 
 ## 技术文章
 
@@ -187,9 +188,19 @@ docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
 * 表结构数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
 * 持久层设计：<https://jeesite.com/docs/dao-mybatis/>
 * 后端工具：<https://jeesite.com/docs/sys-utils/>
+
+**分离版**
+
+* 源码解析：<https://jeesite.com/docs/vue-crud-view/>
+* 表单组件：<https://jeesite.com/docs/vue-basic-form/>
+* 表格组件：<https://jeesite.com/docs/vue-basic-table/>
+* 常用组件：<https://jeesite.com/docs/vue-comp/>
+
+**经典版**
+
 * 表单组件：<https://jeesite.com/docs/views-beetl/>
 * 表格组件：<https://jeesite.com/docs/datagrid/>
-* js工具：<https://jeesite.com/docs/jeesite-js/>
+* 常用工具：<https://jeesite.com/docs/jeesite-js/>
 
 ## 专题文章
 
