@@ -13,7 +13,7 @@
 	<select id="findList" resultType="EmpUser">
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
-		<if test="roleCode != null and roleCode != ''">
+		<if test="(roleCode != null and roleCode != '') or (roleCodes != null and roleCodes.length gt 0)">
 			JOIN ${_prefix}sys_user_role ur2 ON ur2.user_code = a.user_code
 		</if>
 		<if test="employee.postCode != null and employee.postCode != ''">
@@ -23,6 +23,12 @@
 			${sqlMap.where.toSql()}
 			<if test="roleCode != null and roleCode != ''">
 				AND ur2.role_code = #{roleCode}
+			</if>
+			<if test="roleCodes != null and roleCodes.length gt 0">
+				AND ur2.role_code IN
+				<foreach collection="roleCodes" item="roleCode" open="(" separator="," close=")">
+					#{roleCode}
+				</foreach>
 			</if>
 			<if test="employee.postCode != null and employee.postCode != ''">
 				AND (
