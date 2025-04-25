@@ -33,7 +33,7 @@
   var companyselectExists = false;
   var areaselectExists = false;
   for(c in table.columnList){
-    if(c.isQuery == "1" && !c.isTreeEntityColumn){
+    if(c.isEdit == "1" && !c.isTreeEntityColumn){
       if(c.showType == 'userselect'){
         userselectExists = true;
       }else if(c.showType == 'officeselect'){
@@ -57,7 +57,7 @@
   <% } %>
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
-  const record = ref<TestData>({} as ${ParentClassName});
+  const record = ref<${ParentClassName}>({} as ${ParentClassName});
 
   const tableColumns: BasicColumn[] = [
 <%
