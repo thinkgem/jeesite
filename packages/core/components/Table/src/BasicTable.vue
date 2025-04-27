@@ -29,7 +29,7 @@
       @register="registerForm"
       @submit="handleSearchInfoChange"
       @keypress.enter="handleSearchInfoChange"
-      @advanced-change="redoHeight"
+      @advanced-change="handleAdvancedChange"
     >
       <template #[replaceFormSlotKey(item)]="data" v-for="item in getFormSlotKeys">
         <slot :name="item" v-bind="data || {}"></slot>
@@ -397,6 +397,14 @@
 
   function handleFormShowToggle() {
     formShow.value = !formShow.value;
+    redoHeight();
+  }
+
+  function handleAdvancedChange({ realWidthRef, screenEnum }) {
+    // 小屏幕直接隐藏查询窗口
+    if (unref(realWidthRef) < screenEnum.SM) {
+      formShow.value = false;
+    }
     redoHeight();
   }
 

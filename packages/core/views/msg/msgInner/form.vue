@@ -36,7 +36,7 @@
             :labelValue="receivers['n' + model.receiveType]"
             :labelInValue="true"
             :api="officeTreeData"
-            :params="{ isLoadUser: true, userIdPrefix: '', isAll: true }"
+            :params="userApiParams"
             :canSelectParent="true"
             :treeCheckable="true"
             @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
@@ -47,7 +47,7 @@
             :labelValue="receivers['n' + model.receiveType]"
             :labelInValue="true"
             :api="officeTreeData"
-            :params="{ isAll: true }"
+            :params="officeApiParams"
             :canSelectParent="true"
             :treeCheckable="true"
             @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
@@ -58,7 +58,7 @@
             :labelValue="receivers['n' + model.receiveType]"
             :labelInValue="true"
             :api="roleTreeData"
-            :params="{ isAll: true }"
+            :params="officeApiParams"
             :canSelectParent="true"
             :treeCheckable="true"
             @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
@@ -69,7 +69,7 @@
             :labelValue="receivers['n' + model.receiveType]"
             :labelInValue="true"
             :api="postTreeData"
-            :params="{ isAll: true }"
+            :params="officeApiParams"
             :canSelectParent="true"
             :treeCheckable="true"
             @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
@@ -106,6 +106,8 @@
     value: record.value.isNewRecord ? t('新增消息') : t('编辑消息'),
   }));
   const receivers = ref({});
+  const userApiParams = ref<Recordable>({ isLoadUser: true, userIdPrefix: '', isAll: true });
+  const officeApiParams = ref<Recordable>({ isAll: true });
 
   const inputFormSchemas: FormSchema[] = [
     {

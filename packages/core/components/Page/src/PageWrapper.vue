@@ -32,6 +32,7 @@
           :collapsible="true"
           :trigger="null"
           :width="getSidebarWidth"
+          breakpoint="md"
           @breakpoint="onBreakpoint"
         >
           <div class="sidebar-content" :style="getSidebarContentStyle">
@@ -70,6 +71,7 @@
           :collapsible="true"
           :trigger="null"
           :width="getSidebarWidthRight"
+          breakpoint="md"
           @breakpoint="onBreakpointRight"
         >
           <template v-if="!sidebarResizerRight">
