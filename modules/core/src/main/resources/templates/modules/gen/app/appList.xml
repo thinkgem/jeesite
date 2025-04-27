@@ -15,7 +15,7 @@
 			<u-cell-group class="list" :border="false">
 				<u-swipe-action :options="options" v-for="(item, index) in list" :key="item.id" :index="index" @click="optionsClick">
 					<%
-						var idParam = '', idParam2 = '';
+						var idParam = '', idParam2 = '', queryField = '';
 						for(pk in table.pkList){
 						  idParam = idParam + (pk.attrName + '=\'+item.' + pk.attrName);
 						  idParam2 = idParam2 + ('item.' + pk.attrName);
@@ -39,6 +39,7 @@
 						<text slot="label">创建者：{{item.createBy}} &nbsp;|&nbsp; 时间：{{item.createDate}}</text>
 					</u-cell-item>
 					<%
+							  queryField = c.attrName;
 							  break;
 							}
 						}
@@ -130,7 +131,7 @@ export default {
 		search(value) {
 			this.list = [];
 			this.query.pageNo = 0;
-			this.query.testInput = value;
+			this.query.${queryField} = value;
 			this.loadList();
 		},
 		navTo(url) {

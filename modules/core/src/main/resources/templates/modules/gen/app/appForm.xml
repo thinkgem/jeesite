@@ -41,11 +41,11 @@
 		%>
 		<% if(c.showType == 'input'){ %>
 			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text" maxlength="${c.dataLength}"></u-input>
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''}></u-input>
 			</u-form-item>
 		<% }else if(c.showType == 'textarea'){ %>
 			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180" label-position="top">
-				<u-input type="textarea" placeholder="请输入${c.columnLabel}" v-model="model.testTextarea" height="100" maxlength="${c.dataLength}" />
+				<u-input type="textarea" placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" height="100"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} />
 			</u-form-item>
 		<% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
 			var isMultiple = (c.showType == 'select_multiple'); %>
@@ -63,7 +63,7 @@
 		<% }else if(c.showType == 'date' || c.showType == 'datetime'){
 		var isTime = (c.showType == 'datetime'); %>
 			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" format="yyyy-MM-dd${isTime?' HH:mm':''}" type="text" maxlength="${c.dataLength}"></u-input>
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" format="yyyy-MM-dd${isTime?' HH:mm':''}" type="text"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''}></u-input>
 			</u-form-item>
 		<% }else if(c.showType == 'userselect'){ %>
 			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
@@ -87,7 +87,7 @@
 			</u-form-item>
 		<% }else{ %>
 			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text" maxlength="${c.dataLength}"></u-input>
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''}></u-input>
 			</u-form-item>
 		<% } %>
 		<%
