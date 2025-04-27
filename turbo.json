@@ -14,16 +14,13 @@
       "persistent": true
     },
     "type:check": {
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
     "uninstall": {
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
     "update": {
-      "cache": false,
-      "persistent": true
+      "cache": false
     }
   }
 }

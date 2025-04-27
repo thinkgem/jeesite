@@ -5,7 +5,6 @@
  */
 import type { UserConfig, ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
-import { readPackageJSON } from 'pkg-types';
 import path from 'path';
 import {
   createBuildOptions,
@@ -15,18 +14,17 @@ import {
   createServerOptions,
   createVitePlugins,
   wrapperEnv,
-} from '../build';
+} from '@jeesite/build';
 
 export default defineConfig(async ({ command, mode }: ConfigEnv) => {
   const root = process.cwd();
   const isBuild = command === 'build';
   const viteEnv = wrapperEnv(loadEnv(mode, root));
-  const pkg = await readPackageJSON(root);
   const config: UserConfig = {
     root,
     base: viteEnv.VITE_PUBLIC_PATH,
-    define: createDefineOptions(pkg),
-    plugins: createVitePlugins(isBuild, viteEnv, pkg),
+    define: await createDefineOptions(),
+    plugins: createVitePlugins(isBuild, viteEnv),
     server: createServerOptions(viteEnv),
     esbuild: createEsBuildOptions(mode),
     build: createBuildOptions(viteEnv),
