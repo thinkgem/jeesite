@@ -45,6 +45,7 @@
   import { basicProps } from './props';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useAttrs } from '/@/hooks/core/useAttrs';
+  import { useBreakpoint } from '/@/hooks/event/useBreakpoint';
 
   defineOptions({
     inheritAttrs: false,
@@ -58,6 +59,7 @@
 
   const { t } = useI18n();
   const { prefixVar, prefixCls } = useDesign('basic-drawer');
+  const { realWidthRef, screenEnum } = useBreakpoint();
 
   const drawerInstance: DrawerInstance = {
     setDrawerProps: setDrawerProps,
@@ -99,6 +101,10 @@
       }
     } else {
       opt.class = unref(getWrapClassName);
+    }
+    // 小屏幕直接全屏抽屉
+    if (unref(realWidthRef) < screenEnum.SM) {
+      opt.width = '100%';
     }
     return opt as DrawerProps;
   });
