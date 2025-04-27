@@ -40,53 +40,58 @@
 			}
 		%>
 		<% if(c.showType == 'input'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
 				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''}></u-input>
 			</u-form-item>
 		<% }else if(c.showType == 'textarea'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180" label-position="top">
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180" label-position="top">
 				<u-input type="textarea" placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" height="100"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} />
 			</u-form-item>
 		<% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
 			var isMultiple = (c.showType == 'select_multiple'); %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<js-select v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"<% if(isMultiple){ %> multiple="true"<% } %> placeholder="请选择${c.columnLabel}"></js-select>
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"<% if(isMultiple){ %> :multiple="true"<% } %> placeholder="请选择${c.columnLabel}"></js-select>
 			</u-form-item>
 		<% }else if(c.showType == 'radio'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
 				<js-radio v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"></js-radio>
 			</u-form-item>
 		<% }else if(c.showType == 'checkbox'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
 				<js-checkbox v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"></js-checkbox>
 			</u-form-item>
 		<% }else if(c.showType == 'date' || c.showType == 'datetime'){
 		var isTime = (c.showType == 'datetime'); %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" format="yyyy-MM-dd${isTime?' HH:mm':''}" type="text"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''}></u-input>
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text"
+					@click="${c.attrName}Open = true;" :disabled="true"></u-input>
+				<u-picker v-model="${c.attrName}Open" mode="time" :default-time="model.${c.attrName}"
+					:params="{year: true, month: true, day: true<% if(isTime){ %>, hour: true, minute: true, second: false<% } %>}"
+					@confirm="model.${c.attrName} = $event.year + '-' + $event.month + '-' + $event.day<% if(isTime){ %> + ' ' + $event.hour + ':' + $event.minute<% } %>"
+				></u-picker>
 			</u-form-item>
 		<% }else if(c.showType == 'userselect'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.simpleAttrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
 					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
 			</u-form-item>
 		<% }else if(c.showType == 'officeselect'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.simpleAttrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
 					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
 			</u-form-item>
 		<% }else if(c.showType == 'companyselect'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.simpleAttrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
 					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
 			</u-form-item>
 		<% }else if(c.showType == 'areaselect'){ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
-				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.simpleAttrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
 					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
 			</u-form-item>
 		<% }else{ %>
-			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+			<u-form-item label="${c.columnLabel}" prop="${c.simpleAttrName}" label-width="180">
 				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''}></u-input>
 			</u-form-item>
 		<% } %>
@@ -167,7 +172,7 @@ export default {
 				}
 			%>
 				<% if(c.isRequired == '1'){ %>
-				'${c.attrName}': [
+				'${c.simpleAttrName}': [
 					{
 						required: true,
 						message: '请输入${c.columnLabel}',
@@ -199,6 +204,8 @@ export default {
 			${c.simpleAttrName}List: [],
 			<% }else if(c.showType == 'areaselect'){ %>
 			${c.simpleAttrName}List: [],
+			<% }else if(c.showType == 'date' || c.showType == 'datetime'){ %>
+			${c.attrName}Open: false,
 			<% } %>
 			<%
 			  }
