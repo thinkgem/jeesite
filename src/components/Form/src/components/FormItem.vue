@@ -404,8 +404,11 @@
 
         const { baseColProps = {} } = props.formProps;
         const realColProps = props.colLayout ? { ...baseColProps, ...colProps } : {};
-        if (!realColProps.xs && (realColProps.sm || realColProps.md)) {
-          realColProps.xs = realColProps.sm || realColProps.md;
+        if (!realColProps.xs) {
+          realColProps.xs = 24;
+        }
+        if (!realColProps.sm) {
+          realColProps.sm = realColProps.md || realColProps.xs || 24;
         }
         const { isIfShow, isShow } = getShow();
         const values = unref(getValues);
