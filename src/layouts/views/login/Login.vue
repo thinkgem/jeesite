@@ -1,11 +1,11 @@
 <template>
   <div :class="prefixCls" class="relative h-full w-full bg-light-400 px-4">
     <AppLocalePicker
-      class="enter-x absolute right-4 top-4 text-white lg:text-gray-600"
+      class="enter-x absolute right-3 top-6 text-gray-600"
       :showText="false"
       v-if="!sessionTimeout && showLocale"
     />
-    <AppDarkModeToggle class="enter-x absolute right-7 top-3" v-if="!sessionTimeout" />
+    <AppDarkModeToggle class="enter-x absolute right-5 top-5" v-if="!sessionTimeout" />
 
     <span class="-enter-x lg:hidden">
       <AppLogo :alwaysShowTitle="true" />
@@ -122,6 +122,12 @@
         box-shadow: none;
       }
 
+      .@{logo-prefix-cls} {
+        &__title {
+          color: #eee;
+        }
+      }
+
       .jeesite-icon {
         color: #fff;
       }
@@ -140,7 +146,7 @@
     //background-color: #f2fafd;
 
     @media (max-width: @screen-lg) {
-      background-color: #3f60b5;
+      //background-color: #3f60b5;
 
       .@{prefix-cls}-form {
         box-shadow: none;
@@ -187,8 +193,7 @@
       }
 
       &__title {
-        font-size: 16px;
-        color: #eee;
+        font-size: 18px;
       }
 
       img {
