@@ -131,28 +131,31 @@ export default {
 				  continue;
 				}
 			%>
-			<% if(c.showType == 'userselect'){ %>
+			<% if(c.showType == 'userselect' && c.attrType != 'String'){ %>
 				${c.simpleAttrName}: {
 					userCode: '',
 					userName: ''
 				},
-			<% }else if(c.showType == 'officeselect'){ %>
+			<% }else if(c.showType == 'officeselect' && c.attrType != 'String'){ %>
 				${c.simpleAttrName}: {
 					officeCode: '',
 					officeName: ''
 				},
-			<% }else if(c.showType == 'companyselect'){ %>
+			<% }else if(c.showType == 'companyselect' && c.attrType != 'String'){ %>
 				${c.simpleAttrName}: {
 					companyCode: '',
 					companyName: ''
 				},
-			<% }else if(c.showType == 'areaselect'){ %>
+			<% }else if(c.showType == 'areaselect' && c.attrType != 'String'){ %>
 				${c.simpleAttrName}: {
 					areaCode: '',
 					areaName: ''
 				},
 			<% }else{ %>
 				${c.attrName}: '',
+				<% if (!isBlank(c.attrName2)){ %>
+				${c.attrName2}: '',
+				<% } %>
 			<% } %>
 			<%
 			  }
