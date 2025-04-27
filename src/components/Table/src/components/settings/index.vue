@@ -69,7 +69,7 @@
       margin-right: 5px;
       margin-top: 6px;
       font-size: 13px;
-      color: #666;
+      //color: #666;
     }
 
     svg {
