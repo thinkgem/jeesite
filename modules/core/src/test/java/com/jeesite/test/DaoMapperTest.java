@@ -466,18 +466,26 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		queryPost.setPostType("ceo");
 		queryPost.sqlMap().getColumn().setExcludeAttrNames(SetUtils.newHashSet("postType"));
 		queryPost.sqlMap().getColumn().setIncludeAttrNames(SetUtils.newHashSet("postName"));
-		queryPost.sqlMap().getColumn().addExtSql("c1", "column1 AS \"column1\"");
-		queryPost.sqlMap().getTable().addExtSql("t1", "JOIN test1 b.post_code = a.post_code");
-		queryPost.sqlMap().getWhere().addExtSql("w1", "AND a.name1 = '123'");
+		queryPost.sqlMap().getColumn().addExtSql("c1", "b.column1 AS \"column1\"");
+		queryPost.sqlMap().getColumn().addExtSql("c2", "c.column2 AS \"column2\"");
+		queryPost.sqlMap().getTable().addExtSql("t1", "JOIN test1 b ON b.post_code = a.post_code");
+		queryPost.sqlMap().getTable().addExtSql("t2", "JOIN test2 c ON b.test_code = a.test_code");
+		queryPost.sqlMap().getWhere().addExtSql("w1", "AND b.name1 = '123'");
+		queryPost.sqlMap().getWhere().addExtSql("w2", "AND c.name2 = '123'");
 		a = "SELECT " + queryPost.sqlMap().getColumn().toSql();
 		a += " FROM " + queryPost.sqlMap().getTable().toSql();
 		a += " WHERE " + queryPost.sqlMap().getWhere().toSql();
-		b = "SELECT a.`corp_code` AS \"corpCode\", a.`corp_name` AS \"corpName\", a.`status` AS \"status\", " +
-				"a.`create_by` AS \"createBy\", a.`create_date` AS \"createDate\", a.`update_by` AS \"updateBy\", " +
-				"a.`update_date` AS \"updateDate\", a.`post_name` AS \"postName\", column1 AS \"column1\" " +
-			"FROM `js_sys_post` aJOIN test1 b.post_code = a.post_code " +
-			"WHERE a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1} " +
-			"AND a.`post_type` = #{sqlMap.where#post_type#EQ1} AND a.name1 = '123'";
+		b = "SELECT a.`corp_code` AS \"corpCode\", a.`corp_name` AS \"corpName\", a.`status` AS \"status\"," +
+					" a.`create_by` AS \"createBy\", a.`create_date` AS \"createDate\", a.`update_by` AS \"updateBy\"," +
+					" a.`update_date` AS \"updateDate\", a.`post_name` AS \"postName\"," +
+					" b.column1 AS \"column1\", c.column2 AS \"column2\"" +
+				" FROM `js_sys_post` a" +
+					" JOIN test1 b ON b.post_code = a.post_code" +
+					" JOIN test2 c ON b.test_code = a.test_code" +
+				" WHERE a.`status` != #{STATUS_DELETE}" +
+					" AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
+					" AND a.`post_type` = #{sqlMap.where#post_type#EQ1}" +
+					" AND b.name1 = '123' AND c.name2 = '123'";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.exit(0);
