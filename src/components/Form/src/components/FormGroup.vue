@@ -19,10 +19,21 @@
       //width: 100%;
       font-size: 15px;
       //font-style: oblique;
-      padding: 0 0 3px 3px;
-      margin: 0 0 20px 20px;
+      padding: 0 0 3px 8px;
+      margin: 0 0 20px 15px;
       border-bottom: 1px solid @header-light-bottom-border-color;
-      color: @primary-color;
+      color: fade(@primary-color, 90%);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 15px;
+      width: 3px;
+      height: 17px;
+      background-color: fade(@primary-color, 80%);
+      border-radius: 4px;
     }
   }
 </style>
