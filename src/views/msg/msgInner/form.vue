@@ -12,7 +12,7 @@
     :showOkBtn="!record.status || record.status == '9'"
     @register="registerDrawer"
     @ok="handleSubmit('0')"
-    width="60%"
+    width="70%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
