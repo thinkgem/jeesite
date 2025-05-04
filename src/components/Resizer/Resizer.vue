@@ -122,7 +122,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1px;
+    //padding: 1px;
 
     .resiezer-toggler {
       cursor: pointer;

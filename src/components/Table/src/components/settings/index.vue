@@ -67,9 +67,10 @@
     & > * {
       margin-left: 4px;
       margin-right: 5px;
-      margin-top: 6px;
+      //margin-top: 6px;
       font-size: 13px;
       //color: #666;
+      vertical-align: middle;
     }
 
     svg {
