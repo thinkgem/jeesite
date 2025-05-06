@@ -13,7 +13,7 @@
       <slot></slot>
       <slot name="title"></slot>
     </template>
-    <div style="position: absolute; top: 9px; right: 6px" v-if="demoMode && item.name == '角色管理'">
+    <div style="position: absolute; top: 9px; right: 6px" v-if="getDemoMode && item.name == '角色管理'">
       <Badge count="hot" />
     </div>
   </li>
@@ -104,7 +104,7 @@
     { immediate: true },
   );
 
-  const demoMode = computed(() => {
+  const getDemoMode = computed(() => {
     return userStore.getPageCacheByKey('demoMode');
   });
 </script>
