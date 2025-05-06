@@ -18,6 +18,7 @@
   background-color: @white;
   align-items: center;
   justify-content: space-between;
+  overflow: auto hidden;
 }
 
 .@{header-prefix-cls} {
@@ -119,11 +120,13 @@
     align-items: center;
     flex-shrink: 0;
 
-    &__item {
+    > div,
+    > span {
       display: flex !important;
-      height: @header-height;
-      line-height: @header-height;
       padding: 0 2px;
+      height: calc(@header-height - 10px);
+      line-height: calc(@header-height - 10px);
+      border-radius: 6px;
       font-size: 1.2em;
       cursor: pointer;
       align-items: center;
@@ -164,7 +167,8 @@
     }
 
     .@{header-prefix-cls}-action {
-      &__item {
+      > div,
+      > span {
         color: @text-color-base;
 
         .jeesite-icon {
@@ -195,7 +199,8 @@
     }
 
     .@{header-prefix-cls}-action {
-      &__item {
+      > div,
+      > span {
         .jeesite-icon {
           padding: 0 10px;
           font-size: 20px !important;
@@ -210,6 +215,21 @@
 
         &:hover {
           background-color: @header-dark-bg-hover-color;
+        }
+      }
+    }
+  }
+}
+
+html[data-theme='dark'] {
+  .@{header-prefix-cls} {
+    &--dark {
+      .@{header-prefix-cls}-action {
+        > div,
+        > span {
+          &:hover {
+            background-color: #262626;
+          }
         }
       }
     }

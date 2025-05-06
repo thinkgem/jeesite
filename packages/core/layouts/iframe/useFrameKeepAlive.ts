@@ -85,6 +85,8 @@ function addFramePage(route: AppRouteRecordRaw, store = true) {
         array.splice(i, 1);
       }
     }
+    const currentRoute = router.currentRoute.value;
+    route.meta.currentActiveMenu = currentRoute.meta.currentActiveMenu || currentRoute.path;
     array.push(route);
     tempFramePages.value = array;
     sessionStorage.setItem('temp-frame-pages', JSON.stringify(array));

@@ -21,7 +21,7 @@
 </template>
 <script lang="ts">
   import type { MenuState } from './types';
-  import { computed, defineComponent, unref, reactive, watch, toRefs, ref } from 'vue';
+  import { computed, defineComponent, reactive, ref, toRefs, unref, watch } from 'vue';
   import { Menu } from 'ant-design-vue';
   import BasicSubMenuItem from './components/BasicSubMenuItem.vue';
   import { MenuModeEnum, MenuTypeEnum } from '@jeesite/core/enums/menuEnum';
@@ -96,17 +96,6 @@
         return inlineCollapseOptions;
       });
 
-      listenerRouteChange((route) => {
-        if (route.name === REDIRECT_NAME) return;
-        handleMenuChange(route);
-        // currentActiveMenu.value = route.meta?.currentActiveMenu as string;
-
-        // if (unref(currentActiveMenu)) {
-        //   menuState.selectedKeys = [unref(currentActiveMenu)];
-        //   setOpenKeys(unref(currentActiveMenu));
-        // }
-      });
-
       !props.mixSider &&
         watch(
           () => props.items,
@@ -114,6 +103,39 @@
             handleMenuChange();
           },
         );
+
+      listenerRouteChange((route) => {
+        if (route.name === REDIRECT_NAME) return;
+        // currentActiveMenu.value = route.meta?.currentActiveMenu as string;
+        // if (unref(currentActiveMenu)) {
+        //   menuState.selectedKeys = [unref(currentActiveMenu)];
+        //   setOpenKeys(unref(currentActiveMenu));
+        // }
+        handleMenuChange(route);
+      });
+
+      async function handleMenuChange(route?: RouteLocationNormalizedLoaded) {
+        if (unref(isClickGo)) {
+          isClickGo.value = false;
+          return;
+        }
+        // const path = (route || unref(currentRoute)).path;
+        const currRoute = route || unref(currentRoute);
+        const path = (currRoute.meta?.currentActiveMenu as string) || currRoute.path;
+
+        await setOpenKeys(path);
+
+        if (menuState.openKeys.length > 0) {
+          menuState.selectedKeys = menuState.openKeys;
+        } else {
+          if (props.isHorizontal && unref(getSplit)) {
+            const parentPath = await getCurrentParentPath(path);
+            menuState.selectedKeys = [parentPath];
+          } else {
+            menuState.selectedKeys = getAllParentPath(props.items, path);
+          }
+        }
+      }
 
       async function handleMenuClick({ item, key }: MenuInfo) {
         // { item: any; key: string; keyPath: string[] }) {
@@ -125,34 +147,23 @@
         emit('menuClick', key, item);
 
         isClickGo.value = true;
-        menuState.selectedKeys = [key as string];
-      }
 
-      async function handleMenuChange(route?: RouteLocationNormalizedLoaded) {
-        if (unref(isClickGo)) {
-          isClickGo.value = false;
-          return;
-        }
-        // const path = (route || unref(currentRoute)).path;
-        const currRoute = route || unref(currentRoute);
-        const path = (currRoute.meta?.currentActiveMenu as string) || currRoute.path;
-        setOpenKeys(path);
-        // if (unref(currentActiveMenu)) return;
-        if (props.isHorizontal && unref(getSplit)) {
-          const parentPath = await getCurrentParentPath(path);
-          menuState.selectedKeys = [parentPath];
+        await setOpenKeys(key as string);
+
+        if (menuState.openKeys.length > 0) {
+          menuState.selectedKeys = menuState.openKeys;
         } else {
-          const parentPaths = await getAllParentPath(props.items, path);
-          menuState.selectedKeys = parentPaths;
+          menuState.selectedKeys = [key as string];
         }
+        // console.log('TopMenuClick', menuState.selectedKeys, menuState.openKeys);
       }
 
       return {
-        handleMenuClick,
         getInlineCollapseOptions,
         getMenuClass,
         handleOpenChange,
         getOpenKeys,
+        handleMenuClick,
         ...toRefs(menuState),
       };
     },

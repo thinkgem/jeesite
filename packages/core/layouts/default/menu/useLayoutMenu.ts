@@ -35,16 +35,18 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
       if (unref(getSplitNotLeft) || unref(getIsMobile)) return;
 
       const { meta } = unref(currentRoute);
-      const currentActiveMenu = meta.currentActiveMenu as string;
-      let parentPath = await getCurrentParentPath(path);
-      if (!parentPath) {
-        parentPath = await getCurrentParentPath(currentActiveMenu);
-      }
+      const currentPath = (meta.currentActiveMenu as string) || path;
+      let parentPath: string | null = await getCurrentParentPath(currentPath);
+      // if (parentPath) {
+      //   sessionStorage.setItem('temp-parent-path', parentPath);
+      // } else {
+      //   parentPath = sessionStorage.getItem('temp-parent-path');
+      // }
       if (!parentPath) {
         const menus = await getMenus();
         parentPath = menus[0] && menus[0].path;
       }
-      // console.log('parentPath', parentPath, path);
+      // console.log('parentPath', parentPath, path, currentActiveMenu);
       parentPath && throttleHandleSplitLeftMenu(parentPath);
     },
     {

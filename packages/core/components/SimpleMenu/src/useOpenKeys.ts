@@ -20,26 +20,38 @@ export function useOpenKeys(
   const debounceSetOpenKeys = useDebounceFn(setOpenKeys, 50);
   async function setOpenKeys(path: string) {
     const native = !mixSider.value;
-    const menuList = toRaw(menus.value);
     useTimeoutFn(
       () => {
+        const menuList = toRaw(menus.value);
+        // console.log('SidebarMenu.menuList', menuList);
         if (menuList?.length === 0) {
           menuState.activeSubMenuNames = [];
           menuState.openNames = [];
           return;
         }
-        const keys = getAllParentPath(menuList, path);
-        // console.log('SimpleMenu.setOpenKeys', path, keys, menuList);
+        let keys: string[] = getAllParentPath(menuList, path);
+        // console.log('SidebarMenu.getAllParentPath', path, keys, menuList);
+        // if (keys.length === 0) {
+        //   const currentPaths = sessionStorage.getItem('temp-sidebar-paths');
+        //   if (currentPaths) {
+        //     keys = currentPaths.split(',');
+        //   }
+        // } else {
+        //   sessionStorage.setItem('temp-sidebar-paths', keys.join(','));
+        // }
         if (keys.length === 0) {
           return;
         }
 
-        if (!unref(accordion)) {
-          menuState.openNames = uniq([...menuState.openNames, ...keys]);
-        } else {
-          menuState.openNames = keys;
+        if (!unref(collapse)) {
+          if (!unref(accordion)) {
+            menuState.openNames = uniq([...menuState.openNames, ...keys]);
+          } else {
+            menuState.openNames = keys;
+          }
         }
         menuState.activeSubMenuNames = menuState.openNames;
+        // console.log('SidebarMenu.setOpenKeys', path, menuState.openNames);
       },
       30,
       native,
@@ -47,7 +59,7 @@ export function useOpenKeys(
   }
 
   const getOpenKeys = computed(() => {
-    return unref(collapse) ? [] : menuState.openNames;
+    return menuState.openNames;
   });
 
   return { setOpenKeys: debounceSetOpenKeys, getOpenKeys };

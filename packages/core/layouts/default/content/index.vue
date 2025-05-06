@@ -36,7 +36,7 @@
     position: relative;
     flex: 1 1 auto;
     min-height: 0;
-    padding: 14px 14px 0 15px;
+    padding: 12px 12px 0;
     background-color: @content-bg;
 
     &.fixed {
@@ -53,7 +53,7 @@
 
   html[data-theme='dark'] {
     .@{prefix-cls} {
-      background: transparent;
+      background: #000;
     }
   }
 </style>

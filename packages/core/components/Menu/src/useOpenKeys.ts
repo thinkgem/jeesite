@@ -26,16 +26,31 @@ export function useOpenKeys(
     useTimeoutFn(
       () => {
         const menuList = toRaw(menus.value);
+        // console.log('TopMenu.menuList', menuList);
         if (menuList?.length === 0) {
           menuState.openKeys = [];
           return;
         }
-        if (!unref(accordion)) {
-          menuState.openKeys = uniq([...menuState.openKeys, ...getAllParentPath(menuList, path)]);
-        } else {
-          menuState.openKeys = getAllParentPath(menuList, path);
+        let keys: string[] = getAllParentPath(menuList, path);
+        // console.log('TopMenu.getAllParentPath', path, keys, menuList);
+        // if (keys.length === 0) {
+        //   const currentPaths = sessionStorage.getItem('temp-menu-paths');
+        //   if (currentPaths) {
+        //     keys = currentPaths.split(',');
+        //   }
+        // } else {
+        //   sessionStorage.setItem('temp-menu-paths', keys.join(','));
+        // }
+        if (keys.length === 0) {
+          return;
         }
-        // console.log('BasicMenu.setOpenKeys', path, menuState.openKeys);
+
+        if (!unref(accordion)) {
+          menuState.openKeys = uniq([...menuState.openKeys, ...keys]);
+        } else {
+          menuState.openKeys = keys;
+        }
+        // console.log('TopMenu.setOpenKeys', path, menuState.openKeys);
       },
       16,
       !native,

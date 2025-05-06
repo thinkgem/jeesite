@@ -51,7 +51,7 @@
           <Resizer position="left" v-model:collapsed="collapsed" @move="onSidebarMove" />
         </template>
         <template v-if="sidebar && !sidebarResizer">
-          <div v-if="!collapsed" style="margin-right: 15px"></div>
+          <div v-if="!collapsed" style="margin-right: 12px"></div>
         </template>
         <Layout.Content>
           <slot></slot>
@@ -60,7 +60,7 @@
           <Resizer position="right" v-model:collapsed="collapsedRight" @move="onSidebarMoveRight" />
         </template>
         <template v-if="sidebarRight && !sidebarResizerRight">
-          <div v-if="!collapsedRight" style="margin-left: 15px"></div>
+          <div v-if="!collapsedRight" style="margin-left: 12px"></div>
         </template>
         <Layout.Sider
           v-if="sidebarRight"
@@ -212,7 +212,7 @@
 
   const getContentStyle = computed((): CSSProperties => {
     const { contentFullHeight, contentStyle, fixedHeight } = props;
-    const height = `${(unref(contentHeight) || 800) - (!sidebar ? -15 : 0)}px`;
+    const height = `${(unref(contentHeight) || 800) - (!sidebar ? -12 : 0)}px`;
 
     if (sidebar) {
       return {
@@ -261,7 +261,7 @@
     }
     const mainContentHeight = contentHeight.value || 0;
     if (height < mainContentHeight) {
-      height = mainContentHeight - 15;
+      height = mainContentHeight - 12;
     }
     // console.log('calcSidebarContentHeight', height);
     getSidebarContentHeight.value = height;
@@ -299,7 +299,7 @@
   );
 
   const getSidebarWidth = computed(() => {
-    const width = props.sidebarWidth + offsetXMoved.value - 15;
+    const width = props.sidebarWidth + offsetXMoved.value - 12;
     return width < props.sidebarMinWidth ? props.sidebarMinWidth : width;
   });
 
@@ -312,7 +312,7 @@
   }
 
   const getSidebarWidthRight = computed(() => {
-    const width = props.sidebarWidthRight + offsetXMovedRight.value - 15;
+    const width = props.sidebarWidthRight + offsetXMovedRight.value - 12;
     return width < props.sidebarMinWidthRight ? props.sidebarMinWidthRight : width;
   });
 
@@ -332,7 +332,7 @@
 
     .@{prefix-cls}-content {
       // margin: 16px;
-      padding: 15px;
+      padding: 12px;
       margin-bottom: 13px;
       border-radius: 5px;
       color: @text-color-base;
@@ -341,7 +341,7 @@
 
     .ant-page-header {
       // margin: 16px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       padding: 4px 16px;
       border-radius: 5px;
 

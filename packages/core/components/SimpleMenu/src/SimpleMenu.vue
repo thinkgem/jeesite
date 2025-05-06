@@ -106,14 +106,12 @@
 
       listenerRouteChange((route) => {
         if (route.name === REDIRECT_NAME) return;
-
         // currentActiveMenu.value = route.meta?.currentActiveMenu as string;
-        handleMenuChange(route);
-
         // if (unref(currentActiveMenu)) {
         //   menuState.activeName = unref(currentActiveMenu);
         //   setOpenKeys(unref(currentActiveMenu));
         // }
+        handleMenuChange(route);
       });
 
       async function handleMenuChange(route?: RouteLocationNormalizedLoaded) {
@@ -125,9 +123,13 @@
         const currRoute = route || unref(currentRoute);
         const path = (currRoute.meta?.currentActiveMenu as string) || currRoute.path;
 
-        menuState.activeName = path;
+        await setOpenKeys(path);
 
-        setOpenKeys(path);
+        if (menuState.openNames.length > 0) {
+          menuState.activeName = menuState.openNames[menuState.openNames.length - 1];
+        } else {
+          menuState.activeName = path;
+        }
       }
 
       async function handleSelect(key: string, item: any) {
@@ -143,8 +145,15 @@
         emit('menuClick', key, item);
 
         isClickGo.value = true;
-        setOpenKeys(key);
-        menuState.activeName = key;
+
+        await setOpenKeys(key);
+
+        if (menuState.openNames.length > 0) {
+          menuState.activeName = menuState.openNames[menuState.openNames.length - 1];
+        } else {
+          menuState.activeName = key;
+        }
+        // console.log('SidebarMenuClick', menuState.activeName, menuState.openNames);
       }
 
       return {

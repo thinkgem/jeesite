@@ -5,22 +5,22 @@ export const darkMode = ThemeEnum.LIGHT;
 // header preset color
 export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
   '#1951be',
-  '#1890ff',
-  '#001529',
+  '#1677ff',
+  '#394664',
   '#ffffff',
   '#009688',
   '#5172DC',
   '#e74c3c',
+  '#001529',
   '#151515',
   '#24292e',
-  '#394664',
   '#383f45',
 ];
 
 // app theme preset color
 export const APP_PRESET_COLOR_LIST: string[] = [
   '#2a50ec',
-  '#1890ff',
+  '#1677ff',
   '#009688',
   '#536dfe',
   '#ff5c93',

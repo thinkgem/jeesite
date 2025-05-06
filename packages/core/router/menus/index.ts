@@ -97,6 +97,7 @@ export async function getChildrenMenus(parentPath: string) {
   if (!parent || !parent.children || !!parent?.meta?.hideChildrenInMenu) {
     return [] as Menu[];
   }
+  // console.log(menus, parent, parentPath);
   if (isRoleMode()) {
     const routes = router.getRoutes();
     return filter(parent.children, basicFilter(routes));

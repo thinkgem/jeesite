@@ -10,7 +10,7 @@
     :okAuth="'sys:config:edit'"
     @register="registerDrawer"
     @ok="handleSubmit"
-    width="60%"
+    width="70%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />

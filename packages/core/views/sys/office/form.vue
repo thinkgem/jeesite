@@ -10,7 +10,7 @@
     :okAuth="'sys:office:edit'"
     @register="registerDrawer"
     @ok="handleSubmit"
-    width="60%"
+    width="70%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
@@ -41,6 +41,12 @@
   }));
 
   const inputFormSchemas: FormSchema[] = [
+    {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
     {
       label: t('上级机构'),
       field: 'parentCode',

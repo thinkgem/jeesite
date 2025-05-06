@@ -103,7 +103,7 @@ export function useTableScroll(
     // Table height from bottom height-custom offset
     let paddingHeight = 17;
     if (tableEl.closest('.jeesite-layout-content')) {
-      paddingHeight += 13;
+      paddingHeight += 11;
     }
 
     // Pagination height
