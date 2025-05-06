@@ -2,17 +2,37 @@
  * http://jeesite.com
  */
 a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {
-  color:#1890ff;
+  color:#1677ff;
 }
 .main-header .navbar {
-  background: #1890ff;
-  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #2684f5), color-stop(1, #1890ff));
-  background: -ms-linear-gradient(left, #2684f5, #1890ff);
-  background: -moz-linear-gradient(left top, #2684f5 0%, #1890ff 100%);
-  background: -o-linear-gradient(#1890ff, #2684f5);
+  background: #1677ff;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #2684f5), color-stop(1, #1677ff));
+  background: -ms-linear-gradient(left, #2684f5, #1677ff);
+  background: -moz-linear-gradient(left top, #2684f5 0%, #1677ff 100%);
+  background: -o-linear-gradient(#1677ff, #2684f5);
 }
 .main-header .navbar .nav > li > a {
   color: #ffffff;
+  margin: 4.5px 2px 0;
+  padding: 10px 13px;
+  border-radius: 6px;
+}
+.main-header .navbar .nav > li > a > i {
+  font-size: 16px;
+  vertical-align: bottom;
+  line-height: 20px;
+}
+.navbar-nav>.user-menu>.dropdown-menu {
+  margin-top: 7px;
+  border-radius: 6px;
+}
+.navbar-nav .treeview-menu,
+.navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+  margin-top: 5px;
+  border-radius: 6px;
+}
+.navbar-nav .treeview-menu a {
+  border-radius: 6px;
 }
 .main-header .navbar .nav > li > a:hover,
 .main-header .navbar .nav > li > a:active,
@@ -54,10 +74,10 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   border-bottom: 0 solid transparent;
 }
 .main-header .logo:hover {
-  background-color: #1890ff;
+  background-color: #1677ff;
 }
 .main-header li.user-header {
-  background-color: #1890ff;
+  background-color: #1677ff;
 }
 .content-header {
   background: transparent;
@@ -93,7 +113,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   background: #ffffff;
 }
 .sidebar-menu > li.active {
-  border-left-color: #1890ff;
+  border-left-color: #1677ff;
 }
 .sidebar-menu > li.active > a {
   font-weight: 600;
@@ -154,7 +174,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   border-radius: 4px;
 }
 .skin-blue.layout-top-nav .main-header > .logo {
-  background-color: #1890ff;
+  background-color: #1677ff;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
@@ -164,12 +184,12 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .sidebar-menu {padding:0 8px 0 7px;}
 .sidebar-menu li>a>.pull-right-container {left:0;}
-.sidebar-menu .treeview-item.active>a {color:#1890ff;background-color:#e7f4ff;border-right:0;border-radius:6px;}
+.sidebar-menu .treeview-item.active>a {color:#1677ff;background-color:#e7f4ff;border-right:0;border-radius:6px;}
 
 /* 页签添加内边距 */
 .content-wrapper, .tabpanel_content, .tabpanel_content .html_content, body {background-color:#f0f2f5;}
 .box-main, .nav-main, .ui-layout-pane, iframe {border-radius:5px;}
-.tabpanel_content .html_content {padding:13px 14px 13px 15px;}
+.tabpanel_content .html_content {padding:12px 14px 12px 15px;}
 .tabpanel_tab_content {border-bottom:0;}
 .ui-layout-resizer {background:none;}
 .content {padding:0!important}
@@ -211,12 +231,13 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
 .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover,
-.wup_container .placeholder .webuploader-pick {background-color:#1890ff!important;border-color:#1890ff!important;}
-.form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
+.wup_container .placeholder .webuploader-pick {background-color:#1677ff!important;border-color:#1677ff!important;}
+.form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1677ff;}
 .form-unit {border-bottom:1px solid #eee;}
+.form-unit:before {background-color:#1677ff;}
 
 .box-main>.box-header {border-bottom-color:#eeeeee;}
-.box-main>.box-header .box-title .fa {color:#1890ff;}
+.box-main>.box-header .box-title .fa {color:#1677ff;}
 .nav-tabs-custom>.nav-tabs>li.active {border-top-color:#3aa0ff;}
 .form-control:focus,.select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field,

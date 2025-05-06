@@ -167,7 +167,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 /* 页签添加内边距 */
 .content-wrapper, .tabpanel_content, .tabpanel_content .html_content, body {background-color:#000;}
 .box-main, .nav-main, .ui-layout-pane, iframe {border-radius:5px;}
-.tabpanel_content .html_content {padding:13px 14px 13px 15px;}
+.tabpanel_content .html_content {padding:12px 14px 12px 15px;}
 .tabpanel_tab_content {border-bottom:0;}
 .ui-layout-resizer {background:none;}
 .content {padding:0!important}
@@ -227,6 +227,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .wup_container .placeholder .webuploader-pick {background-color:#3aa0ff!important;border-color:#3aa0ff!important;}
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#2975bc;}
 .form-unit {border-bottom:1px solid #4e4e4e;}
+.form-unit:before {background-color:#2975bc;}
 
 .form-inline .form-more {background-color:#1a1a1a;border-bottom-color:#393939;}
 .form-control, .input-group .input-group-addon, input, select, textarea, pre {background-color:#1a1a1a;border-color:#414141!important;color:#ddd}

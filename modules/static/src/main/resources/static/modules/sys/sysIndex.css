@@ -27,7 +27,7 @@
 .navbar-nav > .treeview > a > .pull-right-container > .fa-angle-left{display:none;}
 .navbar-nav li > a > .pull-right-container > .fa-angle-left {margin-top:3px;transition:transform 0.5s ease;}
 .navbar-nav .menu-open > a > .pull-right-container > .fa-angle-left {transform: rotate(-90deg);}
-.navbar-nav .treeview.active>a {color:#1890ff;background-color:#e1e3e9;}
+.navbar-nav .treeview.active>a {color:#1677ff;background-color:#e1e3e9;}
 .navbar-nav .treeview small.label {float:right;}
 
 /* 头部消息列表 */
