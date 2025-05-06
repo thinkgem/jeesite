@@ -18,7 +18,7 @@
   <Dropdown v-else placement="bottom" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
-      <span :class="`${prefixCls}__info hidden md:block`">
+      <span :class="`${prefixCls}__info md:hidden lg:block`">
         <span :class="`${prefixCls}__name`" class="truncate">
           {{ getUserInfo.userName }}
         </span>
@@ -269,8 +269,7 @@
 
   .@{prefix-cls} {
     height: @header-height;
-    padding: 0 0 0 10px;
-    padding-right: 10px;
+    padding: 0 10px !important;
     overflow: hidden;
     font-size: 12px;
     cursor: pointer;
@@ -342,7 +341,7 @@
       .@{prefix-cls} {
         height: auto;
         cursor: default;
-        padding: 8px 10px 10px;
+        padding: 8px 10px 10px !important;
 
         img {
           width: 45px;

@@ -26,19 +26,19 @@
 
     <!-- action  -->
     <div :class="`${prefixCls}-action`">
-      <AppSearch v-if="getShowSearch" :class="`${prefixCls}-action__item `" />
+      <AppSearch v-if="getShowSearch" class="switch-corp" />
 
-      <OnlineCount :class="`${prefixCls}-action__item online-count`" />
+      <OnlineCount class="online-count" />
 
-      <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" />
+      <Notify v-if="getShowNotice" class="notify-item" />
 
-      <ErrorAction v-if="getUseErrorHandle" :class="`${prefixCls}-action__item error-action`" />
+      <ErrorAction v-if="getUseErrorHandle" class="error-action" />
 
-      <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
+      <FullScreen v-if="getShowFullScreen" class="fullscreen-item" />
 
       <UserDropDown :theme="getHeaderTheme" />
 
-      <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
+      <SettingDrawer v-if="getShowSetting" />
     </div>
   </ALayoutHeader>
 </template>
