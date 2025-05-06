@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-npm run dev
+pnpm dev
 
 cd bin
 pause

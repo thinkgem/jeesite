@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/web",
-  "version": "5.11.1-dev",
+  "version": "5.12.0-dev",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,9 +10,9 @@
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",
+    "report": "cross-env REPORT=true npm run build",
     "preview": "npm run build && npm run preview:dist",
     "preview:dist": "vite preview --mode development --port 3100",
-    "report": "cross-env REPORT=true npm run build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "uninstall": "rimraf node_modules",
     "update": "ncu -u"

@@ -17,7 +17,7 @@ import { useLocaleStore } from '@jeesite/core/store/modules/locale';
 
 import { getCommonStoragePrefix, getStorageShortName } from '@jeesite/core/utils/env';
 
-import { primaryColor } from '@jeesite/build/theme/themeConfig';
+import { primaryColor } from '@jeesite/vite/theme/themeConfig';
 import { Persistent } from '@jeesite/core/utils/cache/persistent';
 import { deepMerge } from '@jeesite/core/utils';
 import { ThemeEnum } from '@jeesite/core/enums/appEnum';

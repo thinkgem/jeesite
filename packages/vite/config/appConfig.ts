@@ -48,9 +48,7 @@ export function appConfigPlugin(isBuild: boolean, viteEnv: ViteEnv): PluginOptio
         });
         console.log(colors.cyan(`✨configuration file is build successfully!`));
       } catch (error) {
-        console.log(
-          colors.red('configuration file configuration file failed to package:\n' + error),
-        );
+        console.log(colors.red('configuration file configuration file failed to package:\n' + error));
       }
     },
   };

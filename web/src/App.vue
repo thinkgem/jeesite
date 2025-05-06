@@ -15,7 +15,7 @@
   import { ThemeEnum } from '@jeesite/core/enums/appEnum';
   import { useLocale } from '@jeesite/core/locales/useLocale';
   import { useTitle } from '@jeesite/core/hooks/web/useTitle';
-  import { darkPrimaryColor } from '@jeesite/build/theme/themeConfig';
+  import { darkPrimaryColor } from '@jeesite/vite/theme/themeConfig';
   import 'dayjs/locale/zh-cn';
 
   // support Multi-language

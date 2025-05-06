@@ -36,12 +36,7 @@ export function getThemeColors(color?: string) {
   return [...lightColors, ...darkColors];
 }
 
-export function generateColors({
-  color = primaryColor,
-  mixLighten,
-  mixDarken,
-  tinycolor,
-}: GenerateColorsParams) {
+export function generateColors({ color = primaryColor, mixLighten, mixDarken, tinycolor }: GenerateColorsParams) {
   const arr = new Array(19).fill(0);
 
   const lightens = arr.map((_t, i) => {
@@ -85,12 +80,5 @@ export function generateColors({
   // console.log('tinycolorLightens', tinycolorLightens);
   // console.log('tinycolorDarkens', tinycolorDarkens);
 
-  return [
-    ...lightens,
-    ...darkens,
-    ...alphaColors,
-    ...shortAlphaColors,
-    ...tinycolorDarkens,
-    ...tinycolorLightens,
-  ];
+  return [...lightens, ...darkens, ...alphaColors, ...shortAlphaColors, ...tinycolorDarkens, ...tinycolorLightens];
 }

@@ -14,7 +14,7 @@ import {
   createServerOptions,
   createVitePlugins,
   wrapperEnv,
-} from '@jeesite/build';
+} from '@jeesite/vite';
 
 export default defineConfig(async ({ command, mode }: ConfigEnv) => {
   const root = process.cwd();

@@ -2,7 +2,7 @@ import type { GlobEnvConfig } from '@jeesite/types/config';
 
 import { warn, env } from '@jeesite/core/utils/log';
 import { version } from '../package.json';
-import { getEnvConfigName } from '@jeesite/build/config/getEnvConfigName';
+import { getEnvConfigName } from '@jeesite/vite/config/getEnvConfigName';
 
 export function getCommonStoragePrefix() {
   const { VITE_GLOB_APP_SHORT_NAME } = getAppEnvConfig();

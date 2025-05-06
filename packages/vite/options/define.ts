@@ -18,14 +18,14 @@ export async function createDefineOptions(): Promise<Record<string, any>> {
             ...rootPkg.dependencies,
             ...buildPkg.dependencies,
             ...corePkg.dependencies,
-          }).filter(([key]) => !key.endsWith('-lib'))
+          }).filter(([key]) => !key.endsWith('-lib')),
         ),
         devDependencies: Object.fromEntries(
           Object.entries({
             ...rootPkg.devDependencies,
             ...buildPkg.devDependencies,
             ...corePkg.devDependencies,
-          }).filter(([key]) => !key.endsWith('-lib'))
+          }).filter(([key]) => !key.endsWith('-lib')),
         ),
         name: rootPkg.name,
         version: rootPkg.version,
