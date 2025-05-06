@@ -25,6 +25,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
 
@@ -136,13 +137,14 @@ public class SwitchController extends BaseController{
 	 */
 	//@RequiresPermissions("user")
 	@RequestMapping(value = "switchSkin/{skinName}")
-	public String switchSkin(@PathVariable String skinName, HttpServletRequest request, HttpServletResponse response) {
+	public String switchSkin(@PathVariable String skinName, @RequestParam(defaultValue="${adminPath}/index") String url,
+							 HttpServletRequest request, HttpServletResponse response) {
 		if (StringUtils.isNotBlank(skinName) && !"select".equals(skinName)){
 			CookieUtils.setCookie(response, "skinName", EncodeUtils.encodeUrl(EncodeUtils.xssFilter(skinName, request)));
 			if (ServletUtils.isAjaxRequest(request)) {
 				return renderResult(response, Global.TRUE, text("主题切换成功"));
 			}
-			return REDIRECT + adminPath + "/index";
+			return REDIRECT + EncodeUtils.decodeUrl2(url);
 		}
 		return "modules/sys/switchSkin";
 	}
