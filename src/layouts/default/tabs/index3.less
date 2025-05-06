@@ -3,49 +3,8 @@
   * No deletion without permission, or be held responsible to law.
   * @author Vben、ThinkGem
   */
-@prefix-cls-3: ~'jeesite-multiple-tabs';
-@multiple-height-large: 39px; // TABS_HEIGHT_LARGE
-
-html[data-theme='dark'] {
-  .@{prefix-cls-3} {
-    .ant-tabs.ant-tabs-card {
-      .ant-tabs-nav {
-        background: #000;
-
-        &::before {
-          border-bottom: 0;
-        }
-
-        .ant-tabs-tab {
-          color: #aaa !important;
-          background: #151515;
-
-          svg {
-            fill: #aaa !important;
-          }
-
-          &:hover,
-          .ant-tabs-tab-btn:hover {
-            color: #ddd !important;
-          }
-        }
-
-        .ant-tabs-tab-active {
-          background: fade(#2a50ed, 85) !important;
-
-          svg {
-            fill: #fff !important;
-          }
-
-          .ant-tabs-tab-btn,
-          .ant-tabs-tab-btn:hover {
-            color: #fff !important;
-          }
-        }
-      }
-    }
-  }
-}
+@prefix-cls-3: ~'jeesite-multiple-tabs-3';
+@multiple-height-large: 40px; // TABS_HEIGHT_LARGE
 
 .@{prefix-cls-3} {
   z-index: 10;
@@ -65,13 +24,13 @@ html[data-theme='dark'] {
       }
 
       .ant-tabs-tab {
-        height: calc(@multiple-height-large - 12px);
+        height: calc(@multiple-height-large - 15px);
         line-height: calc(@multiple-height-large - 13px);
         color: @text-color-base;
         background-color: @component-background;
         transition: none;
         border-radius: 4px !important;
-        margin: 10px 0 0;
+        margin: 12px 0 0;
         padding-left: 10px;
         padding-right: 11px;
         border: 0 !important;
@@ -152,7 +111,7 @@ html[data-theme='dark'] {
     }
 
     .ant-tabs-nav > div:nth-child(1) {
-      margin-left: 15px;
+      margin-left: 13px;
 
       .ant-tabs-tab {
         margin-right: 6px !important;
@@ -201,7 +160,7 @@ html[data-theme='dark'] {
       width: 30px;
       // height: @multiple-height-large;
       // line-height: @multiple-height-large;
-      padding-top: 6px;
+      padding-top: 7px;
       color: @text-color-secondary;
       text-align: center;
       cursor: pointer;
@@ -248,5 +207,46 @@ html[data-theme='dark'] {
 
   &-item-remove {
     margin-left: auto !important;
+  }
+}
+
+html[data-theme='dark'] {
+  .@{prefix-cls-3} {
+    .ant-tabs.ant-tabs-card {
+      .ant-tabs-nav {
+        background: #000;
+
+        &::before {
+          border-bottom: 0;
+        }
+
+        .ant-tabs-tab {
+          color: #aaa !important;
+          background: #151515;
+
+          svg {
+            fill: #aaa !important;
+          }
+
+          &:hover,
+          .ant-tabs-tab-btn:hover {
+            color: #ddd !important;
+          }
+        }
+
+        .ant-tabs-tab-active {
+          background: fade(#2a50ed, 85) !important;
+
+          svg {
+            fill: #fff !important;
+          }
+
+          .ant-tabs-tab-btn,
+          .ant-tabs-tab-btn:hover {
+            color: #fff !important;
+          }
+        }
+      }
+    }
   }
 }
