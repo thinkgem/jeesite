@@ -13,6 +13,26 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 }
 .main-header .navbar .nav > li > a {
   color: #ffffff;
+  margin: 4.5px 2px 0;
+  padding: 10px 13px;
+  border-radius: 6px;
+}
+.main-header .navbar .nav > li > a > i {
+  font-size: 16px;
+  vertical-align: bottom;
+  line-height: 20px;
+}
+.navbar-nav .treeview-menu,
+.navbar-nav>.user-menu>.dropdown-menu {
+  margin-top: 7px;
+  border-radius: 6px;
+}
+.navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+  margin-top: 5px;
+  border-radius: 6px;
+}
+.navbar-nav .treeview-menu a {
+  border-radius: 6px;
 }
 .main-header .navbar .nav > li > a:hover,
 .main-header .navbar .nav > li > a:active,
@@ -169,7 +189,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 /* 页签添加内边距 */
 .content-wrapper, .tabpanel_content, .tabpanel_content .html_content, body {background-color:#f0f2f5;}
 .box-main, .nav-main, .ui-layout-pane, iframe {border-radius:5px;}
-.tabpanel_content .html_content {padding:13px 14px 13px 15px;}
+.tabpanel_content .html_content {padding:12px 14px 12px 15px;}
 .tabpanel_tab_content {border-bottom:0;}
 .ui-layout-resizer {background:none;}
 .content {padding:0!important}
@@ -214,6 +234,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .wup_container .placeholder .webuploader-pick {background-color:#1e5edb!important;border-color:#1e5edb!important;}
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
 .form-unit {border-bottom:1px solid #eee;}
+.form-unit:before {background-color:#1e5edb;}
 
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title .fa {color:#1e5edb;}

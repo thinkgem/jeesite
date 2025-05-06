@@ -145,7 +145,7 @@
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-blue-light2" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
 			<span style="display:block;width:20%;float:left;height:13px;background:#1681e5"></span>
-			<span style="display:block;width:80%;float:left;height:13px;background:#1890ff"></span>
+			<span style="display:block;width:80%;float:left;height:13px;background:#1677ff"></span>
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
@@ -163,7 +163,7 @@
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-blue-light3" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
 			<span style="display:block;width:20%;float:left;height:13px;background:#1681e5"></span>
-			<span style="display:block;width:80%;float:left;height:13px;background:#1890ff"></span>
+			<span style="display:block;width:80%;float:left;height:13px;background:#1677ff"></span>
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
@@ -186,7 +186,7 @@
 <% } %>
 <script>
 $('.full-opacity-hover').click(function(){
-	js.window.location = '${ctx}/switchSkin/' + $(this).data('skin');
+	js.window.location = '${ctx}/switchSkin/' + $(this).data('skin') + "?url=" + js.window.location;
 });
 
 $('#formLayerModel')

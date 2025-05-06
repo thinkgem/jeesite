@@ -192,6 +192,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .wup_container .placeholder .webuploader-pick {background-color:#1e5edb!important;border-color:#1e5edb!important;}
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
 .form-unit {border-bottom:1px solid #eee;}
+.form-unit:before {background-color:#1e5edb;}
 
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title .fa {color:#1e5edb;}

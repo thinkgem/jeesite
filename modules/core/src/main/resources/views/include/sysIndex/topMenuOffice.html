@@ -1,7 +1,7 @@
 <% if(toBoolean(switchOffice!)){ %>
 <li>
 	<a href="javascript:" id="switchOffice">
-		<i class="fa icon-grid" style="font-size:12px;"></i> ${officeName!}
+		<i class="fa icon-grid" style="font-size:13px;"></i> ${officeName!}
 	</a>
 	<div class="hide"><#form:treeselect id="switchOfficeSelect" title="${text('部门切换')}" allowClear="true"
 		url="${ctx}/sys/empUser/officeListData?isShowCode=true" callbackFuncName="switchOfficeSelectCallback"
