@@ -22,8 +22,50 @@
       align-items: center;
       border-bottom: 0; // 1px solid @header-light-bottom-border-color;
 
+      .ant-menu-item,
+      .ant-menu-submenu {
+        margin: 4.5px 2px 0;
+        padding: 0 13px;
+        height: calc(@header-height - 10px);
+        line-height: calc(@header-height - 10px);
+        border-radius: 6px;
+      }
+
+      &.ant-menu-light {
+        .ant-menu-item,
+        .ant-menu-submenu {
+          margin: 4px 2px 0;
+        }
+
+        .ant-menu-submenu:hover,
+        .ant-menu-item-open,
+        .ant-menu-submenu-open,
+        .ant-menu-item-selected,
+        .ant-menu-submenu-selected,
+        .ant-menu-item:hover,
+        .ant-menu-item-active,
+        .ant-menu-submenu-active {
+          color: @primary-color;
+          background-color: fade(@primary-color, 10);
+        }
+
+        .ant-menu-submenu-title:hover {
+          color: @primary-color;
+        }
+      }
+
       &.ant-menu-dark {
         background-color: transparent;
+        color: #efefef;
+
+        .ant-menu-item,
+        .ant-menu-submenu {
+          &.@{basic-menu-prefix-cls}-item__level1,
+          .ant-menu-submenu-title {
+            height: calc(@header-height - 10px);
+            line-height: calc(@header-height - 10px);
+          }
+        }
 
         .ant-menu-submenu:hover,
         .ant-menu-item-open,
@@ -55,15 +97,6 @@
             background-color: @top-menu-active-bg-color !important;
           }
         }
-
-        .ant-menu-item,
-        .ant-menu-submenu {
-          &.@{basic-menu-prefix-cls}-item__level1,
-          .ant-menu-submenu-title {
-            height: @header-height;
-            line-height: @header-height;
-          }
-        }
       }
     }
   }
@@ -76,5 +109,30 @@
   .ant-menu-inline.ant-menu-sub {
     box-shadow: unset !important;
     transition: unset;
+  }
+}
+
+html[data-theme='dark'] {
+  .ant-menu.@{basic-menu-prefix-cls} {
+    &__sidebar-hor {
+      &.ant-menu-horizontal {
+        .ant-menu-item,
+        .ant-menu-submenu {
+          color: #c2c2c2 !important;
+        }
+
+        .ant-menu-submenu:hover,
+        .ant-menu-item-open,
+        .ant-menu-submenu-open,
+        .ant-menu-item-selected,
+        .ant-menu-submenu-selected,
+        .ant-menu-item:hover,
+        .ant-menu-item-active,
+        .ant-menu-submenu-active {
+          color: #fff !important;
+          background-color: #262626 !important;
+        }
+      }
+    }
   }
 }
