@@ -43,10 +43,12 @@ export function useOpenKeys(
           return;
         }
 
-        if (!unref(accordion)) {
-          menuState.openNames = uniq([...menuState.openNames, ...keys]);
-        } else {
-          menuState.openNames = keys;
+        if (!unref(collapse)) {
+          if (!unref(accordion)) {
+            menuState.openNames = uniq([...menuState.openNames, ...keys]);
+          } else {
+            menuState.openNames = keys;
+          }
         }
         menuState.activeSubMenuNames = menuState.openNames;
         // console.log('SidebarMenu.setOpenKeys', path, menuState.openNames);
