@@ -18,7 +18,12 @@
   background-color: @white;
   align-items: center;
   justify-content: space-between;
-  overflow: auto hidden;
+}
+
+@media (max-width: @screen-md) {
+  .ant-layout .ant-layout-header.@{header-prefix-cls} {
+    overflow: auto hidden;
+  }
 }
 
 .@{header-prefix-cls} {
