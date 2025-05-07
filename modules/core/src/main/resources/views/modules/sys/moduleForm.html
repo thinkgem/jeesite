@@ -62,22 +62,28 @@ Class.forName(“com.jeesite.modules.sys.web.LoginController”)；在微服务�
 						</div>
 					</div>
 				</div>
+				<div class="form-unit">${text('版本信息')}</div>
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="control-label col-sm-2" title="">
+							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('当前版本')}：<i class="fa icon-question hide"></i></label>
-							<% if(isNotBlank(module.upgradeInfo)){ %>
-								<div class="col-sm-6 control-text">
-									${module.currentVersion} &nbsp; ${module.upgradeInfo}
-								</div>
-							<% }else{ %>
-								<div class="col-sm-4">
-									<#form:input path="currentVersion" maxlength="50" class="form-control"/>
-								</div>
-							<% } %>
+							<div class="col-sm-8">
+								<#form:input path="currentVersion" maxlength="50" class="form-control" readonly="${!module.isNewRecord}"/>
+							</div>
 						</div>
 					</div>
+					<% if(!module.isNewRecord){ %>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('升级信息')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="upgradeInfo" maxlength="300" class="form-control" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<% } %>
 				</div>
 				<% if (hasPermi('sys:module:edit') && isCustomModule){ %>
 				<div class="form-unit">${text('生成工程代码')}</div>
