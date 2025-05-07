@@ -78,6 +78,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('模块名称'),
       field: 'moduleName',
       component: 'Input',
@@ -118,6 +124,12 @@
         maxlength: 500,
         rows: 3,
       },
+      colProps: { md: 24, lg: 24 },
+    },
+    {
+      label: t('版本信息'),
+      field: 'versionInfo',
+      component: 'FormGroup',
       colProps: { md: 24, lg: 24 },
     },
     {

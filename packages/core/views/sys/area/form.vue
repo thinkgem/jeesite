@@ -42,6 +42,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('上级区域'),
       field: 'parentCode',
       fieldLabel: 'parentName',
@@ -90,6 +96,13 @@
         maxlength: 10,
       },
       rules: [{ required: true }, { pattern: /^\d+$/, message: t('请输入一个正整数') }],
+    },
+
+    {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('备注信息'),

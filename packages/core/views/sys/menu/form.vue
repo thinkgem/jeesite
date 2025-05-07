@@ -43,6 +43,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('上级菜单'),
       field: 'parentCode',
       fieldLabel: 'parentName',
@@ -60,7 +66,6 @@
       },
       defaultValue: '1',
     },
-
     {
       label: t('菜单名称'),
       field: 'menuNameRaw',
@@ -82,7 +87,6 @@
       defaultValue: 'core',
       required: true,
     },
-
     {
       label: t('链接地址'),
       field: 'menuHref',
@@ -130,7 +134,6 @@
         maxlength: 10,
       },
     },
-
     {
       label: t('组件路径'),
       field: 'component',
@@ -164,7 +167,6 @@
       },
       // show: ({ values }) => values.menuType === '1',
     },
-
     {
       label: t('排序号'),
       field: 'treeSort',
@@ -187,6 +189,12 @@
     },
 
     {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('菜单图标'),
       field: 'menuIcon',
       component: 'IconPicker',
@@ -201,7 +209,6 @@
       },
       show: ({ values }) => values.menuType === '1',
     },
-
     {
       label: t('页签标题'),
       field: 'menuTitle',
@@ -220,7 +227,6 @@
         dictType: 'sys_show_hide',
       },
     },
-
     {
       label: t('菜单权重'),
       field: 'weight',
@@ -231,7 +237,6 @@
       },
       required: true,
     },
-
     {
       label: t('备注信息'),
       field: 'remarks',

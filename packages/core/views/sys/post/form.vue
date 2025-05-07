@@ -43,6 +43,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('岗位名称'),
       field: 'postName',
       component: 'Input',
@@ -79,6 +85,13 @@
         maxlength: 10,
       },
       required: true,
+    },
+
+    {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('关联角色'),
