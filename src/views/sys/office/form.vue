@@ -117,7 +117,6 @@
       component: 'FormGroup',
       colProps: { md: 24, lg: 24 },
     },
-
     {
       label: t('负责人'),
       field: 'leader',

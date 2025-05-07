@@ -42,6 +42,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('字典名称'),
       field: 'dictName',
       component: 'Input',
@@ -80,6 +86,13 @@
         dictType: 'sys_yes_no',
       },
       defaultValue: '0',
+    },
+
+    {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('备注信息'),

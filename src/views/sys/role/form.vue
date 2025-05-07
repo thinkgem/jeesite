@@ -67,6 +67,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('角色名称'),
       field: 'roleName',
       component: 'Input',
@@ -150,6 +156,14 @@
         dictType: 'sys_yes_no',
         allowClear: true,
       },
+      ifShow: () => op.value === 'add' || op.value === 'edit',
+    },
+
+    {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
     {

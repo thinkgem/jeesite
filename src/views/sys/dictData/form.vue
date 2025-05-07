@@ -42,6 +42,12 @@
 
   const inputFormSchemas: FormSchema[] = [
     {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('上级选项'),
       field: 'parentCode',
       fieldLabel: 'parentName',
@@ -111,6 +117,12 @@
       component: 'IconPicker',
     },
 
+    {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
     {
       label: t('CSS类名'),
       field: 'cssClass',
