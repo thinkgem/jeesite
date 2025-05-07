@@ -133,12 +133,18 @@ mybatis:
   # 批量插入和更新的分批默认大小（防止库一次性接受不了太大的sql语句）
   defaultBatchSize: 500
 
-  # 执行逻辑删除的时候，同时修改主键字段值，方便再次使用这个主键值 v5.4.0+
+  # 执行逻辑删除的时候，同时修改主键字段值，方便再次使用这个主键值（调用 entity.sqlMap().markIdDelete() 时生效） v5.4.0+
   # 案例分析（角色管理场景）：
   #  1.如果是逻辑删除数据，并非物理删除，所以删除了角色 abc 再次新增时，会提示 abc 编号已存在
   #  2.使用方法为：在 super.delete(entity); 前调用：entity.sqlMap().markIdDelete();
   #  3.一般在手动填写主键业务中使用，启用后将会在删除后，修改 ID 值数据，例如：abc__del_随机串
   markIdDeleteFlag: __del_
+
+  # 允许 @Table orderBy 排序 设置为空，否则默认使用 主键 排序 v4.5.0 v5.1.0
+  allowOrderEmpty: true
+
+  # 排序字段 SQL 过滤，该参数仅对 sqlMap.getOrder().setOrderBy 内部调用方法有效 page.setOrderBy 和 entity.setOrderBy 必须经过过滤 v5.12.0
+  orderBySqlFilter: false
 
   # Mapper文件刷新线程
   mapper:
