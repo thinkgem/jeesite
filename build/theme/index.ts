@@ -5,13 +5,7 @@
  */
 import { type PluginOption } from 'vite';
 // import path from 'path';
-import {
-  viteThemePlugin,
-  antdDarkThemePlugin,
-  mixLighten,
-  mixDarken,
-  tinycolor,
-} from 'vite-plugin-theme-vite3';
+import { viteThemePlugin, antdDarkThemePlugin, mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme-vite3';
 import { getThemeColors, generateColors } from './themeConfig';
 import { generateModifyVars } from './modifyVars';
 

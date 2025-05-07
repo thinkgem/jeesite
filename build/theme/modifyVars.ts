@@ -5,7 +5,6 @@
  */
 import { generateAntColors, primaryColor, darkPrimaryColor } from './themeConfig';
 // import { getThemeVariables } from 'ant-design-vue/dist/theme';
-import { resolve } from 'path';
 
 import { theme } from 'ant-design-vue';
 import convertLegacyToken from 'ant-design-vue/lib/theme/convertLegacyToken';
@@ -33,8 +32,8 @@ export function generateModifyVars(dark = false) {
     ...modifyVars,
     // Used for global import to avoid the need to import each style file separately
     // reference:  Avoid repeated references
-    // hack: `${modifyVars.hack} @import (reference) "${resolve('src/design/var/index.less')}";`,
-    hack: `true; @import (reference) "${resolve('src/design/var/index.less')}";`,
+    // hack: `${modifyVars.hack} @import (reference) "${__dirname + '/../../src/design/var/index.less'}";`,
+    hack: `true; @import (reference) "${__dirname + '/../../src/design/var/index.less'}";`,
     // ...primaryColorObj,
     'primary-color': primary,
     'link-color': primary,
