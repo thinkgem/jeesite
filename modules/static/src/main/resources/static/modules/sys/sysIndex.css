@@ -33,6 +33,8 @@
 /* 头部消息列表 */
 .navbar-nav>.messages-menu i.img-circle{margin:auto 10px auto auto;display:block;width:33px;height:33px;padding:9px;font-weight: bold;}
 .navbar-nav>.messages-menu>.dropdown-menu>li.header{border-radius:0;background-color:#f9f9f9;}
+.navbar-nav>.messages-menu>.dropdown-menu>li .menu {max-height:300px}
+.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>h4 {font-size:14px;font-weight:normal;margin-bottom:3px;}
 .navbar-nav>.messages-menu>.dropdown-menu>li a {white-space:normal!important;}
 
 /* 侧边栏用户头像 */
