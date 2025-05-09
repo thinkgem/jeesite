@@ -37,16 +37,19 @@ public class ExceptionUtils {
 	public static String getExceptionMessage(Throwable ex){
 		String message = null;
 		Throwable e = ex;
-		while (true){
-			if (e == null){
+		while (true) {
+			if (e == null) {
 				break;
 			}
-			if (StringUtils.startsWith(e.getMessage(), "msg:")){
+			if (StringUtils.startsWith(e.getMessage(), "msg:")) {
 				message = StringUtils.replace(e.getMessage(), "msg:", "");
-				break;
-			}else if ("com.jeesite.common.service.ServiceException"
-					.equals(e.getClass().getName())){
+			} else if ("com.jeesite.common.service.ServiceException".equals(e.getClass().getName())){
 				message = e.getMessage();
+			}
+			if (StringUtils.isNotBlank(message)){
+				if (e.getSuppressed() != null && e.getCause() != null){
+					ex.addSuppressed(e.getCause());
+				}
 				break;
 			}
 			e = e.getCause();
