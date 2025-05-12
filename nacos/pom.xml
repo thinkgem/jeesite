@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 
 		<!-- version setting -->
-		<nacos.version>2.4.3.1</nacos.version>
+		<nacos.version>2.5.1.1</nacos.version>
 
 		<!-- docker setting -->
 		<docker.run.port>8848:8848</docker.run.port>
@@ -52,12 +52,6 @@
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-istio</artifactId>
 			<version>${nacos.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.alibaba.nacos</groupId>
-					<artifactId>nacos-config</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
