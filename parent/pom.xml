@@ -21,10 +21,10 @@
 	<properties>
 
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2024.0.0</spring-cloud.version>
+		<spring-cloud.version>2024.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
-		<nacos.version>2.4.3</nacos.version>
-		<seata.version>1.8.0</seata.version>
+		<nacos.version>2.5.1.1</nacos.version>
+		<seata.version>2.3.0</seata.version>
 
 	</properties>
 
@@ -41,6 +41,13 @@
 				<groupId>com.alibaba.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
 				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.seata</groupId>
+				<artifactId>seata-bom</artifactId>
+				<version>${seata.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -63,16 +70,6 @@
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>${commons-io.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.seata</groupId>
-				<artifactId>seata-spring-boot-starter</artifactId>
-				<version>${seata.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.seata</groupId>
-				<artifactId>seata-serializer-kryo</artifactId>
-				<version>${seata.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
