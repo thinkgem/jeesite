@@ -57,7 +57,7 @@ import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subMod
 <% } %>
 import ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Service;
 
-import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
  * ${functionName}Controller
