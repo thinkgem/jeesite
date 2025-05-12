@@ -4,8 +4,8 @@
 
 server:
 
-  port: 8981
-    
+  port: 8985
+
 #======================================#
 #========== Cloud settings ============#
 #======================================#
@@ -34,7 +34,7 @@ spring:
   
   # 应用程序名称
   application:
-    name: jeesite-cloud-module-core
+    name: jeesite-cloud-module-test3
 
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
