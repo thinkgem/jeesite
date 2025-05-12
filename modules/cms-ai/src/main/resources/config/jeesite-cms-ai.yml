@@ -5,18 +5,18 @@ spring:
 
     # 在线大模型【请在 pom.xml 中打开 openai 的注释，并注释上其它模型】
     openai:
-      base-url: https://api.siliconflow.cn
-      api-key: ${SFLOW_APP_KEY}
-      #base-url: https://ai.gitee.com
-      #api-key: ${GITEE_APP_KEY}
-      #base-url: https://dashscope.aliyuncs.com/compatible-mode
-      #api-key: ${BAILIAN_APP_KEY}
+#      base-url: https://api.siliconflow.cn
+#      api-key: ${SFLOW_APP_KEY}
+#      base-url: https://ai.gitee.com
+#      api-key: ${GITEE_APP_KEY}
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
+      api-key: ${BAILIAN_APP_KEY}
       # 聊天对话模型
       chat:
         options:
-          model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-          #model: DeepSeek-R1-Distill-Qwen-14B
-          #model: deepseek-r1-distill-llama-8b
+#          model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+#          model: DeepSeek-R1-Distill-Qwen-14B
+          model: deepseek-r1-distill-llama-8b
           max-tokens: 1024
           temperature: 0.6
           top-p: 0.9
@@ -25,11 +25,11 @@ spring:
       # 向量库知识库模型（注意：不同的模型维度不同）
       embedding:
         options:
-          model: BAAI/bge-m3
-          #model: bge-large-zh-v1.5
-          dimensions: 512
-          #model: text-embedding-v3
-          #dimensions: 1024
+#          model: BAAI/bge-m3
+#          model: bge-large-zh-v1.5
+#          dimensions: 512
+          model: text-embedding-v3
+          dimensions: 1024
 
     # 本地大模型配置【请在 pom.xml 中打开 ollama 的注释，并注释上其它模型】
     ollama:
@@ -112,7 +112,15 @@ spring:
         2. 使用幽默有趣的方式与我沟通。
         3. 可以用少量表情，避免过多表情。
         4. 增加互动，如 “您的看法如何？”
-      
+
+    # 默认问题回答模板
+    default-prompt-template: |
+      上下文信息如下，用---------------------符号标出：
+      ---------------------
+      {question_answer_context}
+      ---------------------
+      在提供上下文和历史信息的基础上，并且不使用先前知识的前提下回答用户的问题。
+      如果问题的答案不在上下文中，请告知用户你无法回答该问题。
 
 # ========= Postgresql 向量数据库数据源 =========
 

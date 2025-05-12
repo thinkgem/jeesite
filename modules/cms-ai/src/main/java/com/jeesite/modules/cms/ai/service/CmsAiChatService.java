@@ -10,6 +10,7 @@ import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
+import com.jeesite.modules.cms.ai.properties.CmsAiProperties;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.client.ChatClient;
@@ -21,6 +22,7 @@ import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,8 @@ public class CmsAiChatService extends BaseService {
     private ChatMemory chatMemory;
 	@Autowired
 	private VectorStore vectorStore;
+	@Autowired
+	private CmsAiProperties properties;
 
 	/**
 	 * 获取聊天对话消息
@@ -116,7 +120,10 @@ public class CmsAiChatService extends BaseService {
 			)
             .advisors(
 				new MessageChatMemoryAdvisor(chatMemory, conversationId, 1024),
-				new QuestionAnswerAdvisor(vectorStore, SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
+				QuestionAnswerAdvisor.builder(vectorStore)
+						.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
+						.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
+						.build()
 			)
             .stream()
 			.chatResponse()

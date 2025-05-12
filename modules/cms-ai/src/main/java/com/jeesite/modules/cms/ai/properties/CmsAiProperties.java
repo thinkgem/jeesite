@@ -9,6 +9,8 @@ public class CmsAiProperties {
 
 	private String defaultSystem = "";
 
+	private String defaultPromptTemplate = "";
+
 	public Boolean getToolCalls() {
 		return toolCalls;
 	}
@@ -23,5 +25,13 @@ public class CmsAiProperties {
 
 	public void setDefaultSystem(String defaultSystem) {
 		this.defaultSystem = defaultSystem;
+	}
+
+	public String getDefaultPromptTemplate() {
+		return defaultPromptTemplate;
+	}
+
+	public void setDefaultPromptTemplate(String defaultPromptTemplate) {
+		this.defaultPromptTemplate = defaultPromptTemplate;
 	}
 }
