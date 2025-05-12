@@ -4,7 +4,6 @@
  */
 package com.jeesite.common.io;
 
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.jeesite.common.lang.StringUtils;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.boot.env.PropertiesPropertySourceLoader;
@@ -39,12 +38,12 @@ public class PropertyLoader implements org.springframework.boot.env.PropertySour
 		List<PropertySource<?>> propertySources = new ArrayList<>();
 		if (!isLoadJeeSitePropertySource) {
 			isLoadJeeSitePropertySource = true;
-			try {
-				// 默认开启 FastJSON 1.x 的，安全模式
-				ParserConfig.getGlobalInstance().setSafeMode(true);
-			} catch (Throwable ignored) {
-				// 兼容 FastJSON 2.x 的调用，忽略异常
-			}
+//			try {
+//				// 默认开启 FastJSON 1.x 的，安全模式
+//				ParserConfig.getGlobalInstance().setSafeMode(true);
+//			} catch (Throwable ignored) {
+//				// 兼容 FastJSON 2.x 的调用，忽略异常
+//			}
 			Properties properties = PropertiesUtils.getInstance().getProperties();
 			propertySources.add(new OriginTrackedMapPropertySource("jeesite", properties));
 		} else {
