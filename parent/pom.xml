@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.0</version>
+		<version>3.4.5</version>
 		<relativePath />
 	</parent>
 
@@ -21,17 +21,10 @@
 
 	<properties>
 
-		<!-- common version setting -->
-		<commons-io.version>2.16.1</commons-io.version>
-		<commons-text.version>1.12.0</commons-text.version>
+		<!-- commons version -->
+		<commons-io.version>2.19.0</commons-io.version>
+		<commons-text.version>1.13.1</commons-text.version>
 		<commons-email.version>1.6.0</commons-email.version>
-
-		<fury.version>0.9.0</fury.version>
-		<jackson-bom2.version>2.18.1</jackson-bom2.version>
-		<fastjson.version>2.0.51</fastjson.version>
-		<snakeyaml.version>2.2</snakeyaml.version>
-		<glassfish-jaxb.version>2.3.9</glassfish-jaxb.version>
-		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 
 		<metadata-extractor.version>2.19.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.20</thumbnailator.version>
@@ -41,31 +34,32 @@
 		<zxing.version>3.5.3</zxing.version>
 
 		<poi.version>5.2.3</poi.version>
-		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<fury.version>0.10.2</fury.version>
 		<bcprov.version>1.78.1</bcprov.version>
-
+		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<snakeyaml.version>2.2</snakeyaml.version>
+		<fastjson.version>2.0.57</fastjson.version>
 		<joda-time.version>2.12.7</joda-time.version>
+		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<logstash-logback.version>7.4</logstash-logback.version>
-		<!--<elasticsearch.version>8.11.1</elasticsearch.version>-->
 
-		<!-- framework version setting -->
-		<mybatis.version>3.5.16</mybatis.version>
+		<!-- framework version -->
+		<mybatis.version>3.5.19</mybatis.version>
 		<mybatis-spring.version>3.0.4</mybatis-spring.version>
-		<jsqlparser.version>4.7</jsqlparser.version>
+		<jsqlparser.version>4.9</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
-		<druid.version>1.2.23</druid.version>
-		<shiro.version>2.0.2</shiro.version>
-		<quartz.version>2.4.0-rc3</quartz.version>
+		<druid.version>1.2.24</druid.version>
+		<shiro.version>2.0.4</shiro.version>
+		<quartz.version>2.5.0</quartz.version>
 		<swagger3.version>2.2.27</swagger3.version>
-		<liquibase.version>4.20.0</liquibase.version>
+		<liquibase.version>4.31.1</liquibase.version>
 
-		<!-- jdbc setting -->
+		<!-- jdbc driver version -->
 		<mysql.version>8.0.33</mysql.version>
 		<h2.version>2.3.232</h2.version>
 
 		<!-- environment setting -->
 		<java.version>17</java.version>
-		<!--<tomcat.version>10.1.16</tomcat.version>-->
 		<maven.test.skip>true</maven.test.skip>
 		<resource.delimiter>@</resource.delimiter>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
