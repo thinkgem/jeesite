@@ -16,7 +16,7 @@ import com.jeesite.modules.test.client.TestTreeServiceClient;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestTree;
 
-import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
  * 分布式事务测试

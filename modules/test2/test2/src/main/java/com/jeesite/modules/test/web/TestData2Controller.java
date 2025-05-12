@@ -23,7 +23,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.client.TestDataServiceClient;
 import com.jeesite.modules.test.entity.TestData;
 
-import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
  * 测试数据Controller，调用 test1 服务

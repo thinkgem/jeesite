@@ -9,7 +9,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.test.api.TestTreeServiceApi;
 import com.jeesite.modules.test.dao.TestTreeDao;
 import com.jeesite.modules.test.entity.TestTree;
-import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;

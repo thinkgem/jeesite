@@ -18,7 +18,7 @@ import com.jeesite.modules.test3.entity.TestData;
 import com.jeesite.modules.test3.entity.TestDataChild;
 
 import org.springframework.transaction.annotation.Transactional;
-import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
  * 测试数据Service

@@ -35,7 +35,7 @@ public class TransTestController extends BaseController {
 	@ResponseBody
 	public String test(TestData testData) {
 		try {
-			Class.forName("io.seata.spring.annotation.GlobalTransactionScanner");
+			Class.forName("org.apache.seata.spring.annotation.GlobalTransactionScanner");
 		} catch (ClassNotFoundException e) {
 			return renderResult(Global.FALSE, "测试失败，没有安装 Seata 模块！");
 		}
