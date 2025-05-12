@@ -92,7 +92,7 @@ public class WebClientThinkConfig {
 								}
 								String reasoningContent = (String) delta.get("reasoning_content");
 								String content = (String) delta.get("content");
-								if (reasoningContent != null) {
+								if (StringUtils.isNotBlank(reasoningContent)) {
 									if (!thinkingFlag.get()) {
 										thinkingFlag.set(true);
 										delta.put("content", "<think>\n" + reasoningContent);
