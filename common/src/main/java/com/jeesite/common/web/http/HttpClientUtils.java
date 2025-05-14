@@ -89,6 +89,7 @@ public class HttpClientUtils {
 	 * 构建表单数据，Map 转换 params，支持指定编码
 	 */
 	private static String buildUrl(String url, Map<String, String> dataMap, String charset) {
+		url = StringUtils.substringBefore(url, "#");
 		if (dataMap == null) {
 			return url;
 		}
