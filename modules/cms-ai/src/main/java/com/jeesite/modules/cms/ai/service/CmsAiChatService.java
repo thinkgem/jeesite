@@ -59,7 +59,7 @@ public class CmsAiChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public List<Message> getChatMessage(String conversationId) {
-        return chatMemory.get(conversationId, 100);
+        return chatMemory.get(conversationId);
 	}
 
 	private static String getChatCacheKey() {
@@ -119,7 +119,9 @@ public class CmsAiChatService extends BaseService {
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)
             .advisors(
-				new MessageChatMemoryAdvisor(chatMemory, conversationId, 1024),
+				MessageChatMemoryAdvisor.builder(chatMemory)
+						.conversationId(conversationId)
+						.build(),
 				QuestionAnswerAdvisor.builder(vectorStore)
 						.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
 						.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))

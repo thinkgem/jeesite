@@ -7,8 +7,11 @@ package com.jeesite.modules.cms.ai.config;
 import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.cms.ai.properties.CmsAiProperties;
+import com.jeesite.modules.cms.ai.service.CacheChatMemoryRepository;
 import com.jeesite.modules.cms.ai.tools.CmsAiTools;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +41,18 @@ public class CmsAiChatConfig {
 		}
         return builder.build();
     }
+
+	/**
+	 * 聊天对话数据存储
+	 * @author ThinkGem
+	 */
+	@Bean
+	public ChatMemory chatMemory(CacheChatMemoryRepository cacheChatMemoryRepository) {
+		return MessageWindowChatMemory.builder()
+				.chatMemoryRepository(cacheChatMemoryRepository)
+				.maxMessages(1024)
+				.build();
+	}
 
 //	@Bean
 //	public BatchingStrategy batchingStrategy() {

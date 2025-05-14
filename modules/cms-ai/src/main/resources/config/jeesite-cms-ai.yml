@@ -61,8 +61,8 @@ spring:
           host: http://testserver
           port: 8000
         initialize-schema: true
-        collection-name: vector_store
-        #collection-name: vector_store_1024
+#        collection-name: vector_store
+        collection-name: vector_store_1024
 
       # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）【请在 pom.xml 中打开 pgvector 的注释，并注释上其它向量库】
       pgvector:

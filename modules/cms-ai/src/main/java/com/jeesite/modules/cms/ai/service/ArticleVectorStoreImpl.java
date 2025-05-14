@@ -12,6 +12,7 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.utils.PageUtils;
 import com.jeesite.common.web.http.HttpClientUtils;
+import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.service.ArticleVectorStore;
 import com.jeesite.modules.cms.utils.CmsUtils;
@@ -21,11 +22,11 @@ import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter;
 import com.vladsch.flexmark.html2md.converter.HtmlLinkResolver;
 import com.vladsch.flexmark.html2md.converter.HtmlLinkResolverFactory;
 import com.vladsch.flexmark.html2md.converter.HtmlNodeConverterContext;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -75,13 +76,33 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 		metadata.put("updateBy", article.getUpdateBy());
 		metadata.put("updateDate", article.getUpdateDate());
 		List<String> attachmentList = ListUtils.newArrayList();
-		HtmlLinkResolverFactory linkResolverFactory = new HtmlLinkResolverFactory() {
+		String content = article.getTitle() + ", " + article.getKeywords() + ", "
+				+ article.getDescription() + ", " + FlexmarkHtmlConverter.builder()
+					.linkResolverFactory(getHtmlLinkResolverFactory(attachmentList)).build()
+					.convert(article.getArticleData().getContent())
+				+ ", attachment: " + attachmentList;
+		List<Document> documents = List.of(new Document(article.getId(), content, metadata));
+		List<Document> splitDocuments = new TokenTextSplitter().apply(documents);
+		this.delete(article); // 删除原数据
+		ListUtils.pageList(splitDocuments, 10, params -> {
+			vectorStore.add((List<Document>)params[0]); // 增加新数据
+			return null;
+		});
+	}
+
+	/**
+	 * 解析文章中的连接并提取内容
+	 * @author ThinkGem
+	 */
+	private @NotNull HtmlLinkResolverFactory getHtmlLinkResolverFactory(List<String> attachmentList) {
+		HttpServletRequest request = ServletUtils.getRequest();
+		return new HtmlLinkResolverFactory() {
 			@Override
-			public @Nullable Set<Class<?>> getAfterDependents() {
+			public @NotNull Set<Class<?>> getAfterDependents() {
 				return Set.of();
 			}
 			@Override
-			public @Nullable Set<Class<?>> getBeforeDependents() {
+			public @NotNull Set<Class<?>> getBeforeDependents() {
 				return Set.of();
 			}
 			@Override
@@ -94,11 +115,16 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 					if ("a".equalsIgnoreCase(node.nodeName())) {
 						String href = node.attributes().get("href"); String url = href;
 						if (StringUtils.contains(url, "://")) {
-							try (InputStream is = HttpClientUtils.getInputStream(url, null)) {
-								String text = getDocumentText(is);
-								attachmentList.add(url + text);
-							} catch (IOException | TikaException e) {
-								logger.error(e.getMessage(), e);
+							// 只提取系统允许跳转的附件内容，外部网站内容不进行提取，shiro.allowRedirects 参数设置范围
+							if (ServletUtils.isAllowRedirects(request, url)) {
+								try (InputStream is = HttpClientUtils.getInputStream(url, null)) {
+									if (is != null) {
+										String text = getDocumentText(is);
+										attachmentList.add(url + text);
+									}
+								} catch (IOException | TikaException e) {
+									logger.error(e.getMessage(), e);
+								}
 							}
 						} else {
 							String ctxPath = Global.getCtxPath();
@@ -106,8 +132,10 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 								url = url.substring(ctxPath.length());
 							}
 							try (InputStream is = IOUtils.getFileInputStream(Global.getUserfilesBaseDir(url))){
-								String text = getDocumentText(is);
-								attachmentList.add(url + text);
+								if (is != null) {
+									String text = getDocumentText(is);
+									attachmentList.add(url + text);
+								}
 							} catch (IOException | TikaException e) {
 								logger.error(e.getMessage(), e);
 							}
@@ -130,18 +158,6 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 					.orElse(StringUtils.EMPTY);
 			}
 		};
-		String content = article.getTitle() + ", " + article.getKeywords() + ", "
-				+ article.getDescription() + ", " + FlexmarkHtmlConverter.builder()
-					.linkResolverFactory(linkResolverFactory).build()
-					.convert(article.getArticleData().getContent())
-				+ ", attachment: " + attachmentList;
-		List<Document> documents = List.of(new Document(article.getId(), content, metadata));
-		List<Document> splitDocuments = new TokenTextSplitter().apply(documents);
-		this.delete(article); // 删除原数据
-		ListUtils.pageList(splitDocuments, 64, params -> {
-			vectorStore.add((List<Document>)params[0]); // 增加新数据
-			return null;
-		});
 	}
 
 	/**
