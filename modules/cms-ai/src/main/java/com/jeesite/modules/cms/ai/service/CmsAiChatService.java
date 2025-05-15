@@ -59,6 +59,9 @@ public class CmsAiChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public List<Message> getChatMessage(String conversationId) {
+		if (StringUtils.isBlank(conversationId)) {
+			return List.of();
+		}
         return chatMemory.get(conversationId);
 	}
 

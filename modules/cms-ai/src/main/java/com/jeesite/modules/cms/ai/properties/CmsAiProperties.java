@@ -5,10 +5,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("spring.ai")
 public class CmsAiProperties {
 
+	/**
+	 * 是否启用 Tool calling 工具调用
+	 */
 	private Boolean toolCalls = false;
 
+	/**
+	 * 默认系统提示词
+	 */
 	private String defaultSystem = "";
 
+	/**
+	 * 默认问题模板格式
+	 */
 	private String defaultPromptTemplate = "";
 
 	public Boolean getToolCalls() {
