@@ -53,6 +53,7 @@
 
   const props = defineProps({
     treeCodes: Array as PropType<String[]>,
+    dictType: String,
   });
 
   const emit = defineEmits(['update:treeCodes']);
@@ -64,7 +65,7 @@
     icon: 'i-ant-design:book-outlined',
     value: t('字典选项'),
   };
-  const dictType = ref<string>(query.dictType as string);
+  const dictType = ref<string>(props.dictType || (query.dictType as string));
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 4 },
