@@ -16,6 +16,7 @@ export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'>, Menu {
   children?: AppRouteRecordRaw[];
   props?: Recordable;
   fullPath?: string;
+  url?: string;
 }
 
 export interface MenuTag {
