@@ -116,7 +116,14 @@
         if (item.target === '_blank') {
           window.open(path);
         } else {
+          // const url = String(item.url);
+          // const paramIdx = url.indexOf('?');
+          // if (paramIdx != -1 && !item.meta.frameSrc) {
+          //   const params = url.substring(paramIdx);
+          //   go(item.path + params);
+          // } else {
           go(path);
+          // }
         }
       }
 

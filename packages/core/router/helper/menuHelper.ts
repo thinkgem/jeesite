@@ -47,6 +47,7 @@ export function transformRouteToMenu(routeModuleList: AppRouteModule[], routerMa
       meta: node.meta,
       name: node.meta.title,
       path: node.path,
+      url: node.url,
       target: node.target,
       ...(node.redirect ? { redirect: node.redirect } : {}),
       children: node.children || [],
