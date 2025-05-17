@@ -10,6 +10,8 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
+import java.io.Serial;
+
 /**
  * 内容举报表Entity
  * @author 长春叭哥、ThinkGem
@@ -26,6 +28,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 )
 public class Report extends DataEntity<Report> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String reportSource;	// 举报来源（1文章、2评论）
 	private String reportContent;	// 举报内容（文章标题 评论内容）

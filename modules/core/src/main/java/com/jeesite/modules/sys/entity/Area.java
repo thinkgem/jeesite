@@ -13,6 +13,8 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
+import java.io.Serial;
+
 /**
  * 行政区划Entity
  * @author ThinkGem
@@ -28,6 +30,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class Area extends TreeEntity<Area> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String areaCode;		// 区域代码
 	private String areaName;		// 区域名称

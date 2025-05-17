@@ -17,6 +17,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +52,7 @@ import java.util.stream.Collectors;
 )
 public class Employee extends DataEntity<Employee> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String empCode;		// 员工编码
 	private String empNo;		// 员工工号

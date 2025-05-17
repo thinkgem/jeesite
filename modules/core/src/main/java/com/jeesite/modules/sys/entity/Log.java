@@ -18,6 +18,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.Date;
 import java.util.Map;
 
@@ -58,6 +60,7 @@ public class Log extends DataEntity<Log> {
 	public static final String TYPE_SELECT = "select";
 	public static final String TYPE_LOGIN_LOGOUT = "loginLogout";
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	private String logType;			// 日志类型

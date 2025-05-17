@@ -9,6 +9,8 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 
+import java.io.Serial;
+
 /**
  * 员工岗位Entity
  * @author ThinkGem
@@ -34,6 +36,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 )
 public class EmployeePost extends DataEntity<EmployeePost> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String empCode;		// 员工编码
 	private String postCode;	// 岗位编码

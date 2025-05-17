@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.app.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.validation.constraints.Size;
@@ -34,6 +35,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class AppUpgrade extends DataEntity<AppUpgrade> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String appCode;		// 应用编号
 	private String upTitle;		// 升级标题

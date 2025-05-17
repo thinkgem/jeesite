@@ -12,6 +12,8 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
+
 /**
  * 附属机构Entity
  * @author ThinkGem
@@ -43,6 +45,7 @@ import jakarta.validation.constraints.Size;
 )
 public class EmployeeOffice extends DataEntity<EmployeeOffice> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String empCode;		// 员工编码
 	private String officeCode;	// 机构编码

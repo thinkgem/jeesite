@@ -19,6 +19,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -49,6 +51,7 @@ import java.util.List;
 )
 public class Company extends TreeEntity<Company> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String companyCode;     // 公司编码
 	private String viewCode;        // 公司代码

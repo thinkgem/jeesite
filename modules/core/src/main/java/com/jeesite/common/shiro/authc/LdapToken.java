@@ -4,6 +4,7 @@
  */
 package com.jeesite.common.shiro.authc;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -13,6 +14,7 @@ import java.util.Map;
  */
 public class LdapToken extends FormToken {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public LdapToken() {

@@ -16,6 +16,8 @@ import com.jeesite.modules.sys.utils.UserUtils;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -53,6 +55,7 @@ public class Site extends DataEntity<Site> {
 	 */
 	public static final String DEFAULT_TEMPLATE = "index";
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String siteCode; 	// 站点编码
 	private String siteName; 	// 站点名称

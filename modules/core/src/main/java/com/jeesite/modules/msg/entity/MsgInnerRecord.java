@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.msg.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
@@ -37,6 +38,7 @@ public class MsgInnerRecord extends DataEntity<MsgInnerRecord> {
 	public static final String READ_STATUS_READ = "1";
 	public static final String READ_STATUS_UNREAD = "2";
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String msgInnerId;			// 所属消息
 	private String receiveUserCode;		// 接受者用户编码

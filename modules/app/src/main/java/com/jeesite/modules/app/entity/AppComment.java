@@ -12,6 +12,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -36,6 +37,7 @@ import java.util.Date;
 )
 public class AppComment extends DataEntity<AppComment> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String category;		// 问题分类
 	private String content;		// 问题和意见

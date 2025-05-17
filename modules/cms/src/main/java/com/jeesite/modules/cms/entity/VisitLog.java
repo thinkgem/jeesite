@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.cms.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.validation.constraints.Size;
@@ -57,6 +58,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class VisitLog extends DataEntity<VisitLog> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String requestUrl;			// 请求的URL地址
 	private String requestUrlHost;		// 受访域名

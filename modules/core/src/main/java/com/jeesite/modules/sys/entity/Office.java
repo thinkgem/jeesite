@@ -22,6 +22,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
+
 /**
  * 组织机构Entity
  * @author ThinkGem
@@ -47,6 +49,7 @@ import jakarta.validation.constraints.Size;
 @Schema
 public class Office extends TreeEntity<Office> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String officeCode;		// 机构编码
 	private String viewCode;		// 机构代码（作为显示用，多租户内唯一）

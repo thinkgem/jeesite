@@ -14,6 +14,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
+
 /**
  * 业务分类Entity
  * @author ThinkGem
@@ -30,6 +32,7 @@ import jakarta.validation.constraints.Size;
 )
 public class BizCategory extends TreeEntity<BizCategory> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String categoryCode;		// 分类编码
 	private String viewCode;			// 分类代码（作为显示用，多租户内唯一）

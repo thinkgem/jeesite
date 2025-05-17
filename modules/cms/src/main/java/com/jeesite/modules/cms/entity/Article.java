@@ -16,6 +16,8 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -66,6 +68,7 @@ import java.util.Date;
 public class Article extends DataEntity<Article> {
 	
 	public static final String DEFAULT_TEMPLATE = "viewArticle"; // 默认文章内容模板
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	private Category category; 	// 栏目编码

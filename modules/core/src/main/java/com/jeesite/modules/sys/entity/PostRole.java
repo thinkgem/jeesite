@@ -10,6 +10,8 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
+import java.io.Serial;
+
 /**
  * 岗位角色Entity
  * @author ThinkGem
@@ -31,6 +33,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class PostRole extends DataEntity<PostRole> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String postCode;	// 岗位编码
 	private String roleCode;	// 角色编码

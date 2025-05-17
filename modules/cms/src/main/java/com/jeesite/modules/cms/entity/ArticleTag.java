@@ -8,6 +8,8 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
+import java.io.Serial;
+
 /**
  * 文章与标签关系Entity
  * @author 长春叭哥、ThinkGem
@@ -20,6 +22,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 )
 public class ArticleTag extends DataEntity<ArticleTag> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String articleId; 	// 内容编号
 	private String tagName; 	// 标签名称

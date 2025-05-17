@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.msg.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
@@ -53,6 +54,7 @@ public class MsgInner extends DataEntity<MsgInner> {
 	public static final String CONTENT_LEVEL_2 = "2";
 	public static final String CONTENT_LEVEL_3 = "3";
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String msgTitle;		// 消息标题
 	private String contentLevel;	// 内容等级（1普通 2一般 3紧急）

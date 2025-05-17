@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.TimeZone;
 
 /**
@@ -21,6 +22,7 @@ import java.util.TimeZone;
  */
 public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(XmlMapper.class);

@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.cms.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
@@ -43,6 +44,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class Comment extends DataEntity<Comment> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	private Category category;// 分类编号

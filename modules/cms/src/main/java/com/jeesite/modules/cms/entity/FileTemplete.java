@@ -6,6 +6,7 @@ package com.jeesite.modules.cms.entity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ import com.jeesite.common.lang.ExceptionUtils;
  */
 public class FileTemplete implements Comparable<FileTemplete>, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private Resource resource;
 	private String fileName;

@@ -11,6 +11,8 @@ import com.jeesite.common.entity.Extend;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
+import java.io.Serial;
+
 /**
  * 文章详情表Entity
  * @author 长春叭哥、ThinkGem
@@ -26,6 +28,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 )
 public class ArticleData extends DataEntity<ArticleData> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String content; 		// 文章内容
 	private String relation; 		// 相关文章

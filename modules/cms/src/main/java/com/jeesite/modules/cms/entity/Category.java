@@ -16,6 +16,8 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -59,6 +61,7 @@ public class Category extends TreeEntity<Category> {
 	public static final String SHOW_MODES_CENTENT_LIST = "2"; 	// 首栏目内容列表
 	public static final String SHOW_MODES_FIRST_CONTENT = "3"; 	// 简介类栏目，栏目第一条内容
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String categoryCode; 	// 栏目编码
 	private String categoryName; 	// 栏目名称

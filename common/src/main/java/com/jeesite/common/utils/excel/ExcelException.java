@@ -4,12 +4,15 @@
  */
 package com.jeesite.common.utils.excel;
 
+import java.io.Serial;
+
 /**
  * Excel Exception
  * @author ThinkGem
  */
 public class ExcelException extends RuntimeException {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public ExcelException() {

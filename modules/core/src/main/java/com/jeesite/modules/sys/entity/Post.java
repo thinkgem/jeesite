@@ -15,6 +15,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
+
 @Table(name="${_prefix}sys_post", alias="a", label="岗位信息", columns={
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
@@ -27,6 +29,7 @@ import jakarta.validation.constraints.Size;
 )
 public class Post extends DataEntity<Post> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String postCode;		// 岗位编码
 	private String viewCode;		// 岗位代码（作为显示用，多租户内唯一）

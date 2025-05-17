@@ -9,6 +9,8 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
+import java.io.Serial;
+
 /**
  * 公司机构Entity
  * @author ThinkGem
@@ -21,6 +23,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 )
 public class CompanyOffice extends DataEntity<CompanyOffice> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String companyCode;		// 公司编码
 	private String officeCode;		// 机构编码
