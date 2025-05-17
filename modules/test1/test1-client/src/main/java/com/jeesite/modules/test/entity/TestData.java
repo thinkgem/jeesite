@@ -17,6 +17,7 @@ import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +56,7 @@ import java.util.List;
 )
 public class TestData extends DataEntity<TestData> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String testInput;		// 单行文本
 	private String testTextarea;		// 多行文本

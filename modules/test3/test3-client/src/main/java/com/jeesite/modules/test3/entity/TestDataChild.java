@@ -5,6 +5,8 @@
 package com.jeesite.modules.test3.entity;
 
 import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
 import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
@@ -53,6 +55,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class TestDataChild extends DataEntity<TestDataChild> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private Long testSort;		// 排序号
 	private TestData testData;		// 父表主键 父类
