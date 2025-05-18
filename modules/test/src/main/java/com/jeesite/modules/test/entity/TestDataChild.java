@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.test.entity;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.validation.constraints.Size;
@@ -54,6 +55,7 @@ import com.jeesite.modules.sys.entity.User;
 )
 public class TestDataChild extends DataEntity<TestDataChild> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private Long testSort;		// 排序号
 	private TestData testData;		// 父表主键 父类

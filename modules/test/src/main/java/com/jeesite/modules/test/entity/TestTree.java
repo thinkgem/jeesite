@@ -13,6 +13,8 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
+import java.io.Serial;
+
 /**
  * 测试树表Entity
  * @author ThinkGem
@@ -27,6 +29,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class TestTree extends TreeEntity<TestTree> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String treeCode;		// 节点编码
 	private String treeName;		// 节点名称

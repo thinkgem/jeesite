@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.test.entity;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +56,7 @@ import com.jeesite.modules.sys.entity.User;
 )
 public class TestData extends DataEntity<TestData> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String testInput;		// 单行文本
 	private String testTextarea;		// 多行文本

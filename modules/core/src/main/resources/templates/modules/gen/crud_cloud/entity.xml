@@ -35,6 +35,8 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 <% } %>
 
+import java.io.Serial;
+
 /**
  * ${functionName}Entity
  * @author ${functionAuthor}
@@ -180,6 +182,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 )
 public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(table.isTreeEntity?'BpmTree':'Bpm'):table.isTreeEntity?'Tree':'Data'}Entity<${ClassName}> {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	<%
 	isExtend = false;
