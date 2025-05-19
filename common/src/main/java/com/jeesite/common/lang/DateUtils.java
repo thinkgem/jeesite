@@ -17,14 +17,14 @@ import java.util.Date;
  * @version 2017-1-4
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
-	
+
 	private static final String[] parsePatterns = {
 		"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-dd HH", "yyyy-MM",
 		"yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM/dd HH", "yyyy/MM",
 		"yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM.dd HH", "yyyy.MM", 
 		"yyyy年MM月dd日", "yyyy年MM月dd日 HH时mm分ss秒", "yyyy年MM月dd日 HH时mm分", "yyyy年MM月dd日 HH时", "yyyy年MM月",
-		"yyyyMMdd", "yyyyMM", "yyyy"};
-	
+		"yyyyMMdd", "yyyyMM", "yyyy", "yyyy-MM-dd'T'HH:mm:ss'Z'"};
+
 	/**
 	 * 得到日期字符串 ，转换格式（yyyy-MM-dd）
 	 */
@@ -138,14 +138,25 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 	
 	/**
-	 * 日期型字符串转化为日期 格式   see to DateUtils#parsePatterns
+	 * 日期型字符串转化为日期对象，使用默认格式集
 	 */
 	public static Date parseDate(Object str) {
 		if (str == null){
 			return null;
 		}
+		String dateStr = str.toString();
+		if (StringUtils.isBlank(dateStr)){
+			return null;
+		}
+		return parseDate(dateStr, parsePatterns);
+	}
+
+	/**
+	 * 日期型字符串转化为日期对象，指定日期解析格式
+	 */
+	public static Date parseDate(final String str, final String... parsePatterns) {
 		try {
-			return parseDate(str.toString(), parsePatterns);
+			return parseDate(str, null, parsePatterns);
 		} catch (ParseException e) {
 			return null;
 		}
