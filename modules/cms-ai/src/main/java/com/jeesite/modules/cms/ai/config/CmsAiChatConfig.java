@@ -31,16 +31,16 @@ public class CmsAiChatConfig {
 	 * 聊天对话客户端
 	 * @author ThinkGem
 	 */
-    @Bean
-    public ChatClient chatClient(ChatClient.Builder builder, CmsAiProperties properties) {
+	@Bean
+	public ChatClient chatClient(ChatClient.Builder builder, CmsAiProperties properties) {
 		if (StringUtils.isNotBlank(properties.getDefaultSystem())) {
 			builder.defaultSystem(properties.getDefaultSystem());
 		}
 		if (properties.getToolCalls()) {
 			builder.defaultTools(new CmsAiTools());
 		}
-        return builder.build();
-    }
+		return builder.build();
+	}
 
 	/**
 	 * 聊天对话数据存储

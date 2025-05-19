@@ -18,19 +18,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CmsAiWebMvcConfig implements WebMvcConfigurer {
 
-    @Override
-    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
-        configurer.setTaskExecutor(webMvcAsyncTaskExecutor());
-    }
+	@Override
+	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+		configurer.setTaskExecutor(webMvcAsyncTaskExecutor());
+	}
 
-    @Bean
-    public ThreadPoolTaskExecutor webMvcAsyncTaskExecutor() {
-        ThreadPoolTaskExecutor bean = new ThreadPoolTaskExecutor();
+	@Bean
+	public ThreadPoolTaskExecutor webMvcAsyncTaskExecutor() {
+		ThreadPoolTaskExecutor bean = new ThreadPoolTaskExecutor();
 		bean.setCorePoolSize(Global.getPropertyToInteger("web.taskPool.corePoolSize", "8"));
 		bean.setMaxPoolSize(Global.getPropertyToInteger("web.taskPool.maxPoolSize", "20"));
 		bean.setKeepAliveSeconds(Global.getPropertyToInteger("web.taskPool.keepAliveSeconds", "60"));
 		bean.setQueueCapacity(Global.getPropertyToInteger("web.taskPool.queueCapacity", String.valueOf(Integer.MAX_VALUE)));
-        bean.setThreadNamePrefix("web-async-");
-        return bean;
-    }
+		bean.setThreadNamePrefix("web-async-");
+		return bean;
+	}
 }

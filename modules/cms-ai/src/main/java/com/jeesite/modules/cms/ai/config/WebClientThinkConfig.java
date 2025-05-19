@@ -36,18 +36,18 @@ public class WebClientThinkConfig {
 
 	private final Logger logger = LoggerFactory.getLogger(WebClientThinkConfig.class);
 
-    @Bean
-    @ConditionalOnMissingBean
-    public WebClientCustomizer webClientCustomizerThink() {
-        return webClientBuilder -> {
-            ExchangeFilterFunction requestFilter = ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
-                logger.trace("Request url: {}: {}", clientRequest.method(), clientRequest.url());
-                return Mono.just(clientRequest);
-            });
-            ExchangeFilterFunction responseFilter = ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-                logger.trace("Response status: {}", clientResponse.statusCode());
-                AtomicBoolean thinkingFlag = new AtomicBoolean(false);
-                Flux<DataBuffer> modifiedBody = clientResponse.bodyToFlux(DataBuffer.class)
+	@Bean
+	@ConditionalOnMissingBean
+	public WebClientCustomizer webClientCustomizerThink() {
+		return webClientBuilder -> {
+			ExchangeFilterFunction requestFilter = ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
+				logger.trace("Request url: {}: {}", clientRequest.method(), clientRequest.url());
+				return Mono.just(clientRequest);
+			});
+			ExchangeFilterFunction responseFilter = ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
+				logger.trace("Response status: {}", clientResponse.statusCode());
+				AtomicBoolean thinkingFlag = new AtomicBoolean(false);
+				Flux<DataBuffer> modifiedBody = clientResponse.bodyToFlux(DataBuffer.class)
 					.map(buf -> {
 						byte[] bytes = new byte[buf.readableByteCount()];
 						buf.read(bytes);
@@ -117,13 +117,13 @@ public class WebClientThinkConfig {
 						byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
 						return new DefaultDataBufferFactory().wrap(bytes);
 					});
-                ClientResponse modifiedResponse = ClientResponse.from(clientResponse)
+				ClientResponse modifiedResponse = ClientResponse.from(clientResponse)
 					.headers(headers -> headers.remove(HttpHeaders.CONTENT_LENGTH))
 					.body(modifiedBody)
 					.build();
-                return Mono.just(modifiedResponse);
-            });
-            webClientBuilder.filter(requestFilter).filter(responseFilter);
-        };
-    }
+				return Mono.just(modifiedResponse);
+			});
+			webClientBuilder.filter(requestFilter).filter(responseFilter);
+		};
+	}
 }
