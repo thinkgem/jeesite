@@ -33,8 +33,14 @@ public class CmsAiTools {
 	 * 你可以询问：打开客厅的灯，关闭卧室的灯（需创建新对话）
 	 */
 	@Tool(description = "房间里的灯打开或关闭")
-	public void turnLight(@ToolParam(description = "房间") String roomName, @ToolParam(description = "开关") boolean on) {
+	public String turnLight(@ToolParam(description = "房间") String roomName, @ToolParam(description = "开关") boolean on) {
 		String message = roomName + " 房间里的灯被 " + (on ? "打开" : "关闭");
 		logger.info(message + " ============== ");
+		return String.format("""
+					message: %s
+					roomName: %s
+					on: %s
+					""",
+				roomName, on, message);
 	}
 }
