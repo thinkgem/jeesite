@@ -119,11 +119,37 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 * 菜单名称：AI 助手
 * 菜单地址：/cms/chat/index
 
-## 工具调用 Tool Calling
+## 支持工具调用 Tool Calling
 
 工具调用 Tool Calling（也称 Function Calling）是人工智能应用程序中的常见模式，允许模型与一组 API 或工具交互，从而增强其功能。
 
 实例代码，详见 [CmsAiTools.java](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/java/com/jeesite/modules/cms/ai/tools/CmsAiTools.java) 让 AI 调用你的 java 实现你的业务联动。
+
+## 支持结构化输出
+
+对于依赖可靠解析输出值的下游应用程序来说，LLM 产生结构化输出的能力很重要。开发人员希望将 AI 模型的结果快速转换为数据类型，如 JSON、XML 或 Java 类，这些类可以传递给其他应用程序函数和方法。
+
+pom.xml 中注释掉 `<artifactId>spring-ai-starter-model-openai</artifactId>`
+打开注释 `<artifactId>spring-ai-starter-model-ollama</artifactId>`
+启用 `Ollama` 本地模型进行测试，地址如下：
+
+* 文本格式输出
+  - 源码位置：CmsAiChatService.chatText(message)
+  - 访问地址：<http://127.0.0.1:8980/js/a/cms/chat/text?message=你好>
+  - 输出结果：`你好！有什么问题或需要帮助的吗？`
+* JSON 类型输出
+  - 源码位置：CmsAiChatService.chatJson(message)
+  - 访问地址：<http://127.0.0.1:8980/js/a/cms/chat/json?message=张三>
+  - 输出结果：`{"sex":"男","name":"张三","age":"17"}`
+* 结合 Tool Calling 结构化输出
+  - 开启参数：`spring.ai.tool-calls: true`
+  - 源码位置：CmsAiChatService.chatJson(message)
+  - 访问地址：<http://127.0.0.1:8980/js/a/cms/chat/json?message=打开客厅的灯>
+  - 输出结果：`{"message":"客厅房间里的灯被打开","roomName":"客厅","on":true}`
+* Java 对象类型输出:
+  - 源码位置：CmsAiChatService.chatArea(message)
+  - 访问地址：<http://127.0.0.1:8980/js/a/cms/chat/entity?message=北京>
+  - 输出结果：`[{"id":"110000","pageNo":1,"pageSize":10,"orderBy":"","isNewRecord":false,"dataMap":{},"status":"0","createBy":"system","createDate":"2025-01-01 19:25","updateBy":"system","updateDate":"2025-01-01 19:25","remarks":"","lastUpdateDateTime":1677843300000,"parentCodes":"0,","treeSort":110000,"treeSorts":"0000110000,","treeLeaf":"0","treeLevel":0,"treeNames":"北京市","childList":[{"id":"110100","pageNo":1,"pageSize":10,"orderBy":"","isNewRecord":false,"dataMap":{},"status":"0","createBy":"system","createDate":"2025-01-01 19:25","updateBy":"system","updateDate":"2025-01-01 19:25","remarks":"","lastUpdateDateTime":1677843300000,"parentCodes":"0,110000,","treeSort":110100,"treeSorts":"0000110000,0000110100,","treeLeaf":"0","treeLevel":1,"treeNames":"北京城区","childList":[{"id":"110101","isNewRecord":false,"areaCode":"110101","areaName":"东城区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110102","isNewRecord":false,"areaCode":"110102","areaName":"西城区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110105","isNewRecord":false,"areaCode":"110105","areaName":"朝阳区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110106","isNewRecord":false,"areaCode":"110106","areaName":"丰台区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110107","isNewRecord":false,"areaCode":"110107","areaName":"石景山区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110108","isNewRecord":false,"areaCode":"110108","areaName":"海淀区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110109","isNewRecord":false,"areaCode":"110109","areaName":"门头沟区","areaType":"3","isRoot":true,"isTreeLeaf":false},{"id":"110111","isNewRecord":false,"areaCode":"110111","areaName":"房山区","areaType":"3","isRoot":true,"isTreeLeaf":false}],"isQueryChildren":true,"areaCode":"110100","areaName":"北京城区","areaType":"2","isRoot":false,"parentCode":"110000","isTreeLeaf":false,"parentName":"北京市"}],"isQueryChildren":true,"areaCode":"110000","areaName":"北京市","areaType":"1","isRoot":true,"isTreeLeaf":false}]`
 
 ## 授权协议声明
 
