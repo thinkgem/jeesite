@@ -722,10 +722,6 @@ web:
     id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
   
-  # 默认的日期格式（JsonMapper）
-  json:
-    defaultDateFormat: yyyy-MM-dd HH:mm:ss
-  
   # 默认不启用（为兼用旧版保留，建议使用 CORS）
   jsonp:
     enabled: false
