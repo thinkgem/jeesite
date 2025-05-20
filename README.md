@@ -35,8 +35,8 @@
 
 * 官方网站：<https://jeesite.com>
 * 使用文档：<https://jeesite.com/docs>
-* 问题反馈：[http://jeesite.net](https://gitee.com/thinkgem/jeesite5/issues/new) &nbsp;
-          [GitCode](https://gitcode.com/thinkgem/jeesite/issues/create/choose) &nbsp;
+* 问题反馈：[http://jeesite.net](https://gitee.com/thinkgem/jeesite5/issues/new) &nbsp;|&nbsp;
+          [gitcode](https://gitcode.com/thinkgem/jeesite/issues/create/choose) &nbsp;|&nbsp;
           [新手必读](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 联系我们：<http://s.jeesite.com>
 * 关注微信公众号，了解最新动态：
