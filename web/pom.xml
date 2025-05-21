@@ -101,6 +101,13 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
+		<!-- 热部署工具
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency> -->
+
 	</dependencies>
 	
 	<build>

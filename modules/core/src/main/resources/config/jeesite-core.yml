@@ -102,6 +102,11 @@ spring:
   main:
     bannerMode: "off"
 
+  # 热部署工具
+  devtools:
+    restart:
+      additional-exclude: "**/*.log"
+
 # 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
