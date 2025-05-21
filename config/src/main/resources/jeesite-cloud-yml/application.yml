@@ -159,6 +159,22 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
+#  # 达梦数据库配置，请勿使用 sysdba 用户
+#  type: dameng
+#  driver: dm.jdbc.driver.DmDriver
+#  url: jdbc:dm://127.0.0.1:5236/jeesite5?schema=jeesite5
+#  username: jeesite
+#  password: jeesite123
+#  testSql: SELECT 1 FROM DUAL
+
+#  # 人大金仓数据库配置
+#  type: kingbase
+#  driver: com.kingbase8.Driver
+#  url: jdbc:kingbase8://127.0.0.1:54321/jeesite?currentSchema=jeesite&UseServerPrepare=false
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1 FROM DUAL
+
 #  # H2 数据库配置（请打开 /modules/core/pom.xml 文件，打开 H2 DB 驱动并编译打包 core 模块）
 #  type: h2
 #  driver: org.h2.Driver
@@ -166,6 +182,9 @@ jdbc:
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
+  
+  # 更多数据库的支持列表：
+  # https://jeesite.com/docs/technology/#%E4%B8%83%E3%80%81%E5%B7%B2%E6%94%AF%E6%8C%81%E6%95%B0%E6%8D%AE%E5%BA%93
 
   # 数据库连接池配置
   pool:
