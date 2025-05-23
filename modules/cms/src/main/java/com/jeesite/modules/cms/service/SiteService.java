@@ -129,7 +129,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 */
 	public String rebuildVectorStore(Site site) {
 		if (articleVectorStore == null) {
-			return text("您好，系统未安装内容管理AI模块");
+			return text("您好，系统未配置向量数据库");
 		}
 		return articleVectorStore.rebuild(new Article(new Category(site)));
 	}

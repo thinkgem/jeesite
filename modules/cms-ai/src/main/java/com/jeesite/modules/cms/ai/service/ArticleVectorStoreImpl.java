@@ -37,6 +37,7 @@ import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ import java.util.Set;
  * @author ThinkGem
  */
 @Service
+@ConditionalOnBean(VectorStore.class)
 public class ArticleVectorStoreImpl implements ArticleVectorStore {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());

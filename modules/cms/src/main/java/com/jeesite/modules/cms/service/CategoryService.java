@@ -133,7 +133,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 */
 	public String rebuildVectorStore(Category category) {
 		if (articleVectorStore == null) {
-			return text("您好，系统未安装全文检索模块");
+			return text("您好，系统未配置向量数据库");
 		}
 		return articleVectorStore.rebuild(new Article(category));
 	}

@@ -58,7 +58,7 @@ public class CmsAiChatService extends BaseService {
 	private ChatClient chatClient;
 	@Autowired
 	private ChatMemory chatMemory;
-	@Autowired
+	@Autowired(required = false)
 	private VectorStore vectorStore;
 	@Autowired
 	private CmsAiProperties properties;
@@ -126,20 +126,18 @@ public class CmsAiChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public Flux<ChatResponse> chatStream(String conversationId, String message, HttpServletRequest request) {
-		return chatClient.prompt()
-			.messages(
-				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
-			)
-			.advisors(
-				MessageChatMemoryAdvisor.builder(chatMemory)
+		ChatClient.ChatClientRequestSpec spec = chatClient.prompt()
+				.messages(new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE)))
+				.advisors(MessageChatMemoryAdvisor.builder(chatMemory)
 						.conversationId(conversationId)
-						.build(),
-				QuestionAnswerAdvisor.builder(vectorStore)
-						.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
-						.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
-						.build()
-			)
-			.stream()
+						.build());
+		if (vectorStore != null) {
+			spec.advisors(QuestionAnswerAdvisor.builder(vectorStore)
+					.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
+					.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
+					.build());
+		}
+		return spec.stream()
 			.chatResponse()
 			.doOnNext(response -> {
 				if (response.getResult() != null && StringUtils.isNotBlank(response.getResult().getOutput().getText())) {
@@ -204,7 +202,8 @@ public class CmsAiChatService extends BaseService {
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)
 			.call()
-			.responseEntity(new AbstractMessageOutputConverter<Map<String, Object>>(
+			.responseEntity(
+				new AbstractMessageOutputConverter<Map<String, Object>>(
 					new MappingJackson2MessageConverter(JsonMapper.getInstance())
 				) {
 					final MapOutputConverter mapOutputConverter = new MapOutputConverter();
@@ -228,18 +227,18 @@ public class CmsAiChatService extends BaseService {
 	public List<Area> chatArea(String message) {
 		List<Area> list = AreaUtils.getAreaAllList();
 		if (list.size() > 10) list = list.subList(0, 10);
-		return chatClient.prompt()
-            .messages(
+		ChatClient.ChatClientRequestSpec spec = chatClient.prompt()
+			.messages(
 				new SystemMessage(JsonMapper.toJson(list)),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
-			)
-            .advisors(
-				QuestionAnswerAdvisor.builder(vectorStore)
-						.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
-						.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
-						.build()
-			)
-			.call()
+			);
+		if (vectorStore != null) {
+			spec.advisors(QuestionAnswerAdvisor.builder(vectorStore)
+					.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
+					.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
+					.build());
+		}
+		return spec.call()
 			.responseEntity(new BeanOutputConverter<>(new ParameterizedTypeReference<List<Area>>() {},
 					JsonMapper.getInstance()))
 			.getEntity();
