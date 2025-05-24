@@ -413,5 +413,9 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 //			inputPool.free(input);
 //		}
 //	}
-	
+
+	@Deprecated
+	public ObjectUtils() {
+		// empty
+	}
 }
