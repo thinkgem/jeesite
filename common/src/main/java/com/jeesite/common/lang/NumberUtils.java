@@ -119,5 +119,9 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 		}
 		return df.format(data);
 	}
-	
+
+	@Deprecated
+	public NumberUtils() {
+		// empty
+	}
 }

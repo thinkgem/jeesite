@@ -415,5 +415,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			return name;
 		}
 	}
-	
+
+	@Deprecated
+	public StringUtils() {
+		// empty
+	}
 }
