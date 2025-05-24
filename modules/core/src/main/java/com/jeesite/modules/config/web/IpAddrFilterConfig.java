@@ -6,11 +6,13 @@ package com.jeesite.modules.config.web;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.utils.LocaleUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.LocaleContextResolver;
 
 import javax.servlet.Filter;
 import javax.servlet.ServletRequest;
@@ -28,7 +30,7 @@ public class IpAddrFilterConfig {
 	private static String[] denyPrefixes;
 
 	@Bean
-	public FilterRegistrationBean<Filter> ipAddrFilter() {
+	public FilterRegistrationBean<Filter> ipAddrFilter(LocaleContextResolver localeResolver) {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
 		bean.setName("ipAddrFilter");
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 10);
@@ -40,7 +42,9 @@ public class IpAddrFilterConfig {
 				response.setStatus(403);
 				ServletUtils.renderString(response, Global.getText("访问拒绝"));
 			}
+			LocaleUtils.removeTimeZoneAwareLocaleContext();
 		});
+		LocaleUtils.setLocaleResolver(localeResolver);
 		bean.addUrlPatterns("/*");
 		return bean;
 	}
