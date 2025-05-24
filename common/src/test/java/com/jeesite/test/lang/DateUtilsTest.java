@@ -18,6 +18,7 @@ public class DateUtilsTest {
 
 	public static void main(String[] args) throws ParseException {
 		System.out.println(DateUtils.formatDate(DateUtils.parseDate("2023/3/6")));
+		System.out.println(DateUtils.formatDateTime(DateUtils.parseDate("2023-3-6 12:30:15")));
 		System.out.println(DateUtils.getDate("yyyy年MM月dd日 E"));
 		long time = new Date().getTime()-DateUtils.parseDate("2023-11-19").getTime();
 		System.out.println(time/(24*60*60*1000));
