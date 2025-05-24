@@ -4,10 +4,11 @@
  */
 package com.jeesite.common.lang;
 
+import com.jeesite.common.utils.LocaleUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.lang.management.ManagementFactory;
-import java.text.ParseException;
+import java.text.ParsePosition;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,7 +22,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	private static final String[] parsePatterns = {
 		"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-dd HH", "yyyy-MM",
 		"yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM/dd HH", "yyyy/MM",
-		"yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM.dd HH", "yyyy.MM", 
+		"yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM.dd HH", "yyyy.MM",
 		"yyyy年MM月dd日", "yyyy年MM月dd日 HH时mm分ss秒", "yyyy年MM月dd日 HH时mm分", "yyyy年MM月dd日 HH时", "yyyy年MM月",
 		"yyyyMMdd", "yyyyMM", "yyyy", "yyyy-MM-dd'T'HH:mm:ss'Z'"};
 
@@ -45,15 +46,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static String formatDate(Date date, String pattern) {
 		String formatDate = null;
 		if (date != null){
-//			if (StringUtils.isNotBlank(pattern)) {
-//				formatDate = DateFormatUtils.format(date, pattern);
-//			} else {
-//				formatDate = DateFormatUtils.format(date, "yyyy-MM-dd");
-//			}
 			if (StringUtils.isBlank(pattern)) {
 				pattern = "yyyy-MM-dd";
 			}
-			formatDate = FastDateFormat.getInstance(pattern).format(date);
+//			formatDate = DateFormatUtils.format(date, "yyyy-MM-dd");
+			formatDate = FastDateFormat.getInstance(pattern,
+					LocaleUtils.getTimeZone(), LocaleUtils.getLocale()).format(date);
 		}
 		return formatDate;
 	}
@@ -77,7 +75,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 */
 	public static String getDate(String pattern) {
 //		return DateFormatUtils.format(new Date(), pattern);
-		return FastDateFormat.getInstance(pattern).format(new Date());
+		return FastDateFormat.getInstance(pattern,
+				LocaleUtils.getTimeZone(), LocaleUtils.getLocale()).format(new Date());
 	}
 	
 	/**
@@ -88,11 +87,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * @return
 	 */
 	public static String getDate(String pattern, int amont, int type) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
 		calendar.setTime(new Date());
 		calendar.add(type, amont);
 //		return DateFormatUtils.format(calendar.getTime(), pattern);
-		return FastDateFormat.getInstance(pattern).format(calendar.getTime());
+		return FastDateFormat.getInstance(pattern,
+						LocaleUtils.getTimeZone(), LocaleUtils.getLocale()).format(calendar.getTime());
 	}
 	
 	/**
@@ -155,11 +155,26 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * 日期型字符串转化为日期对象，指定日期解析格式
 	 */
 	public static Date parseDate(final String str, final String... parsePatterns) {
-		try {
-			return parseDate(str, null, parsePatterns);
-		} catch (ParseException e) {
-			return null;
+//		try {
+//			return DateUtils.parseDate(str, Locale.getDefault(), parsePatterns);
+//		} catch (ParseException e) {
+//			return null;
+//		}
+		ParsePosition pos = new ParsePosition(0);
+		Calendar calendar = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
+		for (final String parsePattern : parsePatterns) {
+			FastDateFormat format = FastDateFormat.getInstance(parsePattern);
+			calendar.clear();
+			try {
+				if (format.parse(str, pos, calendar) && pos.getIndex() == str.length()) {
+					return calendar.getTime();
+				}
+			} catch (final IllegalArgumentException ignored) {
+				// leniency is preventing calendar from being set
+			}
+			pos.setIndex(0);
 		}
+		return null;
 	}
 
 	/**
@@ -239,7 +254,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * @return
 	 */
 	public static int getWeekOfYear(Date date){
-		Calendar cal = Calendar.getInstance(); 
+		Calendar cal = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
 		cal.setTime(date);
 		return cal.get(Calendar.WEEK_OF_YEAR);
 	}
@@ -253,7 +268,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (date == null){
 			return null;
 		}
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -271,7 +286,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (date == null){
 			return null;
 		}
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
@@ -326,5 +341,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		}
 		return new Date[]{beginDate, endDate};
 	}
-	
+
+	@Deprecated
+	public DateUtils() {
+		// empty
+	}
 }
