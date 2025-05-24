@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -53,7 +54,7 @@ public class JsonMapper extends ObjectMapper {
 	}
 	
 	public JsonMapper() {
-		// 设置默认时区、默认日期格式
+		// 日志类型格式化处理
 		this.setLocaleTimeZoneDateFormat();
 		// 为Null时不序列化
 		this.setSerializationInclusion(Include.NON_NULL);
@@ -70,7 +71,7 @@ public class JsonMapper extends ObjectMapper {
 	}
 
 	/**
-	 * 设置默认时区、默认日期格式
+	 * 日志类型格式化处理
 	 * @author ThinkGem
 	 */
 	public JsonMapper setLocaleTimeZoneDateFormat(){
@@ -81,32 +82,52 @@ public class JsonMapper extends ObjectMapper {
 		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
 			@Serial
 			private static final long serialVersionUID = 1L;
+			private static final String[] pattern = new String[] {"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS"};
+			private static class JeeSiteJsonSerializer extends JsonSerializer<Date> {
+				private final String pattern;
+				private JeeSiteJsonSerializer(String pattern) {
+					this.pattern = pattern;
+				}
+				@Override
+				public void serialize(Date value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+					if (value != null){
+						if (StringUtils.isNotBlank(pattern)) {
+							gen.writeString(DateUtils.formatDate(value, pattern));
+						} else {
+							gen.writeString(DateUtils.formatDateTime(value));
+						}
+					}
+				}
+			}
+			private static class JeeSiteJsonDeserializer extends JsonDeserializer<Date> {
+				private final String pattern;
+				private JeeSiteJsonDeserializer(String pattern) {
+					this.pattern = pattern;
+				}
+				@Override
+				public Date deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+					if (StringUtils.isNotBlank(pattern)) {
+						return DateUtils.parseDate(parser.getText(), pattern);
+					} else {
+						return DateUtils.parseDate(parser.getText());
+					}
+				}
+			}
 			@Override
 			public Object findSerializer(Annotated a) {
 				if (a instanceof AnnotatedMethod) {
 					AnnotatedElement m = a.getAnnotated();
 					JsonFormat jf = m.getAnnotation(JsonFormat.class);
-					if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(),
-							"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS")) {
-						return new JsonSerializer<Date>(){
-							@Override
-							public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
-								if (value != null){
-									jgen.writeString(DateUtils.formatDate(value, jf.pattern()));
-								}
-							}
-						};
+					if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
+						return new JeeSiteJsonSerializer(jf.pattern());
 					}
 					AnnotatedMethod am = (AnnotatedMethod) a;
 					if (am.getRawReturnType() == Date.class) {
-						return new JsonSerializer<Date>(){
-							@Override
-							public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
-								if (value != null){
-									jgen.writeString(DateUtils.formatDateTime(value));
-								}
-							}
-						};
+						return new JeeSiteJsonSerializer(null);
+					}
+				} else if (a instanceof AnnotatedClass) {
+					if (a.getRawType() == Date.class) {
+						return new JeeSiteJsonSerializer(null);
 					}
 				}
 				return super.findSerializer(a);
@@ -116,23 +137,16 @@ public class JsonMapper extends ObjectMapper {
 				if (a instanceof AnnotatedMethod) {
 					AnnotatedElement m = a.getAnnotated();
 					JsonFormat jf = m.getAnnotation(JsonFormat.class);
-					if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(),
-							"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS")) {
-						return new JsonDeserializer<Date>(){
-							@Override
-							public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-								return DateUtils.parseDate(p.getText(), jf.pattern());
-							}
-						};
+					if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
+						return new JeeSiteJsonDeserializer(jf.pattern());
 					}
 					AnnotatedMethod am = (AnnotatedMethod) a;
 					if (am.getParameterCount() > 0 && am.getParameterType(0).getRawClass() == Date.class) {
-						return new JsonDeserializer<Date>(){
-							@Override
-							public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-								return DateUtils.parseDate(p.getText());
-							}
-						};
+						return new JeeSiteJsonDeserializer(null);
+					}
+				} else if (a instanceof AnnotatedClass) {
+					if (a.getRawType() == Date.class) {
+						return new JeeSiteJsonDeserializer(null);
 					}
 				}
 				return super.findDeserializer(a);

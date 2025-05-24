@@ -8,6 +8,7 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.mapper.JsonMapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class JsonMapperTest {
 		map.put("pId", 1);
 		map.put("name", "你好");
 		map.put("open", true);
+		map.put("date", new Date());
 		list.add(map);
 		String json = JsonMapper.toJson(list);
 		System.out.println(json);
