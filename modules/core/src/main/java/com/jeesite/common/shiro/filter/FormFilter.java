@@ -431,6 +431,8 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("company", Global.getProperty("companyName"));
 		data.put("version", Global.getProperty("productVersion"));
 		data.put("year", Global.getProperty("copyrightYear"));
+		data.put("lang", Global.getLang(request));
+		data.put("timeZone", Global.getTimeZone(request));
 	}
 
 	/**
@@ -458,7 +460,8 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("company", Global.getProperty("companyName"));
 		data.put("version", Global.getProperty("productVersion"));
 		data.put("year", Global.getProperty("copyrightYear"));
-		data.put("lang", Global.getLang());
+		data.put("lang", Global.getLang(request));
+		data.put("timeZone", Global.getTimeZone(request));
 		List<Map<String, Object>> roleList = ListUtils.newArrayList();
 		String desktopUrl = null; String roleCode = (String)session.getAttribute("roleCode");
 		Set<String> roleCodes = roleCode != null ? SetUtils.newHashSet(StringUtils.splitComma(roleCode)) : null;

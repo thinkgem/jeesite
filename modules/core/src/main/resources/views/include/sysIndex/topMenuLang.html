@@ -8,6 +8,19 @@
 		<% for(var dict in @DictUtils.getDictList('sys_lang_type')){ %>
 			<li><a href="${ctxPath}/lang/${dict.dictValue}" onclick="location=this.href+'?url='+location.href;return false;">${dict.dictLabel}</a></li>
 		<% } %>
+		<li><a href="javascript:$('#timeZoneSelectName').click()">${@Global.getTimeZone()}</a></li>
+		<div class="hide">
+			<#form:treeselect id="timeZoneSelect" title="${text('时区选择')}" allowClear="false"
+				url="${ctxPath}/timeZone/treeData" callbackFuncName="timeZoneSelectCallback" boxWidth="350"/>
+			<script>
+				function timeZoneSelectCallback(id, act){
+					if (id == 'timeZoneSelect' && (act == 'ok')){
+						var timeZoneId = $('#timeZoneSelectCode').val();
+						location = '${ctxPath}/timeZone?id=' + js.encodeUrl(timeZoneId) + '&url=' + location.href;
+					}
+				}
+			</script>
+		</div>
 		<li class="mt10"></li>
 	</ul>
 </li>
