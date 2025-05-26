@@ -18,11 +18,11 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(vue@3.5.13(typescript@5.8.3))
       '@jeesite/cms-lib':
-        specifier: 5.11.1-rc.1
-        version: 5.11.1-rc.1(vue@3.5.13(typescript@5.8.3))
+        specifier: 5.12.0-rc.1
+        version: 5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))
       '@jeesite/dbm-lib':
-        specifier: 5.11.1-rc.1
-        version: 5.11.1-rc.1(vue@3.5.13(typescript@5.8.3))
+        specifier: 5.12.0-rc.1
+        version: 5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))
       '@unocss/preset-wind3':
         specifier: 66.1.1
         version: 66.1.1
@@ -1141,24 +1141,12 @@ packages:
   '@iconify/utils@2.3.0':
     resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
 
-  '@intlify/core-base@11.1.2':
-    resolution: {integrity: sha512-nmG512G8QOABsserleechwHGZxzKSAlggGf9hQX0nltvSwyKNVuB/4o6iFeG2OnjXK253r8p8eSDOZf8PgFdWw==}
-    engines: {node: '>= 16'}
-
   '@intlify/core-base@11.1.3':
     resolution: {integrity: sha512-cMuHunYO7LE80azTitcvEbs1KJmtd6g7I5pxlApV3Jo547zdO3h31/0uXpqHc+Y3RKt1wo2y68RGSx77Z1klyA==}
     engines: {node: '>= 16'}
 
-  '@intlify/message-compiler@11.1.2':
-    resolution: {integrity: sha512-T/xbNDzi+Yv0Qn2Dfz2CWCAJiwNgU5d95EhhAEf4YmOgjCKktpfpiUSmLcBvK1CtLpPQ85AMMQk/2NCcXnNj1g==}
-    engines: {node: '>= 16'}
-
   '@intlify/message-compiler@11.1.3':
     resolution: {integrity: sha512-7rbqqpo2f5+tIcwZTAG/Ooy9C8NDVwfDkvSeDPWUPQW+Dyzfw2o9H103N5lKBxO7wxX9dgCDjQ8Umz73uYw3hw==}
-    engines: {node: '>= 16'}
-
-  '@intlify/shared@11.1.2':
-    resolution: {integrity: sha512-dF2iMMy8P9uKVHV/20LA1ulFLL+MKSbfMiixSmn6fpwqzvix38OIc7ebgnFbBqElvghZCW9ACtzKTGKsTGTWGA==}
     engines: {node: '>= 16'}
 
   '@intlify/shared@11.1.3':
@@ -1169,11 +1157,11 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@jeesite/cms-lib@5.11.1-rc.1':
-    resolution: {integrity: sha512-WvDR024pUSxiVLHK0vx3WuEwhcN87M7uE6lxJMMQpCl/MfeMlOj8aHsYzS9xpArBPhrabZb45durPC/pjngKrw==}
+  '@jeesite/cms-lib@5.12.0-rc.1':
+    resolution: {integrity: sha512-Krv2Xn6fpEN8fsa7d74IEQj/kgZp5+KyYyOZTiygduUWpg8VAw40K/gJdZHvkOgOU51v3ucsL3GscJMxSWw9KA==}
 
-  '@jeesite/dbm-lib@5.11.1-rc.1':
-    resolution: {integrity: sha512-rKz7VYxGigQ6oZ6s5d6U4dC87AoWW1r0CxNbFkMei7Nwdzpd23vuThFpQacA+/nABz6ZSvNFbTvU/rc5+u9SmA==}
+  '@jeesite/dbm-lib@5.12.0-rc.1':
+    resolution: {integrity: sha512-8uejttE2LJ1VivJUCxRG/RoQZW91zQetVMiofxCh1MgczIci5DQrO8DYT6OQiv5kKNTmVsB0blMMxa43Z/iSsg==}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -4549,12 +4537,6 @@ packages:
     peerDependencies:
       vue: ^3.4.37
 
-  vue-i18n@11.1.2:
-    resolution: {integrity: sha512-MfdkdKGUHN+jkkaMT5Zbl4FpRmN7kfelJIwKoUpJ32ONIxdFhzxZiLTVaAXkAwvH3y9GmWpoiwjDqbPIkPIMFA==}
-    engines: {node: '>= 16'}
-    peerDependencies:
-      vue: ^3.0.0
-
   vue-i18n@11.1.3:
     resolution: {integrity: sha512-Pcylh9z9S5+CJAqgbRZ3EKxFIBIrtY5YUppU722GIT65+Nukm0TCqiQegZnNLCZkXGthxe0cpqj0AoM51H+6Gw==}
     engines: {node: '>= 16'}
@@ -5611,27 +5593,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@intlify/core-base@11.1.2':
-    dependencies:
-      '@intlify/message-compiler': 11.1.2
-      '@intlify/shared': 11.1.2
-
   '@intlify/core-base@11.1.3':
     dependencies:
       '@intlify/message-compiler': 11.1.3
       '@intlify/shared': 11.1.3
 
-  '@intlify/message-compiler@11.1.2':
-    dependencies:
-      '@intlify/shared': 11.1.2
-      source-map-js: 1.2.1
-
   '@intlify/message-compiler@11.1.3':
     dependencies:
       '@intlify/shared': 11.1.3
       source-map-js: 1.2.1
-
-  '@intlify/shared@11.1.2': {}
 
   '@intlify/shared@11.1.3': {}
 
@@ -5644,22 +5614,22 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@jeesite/cms-lib@5.11.1-rc.1(vue@3.5.13(typescript@5.8.3))':
+  '@jeesite/cms-lib@5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       '@traptitech/markdown-it-katex': 3.6.0
       highlight.js: 11.11.1
       markdown-it: 14.1.0
       markdown-it-link-attributes: 4.0.1
       qs: 6.14.0
-      vue-i18n: 11.1.2(vue@3.5.13(typescript@5.8.3))
+      vue-i18n: 11.1.3(vue@3.5.13(typescript@5.8.3))
       vue-types: 6.0.0(vue@3.5.13(typescript@5.8.3))
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/dbm-lib@5.11.1-rc.1(vue@3.5.13(typescript@5.8.3))':
+  '@jeesite/dbm-lib@5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       qs: 6.14.0
-      vue-i18n: 11.1.2(vue@3.5.13(typescript@5.8.3))
+      vue-i18n: 11.1.3(vue@3.5.13(typescript@5.8.3))
       vue-types: 6.0.0(vue@3.5.13(typescript@5.8.3))
     transitivePeerDependencies:
       - vue
@@ -9385,13 +9355,6 @@ snapshots:
 
   vue-flow-layout@0.1.1(vue@3.5.13(typescript@5.8.3)):
     dependencies:
-      vue: 3.5.13(typescript@5.8.3)
-
-  vue-i18n@11.1.2(vue@3.5.13(typescript@5.8.3)):
-    dependencies:
-      '@intlify/core-base': 11.1.2
-      '@intlify/shared': 11.1.2
-      '@vue/devtools-api': 6.6.4
       vue: 3.5.13(typescript@5.8.3)
 
   vue-i18n@11.1.3(vue@3.5.13(typescript@5.8.3)):

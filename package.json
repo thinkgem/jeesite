@@ -1,6 +1,6 @@
 {
   "name": "jeesite",
-  "version": "5.12.0-dev",
+  "version": "5.12.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -26,8 +26,8 @@
   "dependencies": {
     "@ant-design/colors": "8.0.0",
     "@ant-design/icons-vue": "7.0.1",
-    "@jeesite/cms-lib": "5.11.1-rc.1",
-    "@jeesite/dbm-lib": "5.11.1-rc.1",
+    "@jeesite/cms-lib": "5.12.0-rc.1",
+    "@jeesite/dbm-lib": "5.12.0-rc.1",
     "@unocss/preset-wind3": "66.1.1",
     "@vue/runtime-core": "3.5.13",
     "@vue/shared": "3.5.13",
