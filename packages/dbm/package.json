@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/dbm",
-  "version": "5.12.0-dev",
+  "version": "5.12.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "update": "ncu -u"
   },
   "dependencies": {
-    "@jeesite/dbm-lib": "5.11.1-rc.1",
+    "@jeesite/dbm-lib": "5.12.0-rc.1",
     "qs": "6.14.0"
   },
   "devDependencies": {
