@@ -536,7 +536,8 @@
 
       .ant-input,
       .ant-picker,
-      .ant-select-selector {
+      .ant-select-selector,
+      .ant-input-affix-wrapper {
         background: transparent !important;
         border: 0 !important;
         border-radius: 0;
@@ -573,6 +574,26 @@
       .ant-select-multiple {
         .ant-select-selection-search {
           left: -10px !important;
+        }
+      }
+
+      .ant-input-search > .ant-input-group {
+        > .ant-input-affix-wrapper {
+          > .ant-input-suffix {
+            display: none;
+          }
+        }
+
+        > .ant-input-group-addon {
+          background-color: transparent;
+          > .ant-input-search-button {
+            background-color: transparent;
+            border: 0;
+            &:hover,
+            &:focus {
+              background-color: transparent;
+            }
+          }
         }
       }
 
