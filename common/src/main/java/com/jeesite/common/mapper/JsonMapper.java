@@ -113,13 +113,12 @@ public class JsonMapper extends ObjectMapper {
 			@Override
 			public Object findSerializer(Annotated a) {
 				if (a instanceof AnnotatedMethod) {
-					AnnotatedElement m = a.getAnnotated();
-					JsonFormat jf = m.getAnnotation(JsonFormat.class);
-					if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
-						return new JeeSiteJsonSerializer(jf.pattern());
-					}
 					AnnotatedMethod am = (AnnotatedMethod) a;
 					if (am.getRawReturnType() == Date.class) {
+						JsonFormat jf = am.getAnnotation(JsonFormat.class);
+						if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
+							return new JeeSiteJsonSerializer(jf.pattern());
+						}
 						return new JeeSiteJsonSerializer(null);
 					}
 				} else if (a instanceof AnnotatedClass) {
@@ -132,13 +131,13 @@ public class JsonMapper extends ObjectMapper {
 			@Override
 			public Object findDeserializer(Annotated a) {
 				if (a instanceof AnnotatedMethod) {
-					AnnotatedElement m = a.getAnnotated();
-					JsonFormat jf = m.getAnnotation(JsonFormat.class);
-					if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
-						return new JeeSiteJsonDeserializer(jf.pattern());
-					}
 					AnnotatedMethod am = (AnnotatedMethod) a;
 					if (am.getParameterCount() > 0 && am.getParameterType(0).getRawClass() == Date.class) {
+						AnnotatedElement m = am.getAnnotated();
+						JsonFormat jf = m.getAnnotation(JsonFormat.class);
+						if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
+							return new JeeSiteJsonDeserializer(jf.pattern());
+						}
 						return new JeeSiteJsonDeserializer(null);
 					}
 				} else if (a instanceof AnnotatedClass) {
