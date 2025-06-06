@@ -548,6 +548,8 @@ shiro:
     /oauth2/authorize = user
     /druid/** = perms[sys:state:druid]
     /bpm/modeler/** = perms[bpm:modeler]
+    /ureport/designer/** = perms[ureport]
+    /ureport/datasource/** = perms[ureport]
     ${adminPath}/login-cas = cas
     ${adminPath}/login-ldap = ldap
     ${adminPath}/login = authc
