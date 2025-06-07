@@ -96,9 +96,10 @@ public class CmsAiChatController extends BaseController {
 	}
 
 	/**
-	 * 聊天对话，结构化输出
+	 * 聊天对话，结构化输出 JSON
 	 * @author ThinkGem
 	 * http://127.0.0.1:8980/js/a/cms/chat/json?message=张三
+	 * http://127.0.0.1:8980/js/a/cms/chat/json?message=打开客厅的灯
 	 */
 	@RequestMapping(value = "/json")
 	public Map<String, Object> json(@RequestParam String message) {
@@ -106,7 +107,7 @@ public class CmsAiChatController extends BaseController {
 	}
 
 	/**
-	 * 聊天对话，结构化输出
+	 * 聊天对话，结构化输出 Entity
 	 * @author ThinkGem
 	 * http://127.0.0.1:8980/js/a/cms/chat/entity?message=北京
 	 */

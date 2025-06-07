@@ -5,6 +5,7 @@
 package com.jeesite.modules.cms.ai.service;
 
 import com.jeesite.common.cache.CacheUtils;
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
@@ -27,6 +28,7 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.content.Media;
 import org.springframework.ai.converter.AbstractMessageOutputConverter;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.converter.MapOutputConverter;
@@ -126,8 +128,16 @@ public class CmsAiChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public Flux<ChatResponse> chatStream(String conversationId, String message, HttpServletRequest request) {
-		ChatClient.ChatClientRequestSpec spec = chatClient.prompt()
-				.messages(new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE)))
+		String text = StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE);
+		List<Media> media = ListUtils.newArrayList();
+//		List<FileUpload> fileUploadList = FileUploadUtils.findFileUpload(conversationId, "cms-chat");
+//		for (FileUpload fileUpload : fileUploadList) {
+//			File file = new File(fileUpload.getFileEntity().getFileRealPath());
+//			MediaType mediaType = MediaType.parseMediaType(FileUtils.getContentType(file.getName()));
+//			media.add(Media.builder().mimeType(mediaType).data(file).build());
+//		}
+		UserMessage userMessage = UserMessage.builder().text(text).media(media).build();
+		ChatClient.ChatClientRequestSpec spec = chatClient.prompt().messages(userMessage)
 				.advisors(MessageChatMemoryAdvisor.builder(chatMemory)
 						.conversationId(conversationId)
 						.build());
@@ -197,7 +207,7 @@ public class CmsAiChatService extends BaseService {
 		return chatClient.prompt()
 			.messages(
 				new SystemMessage("""
-						[ {name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'} ]，返回 json。
+						[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]，返回 json。
 						"""),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)

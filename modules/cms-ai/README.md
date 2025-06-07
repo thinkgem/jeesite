@@ -131,7 +131,7 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 
 pom.xml 中注释掉 `<artifactId>spring-ai-starter-model-openai</artifactId>`
 打开注释 `<artifactId>spring-ai-starter-model-ollama</artifactId>`
-启用 `Ollama` 本地模型进行测试，地址如下：
+启用 `Ollama` 本地模型，测试类：`AiChatServiceTest.java`，或测试地址：
 
 * 文本格式输出
   - 源码位置：CmsAiChatService.chatText(message)

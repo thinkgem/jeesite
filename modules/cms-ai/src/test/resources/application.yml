@@ -1,0 +1,28 @@
+
+# 产品或项目名称、软件开发公司名称
+productName: JeeSite Demo
+companyName: ThinkGem
+
+# 产品版本、版权年份
+productVersion: V5.12
+copyrightYear: 2025
+
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+  username: root
+  password: 123456
+  testSql: SELECT 1
+  
+# 日志配置
+logging:
+  config: classpath:logback-test.xml
+
+# 消息推送
+msg:
+  enabled: true
