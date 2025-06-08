@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueIndex</name>
-	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
 	<fileName>index.vue</fileName>
 	<content><![CDATA[
 <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
@@ -30,10 +30,10 @@
 </template>
 <script lang="ts" setup name="${compNamePrefix}Index">
   import { ref } from 'vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { PageWrapper } from '/@/components/Page';
-  import { BasicTree } from '/@/components/Tree';
-  import { ${className}TreeData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { PageWrapper } from '@jeesite/core/components/Page';
+  import { BasicTree } from '@jeesite/core/components/Tree';
+  import { ${className}TreeData } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
   import ListView from './list.vue';
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');

@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueFormChildList</name>
-	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
 	<fileName>form${@StringUtils.cap(table.classNameSimple)}List.vue</fileName>
 	<content><![CDATA[
 <!--
@@ -23,10 +23,10 @@
 </template>
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { Icon } from '/@/components/Icon';
-  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
-  import { ${ParentClassName} } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${parentClassName}';
+  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { Icon } from '@jeesite/core/components/Icon';
+  import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
+  import { ${ParentClassName} } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${parentClassName}';
   <%
   var userselectExists = false;
   var officeselectExists = false;
@@ -47,13 +47,13 @@
   }
   %>
   <% if(userselectExists || officeselectExists) { %>
-  import { officeTreeData } from '/@/api/sys/office';
+  import { officeTreeData } from '@jeesite/core/api/sys/office';
   <% } %>
   <% if(companyselectExists) { %>
-  import { companyTreeData } from '/@/api/sys/company';
+  import { companyTreeData } from '@jeesite/core/api/sys/company';
   <% } %>
   <% if(areaselectExists) { %>
-  import { areaTreeData } from '/@/api/sys/area';
+  import { areaTreeData } from '@jeesite/core/api/sys/area';
   <% } %>
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');

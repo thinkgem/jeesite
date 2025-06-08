@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueList</name>
-	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
 	<fileName>list.vue</fileName>
 	<content><![CDATA[
 <% var modalOrDrawer = @StringUtils.contains(table.tplCategory, '_modal') ? 'Modal' : 'Drawer'; %>
@@ -97,23 +97,23 @@ if(table.isTreeEntity){
   import { unref<% if(toBoolean(table.optionMap['isImportExport'])){ %>, ref<% } %><% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
   	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
   <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
-  import { useEmitter } from '/@/store/modules/user';
+  import { useEmitter } from '@jeesite/core/store/modules/user';
   <% } %>
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useMessage } from '/@/hooks/web/useMessage';
+  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   <% if(toBoolean(table.optionMap['isImportExport'])){ %>
-  import { useGlobSetting } from '/@/hooks/setting';
-  import { downloadByUrl } from '/@/utils/file/download';
+  import { useGlobSetting } from '@jeesite/core/hooks/setting';
+  import { downloadByUrl } from '@jeesite/core/utils/file/download';
   <% } %>
   <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
-  import { useGo } from '/@/hooks/web/usePage';
+  import { useGo } from '@jeesite/core/hooks/web/usePage';
   <% } %>
-  import { router } from '/@/router';
-  import { Icon } from '/@/components/Icon';
-  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
-  import { ${className}Delete, ${className}ListData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { router } from '@jeesite/core/router';
+  import { Icon } from '@jeesite/core/components/Icon';
+  import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
+  import { ${className}Delete, ${className}ListData } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
   <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
-  import { ${className}Disable, ${className}Enable } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { ${className}Disable, ${className}Enable } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
   <% } %>
   <%
   var userselectExists = false;
@@ -135,27 +135,27 @@ if(table.isTreeEntity){
   }
   %>
   <% if(userselectExists || officeselectExists) { %>
-  import { officeTreeData } from '/@/api/sys/office';
+  import { officeTreeData } from '@jeesite/core/api/sys/office';
   <% } %>
   <% if(companyselectExists) { %>
-  import { companyTreeData } from '/@/api/sys/company';
+  import { companyTreeData } from '@jeesite/core/api/sys/company';
   <% } %>
   <% if(areaselectExists) { %>
-  import { areaTreeData } from '/@/api/sys/area';
+  import { areaTreeData } from '@jeesite/core/api/sys/area';
   <% } %>
   <% if(modalOrDrawer == 'Drawer' && !@StringUtils.contains(table.tplCategory, '_route')){ %>
-  import { useDrawer } from '/@/components/Drawer';
+  import { useDrawer } from '@jeesite/core/components/Drawer';
   <% } %>
   <% if(modalOrDrawer == 'Modal' || (toBoolean(table.optionMap['isBpmForm'])
        || toBoolean(table.optionMap['isImportExport']))){ %>
-  import { useModal } from '/@/components/Modal';
+  import { useModal } from '@jeesite/core/components/Modal';
   <% } %>
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
-  import { BpmRuntimeTrace } from '/@/components/Bpm';
+  import { BpmRuntimeTrace } from '@jeesite/bpm/components/Bpm';
   <% } %>
-  import { FormProps } from '/@/components/Form';
+  import { FormProps } from '@jeesite/core/components/Form';
   <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
-  import { isEmpty } from '/@/utils/is';
+  import { isEmpty } from '@jeesite/core/utils/is';
   <% } %>
   <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
   import InputForm from './form.vue';

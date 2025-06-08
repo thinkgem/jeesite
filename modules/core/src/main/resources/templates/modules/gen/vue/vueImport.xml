@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueFormImport</name>
-	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
 	<fileName>formImport.vue</fileName>
 	<content><![CDATA[
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
@@ -45,13 +45,13 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { Upload } from 'ant-design-vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useMessage } from '/@/hooks/web/useMessage';
-  import { useGlobSetting } from '/@/hooks/setting';
-  import { downloadByUrl } from '/@/utils/file/download';
-  import { Icon } from '/@/components/Icon';
-  import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { ${className}ImportData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
+  import { useGlobSetting } from '@jeesite/core/hooks/setting';
+  import { downloadByUrl } from '@jeesite/core/utils/file/download';
+  import { Icon } from '@jeesite/core/components/Icon';
+  import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
+  import { ${className}ImportData } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
   import { FileType } from 'ant-design-vue/es/upload/interface';
   import { AxiosProgressEvent } from 'axios';
 
