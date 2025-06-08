@@ -23,6 +23,7 @@ import { BasicModel, Page } from '@jeesite/core/api/model/baseModel';
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
 import { UploadApiResult } from '@jeesite/core/api/sys/upload';
 import { UploadFileParams } from '@jeesite/types/axios';
+import { AxiosProgressEvent } from 'axios';
 
 const { ctxPath, adminPath } = useGlobSetting();
 <% }else{ %>
@@ -100,7 +101,7 @@ export const ${className}Save = (params?: any, data?: ${ClassName} | any) =>
 
 export const ${className}ImportData = (
   params: UploadFileParams,
-  onUploadProgress: (progressEvent: ProgressEvent) => void,
+  onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
 ) =>
   defHttp.uploadFile<UploadApiResult>(
     {
