@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueApi</name>
-	<filePath>${frontDir}/src/api/${moduleName}/${subModuleName}</filePath>
+	<filePath>${frontDir}/packages/${moduleName}/api/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}.ts</fileName>
 	<content><![CDATA[
 /**
@@ -11,18 +11,18 @@
  * No deletion without permission, or be held responsible to law.
  * @author ${functionAuthor}
  */
-import { defHttp } from '/@/utils/http/axios';
-import { useGlobSetting } from '/@/hooks/setting';
+import { defHttp } from '@jeesite/core/utils/http/axios';
+import { useGlobSetting } from '@jeesite/core/hooks/setting';
 <% if(table.isTreeEntity){ %>
-import { TreeDataModel, TreeModel } from '/@/api/model/baseModel';
+import { TreeDataModel, TreeModel } from '@jeesite/core/api/model/baseModel';
 <% }else if(isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
-import { BasicModel, Page, TreeDataModel } from '/@/api/model/baseModel';
+import { BasicModel, Page, TreeDataModel } from '@jeesite/core/api/model/baseModel';
 <% }else{ %>
-import { BasicModel, Page } from '/@/api/model/baseModel';
+import { BasicModel, Page } from '@jeesite/core/api/model/baseModel';
 <% } %>
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
-import { UploadApiResult } from '/@/api/sys/upload';
-import { UploadFileParams } from '/#/axios';
+import { UploadApiResult } from '@jeesite/core/api/sys/upload';
+import { UploadFileParams } from '@jeesite/types/axios';
 
 const { ctxPath, adminPath } = useGlobSetting();
 <% }else{ %>
