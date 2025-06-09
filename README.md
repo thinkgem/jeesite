@@ -83,8 +83,8 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud 2024.0.0 + Alibaba 2023.0.3
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.4
-* 分布式统一配置中心：Spring Cloud Config / Nacos 2.4
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.5
+* 分布式统一配置中心：Spring Cloud Config / Nacos 2.5
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
@@ -185,8 +185,8 @@ JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启�
 
 **jar 方式：**
 
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.4.3/nacos-server-2.4.3.zip>
-2. 解压 `nacos-server-2.4.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.5.1/nacos-server-2.5.1.zip>
+2. 解压 `nacos-server-2.5.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **配置 mysql 存储：**
 
@@ -295,47 +295,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 
 点击 “保存并生成代码” 按钮，即可完成微服务模块的工程代码新建。
 
-2）新建微服务功能，进入代码生成器功能菜单，生成时选择 Cloud 的代码生成模板即可。
-
-**v4.2.2之前版本：**
-
-由于之前版本没有微服务模块生成器功能，所以需要参考其它模块。举例新增一个微服务模块模块叫 `test3`，该模块的所有映射地址均在 `${adminPath}/test3/**` 这个路径下，该模块可以参照 `test1` 进行，步骤如下：
-
-拷贝 jeesite-cloud-module-test1 项目为 jeesite-cloud-module-test3 文件夹：
-
-1）修改 pom.xml 中的应用名：
-
-```xml
-<artifactId>jeesite-cloud-module-test1</artifactId>
-替换为：
-<artifactId>jeesite-cloud-module-test3</artifactId>
-```
-
-```xml
-<artifactId>jeesite-cloud-module-test1-client</artifactId>
-替换为：
-<artifactId>jeesite-cloud-module-test3-client</artifactId>
-```
-
-2）修改 application.yml 中的应用名：
-
-```yml
-spring:
-  application:
-    name: jeesite-cloud-module-test3
-```
-
-3）修改 *Client.java 里的应用名：
-
-```
-service.test1 替换为 service.test3
-```
-
-4）修改 *Controller.java 里的映射路径：
-
-```
-${adminPath}/test1 替换为 ${adminPath}/test3
-```
+2）新建微服务功能，进入代码生成器功能菜单，生成时选择 Cloud 的代码生成模板，系统会自动生成 test3 的 api 和 clint 工程模块代码。
 
 ### 2、配置服务参数
 
