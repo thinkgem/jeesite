@@ -191,21 +191,19 @@ JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启�
 **配置 mysql 存储：**
 
 1. 默认情况 Nacos 采用 Derby 数据库，你可以将数据库切换到 MySQL 下。
-2. 找到 /nacos/src/main/resources/config/nacos-mysql.sql 文件导入数据表。
+2. 找到 `/nacos/src/main/resources/META-INF/mysql-schema.sql` 文件导入数据表。
 3. 找到 Nacos 的配置文件 application.properties 如下：
 
 ```properties
-spring.datasource.platform=mysql
+spring.sql.init.platform=mysql
 
 ### Count of DB:
 db.num=1
 
 ### Connect URL of DB:
 db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
-db.user=root
-db.password=123456
-
-# 如果是 application.properties 文件，将 key 后的冒号换为等号即可。
+db.user.0=root
+db.password.0=123456
 ```
 
 **注意事项：**
