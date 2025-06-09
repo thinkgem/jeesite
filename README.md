@@ -83,8 +83,8 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud 2021.0.9 + Alibaba 2021.0.6
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.4
-* 分布式统一配置中心：Spring Cloud Config / Nacos 2.4
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.5
+* 分布式统一配置中心：Spring Cloud Config / Nacos 2.5
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
@@ -185,27 +185,25 @@ JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启�
 
 **jar 方式：**
 
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.4.3/nacos-server-2.4.3.zip>
-2. 解压 `nacos-server-2.4.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.5.1/nacos-server-2.5.1.zip>
+2. 解压 `nacos-server-2.5.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **配置 mysql 存储：**
 
 1. 默认情况 Nacos 采用 Derby 数据库，你可以将数据库切换到 MySQL 下。
-2. 找到 /nacos/src/main/resources/config/nacos-mysql.sql 文件导入数据表。
+2. 找到 `/nacos/src/main/resources/META-INF/mysql-schema.sql` 文件导入数据表。
 3. 找到 Nacos 的配置文件 application.properties 如下：
 
 ```properties
-spring.datasource.platform=mysql
+spring.sql.init.platform=mysql
 
 ### Count of DB:
 db.num=1
 
 ### Connect URL of DB:
 db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
-db.user=root
-db.password=123456
-
-# 如果是 application.properties 文件，将 key 后的冒号换为等号即可。
+db.user.0=root
+db.password.0=123456
 ```
 
 **注意事项：**
@@ -297,47 +295,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 
 点击 “保存并生成代码” 按钮，即可完成微服务模块的工程代码新建。
 
-2）新建微服务功能，进入代码生成器功能菜单，生成时选择 Cloud 的代码生成模板即可。
-
-**v4.2.2之前版本：**
-
-由于之前版本没有微服务模块生成器功能，所以需要参考其它模块。举例新增一个微服务模块模块叫 `test3`，该模块的所有映射地址均在 `${adminPath}/test3/**` 这个路径下，该模块可以参照 `test1` 进行，步骤如下：
-
-拷贝 jeesite-cloud-module-test1 项目为 jeesite-cloud-module-test3 文件夹：
-
-1）修改 pom.xml 中的应用名：
-
-```xml
-<artifactId>jeesite-cloud-module-test1</artifactId>
-替换为：
-<artifactId>jeesite-cloud-module-test3</artifactId>
-```
-
-```xml
-<artifactId>jeesite-cloud-module-test1-client</artifactId>
-替换为：
-<artifactId>jeesite-cloud-module-test3-client</artifactId>
-```
-
-2）修改 application.yml 中的应用名：
-
-```yml
-spring:
-  application:
-    name: jeesite-cloud-module-test3
-```
-
-3）修改 *Client.java 里的应用名：
-
-```
-service.test1 替换为 service.test3
-```
-
-4）修改 *Controller.java 里的映射路径：
-
-```
-${adminPath}/test1 替换为 ${adminPath}/test3
-```
+2）新建微服务功能，进入代码生成器功能菜单，生成时选择 Cloud 的代码生成模板，系统会自动生成 test3 的 api 和 clint 工程模块代码。
 
 ### 2、配置服务参数
 
