@@ -83,36 +83,6 @@ public class JsonMapper extends ObjectMapper {
 			@Serial
 			private static final long serialVersionUID = 1L;
 			private static final String[] pattern = new String[] {"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS"};
-			private static class JeeSiteJsonSerializer extends JsonSerializer<Date> {
-				private final String pattern;
-				private JeeSiteJsonSerializer(String pattern) {
-					this.pattern = pattern;
-				}
-				@Override
-				public void serialize(Date value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-					if (value != null){
-						if (StringUtils.isNotBlank(pattern)) {
-							gen.writeString(DateUtils.formatDate(value, pattern));
-						} else {
-							gen.writeString(DateUtils.formatDateTime(value));
-						}
-					}
-				}
-			}
-			private static class JeeSiteJsonDeserializer extends JsonDeserializer<Date> {
-				private final String pattern;
-				private JeeSiteJsonDeserializer(String pattern) {
-					this.pattern = pattern;
-				}
-				@Override
-				public Date deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-					if (StringUtils.isNotBlank(pattern)) {
-						return DateUtils.parseDate(parser.getText(), pattern);
-					} else {
-						return DateUtils.parseDate(parser.getText());
-					}
-				}
-			}
 			@Override
 			public Object findSerializer(Annotated a) {
 				if (a instanceof AnnotatedMethod) {
@@ -152,6 +122,38 @@ public class JsonMapper extends ObjectMapper {
 			}
 		});
 		return this;
+	}
+
+	public static final class JeeSiteJsonSerializer extends JsonSerializer<Date> {
+		private final String pattern;
+		public JeeSiteJsonSerializer(String pattern) {
+			this.pattern = pattern;
+		}
+		@Override
+		public void serialize(Date value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+			if (value != null){
+				if (StringUtils.isNotBlank(pattern)) {
+					gen.writeString(DateUtils.formatDate(value, pattern));
+				} else {
+					gen.writeString(DateUtils.formatDateTime(value));
+				}
+			}
+		}
+	}
+
+	public static final class JeeSiteJsonDeserializer extends JsonDeserializer<Date> {
+		private final String pattern;
+		public JeeSiteJsonDeserializer(String pattern) {
+			this.pattern = pattern;
+		}
+		@Override
+		public Date deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+			if (StringUtils.isNotBlank(pattern)) {
+				return DateUtils.parseDate(parser.getText(), pattern);
+			} else {
+				return DateUtils.parseDate(parser.getText());
+			}
+		}
 	}
 
 	/**
