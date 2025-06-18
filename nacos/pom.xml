@@ -52,12 +52,6 @@
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-istio</artifactId>
 			<version>${nacos.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.alibaba.nacos</groupId>
-					<artifactId>nacos-config</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
@@ -98,6 +92,7 @@
 
 	<build>
 		<finalName>${finalName}</finalName>
+		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>-->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
