@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>package</name>
+	<filePath>${baseDir}/packages/${moduleCode}</filePath>
+	<fileName>package.json</fileName>
+	<content><![CDATA[
+{
+  "name": "@jeesite/${moduleCode}",
+  "version": "${module.currentVersion}",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "uninstall": "rimraf node_modules",
+    "update": "ncu -u"
+  },
+  "dependencies": {
+    "qs": "6.14.0"
+  },
+  "devDependencies": {
+    "@types/qs": "6.9.18"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
+  }
+}
+
+]]>
+	</content>
+</template>
