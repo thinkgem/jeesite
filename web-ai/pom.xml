@@ -13,7 +13,7 @@
 	<artifactId>jeesite-web-ai</artifactId>
 	<packaging>war</packaging>
 	
-	<description>Web AI 服务，也可为分离端提供接口服务</description>
+	<description>Web AI 服务</description>
 	
 	<name>JeeSite Web AI</name>
 	<url>http://jeesite.com</url>

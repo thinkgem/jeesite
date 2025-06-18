@@ -43,11 +43,11 @@
 			<artifactId>spring-ai-starter-model-openai</artifactId>
 		</dependency>
 
-		<!-- 本地大模型
+		<!-- 本地大模型 -->
 		<dependency>
 		   <groupId>org.springframework.ai</groupId>
 		   <artifactId>spring-ai-starter-model-ollama</artifactId>
-		</dependency> -->
+		</dependency>
 
 		<!-- 向量数据库 -->
 		<dependency>
@@ -65,19 +65,19 @@
 			<artifactId>httpclient5</artifactId>
 		</dependency>
 
-		<!-- PG 向量数据库
+		<!-- PG 向量数据库 -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
-        </dependency> -->
+        </dependency>
 
-		<!-- ES 向量数据库
+		<!-- ES 向量数据库 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-vector-store-elasticsearch</artifactId>
-		</dependency> -->
+		</dependency>
 
-		<!-- Milvus 向量数据库
+		<!-- Milvus 向量数据库 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-vector-store-milvus</artifactId>
@@ -92,7 +92,7 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty-resolver-dns-native-macos</artifactId>
 			<classifier>osx-aarch_64</classifier>
-		</dependency> -->
+		</dependency>
 
 		<!-- HTML 转 Markdown -->
 		<dependency>

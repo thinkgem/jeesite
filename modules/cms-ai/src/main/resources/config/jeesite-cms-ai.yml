@@ -3,6 +3,13 @@
 spring:
   ai:
 
+    # 模型选择：openai、ollama
+    model:
+      chat: ollama
+      embedding: ${spring.ai.model.chat}
+      image: ${spring.ai.model.chat}
+      audio: ${spring.ai.model.chat}
+
     # 在线大模型【请在 pom.xml 中打开 openai 的注释，并注释上其它模型】
     openai:
 
@@ -82,6 +89,9 @@ spring:
 
     # 向量数据库配置
     vectorstore:
+
+      # 向量库类型：chroma、pgvector、elasticsearch、milvus
+      type: chroma
 
       # Chroma 向量数据库【请在 pom.xml 中打开 chroma 的注释，并注释上其它向量库】
       chroma:
