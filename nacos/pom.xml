@@ -92,6 +92,7 @@
 
 	<build>
 		<finalName>${finalName}</finalName>
+		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>-->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
