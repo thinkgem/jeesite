@@ -40,13 +40,13 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/module")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @ApiIgnore
 public class ModuleController extends BaseController {
 
 	@Autowired
 	private ModuleService moduleService;
-
+	
 	/**
 	 * 获取数据
 	 * @param moduleCode
@@ -56,7 +56,7 @@ public class ModuleController extends BaseController {
 	public Module get(String moduleCode, boolean isNewRecord) {
 		return moduleService.get(moduleCode, isNewRecord);
 	}
-
+	
 	/**
 	 * 查询列表
 	 * @param module
@@ -70,7 +70,7 @@ public class ModuleController extends BaseController {
 		model.addAttribute("module", module);
 		return "modules/sys/moduleList";
 	}
-
+	
 	/**
 	 * 查询列表
 	 * @param module
@@ -83,7 +83,7 @@ public class ModuleController extends BaseController {
 	@ResponseBody
 	public Page<Module> listData(Module module, HttpServletRequest request, HttpServletResponse response) {
 		module.setPage(new Page<>(request, response));
-		Page<Module> page = moduleService.findPage(module);
+		Page<Module> page = moduleService.findPage(module); 
 		return page;
 	}
 

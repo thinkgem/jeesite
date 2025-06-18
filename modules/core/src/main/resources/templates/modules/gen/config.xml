@@ -293,5 +293,13 @@
 			<template>module_cloud/web/pom.xml</template>
 			<template>module_cloud/pom.xml</template>
 		</category>
+		<category value="module_vue" label="生成前端模块代码（Vue）">
+			<template>module_vue/api/api.xml</template>
+			<template>module_vue/views/views.xml</template>
+			<template>module_vue/index.ts.xml</template>
+			<template>module_vue/package.json.xml</template>
+			<template>module_vue/README.md.xml</template>
+			<template>module_vue/tsconfig.json.xml</template>
+		</category>
 	</moduleTplCategory>
 </config>
