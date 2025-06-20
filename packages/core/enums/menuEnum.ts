@@ -2,14 +2,14 @@
  * @description: menu type
  */
 export enum MenuTypeEnum {
-  // left menu
-  SIDEBAR = 'sidebar',
-
-  MIX_SIDEBAR = 'mix-sidebar',
   // mixin menu
   MIX = 'mix',
+  // left menu
+  SIDEBAR = 'sidebar',
   // top menu
   TOP_MENU = 'top-menu',
+  // mix and sidebar
+  MIX_SIDEBAR = 'mix-sidebar',
 }
 
 // 折叠触发器位置
