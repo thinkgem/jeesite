@@ -586,9 +586,11 @@
 
         > .ant-input-group-addon {
           background-color: transparent;
+
           > .ant-input-search-button {
             background-color: transparent;
             border: 0;
+
             &:hover,
             &:focus {
               background-color: transparent;
