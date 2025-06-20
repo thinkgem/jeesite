@@ -35,6 +35,11 @@
 
 * 模型类型包括：聊天对话模型和嵌入式向量库模型，需注意 dimensions 维度参数，要和模型要求的匹配。
 
+```yml
+# 向量库类型：openai、ollama
+spring.ai.model.chat: openai
+```
+
 具体配置项详见 [jeesite-cms-ai.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/resources/config/jeesite-cms-ai.yml) 文件，有注释。
 
 ## 向量数据库配置
@@ -46,6 +51,11 @@
 * Elasticsearch
 * Milvus
 * ...
+
+```yml
+# 向量库类型：chroma、pgvector、elasticsearch、milvus、指定 none 表示不使用向量库
+spring.ai.vectorstore.type: none
+```
 
 具体配置项详见 [jeesite-cms-ai.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/resources/config/jeesite-cms-ai.yml) 文件，有注释。
 
@@ -119,7 +129,7 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 * 菜单名称：AI 助手
 * 菜单地址：/cms/chat/index
 
-## 支持工具调用 Tool Calling
+## 工具调用 Tool Calling
 
 工具调用 Tool Calling（也称 Function Calling）是人工智能应用程序中的常见模式，允许模型与一组 API 或工具交互，从而增强其功能。
 
