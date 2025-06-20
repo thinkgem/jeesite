@@ -47,24 +47,31 @@ public class LocaleUtils {
 		if (context != null){
 			return context;
 		}
+		Locale locale;
+		TimeZone timeZone;
 		if (LANG_ENABLED && localeResolver != null){
 			HttpServletRequest request = ServletUtils.getRequest();
 			if (request != null){
 				context = (TimeZoneAwareLocaleContext)localeResolver.resolveLocaleContext(request);
 			}
 		}
-		if (context == null){
-			context = new TimeZoneAwareLocaleContext() {
-				@Override
-				public Locale getLocale() {
-					return Locale.getDefault();
-				}
-				@Override
-				public TimeZone getTimeZone() {
-					return TimeZone.getDefault();
-				}
-			};
+		if (context != null){
+			locale = context.getLocale();
+			timeZone = context.getTimeZone();
+		} else {
+			locale = Locale.getDefault();
+			timeZone = TimeZone.getDefault();
 		}
+		context = new TimeZoneAwareLocaleContext() {
+			@Override
+			public Locale getLocale() {
+				return locale;
+			}
+			@Override
+			public TimeZone getTimeZone() {
+				return timeZone;
+			}
+		};
 		setTimeZoneAwareLocaleContext(context);
 		return context;
 	}
