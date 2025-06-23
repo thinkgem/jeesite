@@ -62,7 +62,7 @@ spring.ai.vectorstore.type: none
 ### 安装 Chroma
 
 ```sh
-docker run -it --rm --name chroma -p 8000:8000 ghcr.io/chroma-core/chroma:1.0.0
+docker run -d --name chroma -p 8000:8000 ghcr.io/chroma-core/chroma:1.0.0
 ```
 
 ### 安装 PGVector
