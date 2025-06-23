@@ -37,7 +37,6 @@ import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -52,12 +51,11 @@ import java.util.Set;
  * @author ThinkGem
  */
 @Service
-@ConditionalOnBean(VectorStore.class)
 public class ArticleVectorStoreImpl implements ArticleVectorStore {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Autowired
+	@Autowired(required = false)
 	private VectorStore vectorStore;
 
 	/**
@@ -66,6 +64,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 */
 	@Override
 	public void save(Article article) {
+		if (vectorStore == null) return;
 		Map<String, Object> metadata = MapUtils.newHashMap();
 		metadata.put("id", article.getId());
 		metadata.put("siteCode", article.getCategory().getSite().getSiteCode());
@@ -184,6 +183,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 */
 	@Override
 	public void delete(Article article) {
+		if (vectorStore == null) return;
 		if (StringUtils.isNotBlank(article.getId())) {
 			vectorStore.delete(new FilterExpressionBuilder().eq("id", article.getId()).build());
 		}
@@ -194,6 +194,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 * @author ThinkGem
 	 */
 	public String rebuild(Article article) {
+		if (vectorStore == null) return null;
 		logger.debug("开始重建向量库。 siteCode: {}, categoryCode: {}",
 				article.getCategory().getSite().getSiteCode(),
 				article.getCategory().getCategoryCode());
