@@ -85,6 +85,10 @@ spring:
   cache:
     # 缓存及会话共享（专业版）
     isClusterMode: false
+    # 给缓存Key增加数据源名称前缀 v5.6.1
+    keyPrefixWithDsName: false
+    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true的时有效（cacheName:key|*）v5.12.1
+    globalKeyNames: sysCache:configMap,sysCache:moduleMap,sysCache:areaAllList
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
     # 用户缓存
