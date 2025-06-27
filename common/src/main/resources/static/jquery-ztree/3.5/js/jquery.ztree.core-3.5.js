@@ -434,7 +434,7 @@
 		},
 		getNodeTitle: function(setting, node) {
 			var t = setting.data.key.title === "" ? setting.data.key.name : setting.data.key.title;
-			return "" + node[t];
+			return "" + (node[t] || node[setting.data.key.name]);
 		},
 		getNodes: function(setting) {
 			return data.getRoot(setting)[setting.data.key.children];
