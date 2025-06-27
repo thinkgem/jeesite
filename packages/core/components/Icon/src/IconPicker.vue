@@ -124,6 +124,9 @@
   }
 
   function handleClick(icon: string) {
+    if (icon.startsWith('i-')) {
+      icon = icon.substring(2);
+    }
     currentSelect.value = icon;
     if (props.copy) {
       clipboardRef.value = icon;
