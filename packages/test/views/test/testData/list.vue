@@ -160,24 +160,6 @@
         },
       },
       {
-        label: t('日期时间起'),
-        field: 'testDatetime_gte',
-        component: 'DatePicker',
-        componentProps: {
-          format: 'YYYY-MM-DD HH:mm',
-          showTime: { format: 'HH:mm' },
-        },
-      },
-      {
-        label: t('日期时间止'),
-        field: 'testDatetime_lte',
-        component: 'DatePicker',
-        componentProps: {
-          format: 'YYYY-MM-DD HH:mm',
-          showTime: { format: 'HH:mm' },
-        },
-      },
-      {
         label: t('用户选择'),
         field: 'testUser.userCode',
         component: 'TreeSelect',
@@ -221,7 +203,13 @@
         field: 'remarks',
         component: 'Input',
       },
+      {
+        label: t('日期时间'),
+        field: 'dateRange',
+        component: 'RangePicker',
+      },
     ],
+    fieldMapToTime: [['dateRange', ['testDatetime_gte', 'testDatetime_lte']]],
   };
 
   const tableColumns: BasicColumn[] = [
