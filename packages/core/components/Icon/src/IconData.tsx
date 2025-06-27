@@ -976,6 +976,7 @@ export default [
   'i-ant-design:zhihu-square-filled',
   'i-ant-design:zoom-in-outlined',
   'i-ant-design:zoom-out-outlined',
+  'i-ant-design:open-a-i-outlined',
   'i-bx:bx-circle',
   'i-fa:bug',
   'i-fa:code',
