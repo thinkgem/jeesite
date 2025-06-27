@@ -491,7 +491,7 @@ for (c in table.columnList){
   <%
   for (c in table.columnList){
     if (c.isPk == '1' || c.showType == 'hidden'){ %>
-        ${c.attrName}: record.value.${c.attrName},
+        ${c.attrName}: record.value.${c.attrName} || data.${c.attrName},
       <% 
     }
   }
