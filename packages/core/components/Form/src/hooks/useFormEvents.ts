@@ -12,6 +12,7 @@ import { deepMerge } from '@jeesite/core/utils';
 import { processNumberValue, processDateValue } from '../helper';
 import { cloneDeep, get, uniqBy } from 'lodash-es';
 import { error } from '@jeesite/core/utils/log';
+import { dateUtil } from '@jeesite/core/utils/dateUtil';
 
 interface UseFormActionContext {
   emit: EmitType;
@@ -77,6 +78,28 @@ export function useFormEvents({
       // validKeys.push(key);
     }
     // validateFields(validKeys).catch((_) => {});
+    handleRangeTimeValue(values);
+  }
+
+  /**
+   * @description: Processing time interval parameters
+   */
+  function handleRangeTimeValue(values: Recordable) {
+    const fieldMapToTime = unref(getProps).fieldMapToTime;
+
+    if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
+      return;
+    }
+
+    for (const [field, [startTimeKey, endTimeKey], format = 'YYYY-MM-DD'] of fieldMapToTime) {
+      if (!field || !startTimeKey || !endTimeKey) {
+        continue;
+      }
+
+      const startTime = values[startTimeKey] && dateUtil(values[startTimeKey], format);
+      const endTime = values[endTimeKey] && dateUtil(values[endTimeKey], format);
+      formModel[field] = [startTime, endTime];
+    }
   }
 
   /**
