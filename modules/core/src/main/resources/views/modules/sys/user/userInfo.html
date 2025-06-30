@@ -313,7 +313,7 @@ $("#inputFormBase").validate({
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
-				location = '${ctx}/sys/user/info?op=base';
+				js.window.location = '${ctx}/sys/user/info?op=base';
 			}
 		}, "json");
     }
@@ -353,7 +353,8 @@ $("#inputFormPwd").validate({
 					if ('${parameter.url}'!=''){
 						js.window.location = '${ctxPath}${parameter.url}';
 					}else{
-						js.window.location = '${ctx}/sys/user/info?op=mpd';
+						//js.window.location = '${ctx}/sys/user/info?op=mpd';
+						js.window.location = '${ctxPath}';
 					}
 				});
 			}else{
@@ -385,7 +386,7 @@ $("#inputFormPqa").validate({
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
-				location = '${ctx}/sys/user/info?op=pqa';
+				js.window.location = '${ctx}/sys/user/info?op=pqa';
 			}
 		}, "json");
 		$('#validPassword').val(validPassword);
