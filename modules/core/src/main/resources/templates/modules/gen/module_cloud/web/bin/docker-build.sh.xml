@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>docker-build</name>
-	<filePath>${baseDir}/${moduleCode}/${moduleCode}/bin</filePath>
+	<filePath>${baseDir}/${modulePath}/${moduleCode}/bin</filePath>
 	<fileName>docker-build.sh</fileName>
 	<content><![CDATA[#!/bin/sh
 # /**

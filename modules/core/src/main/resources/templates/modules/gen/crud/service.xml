@@ -3,10 +3,10 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>service</name>
-	<filePath>${baseDir}/src/main/java/${packagePath}/${moduleName}/service${isNotEmpty(subModuleName)?'/'+subModuleName:''}</filePath>
+	<filePath>${baseDir}/src/main/java${packagePath}${modulePath}/service${subModulePath}</filePath>
 	<fileName>${ClassName}Service.java</fileName>
 	<content><![CDATA[
-package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+package ${packageName}.${moduleName}.service${subModuleNameDot};
 
 import java.util.List;
 <% if (table.childList.~size > 0){ %>
@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Crud'}Service;
-import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
-import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
+import ${packageName}.${moduleName}.entity${subModuleNameDot}.${ClassName};
+import ${packageName}.${moduleName}.dao${subModuleNameDot}.${ClassName}Dao;
 <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 import java.util.Map;
 import com.jeesite.common.lang.StringUtils;
@@ -32,8 +32,8 @@ import com.jeesite.common.service.ServiceException;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 <% } %>
 <% for (child in table.childList){ %>
-import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)};
-import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)}Dao;
+import ${packageName}.${moduleName}.entity${subModuleNameDot}.${@StringUtils.cap(child.className)};
+import ${packageName}.${moduleName}.dao${subModuleNameDot}.${@StringUtils.cap(child.className)}Dao;
 <% } %>
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
 import com.jeesite.common.config.Global;
