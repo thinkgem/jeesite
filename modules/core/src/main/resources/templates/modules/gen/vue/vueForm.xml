@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueForm</name>
-	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
 	<fileName>form.vue</fileName>
 	<content><![CDATA[
 <% var modalOrDrawer = @StringUtils.contains(table.tplCategory, '_modal') ? 'Modal' : 'Drawer'; %>
@@ -63,7 +63,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { Basic${modalOrDrawer}, use${modalOrDrawer}Inner } from '@jeesite/core/components/${modalOrDrawer}';
-  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
   <%
   var userselectExists = false;
   var officeselectExists = false;
@@ -101,7 +101,7 @@
 
   const emit = defineEmits(['success', 'register']);
 
-  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<${ClassName}>({} as ${ClassName});

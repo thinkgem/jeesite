@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>package</name>
-	<filePath>${baseDir}/${moduleCode}/bin</filePath>
+	<filePath>${baseDir}/${modulePath}/bin</filePath>
 	<fileName>package.bat</fileName>
 	<charset>GBK</charset>
 	<content><![CDATA[@echo off

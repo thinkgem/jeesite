@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>api</name>
-	<filePath>${baseDir}/packages/${moduleCode}/api</filePath>
+	<filePath>${baseDir}/packages/${modulePath}/api</filePath>
 	<fileName></fileName>
 	<content><![CDATA[
 

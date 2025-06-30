@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>application</name>
-	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
+	<filePath>${baseDir}/${modulePath}/${moduleCode}/src/main/resources/config</filePath>
 	<fileName>application.yml</fileName>
 	<content><![CDATA[
 #======================================#

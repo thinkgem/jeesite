@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>viewForm</name>
-	<filePath>${baseDir}/${moduleName}/src/main/resources/views/${lastPackageName}/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}</filePath>
+	<filePath>${baseDir}${modulePath}/src/main/resources/views/${lastPackageName}${modulePath}${subModulePath}</filePath>
 	<fileName>${className}Form.html</fileName>
 	<content><![CDATA[
 <% include('/templates/modules/gen/view/viewForm.html'){} %>]]>

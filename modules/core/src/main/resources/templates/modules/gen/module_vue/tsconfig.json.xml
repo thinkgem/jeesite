@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>tsconfig</name>
-	<filePath>${baseDir}/packages/${moduleCode}</filePath>
+	<filePath>${baseDir}/packages/${modulePath}</filePath>
 	<fileName>tsconfig.json</fileName>
 	<content><![CDATA[
 {

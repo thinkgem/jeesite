@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueFormImport</name>
-	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
 	<fileName>formImport.vue</fileName>
 	<content><![CDATA[
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
@@ -51,13 +51,13 @@
   import { downloadByUrl } from '@jeesite/core/utils/file/download';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
-  import { ${className}ImportData } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { ${className}ImportData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
   import { FileType } from 'ant-design-vue/es/upload/interface';
   import { AxiosProgressEvent } from 'axios';
 
   const emit = defineEmits(['success', 'register']);
 
-  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
   const { showMessage, showMessageModal } = useMessage();
 
   const fileList = ref<FileType[]>([]);

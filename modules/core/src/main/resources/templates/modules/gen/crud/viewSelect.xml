@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>viewSelect</name>
-	<filePath>${baseDir}/src/main/resources/views/${lastPackageName}/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}</filePath>
+	<filePath>${baseDir}/src/main/resources/views/${lastPackageName}${modulePath}${subModulePath}</filePath>
 	<fileName>${className}Select.html</fileName>
 	<content><![CDATA[
 <% include('/templates/modules/gen/view/viewSelect.html'){} %>]]>

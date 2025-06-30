@@ -3,10 +3,10 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>controller</name>
-	<filePath>${baseDir}/${moduleName}/src/main/java/${packagePath}/${moduleName}/web${isNotEmpty(subModuleName)?'/'+subModuleName:''}</filePath>
+	<filePath>${baseDir}${modulePath}/src/main/java${packagePath}${modulePath}/web${subModulePath}</filePath>
 	<fileName>${ClassName}Controller.java</fileName>
 	<content><![CDATA[
-package ${packageName}.${moduleName}.web${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+package ${packageName}.${moduleName}.web${subModuleNameDot};
 
 <% if (table.isTreeEntity){ %>
 import java.util.Map;
@@ -51,11 +51,11 @@ import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.EncodeUtils;
 <% } %>
 import com.jeesite.common.web.BaseController;
-import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+import ${packageName}.${moduleName}.entity${subModuleNameDot}.${ClassName};
 <% for (child in table.childList){ %>
-import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)};
+import ${packageName}.${moduleName}.entity${subModuleNameDot}.${@StringUtils.cap(child.className)};
 <% } %>
-import ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Service;
+import ${packageName}.${moduleName}.service${subModuleNameDot}.${ClassName}Service;
 
 import org.apache.seata.spring.annotation.GlobalTransactional;
 

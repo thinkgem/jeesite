@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>erm</name>
-	<filePath>${baseDir}/${moduleCode}/${moduleCode}/db</filePath>
+	<filePath>${baseDir}/${modulePath}/${moduleCode}/db</filePath>
 	<fileName>${moduleCode}.erm</fileName>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <diagram>

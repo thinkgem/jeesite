@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueFormRoute</name>
-	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
 	<fileName>formRoute.vue</fileName>
 	<content><![CDATA[
 <!--
@@ -72,7 +72,7 @@
 <% if (table.childList.~size > 0){ %>
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
 <% } %>
-  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
 <%
 var userselectExists = false;
 var officeselectExists = false;
@@ -124,7 +124,7 @@ for(c in table.columnList){
 
   const emitter = useEmitter();
 
-  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
   const { showMessage } = useMessage();
   const { setTitle, close } = useTabs(router);
   const record = ref<${ClassName}>({} as ${ClassName});

@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueFormChildList</name>
-	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
 	<fileName>form${@StringUtils.cap(table.classNameSimple)}List.vue</fileName>
 	<content><![CDATA[
 <!--
@@ -26,7 +26,7 @@
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { ${ParentClassName} } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${parentClassName}';
+  import { ${ParentClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${parentClassName}';
   <%
   var userselectExists = false;
   var officeselectExists = false;
@@ -56,7 +56,7 @@
   import { areaTreeData } from '@jeesite/core/api/sys/area';
   <% } %>
 
-  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
   const record = ref<${ParentClassName}>({} as ${ParentClassName});
 
   const tableColumns: BasicColumn[] = [

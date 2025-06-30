@@ -3,15 +3,15 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>client</name>
-	<filePath>${baseDir}/${moduleName}-client/src/main/java/${packagePath}/${moduleName}/client${isNotEmpty(subModuleName)?'/'+subModuleName:''}</filePath>
+	<filePath>${baseDir}${modulePath}-client/src/main/java${packagePath}${modulePath}/client${subModulePath}</filePath>
 	<fileName>${ClassName}ServiceClient.java</fileName>
 	<content><![CDATA[
-package ${packageName}.${moduleName}.client${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+package ${packageName}.${moduleName}.client${subModuleNameDot};
 
 import org.springframework.cloud.openfeign.FeignClient;
 
 import com.jeesite.modules.cloud.feign.condition.ConditionalOnNotCurrentApplication;
-import ${packageName}.${moduleName}.api${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}ServiceApi;
+import ${packageName}.${moduleName}.api${subModuleNameDot}.${ClassName}ServiceApi;
 
 /**
  * ${functionName}API

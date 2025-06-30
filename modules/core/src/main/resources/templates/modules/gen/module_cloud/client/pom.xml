@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>pom</name>
-	<filePath>${baseDir}/${moduleCode}/${moduleCode}-client</filePath>
+	<filePath>${baseDir}/${modulePath}/${moduleCode}-client</filePath>
 	<fileName>pom.xml</fileName>
 	<charset></charset>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>

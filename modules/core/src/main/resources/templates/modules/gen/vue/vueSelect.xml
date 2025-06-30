@@ -3,12 +3,12 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueSelect</name>
-	<filePath>${frontDir}/packages/${moduleName}/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
 	<fileName>select.ts</fileName>
 	<content><![CDATA[
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { BasicColumn, BasicTableProps, FormProps } from '@jeesite/core/components/Table';
-import { ${className}ListData } from '@jeesite/${moduleName}/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+import { ${className}ListData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
 <%
 var userselectExists = false;
 var officeselectExists = false;
@@ -38,7 +38,7 @@ import { companyTreeData } from '@jeesite/core/api/sys/company';
 import { areaTreeData } from '@jeesite/core/api/sys/area';
 <% } %>
 
-const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
 
 const modalProps = {
   title: t('${functionNameSimple}选择'),

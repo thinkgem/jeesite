@@ -3,15 +3,15 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>api</name>
-	<filePath>${baseDir}/${moduleName}-client/src/main/java/${packagePath}/${moduleName}/api${isNotEmpty(subModuleName)?'/'+subModuleName:''}</filePath>
+	<filePath>${baseDir}${modulePath}-client/src/main/java${packagePath}${modulePath}/api${subModulePath}</filePath>
 	<fileName>${ClassName}ServiceApi.java</fileName>
 	<content><![CDATA[
-package ${packageName}.${moduleName}.api${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+package ${packageName}.${moduleName}.api${subModuleNameDot};
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jeesite.common.service.rest.${table.isTreeEntity?'Tree':'Crud'}ServiceRest;
-import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+import ${packageName}.${moduleName}.entity${subModuleNameDot}.${ClassName};
 
 /**
  * ${functionName}API
