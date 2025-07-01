@@ -158,7 +158,7 @@ state:
 # Shiro 相关
 shiro:
 
-  #  defaultPath: ${shiro.loginUrl}
+#  defaultPath: ${shiro.loginUrl}
   defaultPath: ${vuePath}/login
 
   # 登录相关设置
