@@ -63,7 +63,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { Basic${modalOrDrawer}, use${modalOrDrawer}Inner } from '@jeesite/core/components/${modalOrDrawer}';
-  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   <%
   var userselectExists = false;
   var officeselectExists = false;

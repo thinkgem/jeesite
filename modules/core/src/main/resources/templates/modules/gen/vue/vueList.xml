@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueList</name>
-	<filePath>${frontDir}/packages/${modulePath}/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
 	<fileName>list.vue</fileName>
 	<content><![CDATA[
 <% var modalOrDrawer = @StringUtils.contains(table.tplCategory, '_modal') ? 'Modal' : 'Drawer'; %>
@@ -111,9 +111,9 @@ if(table.isTreeEntity){
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { ${className}Delete, ${className}ListData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+  import { ${className}Delete, ${className}ListData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
-  import { ${className}Disable, ${className}Enable } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+  import { ${className}Disable, ${className}Enable } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   <% } %>
   <%
   var userselectExists = false;

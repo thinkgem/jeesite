@@ -72,7 +72,7 @@
 <% if (table.childList.~size > 0){ %>
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
 <% } %>
-  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
 <%
 var userselectExists = false;
 var officeselectExists = false;
