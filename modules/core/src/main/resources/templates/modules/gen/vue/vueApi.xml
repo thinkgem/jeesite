@@ -4,7 +4,7 @@
 <template>
 	<name>vueApi</name>
 	<filePath>${frontDir}/packages${modulePath}/api${modulePath}${subModulePath}</filePath>
-	<fileName>${className}.ts</fileName>
+	<fileName>${funName}.ts</fileName>
 	<content><![CDATA[
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.

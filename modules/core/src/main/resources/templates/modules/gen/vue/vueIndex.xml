@@ -33,7 +33,7 @@
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { BasicTree } from '@jeesite/core/components/Tree';
-  import { ${className}TreeData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+  import { ${className}TreeData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   import ListView from './list.vue';
 
   const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');

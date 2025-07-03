@@ -8,7 +8,7 @@
 	<content><![CDATA[
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { BasicColumn, BasicTableProps, FormProps } from '@jeesite/core/components/Table';
-import { ${className}ListData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+import { ${className}ListData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
 <%
 var userselectExists = false;
 var officeselectExists = false;
