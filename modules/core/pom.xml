@@ -30,19 +30,19 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Oracle 11g -->
+		<!-- Oracle 11g
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3</version>
 			<scope>runtime</scope>
-		</dependency>
-		<!-- Oracle 12c 及以上版本
+		</dependency> -->
+		<!-- Oracle 12c 及以上版本 -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency>
 
 		<!-- SqlServer 2008
 		<dependency>
