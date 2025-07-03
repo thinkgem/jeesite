@@ -59,7 +59,7 @@ jdbc:
   password: 123456
   testSql: SELECT 1
 
-#  # Oracle 数据库配置（11g，若使用 12c 以上版本，请打开 /modules/core/pom.xml 文件，替换为 Oracle 12c 驱动并编译打包 core 模块）
+#  # Oracle 数据库配置
 #  type: oracle
 #  driver: oracle.jdbc.OracleDriver
 #  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
