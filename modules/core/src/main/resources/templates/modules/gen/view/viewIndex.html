@@ -50,7 +50,7 @@ var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{
 		win.$('#${pk.attrName}').val(treeNode.id);
 			<% } %>
 		<% } %>
-		win.page();
+		win.page(1);
 	}}
 }, tree, loadTree = function(){
 	js.ajaxSubmit(setting.async.url+"?___t="+new Date().getTime(), {
