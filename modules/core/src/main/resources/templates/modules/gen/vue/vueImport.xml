@@ -57,7 +57,7 @@
 
   const emit = defineEmits(['success', 'register']);
 
-  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const { showMessage, showMessageModal } = useMessage();
 
   const fileList = ref<FileType[]>([]);

@@ -56,7 +56,7 @@
   import { areaTreeData } from '@jeesite/core/api/sys/area';
   <% } %>
 
-  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const record = ref<${ParentClassName}>({} as ${ParentClassName});
 
   const tableColumns: BasicColumn[] = [

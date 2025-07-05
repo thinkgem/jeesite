@@ -176,7 +176,7 @@ if(table.isTreeEntity){
   const emitter = useEmitter();
   <% } %>
 
-  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
 
