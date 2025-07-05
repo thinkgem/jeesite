@@ -124,7 +124,7 @@ for(c in table.columnList){
 
   const emitter = useEmitter();
 
-  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const { showMessage } = useMessage();
   const { setTitle, close } = useTabs(router);
   const record = ref<${ClassName}>({} as ${ClassName});

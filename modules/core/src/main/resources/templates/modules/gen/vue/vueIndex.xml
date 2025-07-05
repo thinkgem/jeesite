@@ -36,7 +36,7 @@
   import { ${className}TreeData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   import ListView from './list.vue';
 
-  const { t } = useI18n('${moduleName}${subModuleNameDot}.${className}');
+  const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const treeCodes = ref<string[]>([]);
 </script>
 <% } %>
