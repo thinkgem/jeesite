@@ -6,7 +6,7 @@ package com.jeesite.common.shiro.realm;
 
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.codec.SM3Utils;
-import com.jeesite.common.codec.Sha1Utils;
+import com.jeesite.common.codec.ShaUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.utils.SpringUtils;
@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AuthorizingRealm extends BaseAuthorizingRealm  {
 
-	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_ITERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
 
@@ -89,7 +88,7 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 			String data = SM3Utils.sm3(plain, salt, HASH_ITERATIONS);
 			return salt + data;
 		}
-		String data = Sha1Utils.sha1(plain, salt, HASH_ITERATIONS);
+		String data = ShaUtils.sha1(plain, salt, HASH_ITERATIONS);
 		return salt + data;
 	}
 
@@ -108,7 +107,7 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 				String data = SM3Utils.sm3(plain, salt, HASH_ITERATIONS);
 				return password.equals(salt + data);
 			}
-			String data = Sha1Utils.sha1(plain, salt, HASH_ITERATIONS);
+			String data = ShaUtils.sha1(plain, salt, HASH_ITERATIONS);
 			return password.equals(salt + data);
 		}catch(Exception e){
 			return false;

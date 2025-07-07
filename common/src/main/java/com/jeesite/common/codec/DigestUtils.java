@@ -19,6 +19,7 @@ import java.security.*;
 public class DigestUtils {
 
 	public static final String SHA1 = "SHA-1";
+	public static final String SHA256 = "SHA-256";
 	public static final String MD5 = "MD5";
 	public static final String SM3 = "SM3";
 
