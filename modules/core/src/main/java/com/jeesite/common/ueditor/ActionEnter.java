@@ -72,13 +72,14 @@ public class ActionEnter {
                 state = new Uploader(request, conf).doExec();
                 break;
             case ActionMap.CATCH_IMAGE:
-                if (Global.isDemoMode()) {
-                    state = new BaseState(false, "演示模式，不允许操作！");
-                    break;
-                }
-                conf = configManager.getConfig(actionCode);
-                String[] list = this.request.getParameterValues((String) conf.get("fieldName"));
-                state = new ImageHunter(request, conf).capture(list);
+//                if (Global.isDemoMode()) {
+//                    state = new BaseState(false, "演示模式，不允许操作！");
+//                    break;
+//                }
+//                conf = configManager.getConfig(actionCode);
+//                String[] list = this.request.getParameterValues((String) conf.get("fieldName"));
+//                state = new ImageHunter(request, conf).capture(list);
+				state = new BaseState(false, "该功能暂不提供支持");
                 break;
             case ActionMap.LIST_IMAGE:
             case ActionMap.LIST_FILE:
