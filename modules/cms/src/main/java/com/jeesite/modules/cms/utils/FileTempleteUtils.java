@@ -4,16 +4,16 @@
  */
 package com.jeesite.modules.cms.utils;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.core.io.Resource;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.io.ResourceUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.cms.entity.FileTemplete;
+import org.springframework.core.io.Resource;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 模板文件公共类库
@@ -26,7 +26,10 @@ public class FileTempleteUtils {
 	 * 获取模版文件
 	 * @param fileName
 	 */
-	public static FileTemplete getFileTempleteByResource(String fileName) throws IOException {
+	public static FileTemplete getFileTempleteByResource(String fileName) {
+		if (!StringUtils.startsWith(fileName, "views/modules/cmsfront")) {
+			fileName = "views/modules/cmsfront/themes/default/index.html";
+		}
 		Resource resource = ResourceUtils.getResource(fileName);
 		return new FileTemplete(resource, fileName);
 	}
