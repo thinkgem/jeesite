@@ -198,8 +198,8 @@ importers:
   packages/cms:
     dependencies:
       '@jeesite/cms-lib':
-        specifier: 5.12.0-rc.1
-        version: 5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))
+        specifier: 5.12.1-rc.1
+        version: 5.12.1-rc.1(vue@3.5.13(typescript@5.8.3))
       qs:
         specifier: 6.14.0
         version: 6.14.0
@@ -323,8 +323,8 @@ importers:
   packages/dbm:
     dependencies:
       '@jeesite/dbm-lib':
-        specifier: 5.12.0-rc.1
-        version: 5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))
+        specifier: 5.12.1-rc.1
+        version: 5.12.1-rc.1(vue@3.5.13(typescript@5.8.3))
       qs:
         specifier: 6.14.0
         version: 6.14.0
@@ -336,8 +336,8 @@ importers:
   packages/dfm:
     dependencies:
       '@jeesite/dfm-lib':
-        specifier: 5.12.0-rc.1
-        version: 5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))
+        specifier: 5.12.1-rc.1
+        version: 5.12.1-rc.1(vue@3.5.13(typescript@5.8.3))
       '@vueuse/core':
         specifier: 13.1.0
         version: 13.1.0(vue@3.5.13(typescript@5.8.3))
@@ -1474,14 +1474,14 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@jeesite/cms-lib@5.12.0-rc.1':
-    resolution: {integrity: sha512-Krv2Xn6fpEN8fsa7d74IEQj/kgZp5+KyYyOZTiygduUWpg8VAw40K/gJdZHvkOgOU51v3ucsL3GscJMxSWw9KA==}
+  '@jeesite/cms-lib@5.12.1-rc.1':
+    resolution: {integrity: sha512-EkTPTn8wURDz04LJQsg1ALLiGxq7crqu1ULjG9pJ1fdjYw3ZOiTXewilkPlp0IxtnE7i2n5b/t+MqT0BpZr87w==}
 
-  '@jeesite/dbm-lib@5.12.0-rc.1':
-    resolution: {integrity: sha512-8uejttE2LJ1VivJUCxRG/RoQZW91zQetVMiofxCh1MgczIci5DQrO8DYT6OQiv5kKNTmVsB0blMMxa43Z/iSsg==}
+  '@jeesite/dbm-lib@5.12.1-rc.1':
+    resolution: {integrity: sha512-Kafh6DCrLcFLIyN31UrYmT0yKLS4TPXIiqSC5EavLknVobjcLgeIASiGTEevWgaQiwjSxX+fs/wGu7NEy6vknA==}
 
-  '@jeesite/dfm-lib@5.12.0-rc.1':
-    resolution: {integrity: sha512-Vk6HQ14nx79IoW/7iE2tYKUqOT2EbdD/WyyYf1YmitP7N2xohCFdW55ZcRY2RmspFJDud5sIT4bcf3GGoPzHvA==}
+  '@jeesite/dfm-lib@5.12.1-rc.1':
+    resolution: {integrity: sha512-IXQnrT8f5pVDNlwPGHMczPnTr/quPycvNt4h7ZYk9tBB+wHxB4ZpAefj9JuzI5TCxST58fblFR8/mturH3Jh9g==}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -6955,7 +6955,7 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@jeesite/cms-lib@5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))':
+  '@jeesite/cms-lib@5.12.1-rc.1(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       '@traptitech/markdown-it-katex': 3.6.0
       highlight.js: 11.11.1
@@ -6967,7 +6967,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/dbm-lib@5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))':
+  '@jeesite/dbm-lib@5.12.1-rc.1(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       qs: 6.14.0
       vue-i18n: 11.1.3(vue@3.5.13(typescript@5.8.3))
@@ -6975,7 +6975,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/dfm-lib@5.12.0-rc.1(vue@3.5.13(typescript@5.8.3))':
+  '@jeesite/dfm-lib@5.12.1-rc.1(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       '@vueuse/core': 13.1.0(vue@3.5.13(typescript@5.8.3))
       dayjs: 1.11.13
