@@ -313,7 +313,7 @@ $("#inputFormBase").validate({
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
-				js.window.location = '${ctx}/sys/user/info?op=base';
+				location = '${ctx}/sys/user/info?op=base';
 			}
 		}, "json");
     }
@@ -386,7 +386,7 @@ $("#inputFormPqa").validate({
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
-				js.window.location = '${ctx}/sys/user/info?op=pqa';
+				location = '${ctx}/sys/user/info?op=pqa';
 			}
 		}, "json");
 		$('#validPassword').val(validPassword);
