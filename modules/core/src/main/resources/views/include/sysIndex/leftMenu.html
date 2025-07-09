@@ -6,7 +6,7 @@
 			<script src="${ctxStatic}/modules/sys/leftMenu.js"></script>
 		</div>
 		<div class="pull-left info">
-			<p>${user.userName}</p>
+			<p>${user.userName,xss}</p>
 			<a href="javascript:"><i class="fa fa-circle text-success"></i> ${text('在线')}</a>
 			<a href="${ctx}/logout"><i class="fa fa-sign-out text-danger"></i> ${text('注销')}</a>
 		</div>
