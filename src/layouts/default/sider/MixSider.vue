@@ -359,65 +359,8 @@
       }
     }
 
-    &.light {
-      .@{prefix-cls}-logo {
-        border-bottom: 1px solid rgb(238 238 238);
-      }
-
-      // &.open {
-      //   > .scrollbar {
-      //     border-right: 1px solid rgb(238, 238, 238);
-      //   }
-      // }
-
-      .@{prefix-cls}-module {
-        &__item {
-          font-weight: normal;
-          color: rgb(0 0 0 / 65%);
-
-          &--active {
-            color: @primary-color;
-            background-color: unset;
-          }
-        }
-      }
-      .@{prefix-cls}-menu-list {
-        &__content {
-          box-shadow: -1px 1px 2px 0 rgb(0 0 0 / 5%);
-        }
-
-        &__title {
-          .pushpin {
-            color: rgb(0 0 0 / 35%);
-
-            &:hover {
-              color: rgb(0 0 0 / 85%);
-            }
-          }
-        }
-      }
-    }
-    // @border-color: @sider-dark-lighten-bg-color;
-
-    &.dark {
-      // &.open {
-      //   // .@{prefix-cls}-logo {
-      //   //   border-bottom: 1px solid @border-color;
-      //   // }
-
-      //   > .scrollbar {
-      //     border-right: 1px solid @border-color;
-      //   }
-      // }
-      .@{prefix-cls}-menu-list {
-        background-color: @sider-dark-bg-color;
-
-        &__title {
-          color: @white;
-          border-bottom: none;
-          border-bottom: 1px solid @sider-dark-lighten-bg-color;
-        }
-      }
+    &.light .@{prefix-cls}-logo {
+      border-bottom: 1px solid rgb(238 238 238);
     }
 
     > .scrollbar {
@@ -440,7 +383,8 @@
 
       &__item {
         position: relative;
-        padding: 12px 0;
+        padding: 9px 0;
+        margin: 0 3px;
         color: rgb(255 255 255 / 65%);
         text-align: center;
         cursor: pointer;
@@ -449,12 +393,9 @@
         &:hover {
           color: @white;
         }
+
         // &:hover,
         &--active {
-          font-weight: 700;
-          color: @white;
-          // background-color: @sider-dark-darken-bg-color; // 1
-          background-color: fade(@primary-color, 8) !important; // 2
           border-radius: 6px; // 2
 
           // &::before { // 1
@@ -482,24 +423,25 @@
       }
     }
 
-    &-trigger {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      font-size: 14px;
-      color: rgb(255 255 255 / 65%);
-      text-align: center;
-      cursor: pointer;
-      background-color: @trigger-dark-bg-color;
-      height: 36px;
-      line-height: 36px;
+    &.light &-module {
+      &__item {
+        font-weight: normal;
+        color: rgb(0 0 0 / 65%);
+
+        &--active {
+          color: @primary-color;
+          background-color: fade(@primary-color, 8) !important;
+        }
+      }
     }
 
-    &.light &-trigger {
-      color: rgb(0 0 0 / 65%);
-      background-color: #fff;
-      border-top: 1px solid #eee;
+    &.dark &-module {
+      &__item {
+        &--active {
+          color: @white;
+          background-color: fade(@primary-color, 25) !important;
+        }
+      }
     }
 
     &-menu-list {
@@ -521,6 +463,11 @@
         transition: unset;
         align-items: center;
         justify-content: space-between;
+
+        .text {
+          text-wrap: nowrap;
+          overflow: hidden;
+        }
 
         &.show {
           min-width: 130px;
@@ -561,6 +508,52 @@
           border-right: 1px solid transparent;
         }
       }
+    }
+
+    &.light &-menu-list {
+      &__content {
+        box-shadow: -1px 1px 2px 0 rgb(0 0 0 / 5%);
+      }
+
+      &__title {
+        .pushpin {
+          color: rgb(0 0 0 / 35%);
+
+          &:hover {
+            color: rgb(0 0 0 / 85%);
+          }
+        }
+      }
+    }
+
+    &.dark &-menu-list {
+      background-color: @sider-dark-bg-color;
+
+      &__title {
+        color: @white;
+        border-bottom: none;
+        border-bottom: 1px solid @sider-dark-lighten-bg-color;
+      }
+    }
+
+    &-trigger {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 14px;
+      color: rgb(255 255 255 / 65%);
+      text-align: center;
+      cursor: pointer;
+      background-color: @trigger-dark-bg-color;
+      height: 36px;
+      line-height: 36px;
+    }
+
+    &.light &-trigger {
+      color: rgb(0 0 0 / 65%);
+      background-color: #fff;
+      border-top: 1px solid #eee;
     }
 
     &-drag-bar {

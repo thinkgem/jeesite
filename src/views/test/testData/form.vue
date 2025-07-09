@@ -147,6 +147,12 @@
       },
     },
     {
+      label: t('日期范围'),
+      field: 'dateRange',
+      component: 'RangePicker',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       label: t('用户选择'),
       field: 'testUser.userCode',
       fieldLabel: 'testUser.userName',
@@ -251,6 +257,7 @@
     labelWidth: 120,
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },
+    fieldMapToTime: [['dateRange', ['testDate', 'testDatetime']]],
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {

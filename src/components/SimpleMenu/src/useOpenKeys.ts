@@ -19,7 +19,7 @@ export function useOpenKeys(
 ) {
   const debounceSetOpenKeys = useDebounceFn(setOpenKeys, 50);
   async function setOpenKeys(path: string) {
-    const native = !mixSider.value;
+    const native = true; //!mixSider.value;
     useTimeoutFn(
       () => {
         const menuList = toRaw(menus.value);

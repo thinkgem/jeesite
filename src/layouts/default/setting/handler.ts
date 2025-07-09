@@ -32,8 +32,11 @@ export function baseHandler(event: HandlerEnum, value: any) {
     if (value.type === MenuTypeEnum.MIX || value.type === MenuTypeEnum.TOP_MENU) {
       baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[0]);
       baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[0]);
-    } else if (value.type === MenuTypeEnum.SIDEBAR || value.type === MenuTypeEnum.MIX_SIDEBAR) {
+    } else if (value.type === MenuTypeEnum.SIDEBAR) {
       baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[1]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[3]);
+    } else if (value.type === MenuTypeEnum.MIX_SIDEBAR) {
+      baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[0]);
       baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[3]);
     }
     baseHandler(HandlerEnum.CHANGE_THEME_COLOR, APP_PRESET_COLOR_LIST[0]);

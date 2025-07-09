@@ -3,12 +3,12 @@
  * No deletion without permission, or be held responsible to law.
  * @author Vben、Think Gem
  */
-import { isArray, isFunction, isObject, isString, isNullOrUnDef } from '/@/utils/is';
+import { isArray, isFunction, isObject, isString } from '/@/utils/is';
 import { dateUtil } from '/@/utils/dateUtil';
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
-import { set } from 'lodash-es';
+import { isNil, set } from 'lodash-es';
 
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>;
@@ -82,10 +82,24 @@ export function useFormValues({ defaultValueRef, getSchema, formModel, getProps 
     const schemas = unref(getSchema);
     const obj: Recordable = {};
     schemas.forEach((item) => {
-      const { defaultValue = '' } = item;
-      if (!isNullOrUnDef(defaultValue)) {
+      const { defaultValue, componentProps = {}, field } = item;
+      // Add a type assertion to allow defaultValue on componentProps
+      const props = componentProps as { defaultValue?: any };
+      if (!isNil(defaultValue)) {
         obj[item.field] = defaultValue;
-        formModel[item.field] = defaultValue;
+        if (formModel[item.field] === undefined) {
+          formModel[item.field] = defaultValue;
+        }
+      }
+      if (!isNil(props.defaultValue)) {
+        obj[item.field] = props.defaultValue;
+        if (formModel[item.field] === undefined) {
+          formModel[item.field] = props.defaultValue;
+        }
+      }
+      if (!formModel[item.field] && field == 'status') {
+        obj[item.field] = '';
+        formModel[item.field] = '';
       }
     });
     defaultValueRef.value = obj;

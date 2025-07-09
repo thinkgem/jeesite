@@ -180,7 +180,7 @@ export function useTableScroll(
     }
   }
   useWindowSizeFn(calcTableHeight, 200);
-  onMountedOrActivated(useDebounceFn(redoHeight, 100));
+  onMountedOrActivated(useDebounceFn(redoHeight, 200));
 
   const tableWidthRef = ref();
   function redoTableWidth() {
