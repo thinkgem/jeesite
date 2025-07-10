@@ -98,6 +98,7 @@ export function useFormValues({ defaultValueRef, getSchema, formModel, getProps 
         }
       }
       if (!formModel[item.field] && field == 'status') {
+        obj[item.field] = '';
         formModel[item.field] = '';
       }
     });
