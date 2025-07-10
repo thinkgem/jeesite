@@ -142,7 +142,7 @@
 
 ### 本地运行
 
-1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 5.7 or 8.x` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
+1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 8.0+` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
 2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接（建立一个新库）
 4. 执行脚本：`/web/bin/init-data.bat(sh)` 初始化数据库（自动往新库里创建表和初始数据）
@@ -150,10 +150,11 @@
 6. 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
 8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
+9. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
 ### 快速运行
 
-1. 环境准备：`JDK 17+`、`Maven 3.8+`、无需准备数据库（使用内嵌 H2 DB、Vue资源包）
+1. 环境准备：`JDK 17+`、`Maven 3.8+`、无需准备数据库（使用内嵌 H2 DB、包含 Vue 和 全栈双版本）
 2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
 4. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
@@ -173,42 +174,50 @@ docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
     -v ~/:/data thinkgem/jeesite-web && docker logs -f jeesite-web
 ```
 - 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
-- 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 
 ### 开发环境
 
 1. 部署运行文档：<https://jeesite.com/docs/install-deploy/>
 2. 部署常见问题：<https://jeesite.com/docs/faq/>
 3. 分离端运行文档：<https://jeesite.com/docs/vue-install-deploy/>
-4. 分离端常见问题：<https://jeesite.com/docs/vue-jeesite-vue/>
+4. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
 ## 技术文章
 
-* 菜单和按钮权限：<https://jeesite.com/docs/permi-shiro/>
-* 强大的数据权限：<https://jeesite.com/docs/service-datascope/#数据权限>
-* 表结构数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
-* 持久层设计：<https://jeesite.com/docs/dao-mybatis/>
-* 后端工具：<https://jeesite.com/docs/sys-utils/>
+* 库表生成、代码生成：https://jeesite.com/docs/code-gen/>
+* 菜单权限、按钮权限：<https://jeesite.com/docs/permi-shiro/>
+* 数据权限、库事务：<https://jeesite.com/docs/service-datascope/#数据权限>
+* 表结构、数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
+* 持久层框架、SQL：<https://jeesite.com/docs/dao-mybatis/>
+* 后端常用工具：<https://jeesite.com/docs/sys-utils/>
 
 **分离版**
 
+* 版本介绍：<https://jeesite.com/docs/jeesite-vue/>
 * 源码解析：<https://jeesite.com/docs/vue-crud-view/>
 * 表单组件：<https://jeesite.com/docs/vue-basic-form/>
 * 表格组件：<https://jeesite.com/docs/vue-basic-table/>
+* 参数配置：<https://jeesite.com/docs/vue-settings/>
 * 常用组件：<https://jeesite.com/docs/vue-comp/>
+* 前端权限：<https://jeesite.com/docs/vue-auth/>
+* 图标组件：<https://jeesite.com/docs/vue-icon/>
+* 前端样式库：<https://jeesite.com/docs/vue-style/>
+* 多语言国际化：<https://jeesite.com/docs/vue-i18n/>
 
 **经典版**
 
 * 表单组件：<https://jeesite.com/docs/views-beetl/>
 * 表格组件：<https://jeesite.com/docs/datagrid/>
 * 常用工具：<https://jeesite.com/docs/jeesite-js/>
+* 自定义主题：<https://jeesite.com/docs/custom-views/>
 
 ## 专题文章
 
-* 自定义主题：<https://jeesite.com/docs/custom-views/>
-* 国际化多语言：<https://jeesite.com/docs/i18n-locale/>
-* 接口文档：<https://jeesite.com/docs/mobile-rest-api/>
+* 系统接口文档：<https://jeesite.com/docs/mobile-rest-api/>
+* 多语言国际化：<https://jeesite.com/docs/i18n-locale/>
 * BPM工作流引擎：<https://jeesite.com/docs/bpm/>
+* CMS内容管理：<https://jeesite.com/docs/cms/>
+* AI知识库助手：<https://jeesite.com/docs/cms-ai/>
 * 用户类型：<https://jeesite.com/docs/user-type/>
 * 消息推送：<https://jeesite.com/docs/msg-push-use/>
 * 单点登录：<https://jeesite.com/docs/sso-cas/>
@@ -229,20 +238,9 @@ docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
 * Spring Cloud 微服务：<https://jeesite.com/docs/springcloud/>
 * 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
 * 读写分离、分库分表：<https://jeesite.com/docs/sharding/>
-
-## 前后分离版
-
-* Vue 版介绍：<https://jeesite.com/docs/jeesite-vue/>
-* Vue 安装部署：<https://jeesite.com/docs/vue-install-deploy/>
-* Vue 参数配置：<https://jeesite.com/docs/vue-settings/>
-* Vue 前端权限：<https://jeesite.com/docs/vue-auth/>
-* Vue 源码解析：<https://jeesite.com/docs/vue-crud-view/>
-* Vue 表单组件：<https://jeesite.com/docs/vue-basic-form/>
-* Vue 表格组件：<https://jeesite.com/docs/vue-basic-table/>
-* Vue 常用组件：<https://jeesite.com/docs/vue-comp/>
-* Vue 图标组件：<https://jeesite.com/docs/vue-icon/>
-* Vue 国际化多语言：<https://jeesite.com/docs/vue-i18n/>
-* Vue 样式库：<https://jeesite.com/docs/vue-style/>
+* 监控系统集成：<https://jeesite.com/docs/webadmin/>
+* 追踪系统集成：<https://jeesite.com/docs/skywalking/>
+* ELK日志收集：<https://jeesite.com/docs/elk-log/>
 
 ## 授权协议声明
 
