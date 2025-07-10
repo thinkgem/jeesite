@@ -82,7 +82,7 @@ export function useFormValues({ defaultValueRef, getSchema, formModel, getProps 
     const schemas = unref(getSchema);
     const obj: Recordable = {};
     schemas.forEach((item) => {
-      const { defaultValue, componentProps = {} } = item;
+      const { defaultValue, componentProps = {}, field } = item;
       // Add a type assertion to allow defaultValue on componentProps
       const props = componentProps as { defaultValue?: any };
       if (!isNil(defaultValue)) {
@@ -96,6 +96,9 @@ export function useFormValues({ defaultValueRef, getSchema, formModel, getProps 
         if (formModel[item.field] === undefined) {
           formModel[item.field] = props.defaultValue;
         }
+      }
+      if (!formModel[item.field] && field == 'status') {
+        formModel[item.field] = '';
       }
     });
     defaultValueRef.value = obj;
