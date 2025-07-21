@@ -260,6 +260,7 @@
 			<template>module/src/main/resources/config/jeesite.xml</template>
 			<template>module/src/main/resources/db/versions.xml</template>
 			<template>module/src/main/resources/static/static.xml</template>
+			<template>module/src/main/resources/application-assistant.xml</template>
 			<template>module/pom.xml</template>
 		</category>
 		<category value="module_cloud" label="生成微服务模块代码（Cloud）">
