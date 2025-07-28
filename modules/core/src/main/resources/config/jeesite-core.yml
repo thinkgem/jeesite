@@ -98,7 +98,7 @@ spring:
     #    maxPoolSize: 20
     #    keepAliveSeconds: 60
 
-  # JTA XA 事务（spring boot 3） 请在 jeesite-module-core/pom.xml 中打开 atomikos 依赖
+  # JTA XA 事务（spring boot 3）
   jta:
     enabled: false
     
