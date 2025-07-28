@@ -20,7 +20,7 @@ jdbc:
     # 最大连接数
     maxActive: 20
 
-  # JTA 分布式事务
+  # JTA XA 事务（spring boot 3）
   jta:
     enabled: true
 
