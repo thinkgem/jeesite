@@ -352,7 +352,7 @@
       value: item.roleCode,
     }));
     ctrlPermi.value = res.ctrlPermi || '2';
-    reload();
+    await reload();
   });
 
   watch(
