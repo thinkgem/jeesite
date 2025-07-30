@@ -26,21 +26,8 @@ export function useTableScroll(
     return canResize && !(scroll || {}).y;
   });
 
-  watch(
-    () => [unref(getCanResize), unref(getDataSourceRef)?.length],
-    () => {
-      calcTableHeight();
-    },
-    {
-      flush: 'post',
-    },
-  );
-
-  function redoHeight() {
-    nextTick(() => {
-      calcTableHeight();
-    });
-  }
+  const tableScrollRef = ref();
+  const { refY: tableScrollRefY } = useScroll(tableScrollRef);
 
   function setHeight(height: number) {
     tableHeightRef.value = height;
@@ -48,10 +35,7 @@ export function useTableScroll(
     modalFn?.redoModalHeight?.();
   }
 
-  const tableScrollRef = ref();
-  const { refY: tableScrollRefY } = useScroll(tableScrollRef);
-
-  async function calcTableHeight() {
+  function calcTableHeight() {
     const { resizeHeightOffset, pagination, maxHeight, minHeight, isCanResizeParent, useSearchForm } = unref(propsRef);
     const tableData = unref(getDataSourceRef);
 
@@ -93,9 +77,7 @@ export function useTableScroll(
     // if (!unref(getCanResize) || !unref(tableData) || tableData.length === 0) return;
     if (!unref(getCanResize) || !unref(tableData)) return;
 
-    await nextTick();
     // Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
-
     const headEl = tableEl.querySelector('.ant-table-thead') as HTMLElement;
 
     if (!headEl) return;
@@ -179,8 +161,26 @@ export function useTableScroll(
       }
     }
   }
+
+  function redoHeight() {
+    nextTick().then(() => {
+      calcTableHeight();
+    });
+  }
+
+  watch(
+    () => [unref(getCanResize), unref(getDataSourceRef)?.length],
+    () => {
+      redoHeight();
+    },
+    {
+      flush: 'post',
+      immediate: true,
+    },
+  );
+
   useWindowSizeFn(calcTableHeight, 200);
-  onMountedOrActivated(useDebounceFn(redoHeight, 200));
+  onMountedOrActivated(useDebounceFn(redoHeight, 50));
 
   const tableWidthRef = ref();
   function redoTableWidth() {
