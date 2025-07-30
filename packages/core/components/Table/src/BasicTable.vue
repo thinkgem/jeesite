@@ -76,7 +76,7 @@
 </template>
 <script lang="ts" setup name="BasicTable">
   import type { BasicTableProps, TableActionType, SizeType, ColumnChangeParam } from './types/table';
-  import { ref, computed, unref, toRaw, inject, watchEffect, useSlots } from 'vue';
+  import { ref, computed, unref, toRaw, inject, watch, watchEffect, useSlots } from 'vue';
   import { Table, Form } from 'ant-design-vue';
   import { BasicForm, useForm } from '@jeesite/core/components/Form';
   import { PageWrapperFixedHeightKey } from '@jeesite/core/components/Page';
@@ -393,7 +393,15 @@
     return data;
   }
 
-  const formShow = ref(unref(getProps).showSearchForm);
+  const formShow = ref(false);
+
+  watch(
+    () => unref(getProps).showSearchForm,
+    (val) => {
+      formShow.value = val || false;
+    },
+    { immediate: true },
+  );
 
   function handleFormShowToggle() {
     formShow.value = !formShow.value;
