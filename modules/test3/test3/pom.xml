@@ -19,7 +19,7 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 -->
+		<finalName>web</finalName><!-- war 或 jar 包的名称 -->
 		<start-class>com.jeesite.modules.Test3Application</start-class>
 
 		<!-- docker setting -->

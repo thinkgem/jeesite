@@ -32,6 +32,7 @@ echo.
 echo ====== 解压 Eureka ======
 echo.
 
+rem web.war 与 pom.xml 中 finalName、packaging 一致
 mkdir app
 copy web.war app
 cd app
