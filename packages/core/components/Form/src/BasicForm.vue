@@ -344,8 +344,7 @@
     .ant-input-disabled,
     .ant-input-number-disabled,
     .ant-radio-wrapper-disabled,
-    .ant-select-disabled .ant-select-selector,
-    .ant-select-disabled .ant-select-selection-item {
+    .ant-select-disabled .ant-select-selector {
       color: fade(@text-color-base, 75) !important;
       background: rgb(0 0 0 / 2%) !important;
     }
