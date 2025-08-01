@@ -558,6 +558,13 @@
           }
         }
 
+        .ant-table-cell-ellipsis {
+          &.ant-table-cell-fix-left-last,
+          &.ant-table-cell-fix-right-first {
+            overflow: hidden;
+          }
+        }
+
         td.ant-table-cell-fix-left,
         td.ant-table-cell-fix-right {
           .jeesite-basic-arrow {
