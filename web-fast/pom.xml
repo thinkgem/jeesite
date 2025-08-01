@@ -21,7 +21,7 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war or jar 包的名称 -->
+		<finalName>web</finalName><!-- war 或 jar 包的名称 -->
 		<start-class>com.jeesite.modules.FastApplication</start-class>
 
 		<!-- docker setting -->

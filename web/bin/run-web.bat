@@ -19,7 +19,7 @@ cd target
 rem 打包Web工程（结束）
 
 
-rem 根据情况修改 web.jar 为您的 jar 包名称
+rem web.war 与 pom.xml 中 finalName、packaging 一致
 mkdir app
 copy web.war app
 cd app
