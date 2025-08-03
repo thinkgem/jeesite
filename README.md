@@ -137,7 +137,7 @@
 ## 学习准备
 
 - [VSCode](https://code.visualstudio.com/) - 推荐 IDE 集成开发工具
-- [Node.js 18](https://nodejs.org/dist/latest-v18.x/) 和 [git](https://git-scm.com/) - 开发环境
+- [Node.js 20](https://nodejs.org/dist/latest-v20.x/) 和 [git](https://git-scm.com/) - 开发环境
 - [Vite](https://vitejs.dev/) - 熟悉 Vite 特性
 - [Vue-v3](https://cn.vuejs.org/) - 熟悉 Vue 基础语法
 - [TypeScript](https://www.typescriptlang.org/) - 熟悉 TS 基本语法
@@ -148,7 +148,7 @@
 
 ## 安装使用
 
-- 如果没有安装 Node.js 18+，下载地址：<https://nodejs.org>
+- 如果没有安装 Node.js 20+，下载地址：<https://nodejs.org>
 
 ```bash
 # 验证

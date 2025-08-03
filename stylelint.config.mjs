@@ -116,5 +116,6 @@ export default {
     ],
     'unit-no-unknown': [true, { ignoreUnits: ['rpx'] }],
     'no-duplicate-selectors': null,
+    'no-invalid-position-declaration': null,
   },
 };

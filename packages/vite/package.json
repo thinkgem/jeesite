@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/vite",
-  "version": "5.12.1",
+  "version": "5.13.0-dev",
   "private": true,
   "type": "module",
   "scripts": {
@@ -33,22 +33,24 @@
     "./dist/*": "./dist/*"
   },
   "dependencies": {
+    "picocolors": "1.1.1"
+  },
+  "devDependencies": {
     "@types/fs-extra": "11.0.4",
-    "@vitejs/plugin-legacy": "6.1.1",
-    "@vitejs/plugin-vue": "5.2.4",
-    "@vitejs/plugin-vue-jsx": "4.1.2",
-    "dotenv": "16.5.0",
+    "@vitejs/plugin-legacy": "7.1.0",
+    "@vitejs/plugin-vue": "6.0.1",
+    "@vitejs/plugin-vue-jsx": "5.0.1",
+    "dotenv": "17.2.1",
     "fs-extra": "11.3.0",
-    "picocolors": "1.1.1",
-    "pkg-types": "2.1.0",
-    "rollup-plugin-visualizer": "5.14.0",
-    "unbuild": "3.5.0",
-    "unocss": "66.1.1",
+    "pkg-types": "2.2.0",
+    "rollup-plugin-visualizer": "6.0.3",
+    "unbuild": "3.6.0",
+    "unocss": "66.4.0",
     "vite-plugin-compression": "0.5.1",
     "vite-plugin-html": "3.2.2",
     "vite-plugin-mkcert": "1.17.8",
     "vite-plugin-monaco-editor": "1.1.0",
-    "vite-plugin-theme-vite3": "1.0.5",
+    "vite-plugin-theme-vite3": "2.0.1",
     "vite-plugin-vue-setup-extend": "0.4.0"
   },
   "homepage": "https://jeesite.com",

@@ -68,7 +68,7 @@
 <style lang="less">
   .upload-preview-modal {
     .file-table-td {
-      word-wrap: break-word;
+      overflow-wrap: break-word;
       word-break: break-all;
     }
 

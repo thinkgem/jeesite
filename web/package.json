@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/web",
-  "version": "5.12.1",
+  "version": "5.13.0-dev",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,13 +16,6 @@
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "uninstall": "rimraf node_modules",
     "update": "ncu -u"
-  },
-  "devDependencies": {
-    "vite-plugin-compression": "0.5.1",
-    "vite-plugin-html": "3.2.2",
-    "vite-plugin-mkcert": "1.17.8",
-    "vite-plugin-theme-vite3": "1.0.5",
-    "vite-plugin-vue-setup-extend": "0.4.0"
   },
   "homepage": "https://jeesite.com",
   "repository": {

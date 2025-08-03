@@ -4,8 +4,9 @@
  * @author ThinkGem
  */
 import { type PluginOption } from 'vite';
-// import path from 'path';
-import { viteThemePlugin, antdDarkThemePlugin, mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme-vite3';
+import path from 'path';
+import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme-vite3';
+import { mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme-vite3/es/colorUtils';
 import { getThemeColors, generateColors } from './themeConfig';
 import { generateModifyVars } from './modifyVars';
 
@@ -26,6 +27,7 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
   // );
   // 抽取出viteThemePlugin插件，下方会根据不同环境设置enforce
   const vite_theme_plugin = viteThemePlugin({
+    injectClientPath: JSON.stringify(path.resolve(__dirname, '../node_modules/vite-plugin-theme-vite3/es/client')),
     resolveSelector: (s) => {
       s = s.trim();
       if (s.includes('const __vite__css = "')) {
