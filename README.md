@@ -101,7 +101,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 * 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
-* **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8848/nacos/index.html>
+* **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8849/index.html#/login>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 核心模块（**统一授权认证服务、平台基础数据服务**）：
   - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
@@ -248,7 +248,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 
 ### 启动微服务项目
 
-* 在每个微服务中可以找的 `config/bootstrap.yml` 配置服务注册和配置中心地址。
+* 在每个微服务中可以找的 `config/application.yml` 配置服务注册和配置中心地址。
 * 按顺序运行以下启动类的main方法：（因为服务直接有依赖，请启动完成一个再启下一个）
   - /jeesite-cloud-gateway/../GatewayApplication.java
   - /jeesite-cloud-module-core/../CoreApplication.java
@@ -260,7 +260,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 
 **常见问题：**
 
-* 如果提示 `获取不到 ${service.core.name} 属性，请检查配置` 错误，说明没有从 nacos 或 config 配置中心获取到配置信息。一般有以下原因。1：Nacos 里未导入 `jeesite-cloud-yml.zip` 配置文件；2：如果你自定义了 Nacos 的 Group Name，请于 bootstrap.yml 里的 Group Name 一致；3：如果 Nacos 提示了 yml 读取错误，请在启动参数，配上环境变量 JAVA_OPTS，值为 `-Dfile.encoding=UTF-8`（不同IDE里的设置方法：Eclipse：Window->Preferences->General->Workspace->Text file encoding->Other->UTF-8；IDEA：File->Settings->Editor->FileEncodings->Project Encodeing->UTF-8）
+* 如果提示 `获取不到 ${service.core.name} 属性，请检查配置` 错误，说明没有从 nacos 或 config 配置中心获取到配置信息。一般有以下原因。1：Nacos 里未导入 `jeesite-cloud-yml.zip` 配置文件；2：如果你自定义了 Nacos 的 Group Name，请于 application.yml 里的 Group Name 一致；3：如果 Nacos 提示了 yml 读取错误，请在启动参数，配上环境变量 JAVA_OPTS，值为 `-Dfile.encoding=UTF-8`（不同IDE里的设置方法：Eclipse：Window->Preferences->General->Workspace->Text file encoding->Other->UTF-8；IDEA：File->Settings->Editor->FileEncodings->Project Encodeing->UTF-8）
 
 ![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
 

@@ -96,3 +96,9 @@ spring:
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
+
+# 禁用端点访问
+management:
+  endpoint:
+    gateway:
+      access: none

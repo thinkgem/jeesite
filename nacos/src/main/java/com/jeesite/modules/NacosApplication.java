@@ -46,6 +46,7 @@ public class NacosApplication {
 		}
 		System.setProperty("nacos.logs.path", System.getProperty("nacos.home") + "/logs");
 		System.setProperty("derby.stream.error.file", System.getProperty("nacos.home") + "/.derby.log");
+		System.setProperty("logging.config", "classpath:nacos-logback.xml");
 	}
 
 	public static void main(String[] args) {

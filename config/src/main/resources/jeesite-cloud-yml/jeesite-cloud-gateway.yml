@@ -9,7 +9,7 @@ spring:
   cloud:
 
     # 网关路由配置
-    gateway:
+    gateway.server.webflux:
       defaultFilters:
         - PreserveHostHeader
       routes:
@@ -69,5 +69,3 @@ spring:
 #======================================#
 #========== Project settings ==========#
 #======================================#
-
-management.endpoint.gateway.enabled: false

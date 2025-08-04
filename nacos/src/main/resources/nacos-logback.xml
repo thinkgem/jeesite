@@ -32,14 +32,14 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -56,7 +56,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -80,7 +80,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -105,7 +105,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -129,7 +129,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -153,7 +153,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -186,7 +186,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -204,7 +204,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -220,7 +220,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -236,7 +236,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -252,7 +252,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -319,7 +319,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -336,7 +336,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -353,7 +353,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -370,7 +370,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -387,7 +387,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -404,7 +404,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -421,7 +421,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -438,7 +438,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -455,7 +455,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -472,7 +472,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -491,7 +491,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -507,7 +507,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -524,7 +524,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -542,7 +542,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -559,7 +559,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -576,7 +576,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -593,7 +593,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -610,7 +610,7 @@
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level %msg%n%n</Pattern>
+            <Pattern>%date %level %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -708,8 +708,7 @@
         <appender-ref ref="core-auth"/>
     </logger>
     
-    <logger name="com.alibaba.nacos.k8s.sync.main" additivity="false">
-        <level value="DEBUG"/>
+    <logger name="com.alibaba.nacos.k8s.sync.main" additivity="false" value="DEBUG">
         <appender-ref ref="k8s-sync-main"/>
     </logger>
 
