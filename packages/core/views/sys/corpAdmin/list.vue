@@ -132,6 +132,13 @@
       sorter: true,
       width: 100,
     },
+    // {
+    //   title: t('扩展字段1'),
+    //   dataIndex: 'extend.extendS1',
+    //   key: 'a.extend_s1',
+    //   sorter: true,
+    //   width: 100,
+    // },
   ];
 
   const actionColumn: BasicColumn = {

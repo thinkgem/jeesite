@@ -125,6 +125,14 @@
         maxlength: 8,
       },
     },
+    // {
+    //   label: t('扩展字段1'),
+    //   field: 'extend.extendS1',
+    //   component: 'Input',
+    //   componentProps: {
+    //     maxlength: 100,
+    //   },
+    // },
 
     {
       label: t('备注信息'),
