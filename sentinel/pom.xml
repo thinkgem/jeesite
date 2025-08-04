@@ -118,14 +118,6 @@
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-client</artifactId>
 		</dependency>
-		<!--<dependency>
-			<groupId>com.alibaba.nacos</groupId>
-			<artifactId>nacos-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba.nacos</groupId>
-			<artifactId>nacos-api</artifactId>
-		</dependency>-->
 
         <!-- for Nacos rule publisher sample -->
         <dependency>

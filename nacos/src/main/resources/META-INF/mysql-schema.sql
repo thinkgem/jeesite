@@ -39,6 +39,9 @@ CREATE TABLE `config_info` (
                                UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
 
+/******************************************/
+/*   表名称 = config_info  since 2.5.0                */
+/******************************************/
 CREATE TABLE `config_info_gray` (
                                     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
                                     `data_id` varchar(255) NOT NULL COMMENT 'data_id',
@@ -113,7 +116,7 @@ CREATE TABLE `his_config_info` (
                                    `tenant_id` varchar(128) DEFAULT '' COMMENT '租户字段',
                                    `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥',
                                    `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal',
-                                   `gray_name` varchar(128) DEFAULT NULL,
+                                   `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name',
                                    `ext_info`  longtext DEFAULT NULL COMMENT 'ext info',
                                    PRIMARY KEY (`nid`),
                                    KEY `idx_gmt_create` (`gmt_create`),
