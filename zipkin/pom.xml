@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.ZipkinApplication</start-class>
 
 		<!-- version setting -->
-		<zipkin.version>3.4.0</zipkin.version>
+		<zipkin.version>3.5.1</zipkin.version>
 
 		<!-- docker setting -->
 		<docker.run.port>9411:9411</docker.run.port>

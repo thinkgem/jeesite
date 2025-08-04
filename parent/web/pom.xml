@@ -65,7 +65,7 @@
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 		</dependency>
 		
-		<!-- 流量防卫兵 -->
+		<!-- 流量防卫兵
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
@@ -73,21 +73,21 @@
 		<dependency>
 			<groupId>com.alibaba.csp</groupId>
 			<artifactId>sentinel-datasource-nacos</artifactId>
-		</dependency>
+		</dependency> -->
 
-		<!-- 链路追踪服务 -->
+		<!-- 链路追踪服务
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-observation</artifactId>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-micrometer</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.zipkin.reporter2</groupId>
 			<artifactId>zipkin-reporter-brave</artifactId>
-		</dependency>
+		</dependency> -->
 		
 	</dependencies>
 	
