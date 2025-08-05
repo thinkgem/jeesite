@@ -58,8 +58,6 @@ export default function ({ advanceState, emit, getProps, getSchema, formModel, d
     return 0;
   });
 
-  const debounceUpdateAdvanced = useDebounceFn(updateAdvanced, 30);
-
   watch(
     [
       // () => unref(getSchema), // 注释掉，解决不同的表单的ListSelect组件，查询表单展开后关闭，然后在另外的表单弹窗选择时，查询表单反复折叠展开的问题。
@@ -69,7 +67,7 @@ export default function ({ advanceState, emit, getProps, getSchema, formModel, d
     () => {
       const { showAdvancedButton } = unref(getProps);
       if (showAdvancedButton) {
-        debounceUpdateAdvanced();
+        updateAdvanced();
       }
     },
     { immediate: true },

@@ -29,12 +29,6 @@ export function useTableScroll(
   const tableScrollRef = ref();
   const { refY: tableScrollRefY } = useScroll(tableScrollRef);
 
-  function setHeight(height: number) {
-    tableHeightRef.value = height;
-    //  Solve the problem of modal adaptive height calculation when the form is placed in the modal
-    modalFn?.redoModalHeight?.();
-  }
-
   function calcTableHeight() {
     const { resizeHeightOffset, pagination, maxHeight, minHeight, isCanResizeParent, useSearchForm } = unref(propsRef);
     const tableData = unref(getDataSourceRef);
@@ -116,6 +110,7 @@ export function useTableScroll(
       headerHeight = (headEl as HTMLElement).offsetHeight;
     }
 
+    // Table height
     let bottomIncludeBody = 0;
     if (unref(wrapRef) && isCanResizeParent) {
       const tablePadding = 12;
@@ -144,20 +139,24 @@ export function useTableScroll(
 
     let height =
       bottomIncludeBody - (resizeHeightOffset || 0) - paddingHeight - paginationHeight - footerHeight - headerHeight;
-
     if (minHeight && height < minHeight) {
       height = minHeight;
     }
-
     height = (height > maxHeight! ? (maxHeight as number) : height) ?? height;
-    setHeight(height);
 
+    // Set table height
+    tableHeightRef.value = height;
+    // Solve the problem of modal adaptive height calculation when the form is placed in the modal
+    modalFn?.redoModalHeight?.();
+
+    // Set body height
     bodyEl!.style.height = `${height}px`;
 
+    // Set empty data height
     if (tableData.length === 0) {
       const emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed') as HTMLElement;
       if (emptyDataEl && emptyDataEl.style) {
-        emptyDataEl.style.height = `${height - 9}px`;
+        emptyDataEl.style.height = `${height}px`;
       }
     }
   }
@@ -170,24 +169,32 @@ export function useTableScroll(
 
   watch(
     () => [unref(getCanResize), unref(getDataSourceRef)?.length],
-    () => {
-      redoHeight();
+    (val, oldVal) => {
+      if (val[1] != 0) {
+        calcTableHeight();
+      }
     },
-    {
-      flush: 'post',
-      immediate: true,
-    },
+    { flush: 'post' },
   );
 
-  useWindowSizeFn(calcTableHeight, 200);
-  onMountedOrActivated(useDebounceFn(redoHeight, 50));
-
   const tableWidthRef = ref();
-  function redoTableWidth() {
+
+  function calcTableWidth() {
     const table = unref(tableRef);
     tableWidthRef.value = table?.$el?.offsetWidth - 50 || 600; // 默认宽度不小于，列中指定的宽度总合
   }
-  useResizeObserver(wrapRef, useDebounceFn(redoTableWidth, 20));
+
+  useResizeObserver(wrapRef, useDebounceFn(calcTableWidth, 100));
+
+  onMountedOrActivated(() => {
+    calcTableHeight();
+    calcTableWidth();
+  });
+
+  useWindowSizeFn(() => {
+    calcTableHeight();
+    calcTableWidth();
+  }, 200);
 
   const getScrollRef: ComputedRef<any> = computed(() => {
     let width = 0;
@@ -208,7 +215,7 @@ export function useTableScroll(
 
     const tableWidth = tableWidthRef.value;
     const { canResize, scroll } = unref(propsRef);
-    const canScrollX = tableWidth == 0 || width == 0 || tableWidth > width;
+    const canScrollX = tableWidth <= 0 || width <= 0 || tableWidth > width;
     return {
       x: canScrollX ? (canResize ? tableWidth : undefined) : tableWidth,
       y: canResize ? unref(tableHeightRef) : undefined,
