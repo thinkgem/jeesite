@@ -169,10 +169,8 @@ export function useTableScroll(
 
   watch(
     () => [unref(getCanResize), unref(getDataSourceRef)?.length],
-    (val, oldVal) => {
-      if (val[1] != 0) {
-        calcTableHeight();
-      }
+    () => {
+      calcTableHeight();
     },
     { flush: 'post' },
   );
