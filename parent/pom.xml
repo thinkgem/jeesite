@@ -54,8 +54,14 @@
 		<swagger3.version>2.2.27</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
 
-		<!-- jdbc driver version -->
-		<mysql.version>8.0.33</mysql.version>
+		<!-- jdbc driver for your db version -->
+		<!--<mysql.version>9.3.0</mysql.version>-->
+		<!--<oracle-database.version>23.7.0.25.01</oracle-database.version>-->
+		<!--<jtds.version>1.3.1</jtds.version>-->
+		<!--<mssql-jdbc.version>12.10.1.jre11</mssql-jdbc.version>-->
+		<!--<postgresql.version>42.7.7</postgresql.version>-->
+		<dameng.version>8.1.3.62</dameng.version>
+		<kingbase.version>8.6.1</kingbase.version>
 		<h2.version>2.3.232</h2.version>
 
 		<!-- environment setting -->
