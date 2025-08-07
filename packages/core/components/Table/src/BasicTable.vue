@@ -10,8 +10,13 @@
         <slot name="tableTitle"></slot>
       </template>
       <template #toolbar v-if="$slots.tableTitle || $slots.toolbar">
-        <a-button v-if="getBindValues.useSearchForm" @click="handleFormShowToggle()" :class="{ active: formShow }">
-          <Icon icon="i-ant-design:filter-outlined" /> {{ formShow ? t('common.hideText') : t('common.queryText') }}
+        <a-button
+          v-if="getProps.useSearchForm"
+          :class="{ active: getProps.showSearchForm }"
+          @click="handleShowSearchFormToggle()"
+        >
+          <Icon icon="i-ant-design:filter-outlined" />
+          {{ getProps.showSearchForm ? t('common.hideText') : t('common.queryText') }}
         </a-button>
         <slot v-if="$slots.toolbar" name="toolbar"></slot>
       </template>
@@ -22,9 +27,9 @@
     <BasicForm
       ref="formRef"
       submitOnReset
-      v-show="formShow"
       v-bind="getFormProps"
-      v-if="getBindValues.useSearchForm"
+      v-if="getProps.useSearchForm"
+      v-show="getProps.showSearchForm"
       :tableAction="tableAction"
       @register="registerForm"
       @submit="handleSearchInfoChange"
@@ -111,6 +116,7 @@
   import { warn } from '@jeesite/core/utils/log';
   import TableSelectionBar from '@jeesite/core/components/Table/src/components/TableSelectionBar.vue';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
+  import { useDebounceFn } from '@vueuse/core';
 
   const ATable = Table;
   const FormItemRest = Form.ItemRest;
@@ -393,25 +399,26 @@
     return data;
   }
 
-  const formShow = ref(false);
+  const redoTableHeight = useDebounceFn(redoHeight, 20);
 
   watch(
-    () => unref(getProps).showSearchForm,
+    () => unref(getProps).useSearchForm,
     (val) => {
-      formShow.value = val || false;
+      redoTableHeight();
     },
     { immediate: true },
   );
 
-  function handleFormShowToggle() {
-    formShow.value = !formShow.value;
+  function handleShowSearchFormToggle() {
+    const { showSearchForm } = unref(getProps);
+    setProps({ showSearchForm: !showSearchForm });
     redoHeight();
   }
 
   function handleAdvancedChange({ realWidthRef, screenEnum }) {
     // 小屏幕直接隐藏查询窗口
     if (unref(realWidthRef) < screenEnum.SM) {
-      formShow.value = false;
+      setProps({ showSearchForm: false });
     }
     redoHeight();
   }

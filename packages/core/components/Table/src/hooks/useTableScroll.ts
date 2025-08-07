@@ -39,11 +39,6 @@ export function useTableScroll(
     const tableEl: HTMLElement = table.$el;
     if (!tableEl) return;
 
-    const paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
-    if (paginationEl) {
-      paginationEl.style.display = 'flex';
-    }
-
     const bodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement;
     if (!bodyEl) return;
 
@@ -84,7 +79,9 @@ export function useTableScroll(
 
     // Pagination height
     let paginationHeight = 2;
+    const paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
     if (paginationEl) {
+      paginationEl.style.display = 'flex';
       paginationHeight += paginationEl.offsetHeight || 0;
     } else {
       paginationHeight = -8;
@@ -99,6 +96,7 @@ export function useTableScroll(
       }
     }
 
+    // Summary height
     const summaryEl = tableEl.querySelector('.ant-table-summary') as HTMLElement;
     if (summaryEl) {
       footerHeight += summaryEl.offsetHeight || 0;
@@ -117,7 +115,6 @@ export function useTableScroll(
       const formMargin = 16;
       let paginationMargin = 10;
       const wrapHeight = unref(wrapRef)?.offsetHeight ?? 0;
-
       let formHeight = unref(formRef)?.$el.offsetHeight ?? 0;
       if (formHeight) {
         formHeight += formMargin;
@@ -128,15 +125,11 @@ export function useTableScroll(
       if (isBoolean(useSearchForm) && !useSearchForm) {
         paddingHeight = 0;
       }
-
       const headerCellHeight = (tableEl.querySelector('.ant-table-title') as HTMLElement)?.offsetHeight ?? 0;
-
       bottomIncludeBody = wrapHeight - formHeight - headerCellHeight - tablePadding - paginationMargin;
     } else {
-      // Table height from bottom
       bottomIncludeBody = getViewportOffset(headEl).bottomIncludeBody;
     }
-
     let height =
       bottomIncludeBody - (resizeHeightOffset || 0) - paddingHeight - paginationHeight - footerHeight - headerHeight;
     if (minHeight && height < minHeight) {
@@ -156,13 +149,13 @@ export function useTableScroll(
     if (tableData.length === 0) {
       const emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed') as HTMLElement;
       if (emptyDataEl && emptyDataEl.style) {
-        emptyDataEl.style.height = `${height}px`;
+        emptyDataEl.style.height = `${height - 9}px`;
       }
     }
   }
 
   function redoHeight() {
-    nextTick().then(() => {
+    nextTick(() => {
       calcTableHeight();
     });
   }
