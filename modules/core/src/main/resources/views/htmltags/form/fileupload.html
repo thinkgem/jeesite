@@ -178,7 +178,7 @@ $(function() {
 		},
 		extendParams: {"#{p.extendParams}"},
 		isLazy: "#{p.isLazy}",
-		preview: "${__info_type=='0'?'':p.preview!=''?p.preview:@Global.getConfig('file.preview','true')}",
+		preview: "${__info_type=='0'?'':isBlank(p.preview)||p.preview=='true'?@Global.getConfig('file.preview','true'):p.preview}",
 		callback: function(id, act, $this, fileUploadId, fileUrl, fileName, fileUpload){
 			if(typeof "#{p.callbackFuncName}" == 'function'){
 				"#{p.callbackFuncName}"(id, act, $this, fileUploadId, fileUrl, fileName, fileUpload);
