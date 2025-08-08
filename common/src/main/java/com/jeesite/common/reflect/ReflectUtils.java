@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * 反射工具类. 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
  * @author calvin、ThinkGem
- * @version 2023-2-6
+ * @version 2025-08-08
  */
 @SuppressWarnings("rawtypes")
 public class ReflectUtils {
@@ -112,7 +112,7 @@ public class ReflectUtils {
 		if (field == null) {
 			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
 			if (obj != null) {
-				logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+				logger.debug("在 [{}] 中，没有找到 [{}] 字段 ", obj.getClass(), fieldName);
 			}
 			return null;
 		}
@@ -132,7 +132,7 @@ public class ReflectUtils {
 		Field field = getAccessibleField(obj, fieldName);
 		if (field == null) {
 			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
-			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			logger.debug("在 [{}] 中，没有找到 [{}] 字段 ", obj.getClass(), fieldName);
 			return;
 		}
 		try {
@@ -157,9 +157,7 @@ public class ReflectUtils {
 		Method method = getAccessibleMethod(obj, methodName, parameterTypes);
 		if (method == null) {
 			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
-			if (obj != null) {
-				logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
-			}
+			logger.debug("在 [{}] 中，没有找到 [{}] 方法 ", obj.getClass() == Class.class ? obj : obj.getClass(), methodName);
 			return null;
 		}
 		try {
@@ -182,7 +180,7 @@ public class ReflectUtils {
 		if (method == null) {
 			// 如果为空不报错，直接返回空。 throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
 			if (obj != null) {
-				logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
+				logger.debug("在 [{}] 中，没有找到 [{}] 方法 ", obj.getClass() == Class.class ? obj : obj.getClass(), methodName);
 			}
 			return null;
 		}
@@ -405,17 +403,16 @@ public class ReflectUtils {
 	public static Class getClassGenricType(final Class clazz, final int index) {
 		Type genType = clazz.getGenericSuperclass();
 		if (!(genType instanceof ParameterizedType)) {
-			logger.debug(clazz.getSimpleName() + "'s superclass not ParameterizedType");
+			logger.debug("{}'s superclass not ParameterizedType", clazz.getSimpleName());
 			return Object.class;
 		}
 		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 		if (index >= params.length || index < 0) {
-			logger.debug("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
-					+ params.length);
+			logger.debug("Index: {}, Size of {}'s Parameterized Type: {}", index, clazz.getSimpleName(), params.length);
 			return Object.class;
 		}
 		if (!(params[index] instanceof Class)) {
-			logger.debug(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
+			logger.debug("{} not set the actual class on superclass generic parameter", clazz.getSimpleName());
 			return Object.class;
 		}
 		return (Class) params[index];
@@ -429,7 +426,7 @@ public class ReflectUtils {
 			throw new RuntimeException("Instance must not be null");
 		}
 		Class clazz = instance.getClass();
-		if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
+		if (clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
 			Class<?> superClass = clazz.getSuperclass();
 			if (superClass != null && !Object.class.equals(superClass)) {
 				return superClass;

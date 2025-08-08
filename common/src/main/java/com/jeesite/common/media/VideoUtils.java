@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class VideoUtils {
 
-	private static final Logger log = LoggerFactory.getLogger(VideoUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(VideoUtils.class);
 	private static String ffmpegFile; 		// ffmpeg.exe所放的路径
 	private static String mencoderFile;		//  mencoder.exe所放的路径
 	private static String qtFaststartFile;	//  qt-faststart.exe所放的路径
@@ -111,10 +111,10 @@ public class VideoUtils {
 				}
 			} catch (Exception e) {
 				statusTemp = false;
-				log.error("视频剪切图片失败", e);
+				logger.error("视频剪切图片失败", e);
 			}
 		}
-		log.debug("视频剪切图片" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatTime(System.currentTimeMillis() - startTime));
+		logger.debug("视频剪切图片" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatTime(System.currentTimeMillis() - startTime));
 		return statusTemp;
 	}
 
@@ -128,19 +128,19 @@ public class VideoUtils {
 		int type = checkContentType();
 		String tempFile = outputFile + ".tmp";
 		if (statusTemp && type == 0) {
-			log.debug("使用ffmpage进行视频转换");
+			logger.debug("使用ffmpage进行视频转换");
 			statusTemp = processFfmpeg(inputFile, tempFile);
 		} else if (statusTemp && type == 1) {
-			log.debug("使用mencoder进行视频转换");
+			logger.debug("使用mencoder进行视频转换");
 			statusTemp = processMencoder(inputFile, tempFile);
 		}
 		if (statusTemp){
-			log.debug("将mp4视频的元数据信息转到视频第一帧");
+			logger.debug("将mp4视频的元数据信息转到视频第一帧");
 			statusTemp = processQtFaststart(tempFile, outputFile);
 		}
-		log.debug("删除临时文件");
+		logger.debug("删除临时文件");
 		FileUtils.deleteFile(tempFile);
-		log.debug("视频转换" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatTime(System.currentTimeMillis() - startTime));
+		logger.debug("视频转换{}，用时：{}", statusTemp ? "成功" : "失败", TimeUtils.formatTime(System.currentTimeMillis() - startTime));
 		return statusTemp;
 	}
 
@@ -152,7 +152,7 @@ public class VideoUtils {
 	public boolean checkfile(String inputFile) {
 		File file = new File(inputFile);
 		if (!file.isFile() || !file.exists()) {
-			log.warn("文件不存在！");
+			logger.warn("文件不存在！");
 			return false;
 		}
 		return true;
@@ -279,18 +279,18 @@ public class VideoUtils {
 	 */
 	private boolean process(List<String> command) {
 		try {
-			log.debug(StringUtils.join(command, StringUtils.SPACE));
+			logger.debug(StringUtils.join(command, StringUtils.SPACE));
 //			Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
-			Process process = Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
+			Process process = Runtime.getRuntime().exec(command.toArray(new String[0]));
 			new PrintErrorReader(process.getErrorStream()).start();
 			new PrintInputStream(process.getInputStream()).start();
 			process.waitFor();
 			return true;
 		} catch (Exception e) {
 			if (StringUtils.contains(e.getMessage(), "CreateProcess error=2")){
-				log.error("缺少视频转换工具，请配置video.ffmpegFile相关参数。" + e.getMessage());
+				logger.error("缺少视频转换工具，请配置video.ffmpegFile相关参数。{}", e.getMessage());
 			}else{
-				log.error(e.getMessage(), e);
+				logger.error(e.getMessage(), e);
 			}
 			return false;
 		}
@@ -406,10 +406,10 @@ public class VideoUtils {
 				BufferedReader br = new BufferedReader(new InputStreamReader(__is));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					log.debug(line);
+					logger.debug(line);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 	}
@@ -427,10 +427,10 @@ public class VideoUtils {
 				BufferedReader br = new BufferedReader(new InputStreamReader(__is));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					log.error(line);
+					logger.error(line);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 	}

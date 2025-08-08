@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  * 相同的属性在最后载入的文件中的值将会覆盖之前的值， 
  * 取不到从System.getProperty()获取。
  * @author ThinkGem
- * @version 2017-12-30
+ * @version 2025-4-17
  */
 public class PropertiesUtils {
 	

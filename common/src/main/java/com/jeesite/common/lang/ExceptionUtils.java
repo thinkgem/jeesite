@@ -19,8 +19,7 @@ public class ExceptionUtils {
 
 	/**
 	 * 在request中获取异常类
-	 * @param request
-	 * @return 
+	 * @param request 请求对象
 	 */
 	public static Throwable getThrowable(HttpServletRequest request){
 		Throwable ex = null;

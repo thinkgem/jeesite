@@ -10,6 +10,8 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,13 +25,14 @@ import java.util.Hashtable;
  */
 public class ZxingUtils {
 
+	private static final Logger logger = LoggerFactory.getLogger(ZxingUtils.class);
+
 	/**
 	 * 条形码编码
-	 *
-	 * @param contents
-	 * @param width
-	 * @param height
-	 * @param imgPath
+	 * @param contents 内容
+	 * @param width 宽度
+	 * @param height 高度
+	 * @param imgPath 图片路径
 	 */
 	public static void encode(String contents, int width, int height, String imgPath) {
 		int codeWidth = 3 + // start guard
@@ -42,14 +45,13 @@ public class ZxingUtils {
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(contents, BarcodeFormat.EAN_13, codeWidth, height, null);
 			MatrixToImageWriter.writeToPath(bitMatrix, "png", new File(imgPath).toPath());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
 	/**
 	 * 条形码解码
-	 *
-	 * @param imgPath
+	 * @param imgPath 图片路径
 	 * @return String
 	 */
 	public static String decode(String imgPath) {
@@ -58,25 +60,24 @@ public class ZxingUtils {
 		try {
 			image = ImageIO.read(new File(imgPath));
 			if (image == null) {
-				System.out.println("the decode image may be not exit.");
+				logger.debug("the decode image may be not exit.");
 			}
 			LuminanceSource source = new BufferedImageLuminanceSource(image);
 			BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 			result = new MultiFormatReader().decode(bitmap, null);
 			return result.getText();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}
 
 	/**
 	 * 二维码编码
-	 *
-	 * @param contents
-	 * @param width
-	 * @param height
-	 * @param imgPath
+	 * @param contents 内容
+	 * @param width 宽度
+	 * @param height 高度
+	 * @param imgPath 图片路径
 	 */
 	public static void encode2(String contents, int width, int height, String imgPath) {
 		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
@@ -88,14 +89,13 @@ public class ZxingUtils {
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height, hints);
 			MatrixToImageWriter.writeToPath(bitMatrix, "png", new File(imgPath).toPath());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
 	/**
 	 * 二维码解码
-	 *
-	 * @param imgPath
+	 * @param imgPath 图片路径
 	 * @return String
 	 */
 	public static String decode2(String imgPath) {
@@ -104,7 +104,7 @@ public class ZxingUtils {
 		try {
 			image = ImageIO.read(new File(imgPath));
 			if (image == null) {
-				System.out.println("the decode image may be not exit.");
+				logger.debug("the decode image may be not exit.");
 			}
 			LuminanceSource source = new BufferedImageLuminanceSource(image);
 			BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
@@ -113,7 +113,7 @@ public class ZxingUtils {
 			result = new MultiFormatReader().decode(bitmap, hints);
 			return result.getText();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}

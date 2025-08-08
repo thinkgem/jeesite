@@ -18,7 +18,7 @@ public class ZxingUtilsTest {
 		String baseDir = FileUtils.getProjectPath();
 
 		// 条形码
-		String imgPath = baseDir + "\\target\\zxing_EAN13.png";
+		String imgPath = baseDir + "/target/zxing_EAN13.png";
 		String contents = "6923450657713";
 		int width = 105, height = 50;
 
@@ -30,7 +30,7 @@ public class ZxingUtilsTest {
 		System.out.println("finished zxing EAN-13 decode.");
 
 		// 二维码
-		String imgPath2 = baseDir + "\\target\\zxing.png";
+		String imgPath2 = baseDir + "/target/zxing.png";
 		String contents2 = "Hello Gem, welcome to Zxing!\nEMail [ thinkgem@163.com ]";
 		int width2 = 300, height2 = 300;
 

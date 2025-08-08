@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ */
 package com.jeesite.common.network;
 
 import com.jeesite.common.codec.EncodeUtils;
@@ -6,12 +10,15 @@ import com.jeesite.common.lang.StringUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * IP 地址工具
+ * @author ThinkGem
+ */
 public class IpUtils {
 
 	/**
 	 * 获取客户端IP地址
-	 * @param request
-	 * @return
+	 * @param request 请求对象
 	 */
 	public static String getRemoteAddr(HttpServletRequest request) {
 		if (request == null) {
@@ -38,8 +45,7 @@ public class IpUtils {
 	
 	/**
 	 * 是否是本地地址
-	 * @param ip
-	 * @return
+	 * @param ip 地址
 	 */
 	public static boolean isLocalAddr(String ip){
 		return StringUtils.inString(ip, "127.0.0.1", "0:0:0:0:0:0:0:1");
@@ -47,13 +53,12 @@ public class IpUtils {
 
 	/**
 	 * 判断IP地址为内网IP还是公网IP
-	 * 
+	 * <br>
 	 * tcp/ip协议中，专门保留了三个IP地址区域作为私有地址，其地址范围如下：
 	 * 10.0.0.0/8：10.0.0.0～10.255.255.255
 	 * 172.16.0.0/12：172.16.0.0～172.31.255.255
 	 * 192.168.0.0/16：192.168.0.0～192.168.255.255
-	 * 
-	 * @param ip
+	 * @param ip 地址
 	 * @return
 	 */
 	public static boolean isInternalAddr(String ip) {

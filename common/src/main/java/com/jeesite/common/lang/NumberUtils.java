@@ -79,7 +79,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
 	/**
 	 * 格式化双精度，保留两个小数
-	 * @return
 	 */
 	public static String formatDouble(Double b) {
 		BigDecimal bg = new BigDecimal(b);
@@ -88,7 +87,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
 	/**
 	 * 百分比计算
-	 * @return
 	 */
 	public static String formatScale(double one, long total) {
 		BigDecimal bg = new BigDecimal(one * 100 / total);
@@ -97,8 +95,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 	
 	/**
 	 * 格式化数值类型
-	 * @param data
-	 * @param pattern
 	 */
 	public static String formatNumber(Object data, String pattern) {
 		if (data == null){

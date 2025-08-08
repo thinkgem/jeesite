@@ -283,7 +283,7 @@ public class LoginController extends BaseController{
 			try {
 				request.getRequestDispatcher(passwordModifyUrl).forward(request, response);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			return null;
 		}

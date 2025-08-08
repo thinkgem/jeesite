@@ -4,17 +4,21 @@
  */
 package com.jeesite.common.network;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
  * MAC地址工具
- * 
  * @author ThinkGem
  * @version 2014-6-18
  */
 public class MacUtils {
+
+	private static final Logger logger = LoggerFactory.getLogger(MacUtils.class);
 
 	/**
 	 * 获取当前操作系统名称. return 操作系统名称 例如:windows,Linux,Unix等.
@@ -25,7 +29,6 @@ public class MacUtils {
 
 	/**
 	 * 获取Unix网卡的mac地址.
-	 * 
 	 * @return mac地址
 	 */
 	public static String getUnixMACAddress() {
@@ -33,39 +36,31 @@ public class MacUtils {
 		BufferedReader bufferedReader = null;
 		Process process = null;
 		try {
-			/**
-			 * Unix下的命令，一般取eth0作为本地主网卡 显示信息中包含有mac地址信息
-			 */
+			// Unix下的命令，一般取eth0作为本地主网卡 显示信息中包含有mac地址信息
 			process = Runtime.getRuntime().exec("ifconfig eth0");
 			bufferedReader = new BufferedReader(new InputStreamReader(
 					process.getInputStream()));
 			String line = null;
 			int index = -1;
 			while ((line = bufferedReader.readLine()) != null) {
-				/**
-				 * 寻找标示字符串[hwaddr]
-				 */
+				// 寻找标示字符串[hwaddr]
 				index = line.toLowerCase().indexOf("hwaddr");
-				/**
-				 * 找到了
-				 */
+				// 找到了
 				if (index != -1) {
-					/**
-					 * 取出mac地址并去除2边空格
-					 */
+					// 取出mac地址并去除2边空格
 					mac = line.substring(index + "hwaddr".length() + 1).trim();
 					break;
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} finally {
 			try {
 				if (bufferedReader != null) {
 					bufferedReader.close();
 				}
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				// ignore
 			}
 			bufferedReader = null;
 			process = null;
@@ -84,9 +79,7 @@ public class MacUtils {
 		BufferedReader bufferedReader = null;
 		Process process = null;
 		try {
-			/**
-			 * linux下的命令，一般取eth0作为本地主网卡 显示信息中包含有mac地址信息
-			 */
+			// linux下的命令，一般取eth0作为本地主网卡 显示信息中包含有mac地址信息
 			process = Runtime.getRuntime().exec("ifconfig eth0");
 			bufferedReader = new BufferedReader(new InputStreamReader(
 					process.getInputStream()));
@@ -94,26 +87,22 @@ public class MacUtils {
 			int index = -1;
 			while ((line = bufferedReader.readLine()) != null) {
 				index = line.toLowerCase().indexOf("硬件地址");
-				/**
-				 * 找到了
-				 */
+				// 找到了
 				if (index != -1) {
-					/**
-					 * 取出mac地址并去除2边空格
-					 */
+					// 取出mac地址并去除2边空格
 					mac = line.substring(index + 4).trim();
 					break;
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} finally {
 			try {
 				if (bufferedReader != null) {
 					bufferedReader.close();
 				}
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				// ignore
 			}
 			bufferedReader = null;
 			process = null;
@@ -129,7 +118,6 @@ public class MacUtils {
 
 	/**
 	 * 获取widnows网卡的mac地址.
-	 * 
 	 * @return mac地址
 	 */
 	public static String getWindowsMACAddress() {
@@ -137,37 +125,31 @@ public class MacUtils {
 		BufferedReader bufferedReader = null;
 		Process process = null;
 		try {
-			/**
-			 * windows下的命令，显示信息中包含有mac地址信息
-			 */
+			// windows下的命令，显示信息中包含有mac地址信息
 			process = Runtime.getRuntime().exec("ipconfig /all");
 			bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
 			int index = -1;
 			while ((line = bufferedReader.readLine()) != null) {
-				/**
-				 * 寻找标示字符串[physical address 或  物理地址]
-				 */
+				// 寻找标示字符串[physical address 或  物理地址]
 				if (line.split("-").length == 6){
 					index = line.indexOf(":");
 					if (index != -1) {
-						/**
-						 * 取出mac地址并去除2边空格
-						 */
+						// 取出mac地址并去除2边空格
 						mac = line.substring(index + 1).trim();
 					}
 					break;
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} finally {
 			try {
 				if (bufferedReader != null) {
 					bufferedReader.close();
 				}
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				// ignore
 			}
 			bufferedReader = null;
 			process = null;

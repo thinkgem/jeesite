@@ -9,7 +9,6 @@ import java.text.NumberFormat;
 
 import org.apache.commons.lang3.StringUtils;
 
-
 /**
  * 金额类型转换（保留两位）
  * @author ThinkGem
