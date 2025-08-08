@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ */
 package com.jeesite.common.msg;
 
 import org.slf4j.Logger;
@@ -5,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 发送短信（请实现send方法）
+ * @author ThinkGem
  */
 public class SmsUtils {
 

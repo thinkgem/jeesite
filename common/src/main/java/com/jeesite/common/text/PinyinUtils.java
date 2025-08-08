@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ */
 package com.jeesite.common.text;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -6,6 +10,8 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
@@ -14,10 +20,12 @@ import java.util.regex.Pattern;
  * @author ThinkGem
  */
 public class PinyinUtils {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(PinyinUtils.class);
+
 	private static class Static{
-		private static Pattern idPatt = Pattern.compile("\\W");
-		private static HanyuPinyinOutputFormat defaultFormat;
+		private static final Pattern idPat = Pattern.compile("\\W");
+		private static final HanyuPinyinOutputFormat defaultFormat;
 		static{
 			defaultFormat = new HanyuPinyinOutputFormat();
 			defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
@@ -46,28 +54,28 @@ public class PinyinUtils {
 		if (chinese == null){
 			return null;
 		}
-		StringBuffer pybf = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		char[] arr = chinese.toCharArray();
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] > 128) {
+		for (char c : arr) {
+			if (c > 128) {
 				try {
-					String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], Static.defaultFormat);
+					String[] temp = PinyinHelper.toHanyuPinyinStringArray(c, Static.defaultFormat);
 					if (temp != null && temp.length > 0) {
-						pybf.append(temp[0].charAt(0));
-					}else{
-						pybf.append(String.valueOf(arr[i]));
+						sb.append(temp[0].charAt(0));
+					} else {
+						sb.append(String.valueOf(c));
 					}
 				} catch (BadHanyuPinyinOutputFormatCombination e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			} else {
-				pybf.append(arr[i]);
+				sb.append(c);
 			}
 		}
 		if (isId){
-			return Static.idPatt.matcher(pybf.toString()).replaceAll("").trim();
+			return Static.idPat.matcher(sb.toString()).replaceAll("").trim();
 		}
-		return pybf.toString();
+		return sb.toString();
 	}
 
 	/**
@@ -90,28 +98,28 @@ public class PinyinUtils {
 		if (chinese == null){
 			return null;
 		}
-		StringBuffer pybf = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		char[] arr = chinese.toCharArray();
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] > 128) {
+		for (char c : arr) {
+			if (c > 128) {
 				try {
-					String[] ss = PinyinHelper.toHanyuPinyinStringArray(arr[i], Static.defaultFormat);
-					if (ss != null && ss.length > 0){
-						pybf.append(ss[0]);
-					}else{
-						pybf.append(String.valueOf(arr[i]));
+					String[] ss = PinyinHelper.toHanyuPinyinStringArray(c, Static.defaultFormat);
+					if (ss != null && ss.length > 0) {
+						sb.append(ss[0]);
+					} else {
+						sb.append(String.valueOf(c));
 					}
 				} catch (BadHanyuPinyinOutputFormatCombination e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			} else {
-				pybf.append(arr[i]);
+				sb.append(c);
 			}
 		}
 		if (isId){
-			return Static.idPatt.matcher(pybf.toString()).replaceAll("").trim();
+			return Static.idPat.matcher(sb.toString()).replaceAll("").trim();
 		}
-		return pybf.toString();
+		return sb.toString();
 	}
 	
 	/**
@@ -143,7 +151,7 @@ public class PinyinUtils {
 		if (input == null){
 			return null;
 		}
-		char c[] = input.toCharArray();
+		char[] c = input.toCharArray();
 		for (int i = 0; i < c.length; i++) {
 			if (c[i] == '\u3000') {
 				c[i] = ' ';

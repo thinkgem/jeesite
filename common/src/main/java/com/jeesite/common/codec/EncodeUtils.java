@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * 4. JDK 提供的 URLEncoder
  * 5. XSS、SQL、orderBy 过滤器
  * @author calvin、ThinkGem
- * @version 2022-2-17
+ * @version 2025-7-9
  */
 public class EncodeUtils {
 

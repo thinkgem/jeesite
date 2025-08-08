@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * 日期工具类, 继承org.apache.commons.lang.time.DateUtils类
  * @author ThinkGem
- * @version 2017-1-4
+ * @version 2025-08-08
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
@@ -179,8 +179,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 获取过去的天数
-	 * @param date
-	 * @return
+	 * @param date 日期
 	 */
 	public static long pastDays(Date date) {
 		long t = System.currentTimeMillis()-date.getTime();
@@ -189,8 +188,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 获取过去的小时
-	 * @param date
-	 * @return
+	 * @param date 日期
 	 */
 	public static long pastHour(Date date) {
 		long t = System.currentTimeMillis()-date.getTime();
@@ -199,8 +197,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 获取过去的分钟
-	 * @param date
-	 * @return
+	 * @param date 日期
 	 */
 	public static long pastMinutes(Date date) {
 		long t = System.currentTimeMillis()-date.getTime();
@@ -209,15 +206,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     
 	/**
 	 * 获取两个日期之间的天数
-	 * 
-	 * @param before
-	 * @param after
-	 * @return
+	 * @param before 开始日期
+	 * @param after 结束日期
 	 */
 	public static double getDistanceOfTwoDate(Date before, Date after) {
 		long beforeTime = before.getTime();
 		long afterTime = after.getTime();
-		return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
+		return (double) (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
 	}
 	
 	/**
@@ -250,8 +245,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 获取日期是当年的第几周
-	 * @param date
-	 * @return
+	 * @param date 日期
 	 */
 	public static int getWeekOfYear(Date date){
 		Calendar cal = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
@@ -262,7 +256,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	/**
 	 * 获取一天的开始时间（如：2015-11-3 00:00:00.000）
 	 * @param date 日期
-	 * @return
 	 */
 	public static Date getOfDayFirst(Date date) {
 		if (date == null){
@@ -280,7 +273,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	/**
 	 * 获取一天的最后时间（如：2015-11-3 23:59:59.999）
 	 * @param date 日期
-	 * @return
 	 */
 	public static Date getOfDayLast(Date date) {
 		if (date == null){
@@ -297,7 +289,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 获取服务器启动时间
-	 * @return
 	 */
 	public static Date getServerStartDate(){
 		long time = ManagementFactory.getRuntimeMXBean().getStartTime();

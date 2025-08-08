@@ -22,7 +22,6 @@ public class ThreadUtils {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) {
 			// Ignore.
-			return;
 		}
 	}
 
@@ -34,7 +33,6 @@ public class ThreadUtils {
 			Thread.sleep(unit.toMillis(duration));
 		} catch (InterruptedException e) {
 			// Ignore.
-			return;
 		}
 	}
 

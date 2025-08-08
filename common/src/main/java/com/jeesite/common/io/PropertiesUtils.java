@@ -30,16 +30,14 @@ import java.util.regex.Pattern;
  * 相同的属性在最后载入的文件中的值将会覆盖之前的值， 
  * 取不到从System.getProperty()获取。
  * @author ThinkGem
- * @version 2017-12-30
+ * @version 2025-4-17
  */
 public class PropertiesUtils {
 	
 	// 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
 	public static final String[] DEFAULT_CONFIG_FILE = new String[]{
 		"classpath:config/application.yml", "classpath:application.yml",
-		"classpath:config/bootstrap.yml", "classpath:bootstrap.yml",
 		"file:config/application.yml", "file:application.yml",
-		"file:config/bootstrap.yml", "file:bootstrap.yml",
 	};
 
 	private static final Logger logger = PropertiesUtils.initLogger();

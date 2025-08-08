@@ -465,7 +465,7 @@ public class ExcelImport implements Closeable {
 							//val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
 							//log.debug("Dictionary type value: ["+i+","+colunm+"] " + val);
 						} catch (Exception ex) {
-							log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
+							log.info("Get cell value [{},{}] error: {}", i, column, ex.toString());
 							val = null;
 						}
 					}
@@ -557,7 +557,7 @@ public class ExcelImport implements Closeable {
 				sb.append(val+", ");
 			}
 			dataList.add(e);
-			log.debug("Read success: ["+i+"] "+sb.toString());
+			log.debug("Read success: [{}] {}", i, sb.toString());
 		}
 		return dataList;
 	}
@@ -577,7 +577,7 @@ public class ExcelImport implements Closeable {
 		try {
 			wb.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 

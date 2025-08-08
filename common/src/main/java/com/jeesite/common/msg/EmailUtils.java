@@ -13,6 +13,7 @@ import com.jeesite.common.io.PropertiesUtils;
 
 /**
  * 发送电子邮件
+ * @author ThinkGem
  */
 public class EmailUtils {
 

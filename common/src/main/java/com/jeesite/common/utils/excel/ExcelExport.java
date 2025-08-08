@@ -509,7 +509,7 @@ public class ExcelExport implements Closeable{
 				cell.setCellStyle(style);
 //			}
 		} catch (Exception ex) {
-			log.info("Set cell value ["+row.getRowNum()+","+column+"] error: " + ex.toString());
+			log.info("Set cell value [{},{}] error: {}", row.getRowNum(), column, ex.toString());
 			cell.setCellValue(ObjectUtils.toString(val));
 		}
 		return cell;
@@ -581,7 +581,7 @@ public class ExcelExport implements Closeable{
 				this.addCell(row, colunm++, val, ef.align(), ef.fieldType(), ef.dataFormat());
 				sb.append(val + ", ");
 			}
-			log.debug("Write success: ["+row.getRowNum()+"] "+sb.toString());
+			log.debug("Write success: [{}] {}", row.getRowNum(), sb.toString());
 		}
 		return this;
 	}
@@ -633,7 +633,7 @@ public class ExcelExport implements Closeable{
 //		try {
 //			this.close();
 //		} catch (Exception e) {
-//			e.printStackTrace();
+//			log.error(e.getMessage(), e);
 //		}
 //		return this;
 //	}
@@ -647,7 +647,7 @@ public class ExcelExport implements Closeable{
 		try {
 			wb.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 
-
 /**
  * BigDecimal类型转换
  * @author ThinkGem

@@ -11,7 +11,7 @@
 //import com.drew.metadata.exif.GpsDirectory;
 //
 ///**
-// * 图片地理信息获取
+// * 图片地理信息获取（pom.xml 中打开 com.drewnoakes 依赖）
 // * @author ThinkGem
 // */
 //public class ImageGeo {
@@ -45,7 +45,7 @@
 //			if (easting.equalsIgnoreCase("W")) {
 //				lonsign = -1.0d;
 //			}
-//			
+//
 //			lat = (Math.abs(latpart[0].doubleValue()) + latpart[1].doubleValue() / 60.0d + latpart[2].doubleValue() / 3600.0d) * latsign;
 //			lon = (Math.abs(lonpart[0].doubleValue()) + lonpart[1].doubleValue() / 60.0d + lonpart[2].doubleValue() / 3600.0d) * lonsign;
 //

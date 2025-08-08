@@ -4,25 +4,20 @@
  */
 package com.jeesite.common.image;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Random;
-
 import org.patchca.background.BackgroundFactory;
 import org.patchca.color.ColorFactory;
-import org.patchca.filter.predefined.CurvesRippleFilterFactory;
-import org.patchca.filter.predefined.DiffuseRippleFilterFactory;
-import org.patchca.filter.predefined.DoubleRippleFilterFactory;
-import org.patchca.filter.predefined.MarbleRippleFilterFactory;
-import org.patchca.filter.predefined.WobbleRippleFilterFactory;
+import org.patchca.filter.predefined.*;
 import org.patchca.font.RandomFontFactory;
 import org.patchca.service.ConfigurableCaptchaService;
 import org.patchca.text.renderer.BestFitTextRenderer;
 import org.patchca.utils.encoder.EncoderHelper;
 import org.patchca.word.RandomWordFactory;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Random;
 
 /**
  * 验证码工具
@@ -31,7 +26,7 @@ import org.patchca.word.RandomWordFactory;
  */
 public class CaptchaUtils {
 
-	private static Random random = new Random();
+	private static final Random random = new Random();
 	private volatile static ConfigurableCaptchaService ccs;
 	private static WobbleRippleFilterFactory wrff; 	// 摆波纹
 	private static DoubleRippleFilterFactory doff; 	// 双波纹
@@ -135,9 +130,6 @@ public class CaptchaUtils {
 
 	/**
 	 * 生成验证码
-	 * @param request
-	 * @param response
-	 * @throws IOException
 	 * @return 验证码字符
 	 */
 	public static String generateCaptcha(OutputStream outputStream) throws IOException{

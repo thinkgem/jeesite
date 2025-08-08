@@ -1,32 +1,23 @@
 package com.jeesite.common.utils.word;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.jeesite.common.io.ResourceUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTrPr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
+
+import java.io.*;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHeight;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTrPr;
-import org.w3c.dom.Node;
-
-import com.jeesite.common.io.ResourceUtils;
 
 /**
  * 使用POI,进行Word相关的操作
@@ -37,6 +28,8 @@ import com.jeesite.common.io.ResourceUtils;
  * <p> </p>
  */
 public class WordExport {
+
+	private static final Logger log = LoggerFactory.getLogger(WordExport.class);
 
 	/** 内部使用的文档对象 **/
 	private XWPFDocument document;
@@ -57,7 +50,7 @@ public class WordExport {
 			}
 			bookMarks = new BookMarks(document);
 		} catch (IOException | InvalidFormatException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -224,10 +217,8 @@ public class WordExport {
 		try {
 			fos = new FileOutputStream(newFile);
 			this.document.write(fos);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		} finally {
 			try {
 				if (fos != null){
@@ -237,7 +228,7 @@ public class WordExport {
 					fos.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			}
 		}
 	}

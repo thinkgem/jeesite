@@ -68,7 +68,7 @@ public class ImageUtils {
 				bilder.toFile(targetFile);
 			}
 		}catch(IOException e){
-			logger.error("图片压缩失败：" + imageFile.getAbsoluteFile(), e);
+			logger.error("图片压缩失败：{}", imageFile.getAbsoluteFile(), e);
 		}
 	}
 	
