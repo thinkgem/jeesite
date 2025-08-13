@@ -18,6 +18,14 @@ export interface BasicModel<T> extends Result, Recordable {
   page: Page<T>;
   isNewRecord: boolean;
   dataMap: Map<string, any>;
+
+  createBy?: string;
+  createDate?: string;
+
+  updateBy?: string;
+  updateDate?: string;
+
+  status?: string;
 }
 
 export interface TreeModel<T> extends BasicModel<T> {
