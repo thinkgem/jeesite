@@ -14,7 +14,6 @@
   "exclude": [
     "node_modules",
     "vite.config.ts",
-    "_lib",
     "dist"
   ]
 }

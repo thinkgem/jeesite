@@ -195,16 +195,6 @@
       },
     },
     {
-      label: t('金额组件'),
-      field: 'inputMoney',
-      component: 'InputMoney',
-      componentProps: {
-        maxlength: 200,
-        addonBefore: '￥',
-        addonAfter: '元',
-      },
-    },
-    {
       label: t('备注信息'),
       field: 'remarks',
       component: 'InputTextArea',

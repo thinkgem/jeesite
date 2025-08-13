@@ -19,7 +19,7 @@
   import { upperFirst, cloneDeep } from 'lodash-es';
   import { useItemLabelWidth } from '../hooks/useLabelWidth';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { FormField, FormRecordable } from '@jeesite/types';
+  import { FormField, FormRecordable } from '@jeesite/types/record';
 
   export default defineComponent({
     name: 'JeeSiteFormItem',

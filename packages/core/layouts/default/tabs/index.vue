@@ -20,14 +20,14 @@
 
       <template #rightExtra v-if="getShowRedo || getShowQuick || getShowFold">
         <TabRedo v-if="getShowRedo" />
-        <TabContent isExtra :tabItem="$route" v-if="getShowQuick" />
+        <TabContent isExtra :tabItem="route" v-if="getShowQuick" />
         <FoldButton v-if="getShowFold" />
       </template>
     </Tabs>
   </div>
 </template>
 <script lang="ts">
-  import type { RouteLocationNormalized, RouteMeta } from 'vue-router';
+  import { RouteLocationNormalized, RouteMeta, useRoute } from 'vue-router';
 
   import { defineComponent, computed, unref, ref } from 'vue';
 
@@ -60,6 +60,7 @@
       TabContent,
     },
     setup() {
+      const route = useRoute();
       const affixTextList = initAffixTabs();
       const activeKeyRef = ref('');
 
@@ -127,6 +128,7 @@
         tabStore.closeTabByKey(targetKey, router);
       }
       return {
+        route,
         prefixCls,
         unClose,
         getWrapClass,

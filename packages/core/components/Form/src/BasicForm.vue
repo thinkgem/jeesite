@@ -67,7 +67,7 @@
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
-  import { FormField, FormRecordable } from '@jeesite/types';
+  import { FormField, FormRecordable } from '@jeesite/types/record';
 
   const props = defineProps(basicProps);
   const emit = defineEmits(['advanced-change', 'reset', 'submit', 'register']);

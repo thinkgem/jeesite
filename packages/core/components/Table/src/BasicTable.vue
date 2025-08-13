@@ -117,7 +117,7 @@
   import TableSelectionBar from '@jeesite/core/components/Table/src/components/TableSelectionBar.vue';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useDebounceFn } from '@vueuse/core';
-  import { TableRecordable } from '@jeesite/types';
+  import { TableRecordable } from '@jeesite/types/record';
 
   const ATable = Table;
   const FormItemRest = Form.ItemRest;

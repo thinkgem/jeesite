@@ -13,7 +13,7 @@ import { get, cloneDeep, merge } from 'lodash-es';
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
 import { useEmitter } from '@jeesite/core/store/modules/user';
 import { useDict } from '@jeesite/core/components/Dict';
-import { FormRecordable, TableRecordable } from '@jeesite/types';
+import { FormRecordable, TableRecordable } from '@jeesite/types/record';
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>;
