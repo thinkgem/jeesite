@@ -11,6 +11,7 @@ import type { ColEx, ComponentType } from './index';
 import type { TableActionType } from '@jeesite/core/components/Table/src/types/table';
 import type { CSSProperties } from 'vue';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
+import { FormField } from '@jeesite/types';
 
 export type FieldMapToTime = [string, [string, string], string?][];
 
@@ -18,11 +19,11 @@ export type Rule = RuleObject & {
   trigger?: 'blur' | 'change' | ['change', 'blur'];
 };
 
-export interface RenderCallbackParams {
-  schema: FormSchema;
+export interface RenderCallbackParams<T> {
+  schema: FormSchema<T>;
   values: Recordable;
   model: Recordable;
-  field: string;
+  field: FormField<T>;
 }
 
 export interface FormButtonProps extends AntdButtonProps {
@@ -53,10 +54,10 @@ export type FormRegisterFn = (formInstance: FormActionType, uuid: string) => voi
 
 export type UseFormReturnType = [FormRegisterFn, FormActionType];
 
-export interface FormProps {
+export interface FormProps<T = Recordable> {
   layout?: 'vertical' | 'inline' | 'horizontal';
   // Form value
-  model?: Recordable;
+  model?: T;
   // Request Body
   enctype?: 'json' | 'form-data';
   // The width of all items in the entire form
@@ -79,7 +80,7 @@ export interface FormProps {
   baseColProps?: Partial<ColEx>;
 
   // Form configuration rules
-  schemas?: FormSchema[];
+  schemas?: FormSchema<T>[];
   // Function values used to merge into dynamic control form items
   mergeDynamicData?: Recordable;
   // Compact mode for search forms
@@ -128,11 +129,12 @@ export interface FormProps {
   transformDateFunc?: (date: any) => string;
   colon?: boolean;
 }
-export interface FormSchema {
+
+export interface FormSchema<T = Recordable> {
   // 字段名
-  field: string;
+  field: FormField<T>;
   // 字段标签名，如返回 Select、TreeSelect 的标签名
-  fieldLabel?: string;
+  fieldLabel?: FormField<T>;
   // Event name triggered by internal value change, default change
   changeEvent?: string;
   // 绑定组件的属性名（一般无需设置）默认：value，如：v-model:value
@@ -144,7 +146,7 @@ export interface FormSchema {
   // 辅助标签名，使用浅色显示在标签右侧
   subLabel?: string;
   // 帮助信息，显示在标签右侧的问号里
-  helpMessage?: string | string[] | ((renderCallbackParams: RenderCallbackParams) => string | string[]);
+  helpMessage?: string | string[] | ((renderCallbackParams: RenderCallbackParams<T>) => string | string[]);
   // BaseHelp component props
   helpComponentProps?: Partial<HelpComponentProps>;
   // Label width, if it is passed, the labelCol and WrapperCol configured by itemProps will be invalid
@@ -156,17 +158,17 @@ export interface FormSchema {
   // Component parameters
   componentProps?:
     | ((opt: {
-        schema: FormSchema;
+        schema: FormSchema<T>;
         tableAction: TableActionType;
         formActionType: FormActionType;
-        formModel: Recordable;
+        formModel: T;
       }) => Recordable)
     | object;
   // Required
-  required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+  required?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
 
   // 组件后缀
-  suffix?: string | number | VNode | VNode[] | ((values: RenderCallbackParams) => string | number | VNode | VNode[]);
+  suffix?: string | number | VNode | VNode[] | ((values: RenderCallbackParams<T>) => string | number | VNode | VNode[]);
 
   // Validation rules
   rules?: Rule[];
@@ -188,17 +190,17 @@ export interface FormSchema {
   span?: number;
 
   // 表单控件是否显示（为 false 时不渲染控件）
-  ifShow?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+  ifShow?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
   // 表单控件是否显示（正常渲染控件，只是控制显示隐藏）
-  show?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+  show?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
 
   // Render the content in the form-item tag
-  render?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
+  render?: (renderCallbackParams: RenderCallbackParams<T>) => VNode | VNode[] | string;
 
   // Rendering col content requires outer wrapper form-item
-  renderColContent?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
+  renderColContent?: (renderCallbackParams: RenderCallbackParams<T>) => VNode | VNode[] | string;
 
-  renderComponentContent?: ((renderCallbackParams: RenderCallbackParams) => any) | VNode | VNode[] | string;
+  renderComponentContent?: ((renderCallbackParams: RenderCallbackParams<T>) => any) | VNode | VNode[] | string;
 
   // Custom slot, in from-item
   slot?: string;
@@ -206,10 +208,11 @@ export interface FormSchema {
   // Custom slot, similar to renderColContent
   colSlot?: string;
 
-  dynamicDisabled?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+  dynamicDisabled?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
 
-  dynamicRules?: (renderCallbackParams: RenderCallbackParams) => Rule[];
+  dynamicRules?: (renderCallbackParams: RenderCallbackParams<T>) => Rule[];
 }
+
 export interface HelpComponentProps {
   maxWidth: string;
   // Whether to display the serial number

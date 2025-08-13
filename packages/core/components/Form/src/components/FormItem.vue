@@ -19,17 +19,18 @@
   import { upperFirst, cloneDeep } from 'lodash-es';
   import { useItemLabelWidth } from '../hooks/useLabelWidth';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { FormField, FormRecordable } from '@jeesite/types';
 
   export default defineComponent({
     name: 'JeeSiteFormItem',
     inheritAttrs: false,
     props: {
       schema: {
-        type: Object as PropType<FormSchema>,
+        type: Object as PropType<FormSchema<FormRecordable>>,
         default: () => ({}),
       },
       formProps: {
-        type: Object as PropType<FormProps>,
+        type: Object as PropType<FormProps<FormRecordable>>,
         default: () => ({}),
       },
       allDefaultValues: {
@@ -37,11 +38,11 @@
         default: () => ({}),
       },
       formModel: {
-        type: Object as PropType<Recordable>,
+        type: Object as PropType<FormRecordable>,
         default: () => ({}),
       },
       setFormModel: {
-        type: Function as PropType<(key: string, value: any, labelKey?: string, labelValue?: any) => void>,
+        type: Function as PropType<(key: FormField, value: any, labelKey?: FormField, labelValue?: any) => void>,
         default: null,
       },
       tableAction: {

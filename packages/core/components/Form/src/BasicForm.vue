@@ -67,12 +67,13 @@
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
+  import { FormField, FormRecordable } from '@jeesite/types';
 
   const props = defineProps(basicProps);
   const emit = defineEmits(['advanced-change', 'reset', 'submit', 'register']);
   const attrs = useAttrs();
 
-  const formModel = reactive<Recordable>({});
+  const formModel = reactive<FormRecordable>({});
   const modalFn = useModalContext();
 
   const advanceState = reactive<AdvanceState>({
@@ -233,7 +234,7 @@
     propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
   }
 
-  function setFormModel(key: string, value: any, labelKey?: string, labelValue?: any) {
+  function setFormModel(key: FormField, value: any, labelKey?: FormField, labelValue?: any) {
     formModel[key] = value;
     if (labelKey) {
       formModel[labelKey] = labelValue;

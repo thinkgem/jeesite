@@ -8,9 +8,9 @@ import { getDynamicProps } from '@jeesite/core/utils';
 
 export declare type ValidateFields = (nameList?: NamePath[]) => Promise<Recordable>;
 
-type Props = Partial<DynamicProps<FormProps>>;
+type Props<T> = Partial<DynamicProps<FormProps<T>>>;
 
-export function useForm(props?: Props): UseFormReturnType {
+export function useForm<T = Recordable>(props?: Props<T>): UseFormReturnType {
   const formRef = ref<Nullable<FormActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
 
@@ -51,31 +51,31 @@ export function useForm(props?: Props): UseFormReturnType {
   const methods: FormActionType = {
     setProps: async (formProps: Partial<FormProps>) => {
       const form = await getForm();
-      form.setProps(formProps);
+      await form.setProps(formProps);
     },
 
     updateSchema: async (data: Partial<FormSchema> | Partial<FormSchema>[]) => {
       const form = await getForm();
-      form.updateSchema(data);
+      await form.updateSchema(data);
     },
 
     resetSchema: async (data: Partial<FormSchema> | Partial<FormSchema>[]) => {
       const form = await getForm();
-      form.resetSchema(data);
+      await form.resetSchema(data);
     },
 
-    getFieldsValue: <T>() => {
+    getFieldsValue: <T = Recordable>() => {
       return unref(formRef)?.getFieldsValue() as T;
     },
 
-    setFieldsValue: async <T extends Recordable<any>>(values: T) => {
+    setFieldsValue: async <T extends Recordable>(values: T) => {
       const form = await getForm();
-      form.setFieldsValue(values);
+      await form.setFieldsValue(values);
     },
 
     appendSchemaByField: async (schema: FormSchema, prefixField: string | undefined, first?: boolean) => {
       const form = await getForm();
-      form.appendSchemaByField(schema, prefixField, first);
+      await form.appendSchemaByField(schema, prefixField, first);
     },
 
     removeSchemaByFiled: async (field: string | string[]) => {
@@ -104,12 +104,12 @@ export function useForm(props?: Props): UseFormReturnType {
 
     clearValidate: async (name?: string | string[]) => {
       const form = await getForm();
-      form.clearValidate(name);
+      await form.clearValidate(name);
     },
 
     scrollToField: async (name: NamePath, options?: ScrollOptions | undefined) => {
       const form = await getForm();
-      form.scrollToField(name, options);
+      await form.scrollToField(name, options);
     },
   };
 

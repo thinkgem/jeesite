@@ -85,21 +85,22 @@ export function useFormValues({ defaultValueRef, getSchema, formModel, getProps 
       const { defaultValue, componentProps = {}, field } = item;
       // Add a type assertion to allow defaultValue on componentProps
       const props = componentProps as { defaultValue?: any };
+      const key = item.field;
       if (!isNil(defaultValue)) {
-        obj[item.field] = defaultValue;
-        if (formModel[item.field] === undefined) {
-          formModel[item.field] = defaultValue;
+        obj[key] = defaultValue;
+        if (formModel[key] === undefined) {
+          formModel[key] = defaultValue;
         }
       }
       if (!isNil(props.defaultValue)) {
-        obj[item.field] = props.defaultValue;
-        if (formModel[item.field] === undefined) {
-          formModel[item.field] = props.defaultValue;
+        obj[key] = props.defaultValue;
+        if (formModel[key] === undefined) {
+          formModel[key] = props.defaultValue;
         }
       }
-      if (!formModel[item.field] && field == 'status') {
-        obj[item.field] = '';
-        formModel[item.field] = '';
+      if (!formModel[key] && field == 'status') {
+        obj[key] = '';
+        formModel[key] = '';
       }
     });
     defaultValueRef.value = obj;
