@@ -5,16 +5,27 @@
  */
 import { defHttp } from '@jeesite/core/utils/http/axios';
 import { useGlobSetting } from '@jeesite/core/hooks/setting';
-import { Page, TreeDataModel } from '@jeesite/core/api/model/baseModel';
+import { BasicModel, Page, TreeDataModel } from '@jeesite/core/api/model/baseModel';
 import { User } from '@jeesite/core/api/sys/user';
 import { UploadApiResult } from '@jeesite/core/api/sys/upload';
 import { UploadFileParams } from '@jeesite/types/axios';
 import { AxiosProgressEvent } from 'axios';
+import { Office } from '@jeesite/core/api/sys/office';
+import { Company } from '@jeesite/core/api/sys/company';
 
 const { ctxPath, adminPath } = useGlobSetting();
 
 export interface EmpUser extends User {
-  employee?: any;
+  employee?: Employee;
+}
+
+export interface Employee extends BasicModel<Employee> {
+  empCode?: string;
+  empNo?: string;
+  empName?: string;
+  empNameEn?: string;
+  office?: Office;
+  company?: Company;
 }
 
 export const empUserIndex = (params?: EmpUser | any) =>
@@ -75,3 +86,11 @@ export const saveAuthDataScope = (params?: EmpUser | any) =>
 
 export const empUserTreeData = (params?: any) =>
   defHttp.get<TreeDataModel[]>({ url: adminPath + '/sys/empUser/treeData', params });
+
+export const empUserOfficeListData = (params?: any) =>
+  defHttp.get<Recordable[]>({ url: adminPath + '/sys/empUser/officeListData', params });
+
+export const empUserSwitchOffice = (officeCode: string) =>
+  defHttp.get<User>({
+    url: adminPath + '/sys/empUser/switchOffice' + (officeCode ? '/' + officeCode : ''),
+  });
