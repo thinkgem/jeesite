@@ -8,13 +8,15 @@ import { ref, onUnmounted, unref, watch, toRaw } from 'vue';
 import { isProdMode } from '@jeesite/core/utils/env';
 import { error } from '@jeesite/core/utils/log';
 
-type Props = Partial<DynamicProps<BasicTableProps>>;
+type Props<T> = Partial<DynamicProps<BasicTableProps<T>>>;
 
 type UseTableMethod = TableActionType & {
   getForm: () => FormActionType;
 };
 
-export function useTable(tableProps?: Props): [
+export function useTable<T = Recordable>(
+  tableProps?: Props<T>,
+): [
   (instance: TableActionType, formInstance: UseTableMethod) => void,
   TableActionType & {
     getForm: () => FormActionType;

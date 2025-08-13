@@ -117,6 +117,7 @@
   import TableSelectionBar from '@jeesite/core/components/Table/src/components/TableSelectionBar.vue';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useDebounceFn } from '@vueuse/core';
+  import { TableRecordable } from '@jeesite/types';
 
   const ATable = Table;
   const FormItemRest = Form.ItemRest;
@@ -149,7 +150,7 @@
 
   const { t } = useI18n();
   const tableRef = ref<ComponentRef>(null);
-  const tableData = ref<Recordable[]>([]);
+  const tableData = ref<TableRecordable[]>([]);
 
   const wrapRef = ref<ComponentRef>(null);
   const formRef = ref<ComponentRef>(null);

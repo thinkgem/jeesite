@@ -13,16 +13,17 @@ import { get, cloneDeep, merge } from 'lodash-es';
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
 import { useEmitter } from '@jeesite/core/store/modules/user';
 import { useDict } from '@jeesite/core/components/Dict';
+import { FormRecordable, TableRecordable } from '@jeesite/types';
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>;
   setPagination: (info: Partial<PaginationProps>) => void;
   setLoading: (loading: boolean) => void;
-  getFieldsValue: () => Recordable;
+  getFieldsValue: () => FormRecordable;
   clearSelectedRowKeys: () => void;
-  tableData: Ref<Recordable[]>;
+  tableData: Ref<TableRecordable[]>;
   collapseAll: () => void;
-  expandCollapse: (record: Recordable, onlyLoadData: boolean, forceLoad: boolean) => Promise<any>;
+  expandCollapse: (record: TableRecordable, onlyLoadData: boolean, forceLoad: boolean) => Promise<any>;
 }
 
 interface SearchState {
@@ -48,10 +49,10 @@ export function useDataSource(
     sortInfo: {},
     filterInfo: {},
   });
-  const dataSourceRef = ref<Recordable[]>([]);
-  const delDataSourceRef = ref<Recordable[]>([]);
-  const rawDataSourceRef = ref<Recordable>({});
-  const getDataSourceRef: Ref<Recordable<any>[]> = ref([]);
+  const dataSourceRef = ref<TableRecordable[]>([]);
+  const delDataSourceRef = ref<TableRecordable[]>([]);
+  const rawDataSourceRef = ref<TableRecordable>({});
+  const getDataSourceRef: Ref<TableRecordable<any>[]> = ref([]);
 
   watchEffect(() => {
     tableData.value = unref(dataSourceRef);

@@ -9,6 +9,7 @@ import { VueNode } from '@jeesite/core/utils/propTypes';
 import { RoleEnum } from '@jeesite/core/enums/roleEnum';
 import { ActionItem } from './tableAction';
 import { EditRecordRow } from '../components/editable';
+import { TableDataIndex } from '@jeesite/types';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
@@ -202,14 +203,14 @@ export interface BasicTableProps<T = any> {
   // 是否显示搜索表单
   showSearchForm?: boolean;
   // 表单配置
-  formConfig?: Partial<FormProps>;
+  formConfig?: Partial<FormProps<T>>;
   // 列配置
-  columns: BasicColumn[];
+  columns: BasicColumn<T>[];
   // 是否显示序号列
   showIndexColumn?: boolean;
   // 序号列配置
-  indexColumnProps?: BasicColumn;
-  actionColumn?: BasicColumn;
+  indexColumnProps?: BasicColumn<T>;
+  actionColumn?: BasicColumn<T>;
   // 文本超过宽度是否显示。。。
   ellipsis?: boolean;
   // 是否继承父级高度（父级高度-表单高度-padding高度）
@@ -432,23 +433,25 @@ export interface BasicTableProps<T = any> {
   dictTypes?: Set<string>;
 }
 
-export type CellFormat =
+export type CellFormat<T = Recordable> =
   | string
-  | ((text: string, record: Recordable, index: number, column?: BasicColumn) => string | number)
+  | ((text: string, record: T, index: number, column?: BasicColumn) => string | number)
   | Map<string | number, any>;
 
-// @ts-ignore
-export interface BasicColumn extends ColumnProps<Recordable> {
+export interface BasicColumn<T = Recordable> extends ColumnProps<T> {
+  dataIndex?: TableDataIndex<T>;
   dataIndex_?: string;
-  children?: BasicColumn[];
-  filters?: {
-    text: string;
-    value: string;
-    children?: unknown[] | (((props: Record<string, unknown>) => unknown[]) & (() => unknown[]) & (() => unknown[]));
-  }[];
+  children?: BasicColumn<T>[];
+  // filters?: {
+  //   text: VueNode;
+  //   value: string | number | boolean;
+  //   children?: unknown[] | (((props: Record<string, unknown>) => unknown[]) & (() => unknown[]));
+  // }[];
 
-  //
+  // 标记为内置列
   flag?: 'INDEX' | 'DRAG' | 'DEFAULT' | 'CHECKBOX' | 'RADIO' | 'ACTION';
+
+  // 自定义标题
   customTitle?: VueNode;
 
   // Antdv 3.0 中，不推荐使用 slots 所以新增 slot 指定插槽名称
@@ -460,7 +463,8 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   // Help text for table column header
   helpMessage?: string | string[];
 
-  format?: CellFormat;
+  // 单元格格式化
+  format?: CellFormat<T>;
 
   // Editable
   edit?: boolean;
@@ -469,17 +473,17 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   editAutoCancel?: boolean;
   editComponent?: ComponentType;
   editComponentProps?:
-    | ((opt: { text: any; record: EditRecordRow | Recordable; column: BasicColumn; index: number }) => Recordable)
+    | ((opt: { text: any; record: EditRecordRow | Recordable; column: BasicColumn<T>; index: number }) => Recordable)
     | any;
   // 自定义修改后显示的内容
   editRender?: (opt: {
-    text: string | number | boolean | Recordable;
-    record: Recordable;
-    column: BasicColumn;
+    text: string | number | boolean | T;
+    record: T;
+    column: BasicColumn<T>;
     index: number;
     attrs?: object;
   }) => VNodeChild | JSX.Element;
-  editRule?: boolean | ((text: any, record: Recordable) => Promise<void>);
+  editRule?: boolean | ((text: any, record: T) => Promise<void>);
   // editValueMap?: (value: any) => string;
   onEditRow?: () => void;
 
@@ -490,7 +494,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   // 权限编码控制是否显示
   auth?: RoleEnum | RoleEnum[] | string | string[];
   // 业务控制是否显示
-  ifShow?: boolean | ((column: BasicColumn) => boolean);
+  ifShow?: boolean | ((column: BasicColumn<T>) => boolean);
 
   // 数据的标签显示，举例 dataIndex 是 userCode，dataLabel 是 userName
   dataLabel?: string;
@@ -505,8 +509,8 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   defaultValue?: string;
 
   // 列表操作列选项
-  actions?: (record: Recordable) => ActionItem[];
-  dropDownActions?: (record: Recordable) => ActionItem[];
+  actions?: (record: T) => ActionItem[];
+  dropDownActions?: (record: T) => ActionItem[];
 }
 
 export type ColumnChangeParam = {
