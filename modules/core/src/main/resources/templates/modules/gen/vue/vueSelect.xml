@@ -44,7 +44,7 @@ const modalProps = {
   title: t('${functionNameSimple}选择'),
 };
 
-const searchForm: FormProps = {
+const searchForm: FormProps<${ClassName}> = {
   baseColProps: { md: 8, lg: 6 },
   labelWidth: 90,
   schemas: [
@@ -130,7 +130,7 @@ const searchForm: FormProps = {
   ],
 };
 
-const tableColumns: BasicColumn[] = [
+const tableColumns: BasicColumn<${ClassName}>[] = [
 <%
 var firstColumn = true;
 // 生成树表的节点列

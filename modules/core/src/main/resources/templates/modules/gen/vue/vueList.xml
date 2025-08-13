@@ -193,7 +193,7 @@ if(table.isTreeEntity){
   const loading = ref(false);
   <% } %>
 
-  const searchForm: FormProps = {
+  const searchForm: FormProps<${ClassName}> = {
     baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
@@ -287,7 +287,7 @@ if(table.isTreeEntity){
   <% } %>
   };
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<${ClassName}>[] = [
 <%
 var firstColumn = true;
 // 生成树表的节点列
@@ -357,9 +357,9 @@ for(c in table.columnList){
 %>
   ];
 
-  const actionColumn: BasicColumn = {
+  const actionColumn: BasicColumn<${ClassName}> = {
     width: 160,
-    actions: (record: Recordable) => [
+    actions: (record: ${ClassName}) => [
       {
         icon: 'i-clarity:note-edit-line',
         title: t('编辑${functionNameSimple}'),
@@ -427,7 +427,7 @@ for(c in table.columnList){
     ],
   };
 
-  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %>, getForm }] = useTable({
+  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %>, getForm }] = useTable<${ClassName}>({
     api: ${className}ListData,
     beforeFetch: (params) => {
       <% if(table.isTreeEntity){ %>
@@ -466,7 +466,11 @@ for(c in table.columnList){
       if (!isEmpty(props.treeCodes)) {
         <% if (isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
         await getForm().setFieldsValue({
+          <% if (@StringUtils.contains(table.optionMap['leftTreeRightTableFk'], '.')) { %>
           '${table.optionMap['leftTreeRightTableFk']}': props.treeCodes[0],
+          <% } else { %>
+          ${table.optionMap['leftTreeRightTableFk']}: props.treeCodes[0],
+          <% } %>
         });
         <% } %>
         await reload();

@@ -136,7 +136,7 @@ for(c in table.columnList){
     setTitle(record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'));
   };
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<${ClassName}>[] = [
   <% if(table.isTreeEntity){ %>
     {
       label: t('上级${functionNameSimple}'),
@@ -368,7 +368,7 @@ for (c in table.columnList){
 <%
   for (child in table.childList){ %>
 
-  const input${child.className}FormSchemas: FormSchema[] = [
+  const input${child.className}FormSchemas: FormSchema<${ClassName}>[] = [
     {
       field: '${@StringUtils.uncap(child.classNameSimple)}List',
       component: 'Input',
@@ -381,7 +381,7 @@ for (c in table.columnList){
   if(false && toBoolean(table.optionMap['isBpmForm'])){
 %>
 
-  const inputBpmFormSchemas: FormSchema[] = [
+  const inputBpmFormSchemas: FormSchema<${ClassName}>[] = [
     {
       label: t('审批意见'),
       field: 'bpm.comment',
@@ -459,7 +459,7 @@ for (c in table.columnList){
   }
 }
 %>
-  const [registerForm, formAction] = useForm({
+  const [registerForm, formAction] = useForm<${ClassName}>({
     labelWidth: 120,
     schemas: inputFormSchemas,
     <% var formColNum = table.optionMap['formColNum']; %>
@@ -467,16 +467,16 @@ for (c in table.columnList){
   });
 <% for (child in table.childList){ %>
 
-  const [register${child.className}Form, ${@StringUtils.uncap(child.className)}Form] = useForm({
+  const [register${child.className}Form, ${@StringUtils.uncap(child.className)}Form] = useForm<${ClassName}>({
     labelWidth: 120,
     schemas: input${child.className}FormSchemas,
     baseColProps: { md: 24, lg: 24 },
   });
 
-  const [register${child.className}Table, ${@StringUtils.uncap(child.classNameSimple)}Table] = useTable({
+  const [register${child.className}Table, ${@StringUtils.uncap(child.classNameSimple)}Table] = useTable<${ClassName}>({
     actionColumn: {
       width: 60,
-      actions: (record: Recordable) => [
+      actions: (record: ${ClassName}) => [
         {
           icon: 'i-ant-design:delete-outlined',
           color: 'error',
@@ -687,7 +687,7 @@ for (c in table.columnList){
       record.value.parentName = data.parentName;
     }
   <% } %>
-    setFieldsValue(record.value);
+    await setFieldsValue(record.value);
   <% for (child in table.childList){ %>
     set${child.className}TableData(res);
   <% } %>

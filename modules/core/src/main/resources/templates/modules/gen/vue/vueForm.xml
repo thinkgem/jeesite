@@ -117,7 +117,7 @@
     value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
   }));
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<${ClassName}>[] = [
   <% if(table.isTreeEntity){ %>
     {
       label: t('上级${functionNameSimple}'),
@@ -428,7 +428,7 @@ for (c in table.columnList){
   }
 }
 %>
-  const [registerForm, { resetFields, setFieldsValue<% if(updateSchemas.~size > 0){ %>, updateSchema<% } %>, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue<% if(updateSchemas.~size > 0){ %>, updateSchema<% } %>, validate }] = useForm<${ClassName}>({
     labelWidth: 120,
     schemas: inputFormSchemas,
     <% var formColNum = table.optionMap['formColNum']; %>
@@ -447,7 +447,7 @@ for (c in table.columnList){
       record.value.parentName = data.parentName;
     }
   <% } %>
-    setFieldsValue(record.value);
+    await setFieldsValue(record.value);
   <% for (child in table.childList){ %>
     form${@StringUtils.cap(child.classNameSimple)}ListRef.value?.setTableData(record.value);
   <% } %>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueApi</name>
+	<filePath>${frontDir}/packages${modulePath}/api${modulePath}${subModulePath}</filePath>
+	<fileName>${@StringUtils.uncap(table.classNameSimple)}.ts</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+ */
+<% if(table.isTreeEntity){ %>
+import { TreeModel } from '@jeesite/core/api/model/baseModel';
+<% }else{ %>
+import { BasicModel } from '@jeesite/core/api/model/baseModel';
+<% } %>
+import { ${ParentClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
+
+export interface ${ClassName} extends ${table.isTreeEntity?'Tree':'Basic'}Model<${ClassName}> {
+<%
+isExtend = false;
+// 生成字段属性
+for(c in table.columnList){
+  var attrType = c.simpleAttrType;
+  if (attrType == 'String') attrType = 'string';
+  else if (attrType == 'Long') attrType = 'number';
+  else if (attrType == 'Integer') attrType = 'number';
+  else if (attrType == 'Double') attrType = 'number';
+  else if (attrType == 'BigDecimal') attrType = 'number';
+  else if (attrType == 'Date') attrType = 'string';
+  else attrType = 'any';
+  if(!@StringUtils.equalsIgnoreCase(c.columnName, 'id') && !c.isSuperColumn){
+    // 如果是Extend类属性
+    if(table.isExtendEntity && c.isExtendColumn){
+      if(!isExtend){
+        isExtend = true;
+%>
+  extend?: any; // 扩展字段
+<%
+      }
+    }
+    // 如果不是基类属性
+    else if(!@StringUtils.equalsIgnoreCase(c.columnName, 'id') && !c.isSuperColumn){
+      // 父类对象
+      if(table.parentExists && table.parentTableFkName == c.columnName){
+%>
+  ${c.simpleAttrName}${c.isRequired == '1' ? '' : '?'}: ${ParentClassName};<% if (isNotBlank(c.comments)){ %> // ${c.comments} 父类<% } %>
+<%
+      // 其它字段
+      }else{
+%>
+  ${c.simpleAttrName}${c.isRequired == '1' ? '' : '?'}: ${attrType};<%if(isNotBlank(c.comments)){%> // ${c.comments}<%}%>
+<%
+      }
+    }
+  }
+}
+%>
+}
+<% %>
+]]>
+	</content>
+</template>

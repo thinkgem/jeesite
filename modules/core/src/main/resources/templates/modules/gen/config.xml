@@ -23,6 +23,7 @@
 			<template>vue/vueImport.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
@@ -33,12 +34,14 @@
 			<template>vue/vueIndex.xml</template>
 			<template>vue/vueImport.xml</template>
 			<childTable>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_only_vue_modal" label="单表/主子表 （增删改查，弹窗表单） 仅vue ">
 			<template>category-ref:crud_only_vue</template>
 			<childTable>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
@@ -49,6 +52,7 @@
 			<template>vue/vueIndex.xml</template>
 			<template>vue/vueImport.xml</template>
 			<childTable>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
@@ -64,6 +68,7 @@
 			<template>vue/vueSelect.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
@@ -93,6 +98,7 @@
 			<template>vue/vueImport.xml</template>
 			<childTable>
 				<template>category-ref:dao_cloud</template>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
@@ -108,6 +114,7 @@
 			<template>vue/vueSelect.xml</template>
 			<childTable>
 				<template>category-ref:dao_cloud</template>
+				<template>vue/vueApiChild.xml</template>
 				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>

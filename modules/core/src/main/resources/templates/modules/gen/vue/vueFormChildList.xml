@@ -27,6 +27,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
   import { ${ParentClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${parentClassName}';
+  import { ${ClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
   <%
   var userselectExists = false;
   var officeselectExists = false;
@@ -59,7 +60,7 @@
   const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const record = ref<${ParentClassName}>({} as ${ParentClassName});
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<${ClassName}>[] = [
 <%
 for (c in table.columnList){
   if (c.isEdit != '1' || c.isPk == '1'){
@@ -166,11 +167,11 @@ for (c in table.columnList){
 <% } %>
   ];
 
-  const [registerTable, tableAction] = useTable({
+  const [registerTable, tableAction] = useTable<${ClassName}>({
     columns: tableColumns,
     actionColumn: {
       width: 60,
-      actions: (record: Recordable) => [
+      actions: (record: ${ClassName}) => [
         {
           icon: 'i-ant-design:delete-outlined',
           color: 'error',
