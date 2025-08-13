@@ -20,6 +20,10 @@ import { BasicModel, Page, TreeDataModel } from '@jeesite/core/api/model/baseMod
 <% }else{ %>
 import { BasicModel, Page } from '@jeesite/core/api/model/baseModel';
 <% } %>
+<% // 生成子表列表字段
+for(child in table.childList){ %>
+import { ${child.className} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${@StringUtils.uncap(child.classNameSimple)}';
+<% } %>
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
 import { UploadApiResult } from '@jeesite/core/api/sys/upload';
 import { UploadFileParams } from '@jeesite/types/axios';
@@ -59,12 +63,12 @@ for(c in table.columnList){
       // 父类对象
       if(table.parentExists && table.parentTableFkName == c.columnName){
 %>
-  ${c.simpleAttrName}?: ${attrType};<% if (isNotBlank(c.comments)){ %> // ${c.comments} 父类<% } %>
+  ${c.simpleAttrName}${c.isRequired == '1' ? '' : '?'}: ${ParentClassName};<% if (isNotBlank(c.comments)){ %> // ${c.comments} 父类<% } %>
 <%
       // 其它字段
       }else{
 %>
-  ${c.simpleAttrName}?: ${attrType};<%if(isNotBlank(c.comments)){%> // ${c.comments}<%}%>
+  ${c.simpleAttrName}${c.isRequired == '1' ? '' : '?'}: ${attrType};<%if(isNotBlank(c.comments)){%> // ${c.comments}<%}%>
 <%
       }
     }
@@ -73,7 +77,7 @@ for(c in table.columnList){
 %>
 <% // 生成子表列表字段
 for(child in table.childList){ %>
-  ${@StringUtils.uncap(child.classNameSimple)}List?: any[]; // 子表列表
+  ${@StringUtils.uncap(child.classNameSimple)}List?: ${child.className}[]; // 子表列表
 <% } %>
 }
 

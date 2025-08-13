@@ -94,7 +94,7 @@ if(table.isTreeEntity){
   </div>
 </template>
 <script lang="ts" setup name="${compNamePrefix}List">
-  import { unref<% if(toBoolean(table.optionMap['isImportExport'])){ %>, ref<% } %><% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
+  import { onMounted<% if(toBoolean(table.optionMap['isImportExport'])){ %>, ref<% } %>, unref<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
   	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
   <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
   import { useEmitter } from '@jeesite/core/store/modules/user';
@@ -111,6 +111,7 @@ if(table.isTreeEntity){
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
+  import { ${ClassName}, ${className}List } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   import { ${className}Delete, ${className}ListData } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
   <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
   import { ${className}Disable, ${className}Enable } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
@@ -179,6 +180,7 @@ if(table.isTreeEntity){
   const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
+  const record = ref<${ClassName}>({} as ${ClassName});
 
   const getTitle = {
     icon: meta.icon || 'i-ant-design:book-outlined',
@@ -191,7 +193,7 @@ if(table.isTreeEntity){
   const loading = ref(false);
   <% } %>
 
-  const searchForm: FormProps = {
+  const searchForm: FormProps<${ClassName}> = {
     baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
@@ -285,7 +287,7 @@ if(table.isTreeEntity){
   <% } %>
   };
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<${ClassName}>[] = [
 <%
 var firstColumn = true;
 // 生成树表的节点列
@@ -355,9 +357,9 @@ for(c in table.columnList){
 %>
   ];
 
-  const actionColumn: BasicColumn = {
+  const actionColumn: BasicColumn<${ClassName}> = {
     width: 160,
-    actions: (record: Recordable) => [
+    actions: (record: ${ClassName}) => [
       {
         icon: 'i-clarity:note-edit-line',
         title: t('编辑${functionNameSimple}'),
@@ -425,9 +427,7 @@ for(c in table.columnList){
     ],
   };
 
-  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %><%
-  		if (table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])
-  		    || toBoolean(table.optionMap['isImportExport'])){ %>, getForm<% } %> }] = useTable({
+  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %>, getForm }] = useTable<${ClassName}>({
     api: ${className}ListData,
     beforeFetch: (params) => {
       <% if(table.isTreeEntity){ %>
@@ -449,6 +449,12 @@ for(c in table.columnList){
     canResize: true,
   });
 
+  onMounted(async () => {
+    const res = await ${className}List();
+    record.value = (res.${className} || {}) as ${ClassName};
+    await getForm().setFieldsValue(record.value);
+  });
+
   <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
   const [register${modalOrDrawer}, { open${modalOrDrawer} }] = use${modalOrDrawer}();
   <% } %>
@@ -460,10 +466,14 @@ for(c in table.columnList){
       if (!isEmpty(props.treeCodes)) {
         <% if (isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
         await getForm().setFieldsValue({
+          <% if (@StringUtils.contains(table.optionMap['leftTreeRightTableFk'], '.')) { %>
           '${table.optionMap['leftTreeRightTableFk']}': props.treeCodes[0],
+          <% } else { %>
+          ${table.optionMap['leftTreeRightTableFk']}: props.treeCodes[0],
+          <% } %>
         });
         <% } %>
-        reload();
+        await reload();
       }
     },
   );
@@ -511,14 +521,14 @@ for(c in table.columnList){
     const params = { ${idParam} };
     const res = await ${className}Disable(params);
     showMessage(res.message);
-    handleSuccess(record);
+    await handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
     const params = { ${idParam} };
     const res = await ${className}Enable(params);
     showMessage(res.message);
-    handleSuccess(record);
+    await handleSuccess(record);
   }
   <% } %>
 
@@ -526,11 +536,11 @@ for(c in table.columnList){
     const params = { ${idParam} };
     const res = await ${className}Delete(params);
     showMessage(res.message);
-    handleSuccess(record);
+    await handleSuccess(record);
   }
 
-  function handleSuccess(record: Recordable) {
-    reload({ record });
+  async function handleSuccess(record: Recordable) {
+    await reload({ record });
   }
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 
