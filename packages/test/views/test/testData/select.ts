@@ -1,6 +1,6 @@
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { BasicColumn, BasicTableProps, FormProps } from '@jeesite/core/components/Table';
-import { testDataListData } from '@jeesite/test/api/test/testData';
+import { TestData, testDataListData } from '@jeesite/test/api/test/testData';
 
 const { t } = useI18n('sys.testData');
 
@@ -8,7 +8,7 @@ const modalProps = {
   title: t('测试数据选择'),
 };
 
-const searchForm: FormProps = {
+const searchForm: FormProps<TestData> = {
   baseColProps: { md: 8, lg: 6 },
   labelWidth: 90,
   schemas: [
@@ -97,7 +97,7 @@ const searchForm: FormProps = {
   ],
 };
 
-const tableColumns: BasicColumn[] = [
+const tableColumns: BasicColumn<TestData>[] = [
   {
     title: t('单行文本'),
     dataIndex: 'testInput',
@@ -222,7 +222,7 @@ const tableColumns: BasicColumn[] = [
   },
 ];
 
-const tableProps: BasicTableProps = {
+const tableProps: BasicTableProps<TestData> = {
   api: testDataListData,
   beforeFetch: (params) => {
     params['isAll'] = true;

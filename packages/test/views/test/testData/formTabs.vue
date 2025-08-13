@@ -64,6 +64,7 @@
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
   import { TestData, testDataSave, testDataForm } from '@jeesite/test/api/test/testData';
+  import { TestDataChild } from '@jeesite/test/api/test/testDataChild';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { areaTreeData } from '@jeesite/core/api/sys/area';
   import { BasicUpload } from '@jeesite/core/components/Upload';
@@ -83,7 +84,7 @@
 
   const activeKey = ref<string>('1');
 
-  const inputFormSchemas1: FormSchema[] = [
+  const inputFormSchemas1: FormSchema<TestData>[] = [
     {
       label: t('单行文本'),
       field: 'testInput',
@@ -213,7 +214,7 @@
       colProps: { md: 24, lg: 24 },
     },
   ];
-  const inputFormSchemas2: FormSchema[] = [
+  const inputFormSchemas2: FormSchema<TestData>[] = [
     {
       label: t('图片上传'),
       field: 'dataMap',
@@ -255,13 +256,13 @@
     },
   ];
 
-  const [registerForm1, formAction1] = useForm({
+  const [registerForm1, formAction1] = useForm<TestData>({
     labelWidth: 120,
     schemas: inputFormSchemas1,
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const [registerForm2, formAction2] = useForm({
+  const [registerForm2, formAction2] = useForm<TestData>({
     labelWidth: 120,
     schemas: inputFormSchemas2,
     baseColProps: { md: 24, lg: 12 },
@@ -278,11 +279,11 @@
     await formAction2.setFieldsValue(values);
   }
 
-  async function validate(): Promise<Recordable<any>> {
+  async function validate(): Promise<Recordable> {
     return Object.assign(await formAction1.validate(), await formAction2.validate());
   }
 
-  const [registerTestDataChildTable, testDataChildTable] = useTable({
+  const [registerTestDataChildTable, testDataChildTable] = useTable<TestDataChild>({
     actionColumn: {
       width: 60,
       actions: (record: Recordable) => [

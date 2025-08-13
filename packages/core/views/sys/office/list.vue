@@ -47,7 +47,7 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { officeDelete, officeListData } from '@jeesite/core/api/sys/office';
+  import { Office, officeDelete, officeListData } from '@jeesite/core/api/sys/office';
   import { officeDisable, officeEnable } from '@jeesite/core/api/sys/office';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { useModal } from '@jeesite/core/components/Modal';
@@ -71,7 +71,7 @@
   };
   const loading = ref(false);
 
-  const searchForm: FormProps = {
+  const searchForm: FormProps<Office> = {
     baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
@@ -125,7 +125,7 @@
     },
   };
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<Office>[] = [
     {
       title: t('机构名称'),
       dataIndex: 'officeName',
@@ -203,9 +203,9 @@
     },
   ];
 
-  const actionColumn: BasicColumn = {
+  const actionColumn: BasicColumn<Office> = {
     width: 160,
-    actions: (record: Recordable) => [
+    actions: (record: Office) => [
       {
         icon: 'i-clarity:note-edit-line',
         title: t('编辑机构'),
@@ -257,7 +257,7 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload, expandAll, collapseAll, expandCollapse, getForm }] = useTable({
+  const [registerTable, { reload, expandAll, collapseAll, expandCollapse, getForm }] = useTable<Office>({
     api: officeListData,
     beforeFetch: (params) => {
       params.officeCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';

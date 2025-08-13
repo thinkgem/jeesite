@@ -65,7 +65,7 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { testDataDelete, testDataListData } from '@jeesite/test/api/test/testData';
+  import { TestData, testDataDelete, testDataListData } from '@jeesite/test/api/test/testData';
   import { testDataDisable, testDataEnable } from '@jeesite/test/api/test/testData';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { areaTreeData } from '@jeesite/core/api/sys/area';
@@ -89,7 +89,7 @@
   };
   const go = useGo();
 
-  const searchForm: FormProps = {
+  const searchForm: FormProps<TestData> = {
     baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
@@ -212,7 +212,7 @@
     fieldMapToTime: [['dateRange', ['testDatetime_gte', 'testDatetime_lte']]],
   };
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<TestData>[] = [
     {
       title: t('单行文本'),
       dataIndex: 'testInput',
@@ -227,7 +227,7 @@
       //   { text: 'Female', value: '2' },
       // ],
       // filterMultiple: true,
-      // onFilter: (value: string, record: Recordable) => {
+      // onFilter: (value: any, record: TestData) => {
       //   console.log('onFilter', value, record);
       //   return record.userName === value;
       // },
@@ -353,9 +353,9 @@
     },
   ];
 
-  const actionColumn: BasicColumn = {
+  const actionColumn: BasicColumn<TestData> = {
     width: 250,
-    actions: (record: Recordable) => [
+    actions: (record: TestData) => [
       {
         icon: 'i-clarity:note-edit-line',
         title: t('抽屉模式编辑'),
@@ -419,7 +419,7 @@
   const [registerDrawerTabs, { openDrawer: openDrawerTabs }] = useDrawer();
   const [registerModal, { openModal }] = useModal();
 
-  const [registerTable, { reload /*, getForm*/ }] = useTable({
+  const [registerTable, { reload /*, getForm*/ }] = useTable<TestData>({
     api: testDataListData,
     beforeFetch: (params) => {
       // 查询前增加默认条件（例子）

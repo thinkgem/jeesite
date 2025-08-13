@@ -19,11 +19,12 @@
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { areaTreeData } from '@jeesite/core/api/sys/area';
   import { TestData } from '@jeesite/test/api/test/testData';
+  import { TestDataChild } from '@jeesite/test/api/test/testDataChild';
 
   const { t } = useI18n('test.testDataChild');
   const record = ref<TestData>({} as TestData);
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<TestDataChild>[] = [
     {
       title: t('单行文本'),
       dataIndex: 'testInput',
@@ -183,11 +184,11 @@
     },
   ];
 
-  const [registerTable, tableAction] = useTable({
+  const [registerTable, tableAction] = useTable<TestDataChild>({
     columns: tableColumns,
     actionColumn: {
       width: 60,
-      actions: (record: Recordable) => [
+      actions: (record: TestDataChild) => [
         {
           icon: 'i-ant-design:delete-outlined',
           color: 'error',

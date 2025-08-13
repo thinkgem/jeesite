@@ -95,6 +95,7 @@
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import { TestData, testDataSave, testDataForm } from '@jeesite/test/api/test/testData';
+  import { TestDataChild } from '@jeesite/test/api/test/testDataChild';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { areaTreeData } from '@jeesite/core/api/sys/area';
   import { BasicUpload } from '@jeesite/core/components/Upload';
@@ -131,7 +132,7 @@
     setTitle(record.value.isNewRecord ? t('新增数据') : t('编辑数据'));
   };
 
-  const inputFormSchemas1: FormSchema[] = [
+  const inputFormSchemas1: FormSchema<TestData>[] = [
     {
       label: t('单行文本'),
       field: 'testInput',
@@ -309,13 +310,13 @@
     },
   ];
 
-  const [registerForm1, formAction1] = useForm({
+  const [registerForm1, formAction1] = useForm<TestData>({
     labelWidth: 120,
     schemas: inputFormSchemas1,
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const inputFormSchemas2: FormSchema[] = [
+  const inputFormSchemas2: FormSchema<TestData>[] = [
     {
       field: 'testDataChildList',
       component: 'Input',
@@ -324,16 +325,16 @@
     },
   ];
 
-  const [registerForm2, formAction2] = useForm({
+  const [registerForm2, formAction2] = useForm<TestData>({
     labelWidth: 120,
     schemas: inputFormSchemas2,
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const [registerTestDataChildTable, testDataChildTable] = useTable({
+  const [registerTestDataChildTable, testDataChildTable] = useTable<TestDataChild>({
     actionColumn: {
       width: 60,
-      actions: (record: Recordable) => [
+      actions: (record: TestDataChild) => [
         {
           icon: 'i-ant-design:delete-outlined',
           color: 'error',
@@ -535,7 +536,7 @@
     await formAction2.setFieldsValue(values);
   }
 
-  async function validate(): Promise<Recordable<any>> {
+  async function validate(): Promise<Recordable> {
     return Object.assign(await formAction1.validate(), await formAction2.validate());
   }
 

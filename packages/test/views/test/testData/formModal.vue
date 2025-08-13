@@ -55,6 +55,7 @@
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   import { TestData, testDataSave, testDataForm } from '@jeesite/test/api/test/testData';
+  import { TestDataChild } from '@jeesite/test/api/test/testDataChild';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { areaTreeData } from '@jeesite/core/api/sys/area';
   import { BasicUpload } from '@jeesite/core/components/Upload';
@@ -72,7 +73,7 @@
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
   }));
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<TestData>[] = [
     {
       label: t('单行文本'),
       field: 'testInput',
@@ -254,16 +255,16 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm<TestData>({
     labelWidth: 120,
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const [registerTestDataChildTable, testDataChildTable] = useTable({
+  const [registerTestDataChildTable, testDataChildTable] = useTable<TestDataChild>({
     actionColumn: {
       width: 60,
-      actions: (record: Recordable) => [
+      actions: (record: TestDataChild) => [
         {
           icon: 'i-ant-design:delete-outlined',
           color: 'error',

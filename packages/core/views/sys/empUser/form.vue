@@ -67,7 +67,7 @@
   const postRolePermi = ref<boolean>(false);
   const op = ref<string>('');
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<EmpUser>[] = [
     {
       label: t('基本信息'),
       field: 'basicInfo',
@@ -273,7 +273,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm<EmpUser>({
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },
     labelWidth: 120,

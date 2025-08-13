@@ -47,7 +47,7 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { empUserDelete, empUserListData, empUserList } from '@jeesite/core/api/sys/empUser';
+  import { EmpUser, empUserDelete, empUserListData, empUserList } from '@jeesite/core/api/sys/empUser';
   import { resetpwd, empUserDisable, empUserEnable } from '@jeesite/core/api/sys/empUser';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { companyTreeData } from '@jeesite/core/api/sys/company';
@@ -81,7 +81,7 @@
   const localeStore = useLocaleStore();
   const loading = ref(false);
 
-  const searchForm: FormProps = {
+  const searchForm: FormProps<EmpUser> = {
     baseColProps: { md: 8, lg: 6 },
     labelWidth: localeStore.getLocale == LOCALE.ZH_CN ? 60 : 100,
     showAdvancedButton: true,
@@ -171,7 +171,7 @@
     },
   };
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<EmpUser>[] = [
     {
       title: t('登录账号'),
       dataIndex: 'loginCode',
@@ -246,9 +246,9 @@
     },
   ];
 
-  const actionColumn: BasicColumn = {
+  const actionColumn: BasicColumn<EmpUser> = {
     width: 160,
-    actions: (record: Recordable) => [
+    actions: (record: EmpUser) => [
       {
         icon: 'i-clarity:note-edit-line',
         title: t('编辑用户'),
@@ -319,7 +319,7 @@
   const selectedRowKeysRef = ref<string[]>([]);
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerAuthDataSourceDrawer, { openDrawer: openAuthDataScopeDrawer }] = useDrawer();
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm }] = useTable<EmpUser>({
     api: empUserListData,
     beforeFetch: (params) => {
       params.ctrlPermi = ctrlPermi.value;

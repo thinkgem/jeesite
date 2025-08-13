@@ -38,7 +38,7 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { testTreeDelete, testTreeListData } from '@jeesite/test/api/test/testTree';
+  import { TestTree, testTreeDelete, testTreeListData } from '@jeesite/test/api/test/testTree';
   import { testTreeDisable, testTreeEnable } from '@jeesite/test/api/test/testTree';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
@@ -59,7 +59,7 @@
     value: meta.title || t('数据管理'),
   };
 
-  const searchForm: FormProps = {
+  const searchForm: FormProps<TestTree> = {
     baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
@@ -89,7 +89,7 @@
     },
   };
 
-  const tableColumns: BasicColumn[] = [
+  const tableColumns: BasicColumn<TestTree>[] = [
     {
       title: t('节点名称'),
       dataIndex: 'treeName',
@@ -124,9 +124,9 @@
     },
   ];
 
-  const actionColumn: BasicColumn = {
+  const actionColumn: BasicColumn<TestTree> = {
     width: 160,
-    actions: (record: Recordable) => [
+    actions: (record: TestTree) => [
       {
         icon: 'i-clarity:note-edit-line',
         title: t('编辑数据'),
@@ -178,7 +178,7 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable({
+  const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable<TestTree>({
     api: testTreeListData,
     beforeFetch: (params) => {
       params.id = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';

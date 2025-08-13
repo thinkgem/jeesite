@@ -6,6 +6,7 @@
 import { defHttp } from '@jeesite/core/utils/http/axios';
 import { useGlobSetting } from '@jeesite/core/hooks/setting';
 import { BasicModel, Page } from '@jeesite/core/api/model/baseModel';
+import { TestDataChild } from '@jeesite/test/api/test/testDataChild';
 
 const { adminPath } = useGlobSetting();
 
@@ -22,8 +23,7 @@ export interface TestData extends BasicModel<TestData> {
   testOffice?: any; // 机构选择
   testAreaCode?: string; // 区域选择
   testAreaName?: string; // 区域名称
-
-  testDataChildList?: any[]; // 子表列表
+  testDataChildList?: TestDataChild[]; // 子表列表
 }
 
 export const testDataList = (params?: TestData | any) =>

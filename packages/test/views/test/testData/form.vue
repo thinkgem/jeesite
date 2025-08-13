@@ -60,7 +60,7 @@
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
   }));
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<TestData>[] = [
     {
       label: t('单行文本'),
       field: 'testInput',
@@ -195,6 +195,16 @@
       },
     },
     {
+      label: t('金额组件'),
+      field: 'inputMoney',
+      component: 'InputMoney',
+      componentProps: {
+        maxlength: 200,
+        addonBefore: '￥',
+        addonAfter: '元',
+      },
+    },
+    {
       label: t('备注信息'),
       field: 'remarks',
       component: 'InputTextArea',
@@ -253,7 +263,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm<TestData>({
     labelWidth: 120,
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },

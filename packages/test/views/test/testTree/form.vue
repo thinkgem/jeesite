@@ -40,7 +40,7 @@
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
   }));
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<TestTree>[] = [
     {
       label: t('上级数据'),
       field: 'parentCode',
@@ -90,7 +90,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm<TestTree>({
     labelWidth: 120,
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },

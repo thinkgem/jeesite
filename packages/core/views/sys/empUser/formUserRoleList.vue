@@ -12,11 +12,12 @@
   import { Ref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
+  import { TreeDataModel } from '@jeesite/core/api/model/baseModel';
   import { roleTreeData } from '@jeesite/core/api/sys';
 
   const { t } = useI18n('sys.empUser');
 
-  const [registerTable, tableAction] = useTable({
+  const [registerTable, tableAction] = useTable<TreeDataModel>({
     columns: [
       {
         title: t('角色名称'),

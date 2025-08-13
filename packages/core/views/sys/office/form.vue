@@ -40,7 +40,7 @@
     value: record.value.isNewRecord ? t('新增机构') : t('编辑机构'),
   }));
 
-  const inputFormSchemas: FormSchema[] = [
+  const inputFormSchemas: FormSchema<Office>[] = [
     {
       label: t('基本信息'),
       field: 'basicInfo',
@@ -168,7 +168,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm<Office>({
     labelWidth: 120,
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },
