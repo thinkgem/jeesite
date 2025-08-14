@@ -41,7 +41,7 @@ public class RoleListType implements FieldType {
 				}
 			}
 		}
-		return list.size() > 0 ? list.toArray(new String[list.size()]) : null;
+		return !list.isEmpty() ? list.toArray(new String[0]) : null;
 	}
 
 	/**

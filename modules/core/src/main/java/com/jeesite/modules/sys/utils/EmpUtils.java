@@ -15,10 +15,10 @@ import com.jeesite.modules.sys.entity.*;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.session.Session;
 import org.springframework.core.NamedThreadLocal;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -263,7 +263,7 @@ public class EmpUtils {
 				}
 			}
 		});
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 	
 	/**
