@@ -250,7 +250,7 @@ public class ReflectUtils {
 						args[i] = DateUtil.getJavaDate((Double) args[i]);
 					}
 				}else{
-					System.out.println(cs[i] + "    " + args[i]);
+					logger.debug("class: {}, args: {}", cs[i], args[i]);
 				}
 			}
 		}
