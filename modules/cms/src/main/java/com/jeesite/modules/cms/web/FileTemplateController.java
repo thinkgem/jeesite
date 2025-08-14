@@ -4,20 +4,12 @@
  */
 package com.jeesite.modules.cms.web;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.io.FileUtils;
-import com.jeesite.common.io.ResourceUtils;
-import com.jeesite.common.lang.DateUtils;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.modules.gen.entity.GenTable;
-import com.jeesite.modules.gen.utils.GenTableUtils;
-import com.jeesite.modules.gen.utils.GenUtils;
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.cms.entity.FileTemplate;
+import com.jeesite.modules.cms.entity.Site;
+import com.jeesite.modules.cms.service.FileTemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,12 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.FileTemplete;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.FileTempleteService;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 模板管理
@@ -42,7 +31,7 @@ import com.jeesite.modules.cms.service.FileTempleteService;
 public class FileTemplateController extends BaseController {
 	
 	@Autowired
-	private FileTempleteService fileTempleteService;
+	private FileTemplateService fileTemplateService;
 
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = { "list", "" })
@@ -50,19 +39,10 @@ public class FileTemplateController extends BaseController {
 		return "modules/cms/tplIndex";
 	}
 
-//	@RequiresPermissions("cms:template:edit")
-//	@RequestMapping(value = "tree")
-//	public String tree(Model model) throws IOException {
-//		//根据系统默认的主题获取模板地址
-//		model.addAttribute("templateList", fileTempleteService
-//				.getFileTempleteListForEdit(Site.TEMPLETE_BASE_DIRECTION + "/" + "default"));
-//		return "modules/cms/tplTree";
-//	}
-
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "form")
 	public String form(String name, Model model) throws IOException {
-		model.addAttribute("template", fileTempleteService.getFileTemplete(name));
+		model.addAttribute("template", fileTemplateService.getFileTemplate(name));
 		return "modules/cms/tplForm";
 	}
 
@@ -70,7 +50,7 @@ public class FileTemplateController extends BaseController {
 	@RequestMapping(value = "saveFileTemplate")
 	@ResponseBody
 	public String saveFileTemplate(String fileName, String fileContent) throws IOException {
-		FileTemplete template = fileTempleteService.getFileTemplete(fileName);
+		FileTemplate template = fileTemplateService.getFileTemplate(fileName);
 		String newFileName = FileUtils.path(FileUtils.getWebappPath() + "/WEB-INF/classes/" + fileName);
 		File templateFile = template.resource().getFile();
 		if (templateFile.getAbsoluteFile().exists()) {
@@ -86,7 +66,7 @@ public class FileTemplateController extends BaseController {
 	@RequestMapping(value = "deleteFileTemplate")
 	@ResponseBody
 	public String deleteFileTemplate(String fileName) throws IOException {
-		FileTemplete template = fileTempleteService.getFileTemplete(fileName);
+		FileTemplate template = fileTemplateService.getFileTemplate(fileName);
 		File templateFile = template.resource().getFile();
 		if (templateFile.getAbsoluteFile().exists()) {
 			FileUtils.deleteFile(templateFile.getAbsolutePath());
@@ -109,9 +89,9 @@ public class FileTemplateController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData() throws IOException {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		List<FileTemplete> listFileTemplete = fileTempleteService.getFileTempleteListForEdit(Site.TEMPLETE_BASE_DIRECTION);
-		for (int i = 0; i < listFileTemplete.size(); i++) {
-			FileTemplete e = listFileTemplete.get(i);
+		List<FileTemplate> listFileTemplate = fileTemplateService.getFileTemplateListForEdit(Site.TEMPLATE_BASE_DIRECTION);
+		for (int i = 0; i < listFileTemplate.size(); i++) {
+			FileTemplate e = listFileTemplate.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
 			map.put("id", e.getFilePath() + "/" + e.getFileName());
 			map.put("isDirectory", e.isDirectory());

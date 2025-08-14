@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serial;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import org.springframework.core.io.Resource;
@@ -22,17 +23,17 @@ import com.jeesite.common.lang.ExceptionUtils;
  * @author 长春叭哥、ThinkGem
  * @version 2020-7-7
  */
-public class FileTemplete implements Comparable<FileTemplete>, Serializable {
+public class FileTemplate implements Comparable<FileTemplate>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private Resource resource;
+	private final Resource resource;
 	private String fileName;
 	private String fileExtension;
 	private String filePath;
 	private boolean isDirectory;
 	
-	public FileTemplete(Resource resource, String path) {
+	public FileTemplate(Resource resource, String path) {
 		this.resource = resource;
 		this.fileName = resource.getFilename();
 		this.fileExtension = FileUtils.getFileExtension(this.fileName);
@@ -43,22 +44,22 @@ public class FileTemplete implements Comparable<FileTemplete>, Serializable {
 				beginIndex = filePath.indexOf(path);
 			}
 			int endIndex = filePath.length();
-			if (this.fileName.contains(".")){
+			if (this.fileName != null && this.fileName.contains(".")) {
 				endIndex = filePath.lastIndexOf('/');
-			}else if (filePath.endsWith("/")) {
-				endIndex -= 1;
-			} 
+			}
 			this.filePath = filePath.substring(beginIndex, endIndex);
 //			System.out.println(this.filePath);
 		} catch (IOException e) {
 			throw ExceptionUtils.unchecked(e);
 		}
-		this.isDirectory = !this.fileName.contains(".");
+		if (this.fileName != null) {
+			this.isDirectory = !this.fileName.contains(".");
+		}
 //		System.out.println(filePath);
 //		System.out.println(fileName);
 	}
 	
-	public FileTemplete(FileTemplete source) {
+	public FileTemplate(FileTemplate source) {
 		int index = source.filePath.lastIndexOf('/');
 		this.fileName = source.filePath.substring(index+1);
 		this.filePath = source.filePath.substring(0, index);
@@ -111,14 +112,14 @@ public class FileTemplete implements Comparable<FileTemplete>, Serializable {
 			return null;
 		}
 		try(InputStream is = resource.getInputStream()){
-			return IOUtils.toString(is, EncodeUtils.UTF_8);
+			return IOUtils.toString(is, StandardCharsets.UTF_8);
 		}catch (IOException e) {
 			throw ExceptionUtils.unchecked(e);
 		}
 	}
 
 	@Override
-	public int compareTo(FileTemplete o) {
+	public int compareTo(FileTemplate o) {
 		return this.getFileName().compareTo(o.getFileName());
 	}
 	
@@ -130,7 +131,7 @@ public class FileTemplete implements Comparable<FileTemplete>, Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		FileTemplete e = (FileTemplete) o;
+		FileTemplate e = (FileTemplate) o;
 		return Objects.equals(this.fileName, e.fileName)
 				&& Objects.equals(this.fileExtension, e.fileExtension)
 				&& Objects.equals(this.filePath, e.filePath)

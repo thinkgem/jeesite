@@ -14,7 +14,7 @@ import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.service.CategoryService;
-import com.jeesite.modules.cms.service.FileTempleteService;
+import com.jeesite.modules.cms.service.FileTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -46,7 +46,7 @@ public class ArticleController extends BaseController {
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
-	private FileTempleteService fileTempleteService;
+	private FileTemplateService fileTemplateService;
 
 	/**
 	 * 获取数据
@@ -135,7 +135,7 @@ public class ArticleController extends BaseController {
 		if (StringUtils.isBlank(article.getId())) {
 			article.setStatus(Article.STATUS_DRAFT);
 		}
-		model.addAttribute("contentViewList", fileTempleteService.getTempleteContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
 		model.addAttribute("article", article);
 		CmsUtils.addViewConfigAttribute(model, article.getCategory());
