@@ -8,11 +8,9 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.common.web.CookieUtils;
 import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.FileTempleteService;
+import com.jeesite.modules.cms.service.FileTemplateService;
 import com.jeesite.modules.cms.service.SiteService;
-import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class SiteController extends BaseController {
 	private SiteService siteService;
 
 	@Autowired
-	private FileTempleteService fileTempleteService;
+	private FileTemplateService fileTemplateService;
 
 	/**
 	 * 获取数据
@@ -81,7 +79,7 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = "form")
 	public String form(Site site, Model model) throws IOException {
-		model.addAttribute("indexViewList", fileTempleteService.getTempleteContentDict(Site.DEFAULT_TEMPLATE));
+		model.addAttribute("indexViewList", fileTemplateService.getTemplateContentDict(Site.DEFAULT_TEMPLATE));
 		model.addAttribute("site_DEFAULT_TEMPLATE", Site.DEFAULT_TEMPLATE);
 		model.addAttribute("site", site);
 		model.addAttribute("demos", site);

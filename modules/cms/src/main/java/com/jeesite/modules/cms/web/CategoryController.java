@@ -14,9 +14,10 @@ import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.CategoryService;
-import com.jeesite.modules.cms.service.FileTempleteService;
+import com.jeesite.modules.cms.service.FileTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.DictUtils;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class CategoryController extends BaseController {
 	private CategoryService categoryService;
 
 	@Autowired
-	private FileTempleteService fileTempleteService;
+	private FileTemplateService fileTemplateService;
 
 	/**
 	 * 获取数据
@@ -157,9 +157,9 @@ public class CategoryController extends BaseController {
 		if (category.getIsNeedAudit() == null) {
 			category.setIsNeedAudit(Global.NO);
 		}
-		model.addAttribute("listViewList", fileTempleteService.getTempleteContentDict(Category.DEFAULT_TEMPLATE));
+		model.addAttribute("listViewList", fileTemplateService.getTemplateContentDict(Category.DEFAULT_TEMPLATE));
 		model.addAttribute("category_DEFAULT_TEMPLATE", Category.DEFAULT_TEMPLATE);
-		model.addAttribute("contentViewList", fileTempleteService.getTempleteContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
 		model.addAttribute("category", category);
 		return "modules/cms/categoryForm";

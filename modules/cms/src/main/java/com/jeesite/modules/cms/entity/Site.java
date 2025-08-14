@@ -16,6 +16,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class Site extends DataEntity<Site> {
 	/**
 	 * 模板路径
 	 */
-	public static final String TEMPLETE_BASE_DIRECTION = "views/modules/cmsfront/themes";
+	public static final String TEMPLATE_BASE_DIRECTION = "views/modules/cmsfront/themes";
 	/**
 	 * 默认模版
 	 */
@@ -189,7 +190,7 @@ public class Site extends DataEntity<Site> {
 	 * @return
 	 */
 	public String getSolutionPath() {
-		return TEMPLETE_BASE_DIRECTION + "/" + getTheme();
+		return TEMPLATE_BASE_DIRECTION + "/" + getTheme();
 	}
 	
 	public List<String> getCategoryCodes() {
