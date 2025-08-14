@@ -27,10 +27,10 @@ import com.jeesite.modules.sys.utils.UserUtils;
 public class CacheController extends BaseController {
 
 	/**
-	 * 清理全部缓存，可清理属性文件里的缓存（stste 单词写错了，将错就错）
+	 * 清理全部缓存，可清理属性文件里的缓存
 	 * @return
 	 */
-	@RequiresPermissions(value={"sys:config:edit", "sys:stste:cache"}, logical=Logical.OR)
+	@RequiresPermissions(value={"sys:config:edit", "sys:state:cache"}, logical=Logical.OR)
 	@RequestMapping(value = "clearAll")
 	@ResponseBody
 	public String clearAll() {
