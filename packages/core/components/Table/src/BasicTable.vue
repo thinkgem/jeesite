@@ -81,6 +81,8 @@
 </template>
 <script lang="ts" setup name="BasicTable">
   import type { BasicTableProps, TableActionType, SizeType, ColumnChangeParam } from './types/table';
+  import type { TableRecordable } from '@jeesite/types/record';
+
   import { ref, computed, unref, toRaw, inject, watch, watchEffect, useSlots } from 'vue';
   import { Table, Form } from 'ant-design-vue';
   import { BasicForm, useForm } from '@jeesite/core/components/Form';
@@ -117,7 +119,6 @@
   import TableSelectionBar from '@jeesite/core/components/Table/src/components/TableSelectionBar.vue';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useDebounceFn } from '@vueuse/core';
-  import { TableRecordable } from '@jeesite/types/record';
 
   const ATable = Table;
   const FormItemRest = Form.ItemRest;

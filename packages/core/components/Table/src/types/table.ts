@@ -3,13 +3,13 @@ import type { PaginationProps } from './pagination';
 import type { FormProps } from '@jeesite/core/components/Form';
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
 import type { ColumnProps } from 'ant-design-vue/lib/table';
+import type { TableDataIndex } from '@jeesite/types/record';
 
 import { ComponentType } from './componentType';
 import { VueNode } from '@jeesite/core/utils/propTypes';
 import { RoleEnum } from '@jeesite/core/enums/roleEnum';
 import { ActionItem } from './tableAction';
 import { EditRecordRow } from '../components/editable';
-import { TableDataIndex } from '@jeesite/types';
 
 export declare type SortOrder = 'ascend' | 'descend';
 

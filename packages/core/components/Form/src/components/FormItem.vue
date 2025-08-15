@@ -9,6 +9,7 @@
   import type { FormSchema } from '../types/form';
   import type { Rule } from 'ant-design-vue/lib/form';
   import type { TableActionType } from '@jeesite/core/components/Table';
+  import type { FormField, FormRecordable } from '@jeesite/types/record';
   import { defineComponent, computed, unref, toRefs } from 'vue';
   import { Form, Col } from 'ant-design-vue';
   import { componentMap } from '../componentMap';
@@ -19,7 +20,6 @@
   import { upperFirst, cloneDeep } from 'lodash-es';
   import { useItemLabelWidth } from '../hooks/useLabelWidth';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { FormField, FormRecordable } from '@jeesite/types/record';
 
   export default defineComponent({
     name: 'JeeSiteFormItem',

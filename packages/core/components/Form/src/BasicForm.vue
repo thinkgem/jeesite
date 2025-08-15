@@ -41,9 +41,10 @@
   </Form>
 </template>
 <script lang="ts" setup name="BasicForm">
-  import type { FormActionType, FormProps, FormSchema } from './types/form';
-  import type { AdvanceState } from './types/hooks';
   import type { Ref } from 'vue';
+  import type { AdvanceState } from './types/hooks';
+  import type { FormActionType, FormProps, FormSchema } from './types/form';
+  import type { FormField, FormRecordable } from '@jeesite/types/record';
 
   import { reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
   import { Form, Row } from 'ant-design-vue';
@@ -67,7 +68,6 @@
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
-  import { FormField, FormRecordable } from '@jeesite/types/record';
 
   const props = defineProps(basicProps);
   const emit = defineEmits(['advanced-change', 'reset', 'submit', 'register']);

@@ -11,7 +11,7 @@ import type { ColEx, ComponentType } from './index';
 import type { TableActionType } from '@jeesite/core/components/Table/src/types/table';
 import type { CSSProperties } from 'vue';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
-import { FormField } from '@jeesite/types';
+import type { FormField } from '@jeesite/types';
 
 export type FieldMapToTime = [string, [string, string], string?][];
 
