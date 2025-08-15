@@ -35,22 +35,7 @@
       "node",
       "vue-types",
       "vite/client",
-      "@jeesite/types"
+      "@jeesite/types/global"
     ]
-  },
-  "include": [
-    "./**/*.ts",
-    "./**/*.tsx",
-    "./**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "vite.config.ts",
-    "dist"
-  ],
-  "ts-node": {
-    "transpileOnly": true,
-    "files": true,
-    "esm": true
   }
 }
