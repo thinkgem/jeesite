@@ -7,7 +7,7 @@
     "stub": "pnpm unbuild --stub",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "lint:eslint": "eslint --cache --max-warnings 0  \"./**/*.{vue,ts,tsx}\" --fix",
-    "lint:all": "npm run type:check && npm run lint:eslint",
+    "lint:all": "pnpm type:check && pnpm lint:eslint",
     "uninstall": "rimraf node_modules",
     "update": "ncu -u"
   },

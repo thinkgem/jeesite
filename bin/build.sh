@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ..
-npm run build
+pnpm build
 
 cd bin
