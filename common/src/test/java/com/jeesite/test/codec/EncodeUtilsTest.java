@@ -41,6 +41,7 @@ public class EncodeUtilsTest {
 		xssFilter(i++, "<!--HTML-->你好 ?abc=def&hello=123&world={\"a\":1}我还在。");
 		xssFilter(i++, "<!--HTML-->你好 ?abc=def&hello=123&world={'a':1}我还在。");
 		xssFilter(i++, "<!--HTML-->\"><svg/ONLOAD=confirm(3) />");
+		xssFilter(i++, "<!--HTML-->XSS<embed src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCg5KTwvc2NyaXB0Pgo=\">");
 		sqlFilter(i++, "你好 select * from xxx where abc=def and 1=1我还在。", "common");
 		sqlFilter(i++, "你好 insert into xxx values(1,2,3,4,5)我还在。", "common");
 		sqlFilter(i++, "你好 delete from xxx我还在。", "common");

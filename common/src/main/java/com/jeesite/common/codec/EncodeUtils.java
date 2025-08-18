@@ -191,7 +191,7 @@ public class EncodeUtils {
 	// 预编译XSS过滤正则表达式
 	private static final List<Pattern> xssPatterns = ListUtils.newArrayList(
 			Pattern.compile("(<\\s*(script|link|style|iframe)([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(script|link|style|iframe)\\s*>)", Pattern.CASE_INSENSITIVE),
-			Pattern.compile("\\s*(href|src)\\s*=\\s*(\"\\s*(javascript|vbscript):[^\"]+\"|'\\s*(javascript|vbscript):[^']+'|(javascript|vbscript):[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("\\s*(href|src)\\s*=\\s*(\"\\s*(javascript|vbscript|data):[^\"]+\"|'\\s*(javascript|vbscript|data):[^']+'|(javascript|vbscript|data):[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("\\s*/?\\s*on[a-zA-Z]+\\s*=\\s*(['\"]?)(.*?)\\1(?=\\s|>|/>)", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("(eval\\((.*?)\\)|expression\\((.*?)\\))", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("^(javascript:|vbscript:)", Pattern.CASE_INSENSITIVE)
