@@ -8,6 +8,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.utils.excel.ExcelImport;
@@ -72,16 +73,17 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 */
 	@Override
 	public void addDataScopeFilter(EmpUser empUser, String ctrlPermi) {
-		empUser.sqlMap().getDataScope().addFilter("dsfOffice",
-				"Office", "e.office_code", "a.create_by", ctrlPermi, "office_user");
+		QueryDataScope dataScope = empUser.sqlMap().getDataScope();
+		dataScope.addFilter("dsfOffice", "Office",
+				"e.office_code", "a.create_by", ctrlPermi, "office_user");
 		if (StringUtils.isNotBlank(EmpUtils.getCompany().getCompanyCode())){
-			empUser.sqlMap().getDataScope().addFilter("dsfCompany",
-					"Company", "e.company_code", "a.create_by", ctrlPermi, "office_user");
+			dataScope.addFilter("dsfCompany", "Company",
+					"e.company_code", "a.create_by", ctrlPermi, "office_user");
 		}
-//		empUser.sqlMap().getDataScope().addFilterByPermission("dsfOffice", "sys:empUser:view",
-//				"Office", "e.office_code", "a.create_by", ctrlPermi);
-//		empUser.sqlMap().getDataScope().addFilterByPermission("dsfOffice", "sys:empUser:view",
-//				"User", "a.user_code", ctrlPermi);
+//		dataScope.addFilterByPermission("dsfOffice", "sys:empUser:view", "Office",
+//				"e.office_code", "a.create_by", ctrlPermi);
+//		dataScope.addFilterByPermission("dsfOffice", "sys:empUser:view", "User",
+//				"a.user_code", ctrlPermi);
 	}
 
 	/**
