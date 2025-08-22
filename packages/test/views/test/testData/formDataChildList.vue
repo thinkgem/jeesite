@@ -32,6 +32,10 @@
       align: 'left',
       editRow: true,
       editComponent: 'Input',
+      editComponentProps: {
+        // addonBefore: t('前'),
+        // addonAfter: t('后'),
+      },
       editRule: true,
     },
     {

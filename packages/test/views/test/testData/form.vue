@@ -38,7 +38,6 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
-  import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
   import { TestData, testDataSave, testDataForm } from '@jeesite/test/api/test/testData';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
@@ -67,6 +66,8 @@
       component: 'Input',
       componentProps: {
         maxlength: 200,
+        // addonBefore: t('前'),
+        // addonAfter: t('后'),
       },
       required: true,
     },
