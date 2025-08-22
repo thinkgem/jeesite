@@ -109,8 +109,8 @@
 
 ## 更多介绍
 
-* 内置功能：<https://jeesite.com/docs/function/>
 * 目录结构：<https://jeesite.com/docs/catalog/>
+* 内置功能：<https://jeesite.com/docs/function/>
 * 架构特点：<https://jeesite.com/docs/feature/>
 * 参数配置：<https://jeesite.com/docs/config/>
 * 开发规范：<https://jeesite.com/docs/standard/>
