@@ -24,7 +24,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysCorpAdminForm">
-  import { ref, unref, computed } from 'vue';
+  import { ref, unref, computed, h } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -96,6 +96,7 @@
       component: 'Input',
       componentProps: {
         maxlength: 300,
+        addonAfter: h(Icon, { icon: 'i-ant-design:mail-outlined' }),
       },
       rules: [{ type: 'email', message: t('请填写正确的邮箱地址') }],
     },
@@ -105,6 +106,7 @@
       component: 'Input',
       componentProps: {
         maxlength: 100,
+        addonAfter: h(Icon, { icon: 'i-ant-design:mobile-outlined' }),
       },
     },
     {
@@ -113,6 +115,7 @@
       component: 'Input',
       componentProps: {
         maxlength: 100,
+        addonAfter: h(Icon, { icon: 'i-ant-design:phone-outlined' }),
       },
     },
     {
