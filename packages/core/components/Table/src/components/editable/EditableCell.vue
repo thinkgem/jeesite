@@ -439,12 +439,12 @@
 
   const CellComponent = ({}, { attrs }) => {
     const Comp = componentMap.get(unref(getComponent)) as typeof defineComponent;
-    const DefaultComp = h(Comp, attrs);
+    const CellComp = h(Comp, attrs);
     if (!props.column?.editRule) {
-      return DefaultComp;
+      return CellComp;
     }
     return h(Popover, unref(getPopoverProps), {
-      default: () => DefaultComp,
+      default: () => CellComp,
       content: () => unref(ruleMessage),
     });
   };
