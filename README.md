@@ -97,7 +97,7 @@
 
 ## 技术选型
 
-* 主框架：Spring Boot 3.4、Spring Framework 6、Apache Shiro 2、J2Cache
+* 主框架：Spring Boot 3.5、Spring Framework 6、Apache Shiro 2、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 8、Alibaba Druid 1.2
 * 分离版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 经典版：Beetl 3.10（HTML）、jQuery 3.7、Bootstrap 3.3、AdminLTE 2.4
@@ -111,9 +111,9 @@
 
 ## 更多介绍
 
+* 架构特点：<https://jeesite.com/docs/feature/>
 * 内置功能：<https://jeesite.com/docs/function/>
 * 目录结构：<https://jeesite.com/docs/catalog/>
-* 架构特点：<https://jeesite.com/docs/feature/>
 * 参数配置：<https://jeesite.com/docs/config/>
 * 开发规范：<https://jeesite.com/docs/standard/>
 * 代码生成：<https://jeesite.com/docs/code-gen/>
