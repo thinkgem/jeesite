@@ -4,23 +4,21 @@
  */
 package com.jeesite.test;
 
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.tests.BaseSpringContextTests;
+import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.entity.TestDataChild;
+import com.jeesite.modules.test.service.TestDataService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.idgen.IdGen;
-import com.jeesite.common.tests.BaseSpringContextTests;
-import com.jeesite.modules.Application;
-import com.jeesite.modules.test.entity.TestData;
-import com.jeesite.modules.test.entity.TestDataChild;
-import com.jeesite.modules.test.service.TestDataService;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 多数据源并发测试<br>
@@ -31,7 +29,7 @@ import com.jeesite.modules.test.service.TestDataService;
  * @version 2019-6-26
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = ApplicationTest.class)
 public class MultiDataSourceTest extends BaseSpringContextTests {
 	
 	@Autowired
