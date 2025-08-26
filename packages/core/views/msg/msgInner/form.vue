@@ -19,7 +19,12 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <template #centerFooter>
-      <a-button color="success" v-if="!record.status || record.status == '9'" @click="handleSubmit('9')">
+      <a-button
+        color="success"
+        v-if="!record.status || record.status == '9'"
+        :loading="confirmLoading"
+        @click="handleSubmit('9')"
+      >
         <Icon icon="i-ant-design:save-outlined" />
         {{ t('草稿') }}
       </a-button>
@@ -236,7 +241,7 @@
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+  const [registerDrawer, { setDrawerProps, closeDrawer, getDrawerProps }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });
     await resetFields();
     const res = await msgInnerForm(data);
@@ -245,6 +250,10 @@
     onReceiversChange(record.value.receiveType, record.value.receiveCodes, record.value.receiveNames);
     setFieldsValue(record.value);
     setDrawerProps({ loading: false });
+  });
+
+  const confirmLoading = computed(() => {
+    return getDrawerProps().confirmLoading || false;
   });
 
   function onReceiversChange(receiveType, value, labelValue) {
