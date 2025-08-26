@@ -76,6 +76,7 @@
   // modal   Bottom and top height
   const extHeightRef = ref(0);
   const modalMethods: ModalMethods = {
+    getModalProps,
     setModalProps,
     emitOpen: undefined,
     redoModalHeight: () => {
@@ -199,6 +200,10 @@
     handleFullScreen(e);
   }
 
+  function getModalProps(): Partial<ModalProps> {
+    return getProps.value;
+  }
+
   function setModalProps(props: Partial<ModalProps>): void {
     if (typeof props.loading != 'undefined') {
       props.confirmLoading = props.loading;
@@ -233,7 +238,7 @@
     closeConfirmLoading: () => {
       setModalProps({ confirmLoading: false });
     },
-    getProps: () => getProps.value,
+    getProps: getModalProps,
     setProps: setModalProps,
   });
 </script>

@@ -4,6 +4,7 @@ import type { CSSProperties, VNodeChild, ComputedRef } from 'vue';
  * @description: 弹窗对外暴露的方法
  */
 export interface ModalMethods {
+  getModalProps: () => Partial<ModalProps>;
   setModalProps: (props: Partial<ModalProps>) => void;
   emitOpen?: (open: boolean, uid: number) => void;
   redoModalHeight?: () => void;

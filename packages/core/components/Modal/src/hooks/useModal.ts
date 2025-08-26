@@ -49,6 +49,10 @@ export function useModal(): UseModalReturnType {
   };
 
   const methods: ReturnMethods = {
+    getModalProps: (): Partial<ModalProps> => {
+      return getInstance()?.getModalProps() || {};
+    },
+
     setModalProps: (props: Partial<ModalProps>): void => {
       getInstance()?.setModalProps(props);
     },
@@ -56,10 +60,6 @@ export function useModal(): UseModalReturnType {
     getOpen: computed((): boolean => {
       return openData[~~unref(uid)];
     }),
-
-    redoModalHeight: () => {
-      getInstance()?.redoModalHeight?.();
-    },
 
     openModal: <T = any>(open = true, data?: T, openOnSet = true): void => {
       getInstance()?.setModalProps({
@@ -93,6 +93,10 @@ export function useModal(): UseModalReturnType {
           return;
         }, 100);
       });
+    },
+
+    redoModalHeight: () => {
+      getInstance()?.redoModalHeight?.();
     },
   };
   return [register, methods];
@@ -136,16 +140,21 @@ export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
       changeLoading: (loading = true) => {
         getInstance()?.setModalProps({ loading });
       },
-      getOpen: computed((): boolean => {
-        return openData[~~unref(uidRef)];
-      }),
 
       changeOkLoading: (loading = true) => {
         getInstance()?.setModalProps({ confirmLoading: loading });
       },
 
+      getOpen: computed((): boolean => {
+        return openData[~~unref(uidRef)];
+      }),
+
       closeModal: () => {
         getInstance()?.setModalProps({ open: false });
+      },
+
+      getModalProps: (): Partial<ModalProps> => {
+        return getInstance()?.getModalProps() || {};
       },
 
       setModalProps: (props: Partial<ModalProps>) => {
