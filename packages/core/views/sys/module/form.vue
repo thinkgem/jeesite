@@ -17,7 +17,7 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <template #centerFooter>
-      <a-button v-if="isCustomModule" type="primary" danger @click="handleSubmit('2')">
+      <a-button v-if="isCustomModule" type="primary" danger :loading="confirmLoading" @click="handleSubmit('2')">
         <Icon icon="i-ant-design:bug-outlined" /> {{ t('确认并生成代码') }}
       </a-button>
     </template>
@@ -190,7 +190,7 @@
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+  const [registerDrawer, { setDrawerProps, closeDrawer, getDrawerProps }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });
     await resetFields();
     const res = await moduleForm(data);
@@ -222,6 +222,10 @@
       },
     ]);
     setDrawerProps({ loading: false });
+  });
+
+  const confirmLoading = computed(() => {
+    return getDrawerProps().confirmLoading || false;
   });
 
   async function handleSubmit(flag: string) {
