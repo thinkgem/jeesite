@@ -58,7 +58,7 @@
       dialogComponentRef.value?.closeConfirmLoading();
     },
     getProps: () => {
-      dialogComponentRef.value?.getProps();
+      return dialogComponentRef.value?.getProps();
     },
     setProps: (props: BasicDialogProps) => {
       dialogComponentRef.value?.setProps(props);
