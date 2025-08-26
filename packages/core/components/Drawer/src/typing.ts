@@ -3,6 +3,7 @@ import type { CSSProperties, VNodeChild, ComputedRef } from 'vue';
 import type { ScrollContainerOptions } from '@jeesite/core/components/Container';
 
 export interface DrawerInstance {
+  getDrawerProps: () => Partial<DrawerProps>;
   setDrawerProps: (props: Partial<DrawerProps>) => void;
   emitOpen?: (open: boolean, uid: number) => void;
 }

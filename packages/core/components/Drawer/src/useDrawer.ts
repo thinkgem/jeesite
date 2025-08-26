@@ -55,6 +55,10 @@ export function useDrawer(): UseDrawerReturnType {
   };
 
   const methods: ReturnMethods = {
+    getDrawerProps: (): Partial<DrawerProps> => {
+      return getInstance()?.getDrawerProps() || {};
+    },
+
     setDrawerProps: (props: Partial<DrawerProps>): void => {
       getInstance()?.setDrawerProps(props);
     },
@@ -145,12 +149,17 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
       changeOkLoading: (loading = true) => {
         getInstance()?.setDrawerProps({ confirmLoading: loading });
       },
+
       getOpen: computed((): boolean => {
         return openData[~~unref(uidRef)];
       }),
 
       closeDrawer: () => {
         getInstance()?.setDrawerProps({ open: false });
+      },
+
+      getDrawerProps: (): Partial<DrawerProps> => {
+        return getInstance()?.getDrawerProps() || {};
       },
 
       setDrawerProps: (props: Partial<DrawerProps>) => {

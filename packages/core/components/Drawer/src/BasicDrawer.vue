@@ -62,7 +62,8 @@
   const { realWidthRef, screenEnum } = useBreakpoint();
 
   const drawerInstance: DrawerInstance = {
-    setDrawerProps: setDrawerProps,
+    getDrawerProps,
+    setDrawerProps,
     emitOpen: undefined,
   };
 
@@ -196,6 +197,10 @@
     };
   };
 
+  function getDrawerProps(): Partial<DrawerProps> {
+    return getProps.value;
+  }
+
   function setDrawerProps(props: Partial<DrawerProps>): void {
     if (typeof props.loading != 'undefined') {
       props.confirmLoading = props.loading;
@@ -227,7 +232,7 @@
     closeConfirmLoading: () => {
       setDrawerProps({ confirmLoading: false });
     },
-    getProps: () => getProps.value,
+    getProps: getDrawerProps,
     setProps: setDrawerProps,
   });
 </script>
