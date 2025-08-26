@@ -1,6 +1,6 @@
 <template>
   <BasicModal
-    width="800px"
+    width="80%"
     :title="t('component.upload.view')"
     :cancelText="t('component.modal.okText')"
     wrapClassName="upload-preview-modal"
@@ -8,7 +8,9 @@
     @register="register"
     :showOkBtn="false"
   >
-    <FileList :dataSource="fileList" :columns="columns" :actionColumn="actionColumn" :readonly="readonly" />
+    <div class="overflow-x-auto">
+      <FileList :dataSource="fileList" :columns="columns" :actionColumn="actionColumn" :readonly="readonly" />
+    </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -70,6 +72,8 @@
     .file-table-td {
       overflow-wrap: break-word;
       word-break: break-all;
+      white-space: normal;
+      min-width: 100px;
     }
 
     .ant-upload-list {

@@ -1,6 +1,6 @@
 <template>
   <BasicModal
-    width="800px"
+    width="80%"
     :title="t('component.upload.upload')"
     :okText="t('component.upload.save')"
     v-bind="$attrs"
@@ -40,7 +40,9 @@
         </a-button>
       </Upload>
     </div>
-    <FileList :dataSource="fileItemList" :columns="columns" :actionColumn="actionColumn" />
+    <div class="overflow-x-auto">
+      <FileList :dataSource="fileItemList" :columns="columns" :actionColumn="actionColumn" />
+    </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -69,6 +71,7 @@
   const { uploadType, accept, helpText, maxNumber, maxSize, directory } = toRefs(props);
   const { t } = useI18n();
   const [register, { closeModal }] = useModalInner();
+  const { filePreview } = useGlobSetting();
   const fileItemList = ref<FileItem[]>([]);
   const uploading = ref(false);
 
@@ -294,6 +297,13 @@
 </script>
 <style lang="less">
   .upload-modal {
+    .file-table-td {
+      overflow-wrap: break-word;
+      word-break: break-all;
+      white-space: normal;
+      min-width: 100px;
+    }
+
     .ant-upload-list {
       display: none;
     }

@@ -49,7 +49,7 @@ export function createTableColumns(): BasicColumn[] {
         }
         return (
           <span>
-            <p class="mb-1 truncate" title={text}>
+            <p class="mb-1" title={text}>
               {text}
             </p>
             <Progress percent={percent} size="small" status={status} />
@@ -153,6 +153,9 @@ export function createPreviewColumns(props: any): BasicColumn[] {
       dataIndex: 'createDate',
       width: 130,
       align: 'center',
+      customRender: ({ text = 0 }) => {
+        return <span class="truncate">{text}</span>;
+      },
     },
   ];
 }
