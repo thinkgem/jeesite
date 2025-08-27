@@ -320,8 +320,8 @@ importers:
   packages/dbm:
     dependencies:
       '@jeesite/dbm-lib':
-        specifier: 5.13.0-rc.1
-        version: 5.13.0-rc.1(vue@3.5.18(typescript@5.9.2))
+        specifier: 5.13.0-rc.2
+        version: 5.13.0-rc.2(vue@3.5.18(typescript@5.9.2))
       qs:
         specifier: 6.14.0
         version: 6.14.0
@@ -1635,8 +1635,8 @@ packages:
   '@jeesite/cms-lib@5.13.0-rc.1':
     resolution: {integrity: sha512-H9qZIJg4JurNADoSYf9955adC7G7TZTpgxJ7Zsbwy4/h/sqYAE22jTD5Ra0cFXXe5WrKaWk/gAxwDGmpj8/1Ew==}
 
-  '@jeesite/dbm-lib@5.13.0-rc.1':
-    resolution: {integrity: sha512-XEYdKDRCUo/jJbaDjUtp4itO+qfm5d0zd7PIOnlaABW+L7zfB9OtZUJrdkDKFuuTGoulg0z/l2TdTVKC/UdG+Q==}
+  '@jeesite/dbm-lib@5.13.0-rc.2':
+    resolution: {integrity: sha512-p0WKyfDz8juA6fAjhSs4stRMk57ATzGCg9FKxr5Q+dlzALYrBouJwU+y0HcSMkYQKwTaaDJM6y4u9EWL2QF1IQ==}
 
   '@jeesite/dfm-lib@5.13.0-rc.1':
     resolution: {integrity: sha512-CYXmAr6o1Kw/EZqzYk4CBQK29+M9CqSUPFFu+eU1jZajOiXHOtVaSGjMF/+Nx53EcbOgPEEXLEl1fsLdNodw4Q==}
@@ -7089,7 +7089,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/dbm-lib@5.13.0-rc.1(vue@3.5.18(typescript@5.9.2))':
+  '@jeesite/dbm-lib@5.13.0-rc.2(vue@3.5.18(typescript@5.9.2))':
     dependencies:
       qs: 6.14.0
       vue-i18n: 11.1.11(vue@3.5.18(typescript@5.9.2))
