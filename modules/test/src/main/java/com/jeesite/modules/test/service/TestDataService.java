@@ -111,6 +111,9 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 			}else{
 				testDataChildDao.delete(testDataChild);
 			}
+			// 保存上传图片
+			FileUploadUtils.saveFileUpload(testDataChild, testDataChild.getId(),
+					"testDataChildList["+index+"].testDataChild_image");
 			// 保存上传附件
 			FileUploadUtils.saveFileUpload(testDataChild, testDataChild.getId(),
 					"testDataChildList["+index+"].testDataChild_file");
