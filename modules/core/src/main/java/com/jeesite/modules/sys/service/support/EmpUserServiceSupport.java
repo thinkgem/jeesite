@@ -181,7 +181,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		EmployeeOffice employeeOfficeWhere = new EmployeeOffice();
 		employeeOfficeWhere.setEmpCode(employee.getEmpCode());
 		employeeOfficeDao.deleteByEntity(employeeOfficeWhere);
-		if (employee.getEmployeeOfficeList().size() > 0){
+		if (!employee.getEmployeeOfficeList().isEmpty()){
 			employee.getEmployeeOfficeList().forEach(employeeOffice -> {
 				employeeOffice.setId(IdGen.nextId());
 				employeeOffice.setEmpCode(employee.getEmpCode());
