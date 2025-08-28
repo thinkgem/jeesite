@@ -84,7 +84,7 @@
 
   const bindValue = computed(() => {
     const value = { ...attrs, ...props };
-    return omit(value, 'onChange');
+    return omit(value, 'onChange', 'class');
   });
 
   watch(
