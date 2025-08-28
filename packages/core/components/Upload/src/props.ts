@@ -162,4 +162,8 @@ export const fileListProps = {
     type: Array as PropType<any[]>,
     default: null,
   },
+  emptyText: {
+    type: String,
+    default: '',
+  },
 };

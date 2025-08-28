@@ -127,6 +127,7 @@ export default {
     uploading: 'Uploading',
     uploadWait: 'Please wait for the file upload to finish',
     reUploadFailed: 'Re-upload failed files',
+    fileListEmpty: 'No file has been uploaded yet.',
   },
   verify: {
     error: 'verification failed！',
