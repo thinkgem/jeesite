@@ -159,6 +159,34 @@
       editRule: false,
     },
     {
+      title: t('图片上传'),
+      dataIndex: 'dataMap',
+      width: 160,
+      align: 'left',
+      editRow: true,
+      editComponent: 'Upload',
+      editComponentProps: ({ record: childRecord }) => {
+        return {
+          loadTime: record.value.__t,
+          bizKey: childRecord.id,
+          bizType: 'testDataChild_image',
+          uploadType: 'image',
+          // imageMaxWidth: 1024,
+          // imageMaxHeight: 768,
+          // imageThumbName: '150x150.jpg',
+          size: 'small',
+        };
+      },
+      // 图片上传的必填验证实例
+      // editRule: (value: any, record: Recordable) => {
+      //   return new Promise((resolve, reject) => {
+      //     const len = !value || value['testDataChild_image__len'] || 0;
+      //     if (len == 0) reject(t('请上传图片'));
+      //     else resolve();
+      //   });
+      // },
+    },
+    {
       title: t('文件上传'),
       dataIndex: 'dataMap',
       width: 160,
@@ -171,9 +199,6 @@
           bizKey: childRecord.id,
           bizType: 'testDataChild_file',
           uploadType: 'all',
-          // imageMaxWidth: 1024,
-          // imageMaxHeight: 768,
-          // imageThumbName: '150x150.jpg',
           size: 'small',
         };
       },
@@ -181,7 +206,7 @@
       // editRule: (value: any, record: Recordable) => {
       //   return new Promise((resolve, reject) => {
       //     const len = !value || value['testDataChild_file__len'] || 0;
-      //     if (len == 0) reject(t('请上传图片'));
+      //     if (len == 0) reject(t('请上传文件'));
       //     else resolve();
       //   });
       // },
