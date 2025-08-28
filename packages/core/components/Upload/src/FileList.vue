@@ -1,5 +1,6 @@
 <script lang="tsx">
-  import { defineComponent, CSSProperties, watch, nextTick } from 'vue';
+  import { defineComponent, CSSProperties, nextTick, ref } from 'vue';
+  import { useResizeObserver } from '@vueuse/core';
   import { fileListProps } from './props';
   import { isFunction } from '@jeesite/core/utils/is';
   import { useModalContext } from '@jeesite/core/components/Modal/src/hooks/useModalContext';
@@ -10,19 +11,17 @@
     props: fileListProps,
     setup(props) {
       const modalFn = useModalContext();
-      watch(
-        () => props.dataSource,
-        () => {
-          nextTick(() => {
-            modalFn?.redoModalHeight?.();
-          });
-        },
-      );
+      const tableRef = ref<HTMLTableElement>();
+      useResizeObserver(tableRef, () => {
+        nextTick(() => {
+          modalFn?.redoModalHeight?.();
+        });
+      });
       return () => {
         const { columns, actionColumn, dataSource } = props;
         const columnList = [...columns, actionColumn];
         return (
-          <table class="file-table">
+          <table class="file-table" ref={tableRef}>
             <colgroup>
               {columnList.map((item) => {
                 const { width = 0, dataIndex } = item;
@@ -67,6 +66,13 @@
                   </tr>
                 );
               })}
+              {dataSource.length == 0 && (
+                <tr class="file-table-tr">
+                  <td class="file-table-td center" colspan={columnList.length}>
+                    {props.emptyText}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         );
@@ -87,6 +93,10 @@
       border-left: 1px solid @border-color-base;
       border-bottom: 1px solid @border-color-base;
       padding: 12px 8px;
+      overflow-wrap: break-word;
+      word-break: break-all;
+      white-space: normal;
+      min-width: 100px;
     }
 
     thead {

@@ -9,7 +9,13 @@
     :showOkBtn="false"
   >
     <div class="overflow-x-auto">
-      <FileList :dataSource="fileList" :columns="columns" :actionColumn="actionColumn" :readonly="readonly" />
+      <FileList
+        :dataSource="fileList"
+        :columns="columns"
+        :actionColumn="actionColumn"
+        :readonly="readonly"
+        :emptyText="t('component.upload.fileListEmpty')"
+      />
     </div>
   </BasicModal>
 </template>
@@ -69,13 +75,6 @@
 </script>
 <style lang="less">
   .upload-preview-modal {
-    .file-table-td {
-      overflow-wrap: break-word;
-      word-break: break-all;
-      white-space: normal;
-      min-width: 100px;
-    }
-
     .ant-upload-list {
       display: none;
     }

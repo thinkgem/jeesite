@@ -41,7 +41,12 @@
       </Upload>
     </div>
     <div class="overflow-x-auto">
-      <FileList :dataSource="fileItemList" :columns="columns" :actionColumn="actionColumn" />
+      <FileList
+        :dataSource="fileItemList"
+        :columns="columns"
+        :actionColumn="actionColumn"
+        :emptyText="t('component.upload.fileListEmpty')"
+      />
     </div>
   </BasicModal>
 </template>
@@ -297,13 +302,6 @@
 </script>
 <style lang="less">
   .upload-modal {
-    .file-table-td {
-      overflow-wrap: break-word;
-      word-break: break-all;
-      white-space: normal;
-      min-width: 100px;
-    }
-
     .ant-upload-list {
       display: none;
     }
