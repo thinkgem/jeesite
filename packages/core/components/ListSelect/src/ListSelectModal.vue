@@ -141,6 +141,7 @@
   const tableProps: BasicTableProps = {
     showTableSetting: false,
     useSearchForm: true,
+    immediate: false,
     canResize: true,
     resizeHeightOffset: 60,
     rowSelection,
@@ -166,6 +167,7 @@
       const params = Object.assign(tableAction.getForm().getFieldsValue(), data.queryParams);
       await tableAction.getForm().setFieldsValue(params);
     }
+    await tableAction.reload();
     if (props.config.headerButtons) {
       headerButtons.value = [];
       for (const item of props.config.headerButtons) {
