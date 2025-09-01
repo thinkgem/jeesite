@@ -6,8 +6,8 @@
   "scripts": {
     "bootstrap": "pnpm install",
     "serve": "pnpm dev",
-    "dev": "cross-env VITE_CJS_IGNORE_WARNING=true vite dev",
-    "build": "vite build --mode production",
+    "dev": "cross-env VITE_CJS_IGNORE_WARNING=true NODE_OPTIONS=--trace-deprecation vite dev",
+    "build": "cross-env NODE_OPTIONS=--max_old_space_size=4096 vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "pnpm build && pnpm preview:dist",
     "report": "cross-env REPORT=true pnpm build",
