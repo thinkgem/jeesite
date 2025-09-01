@@ -30,9 +30,9 @@
         <div class="p-2" v-if="filter.column.dataIndex == 'testInput'">
           <a-input
             ref="searchInput"
-            :placeholder="`${t('搜索')}${filter.column.customTitle}`"
+            :placeholder="t('搜索单行文本')"
             :value="filter.selectedKeys[0]"
-            style="width: 168px; margin-bottom: 8px; display: block"
+            class="!w-168px !mb-8px !block"
             @change="(e: any) => filter.setSelectedKeys(e.target.value ? [e.target.value] : [])"
           />
           <a-button type="primary" size="small" class="mr-2 w-20" @click="filter.confirm()">
@@ -57,7 +57,7 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsTestTestDataList">
-  import { unref } from 'vue';
+  import { unref, h } from 'vue';
   import { useEmitter } from '@jeesite/core/store/modules/user';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
@@ -214,7 +214,9 @@
 
   const tableColumns: BasicColumn<TestData>[] = [
     {
-      title: t('单行文本'),
+      // title: t('单行文本'),
+      // title: h('font', { color: '#f00' }, '单行文本'),
+      title: [h('font', { color: '#cf0202' }, '单行'), h('font', { color: '#25b110' }, '文本')],
       dataIndex: 'testInput',
       key: 'a.test_input',
       sorter: true,

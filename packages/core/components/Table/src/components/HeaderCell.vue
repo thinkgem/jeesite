@@ -1,9 +1,15 @@
 <template>
   <span v-if="getIsEditRule" class="c-red vertical-middle pr-1">*</span>
   <EditTableHeaderCell v-if="getIsEdit">
-    {{ getTitle }}
+    <template v-for="title in getTitles" :key="title">
+      <component :is="title" v-if="isComponent(title)" />
+      <template v-else>{{ title }}</template>
+    </template>
   </EditTableHeaderCell>
-  <span v-else>{{ getTitle }}</span>
+  <template v-else v-for="title in getTitles" :key="title">
+    <component :is="title" v-if="isComponent(title)" />
+    <template v-else>{{ title }}</template>
+  </template>
   <BasicHelp v-if="getHelpMessage" :text="getHelpMessage" :class="`${prefixCls}__help`" />
 </template>
 <script lang="ts" setup name="TableHeaderCell">
@@ -24,8 +30,16 @@
 
   const getIsEdit = computed(() => !!props.column?.edit);
   const getIsEditRule = computed(() => props.column?.editRule === true);
-  const getTitle = computed(() => props.column?.customTitle /*|| props.column?.title*/);
   const getHelpMessage = computed(() => props.column?.helpMessage);
+
+  const getTitles = computed(() => {
+    const title = props.column?.title;
+    return title && typeof title === 'object' && 'length' in title ? title : [title];
+  });
+
+  function isComponent(title: any) {
+    return typeof title === 'function' || (title && typeof title === 'object' && 'type' in title);
+  }
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-table-header-cell';
