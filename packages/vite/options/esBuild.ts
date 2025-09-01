@@ -5,9 +5,8 @@
  */
 import type { ESBuildOptions } from 'vite';
 
-export function createEsBuildOptions(mode: string): ESBuildOptions {
+export function createEsBuildOptions(viteEnv: ViteEnv): ESBuildOptions {
   return {
-    // pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : [],
-    drop: mode === 'production' ? ['console', 'debugger'] : [],
+    drop: viteEnv.VITE_DROP_CONSOLE ? ['console', 'debugger'] : [],
   };
 }

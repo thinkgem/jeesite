@@ -25,7 +25,6 @@ declare global {
     VITE_GLOB_API_URL_PREFIX: string;
     VITE_GLOB_ADMIN_PATH: string;
     VITE_FILE_PREVIEW: string;
-    VITE_USE_PWA: boolean;
     VITE_LEGACY: boolean;
   }
 

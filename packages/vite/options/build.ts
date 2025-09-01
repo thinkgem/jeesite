@@ -5,15 +5,16 @@
  */
 import type { BuildOptions } from 'vite';
 
-// 兼容 Chrome 内核最低版本的浏览器，如 360、QQ 浏览器
-export const legacyTargets = ['Chrome 80'];
-export const viteCssTarget = 'chrome80';
+// 现代浏览器支持列表 https://cn.vitejs.dev/config/build-options.html#build-target
+export const viteTarget = ['chrome107', 'edge107', 'firefox104', 'safari16'];
+// 低版本浏览器支持列表，VITE_LEGACY 参数开启时有效 https://www.npmjs.com/package/@vitejs/plugin-legacy
+export const legacyTargets = ['chrome>=87', 'edge>=88', 'firefox>=78', 'safari>=14'];
 
 export function createBuildOptions(viteEnv: ViteEnv): BuildOptions {
   const timestamp = new Date().getTime();
   return {
-    // target: 'es2015',
-    cssTarget: viteCssTarget,
+    target: viteTarget,
+    cssTarget: viteTarget,
     outDir: viteEnv.VITE_OUTPUT_DIR ?? 'dist',
     // 启用 terser 缩小器，当设置 terserOptions 时才会有效
     // minify: 'terser',
@@ -27,12 +28,13 @@ export function createBuildOptions(viteEnv: ViteEnv): BuildOptions {
     reportCompressedSize: false,
     chunkSizeWarningLimit: 9000,
     rollupOptions: {
-      // maxParallelFileOps: 3,
+      maxParallelFileOps: 50,
       output: {
         entryFileNames: `assets/[name]-[hash]-${timestamp}.js`,
+        experimentalMinChunkSize: 12288,
         // manualChunks: {
-        //   vue: ['vue', 'vue-router', 'pinia'],
-        //   antdv: ['ant-design-vue', '@ant-design/icons-vue'],
+        //   vue: ['vue', 'vue-router'],
+        //   antd: ['ant-design-vue', '@ant-design/icons-vue'],
         // },
       },
     },

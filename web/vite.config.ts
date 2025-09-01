@@ -26,7 +26,7 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
     define: await createDefineOptions(),
     plugins: createVitePlugins(isBuild, viteEnv),
     server: createServerOptions(viteEnv),
-    esbuild: createEsBuildOptions(mode),
+    esbuild: createEsBuildOptions(viteEnv),
     build: createBuildOptions(viteEnv),
     css: createCSSOptions(),
     resolve: {
