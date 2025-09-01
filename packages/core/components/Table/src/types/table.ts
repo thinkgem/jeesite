@@ -451,9 +451,6 @@ export interface BasicColumn<T = Recordable> extends ColumnProps<T> {
   // 标记为内置列
   flag?: 'INDEX' | 'DRAG' | 'DEFAULT' | 'CHECKBOX' | 'RADIO' | 'ACTION';
 
-  // 自定义标题
-  customTitle?: VueNode;
-
   // Antdv 3.0 中，不推荐使用 slots 所以新增 slot 指定插槽名称
   slot?: string;
 

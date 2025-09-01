@@ -179,7 +179,7 @@
         const ret: Options[] = [];
         table.getColumns({ ignoreIndex: true, ignoreAction: true }).forEach((item) => {
           ret.push({
-            label: (item.title as string) || (item.customTitle as string),
+            label: item.title as string /* || (item.customTitle as string)*/,
             value: (item.dataIndex_ || item.title) as string,
             ...item,
           });

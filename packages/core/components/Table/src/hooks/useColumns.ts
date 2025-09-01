@@ -228,8 +228,8 @@ export function useColumns(
 
           //if (!slots || !slots?.title) {
           //  //column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
-          column.customTitle = column.title as any;
-          Reflect.deleteProperty(column, 'title');
+          // column.customTitle = column.title as any;
+          // Reflect.deleteProperty(column, 'title');
           //}
           const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
           if (!customRender && format && !edit && !isDefaultAction) {
