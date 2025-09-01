@@ -119,13 +119,22 @@
       // editComponent: 'TreeSelect',
       editComponent: 'ListSelect',
       editComponentProps: {
-        // api: officeTreeData,
-        // params: { isLoadUser: true, userIdPrefix: '' },
-        // canSelectParent: false,
-        // allowClear: true,
-        configFile: import('./select'),
-        checkbox: false,
+        api: officeTreeData,
+        params: { isLoadUser: true, userIdPrefix: '' },
+        canSelectParent: false,
+        allowClear: true,
+        // configFile: import('./select'),
+        // checkbox: false,
       },
+      // 编辑表格联动例子（选择框查询条件，实时读取第一列的数据）
+      // editComponentProps: ({ record: childRecord }) => {
+      //   return {
+      //     configFile: import('./select'),
+      //     queryParams: {
+      //       testInput: childRecord.editValueRefs.testInput,
+      //     },
+      //   };
+      // },
       editRule: false,
     },
     {
