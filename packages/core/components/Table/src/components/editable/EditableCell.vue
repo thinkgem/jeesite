@@ -265,7 +265,7 @@
       column: props.column,
       value: unref(currentValueRef),
       labelValue: unref(currentLabelValueRef),
-      record: toRaw(props.record),
+      record: props.record,
     });
 
     handleValid();

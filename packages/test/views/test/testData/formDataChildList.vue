@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <BasicTable @register="registerTable" @row-click="handleRowClick" />
+    <BasicTable @register="registerTable" @row-click="handleRowClick" @edit-change="onEditChange" />
     <a-button class="mt-2" @click="handleRowAdd" v-auth="'test:testData:edit'">
       <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
     </a-button>
@@ -244,6 +244,13 @@
     size: 'small',
     inset: true,
   });
+
+  function onEditChange({ column, record }) {
+    // 当修改 testInput 的时候，更改 testTextarea 的值，例子（联动）
+    if (column.dataIndex == 'testInput' && record.editValueRefs) {
+      // record.testTextarea = record.editValueRefs.testInput;
+    }
+  }
 
   function handleRowClick(data: Recordable) {
     data.onEdit?.(true, false);
