@@ -143,8 +143,8 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
     case HandlerEnum.OPEN_ROUTE_TRANSITION:
       return { transitionSetting: { enable: value } };
 
-    case HandlerEnum.OPEN_PROGRESS:
-      return { transitionSetting: { openNProgress: value } };
+    // case HandlerEnum.OPEN_PROGRESS:
+    //   return { transitionSetting: { openNProgress: value } };
     // ============root==================
 
     case HandlerEnum.LOCK_TIME:

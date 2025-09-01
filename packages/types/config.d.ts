@@ -77,7 +77,7 @@ export interface TransitionSetting {
   // Whether to open page switching loading
   openPageLoading: boolean;
   // Whether to open the top progress bar
-  openNProgress: boolean;
+  // openNProgress: boolean;
 }
 
 export interface ProjectConfig {

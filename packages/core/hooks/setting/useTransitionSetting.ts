@@ -9,7 +9,7 @@ export function useTransitionSetting() {
 
   const getEnableTransition = computed(() => appStore.getTransitionSetting?.enable);
 
-  const getOpenNProgress = computed(() => appStore.getTransitionSetting?.openNProgress);
+  // const getOpenNProgress = computed(() => appStore.getTransitionSetting?.openNProgress);
 
   const getOpenPageLoading = computed((): boolean => {
     return !!appStore.getTransitionSetting?.openPageLoading;
@@ -20,11 +20,12 @@ export function useTransitionSetting() {
   function setTransitionSetting(transitionSetting: Partial<TransitionSetting>) {
     appStore.setProjectConfig({ transitionSetting });
   }
+
   return {
     setTransitionSetting,
 
     getEnableTransition,
-    getOpenNProgress,
+    // getOpenNProgress,
     getOpenPageLoading,
     getBasicTransition,
   };
