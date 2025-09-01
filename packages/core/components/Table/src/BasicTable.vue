@@ -487,40 +487,6 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-table';
 
-  html[data-theme='dark'] {
-    .@{prefix-cls} {
-      a,
-      .ant-btn-link {
-        color: #42a4e0;
-      }
-
-      .ant-table {
-        &-tbody > tr > td.ant-table-column-sort {
-          background-color: #1e1e1e;
-        }
-
-        .ant-table-tbody > tr {
-          &:hover > td.ant-table-cell-row-hover {
-            background-color: #262626;
-          }
-
-          &.ant-table-row-selected,
-          &.ant-table-row-selected:hover {
-            td,
-            td.ant-table-cell-fix-left,
-            td.ant-table-cell-fix-right {
-              background-color: #2c2c2c;
-            }
-          }
-        }
-      }
-
-      &-header-container {
-        color: rgb(255 255 255 / 75%);
-      }
-    }
-  }
-
   .@{prefix-cls} {
     max-width: 100%;
     background-color: @component-background;
@@ -546,10 +512,6 @@
           }
         }
 
-        .ant-table-column-sorter {
-          margin: 0 -4px 0 -1px;
-        }
-
         .ant-table-title {
           min-height: 40px;
           padding: 6px 0 8px !important;
@@ -564,6 +526,21 @@
             & > thead > tr > th:last-child {
               border-right: 0 !important;
             }
+          }
+        }
+
+        .ant-table-column-sorter {
+          margin: 0 -4px 0 -1px;
+        }
+
+        .ant-table-filter-column {
+          .ant-table-column-sorter {
+            margin: 0 -2px 0 -1px;
+          }
+
+          .ant-table-filter-trigger {
+            margin-right: -8px;
+            margin-left: 0;
           }
         }
 
@@ -792,6 +769,40 @@
           min-height: 24px;
           height: 24px;
         }
+      }
+    }
+  }
+
+  html[data-theme='dark'] {
+    .@{prefix-cls} {
+      a,
+      .ant-btn-link {
+        color: #42a4e0;
+      }
+
+      .ant-table {
+        &-tbody > tr > td.ant-table-column-sort {
+          background-color: #1e1e1e;
+        }
+
+        .ant-table-tbody > tr {
+          &:hover > td.ant-table-cell-row-hover {
+            background-color: #262626;
+          }
+
+          &.ant-table-row-selected,
+          &.ant-table-row-selected:hover {
+            td,
+            td.ant-table-cell-fix-left,
+            td.ant-table-cell-fix-right {
+              background-color: #2c2c2c;
+            }
+          }
+        }
+      }
+
+      &-header-container {
+        color: rgb(255 255 255 / 75%);
       }
     }
   }
