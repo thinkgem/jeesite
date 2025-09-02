@@ -94,7 +94,7 @@ if(table.isTreeEntity){
   </div>
 </template>
 <script lang="ts" setup name="${compNamePrefix}List">
-  import { onMounted<% if(toBoolean(table.optionMap['isImportExport'])){ %>, ref<% } %>, unref<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
+  import { onMounted, ref, unref<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
   	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
   <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
   import { useEmitter } from '@jeesite/core/store/modules/user';
