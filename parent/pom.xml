@@ -33,7 +33,7 @@
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.5.3</zxing.version>
 
-		<poi.version>5.2.3</poi.version>
+		<poi.version>5.4.1</poi.version>
 		<fury.version>0.10.2</fury.version>
 		<bcprov.version>1.78.1</bcprov.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
