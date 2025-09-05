@@ -5,7 +5,7 @@ export default {
     errorMessage: '操作失败，系统异常！',
     timeoutMessage: '登录超时，请重新登录！',
     apiTimeoutMessage: '接口请求超时，请刷新页面重试！',
-    apiRequestFailed: '接口请求出错，请稍候重试！',
+    apiRequestFailed: '接口请求出错，请稍后重试！',
     networkException: '网络异常',
     networkExceptionMsg: '网络异常，请稍后重试！',
 
@@ -29,7 +29,7 @@ export default {
   app: {
     logoutTip: '温馨提醒',
     logoutMessage: '是否确认退出系统？',
-    menuLoading: '请稍后，即将进入系统...',
+    menuLoading: '请稍候，即将进入系统...',
   },
   errorLog: {
     tableTitle: '错误日志列表',
