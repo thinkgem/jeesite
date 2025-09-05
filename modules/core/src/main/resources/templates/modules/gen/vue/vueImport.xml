@@ -80,7 +80,7 @@
   function onUploadProgress(progressEvent: AxiosProgressEvent) {
     const complete = ((progressEvent.loaded / (progressEvent.total || 1)) * 100) | 0;
     if (complete != 100) {
-      uploadInfo.value = t('正在导入，请稍后') + ' ' + complete + '%...';
+      uploadInfo.value = t('正在导入，请稍候') + ' ' + complete + '%...';
     } else {
       uploadInfo.value = '';
     }
