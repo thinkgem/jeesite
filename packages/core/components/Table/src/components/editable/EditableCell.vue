@@ -349,7 +349,9 @@
 
     //const record = await table.updateTableData(index, dataKey, value);
     needEmit && table.emit('edit-end', { record, index, key, value, labelValue });
-    isEdit.value = edit;
+    nextTick(() => {
+      isEdit.value = edit;
+    });
   }
 
   async function handleEnter() {
