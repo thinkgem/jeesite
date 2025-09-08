@@ -5,6 +5,7 @@
 package com.jeesite.modules.config.web;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.LocaleUtils;
 import com.jeesite.common.web.http.ServletUtils;
@@ -12,6 +13,7 @@ import jakarta.servlet.Filter;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.MDC;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,21 +21,28 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.LocaleContextResolver;
 
 /**
- * IP地址黑白名单过滤器配置
+ * 全局过滤器：
+ * 1、IP地址黑白名单过滤器配置
+ * 2、本地化时区上下文设置
+ * 3、Slf4j MDC 标识设置
  */
 @Configuration(proxyBeanMethods = false)
-public class IpAddrFilterConfig {
+public class GlobalFilterConfig {
 
+	private static final String TRACE_ID = "TRACE_ID";
 	private static long clearCacheTime;
 	private static String[] allowPrefixes;
 	private static String[] denyPrefixes;
 
 	@Bean
-	public FilterRegistrationBean<Filter> ipAddrFilter(LocaleContextResolver localeResolver) {
+	public FilterRegistrationBean<Filter> jeesiteGlobalFilter(LocaleContextResolver localeResolver) {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-		bean.setName("ipAddrFilter");
+		bean.setName("jeesiteGlobalFilter");
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 10);
 		bean.setFilter((servletRequest, servletResponse, chain) -> {
+			if (StringUtils.isBlank(MDC.get(TRACE_ID))) {
+				MDC.put(TRACE_ID, IdGen.randomShortString());
+			}
 			if (isAccessAllowed(servletRequest, servletResponse)) {
 				chain.doFilter(servletRequest, servletResponse);
 			} else {
@@ -42,6 +51,7 @@ public class IpAddrFilterConfig {
 				ServletUtils.renderString(response, Global.getText("访问拒绝"));
 			}
 			LocaleUtils.removeTimeZoneAwareLocaleContext();
+			MDC.remove(TRACE_ID);
 		});
 		LocaleUtils.setLocaleResolver(localeResolver);
 		bean.addUrlPatterns("/*");
@@ -77,9 +87,6 @@ public class IpAddrFilterConfig {
 				break;
 			}
 		}
-		if (result) {
-			return true;
-		}
-		return false;
+		return result;
 	}
 }

@@ -4,22 +4,17 @@
  */
 package com.jeesite.modules.sys.interceptor;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import org.slf4j.MDC;
-import org.springframework.core.NamedThreadLocal;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.ByteUtils;
-import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.NamedThreadLocal;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 日志拦截器
@@ -28,16 +23,12 @@ import com.jeesite.modules.sys.utils.UserUtils;
  */
 public class LogInterceptor extends BaseService implements HandlerInterceptor {
 
-	private static final String TRACE_ID = "TRACE_ID";
 	private static final ThreadLocal<Long> startTimeThreadLocal =
 			new NamedThreadLocal<Long>("LogInterceptor StartTime");
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
 			Object handler) throws Exception {
-		if (StringUtils.isBlank(MDC.get(TRACE_ID))) {
-            MDC.put(TRACE_ID, IdGen.randomShortString());
-        }
 		long beginTime = System.currentTimeMillis();// 1、开始时间  
 		startTimeThreadLocal.set(beginTime);		// 线程绑定变量（该数据只有当前请求的线程可见）  
 		if (logger.isDebugEnabled()){
@@ -82,7 +73,6 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 					TimeUtils.formatTime(executeTime), ByteUtils.formatByteSize(totalMemory),
 					ByteUtils.formatByteSize(totalMemory-(totalMemory-runtime.freeMemory())));
 		}
-		MDC.remove(TRACE_ID);
 	}
 
 }
