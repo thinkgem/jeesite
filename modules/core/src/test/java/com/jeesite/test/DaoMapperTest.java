@@ -9,6 +9,7 @@ import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.file.dao.FileUploadDao;
@@ -166,6 +167,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company.setCompanyName("a");
 			company.setCreateDate_gte(new Date());
 			company.setCreateDate_lte(new Date());
+			company.setUpdateDate_between("2025-09-11 ~ 2025-09-12");
 			company.setArea(areaList.get(0));
 			company.getArea().setCreateDate_gte(company.getCreateDate_gte());
 			company.getArea().setCreateDate_lte(company.getCreateDate_gte());
@@ -300,6 +302,18 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				.and("name2", QueryType.IN, new String[]{})
 				.and("name3", QueryType.NOT_IN, ListUtils.newArrayList()).toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
+
+		System.out.println("============ BETWEEN、NOT BETWEEN 测试 ============");
+		Date[] ds = DateUtils.parseDateBetweenString("2025-09-11 ~ 2025-09-12");
+		a = new Post("1").sqlMap().getWhere()
+				.and("create_date", QueryType.BETWEEN, ds)
+				.and("update_date", QueryType.NOT_BETWEEN, ds).toSql();
+		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
+				" AND a.create_date BETWEEN #{sqlMap.where.create_date#BETWEEN1.val[0]}" +
+				" AND #{sqlMap.where.create_date#BETWEEN1.val[1]}" +
+				" AND a.update_date NOT BETWEEN #{sqlMap.where.update_date#NOT_BETWEEN1.val[0]}" +
+				" AND #{sqlMap.where.update_date#NOT_BETWEEN1.val[1]}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 带括号测试 ============");
