@@ -70,25 +70,31 @@ export const basicProps = {
     type: String as PropType<string>,
     default: ctxAdminPath + '/file/fileList',
   },
+  // 选择文件后，是否需要点击上传按钮再上传文件
   isLazy: {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+  // 业务主键
   bizKey: {
     type: [String, Number] as PropType<string | number>,
     default: '',
   },
+  // 业务类型
   bizType: {
     type: String as PropType<string>,
     default: '',
   },
+  // 上传类型
   uploadType: {
     type: String as PropType<UploadType>,
     default: 'all',
   },
+  // 图片压缩最大宽度
   imageMaxWidth: {
     type: Number as PropType<number>,
   },
+  // 图片压缩最大高度
   imageMaxHeight: {
     type: Number as PropType<number>,
   },
@@ -102,6 +108,7 @@ export const basicProps = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+  // 预览按钮大小
   size: {
     type: String as PropType<SizeType>,
     default: DEFAULT_SIZE,
@@ -114,17 +121,25 @@ export const uploadContainerProps = {
     type: Object as PropType<any>,
     default: {},
   },
+  // 是否显示预览按钮
   showPreview: {
     type: Boolean as PropType<boolean>,
     default: true,
   },
+  // 是否显示已上传的文件个数
   showPreviewNumber: {
     type: Boolean as PropType<boolean>,
     default: true,
   },
-  emptyHidePreview: {
+  // 直接在表单里显示预览文件列表
+  showPreviewList: {
     type: Boolean as PropType<boolean>,
     default: false,
+  },
+  // 预览表格为空的时候，是否不显示预览框
+  emptyHidePreview: {
+    type: Boolean as PropType<boolean>,
+    default: true,
   },
   // 加载时间戳，此为监听属性，方便刷新文件列表数据
   loadTime: {
@@ -142,7 +157,7 @@ export const uploadProps = {
 };
 
 export const previewProps = {
-  ...basicProps,
+  ...uploadContainerProps,
   value: {
     type: Array as PropType<FileUpload[]>,
     default: () => [],

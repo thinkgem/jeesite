@@ -17,9 +17,9 @@
             {{ fileList.length }}
           </template>
         </template>
-        <a-button @click="openPreviewModal" :size="size">
+        <a-button @click="props.showPreviewList ? null : openPreviewModal()" :size="props.size">
           <Icon icon="i-bi:eye" />
-          <template v-if="fileList.length && showPreviewNumber">
+          <template v-if="fileList.length && props.showPreviewNumber">
             {{ fileList.length }}
           </template>
         </a-button>
@@ -76,7 +76,8 @@
   const fileListDel = ref<FileUpload[]>([]);
 
   const getShowPreview = computed(() => {
-    const { showPreview, emptyHidePreview } = props;
+    const { showPreview, emptyHidePreview, showPreviewList, showPreviewNumber } = props;
+    if (showPreviewList && !showPreviewNumber) return false;
     if (!showPreview) return false;
     if (!emptyHidePreview) return true;
     return emptyHidePreview ? fileList.value.length > 0 : true;

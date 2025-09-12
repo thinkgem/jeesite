@@ -1,5 +1,6 @@
 <template>
   <BasicModal
+    v-if="!props.showPreviewList"
     width="80%"
     :title="t('component.upload.view')"
     :cancelText="t('component.modal.okText')"
@@ -18,6 +19,15 @@
       />
     </div>
   </BasicModal>
+  <div v-else-if="props.emptyHidePreview ? fileList.length > 0 : true" class="overflow-x-auto mt-3">
+    <FileList
+      :dataSource="fileList"
+      :columns="columns"
+      :actionColumn="actionColumn"
+      :readonly="readonly"
+      :emptyText="t('component.upload.fileListEmpty')"
+    />
+  </div>
 </template>
 <script lang="ts" setup>
   import { watch, ref, useAttrs } from 'vue';
