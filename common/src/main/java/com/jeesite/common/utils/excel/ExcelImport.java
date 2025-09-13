@@ -305,7 +305,7 @@ public class ExcelImport implements Closeable {
 					if (DateUtil.isCellDateFormatted(cell)) {
 						val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
 					}else{
-						if ((Double) val % 1 > 0){
+						if (Math.abs((double)val % 1) > 1E-10){
 							val = new DecimalFormat("0.00").format(val);
 						}else{
 							val = new DecimalFormat("0").format(val);
