@@ -270,7 +270,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 	
 	/**
-	 * 驼峰命名法工具
+	 * 转换为驼峰命名法
 	 * @return
 	 * 		camelCase("hello_world") == "helloWorld" 
 	 * 		capCamelCase("hello_world") == "HelloWorld"
@@ -283,37 +283,35 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         s = s.toLowerCase();
         StringBuilder sb = new StringBuilder(s.length());
         boolean upperCase = false;
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0, j = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == UNDERLINE.charAt(0) || c == MINUS.charAt(0)) {
-                upperCase = i != 1; // 不允许第二个字符是大写
+                upperCase = j > 1; // 不允许第二个字符是大写
             } else if (upperCase) {
                 sb.append(Character.toUpperCase(c));
                 upperCase = false;
+				j++;
             } else {
                 sb.append(c);
+				j++;
             }
         }
         return sb.toString();
     }
 
     /**
-	 * 驼峰命名法工具
+	 * 转换为驼峰命名法（首字母大写）
 	 * @return
 	 * 		camelCase("hello_world") == "helloWorld" 
 	 * 		capCamelCase("hello_world") == "HelloWorld"
 	 * 		uncamelCase("helloWorld") = "hello_world"
 	 */
     public static String capCamelCase(String s) {
-        if (s == null) {
-            return null;
-        }
-        s = camelCase(s);
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
+        return cap(camelCase(s));
     }
     
     /**
-	 * 驼峰命名法工具
+	 * 取消驼峰命名发
 	 * @return
 	 * 		camelCase("hello_world") == "helloWorld" 
 	 * 		capCamelCase("hello_world") == "HelloWorld"
