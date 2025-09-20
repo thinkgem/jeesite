@@ -101,7 +101,7 @@
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 8、Alibaba Druid 1.2
 * 分离版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 经典版：Beetl 3.10（HTML）、jQuery 3.7、Bootstrap 3.3、AdminLTE 2.4
-* 分离版：支持所有现代浏览器，如：谷歌 Chrome 86+、微软 Edge、火狐、国产浏览器 等
+* 分离版：支持所有现代浏览器，如：谷歌 Chrome 87+、微软 Edge、火狐、国产浏览器 等
 * 经典版：支持 IE10 和以上版本，以及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）已支持数据库：<http://jeesite.com/docs/technology/>
@@ -140,6 +140,17 @@
 1. 分离版地址：<https://vue.jeesite.com>
 2. 经典版地址：<https://demo.jeesite.com>
 
+### 快速运行
+
+1. 免安装数据库，使用内嵌 H2 DB、包含 Vue 和 全栈双版本
+2. 环境准备：`JDK 17 或更高版本`、`Maven 3.8+`、无需准备数据库
+3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
+4. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
+5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
+6. 全栈版本地址：<http://127.0.0.1:8980/a/login>
+7. 初始登录账号：超级管理员：system  密码：admin
+8. 部署常见问题：<https://jeesite.com/docs/faq/>
+
 ### 本地运行
 
 1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 8.0+` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
@@ -152,27 +163,21 @@
 8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 9. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
-### 快速运行
-
-1. 环境准备：`JDK 17+`、`Maven 3.8+`、无需准备数据库（使用内嵌 H2 DB、包含 Vue 和 全栈双版本）
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
-3. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
-4. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
-5. 全栈版本地址：<http://127.0.0.1:8980/a/login>
-6. 初始登录账号：超级管理员：system  密码：admin
-7. 部署常见问题：<https://jeesite.com/docs/faq/>
-
 ### 容器运行
 
 - 拉取 Docker 镜像（JeeSite版本不是最新）：
 ```sh
-docker pull thinkgem/jeesite-web
+docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
 ```
-- 启动脚本：
+- 启动镜像：
 ```sh
-docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
-    -v ~/:/data thinkgem/jeesite-web && docker logs -f jeesite-web
+docker run --name js5 -p 8980:8980 -d crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
 ```
+- 查看日志：
+```sh
+docker logs -f js5
+```
+
 - 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 
 ### 开发环境

@@ -26,11 +26,11 @@
 
 		<!-- docker setting -->
 		<docker.dockerHost>unix:///var/run/docker.sock</docker.dockerHost>
-		<docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>
-<!--		<docker.imageName>thinkgem/jeesite-web:amd64</docker.imageName>-->
-<!--		<docker.platform>linux/amd64</docker.platform>-->
-<!--		<docker.imageName>thinkgem/jeesite-web:arm64</docker.imageName>-->
-<!--		<docker.platform>linux/arm64</docker.platform>-->
+		<docker.imageName>thinkgem/jeesite-web-fast:latest</docker.imageName>
+<!--		<docker.imageName>crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:amd64</docker.imageName>-->
+<!--		<docker.platforms>linux/amd64</docker.platforms>-->
+<!--		<docker.imageName>crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:arm64</docker.imageName>-->
+<!--		<docker.platforms>linux/arm64</docker.platforms>-->
 		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
@@ -133,6 +133,26 @@
 					<wtpContextName>${finalName}</wtpContextName>
 				</configuration>
 			</plugin>
+
+			<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin - https://dmp.fabric8.io
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<images>
+						<image>
+							<build>
+								<buildx>
+									<builderName>maven</builderName>
+									<platforms>
+										<platform>${docker.platforms}</platform>
+									</platforms>
+								</buildx>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin> -->
 			
 		</plugins>
 	</build>
