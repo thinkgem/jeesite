@@ -157,14 +157,12 @@ public class OnlineController extends BaseController{
 				onlineTickOutMap = MapUtils.newConcurrentMap();
 			}
 			Object pc = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-			if (pc != null && pc instanceof PrincipalCollection){
+			if (pc instanceof PrincipalCollection){
 				Object pp = ((PrincipalCollection)pc).getPrimaryPrincipal();
-				if (pp != null) {
-					if (pp instanceof LoginInfo){
-						LoginInfo loginInfo = ((LoginInfo)pp);
-						String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
-						onlineTickOutMap.put(key, StringUtils.EMPTY);
-					}
+				if (pp instanceof LoginInfo){
+					LoginInfo loginInfo = ((LoginInfo)pp);
+					String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
+					onlineTickOutMap.put(key, StringUtils.EMPTY);
 				}
 			}
 			SysCacheUtils.put("onlineTickOutMap", onlineTickOutMap);
