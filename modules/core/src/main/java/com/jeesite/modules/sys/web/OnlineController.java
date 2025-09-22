@@ -67,7 +67,7 @@ public class OnlineController extends BaseController{
 	public String list(Model model) {
 		return "modules/sys/onlineList";
 	}
-
+	
 	/**
 	 * 在线用户列表数据
 	 * @author ThinkGem
@@ -75,12 +75,12 @@ public class OnlineController extends BaseController{
 	@RequiresPermissions("sys:online:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public List<Map<String, Object>> listData(String isAllOnline, String isVisitor, String sessionId,
+	public List<Map<String, Object>> listData(String isAllOnline, String isVisitor, String sessionId, 
 			String userCode, String userName, String userType, String orderBy) {
 		List<Map<String, Object>> list = ListUtils.newArrayList();
 		boolean excludeLeave = !Global.YES.equals(isAllOnline);
 		boolean excludeVisitor = !Global.YES.equals(isVisitor);
- 		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave,
+ 		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave, 
 				excludeVisitor, null, sessionId, userCode);
 		long currentTime = System.currentTimeMillis();
 		for (Session session : sessions){
@@ -93,7 +93,7 @@ public class OnlineController extends BaseController{
 			Map<String, Object> map = MapUtils.newLinkedHashMap();
 			// 为了安全性，需要有权限的人才能看
 			if (UserUtils.getSubject().isPermitted("sys:online:edit")){
-				map.put("id", session.getId().toString());
+				map.put("id", session.getId().toString()); 
 			}
 			map.put("startTimestamp", DateUtils.formatDateTime(session.getStartTimestamp()));
 			map.put("lastAccessTime", DateUtils.formatDateTime(session.getLastAccessTime()));
@@ -155,14 +155,12 @@ public class OnlineController extends BaseController{
 				onlineTickOutMap = MapUtils.newConcurrentMap();
 			}
 			Object pc = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-			if (pc != null && pc instanceof PrincipalCollection){
+			if (pc instanceof PrincipalCollection){
 				Object pp = ((PrincipalCollection)pc).getPrimaryPrincipal();
-				if (pp != null) {
-					if (pp instanceof LoginInfo){
-						LoginInfo loginInfo = ((LoginInfo)pp);
-						String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
-						onlineTickOutMap.put(key, StringUtils.EMPTY);
-					}
+				if (pp instanceof LoginInfo){
+					LoginInfo loginInfo = ((LoginInfo)pp);
+					String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
+					onlineTickOutMap.put(key, StringUtils.EMPTY);
 				}
 			}
 			SysCacheUtils.put("onlineTickOutMap", onlineTickOutMap);
