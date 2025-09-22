@@ -64,8 +64,11 @@ public class PropertiesUtils {
 			// 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
 			Set<String> set = SetUtils.newLinkedHashSet();
 			set.addAll(Arrays.asList(DEFAULT_CONFIG_FILE));
-			// 获取 spring.config.location 外部自定义的配置文件
+			// 获取 spring.config.location、spring.config.additional-location 外部自定义的配置文件
 			String customConfigs = System.getProperty("spring.config.location");
+			if (StringUtils.isBlank(customConfigs)){
+				customConfigs = System.getProperty("spring.config.additional-location");
+			}
 			if (StringUtils.isNotBlank(customConfigs)){
 				for (String customConfig : StringUtils.splitComma(customConfigs)){
 					if (!customConfig.contains("$")){
