@@ -16,9 +16,9 @@
         :dictValue="currentValueRef"
         :defaultValue="column.defaultValue"
       />
-      <div v-else class="cell-content" :title="column.ellipsis ? (getValues ?? '') : ''">
+      <div v-else class="cell-content" :title="column.ellipsis ? getValues : ''">
         <EditRender v-if="column.editRender" v-bind="getComponentProps" :edit="false" />
-        <template v-else>{{ getValues ?? '\u00A0' }}</template>
+        <template v-else>{{ getValues }}</template>
       </div>
       <FormOutlined v-if="!column.editRow" :class="`${prefixCls}__normal-icon`" />
     </div>
@@ -176,7 +176,7 @@
     if (props.column?.format && isDef(value)) {
       return formatCell(value, props.column.format, props.record as Recordable, props.index, props.column);
     }
-    if (typeof value == 'object') {
+    if (!value || typeof value == 'object') {
       return '\u00A0';
     }
     return value;
