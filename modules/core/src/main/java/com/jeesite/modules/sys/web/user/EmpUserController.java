@@ -174,7 +174,7 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions(value={"sys:empUser:edit","sys:empUser:authRole"}, logical=Logical.OR)
 	@PostMapping(value = "save")
 	@ResponseBody
-	//@Idempotent // 幂等示例，默认规则：10秒内，相同的会话和相同的提交内容，会提示“请不要频繁操作”
+	//@Idempotent // 幂等示例，默认规则：5秒内，相同的会话和相同的提交内容，会提示“请不要频繁操作”
 	public String save(@Validated EmpUser empUser, String op, HttpServletRequest request) {
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
