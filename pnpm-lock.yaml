@@ -122,7 +122,7 @@ importers:
         version: 10.1.8(eslint@9.33.0(jiti@2.5.1))
       eslint-plugin-prettier:
         specifier: 5.5.4
-        version: 5.5.4(eslint-config-prettier@10.1.8(eslint@9.33.0(jiti@2.5.1)))(eslint@9.33.0(jiti@2.5.1))(prettier@3.6.2)
+        version: 5.5.4(@types/eslint@8.56.12)(eslint-config-prettier@10.1.8(eslint@9.33.0(jiti@2.5.1)))(eslint@9.33.0(jiti@2.5.1))(prettier@3.6.2)
       eslint-plugin-vue:
         specifier: 10.4.0
         version: 10.4.0(@typescript-eslint/parser@8.39.1(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.33.0(jiti@2.5.1))(vue-eslint-parser@10.2.0(eslint@9.33.0(jiti@2.5.1)))
@@ -132,6 +132,9 @@ importers:
       less:
         specifier: 4.4.0
         version: 4.4.0
+      monaco-editor:
+        specifier: 0.52.2
+        version: 0.52.2
       npm-check-updates:
         specifier: 18.0.2
         version: 18.0.2
@@ -477,9 +480,9 @@ importers:
       vite-plugin-mkcert:
         specifier: 1.17.8
         version: 1.17.8(vite@7.1.2(@types/node@24.2.1)(jiti@2.5.1)(less@4.4.0)(terser@5.43.1)(yaml@2.8.1))
-      vite-plugin-monaco-editor:
-        specifier: 1.1.0
-        version: 1.1.0(monaco-editor@0.52.2)
+      vite-plugin-monaco-editor-esm:
+        specifier: 2.0.2
+        version: 2.0.2(monaco-editor@0.52.2)
       vite-plugin-theme-vite3:
         specifier: 2.0.1
         version: 2.0.1(vite@7.1.2(@types/node@24.2.1)(jiti@2.5.1)(less@4.4.0)(terser@5.43.1)(yaml@2.8.1))
@@ -1991,6 +1994,9 @@ packages:
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
+
+  '@types/eslint@8.56.12':
+    resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
@@ -5680,8 +5686,8 @@ packages:
     peerDependencies:
       vite: '>=3'
 
-  vite-plugin-monaco-editor@1.1.0:
-    resolution: {integrity: sha512-IvtUqZotrRoVqwT0PBBDIZPNraya3BxN/bfcNfnxZ5rkJiGcNtO5eAOWWSgT7zullIAEqQwxMU83yL9J5k7gww==}
+  vite-plugin-monaco-editor-esm@2.0.2:
+    resolution: {integrity: sha512-XVkOpL/r0rw1NpbO30vUwG4S0THkC9KB1vjjV8olGd49h4/EQsKl3DrxB6KRDwyZNC9mKiiZgk2L6njUYj3oKQ==}
     peerDependencies:
       monaco-editor: '>=0.33.0'
 
@@ -7549,6 +7555,12 @@ snapshots:
 
   '@types/deep-eql@4.0.2': {}
 
+  '@types/eslint@8.56.12':
+    dependencies:
+      '@types/estree': 1.0.8
+      '@types/json-schema': 7.0.15
+    optional: true
+
   '@types/estree@1.0.8': {}
 
   '@types/event-emitter@0.3.5': {}
@@ -9165,13 +9177,14 @@ snapshots:
     dependencies:
       eslint: 9.33.0(jiti@2.5.1)
 
-  eslint-plugin-prettier@5.5.4(eslint-config-prettier@10.1.8(eslint@9.33.0(jiti@2.5.1)))(eslint@9.33.0(jiti@2.5.1))(prettier@3.6.2):
+  eslint-plugin-prettier@5.5.4(@types/eslint@8.56.12)(eslint-config-prettier@10.1.8(eslint@9.33.0(jiti@2.5.1)))(eslint@9.33.0(jiti@2.5.1))(prettier@3.6.2):
     dependencies:
       eslint: 9.33.0(jiti@2.5.1)
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.11
     optionalDependencies:
+      '@types/eslint': 8.56.12
       eslint-config-prettier: 10.1.8(eslint@9.33.0(jiti@2.5.1))
 
   eslint-plugin-vue@10.4.0(@typescript-eslint/parser@8.39.1(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.33.0(jiti@2.5.1))(vue-eslint-parser@10.2.0(eslint@9.33.0(jiti@2.5.1))):
@@ -11662,7 +11675,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-monaco-editor@1.1.0(monaco-editor@0.52.2):
+  vite-plugin-monaco-editor-esm@2.0.2(monaco-editor@0.52.2):
     dependencies:
       monaco-editor: 0.52.2
 

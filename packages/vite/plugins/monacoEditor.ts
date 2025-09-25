@@ -4,10 +4,10 @@
  * @author ThinkGem
  */
 import type { PluginOption } from 'vite';
-import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+import monacoEditorPlugin from 'vite-plugin-monaco-editor-esm';
 
 export function configMonacoEditorPlugin(): PluginOption {
-  return (monacoEditorPlugin as any).default({
+  return monacoEditorPlugin({
     languageWorkers: ['editorWorkerService', 'json', 'html'],
     customDistPath: (root, buildOutDir) => `${buildOutDir}/monaco`,
     publicPath: 'monaco',

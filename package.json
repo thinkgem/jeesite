@@ -66,6 +66,7 @@
     "eslint-plugin-vue": "10.4.0",
     "globals": "16.3.0",
     "less": "4.4.0",
+    "monaco-editor": "0.52.2",
     "npm-check-updates": "18.0.2",
     "pkg-types": "2.2.0",
     "postcss": "8.5.6",
