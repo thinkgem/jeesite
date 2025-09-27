@@ -163,7 +163,7 @@ docker run --name js5 -p 8980:8980 -d crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.
 docker logs -f js5
 ```
 
-- 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
+- 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
 
 ### 开发环境
 
