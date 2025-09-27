@@ -12,7 +12,7 @@
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>5.13.1.springboot3-SNAPSHOT</version>
+	<version>5.14.0.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Parent</name>
@@ -22,36 +22,37 @@
 	<properties>
 
 		<!-- commons version -->
-		<commons-io.version>2.19.0</commons-io.version>
+		<commons-lang3.version>3.18.0</commons-lang3.version>
 		<commons-text.version>1.13.1</commons-text.version>
+		<commons-io.version>2.20.0</commons-io.version>
 		<commons-email.version>1.6.0</commons-email.version>
 
 		<metadata-extractor.version>2.19.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.20</thumbnailator.version>
-		<twelvemonkeys.version>3.11.0</twelvemonkeys.version>
+		<twelvemonkeys.version>3.12.0</twelvemonkeys.version>
 		<blade-patchca.version>1.1.2</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.5.3</zxing.version>
 
 		<poi.version>5.4.1</poi.version>
-		<fury.version>0.10.2</fury.version>
-		<bcprov.version>1.78.1</bcprov.version>
+		<fury.version>0.10.3</fury.version>
+		<bcprov.version>1.80</bcprov.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
-		<snakeyaml.version>2.2</snakeyaml.version>
+		<snakeyaml.version>2.4</snakeyaml.version>
 		<fastjson.version>2.0.57</fastjson.version>
 		<joda-time.version>2.12.7</joda-time.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
-		<logstash-logback.version>7.4</logstash-logback.version>
+		<logstash-logback.version>8.1</logstash-logback.version>
 
 		<!-- framework version -->
 		<mybatis.version>3.5.19</mybatis.version>
-		<mybatis-spring.version>3.0.4</mybatis-spring.version>
+		<mybatis-spring.version>3.0.5</mybatis-spring.version>
 		<jsqlparser.version>4.9</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
 		<druid.version>1.2.27</druid.version>
 		<shiro.version>2.0.5</shiro.version>
 		<quartz.version>2.5.0</quartz.version>
-		<swagger3.version>2.2.27</swagger3.version>
+		<swagger3.version>2.2.36</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
 
 		<!-- jdbc driver for your db version -->
