@@ -133,6 +133,19 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 开发规范：<https://jeesite.com/docs/standard/>
 * 代码生成：<https://jeesite.com/docs/code-gen/>
 
+## 生态系统
+
+* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
+* Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
+* 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
+* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
+* PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
+* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
+* JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
+* Mybatis-Plus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+
 ## 快速运行
 
 ### 初始化数据库
