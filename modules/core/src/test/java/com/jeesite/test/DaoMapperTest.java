@@ -10,6 +10,8 @@ import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.SqlMap;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.file.dao.FileUploadDao;
@@ -242,9 +244,23 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			EmpUser empUser = new EmpUser();
 			empUser.setCodes(new String[]{"SDJN01","SDJN02"});
 			empUser.setPage(new Page<>(1, 3));
+			empUser.sqlMap().getColumn().addExtSql("num", "COUNT(1) as num");
+			empUser.sqlMap().getGroup().setGroupBy("a.emp_id, a.emp_code");
 			List<EmpUser> empUserList = empUserDao.findUserListByOfficeCodes(empUser);
 			System.out.println(empUserList);
 			Assert.assertFalse("empUserDao.findUserListByOfficeCodes", empUserList.isEmpty());
+
+			System.out.println("============ 分组查询 5.14.0 ============");
+			Post postGroup = new Post();
+			SqlMap sqlMap = postGroup.sqlMap();
+			sqlMap.getColumn()
+					.setExcludeAttrNames(SetUtils.newHashSet("*"))
+					.addExtSql("column", "a.post_type, COUNT(a.post_type) AS typeNum");
+			sqlMap.getGroup().setGroupBy("a.post_type").setHaving("COUNT(a.post_type) > 0");
+			sqlMap.getOrder().setOrderBy(StringUtils.EMPTY);
+			List<Post> postGroupList = postDao.findList(postGroup);
+			System.out.println(postGroupList);
+			Assert.assertFalse("postDao.findList", postGroupList.isEmpty());
 
 			System.out.println("\n===========================================\n");
 
@@ -478,28 +494,34 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		Post queryPost = new Post("1");
 		queryPost.currentUser(new User("system"));
 		queryPost.setPostType("ceo");
-		queryPost.sqlMap().getColumn().setExcludeAttrNames(SetUtils.newHashSet("postType"));
-		queryPost.sqlMap().getColumn().setIncludeAttrNames(SetUtils.newHashSet("postName"));
-		queryPost.sqlMap().getColumn().addExtSql("c1", "b.column1 AS \"column1\"");
-		queryPost.sqlMap().getColumn().addExtSql("c2", "c.column2 AS \"column2\"");
-		queryPost.sqlMap().getTable().addExtSql("t1", "JOIN test1 b ON b.post_code = a.post_code");
-		queryPost.sqlMap().getTable().addExtSql("t2", "JOIN test2 c ON b.test_code = a.test_code");
-		queryPost.sqlMap().getWhere().addExtSql("w1", "AND b.name1 = '123'");
-		queryPost.sqlMap().getWhere().addExtSql("w2", "AND c.name2 = '123'");
-		a = "SELECT " + queryPost.sqlMap().getColumn().toSql();
-		a += " FROM " + queryPost.sqlMap().getTable().toSql();
-		a += " WHERE " + queryPost.sqlMap().getWhere().toSql();
-		b = "SELECT a.`corp_code` AS \"corpCode\", a.`corp_name` AS \"corpName\", a.`status` AS \"status\"," +
-					" a.`create_by` AS \"createBy\", a.`create_date` AS \"createDate\", a.`update_by` AS \"updateBy\"," +
-					" a.`update_date` AS \"updateDate\", a.`post_name` AS \"postName\"," +
-					" b.column1 AS \"column1\", c.column2 AS \"column2\"" +
+		SqlMap sqlMap = queryPost.sqlMap();
+		sqlMap.getColumn()
+				.setExcludeAttrNames(SetUtils.newHashSet("postType",
+						"createBy", "createDate", "updateBy", "updateDate", "status", "corpCode", "corpName"))
+				.setIncludeAttrNames(SetUtils.newHashSet("postName"))
+				.addExtSql("c1", "b.column1 AS \"column1\"")
+				.addExtSql("c2", "COUNT(c.column2) AS \"column2\""); // 聚合函数
+		sqlMap.getTable()
+				.addExtSql("t1", "JOIN test1 b ON b.post_code = a.post_code")
+				.addExtSql("t2", "JOIN test2 c ON b.test_code = a.test_code");
+		sqlMap.getWhere()
+				.addExtSql("w1", "AND b.name1 = '123'");
+		sqlMap.getGroup()
+				.setGroupBy("c.name2")				// 分组查询 v5.14.0
+				.setHaving("COUNT(c.column2) > 0"); // 分组条件 v5.14.0
+		a = "SELECT " + sqlMap.getColumn().toSql();
+		a += " FROM " + sqlMap.getTable().toSql();
+		a += " WHERE " + sqlMap.getWhere().toSql();
+		a += " GROUP BY " + sqlMap.getGroup().toSql();
+		a += " ORDER BY " + sqlMap.getOrder().toSql();
+		b = "SELECT a.`post_name` AS \"postName\", b.column1 AS \"column1\", COUNT(c.column2) AS \"column2\"" +
 				" FROM `js_sys_post` a" +
-					" JOIN test1 b ON b.post_code = a.post_code" +
-					" JOIN test2 c ON b.test_code = a.test_code" +
-				" WHERE a.`status` != #{STATUS_DELETE}" +
-					" AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
-					" AND a.`post_type` = #{sqlMap.where#post_type#EQ1}" +
-					" AND b.name1 = '123' AND c.name2 = '123'";
+				" JOIN test1 b ON b.post_code = a.post_code" +
+				" JOIN test2 c ON b.test_code = a.test_code" +
+				" WHERE a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
+					" AND a.`post_type` = #{sqlMap.where#post_type#EQ1} AND b.name1 = '123'" +
+				" GROUP BY c.name2 HAVING COUNT(c.column2) > 0" +
+				" ORDER BY a.post_sort ASC";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.exit(0);
