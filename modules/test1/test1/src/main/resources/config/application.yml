@@ -85,7 +85,6 @@ spring:
   # 打印横幅
   main:
     bannerMode: "off"
-    allow-bean-definition-overriding: true
 
 # 日志配置
 logging:
