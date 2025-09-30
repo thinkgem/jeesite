@@ -756,8 +756,11 @@ web:
   core: 
     enabled: true
   
-  # 在线API文档工具
-  swagger: 
+# 在线API文档
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
     enabled: true
   
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）

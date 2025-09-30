@@ -166,9 +166,12 @@ web:
   core:
     enabled: false
   
-  # 在线API文档工具
-  swagger: 
-    enabled: false
+# 在线API文档
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
 
 # 文件上传
 file:
