@@ -52,6 +52,17 @@
 			<artifactId>fury-core</artifactId>
 			<version>${fury.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.fury</groupId>
+			<artifactId>fury-extensions</artifactId>
+			<version>${fury.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.fury</groupId>
+					<artifactId>fury-test-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		
 		<!-- Jackson json -->
 		<dependency>
