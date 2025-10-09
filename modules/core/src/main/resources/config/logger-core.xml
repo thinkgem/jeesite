@@ -34,6 +34,7 @@
 	<logger name="com.bstek.ureport" level="DEBUG" />
 	
 	<logger name="com.jeesite" level="DEBUG" />
+	<logger name="com.jeesite.common.web" level="INFO" />
 	<logger name="com.jeesite.common.i18n" level="INFO" />
 	<logger name="com.jeesite.common.shiro" level="INFO" />
 	<logger name="com.jeesite.common.beetl" level="INFO" />
