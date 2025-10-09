@@ -6,6 +6,7 @@ package com.jeesite.common.lang;
 
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +32,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 分隔字符串（逗号分隔）
 	 * @param str 字符串
-	 * @return
 	 */
 	public static String[] splitComma(final String str) {
 		return split(str, COMMA);
@@ -40,7 +40,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 连接字符串（逗号分隔）
 	 * @param array 字符串数组
-	 * @return
 	 */
 	public static String joinComma(final Object[] array) {
 		return join(array, COMMA);
@@ -49,7 +48,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 连接字符串（逗号分隔）
 	 * @param iterable 字符串集合
-	 * @return
 	 */
 	public static String joinComma(final Iterable<?> iterable) {
 		return join(iterable, COMMA);
@@ -57,8 +55,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 转换为字节数组
-     * @param str
-     * @return
+     * @param str 字符串
      */
     public static byte[] getBytes(String str){
     	if (str != null){
@@ -70,8 +67,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     
     /**
      * 转换为字节数组
-     * @param bytes
-     * @return
+     * @param bytes 字节数组
      */
     public static String toString(byte[] bytes){
 		return new String(bytes, StandardCharsets.UTF_8);
@@ -110,10 +106,79 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     	}
     	return false;
     }
+
+	/**
+	 * 比较字符串，是否相等
+	 */
+    public static boolean equals(final CharSequence cs1, final CharSequence cs2) {
+        return Strings.CS.equals(cs1, cs2);
+    }
+
+	/**
+	 * 比较字符串，是否相等（忽略大小写）
+	 */
+    public static boolean equalsIgnoreCase(final CharSequence cs1, final CharSequence cs2) {
+        return Strings.CI.equals(cs1, cs2);
+    }
+
+	/**
+	 * 比较字符串，是否在字符串中包含
+	 */
+    public static boolean contains(final CharSequence seq, final CharSequence searchSeq) {
+        return Strings.CS.contains(seq, searchSeq);
+    }
+
+	/**
+	 * 比较字符串，前缀是否匹配
+	 */
+    public static boolean startsWith(final CharSequence str, final CharSequence prefix) {
+        return Strings.CS.startsWith(str, prefix);
+    }
+
+	/**
+	 * 比较字符串，前缀是否匹配，只要有一个匹配就成立
+	 */
+    public static boolean startsWithAny(final CharSequence sequence, final CharSequence... searchStrings) {
+        return Strings.CS.startsWithAny(sequence, searchStrings);
+    }
+
+	/**
+	 * 比较字符串，前缀是否匹配（忽略大小写）
+	 */
+    public static boolean startsWithIgnoreCase(final CharSequence str, final CharSequence prefix) {
+        return Strings.CI.startsWith(str, prefix);
+    }
+
+	/**
+	 * 比较字符串，后缀是否匹配
+	 */
+    public static boolean endsWith(final CharSequence str, final CharSequence suffix) {
+        return Strings.CS.endsWith(str, suffix);
+    }
+
+	/**
+	 * 比较字符串，后缀是否匹配，只要有一个匹配就成立
+	 */
+    public static boolean endsWithAny(final CharSequence sequence, final CharSequence... searchStrings) {
+        return Strings.CS.endsWithAny(sequence, searchStrings);
+    }
+
+	/**
+	 * 比较字符串，后缀是否匹配（忽略大小写）
+	 */
+    public static boolean endsWithIgnoreCase(final CharSequence str, final CharSequence suffix) {
+        return Strings.CI.endsWith(str, suffix);
+    }
+
+	/**
+	 * 替换字符串
+	 */
+    public static String replace(final String text, final String searchString, final String replacement) {
+        return Strings.CS.replace(text, searchString, replacement);
+    }
     
     /**
      * 去除左右空格（包含中文空格）
-     * @param str
      */
     public static String trim2(final String str) {
         return str == null ? null : str.replaceAll("^[\\s|　| ]*|[\\s|　| ]*$", "");
@@ -135,8 +200,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	
 	/**
 	 * 替换为手机识别的HTML，去掉样式及属性，保留回车。
-	 * @param html
-	 * @return
 	 */
 	public static String toMobileHtml(String html){
 		if (isBlank(html)){
@@ -147,8 +210,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	
 	/**
 	 * 对txt进行HTML编码，并将\n转换为&gt;br/&lt;、\t转换为&nbsp; &nbsp;
-	 * @param txt
-	 * @return
 	 */
 	public static String toHtml(String txt){
 		if (isBlank(txt)){
@@ -161,7 +222,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 缩略字符串（不区分中英文字符）
 	 * @param str 目标字符串
 	 * @param length 截取长度
-	 * @return
 	 */
 	public static String abbr(String str, int length) {
 		if (isBlank(str)){
@@ -193,13 +253,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 缩略字符串（适应于与HTML标签的）
 	 * @param param 目标字符串
 	 * @param length 截取长度
-	 * @return
 	 */
 	public static String htmlAbbr(String param, int length) {
 		if (isBlank(param)){
 			return EMPTY;
 		}
-		StringBuffer result = new StringBuffer();
+		StringBuilder result = new StringBuilder();
 		int n = 0;
 		char temp;
 		boolean isCode = false; // 是不是HTML代码
@@ -223,7 +282,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-
 			if (n <= length - 3) {
 				result.append(temp);
 			} else {
@@ -352,39 +410,40 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     	StringBuilder result = new StringBuilder();
     	StringBuilder val = new StringBuilder();
     	String[] vals = split(objectString, ".");
-    	for (int i=0; i<vals.length; i++){
-    		val.append("." + vals[i]);
-    		result.append("!"+(val.substring(1))+"?'':");
-    	}
+		for (String s : vals) {
+			val.append(".").append(s);
+			result.append("!").append(val.substring(1)).append("?'':");
+		}
     	result.append(val.substring(1));
     	return result.toString();
     }
 
 	/**
 	 * 获取随机字符串
-	 * @param count
-	 * @return
+	 * @param count 长度
 	 */
 	public static String getRandomStr(int count) {
 		char[] codeSeq = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
 				'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
 				'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-		Random random = new Random();
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < count; i++) {
-			String r = String.valueOf(codeSeq[random.nextInt(codeSeq.length)]);
-			s.append(r);
-		}
-		return s.toString();
+		return getRandom(count, codeSeq);
 	}
 
 	/**
 	 * 获取随机数字
-	 * @param count
-	 * @return
+	 * @param count 长度
 	 */
 	public static String getRandomNum(int count) {
 		char[] codeSeq = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+		return getRandom(count, codeSeq);
+	}
+
+	/**
+	 * 获取随机字符串
+	 * @param count 长度
+	 * @param codeSeq 因子
+	 */
+	private static String getRandom(int count, char[] codeSeq) {
 		Random random = new Random();
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < count; i++) {
@@ -402,7 +461,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 		false or null：不显示编码：name
 	 * @param code 编码
 	 * @param name 名称
-	 * @return 
 	 */
 	public static String getTreeNodeName(String isShowCode, String code, String name) {
 		if ("true".equals(isShowCode) || "1".equals(isShowCode)) {
