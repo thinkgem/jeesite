@@ -2,7 +2,8 @@
 # 打印横幅
 spring:
   main:
-    bannerMode: "off"
+    banner-mode: "off"
+    lazy-initialization: true
 
 # 日志配置
 logging:

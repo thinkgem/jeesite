@@ -81,7 +81,8 @@ spring:
 
   # 打印横幅
   main:
-    bannerMode: "off"
+    banner-mode: "off"
+    lazy-initialization: true
     allow-bean-definition-overriding: true
     
 # 日志配置
