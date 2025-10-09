@@ -79,7 +79,6 @@ spring:
   main:
     banner-mode: "off"
     lazy-initialization: true
-    allow-bean-definition-overriding: true
     
 # 日志配置
 logging:
