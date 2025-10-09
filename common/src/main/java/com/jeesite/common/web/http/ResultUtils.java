@@ -15,12 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class ResultUtils {
 
-	private static final boolean isDefaultResult = PropertiesUtils.getInstance()
-			.getPropertyToBoolean("web.isDefaultResult", "false");
-	private static final String resultParamName = PropertiesUtils.getInstance()
-			.getProperty("web.resultParamName", "__data");
-	private static final String headerParamName = PropertiesUtils.getInstance()
-			.getProperty("web.headerParamName", "x-data");
+	private static final PropertiesUtils props = PropertiesUtils.getInstance();
+	private static final boolean isDefaultResult = props.getPropertyToBoolean("web.isDefaultResult", "false");
+	private static final String resultParamName = props.getProperty("web.resultParamName", "__data");
+	private static final String headerParamName = props.getProperty("web.headerParamName", "x-data");
 
 	/**
 	 * 设置 web.isResult 参数可强制全局使用统一结果输出，否则，传递 __data=true 参数，或 x-data 请求头为 true 时启用
