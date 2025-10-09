@@ -267,7 +267,8 @@ spring:
 
   # 打印横幅
   main:
-    bannerMode: "off"
+    banner-mode: "off"
+    lazy-initialization: true
 
   # MVC 映射匹配策略
   mvc:
