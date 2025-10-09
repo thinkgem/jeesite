@@ -28,7 +28,6 @@ import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
@@ -154,15 +153,13 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 				
 				// 其它类型，根据项目需要自行创建
 				else{
-					try{
-						CasCreateUser casCreateUser = SpringUtils.getBean(CasCreateUser.class);
-						if(casCreateUser != null){
-							casCreateUser.createUser(user, attrs);
-						}
-					}catch(NoSuchBeanDefinitionException e){
+					User finalUser = user;
+					SpringUtils.getBeanIfAvailable(CasCreateUser.class, (casCreateUser) -> {
+						casCreateUser.createUser(finalUser, attrs);
+					}, (e -> {
 						throw new AuthenticationException("msg:用户 “" + token.getUsername()
-								+ "”, 类型 “" + user.getUserType() + "” 在本系统中不存在, 请联系管理员.");
-					}
+								+ "”, 类型 “" + finalUser.getUserType() + "” 在本系统中不存在, 请联系管理员.");
+					}));
 				}
 			}else{
 				throw new AuthenticationException("msg:用户 “" + token.getUsername() + "” 在本系统中不存在, 请联系管理员.");
