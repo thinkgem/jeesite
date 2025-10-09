@@ -72,15 +72,13 @@ public class JsonMapper extends ObjectMapper {
 	public JsonMapper setLocaleTimeZoneDateFormat(){
 		PropertiesUtils props = PropertiesUtils.getInstance();
 		// 设置默认语言环境
-		String defaultLocale = props.getProperty("lang.defaultLocale");
-		if (StringUtils.isNotBlank(defaultLocale)) {
+		props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
 			this.setLocale(LocaleUtils.toLocale(defaultLocale));
-		}
+		});
 		// 设置默认时区
-		String defaultTimeZone = props.getProperty("lang.defaultTimeZone");
-		if (StringUtils.isNotBlank(defaultTimeZone)) {
+		props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
 			this.setTimeZone(TimeZone.getTimeZone(defaultTimeZone));
-		}
+		});
 		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
 			private static final long serialVersionUID = 1L;
 			@Override
