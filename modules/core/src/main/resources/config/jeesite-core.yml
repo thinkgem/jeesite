@@ -112,7 +112,8 @@ spring:
     
   # 打印横幅
   main:
-    bannerMode: "off"
+    banner-mode: "off"
+    lazy-initialization: true
 
   # 热部署工具
   devtools:
