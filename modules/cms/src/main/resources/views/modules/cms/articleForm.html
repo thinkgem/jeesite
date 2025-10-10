@@ -240,11 +240,13 @@ $('#inputForm').validate({
 		$('#wordCount').val(contentUE.getContentTxt().length);
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
+			//# if(parameter['category.showModes'] != '3'){
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){
 					contentWindow.page();
 				});
 			}
+			//# }
 		}, "json");
     }
 });
