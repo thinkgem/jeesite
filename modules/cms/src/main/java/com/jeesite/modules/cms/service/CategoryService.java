@@ -33,8 +33,6 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 
 	/**
 	 * 获取单条数据
-	 * @param category
-	 * @return
 	 */
 	@Override
 	public Category get(Category category) {
@@ -52,8 +50,6 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	
 	/**
 	 * 查询列表数据
-	 * @param category
-	 * @return
 	 */
 	@Override
 	public List<Category> findList(Category category) {
@@ -62,19 +58,15 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 
 	/**
 	 * 保存数据（插入或更新）
-	 * @param category
 	 */
 	@Override
 	@Transactional
 	public void save(Category category) {
 		super.save(category);
-		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(category, category.getId(), "category_image");
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(category);
-		}
+		// 清理栏目缓存
+		clearCache(category);
 	}
 	
 	/**
@@ -89,27 +81,37 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 
 	/**
 	 * 更新状态
-	 * @param category
 	 */
 	@Override
 	@Transactional
 	public void updateStatus(Category category) {
 		super.updateStatus(category);
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(category);
-		}
+		// 清理栏目缓存
+		clearCache(category);
 	}
 
 	/**
 	 * 删除数据
-	 * @param category
 	 */
 	@Override
 	@Transactional
 	public void delete(Category category) {
 		category.sqlMap().markIdDelete();
 		super.delete(category);
+		// 清理栏目缓存
+		clearCache(category);
+	}
+
+	/**
+	 * 清理栏目缓存
+	 */
+	public void clearCache(Category category) {
+		// 清理栏目缓存
+		CmsUtils.removeCache("category_" + category.getId());
+		// 清理栏目列表缓存
+		CmsUtils.removeCacheByKeyPrefix("categoryList_" + category.getSite().getId() + "_" + category.getParentCode() + "_");
+		// 清理主导航缓存
+		CmsUtils.removeCache("mainNavList_" + category.getSite().getId());
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(category);
