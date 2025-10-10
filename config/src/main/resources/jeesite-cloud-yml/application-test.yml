@@ -1,8 +1,7 @@
 
-# 数据库连接
-jdbc: 
+spring:
   
-  # JTA 分布式事务
+  # JTA XA 事务（spring boot 3）
   jta:
     enabled: false
     
