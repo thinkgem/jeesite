@@ -26,7 +26,7 @@ public class MiniApplication extends SpringBootServletInitializer {
 		SpringApplication.run(MiniApplication.class, args);
 		logger.info(
 				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   启动完成，系统监控地址：http://127.0.0.1:"
+				+ "\r\n   启动完成，监控地址：http://127.0.0.1:"
 				+ Global.getProperty("server.port") + FileUtils.path("/"
 				+ Global.getProperty("server.servlet.context-path")
 				+ Global.getAdminPath()) + "/state/server/index"
