@@ -40,7 +40,7 @@ public class CasFilter extends CasBaseFilter {
 	 */
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), (HttpServletRequest)request);
+		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(subject), (HttpServletRequest)request);
 		ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, getSuccessUrl());
 		return false;
 	}
