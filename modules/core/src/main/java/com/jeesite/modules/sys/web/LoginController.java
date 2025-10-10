@@ -21,7 +21,6 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -60,9 +59,9 @@ public class LoginController extends BaseController{
 			return null;
 		}
 
-		LoginInfo loginInfo = UserUtils.getLoginInfo();
-		
 		// 如果已经登录，则跳转到管理首页
+		Subject subject = UserUtils.getSubject();
+		LoginInfo loginInfo = UserUtils.getLoginInfo(subject);
 		if(loginInfo != null){
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
@@ -155,18 +154,9 @@ public class LoginController extends BaseController{
 			return null;
 		}
 
-		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
-		Subject subject = SecurityUtils.getSubject();
-		if (!subject.isPermitted("user")){
-			subject.logout();
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
-			return null;
-		}
-
 		// 获取登录用户信息，未加载shiro模块时会为空，直接访问则提示操作权限不足。
-		LoginInfo loginInfo = UserUtils.getLoginInfo();
+		Subject subject = UserUtils.getSubject();
+		LoginInfo loginInfo = UserUtils.getLoginInfo(subject);
 		if(loginInfo == null){
 			subject.logout();
 			String queryString = request.getQueryString();
@@ -174,7 +164,7 @@ public class LoginController extends BaseController{
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
 			return null;
 		}
-		
+
 		// 当前用户对象信息
 		User user = UserUtils.get(loginInfo.getId());
 		if (user == null){
@@ -217,6 +207,15 @@ public class LoginController extends BaseController{
 					}
 				}
 			}
+		}
+
+		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
+		else if (!subject.isPermitted("user")){
+			subject.logout();
+			String queryString = request.getQueryString();
+			queryString = queryString == null ? "" : "?" + queryString;
+			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			return null;
 		}
 
 		// 获取当前会话对象，并返回一些数据
