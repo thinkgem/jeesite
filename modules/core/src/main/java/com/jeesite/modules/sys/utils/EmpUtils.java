@@ -107,12 +107,8 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<EmployeeOffice> getEmployeeOfficeList(){
-		List<EmployeeOffice> list = UserUtils.getCache(CACHE_EMPLOYEE_OFFICE_LIST);
-		if (list == null){
-			list = Static.employeeService.findEmployeeOfficeList(getEmployee());
-			UserUtils.putCache(CACHE_EMPLOYEE_OFFICE_LIST, list);
-		}
-		return list;
+		return UserUtils.computeIfAbsentCache(CACHE_EMPLOYEE_OFFICE_LIST, k ->
+				Static.employeeService.findEmployeeOfficeList(getEmployee()));
 	}
 	
 	/**
@@ -143,14 +139,19 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<Office> getOfficeAllList(){
-		List<Office> officeList = CorpUtils.getCache(CACHE_OFFICE_ALL_LIST);
-		if (officeList == null){
+//		List<Office> officeList = CorpUtils.getCache(CACHE_OFFICE_ALL_LIST);
+//		if (officeList == null){
+//			Office where = new Office();
+//			where.setStatus(Office.STATUS_NORMAL);
+//			officeList = Static.officeService.findList(where);
+//			CorpUtils.putCache(CACHE_OFFICE_ALL_LIST, officeList);
+//		}
+//		return officeList;
+		return CorpUtils.computeIfAbsentCache(CACHE_OFFICE_ALL_LIST, k -> {
 			Office where = new Office();
 			where.setStatus(Office.STATUS_NORMAL);
-			officeList = Static.officeService.findList(where);
-			CorpUtils.putCache(CACHE_OFFICE_ALL_LIST, officeList);
-		}
-		return officeList;
+			return Static.officeService.findList(where);
+		});
 	}
 
 	/**
@@ -304,14 +305,19 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<Company> getCompanyAllList(){
-		List<Company> companyList = CorpUtils.getCache(CACHE_COMPANY_ALL_LIST);
-		if (companyList == null){
+//		List<Company> companyList = CorpUtils.getCache(CACHE_COMPANY_ALL_LIST);
+//		if (companyList == null){
+//			Company where = new Company();
+//			where.setStatus(Office.STATUS_NORMAL);
+//			companyList = Static.companyService.findList(where);
+//			CorpUtils.putCache(CACHE_COMPANY_ALL_LIST, companyList);
+//		}
+//		return companyList;
+		return CorpUtils.computeIfAbsentCache(CACHE_COMPANY_ALL_LIST, k -> {
 			Company where = new Company();
 			where.setStatus(Office.STATUS_NORMAL);
-			companyList = Static.companyService.findList(where);
-			CorpUtils.putCache(CACHE_COMPANY_ALL_LIST, companyList);
-		}
-		return companyList;
+			return Static.companyService.findList(where);
+		});
 	}
 	
 	/**
@@ -351,12 +357,8 @@ public class EmpUtils {
 	 * @return
 	 */
 	public static List<EmployeePost> getEmployeePostList(){
-		List<EmployeePost> list = UserUtils.getCache(CACHE_EMPLOYEE_POST_LIST);
-		if (list == null){
-			list = getEmployeePostList(getEmployee().getEmpCode());
-			UserUtils.putCache(CACHE_EMPLOYEE_POST_LIST, list);
-		}
-		return list;
+		return UserUtils.computeIfAbsentCache(CACHE_EMPLOYEE_POST_LIST, k ->
+				getEmployeePostList(getEmployee().getEmpCode()));
 	}
 
 	/**

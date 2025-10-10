@@ -120,8 +120,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	public void updateExpiredWeight(Article article) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate = CmsUtils.getCache("updateExpiredWeightDateByArticle");
-		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null
-				&& updateExpiredWeightDate.getTime() < System.currentTimeMillis())) {
+		if (updateExpiredWeightDate == null || updateExpiredWeightDate.getTime() < System.currentTimeMillis()) {
 			article.setWeightDate(new Date());
 			dao.updateExpiredWeight(article);
 			CmsUtils.putCache("updateExpiredWeightDateByArticle", DateUtils.addHours(new Date(), 6));

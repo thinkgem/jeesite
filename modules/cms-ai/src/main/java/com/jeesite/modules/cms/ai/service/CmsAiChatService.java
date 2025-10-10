@@ -85,11 +85,7 @@ public class CmsAiChatService extends BaseService {
 	}
 
 	public Map<String, Map<String, Object>> getChatCacheMap() {
-		Map<String, Map<String, Object>> cache = CacheUtils.get(CMS_CHAT_CACHE, getChatCacheKey());
-		if (cache == null) {
-			cache = MapUtils.newHashMap();
-		}
-		return cache;
+		return CacheUtils.computeIfAbsent(CMS_CHAT_CACHE, getChatCacheKey(), k -> MapUtils.newHashMap());
 	}
 
 	/**

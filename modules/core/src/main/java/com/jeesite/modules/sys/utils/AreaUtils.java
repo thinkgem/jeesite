@@ -4,11 +4,11 @@
  */
 package com.jeesite.modules.sys.utils;
 
-import java.util.List;
-
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.service.AreaService;
+
+import java.util.List;
 
 /**
  * 
@@ -29,15 +29,10 @@ public class AreaUtils {
 	
 	/**
 	 * 获取所有区域列表（系统级别缓存）
-	 * @return
 	 */
 	public static List<Area> getAreaAllList(){
-		List<Area> areaList = SysCacheUtils.get(CACHE_AREA_ALL_LIST);
-		if (areaList == null){
-			areaList = Static.areaService.findList(new Area());
-			SysCacheUtils.put(CACHE_AREA_ALL_LIST, areaList);
-		}
-		return areaList;
+		return SysCacheUtils.computeIfAbsentCache(CACHE_AREA_ALL_LIST, k ->
+				Static.areaService.findList(new Area()));
 	}
 	
 	/**

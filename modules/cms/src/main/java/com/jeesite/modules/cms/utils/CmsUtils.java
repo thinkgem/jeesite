@@ -20,10 +20,10 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
 import org.springframework.ui.Model;
 
-import jakarta.servlet.ServletContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * CmsUtils
@@ -69,13 +69,8 @@ public class CmsUtils {
 	 * 获得站点列表
 	 */
 	public static List<Site> getSiteList() {
-		@SuppressWarnings("unchecked")
-		List<Site> siteList = (List<Site>) getCache("siteList");
-		if (siteList == null) {
-			siteList = Static.siteService.findList(new Site());
-			putCache("siteList", siteList);
-		}
-		return siteList;
+		return CmsUtils.computeIfAbsentCache("siteList", k ->
+				Static.siteService.findList(new Site()));
 	}
 
 	/**
@@ -83,23 +78,18 @@ public class CmsUtils {
 	 * @param siteCode 站点编号
 	 */
 	public static List<Category> getMainNavList(String siteCode) {
-		@SuppressWarnings("unchecked")
-		List<Category> mainNavList = (List<Category>) getCache("mainNavList_" + siteCode);
-		if (mainNavList == null) {
+		return CmsUtils.computeIfAbsentCache("mainNavList_" + siteCode, k -> {
 			Category category = new Category();
 			category.setSite(new Site(siteCode));
 			category.setParent(new Category(Category.ROOT_CODE));
 			category.setInMenu(Global.SHOW);
-			mainNavList = Static.categoryService.findList(category);
-			putCache("mainNavList_" + siteCode, mainNavList);
-		}
-		return mainNavList;
+			return Static.categoryService.findList(category);
+		});
 	}
 
 	/**
 	 * 获取栏目
 	 * @param categoryCode 栏目编号
-	 * @return
 	 */
 	public static Category getCategory(String categoryCode) {
 		return Static.categoryService.get(categoryCode);
@@ -237,8 +227,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得文章动态URL地址
-	 * @param article
-	 * @return url
 	 */
 	public static String getUrlDynamic(Article article) {
 		StringBuilder str = new StringBuilder();
@@ -259,8 +247,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得栏目动态URL地址
-	 * @param category
-	 * @return url
 	 */
 	public static String getUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
@@ -279,8 +265,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得站点动态URL地址
-	 * @param site
-	 * @return url
 	 */
 	public static String getUrlDynamic(Site site) {
 		StringBuilder str = new StringBuilder();
@@ -299,8 +283,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得栏目动态URL地址
-	 * @param category
-	 * @return url
 	 */
 	public static String getAdminUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
@@ -381,8 +363,6 @@ public class CmsUtils {
 
 	/**
 	 * 从图片地址中去除ContextPath地址
-	 * @param src
-	 * @return
 	 */
 	public static String formatImageSrcToDb(String src) {
 		if (StringUtils.isBlank(src)) {
@@ -397,8 +377,6 @@ public class CmsUtils {
 
 	/**
 	 * 从图片地址中加入ContextPath地址
-	 * @param src
-	 * @return
 	 */
 	public static String formatImageSrcToWeb(String src) {
 		if (StringUtils.isBlank(src)) {
@@ -413,8 +391,6 @@ public class CmsUtils {
 
 	/**
 	 * 获取文章视图
-	 * @param article
-	 * @return
 	 */
 	public static String getArticleView(Article article) {
 		if (StringUtils.isBlank(article.getCustomContentView())) {
@@ -441,8 +417,6 @@ public class CmsUtils {
 
 	/**
 	 * 视图配置属性设置
-	 * @param model
-	 * @param params
 	 */
 	public static void addViewConfigAttribute(Model model, String params) {
 		if (StringUtils.isNotBlank(params)) {
@@ -458,8 +432,6 @@ public class CmsUtils {
 
 	/**
 	 * 视图配置属性设置
-	 * @param model
-	 * @param category
 	 */
 	public static void addViewConfigAttribute(Model model, Category category) {
 		List<Category> categoryList = ListUtils.newArrayList();
@@ -481,31 +453,67 @@ public class CmsUtils {
 		}
 	}
 
+	/**
+	 * 获取站点服务
+	 */
 	public static SiteService getSiteService() {
 		return Static.siteService;
 	}
 
+	/**
+	 * 获取栏目服务
+	 */
 	public static CategoryService getCategoryService() {
 		return Static.categoryService;
 	}
 
+	/**
+	 * 获取文章服务
+	 */
 	public static ArticleService getArticleService() {
 		return Static.articleService;
 	}
 
+	/**
+	 * 获取缓存值
+	 * @param key 缓存键
+	 */
 	public static <V> V getCache(String key) {
 		return CacheUtils.get(CMS_CACHE, key);
 	}
 
+	/**
+	 * 获取缓存值
+	 * @param key 缓存键
+	 * @param defaultValue 默认值
+	 */
 	public static <V> V getCache(String key, V defaultValue) {
 		V value = CacheUtils.get(CMS_CACHE, key);
 		return value != null ? value : defaultValue;
 	}
 
+	/**
+	 * 设置缓存值
+	 * @param key 缓存键
+	 * @param value 缓存值
+	 */
 	public static void putCache(String key, Object value) {
 		CacheUtils.put(CMS_CACHE, key, value);
 	}
 
+	/**
+	 * 获取缓存，如果不存在，则设置新值
+	 * @param key 缓存键
+	 * @param mappingFunction 新值
+	 */
+	public static <V> V computeIfAbsentCache(String key, Function<String, V> mappingFunction) {
+		return CacheUtils.computeIfAbsent(CMS_CACHE, key, mappingFunction);
+	}
+
+	/**
+	 * 移除缓存值
+	 * @param key 缓存键
+	 */
 	public static void removeCache(String key) {
 		CacheUtils.remove(CMS_CACHE, key);
 	}

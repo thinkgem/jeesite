@@ -28,8 +28,7 @@ public class CacheChatMemoryRepository implements ChatMemoryRepository {
 
 	@Override
 	public @NotNull List<Message> findByConversationId(@NotNull String conversationId) {
-		List<Message> all = CacheUtils.get(CMS_CHAT_MSG_CACHE, conversationId);
-		return all != null ? all : List.of();
+		return CacheUtils.computeIfAbsent(CMS_CHAT_MSG_CACHE, conversationId, k -> List.of());
 	}
 
 	@Override
