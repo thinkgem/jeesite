@@ -144,7 +144,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	/**
 	 * 根据岗位清理缓存
 	 */
-	protected void clearCache(Post post){
+	public void clearCache(Post post){
 		// 清除该岗位下所有的用户缓存
 		EmpUser where = new EmpUser();
 		where.setCodes(new String[]{ post.getPostCode() });
