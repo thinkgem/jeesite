@@ -5,6 +5,7 @@
 package com.jeesite.modules.cms.utils;
 
 import com.jeesite.common.cache.CacheUtils;
+import com.jeesite.common.codec.Md5Utils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
@@ -52,17 +53,14 @@ public class CmsUtils {
 	 * @param siteCode 站点编号
 	 */
 	public static Site getSite(String siteCode) {
-		String code = Site.MAIN_SITE_CODE;
-		if (StringUtils.isNotBlank(siteCode)) {
-			code = siteCode;
-		}
-		// 根据编码获取站点
-		for (Site site : getSiteList()) {
-			if (site.getSiteCode().equals(code)) {
-				return site;
+		String code = StringUtils.isNotBlank(siteCode) ? siteCode : Site.MAIN_SITE_CODE;
+		return CmsUtils.computeIfAbsentCache("site_" + code, k -> {
+			Site site = Static.siteService.get(code);
+			if (site == null) {
+				site = new Site(code);
 			}
-		}
-		return new Site(code);
+			return site;
+		});
 	}
 
 	/**
@@ -92,7 +90,8 @@ public class CmsUtils {
 	 * @param categoryCode 栏目编号
 	 */
 	public static Category getCategory(String categoryCode) {
-		return Static.categoryService.get(categoryCode);
+		return CmsUtils.computeIfAbsentCache("category_" + categoryCode, k ->
+				Static.categoryService.get(categoryCode));
 	}
 
 	/**
@@ -113,46 +112,49 @@ public class CmsUtils {
 		if (StringUtils.isBlank(siteCode) || StringUtils.isBlank(parentCode)) {
 			return ListUtils.newArrayList();
 		}
-		Page<Category> page = new Page<>(1, number, -1);
-		Category category = new Category();
-		category.setSite(new Site(siteCode));
-		category.setParentCode(parentCode);
-		Boolean isChildList = false; // 是否进行childList转换
-		if (StringUtils.isNotBlank(params)) {
-			@SuppressWarnings({ "rawtypes" })
-			Map map = JsonMapper.fromJson("{" + params.trim() + "}", Map.class);
+		String key = "categoryList_" + siteCode + "_" + parentCode + "_" + Md5Utils.md5(number + "_" + params);
+		return CmsUtils.computeIfAbsentCache(key, k -> {
+			Page<Category> page = new Page<>(1, number, -1);
+			Category category = new Category();
+			category.setSite(new Site(siteCode));
+			category.setParentCode(parentCode);
+			boolean isChildList = false; // 是否进行childList转换
+			if (StringUtils.isNotBlank(params)) {
+				@SuppressWarnings({ "rawtypes" })
+				Map map = JsonMapper.fromJson("{" + params.trim() + "}", Map.class);
 
-			// 获取的层级级别
-			String sortGrades = ObjectUtils.toString(map.get("sortGrades"));
-			if (StringUtils.isNotBlank(sortGrades)) {
+				// 获取的层级级别
+				String sortGrades = ObjectUtils.toString(map.get("sortGrades"));
+				if (StringUtils.isNotBlank(sortGrades)) {
 
-				// 如果设置了级别，则清理ParentCode，并使用ParentCodes进行查询
-				category.setParentCode(null);
+					// 如果设置了级别，则清理ParentCode，并使用ParentCodes进行查询
+					category.setParentCode(null);
 
-				// 如果是跟节点则不加入条件，代表查询全部，不是跟节点的时候获取指定节点的所有下级
-				if (!Category.ROOT_CODE.equals(parentCode)) {
-					category.setParentCodes("%," + parentCode + ",%");
+					// 如果是跟节点则不加入条件，代表查询全部，不是跟节点的时候获取指定节点的所有下级
+					if (!Category.ROOT_CODE.equals(parentCode)) {
+						category.setParentCodes("%," + parentCode + ",%");
+					}
+
+					// 增加获取层次级别条件
+					List<Integer> sortGradeList = ListUtils.newArrayList();
+					for (String s : StringUtils.splitComma(sortGrades)) {
+						sortGradeList.add(ObjectUtils.toInteger(s));
+					}
+					category.setSortGradeList(sortGradeList);
 				}
-
-				// 增加获取层次级别条件
-				List<Integer> sortGradeList = ListUtils.newArrayList();
-				for (String s : StringUtils.splitComma(sortGrades)) {
-					sortGradeList.add(ObjectUtils.toInteger(s));
-				}
-				category.setSortGradeList(sortGradeList);
+				// 是否进行childList转换
+				isChildList = ObjectUtils.toBoolean(map.get("isChildList"));
 			}
-			// 是否进行childList转换
-			isChildList = ObjectUtils.toBoolean(map.get("isChildList"));
-		}
-		category.setPage(page);
-		page = Static.categoryService.findPage(category);
-		// 进行childList转换
-		if (isChildList) {
-			List<Category> sourceList = page.getList();
-			List<Category> targetList = Static.categoryService.convertTreeList(sourceList, parentCode);
-			page.setList(targetList);
-		}
-		return page.getList();
+			category.setPage(page);
+			page = Static.categoryService.findPage(category);
+			// 进行childList转换
+			if (isChildList) {
+				List<Category> sourceList = page.getList();
+				List<Category> targetList = Static.categoryService.convertTreeList(sourceList, parentCode);
+				page.setList(targetList);
+			}
+			return page.getList();
+		});
 	}
 	
 	/**
@@ -516,6 +518,14 @@ public class CmsUtils {
 	 */
 	public static void removeCache(String key) {
 		CacheUtils.remove(CMS_CACHE, key);
+	}
+
+	/**
+	 * 根据key前缀从缓存中移除
+	 * @param key 缓存键
+	 */
+	public static void removeCacheByKeyPrefix(String key) {
+		CacheUtils.removeByKeyPrefix(CMS_CACHE, key);
 	}
 
 }

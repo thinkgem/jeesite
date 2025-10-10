@@ -32,7 +32,6 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	/**
 	 * 获取单条数据
 	 * @param site
-	 * @return
 	 */
 	@Override
 	public Site get(Site site) {
@@ -43,7 +42,6 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * 查询分页数据
 	 * @param site 查询条件
 	 * @param site page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<Site> findPage(Site site) {
@@ -52,19 +50,14 @@ public class SiteService extends CrudService<SiteDao, Site> {
 
 	/**
 	 * 保存数据（插入或更新）
-	 * @param site
 	 */
 	@Override
 	@Transactional
 	public void save(Site site) {
 		super.save(site);
-		CmsUtils.removeCache("siteList");
-		// 保存logo
 		FileUploadUtils.saveFileUpload(site, site.getId(), "site_logo");
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(site);
-		}
+		// 清理站点缓存
+		clearCache(site);
 	}
 
 	/**
@@ -75,11 +68,8 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Transactional
 	public void updateStatus(Site site) {
 		super.updateStatus(site);
-		CmsUtils.removeCache("siteList");
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(site);
-		}
+		// 清理站点缓存
+		clearCache(site);
 	}
 
 	/**
@@ -91,11 +81,8 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	public void delete(Site site) {
 		site.sqlMap().markIdDelete();
 		super.delete(site);
-		CmsUtils.removeCache("siteList");
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(site);
-		}
+		// 清理站点缓存
+		clearCache(site);
 	}
 
 //	/**
@@ -109,6 +96,26 @@ public class SiteService extends CrudService<SiteDao, Site> {
 //		super.delete(site);
 //		CmsUtils.removeCache("siteList");
 //	}
+
+	/**
+	 * 清理站点缓存
+	 */
+	public void clearCache(Site site) {
+		// 清理栏目缓存
+		CmsUtils.removeCacheByKeyPrefix("category_");
+		// 清理栏目列表缓存
+		CmsUtils.removeCacheByKeyPrefix("categoryList_" + site.getId() + "_");
+		// 清理主导航缓存
+		CmsUtils.removeCache("mainNavList_" + site.getId());
+		// 清理站点缓存
+		CmsUtils.removeCache("site_" + site.getId());
+		// 清理站点列表缓存
+		CmsUtils.removeCache("siteList");
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(site);
+		}
+	}
 
 	/**
 	 * 重建索引

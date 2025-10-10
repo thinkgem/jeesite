@@ -126,7 +126,7 @@ public class ArticleController extends BaseController {
 			categoryParam.setSite(new Site(Site.getCurrentSiteCode()));
 			categoryParam.setParentCode(article.getCategory().getCategoryCode());
 			List<Category> list = categoryService.findList(categoryParam);
-			if (list.size() > 0) {
+			if (!list.isEmpty()) {
 				article.setCategory(null); // 不允许在父节点上添加文章
 			} else {
 				article.setCategory(CmsUtils.getCategory(article.getCategory().getCategoryCode()));
