@@ -98,6 +98,11 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		String host = getHost(request);						// 登录主机
 		String captcha = getCaptcha(request);				// 登录验证码
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);	// 登录附加参数
+//		// 登录设备合法性验证（根据业务需要自行添加）
+//		String deviceType = (String)paramMap.getOrDefault("deviceType", "pc");
+//		if (!StringUtils.inString(deviceType, "pc", "mobileApp", "wxMa", "wxMp")) {
+//    		throw new AuthenticationException("msg:"+Global.getText("登录设备类型错误"));
+//		}
 		return new FormToken(username, password.toCharArray(), rememberMe, host, captcha, paramMap);
 	}
 	
