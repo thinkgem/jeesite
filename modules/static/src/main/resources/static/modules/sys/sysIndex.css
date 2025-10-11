@@ -8,7 +8,7 @@
 .fixed .main-header {position:relative;max-height:none;}
 .fixed .content-wrapper, .fixed .right-side {padding-top:0;}
 .fixed .main-header .navbar, .fixed .right-side{margin-left:0}
-.fixed .main-sidebar {top:auto;padding-top:0;/*position:absolute;url带#会隐藏工具栏*/position:relative;height:0;
+.fixed .main-sidebar {top:auto;padding-top:0;/*position:absolute;url带#会隐藏工具栏*//*position:relative;小窗口时未展开*/height:0;
 	transition: transform .1s ease-in-out,width .1s ease-in-out;}
 
 /* 头部下拉框样式 */
