@@ -4,27 +4,6 @@
  */
 package com.jeesite.common.shiro.realm;
 
-import javax.naming.AuthenticationNotSupportedException;
-import javax.naming.NamingException;
-import javax.naming.ldap.LdapContext;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.ldap.UnsupportedAuthenticationMechanismException;
-import org.apache.shiro.realm.ldap.DefaultLdapRealm;
-import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
-import org.apache.shiro.realm.ldap.LdapContextFactory;
-import org.apache.shiro.realm.ldap.LdapUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.shiro.authc.LdapToken;
 import com.jeesite.common.utils.SpringUtils;
@@ -35,6 +14,24 @@ import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.ldap.UnsupportedAuthenticationMechanismException;
+import org.apache.shiro.realm.ldap.DefaultLdapRealm;
+import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
+import org.apache.shiro.realm.ldap.LdapContextFactory;
+import org.apache.shiro.realm.ldap.LdapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
+
+import javax.naming.AuthenticationNotSupportedException;
+import javax.naming.NamingException;
+import javax.naming.ldap.LdapContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 系统认证授权实现类
@@ -124,8 +121,8 @@ public class LdapAuthorizingRealm extends BaseAuthorizingRealm  {
 	}
 	
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, Subject subject, Session session, User user) {
-		return super.doGetAuthorizationInfo(loginInfo, subject, session, user);
+	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, User user) {
+		return super.doGetAuthorizationInfo(loginInfo, user);
 	}
 	
 	@Override

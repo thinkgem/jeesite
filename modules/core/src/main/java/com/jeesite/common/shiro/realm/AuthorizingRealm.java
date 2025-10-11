@@ -8,8 +8,10 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.codec.SM3Utils;
 import com.jeesite.common.codec.ShaUtils;
 import com.jeesite.common.config.Global;
+import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.utils.SpringUtils;
+import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
@@ -19,10 +21,9 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * 系统认证授权实现类
@@ -71,8 +72,8 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	 * 获取用户授权信息，默认返回类型 SimpleAuthorizationInfo
 	 */
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, Subject subject, Session session, User user) {
-		return super.doGetAuthorizationInfo(loginInfo, subject, session, user);
+	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, User user) {
+		return super.doGetAuthorizationInfo(loginInfo, user);
 	}
 	
 	/**
@@ -117,13 +118,20 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	@Override
 	public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
 		super.onLoginSuccess(loginInfo, request);
-		
+
 		// 更新登录IP、时间、会话ID等
 		User user = UserUtils.get(loginInfo.getId());
+		user.setOldLastLoginIp(user.getLastLoginIp());
+		user.setOldLastLoginDate(user.getLastLoginDate());
+		user.setLastLoginIp(IpUtils.getRemoteAddr(request));
+		user.setLastLoginDate(new Date());
 		getUserService().updateUserLoginInfo(user);
-		
+
 		// 记录用户登录日志
 		LogUtils.saveLog(user, request, "系统登录", Log.TYPE_LOGIN_LOGOUT);
+
+		// 登录成功后，验证码计算器清零
+		BaseAuthorizingRealm.isValidCodeLogin(user.getLoginCode(), user.getCorpCode_(), loginInfo.getParam("deviceType"), "success");
 	}
 	
 	@Override
