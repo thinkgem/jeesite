@@ -627,6 +627,7 @@ j2cache:
     region:
       #[cacheName]: size, xxxx[s|m|h|d]
       default: 10000, 1h
+      sysCache: 100000, 365d
       sessionCache: 100000, 12h
     
   # 二级缓存
