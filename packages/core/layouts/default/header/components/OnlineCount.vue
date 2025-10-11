@@ -39,7 +39,7 @@
       }
 
       onMounted(async () => {
-        refreshOnlineCount(); // 先执行一次
+        await refreshOnlineCount(); // 先执行一次
         (window as any).rocInt = setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
       });
 

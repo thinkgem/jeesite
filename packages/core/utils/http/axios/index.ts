@@ -198,8 +198,12 @@ const transform: AxiosTransform = {
     const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
     const msg: string = response?.data?.message ?? '';
     const err: string = error?.toString?.() ?? '';
-    let errMessage = '';
 
+    if (errorMessageMode === 'none') {
+      return Promise.resolve(response);
+    }
+
+    let errMessage = '';
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
         errMessage = t('sys.api.apiTimeoutMessage');
@@ -218,7 +222,7 @@ const transform: AxiosTransform = {
               content: msg || errMessage,
               onOk() {
                 isShowMessageModal = false;
-                return Promise.resolve();
+                return Promise.resolve(response);
               },
             });
           }
@@ -235,7 +239,7 @@ const transform: AxiosTransform = {
       throw new Error(error);
     }
 
-    checkStatus(error?.response?.status, msg, errorMessageMode);
+    checkStatus(response?.status, msg, errorMessageMode);
     return Promise.reject(error);
   },
 };
