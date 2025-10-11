@@ -11,6 +11,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
 
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { usePermission } from '@jeesite/core/hooks/web/usePermission';
   import { onlineCount } from '@jeesite/core/api/sys/online';
 
@@ -24,18 +25,28 @@
       const { t } = useI18n();
       const { push } = useRouter();
       const { hasPermission } = usePermission();
+      const { createConfirm } = useMessage();
 
       const count = ref<number>(0);
 
       async function refreshOnlineCount() {
-        let num = Number(await onlineCount());
-        if (!num || Number.isNaN(num)) {
-          if ((window as any).rocInt) {
-            clearInterval((window as any).rocInt);
+        const data = await onlineCount();
+        if (data && data.message) {
+          if (data.result == 'false' || data.result == 'login') {
+            if ((window as any).rocInt) clearInterval((window as any).rocInt);
+            if ((window as any).ppmInt) clearInterval((window as any).ppmInt);
           }
-          num = 0;
+          createConfirm({
+            title: t('sys.api.errorTip'),
+            content: data.message,
+            iconType: 'info',
+            onOk() {
+              location.reload();
+            },
+          });
+          return;
         }
-        count.value = num;
+        count.value = Number(data || 0);
       }
 
       onMounted(async () => {
