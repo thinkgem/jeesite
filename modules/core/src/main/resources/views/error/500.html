@@ -42,7 +42,9 @@ else {
 		<h3>${message}</h3>
 		<p>${text('sys.error.500.message.p1')}</p>
 		<button type="button" class="btn btn-danger btn-sm" onclick="history.go(-1);"><i
-			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button>
+			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button> &nbsp;
+		<button type="button" class="btn btn-default btn-sm" onclick="location.reload();"><i
+			class="fa fa-refresh"></i> ${text('sys.error.refreshButton')}</button>
 	</div>
 	<div class="copyright">
 		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
