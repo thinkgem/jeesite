@@ -269,17 +269,17 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		if (Global.getPropertyToBoolean("shiro.isGenerateNewSessionAfterLogin", "false")){
 			String[] keys = new String[] { ValidCodeUtils.VALID_CODE };
 			Map<String, Object> attrMap = MapUtils.newHashMap();
-			final Session sessionOld = UserUtils.getSession();
+			final Session oldSession = UserUtils.getSession();
 			for (String key : keys) {
-				Object value = sessionOld.getAttribute(key);
+				Object value = oldSession.getAttribute(key);
 				if (value != null) {
 					attrMap.put(key, value);
 				}
 			}
 			UserUtils.getSubject().logout();
 			// 恢复生成新的Session之前的Session数据
-			final Session sessionNew = UserUtils.getSession();
-			attrMap.forEach(sessionNew::setAttribute);
+			final Session newSession = UserUtils.getSession();
+			attrMap.forEach(newSession::setAttribute);
 		}
 		return super.executeLogin(request, response);
 	}
@@ -291,13 +291,15 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		try {
 			return instance.onLoginSuccess(null, null, request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
 
 	/**
 	 * 登录成功调用事件
+	 * @param token 通过 onLoginSuccess 静态方法调用时可能为空
+	 * @param subject 通过 onLoginSuccess 静态方法调用时可能为空
 	 */
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest servletRequest, ServletResponse response) throws Exception {
@@ -316,16 +318,18 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	/**
 	 * 登录失败调用事件（静态方便其他位置调用）
 	 */
+	@SuppressWarnings("UnusedReturnValue")
 	public static boolean onLoginFailure(AuthenticationException e, HttpServletRequest request, HttpServletResponse response) {
 		return instance.onLoginFailure(null, e, request, response);
 	}
 
 	/**
 	 * 登录失败调用事件
+	 * @param token 通过 onLoginFailure 静态方法调用时可能为空
 	 */
 	@Override
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-		String message = StringUtils.EMPTY;
+		String message;
 		if (e.getMessage() != null && StringUtils.startsWith(e.getMessage(), "msg:")) {
 			message = StringUtils.replace(e.getMessage(), "msg:", "");
 		} else if (e instanceof IncorrectCredentialsException || e instanceof UnknownAccountException) {

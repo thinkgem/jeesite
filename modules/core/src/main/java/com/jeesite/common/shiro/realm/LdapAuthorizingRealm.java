@@ -25,8 +25,6 @@ import org.apache.shiro.realm.ldap.DefaultLdapRealm;
 import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -123,8 +121,8 @@ public class LdapAuthorizingRealm extends BaseAuthorizingRealm  {
 	}
 	
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, Subject subject, Session session, User user) {
-		return super.doGetAuthorizationInfo(loginInfo, subject, session, user);
+	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, User user) {
+		return super.doGetAuthorizationInfo(loginInfo, user);
 	}
 	
 	@Override

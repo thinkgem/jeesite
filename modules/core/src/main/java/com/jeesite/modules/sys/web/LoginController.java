@@ -53,9 +53,7 @@ public class LoginController extends BaseController{
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
 		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			redirectUrl(request, response, "/login");
 			return null;
 		}
 
@@ -63,9 +61,7 @@ public class LoginController extends BaseController{
 		Subject subject = UserUtils.getSubject();
 		LoginInfo loginInfo = UserUtils.getLoginInfo(subject);
 		if(loginInfo != null){
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+			redirectUrl(request, response, "/index");
 			return null;
 		}
 		
@@ -109,12 +105,10 @@ public class LoginController extends BaseController{
 //		// 如果已经登录，则跳转到管理首页
 //		LoginInfo loginInfo = UserUtils.getLoginInfo();
 //		if(loginInfo != null){ // 注释掉，已经登录的账号，正常返回登录失败信息，方便前端判断。
-//			String queryString = request.getQueryString();
-//			queryString = queryString == null ? "" : "?" + queryString;
-//			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+//			redirectUrl(request, response, "/index");
 //			return null;
 //		}
-		
+
 		// 获取登录失败数据
 		model.addAllAttributes(FormFilter.getLoginFailureData(request, response));
 		
@@ -148,9 +142,7 @@ public class LoginController extends BaseController{
 	public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
 		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
 		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+			redirectUrl(request, response, "/index");
 			return null;
 		}
 
@@ -159,37 +151,36 @@ public class LoginController extends BaseController{
 		LoginInfo loginInfo = UserUtils.getLoginInfo(subject);
 		if(loginInfo == null){
 			subject.logout();
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			redirectUrl(request, response, "/login");
 			return null;
 		}
 
 		// 当前用户对象信息
 		User user = UserUtils.get(loginInfo.getId());
 		if (user == null){
-			UserUtils.getSubject().logout();
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			subject.logout();
+			redirectUrl(request, response, "/login");
 			return null;
 		}
 
 		// 如果是登录操作，则初始化一些登录参数
-		Session session = UserUtils.getSession();
+		Session session = UserUtils.getSession(subject);
 		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));
 		if (isLogin){
-			// 获取后接着清除，防止下次获取仍然认为是登录状态
+			// 清除登录状态，防止下次调用误认为是登录
 			session.removeAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER);
+
 			// 设置共享SessionId的Cookie值（第三方系统使用）
 			String cookieName = Global.getProperty("session.shareSessionIdCookieName");
 			if (StringUtils.isNotBlank(cookieName)){
 				CookieUtils.setCookie(response, cookieName, (String)session.getId(), "/");
 			}
+
 			// 如果登录设置了语言，则切换语言
 			if (loginInfo.getParam("lang") != null){
 				Global.setLang(loginInfo.getParam("lang"), request, response);
 			}
+
 			// 根据当前用户子系统，切换到默认系统下
 			for(Role role : user.getRoleList()) {
 				if (role.getSysCodes() != null) {
@@ -209,12 +200,10 @@ public class LoginController extends BaseController{
 			}
 		}
 
-		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
+		// 验证下用户权限，以便调用doGetAuthorizationInfo方法
 		else if (!subject.isPermitted("user")){
 			subject.logout();
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			redirectUrl(request, response, "/login");
 			return null;
 		}
 
@@ -311,7 +300,16 @@ public class LoginController extends BaseController{
 		// 返回主页面视图
 		return "modules/sys/sysIndex";
 	}
-	
+
+	/**
+	 * 带参数跳转地址
+	 */
+	private void redirectUrl(HttpServletRequest request, HttpServletResponse response, String url) {
+		String queryString = request.getQueryString();
+		queryString = queryString == null ? "" : "?" + queryString;
+		ServletUtils.redirectUrl(request, response, adminPath + url + queryString);
+	}
+
 	/**
 	 * 侧边栏菜单数据
 	 */
