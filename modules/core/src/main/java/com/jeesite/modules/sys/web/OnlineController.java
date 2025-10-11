@@ -29,7 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 在线用户Controller
@@ -51,6 +53,7 @@ public class OnlineController extends BaseController{
 	 * @param response
 	 * @author ThinkGem
 	 */
+	@RequiresPermissions("user")
 	@RequestMapping(value = "count")
 	@ResponseBody
 	public Integer count(HttpServletRequest request, HttpServletResponse response) {
@@ -158,7 +161,7 @@ public class OnlineController extends BaseController{
 			if (pc instanceof PrincipalCollection){
 				Object pp = ((PrincipalCollection)pc).getPrimaryPrincipal();
 				if (pp instanceof LoginInfo){
-					LoginInfo loginInfo = ((LoginInfo)pp);
+					LoginInfo loginInfo = (LoginInfo)pp;
 					String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
 					onlineTickOutMap.put(key, StringUtils.EMPTY);
 				}
