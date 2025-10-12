@@ -23,8 +23,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param id
-	 * @return
+	 * @param id 主键编号
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "getByPk")
@@ -32,9 +31,8 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param id
-	 * @param isNewRecord
-	 * @return
+	 * @param id 主键编号
+	 * @param isNewRecord 是否新记录
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "getByPkAndIsNewRecord")
@@ -42,8 +40,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 查询分页数据
-	 * @param testData
-	 * @return
+	 * @param testData 查询条件
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findList")
@@ -53,7 +50,6 @@ public interface TestDataServiceApi {
 	 * 查询分页数据
 	 * @param testData 查询条件
 	 * @param testData page 分页对象
-	 * @return
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findPage")
@@ -61,8 +57,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 查询数据总数
-	 * @param testData
-	 * @return
+	 * @param testData 查询条件
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findCount")
@@ -70,7 +65,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param testData
+	 * @param testData 数据对象
 	 */
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "save")
@@ -78,7 +73,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 更新状态
-	 * @param testData
+	 * @param testData 数据对象
 	 */
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "updateStatus")
@@ -86,7 +81,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 删除数据
-	 * @param testData
+	 * @param testData 数据对象
 	 */
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "delete")

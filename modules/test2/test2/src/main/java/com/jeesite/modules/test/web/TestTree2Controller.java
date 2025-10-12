@@ -12,10 +12,9 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.entity.TestTree;
 import com.jeesite.modules.test.service.TestTreeService;
-import org.apache.seata.spring.annotation.GlobalTransactional;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -36,9 +35,12 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}/test2/testTree")
 public class TestTree2Controller extends BaseController {
 
-	@Autowired
-	private TestTreeService testTreeService;
-	
+	private final TestTreeService testTreeService;
+
+	public TestTree2Controller(TestTreeService testTreeService) {
+		this.testTreeService = testTreeService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -178,7 +180,6 @@ public class TestTree2Controller extends BaseController {
 	 * 获取树结构数据
 	 * @param excludeCode 排除的Code
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@RequestMapping(value = "treeData")

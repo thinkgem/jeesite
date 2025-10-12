@@ -58,7 +58,6 @@ public class MetricVo implements Comparable<MetricVo> {
      *
      * @param entities 通过hashCode查找到的MetricEntities
      * @param identity 真正需要查找的资源名
-     * @return
      */
     public static List<MetricVo> fromMetricEntities(Collection<MetricEntity> entities, String identity) {
         List<MetricVo> list = new ArrayList<>();

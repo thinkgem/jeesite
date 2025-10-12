@@ -23,8 +23,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param id
-	 * @return
+	 * @param id 主键编号
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "getByPk")
@@ -32,9 +31,8 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param id
-	 * @param isNewRecord
-	 * @return
+	 * @param id 主键编号
+	 * @param isNewRecord 是否新记录
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "getByPkAndIsNewRecord")
@@ -42,8 +40,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 根据父节点单条数据
-	 * @param testTree
-	 * @return
+	 * @param testTree 查询条件
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "getLastByParentCode")
@@ -51,8 +48,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 查询分页数据
-	 * @param testTree
-	 * @return
+	 * @param testTree 查询条件
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "findList")
@@ -62,7 +58,6 @@ public interface TestTreeServiceApi {
 	 * 查询分页数据
 	 * @param testTree 查询条件
 	 * @param testTree page 分页对象
-	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "findPage")
@@ -70,8 +65,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 查询数据总数
-	 * @param testTree
-	 * @return
+	 * @param testTree 查询条件
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "findCount")
@@ -79,7 +73,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param testTree
+	 * @param testTree 数据对象
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "save")
@@ -87,7 +81,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 更新状态
-	 * @param testTree
+	 * @param testTree 数据对象
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "updateStatus")
@@ -95,7 +89,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 删除数据
-	 * @param testTree
+	 * @param testTree 数据对象
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "delete")
@@ -103,7 +97,6 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 修复树结构数据
-	 * @param testTree
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "fixTreeData")

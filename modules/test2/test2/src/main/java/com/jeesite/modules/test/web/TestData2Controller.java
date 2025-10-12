@@ -4,11 +4,15 @@
  */
 package com.jeesite.modules.test.web;
 
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.test.client.TestDataServiceClient;
+import com.jeesite.modules.test.entity.TestData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -16,14 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.test.client.TestDataServiceClient;
-import com.jeesite.modules.test.entity.TestData;
-
-import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
  * 测试数据Controller，调用 test1 服务
@@ -34,9 +30,12 @@ import org.apache.seata.spring.annotation.GlobalTransactional;
 @RequestMapping(value = "${adminPath}/test2/testData")
 public class TestData2Controller extends BaseController {
 
-	@Autowired
-	private TestDataServiceClient testDataServiceClient;
-	
+	private final TestDataServiceClient testDataServiceClient;
+
+	public TestData2Controller(TestDataServiceClient testDataServiceClient) {
+		this.testDataServiceClient = testDataServiceClient;
+	}
+
 	/**
 	 * 获取数据
 	 */
