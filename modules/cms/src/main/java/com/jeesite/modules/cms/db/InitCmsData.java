@@ -15,7 +15,6 @@ import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
 import com.jeesite.modules.gen.utils.GenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +26,14 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitCmsData extends BaseInitDataTests {
+
+	public InitCmsData(SiteService siteService, CategoryService categoryService,
+					   ArticleDao articleDao, ArticleDataDao articleDataDao) {
+		this.siteService = siteService;
+		this.categoryService = categoryService;
+		this.articleDao = articleDao;
+		this.articleDataDao = articleDataDao;
+	}
 
 	@Override
 	public boolean initData() throws Exception {
@@ -44,8 +51,7 @@ public class InitCmsData extends BaseInitDataTests {
 		return true;
 	}
 
-	@Autowired
-	private SiteService siteService;
+	private final SiteService siteService;
 	public void initSite() throws Exception{
 		initExcelData(Site.class, params -> {
 			String action = (String)params[0];
@@ -59,8 +65,7 @@ public class InitCmsData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private CategoryService categoryService;
+	private final CategoryService categoryService;
 	public void initCategory() throws Exception{
 		initExcelData(Category.class, params -> {
 			String action = (String)params[0];
@@ -74,8 +79,7 @@ public class InitCmsData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private ArticleDao articleDao;
+	private final ArticleDao articleDao;
 	public void initArticle() throws Exception{
 		initExcelData(Article.class, params -> {
 			String action = (String)params[0];
@@ -89,8 +93,7 @@ public class InitCmsData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private ArticleDataDao articleDataDao;
+	private final ArticleDataDao articleDataDao;
 	public void initArticleData() throws Exception{
 		initExcelData(ArticleData.class, params -> {
 			String action = (String)params[0];

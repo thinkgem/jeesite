@@ -4,12 +4,6 @@
  */
 package com.jeesite.modules.app.db;
 
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.app.entity.AppComment;
@@ -17,6 +11,10 @@ import com.jeesite.modules.app.entity.AppUpgrade;
 import com.jeesite.modules.app.service.AppCommentService;
 import com.jeesite.modules.app.service.AppUpgradeService;
 import com.jeesite.modules.gen.utils.GenUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * 初始化APP表及数据
@@ -26,6 +24,11 @@ import com.jeesite.modules.gen.utils.GenUtils;
 @Component
 @ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitAppData extends BaseInitDataTests {
+
+	public InitAppData(AppUpgradeService appUpgradeService, AppCommentService appCommentService) {
+		this.appUpgradeService = appUpgradeService;
+		this.appCommentService = appCommentService;
+	}
 
 	@Override
 	public boolean initData() throws Exception {
@@ -41,8 +44,7 @@ public class InitAppData extends BaseInitDataTests {
 		return true;
 	}
 	
-	@Autowired
-	private AppUpgradeService appUpgradeService;
+	private final AppUpgradeService appUpgradeService;
 	public void initAppUpgrade() throws Exception{
 //		clearTable(AppUpgrade.class);
 		initExcelData(AppUpgrade.class, params -> {
@@ -57,8 +59,7 @@ public class InitAppData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private AppCommentService appCommentService;
+	private final AppCommentService appCommentService;
 	public void initAppComment() throws Exception{
 //		clearTable(AppComment.class);
 		initExcelData(AppComment.class, params -> {

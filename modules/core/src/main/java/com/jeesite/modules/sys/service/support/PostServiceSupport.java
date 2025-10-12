@@ -12,12 +12,13 @@ import com.jeesite.common.service.CrudService;
 import com.jeesite.common.utils.PageUtils;
 import com.jeesite.modules.sys.dao.PostDao;
 import com.jeesite.modules.sys.dao.PostRoleDao;
-import com.jeesite.modules.sys.entity.*;
+import com.jeesite.modules.sys.entity.EmpUser;
+import com.jeesite.modules.sys.entity.Post;
+import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -30,10 +31,13 @@ import java.util.List;
 public class PostServiceSupport extends CrudService<PostDao, Post>
 		implements PostService{
 
-	@Autowired
-	private PostRoleDao postRoleDao;
-	@Autowired
-	private EmpUserService empUserService;
+	protected final PostRoleDao postRoleDao;
+	protected final EmpUserService empUserService;
+
+	public PostServiceSupport(PostRoleDao postRoleDao, EmpUserService empUserService) {
+		this.postRoleDao = postRoleDao;
+		this.empUserService = empUserService;
+	}
 
 	/**
 	 * 查询岗位

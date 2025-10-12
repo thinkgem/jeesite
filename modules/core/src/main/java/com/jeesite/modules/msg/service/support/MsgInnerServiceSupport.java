@@ -23,7 +23,6 @@ import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -40,16 +39,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 		implements MsgInnerService {
-	
-	@Autowired
-	private EmpUserService empUserService;
-	@Autowired
-	private MsgInnerRecordDao msgInnerRecordDao;
 
-	private static ExecutorService msgPushThreadPool = new ThreadPoolExecutor(5, 20,
+	protected static final ExecutorService msgPushThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
 			new DefaultThreadFactory("cms-update-expired-weight"));
-	
+
+	protected final EmpUserService empUserService;
+	protected final MsgInnerRecordDao msgInnerRecordDao;
+
+	public MsgInnerServiceSupport(EmpUserService empUserService, MsgInnerRecordDao msgInnerRecordDao) {
+		this.empUserService = empUserService;
+		this.msgInnerRecordDao = msgInnerRecordDao;
+	}
+
 	/**
 	 * 获取单条数据
 	 * @param msgInner 主键

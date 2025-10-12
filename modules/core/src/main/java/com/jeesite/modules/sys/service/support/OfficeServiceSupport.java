@@ -19,7 +19,6 @@ import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,11 +34,14 @@ import java.util.List;
 public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 		implements OfficeService{
 
-	@Autowired
-	private DataScopeService dataScopeService;
-	@Autowired
-	private EmpUserService empUserService;
-	
+	protected final DataScopeService dataScopeService;
+	protected final EmpUserService empUserService;
+
+	public OfficeServiceSupport(DataScopeService dataScopeService, EmpUserService empUserService) {
+		this.dataScopeService = dataScopeService;
+		this.empUserService = empUserService;
+	}
+
 	/**
 	 * 获取单条数据
 	 */

@@ -4,18 +4,16 @@
  */
 package com.jeesite.modules.test.db;
 
-import com.jeesite.common.datasource.DataSourceHolder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
-
 import com.jeesite.common.config.Global;
+import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.gen.entity.GenTable;
 import com.jeesite.modules.gen.entity.GenTableColumn;
 import com.jeesite.modules.gen.service.GenTableService;
 import com.jeesite.modules.gen.utils.GenUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 /**
  * 初始化核心表数据
@@ -25,6 +23,10 @@ import com.jeesite.modules.gen.utils.GenUtils;
 @Component
 @ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitTestData extends BaseInitDataTests {
+
+	public InitTestData(GenTableService genTableService) {
+		this.genTableService = genTableService;
+	}
 
 	@Override
 	public boolean initData() throws Exception {
@@ -36,8 +38,7 @@ public class InitTestData extends BaseInitDataTests {
 		return true;
 	}
 	
-	@Autowired
-	private GenTableService genTableService;
+	private final GenTableService genTableService;
 	/**
 	 * 代码生成测试数据
 	 */
