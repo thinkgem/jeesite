@@ -11,7 +11,6 @@ import com.jeesite.modules.sys.entity.Area;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -30,8 +29,11 @@ import java.util.Map;
 @SpringBootTest(properties = {"spring.ai.tool-calls=true"})
 public class AiChatServiceTest extends BaseSpringContextTests {
 
-	@Autowired
-	private CmsAiChatService cmsAiChatService;
+	private final CmsAiChatService cmsAiChatService;
+
+	public AiChatServiceTest(CmsAiChatService cmsAiChatService) {
+		this.cmsAiChatService = cmsAiChatService;
+	}
 
 	@Test
 	public void test01Text() {

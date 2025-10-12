@@ -5,6 +5,10 @@
 package com.jeesite.autoconfigure.sys;
 
 import com.jeesite.common.mybatis.MyBatisFactoryBean;
+import com.jeesite.modules.sys.dao.CompanyOfficeDao;
+import com.jeesite.modules.sys.dao.EmployeeOfficeDao;
+import com.jeesite.modules.sys.dao.EmployeePostDao;
+import com.jeesite.modules.sys.dao.PostRoleDao;
 import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.service.support.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -31,20 +35,20 @@ public class SysAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public CompanyService companyService(){
-		return new CompanyServiceSupport();
+	public CompanyService companyService(CompanyOfficeDao companyOfficeDao, DataScopeService dataScopeService, EmpUserService empUserService){
+		return new CompanyServiceSupport(companyOfficeDao, dataScopeService, empUserService);
 	}
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public EmployeeService employeeService(){
-		return new EmployeeServiceSupport();
+	public EmployeeService employeeService(EmployeePostDao employeePostDao, EmployeeOfficeDao employeeOfficeDao){
+		return new EmployeeServiceSupport(employeePostDao, employeeOfficeDao);
 	}
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public EmpUserService empUserService(){
-		return new EmpUserServiceSupport();
+	public EmpUserService empUserService(UserService userService, EmployeeService employeeService, EmployeeOfficeDao employeeOfficeDao){
+		return new EmpUserServiceSupport(userService, employeeService, employeeOfficeDao);
 	}
 	
 	@Bean
@@ -55,14 +59,14 @@ public class SysAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public OfficeService officeService(){
-		return new OfficeServiceSupport();
+	public OfficeService officeService(DataScopeService dataScopeService, EmpUserService empUserService){
+		return new OfficeServiceSupport(dataScopeService, empUserService);
 	}
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PostService postService(){
-		return new PostServiceSupport();
+	public PostService postService(PostRoleDao postRoleDao, EmpUserService empUserService){
+		return new PostServiceSupport(postRoleDao, empUserService);
 	}
 
 }

@@ -14,7 +14,6 @@ import com.jeesite.modules.test.dao.TestDataChildDao;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestDataChild;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,12 @@ import java.util.List;
 @Service
 public class TestDataService extends CrudService<TestDataDao, TestData> {
 	
-	@Autowired
-	private TestDataChildDao testDataChildDao;
-	
+	private final TestDataChildDao testDataChildDao;
+
+	public TestDataService(TestDataChildDao testDataChildDao) {
+		this.testDataChildDao = testDataChildDao;
+	}
+
 	/**
 	 * 获取单条数据
 	 * @param testData 主键

@@ -4,18 +4,16 @@
  */
 package com.jeesite.test;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.gen.entity.GenTable;
 import com.jeesite.modules.gen.entity.GenTableColumn;
 import com.jeesite.modules.gen.service.GenTableService;
+import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * 代码生成工具（API）
@@ -27,9 +25,12 @@ import com.jeesite.modules.gen.service.GenTableService;
 @Rollback(false)
 public class GenTableToolTest extends BaseSpringContextTests {
 
-	@Autowired
-	private GenTableService genTableService;
-	
+	private final GenTableService genTableService;
+
+	public GenTableToolTest(GenTableService genTableService) {
+		this.genTableService = genTableService;
+	}
+
 	@Test
 	public void execute() throws Exception{
 		GenTable genTable = new GenTable();

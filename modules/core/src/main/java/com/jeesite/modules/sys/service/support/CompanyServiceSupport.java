@@ -18,7 +18,6 @@ import com.jeesite.modules.sys.service.DataScopeService;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -31,13 +30,17 @@ import java.util.List;
 public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 		implements CompanyService{
 
-	@Autowired
-	private CompanyOfficeDao companyOfficeDao;
-	@Autowired
-	private DataScopeService dataScopeService;
-	@Autowired
-	private EmpUserService empUserService;
-	
+	protected final CompanyOfficeDao companyOfficeDao;
+	protected final DataScopeService dataScopeService;
+	protected final EmpUserService empUserService;
+
+	public CompanyServiceSupport(CompanyOfficeDao companyOfficeDao, DataScopeService dataScopeService,
+								 EmpUserService empUserService) {
+		this.companyOfficeDao = companyOfficeDao;
+		this.dataScopeService = dataScopeService;
+		this.empUserService = empUserService;
+	}
+
 	/**
 	 * 获取单条数据
 	 */

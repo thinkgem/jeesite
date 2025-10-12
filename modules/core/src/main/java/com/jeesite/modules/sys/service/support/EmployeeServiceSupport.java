@@ -15,7 +15,6 @@ import com.jeesite.modules.sys.entity.Employee;
 import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.EmployeePost;
 import com.jeesite.modules.sys.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -28,11 +27,14 @@ import java.util.List;
 public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		implements EmployeeService{
 
-	@Autowired
-	private EmployeePostDao employeePostDao;
-	@Autowired
-	private EmployeeOfficeDao employeeOfficeDao;
-	
+	protected final EmployeePostDao employeePostDao;
+	protected final EmployeeOfficeDao employeeOfficeDao;
+
+	public EmployeeServiceSupport(EmployeePostDao employeePostDao, EmployeeOfficeDao employeeOfficeDao) {
+		this.employeePostDao = employeePostDao;
+		this.employeeOfficeDao = employeeOfficeDao;
+	}
+
 	/**
 	 * 获取单条数据
 	 */

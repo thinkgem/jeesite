@@ -27,7 +27,6 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,13 +40,16 @@ import java.util.List;
 public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		implements EmpUserService{
 
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private EmployeeService employeeService;
-	@Autowired
-	private EmployeeOfficeDao employeeOfficeDao;
-	
+	protected final UserService userService;
+	protected final EmployeeService employeeService;
+	protected final EmployeeOfficeDao employeeOfficeDao;
+
+	public EmpUserServiceSupport(UserService userService, EmployeeService employeeService, EmployeeOfficeDao employeeOfficeDao) {
+		this.userService = userService;
+		this.employeeService = employeeService;
+		this.employeeOfficeDao = employeeOfficeDao;
+	}
+
 	/**
 	 * 租户功能验证
 	 */
