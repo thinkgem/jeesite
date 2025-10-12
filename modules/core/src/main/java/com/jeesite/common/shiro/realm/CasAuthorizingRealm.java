@@ -17,7 +17,6 @@ import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,14 +39,13 @@ import java.util.Map;
  */
 @SuppressWarnings("deprecation")
 public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
-
-	private UserService userService;
-	private EmpUserService empUserService;
 	
 	private CasOutHandler casOutHandler;
 	private String casServerUrl; 			// CAS 服务器地址
     private String casServerCallbackUrl; 	// CAS 服务器回调地址
     private TicketValidator ticketValidator;// CAS 令牌验证类
+
+	private EmpUserService empUserService;
 	
 	public CasAuthorizingRealm() {
 		super();
@@ -175,28 +173,27 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 	}
 	
 	@Override
-	public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+	public User onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+		User user = super.onLoginSuccess(loginInfo, request);
+
 		// 单点登录登出句柄（登录时注入session），在这之前必须获取下授权信息
 		String ticket = loginInfo.getParam("ticket");
 		casOutHandler.recordSession(request, ticket);
 		//System.out.print("__sid: "+request.getSession().getId());
 		//System.out.println(" == "+UserUtils.getSession().getId());
+
+		// 记录用户登录日志
+		LogUtils.saveLog(user, request, "系统登录", Log.TYPE_LOGIN_LOGOUT);
+		return user;
 	}
 	
 	@Override
-	public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-		super.onLogoutSuccess(loginInfo, request);
+	public User onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+		User user = super.onLogoutSuccess(loginInfo, request);
 		
 		// 记录用户退出日志
-		User user = UserUtils.get(loginInfo.getId());
 		LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
-	}
-
-	public UserService getUserService() {
-		if (userService == null){
-			userService = SpringUtils.getBean(UserService.class);
-		}
-		return userService;
+		return user;
 	}
 
 	public EmpUserService getEmpUserService() {
