@@ -43,10 +43,13 @@ import java.util.Map;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class CorpAdminController extends BaseController {
 
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private RoleService roleService;
+	private final UserService userService;
+	private final RoleService roleService;
+
+	public CorpAdminController(UserService userService, RoleService roleService) {
+		this.userService = userService;
+		this.roleService = roleService;
+	}
 
 	@ModelAttribute
 	public User get(String userCode, boolean isNewRecord) {
@@ -156,8 +159,6 @@ public class CorpAdminController extends BaseController {
 
 	/**
 	 * 停用用户
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@ResponseBody
@@ -176,8 +177,6 @@ public class CorpAdminController extends BaseController {
 	
 	/**
 	 * 启用用户
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@ResponseBody
@@ -193,8 +192,6 @@ public class CorpAdminController extends BaseController {
 	
 	/**
 	 * 密码重置
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@RequestMapping(value = "resetpwd")
@@ -209,8 +206,6 @@ public class CorpAdminController extends BaseController {
 
 	/**
 	 * 删除用户
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@RequestMapping(value = "delete")
@@ -238,7 +233,6 @@ public class CorpAdminController extends BaseController {
 	 * 查询租户数据树格式
 	 * @param pId 父级编码，默认 -1
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	//@RequiresPermissions("user") // 注释掉，允许配置URI控制权限
 	@RequestMapping(value = "treeData")
@@ -260,8 +254,6 @@ public class CorpAdminController extends BaseController {
 
 	/**
 	 * 切换租户
-	 * @param corpCode
-	 * @return
 	 */
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@RequestMapping(value = "switch/{corpCode}")

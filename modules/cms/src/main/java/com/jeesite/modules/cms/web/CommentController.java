@@ -4,11 +4,14 @@
  */
 package com.jeesite.modules.cms.web;
 
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.cms.entity.Comment;
+import com.jeesite.modules.cms.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -16,12 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Comment;
-import com.jeesite.modules.cms.service.CommentService;
 
 /**
  * 文章评论表Controller
@@ -32,9 +29,12 @@ import com.jeesite.modules.cms.service.CommentService;
 @RequestMapping(value = "${adminPath}/cms/comment")
 public class CommentController extends BaseController {
 
-	@Autowired
-	private CommentService commentService;
-	
+	private final CommentService commentService;
+
+	public CommentController(CommentService commentService) {
+		this.commentService = commentService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -120,5 +120,5 @@ public class CommentController extends BaseController {
 		commentService.delete(comment);
 		return renderResult(Global.TRUE, text("删除文章评论表成功！"));
 	}
-	
+
 }

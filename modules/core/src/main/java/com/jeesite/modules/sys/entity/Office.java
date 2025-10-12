@@ -235,7 +235,6 @@ public class Office extends TreeEntity<Office> {
 	 * 2、例如当前机构类型为部门的子部门，你想获取部门所在省公司名称
 	 * 3、例如当前机构类型为小组，你想获取所在公司名称
 	 * @param type 机构类型
-	 * @return
 	 */
 	@JsonIgnore
 	public Office getParentByType(String type){

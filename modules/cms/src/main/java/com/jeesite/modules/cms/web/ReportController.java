@@ -4,11 +4,14 @@
  */
 package com.jeesite.modules.cms.web;
 
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.cms.entity.Report;
+import com.jeesite.modules.cms.service.ReportService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -16,12 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Report;
-import com.jeesite.modules.cms.service.ReportService;
 
 /**
  * 内容举报表Controller
@@ -32,9 +29,12 @@ import com.jeesite.modules.cms.service.ReportService;
 @RequestMapping(value = "${adminPath}/cms/report")
 public class ReportController extends BaseController {
 
-	@Autowired
-	private ReportService reportService;
-	
+	private final ReportService reportService;
+
+	public ReportController(ReportService reportService) {
+		this.reportService = reportService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -120,5 +120,5 @@ public class ReportController extends BaseController {
 		reportService.delete(report);
 		return renderResult(Global.TRUE, text("删除内容举报表成功！"));
 	}
-	
+
 }

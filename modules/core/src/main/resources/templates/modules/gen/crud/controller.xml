@@ -20,7 +20,6 @@ import jakarta.servlet.http.HttpServletResponse;
 <% } %>
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -66,8 +65,11 @@ import ${packageName}.${moduleName}.service${subModuleNameDot}.${ClassName}Servi
 @RequestMapping(value = "\${adminPath}/${urlPrefix}")
 public class ${ClassName}Controller extends BaseController {
 
-	@Autowired
-	private ${ClassName}Service ${className}Service;
+	private final ${ClassName}Service ${className}Service;
+
+	public ${ClassName}Controller(${ClassName}Service ${className}Service) {
+		this.${className}Service = ${className}Service;
+	}
 	
 	/**
 	 * 获取数据
@@ -327,7 +329,6 @@ public class ${ClassName}Controller extends BaseController {
 	 * @param excludeCode 排除的Code
 	 * @param parentCode 设置父级编码返回一级
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "treeData")

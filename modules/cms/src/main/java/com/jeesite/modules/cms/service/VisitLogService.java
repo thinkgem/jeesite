@@ -23,8 +23,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	
 	/**
 	 * 获取单条数据
-	 * @param visitLog
-	 * @return
+	 * @param visitLog 主键
 	 */
 	@Override
 	public VisitLog get(VisitLog visitLog) {
@@ -35,7 +34,6 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	 * 查询分页数据
 	 * @param visitLog 查询条件
 	 * @param visitLog page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<VisitLog> findPage(VisitLog visitLog) {
@@ -44,7 +42,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param visitLog
+	 * @param visitLog 数据对象
 	 */
 	@Override
 	@Transactional
@@ -58,7 +56,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	
 	/**
 	 * 更新状态
-	 * @param visitLog
+	 * @param visitLog 数据对象
 	 */
 	@Override
 	@Transactional
@@ -68,7 +66,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	
 	/**
 	 * 删除数据
-	 * @param visitLog
+	 * @param visitLog 数据对象
 	 */
 	@Override
 	@Transactional

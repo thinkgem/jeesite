@@ -19,8 +19,9 @@ import com.jeesite.modules.sys.utils.DictUtils;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.RoleUtils;
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +31,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +45,13 @@ import java.util.Map;
 @Hidden
 public class RoleController extends BaseController {
 
-	@Autowired
-	private RoleService roleService;
-	
-	@Autowired
-	private MenuService menuService;
+	private final RoleService roleService;
+	private final MenuService menuService;
+
+	public RoleController(RoleService roleService, MenuService menuService) {
+		this.roleService = roleService;
+		this.menuService = menuService;
+	}
 
 	@ModelAttribute
 	public Role get(String roleCode, boolean isNewRecord) {
@@ -120,9 +121,6 @@ public class RoleController extends BaseController {
 	
 	/**
 	 * 验证角色名是否有效
-	 * @param oldRoleName
-	 * @param roleName
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "checkRoleName")
@@ -140,8 +138,6 @@ public class RoleController extends BaseController {
 
 	/**
 	 * 停用角色
-	 * @param role
-	 * @return
 	 */
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "disable")
@@ -159,8 +155,6 @@ public class RoleController extends BaseController {
 	
 	/**
 	 * 启用角色
-	 * @param role
-	 * @return
 	 */
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "enable")
@@ -178,8 +172,6 @@ public class RoleController extends BaseController {
 	
 	/**
 	 * 删除角色
-	 * @param role
-	 * @return
 	 */
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "delete")
@@ -202,9 +194,6 @@ public class RoleController extends BaseController {
 
 	/**
 	 * 判断某用户是包含某角色
-	 * @param userCode
-	 * @param roleCode
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "hasUserRole")
@@ -219,7 +208,6 @@ public class RoleController extends BaseController {
 	
 	/**
 	 * 查询菜单的树结构数据
-	 * @param role
 	 */
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = "menuTreeData")
@@ -265,8 +253,6 @@ public class RoleController extends BaseController {
 
 	/**
 	 * 查询角色的菜单树结构数据
-	 * @param roleCode
-	 * @param sysCode
 	 */
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = "menuTreeDataByRoleCode")
@@ -351,7 +337,6 @@ public class RoleController extends BaseController {
 	 * 获取角色树结构数据
 	 * @param isAll			是否显示所有机构（true：不进行权限过滤）
 	 * @param isShowCode	是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")

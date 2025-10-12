@@ -147,6 +147,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
+	 * 比较字符串，是否在字符串中包含，只要有一个匹配就成立（忽略大小写）
+	 */
+	public static boolean containsAnyIgnoreCase(final CharSequence cs, final CharSequence... searchCharSequences) {
+		return Strings.CI.containsAny(cs, searchCharSequences);
+	}
+
+	/**
 	 * 比较字符串，是否在字符串中包含（忽略大小写）
 	 */
 	public static boolean containsIgnoreCase(final CharSequence str, final CharSequence searchStr) {

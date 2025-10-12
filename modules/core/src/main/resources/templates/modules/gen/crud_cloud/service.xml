@@ -9,9 +9,6 @@
 package ${packageName}.${moduleName}.service${subModuleNameDot};
 
 import java.util.List;
-<% if (table.childList.~size > 0){ %>
-import org.springframework.beans.factory.annotation.Autowired;
-<% } %>
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,14 +56,16 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 		implements ${ClassName}ServiceApi {
 	<% for (child in table.childList){ %>
 	
-	@Autowired
-	private ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+	private final ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+
+	public ${ClassName}Service(${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao) {
+		this.${@StringUtils.uncap(child.className)}Dao = ${@StringUtils.uncap(child.className)}Dao;
+	}
 	<% } %>
 	
 	/**
 	 * 获取单条数据
-	 * @param ${className}
-	 * @return
+	 * @param ${className} 主键
 	 */
 	@Override
 	public ${ClassName} get(${ClassName} ${className}) {
@@ -89,7 +88,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * 查询分页数据
 	 * @param ${className} 查询条件
 	 * @param ${className} page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<${ClassName}> findPage(${ClassName} ${className}) {
@@ -98,8 +96,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	
 	/**
 	 * 查询列表数据
-	 * @param ${className}
-	 * @return
+	 * @param ${className} 查询条件
 	 */
 	@Override
 	public List<${ClassName}> findList(${ClassName} ${className}) {
@@ -111,7 +108,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * 查询子表分页数据
 	 * @param ${@StringUtils.uncap(child.className)}
 	 * @param ${@StringUtils.uncap(child.className)} page 分页对象
-	 * @return
 	 */
 	public Page<${@StringUtils.cap(child.className)}> findSubPage(${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)}) {
 		Page<${@StringUtils.cap(child.className)}> page = ${@StringUtils.uncap(child.className)}.getPage();
@@ -122,7 +118,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param ${className}
+	 * @param ${className} 数据对象
 	 */
 	@Override
 	@GlobalTransactional
@@ -252,7 +248,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	
 	/**
 	 * 更新状态
-	 * @param ${className}
+	 * @param ${className} 数据对象
 	 */
 	@Override
 	@GlobalTransactional
@@ -263,7 +259,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	
 	/**
 	 * 删除数据
-	 * @param ${className}
+	 * @param ${className} 数据对象
 	 */
 	@Override
 	@GlobalTransactional

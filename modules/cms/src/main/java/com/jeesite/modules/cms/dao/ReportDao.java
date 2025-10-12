@@ -10,7 +10,7 @@ import com.jeesite.modules.cms.entity.Report;
 
 /**
  * 内容举报表DAO接口
- * @author 长春叭哥
+ * @author 长春叭哥、ThinkGem
  * @version 2018-10-15
  */
 @MyBatisDao

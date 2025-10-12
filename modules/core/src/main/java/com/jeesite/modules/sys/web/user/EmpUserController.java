@@ -58,16 +58,20 @@ import java.util.concurrent.atomic.AtomicReference;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class EmpUserController extends BaseController {
 
-	@Autowired
-	private EmpUserService empUserService;
-	@Autowired
-	private EmployeeService employeeService;
-	@Autowired
-	private PostService postService;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private RoleService roleService;
+	private final EmpUserService empUserService;
+	private final EmployeeService employeeService;
+	private final PostService postService;
+	private final UserService userService;
+	private final RoleService roleService;
+
+	public EmpUserController(EmpUserService empUserService, EmployeeService employeeService,
+							 PostService postService, UserService userService, RoleService roleService) {
+		this.empUserService = empUserService;
+		this.employeeService = employeeService;
+		this.postService = postService;
+		this.userService = userService;
+		this.roleService = roleService;
+	}
 
 	@ModelAttribute
 	public EmpUser get(String userCode, boolean isNewRecord, Boolean isAll, String ctrlPermi) {
@@ -209,9 +213,6 @@ public class EmpUserController extends BaseController {
 	
 	/**
 	 * 验证工号是否有效
-	 * @param oldEmpNo
-	 * @param empNo
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "checkEmpNo")
@@ -284,8 +285,6 @@ public class EmpUserController extends BaseController {
 	
 	/**
 	 * 停用用户
-	 * @param empUser
-	 * @return
 	 */
 	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
@@ -308,8 +307,6 @@ public class EmpUserController extends BaseController {
 	
 	/**
 	 * 启用用户
-	 * @param empUser
-	 * @return
 	 */
 	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
@@ -330,8 +327,6 @@ public class EmpUserController extends BaseController {
 	
 	/**
 	 * 密码重置
-	 * @param empUser
-	 * @return
 	 */
 	@RequiresPermissions("sys:empUser:resetpwd")
 	@RequestMapping(value = "resetpwd")
@@ -350,8 +345,6 @@ public class EmpUserController extends BaseController {
 
 	/**
 	 * 删除用户
-	 * @param empUser
-	 * @return
 	 */
 	@RequiresPermissions("sys:empUser:edit")
 	@RequestMapping(value = "delete")
@@ -412,7 +405,6 @@ public class EmpUserController extends BaseController {
 	 * @param roleCode 角色Code
 	 * @param isAll 是否显示所有用户（true：不进行权限过滤）
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")

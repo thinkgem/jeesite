@@ -235,7 +235,6 @@ public class ExcelImport implements Closeable {
 
 	/**
 	 * 获取行对象
-	 * @param rownum
 	 * @return 返回Row对象，如果空行返回null
 	 */
 	public Row getRow(int rownum){
@@ -262,7 +261,6 @@ public class ExcelImport implements Closeable {
 
 	/**
 	 * 获取数据行号
-	 * @return
 	 */
 	public int getDataRowNum(){
 		return headerNum;
@@ -270,7 +268,6 @@ public class ExcelImport implements Closeable {
 	
 	/**
 	 * 获取最后一个数据行号
-	 * @return
 	 */
 	public int getLastDataRowNum(){
 		//return this.sheet.getLastRowNum() + headerNum;
@@ -279,7 +276,6 @@ public class ExcelImport implements Closeable {
 	
 	/**
 	 * 获取最后一个列号
-	 * @return
 	 */
 	public int getLastCellNum(){
 		Row row = this.getRow(headerNum);

@@ -19,19 +19,28 @@ import com.jeesite.common.web.BaseController;
 @Controller
 @RequestMapping(value = "${adminPath}/cms")
 public class CmsIndexController extends BaseController {
-	
+
+	/**
+	 * 管理内容页
+	 */
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "index")
 	public String index() {
 		return "modules/cms/cmsIndex";
 	}
 
+	/**
+	 * 查看内容页
+	 */
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "view")
 	public String view(Model model) {
 		return "modules/cms/cmsView";
 	}
 
+	/**
+	 * 空内容页面
+	 */
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "none")
 	public String none() {

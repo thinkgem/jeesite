@@ -283,7 +283,6 @@ public class Article extends DataEntity<Article> {
 
 	/**
 	 * 是否查询文章内容
-	 * @return
 	 */
 	public Boolean getIsQueryArticleData() {
 		return isQueryArticleData;

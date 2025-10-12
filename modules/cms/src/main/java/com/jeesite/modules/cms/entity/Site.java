@@ -189,7 +189,6 @@ public class Site extends DataEntity<Site> {
 
 	/**
 	 * 获得模板方案路径。如：/WEB-INF/views/modules/cmsfront/themes/jeesite
-	 * @return
 	 */
 	public String getSolutionPath() {
 		return TEMPLATE_BASE_DIRECTION + "/" + getTheme();

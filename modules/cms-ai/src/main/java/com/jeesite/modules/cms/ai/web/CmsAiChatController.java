@@ -11,7 +11,6 @@ import com.jeesite.modules.sys.entity.Area;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +31,11 @@ import java.util.stream.Collectors;
 @RequestMapping("${adminPath}/cms/chat")
 public class CmsAiChatController extends BaseController {
 
-	@Autowired
-	private CmsAiChatService cmsAiChatService;
+	private final CmsAiChatService cmsAiChatService;
+
+	public CmsAiChatController(CmsAiChatService cmsAiChatService) {
+		this.cmsAiChatService = cmsAiChatService;
+	}
 
 	/**
 	 * 获取聊天对话消息

@@ -84,7 +84,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * @param pattern 格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
 	 * @param amont 数量，前为负数，后为正数
 	 * @param type 类型，可参考Calendar的常量(如：Calendar.HOUR、Calendar.MINUTE、Calendar.SECOND)
-	 * @return
 	 */
 	public static String getDate(String pattern, int amont, int type) {
 		Calendar calendar = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());

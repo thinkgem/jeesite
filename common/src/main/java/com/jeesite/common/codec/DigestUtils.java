@@ -61,7 +61,6 @@ public class DigestUtils {
 	 * @param algorithm 散列算法（"SHA-1"、"MD5"、"SM3"）
 	 * @param salt 可为空
 	 * @param iterations 迭代次数
-	 * @return
 	 */
 	public static byte[] digest(byte[] input, String algorithm, byte[] salt, int iterations) {
 		try {

@@ -12,28 +12,33 @@ import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 站点表Service
- * @author 长春叭哥、ThinkGem
- * @version 2023-4-10
+ * 站点Service
+ * @author ThinkGem
+ * @version 2025-10-12
  */
 @Service
 public class SiteService extends CrudService<SiteDao, Site> {
 
-	@Autowired(required = false)
-	private ArticleIndexService articleIndexService;
-	@Autowired(required = false)
-	private ArticleVectorStore articleVectorStore;
-	@Autowired(required = false)
-	private PageCacheService pageCacheService;
+	private final ArticleIndexService articleIndexService;
+	private final ArticleVectorStore articleVectorStore;
+	private final PageCacheService pageCacheService;
+
+	public SiteService(ObjectProvider<ArticleIndexService> articleIndexService,
+					   ObjectProvider<ArticleVectorStore> articleVectorStore,
+					   ObjectProvider<PageCacheService> pageCacheService) {
+		this.articleIndexService = articleIndexService.getIfAvailable();
+		this.articleVectorStore = articleVectorStore.getIfAvailable();
+		this.pageCacheService = pageCacheService.getIfAvailable();
+	}
 
 	/**
 	 * 获取单条数据
-	 * @param site
+	 * @param site 主键
 	 */
 	@Override
 	public Site get(Site site) {
@@ -52,6 +57,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 
 	/**
 	 * 保存数据（插入或更新）
+	 * @param site 数据对象
 	 */
 	@Override
 	@Transactional
@@ -64,7 +70,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 
 	/**
 	 * 更新状态
-	 * @param site
+	 * @param site 数据对象
 	 */
 	@Override
 	@Transactional
@@ -76,7 +82,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 
 	/**
 	 * 删除数据
-	 * @param site
+	 * @param site 数据对象
 	 */
 	@Override
 	@Transactional
@@ -86,18 +92,6 @@ public class SiteService extends CrudService<SiteDao, Site> {
 		// 清理站点缓存
 		clearCache(site);
 	}
-
-//	/**
-//	 * 删除站点
-//	 * @param site
-//	 * @param isRe
-//	 */
-//	@Transactional
-//	public void delete(Site site, Boolean isRe) {
-//		site.setStatus(isRe != null && isRe ? Site.STATUS_NORMAL : Site.STATUS_DELETE);
-//		super.delete(site);
-//		CmsUtils.removeCache("siteList");
-//	}
 
 	/**
 	 * 清理站点缓存

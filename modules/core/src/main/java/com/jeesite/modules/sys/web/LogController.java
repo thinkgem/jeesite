@@ -4,23 +4,20 @@
  */
 package com.jeesite.modules.sys.web;
 
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.Log;
+import com.jeesite.modules.sys.service.LogService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.Log;
-import com.jeesite.modules.sys.service.LogService;
 
 /**
  * 日志Controller
@@ -33,9 +30,12 @@ import com.jeesite.modules.sys.service.LogService;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class LogController extends BaseController {
 
-	@Autowired
-	private LogService logService;
-	
+	private final LogService logService;
+
+	public LogController(LogService logService) {
+		this.logService = logService;
+	}
+
 	/**
      * 获取数据
      */

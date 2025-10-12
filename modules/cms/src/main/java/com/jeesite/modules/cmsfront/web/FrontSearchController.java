@@ -4,16 +4,6 @@
  */
 package com.jeesite.modules.cmsfront.web;
 
-import java.util.Map;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
@@ -22,6 +12,13 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.utils.CmsUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Map;
 
 /**
  * 网站搜索Controller
@@ -32,9 +29,12 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 @RequestMapping(value = "${frontPath}/search")
 public class FrontSearchController extends BaseController{
 	
-	@Autowired
-	private ArticleService articleService;
-	
+	private final ArticleService articleService;
+
+	public FrontSearchController(ArticleService articleService) {
+		this.articleService = articleService;
+	}
+
 	/**
 	 * 全站搜索
 	 * @param t 搜索类型(article、guestbook)

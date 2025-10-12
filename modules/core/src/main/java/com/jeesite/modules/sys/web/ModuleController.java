@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,13 +43,14 @@ import java.util.stream.Collectors;
 @Hidden
 public class ModuleController extends BaseController {
 
-	@Autowired
-	private ModuleService moduleService;
-	
+	private final ModuleService moduleService;
+
+	public ModuleController(ModuleService moduleService) {
+		this.moduleService = moduleService;
+	}
+
 	/**
 	 * 获取数据
-	 * @param moduleCode
-	 * @return
 	 */
 	@ModelAttribute
 	public Module get(String moduleCode, boolean isNewRecord) {
@@ -59,9 +59,6 @@ public class ModuleController extends BaseController {
 	
 	/**
 	 * 查询列表
-	 * @param module
-	 * @param model
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:view")
 	@RequestMapping(value = "list")
@@ -73,10 +70,6 @@ public class ModuleController extends BaseController {
 	
 	/**
 	 * 查询列表
-	 * @param module
-	 * @param request
-	 * @param response
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:view")
 	@RequestMapping(value = "listData")
@@ -104,9 +97,6 @@ public class ModuleController extends BaseController {
 
 	/**
 	 * 查看编辑表单
-	 * @param module
-	 * @param model
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:view")
 	@RequestMapping(value = "form")
@@ -132,8 +122,6 @@ public class ModuleController extends BaseController {
 
 	/**
 	 * 保存数据
-	 * @param module
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:edit")
 	@PostMapping(value = "save")
@@ -159,7 +147,6 @@ public class ModuleController extends BaseController {
 	
 	/**
 	 * 验证编码是否有效
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:edit")
 	@RequestMapping(value = "checkModuleCode")
@@ -177,8 +164,6 @@ public class ModuleController extends BaseController {
 
 	/**
 	 * 停用数据
-	 * @param module
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:edit")
 	@RequestMapping(value = "disable")
@@ -197,8 +182,6 @@ public class ModuleController extends BaseController {
 
 	/**
 	 * 启用数据
-	 * @param module
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:edit")
 	@RequestMapping(value = "enable")
@@ -214,8 +197,6 @@ public class ModuleController extends BaseController {
 	
 	/**
 	 * 删除数据
-	 * @param module
-	 * @return
 	 */
 	@RequiresPermissions("sys:module:edit")
 	@RequestMapping(value = "delete")

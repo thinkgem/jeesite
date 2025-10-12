@@ -36,7 +36,7 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -53,10 +53,12 @@ import java.util.Set;
 @Service
 public class ArticleVectorStoreImpl implements ArticleVectorStore {
 
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final VectorStore vectorStore;
 
-	@Autowired(required = false)
-	private VectorStore vectorStore;
+	public ArticleVectorStoreImpl(ObjectProvider<VectorStore> vectorStore) {
+		this.vectorStore = vectorStore.getIfAvailable();
+	}
 
 	/**
 	 * 保存文章到向量库

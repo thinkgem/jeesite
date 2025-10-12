@@ -22,7 +22,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,12 +46,15 @@ import java.util.Map;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class OfficeController extends BaseController {
 
-	@Autowired
-	private OfficeService officeService;
-	@Autowired
-	private EmpUserService empUserService;
-	@Autowired
-	private EmpUserController empUserController;
+	private final OfficeService officeService;
+	private final EmpUserService empUserService;
+	private final EmpUserController empUserController;
+
+	public OfficeController(OfficeService officeService, EmpUserService empUserService, EmpUserController empUserController) {
+		this.officeService = officeService;
+		this.empUserService = empUserService;
+		this.empUserController = empUserController;
+	}
 
 	/**
 	 * 获取机构
@@ -78,7 +80,6 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 机构列表
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "list")
@@ -90,7 +91,6 @@ public class OfficeController extends BaseController {
 	
 	/**
 	 * 查询机构数据
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "listData")
@@ -115,7 +115,6 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 查看编辑机构
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "form")
@@ -173,7 +172,6 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 保存机构
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:edit")
 	@PostMapping(value = "save")
@@ -232,7 +230,6 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 停用机构
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "disable")
@@ -252,7 +249,6 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 启用机构
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "enable")
@@ -265,7 +261,6 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 删除机构
-	 * @param office
 	 */
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "delete")
@@ -295,7 +290,6 @@ public class OfficeController extends BaseController {
 	 * @param isLoadUser	是否加载机构下的用户（true 一次性加载；lazy 懒加载，点击再加载）
 	 * @param postCode		机构下的用户过滤岗位
 	 * @param roleCode		机构下的用户过滤角色
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")

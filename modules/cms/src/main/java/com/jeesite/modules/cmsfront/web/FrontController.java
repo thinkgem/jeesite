@@ -16,13 +16,12 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.CommentService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +34,15 @@ import java.util.List;
 @RequestMapping(value = "${frontPath}")
 public class FrontController extends BaseController {
 
-	@Autowired
-	private CategoryService categoryService;
-	@Autowired
-	private ArticleService articleService;
-	@Autowired
-	private CommentService commentService;
+	private final CategoryService categoryService;
+	private final ArticleService articleService;
+	private final CommentService commentService;
+
+	public FrontController(CategoryService categoryService, ArticleService articleService, CommentService commentService) {
+		this.categoryService = categoryService;
+		this.articleService = articleService;
+		this.commentService = commentService;
+	}
 
 	/**
 	 * 主站首页
@@ -75,7 +77,7 @@ public class FrontController extends BaseController {
 
 		// 否则显示子站第一个栏目
 		List<Category> mainNavList = CmsUtils.getMainNavList(siteCode);
-		if (mainNavList.size() > 0) {
+		if (!mainNavList.isEmpty()) {
 			String firstCategoryCode = CmsUtils.getMainNavList(siteCode).get(0).getId();
 			return REDIRECT + frontPath + "/list-" + firstCategoryCode + ".html";
 		}
@@ -142,7 +144,7 @@ public class FrontController extends BaseController {
 			if (Category.SHOW_MODES_CENTENT_LIST.equals(category.getShowModes()) || categoryList.size() <= 1) {
 
 				// 有子栏目并展现方式为2，则获取第一个子栏目；无子栏目，则获取同级分类列表。
-				if (categoryList.size() > 0) {
+				if (!categoryList.isEmpty()) {
 					category = categoryList.get(0);
 				}
 				
@@ -231,15 +233,15 @@ public class FrontController extends BaseController {
 		// 文章模型
 		if ("article".equals(category.getModuleType())) {
 
-//			// 获取当前级别的栏目列表
-//			List<Category> categoryList = Lists.newArrayList();
-////			if (category.getIsRoot()){
-////				categoryList.add(category);
-////			}else{
-////				categoryList = categoryService.findListByParentCode(category.getParentCode(), category.getSite().getId());
-//				categoryList = CmsUtils.getCategoryList(category.getSite().getSiteCode(), category.getParentCode(), -1, null);
-////			}
-//			model.addAttribute("categoryList", categoryList);
+			/*// 获取当前级别的栏目列表
+			List<Category> categoryList = ListUtils.newArrayList();
+//			if (category.getIsRoot()){
+//				categoryList.add(category);
+//			}else{
+//				categoryList = categoryService.findListByParentCode(category.getParentCode(), category.getSite().getId());
+				categoryList = CmsUtils.getCategoryList(category.getSite().getSiteCode(), category.getParentCode(), -1, null);
+//			}
+			model.addAttribute("categoryList", categoryList);*/
 
 			// 获取文章
 			Article article = null;
@@ -254,7 +256,7 @@ public class FrontController extends BaseController {
 				Article entity = new Article(category);
 				entity.setPage(page);
 				page = articleService.findPage(entity);
-				if (page.getList().size() > 0) {
+				if (!page.getList().isEmpty()) {
 					article = page.getList().get(0);
 					article.setArticleData(articleService.get(new ArticleData(article.getId())));
 				}

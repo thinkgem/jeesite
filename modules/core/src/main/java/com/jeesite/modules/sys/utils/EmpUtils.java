@@ -113,7 +113,6 @@ public class EmpUtils {
 	
 	/**
 	 * 根据机构编码获取机构对象
-	 * @param officeCode
 	 * @author ThinkGem
 	 */
 	public static Office getOffice(String officeCode){
@@ -269,7 +268,6 @@ public class EmpUtils {
 	
 	/**
 	 * 根据公司编码获取公司对象
-	 * @param companyCode
 	 * @author ThinkGem
 	 */
 	public static Company getCompany(String companyCode){
@@ -354,7 +352,6 @@ public class EmpUtils {
 
 	/**
 	 * 获取当前员工岗位（返回岗位编码和名称）
-	 * @return
 	 */
 	public static List<EmployeePost> getEmployeePostList(){
 		return UserUtils.computeIfAbsentCache(CACHE_EMPLOYEE_POST_LIST, k ->
@@ -363,8 +360,6 @@ public class EmpUtils {
 
 	/**
 	 * 根据员工编号，获取员工岗位（返回岗位编码和名称）
-	 * @param empCode
-	 * @return
 	 */
 	public static List<EmployeePost> getEmployeePostList(String empCode){
 		Employee employee = new Employee();
@@ -386,7 +381,6 @@ public class EmpUtils {
 
 	/**
 	 * 获取当前登录用户的部门代码
-	 * @return
 	 */
 	public static String getCurrentOfficeCode() {
 		String officeCode = StringUtils.EMPTY;
@@ -413,7 +407,6 @@ public class EmpUtils {
 
 	/**
 	 * 获取当前登录用户的部门名称
-	 * @return
 	 */
 	public static String getCurrentOfficeName() {
 		String officeName = StringUtils.EMPTY;

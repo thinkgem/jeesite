@@ -23,8 +23,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	
 	/**
 	 * 获取单条数据
-	 * @param testTree
-	 * @return
+	 * @param testTree 主键
 	 */
 	@Override
 	public TestTree get(TestTree testTree) {
@@ -33,8 +32,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	
 	/**
 	 * 查询列表数据
-	 * @param testTree
-	 * @return
+	 * @param testTree 查询条件
 	 */
 	@Override
 	public List<TestTree> findList(TestTree testTree) {
@@ -43,7 +41,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param testTree
+	 * @param testTree 数据对象
 	 */
 	@Override
 	@Transactional
@@ -57,7 +55,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	
 	/**
 	 * 更新状态
-	 * @param testTree
+	 * @param testTree 数据对象
 	 */
 	@Override
 	@Transactional
@@ -67,7 +65,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	
 	/**
 	 * 删除数据
-	 * @param testTree
+	 * @param testTree 数据对象
 	 */
 	@Override
 	@Transactional

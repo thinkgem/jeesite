@@ -60,8 +60,11 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class AccountController extends BaseController{
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+
+	public AccountController(UserService userService) {
+		this.userService = userService;
+	}
 
 	/**
 	 * 获取登录短信或邮件验证码
@@ -341,9 +344,6 @@ public class AccountController extends BaseController{
 
 	/**
 	 * 校验密保问题答案
-	 * @param user
-	 * @param request
-	 * @return
 	 */
 	@PostMapping(value = "savePwdByPwdQuestion")
 	@ResponseBody

@@ -43,11 +43,14 @@ import java.util.Map;
 @Hidden
 public class DictDataController extends BaseController {
 
-	@Autowired
-	private DictDataService dictDataService;
-	@Autowired
-	private DictTypeService dictTypeService;
-	
+	private final DictDataService dictDataService;
+	private final DictTypeService dictTypeService;
+
+	public DictDataController(DictDataService dictDataService, DictTypeService dictTypeService) {
+		this.dictDataService = dictDataService;
+		this.dictTypeService = dictTypeService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -176,7 +179,6 @@ public class DictDataController extends BaseController {
 	
 	/**
 	 * 停用字典
-	 * @param dictData
 	 */
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "disable")
@@ -201,7 +203,6 @@ public class DictDataController extends BaseController {
 
 	/**
 	 * 启用字典
-	 * @param dictData
 	 */
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "enable")
@@ -283,7 +284,6 @@ public class DictDataController extends BaseController {
 	
 	/**
 	 * 树结构数据修复
-	 * @return
 	 */
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "fixTreeData")

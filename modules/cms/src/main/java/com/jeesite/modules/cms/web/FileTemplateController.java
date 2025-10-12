@@ -11,7 +11,6 @@ import com.jeesite.modules.cms.entity.FileTemplate;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.FileTemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +29,24 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}/cms/template")
 public class FileTemplateController extends BaseController {
 	
-	@Autowired
-	private FileTemplateService fileTemplateService;
+	private final FileTemplateService fileTemplateService;
 
+	public FileTemplateController(FileTemplateService fileTemplateService) {
+		this.fileTemplateService = fileTemplateService;
+	}
+
+	/**
+	 * 模版管理页
+	 */
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = { "list", "" })
 	public String index() {
 		return "modules/cms/tplIndex";
 	}
 
+	/**
+	 * 模版查看页
+	 */
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "form")
 	public String form(String name, Model model) throws IOException {
@@ -75,6 +83,9 @@ public class FileTemplateController extends BaseController {
 		return renderResult(Global.FALSE, "模版文件不存在！");
 	}*/
 
+	/**
+	 * 模版帮助页
+	 */
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "help")
 	public String help() {

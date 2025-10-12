@@ -4,20 +4,6 @@
  */
 package com.jeesite.modules.msg.web;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
@@ -26,6 +12,17 @@ import com.jeesite.modules.msg.entity.MsgInner;
 import com.jeesite.modules.msg.entity.MsgInnerRecord;
 import com.jeesite.modules.msg.entity.MsgPush;
 import com.jeesite.modules.msg.service.MsgInnerService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 内部消息Controller
@@ -37,9 +34,12 @@ import com.jeesite.modules.msg.service.MsgInnerService;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class MsgInnerController extends BaseController {
 
-	@Autowired
-	private MsgInnerService msgInnerService;
-	
+	private final MsgInnerService msgInnerService;
+
+	public MsgInnerController(MsgInnerService msgInnerService) {
+		this.msgInnerService = msgInnerService;
+	}
+
 	/**
 	 * 获取数据
 	 */

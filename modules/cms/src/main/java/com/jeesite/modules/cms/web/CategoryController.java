@@ -20,7 +20,6 @@ import com.jeesite.modules.sys.utils.DictUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -42,11 +41,13 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}/cms/category")
 public class CategoryController extends BaseController {
 
-	@Autowired
-	private CategoryService categoryService;
+	private final CategoryService categoryService;
+	private final FileTemplateService fileTemplateService;
 
-	@Autowired
-	private FileTemplateService fileTemplateService;
+	public CategoryController(CategoryService categoryService, FileTemplateService fileTemplateService) {
+		this.categoryService = categoryService;
+		this.fileTemplateService = fileTemplateService;
+	}
 
 	/**
 	 * 获取数据
@@ -108,7 +109,6 @@ public class CategoryController extends BaseController {
 
 	/**
 	 * 查看编辑表单
-	 * @throws IOException
 	 */
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "form")
@@ -121,7 +121,7 @@ public class CategoryController extends BaseController {
 				Category categoryChild = new Category();
 				categoryChild.setParent(new Category(category.getParentCode()));
 				List<Category> list = categoryService.findList(category);
-				if (list.size() > 0) {
+				if (!list.isEmpty()) {
 					category.setTreeSort(list.get(list.size() - 1).getTreeSort());
 					if (category.getTreeSort() != null) {
 						category.setTreeSort(category.getTreeSort() + 30);
@@ -285,7 +285,6 @@ public class CategoryController extends BaseController {
 	 * 获取树结构数据
 	 * @param excludeCode 排除的Code
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions(value = {"cms:category:view", "cms:article:view"}, logical = Logical.OR)
 	@RequestMapping(value = "treeData")

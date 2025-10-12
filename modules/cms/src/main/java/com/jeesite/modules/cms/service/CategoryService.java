@@ -10,26 +10,31 @@ import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * 栏目表Service
- * @author 长春叭哥、ThinkGem
- * @version 2023-4-10
+ * 栏目Service
+ * @author ThinkGem
+ * @version 2025-10-12
  */
 @Service
 public class CategoryService extends TreeService<CategoryDao, Category> {
 
-	@Autowired(required = false)
-	private ArticleIndexService articleIndexService;
-	@Autowired(required = false)
-	private ArticleVectorStore articleVectorStore;
-	@Autowired(required = false)
-	private PageCacheService pageCacheService;
+	private final ArticleIndexService articleIndexService;
+	private final ArticleVectorStore articleVectorStore;
+	private final PageCacheService pageCacheService;
+
+	public CategoryService(ObjectProvider<ArticleIndexService> articleIndexService,
+						   ObjectProvider<ArticleVectorStore> articleVectorStore,
+						   ObjectProvider<PageCacheService> pageCacheService) {
+		this.articleIndexService = articleIndexService.getIfAvailable();
+		this.articleVectorStore = articleVectorStore.getIfAvailable();
+		this.pageCacheService = pageCacheService.getIfAvailable();
+	}
 
 	/**
 	 * 获取单条数据

@@ -42,9 +42,12 @@ import java.util.Map;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class AreaController extends BaseController {
 
-	@Autowired
-	private AreaService areaService;
-	
+	private final AreaService areaService;
+
+	public AreaController(AreaService areaService) {
+		this.areaService = areaService;
+	}
+
 	/**
 	 * 获取区域
 	 */
@@ -68,7 +71,6 @@ public class AreaController extends BaseController {
 	
 	/**
 	 * 区域列表
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "list")
@@ -79,7 +81,6 @@ public class AreaController extends BaseController {
 	
 	/**
 	 * 查询区域数据
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "listData")
@@ -114,7 +115,6 @@ public class AreaController extends BaseController {
 	
 	/**
 	 * 查看编辑区域
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "form")
@@ -156,7 +156,6 @@ public class AreaController extends BaseController {
 	
 	/**
 	 * 保存区域
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:edit")
 	@PostMapping(value = "save")
@@ -168,7 +167,6 @@ public class AreaController extends BaseController {
 
 	/**
 	 * 停用区域
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "disable")
@@ -188,7 +186,6 @@ public class AreaController extends BaseController {
 
 	/**
 	 * 启用区域
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "enable")
@@ -201,7 +198,6 @@ public class AreaController extends BaseController {
 
 	/**
 	 * 删除区域
-	 * @param area
 	 */
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "delete")
@@ -215,7 +211,6 @@ public class AreaController extends BaseController {
 	 * 获取区域树结构数据
 	 * @param excludeCode 排除的Code
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")

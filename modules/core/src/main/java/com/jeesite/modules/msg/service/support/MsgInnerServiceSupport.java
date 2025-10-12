@@ -52,8 +52,7 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	
 	/**
 	 * 获取单条数据
-	 * @param msgInner
-	 * @return
+	 * @param msgInner 主键
 	 */
 	@Override
 	public MsgInner get(MsgInner msgInner) {
@@ -63,7 +62,6 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	/**
 	 * 查询分页数据
 	 * @param msgInner 查询条件； page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<MsgInner> findPage(MsgInner msgInner) {
@@ -82,7 +80,7 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param msgInner
+	 * @param msgInner 数据对象
 	 */
 	@Override
 	@Transactional
@@ -225,7 +223,7 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	
 	/**
 	 * 更新状态
-	 * @param msgInner
+	 * @param msgInner 数据对象
 	 */
 	@Override
 	@Transactional
@@ -235,7 +233,7 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	
 	/**
 	 * 删除数据
-	 * @param msgInner
+	 * @param msgInner 数据对象
 	 */
 	@Override
 	@Transactional

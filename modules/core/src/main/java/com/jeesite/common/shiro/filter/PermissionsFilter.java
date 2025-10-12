@@ -34,10 +34,6 @@ public class PermissionsFilter extends org.apache.shiro.web.filter.authz.Permiss
 	
 	/**
 	 * 无访问权限时，跳转到403页面
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws IOException
 	 * @author ThinkGem
 	 */
 	public static boolean redirectTo403Page(ServletRequest request, ServletResponse response) throws IOException {

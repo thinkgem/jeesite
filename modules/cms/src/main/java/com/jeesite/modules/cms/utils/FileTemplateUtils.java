@@ -24,7 +24,7 @@ public class FileTemplateUtils {
 
 	/**
 	 * 获取模版文件
-	 * @param fileName
+	 * @param fileName 模块名称
 	 */
 	public static FileTemplate getFileTemplateByResource(String fileName) {
 		if (!StringUtils.startsWith(fileName, "views/modules/cmsfront")) {

@@ -19,7 +19,7 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,21 +32,27 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 文章表Service
- * @author 长春叭哥、ThinkGem
- * @version 2023-4-10
+ * 文章Service
+ * @author ThinkGem
+ * @version 2025-10-12
  */
 @Service
 public class ArticleService extends CrudService<ArticleDao, Article> {
 
-	@Autowired
-	private ArticleDataDao articleDataDao;
-	@Autowired(required = false)
-	private ArticleIndexService articleIndexService;
-	@Autowired(required = false)
-	private ArticleVectorStore articleVectorStore;
-	@Autowired(required = false)
-	private PageCacheService pageCacheService;
+	private final ArticleDataDao articleDataDao;
+	private final ArticleIndexService articleIndexService;
+	private final ArticleVectorStore articleVectorStore;
+	private final PageCacheService pageCacheService;
+
+	public ArticleService(ArticleDataDao articleDataDao,
+						  ObjectProvider<ArticleIndexService> articleIndexService,
+						  ObjectProvider<ArticleVectorStore> articleVectorStore,
+						  ObjectProvider<PageCacheService> pageCacheService) {
+		this.articleDataDao = articleDataDao;
+		this.articleIndexService = articleIndexService.getIfAvailable();
+		this.articleVectorStore = articleVectorStore.getIfAvailable();
+		this.pageCacheService = pageCacheService.getIfAvailable();
+	}
 
 	private static final ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
@@ -54,8 +60,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	
 	/**
 	 * 获取单条数据
-	 * @param article
-	 * @return
+	 * @param article 主键
 	 */
 	@Override
 	public Article get(Article article) {
@@ -86,7 +91,6 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * 查询分页数据
 	 * @param article 查询条件
 	 * @param article page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<Article> findPage(Article article) {
@@ -96,6 +100,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	/**
 	 * 通过编号获取内容标题
+	 * @param ids 主键，使用逗号分隔
 	 * @return new Object[]{栏目Id,内容Id,内容标题}
 	 */
 	public List<Object[]> findByIds(String ids) {
@@ -113,7 +118,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	
 	/**
 	 * 权重更新
-	 * @param article
+	 * @param article 数据对象
 	 * @author ThinkGem
 	 */
 	@Transactional
@@ -129,7 +134,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	/**
 	 * 保存数据（插入或更新）
-	 * @param article
+	 * @param article 数据对象
 	 */
 	@Override
 	@Transactional
@@ -179,7 +184,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	/**
 	 * 更新状态
-	 * @param article
+	 * @param article 数据对象
 	 */
 	@Override
 	@Transactional
@@ -224,7 +229,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	/**
 	 * 删除数据
-	 * @param article
+	 * @param article 文章
 	 */
 	@Override
 	@Transactional

@@ -23,8 +23,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	
 	/**
 	 * 获取单条数据
-	 * @param comment
-	 * @return
+	 * @param comment 主键
 	 */
 	@Override
 	public Comment get(Comment comment) {
@@ -35,7 +34,6 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	 * 查询分页数据
 	 * @param comment 查询条件
 	 * @param comment page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<Comment> findPage(Comment comment) {
@@ -44,7 +42,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param comment
+	 * @param comment 数据对象
 	 */
 	@Override
 	@Transactional
@@ -58,7 +56,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	
 	/**
 	 * 更新状态
-	 * @param comment
+	 * @param comment 数据对象
 	 */
 	@Override
 	@Transactional
@@ -68,7 +66,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	
 	/**
 	 * 删除数据
-	 * @param comment
+	 * @param comment 数据对象
 	 */
 	@Override
 	@Transactional

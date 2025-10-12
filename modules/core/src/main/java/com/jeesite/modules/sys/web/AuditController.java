@@ -40,8 +40,11 @@ import java.util.Map;
 @Hidden
 public class AuditController extends BaseController {
 
-	@Autowired
-	private AuditService auditService;
+	private final AuditService auditService;
+
+	public AuditController(AuditService auditService) {
+		this.auditService = auditService;
+	}
 
 	/**
 	 * 安全审计列表

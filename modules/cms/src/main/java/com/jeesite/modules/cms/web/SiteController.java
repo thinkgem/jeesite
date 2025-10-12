@@ -15,7 +15,6 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -35,11 +34,13 @@ import java.io.IOException;
 @RequestMapping(value = "${adminPath}/cms/site")
 public class SiteController extends BaseController {
 
-	@Autowired
-	private SiteService siteService;
+	private final SiteService siteService;
+	private final FileTemplateService fileTemplateService;
 
-	@Autowired
-	private FileTemplateService fileTemplateService;
+	public SiteController(SiteService siteService, FileTemplateService fileTemplateService) {
+		this.siteService = siteService;
+		this.fileTemplateService = fileTemplateService;
+	}
 
 	/**
 	 * 获取数据

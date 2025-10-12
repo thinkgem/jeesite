@@ -37,9 +37,12 @@ import java.util.Map;
 @Hidden
 public class DictTypeController extends BaseController {
 
-	@Autowired
-	private DictTypeService dictTypeService;
-	
+	private final DictTypeService dictTypeService;
+
+	public DictTypeController(DictTypeService dictTypeService) {
+		this.dictTypeService = dictTypeService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -104,7 +107,6 @@ public class DictTypeController extends BaseController {
 	
 	/**
 	 * 验证字段类型是否有效
-	 * @return
 	 */
 	@RequiresPermissions("sys:dictType:edit")
 	@RequestMapping(value = "checkDictType")

@@ -28,7 +28,6 @@ public class CacheController extends BaseController {
 
 	/**
 	 * 清理全部缓存，可清理属性文件里的缓存
-	 * @return
 	 */
 	@RequiresPermissions(value={"sys:config:edit", "sys:state:cache"}, logical=Logical.OR)
 	@RequestMapping(value = "clearAll")

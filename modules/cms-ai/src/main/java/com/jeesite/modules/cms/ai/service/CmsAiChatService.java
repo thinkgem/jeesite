@@ -34,7 +34,7 @@ import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.converter.MapOutputConverter;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.stereotype.Service;
@@ -56,14 +56,20 @@ public class CmsAiChatService extends BaseService {
 	private static final String[] USER_MESSAGE_SEARCH = new String[]{"{", "}"};
 	private static final String[] USER_MESSAGE_REPLACE = new String[]{"\\{", "\\}"};
 
-	@Autowired
-	private ChatClient chatClient;
-	@Autowired
-	private ChatMemory chatMemory;
-	@Autowired(required = false)
-	private VectorStore vectorStore;
-	@Autowired
-	private CmsAiProperties properties;
+	private final ChatClient chatClient;
+	private final ChatMemory chatMemory;
+	private final VectorStore vectorStore;
+	private final CmsAiProperties properties;
+
+	public CmsAiChatService(ChatClient chatClient,
+							ChatMemory chatMemory,
+							ObjectProvider<VectorStore> vectorStore,
+							CmsAiProperties properties) {
+		this.chatClient = chatClient;
+		this.chatMemory = chatMemory;
+		this.vectorStore = vectorStore.getIfAvailable();
+		this.properties = properties;
+	}
 
 	/**
 	 * 获取聊天对话消息

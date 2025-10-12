@@ -43,12 +43,15 @@ import java.util.Map;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class CompanyController extends BaseController {
 
-	@Autowired
-	private CompanyService companyService;
-	@Autowired
-	private OfficeService officeService;
-	@Autowired
-	private EmpUserService empUserService;
+	private final CompanyService companyService;
+	private final OfficeService officeService;
+	private final EmpUserService empUserService;
+
+	public CompanyController(CompanyService companyService, OfficeService officeService, EmpUserService empUserService) {
+		this.companyService = companyService;
+		this.officeService = officeService;
+		this.empUserService = empUserService;
+	}
 
 	/**
 	 * 获取公司
@@ -74,7 +77,6 @@ public class CompanyController extends BaseController {
 
 	/**
 	 * 公司列表
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:view")
 	@RequestMapping(value = "list")
@@ -86,7 +88,6 @@ public class CompanyController extends BaseController {
 
 	/**
 	 * 查询公司数据
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:view")
 	@RequestMapping(value = "listData")
@@ -109,7 +110,6 @@ public class CompanyController extends BaseController {
 	
 	/**
 	 * 查看编辑公司
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:view")
 	@RequestMapping(value = "form")
@@ -165,7 +165,6 @@ public class CompanyController extends BaseController {
 	
 	/**
 	 * 保存公司
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:edit")
 	@PostMapping(value = "save")
@@ -177,7 +176,6 @@ public class CompanyController extends BaseController {
 	
 	/**
 	 * 停用公司
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:edit")
 	@RequestMapping(value = "disable")
@@ -197,7 +195,6 @@ public class CompanyController extends BaseController {
 	
 	/**
 	 * 启用公司
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:edit")
 	@RequestMapping(value = "enable")
@@ -210,7 +207,6 @@ public class CompanyController extends BaseController {
 
 	/**
 	 * 删除公司
-	 * @param company
 	 */
 	@RequiresPermissions("sys:company:edit")
 	@RequestMapping(value = "delete")
@@ -235,7 +231,6 @@ public class CompanyController extends BaseController {
 	 * @param isAll 是否显示所有机构（true：不进行权限过滤）
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @param isShowFullName 是否显示全公司名称
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
