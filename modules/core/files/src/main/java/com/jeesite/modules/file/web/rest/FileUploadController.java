@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.file.web.rest;
 
+import com.jeesite.modules.file.service.FileUploadService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,4 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @ConditionalOnProperty(name="file.enabled", havingValue="true", matchIfMissing=true)
 public class FileUploadController extends com.jeesite.modules.file.web.FileUploadController {
 
+	public FileUploadController(FileUploadService fileUploadService) {
+		super(fileUploadService);
+	}
 }

@@ -112,7 +112,6 @@ public class MachineInfo implements Comparable<MachineInfo> {
     /**
      * whether dead should be removed
      * 
-     * @return
      */
     public boolean isDead() {
         if (DashboardConfig.getAutoRemoveMachineMillis() > 0) {
@@ -177,7 +176,6 @@ public class MachineInfo implements Comparable<MachineInfo> {
     /**
      * Information for log
      *
-     * @return
      */
     public String toLogString() {
         return app + "|" + ip + "|" + port + "|" + version;

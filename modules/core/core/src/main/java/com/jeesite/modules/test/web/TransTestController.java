@@ -9,7 +9,6 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestTree;
 import com.jeesite.modules.test.service.TransTestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,10 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "${adminPath}/trans")
 public class TransTestController extends BaseController {
 
-	@Autowired
-	private TransTestService transTestService;
-
 	private int i = 0;
+	private final TransTestService transTestService;
+
+	public TransTestController(TransTestService transTestService) {
+		this.transTestService = transTestService;
+	}
 
 	/**
 	 * 查询列表数据

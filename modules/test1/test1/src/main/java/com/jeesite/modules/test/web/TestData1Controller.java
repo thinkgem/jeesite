@@ -14,7 +14,6 @@ import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.service.TestDataService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -36,8 +35,11 @@ import java.util.List;
 @RequestMapping(value = "${adminPath}/test1/testData")
 public class TestData1Controller extends BaseController {
 
-	@Autowired
-	private TestDataService testDataService;
+	private final TestDataService testDataService;
+
+	public TestData1Controller(TestDataService testDataService) {
+		this.testDataService = testDataService;
+	}
 
 	/**
 	 * 获取数据

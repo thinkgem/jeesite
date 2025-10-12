@@ -35,8 +35,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	
 	/**
 	 * 获取单条数据
-	 * @param testData
-	 * @return
+	 * @param testData 主键
 	 */
 	@Override
 	public TestData get(TestData testData) {
@@ -53,7 +52,6 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * 查询分页数据
 	 * @param testData 查询条件
 	 * @param testData page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<TestData> findPage(TestData testData) {
@@ -62,9 +60,8 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	
 	/**
 	 * 查询子表分页数据
-	 * @param testDataChild
+	 * @param testDataChild 查询条件
 	 * @param testDataChild page 分页对象
-	 * @return
 	 */
 	public Page<TestDataChild> findSubPage(TestDataChild testDataChild) {
 		Page<TestDataChild> page = testDataChild.getPage();
@@ -74,7 +71,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param testData
+	 * @param testData 数据对象
 	 */
 	@Override
 	@GlobalTransactional
@@ -102,7 +99,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	
 	/**
 	 * 更新状态
-	 * @param testData
+	 * @param testData 数据对象
 	 */
 	@Override
 	@GlobalTransactional
@@ -113,7 +110,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	
 	/**
 	 * 删除数据
-	 * @param testData
+	 * @param testData 数据对象
 	 */
 	@Override
 	@GlobalTransactional

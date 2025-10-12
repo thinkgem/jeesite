@@ -30,7 +30,6 @@ public interface RuleRepository<T, ID> {
      * Save one.
      *
      * @param entity
-     * @return
      */
     T save(T entity);
 
@@ -54,7 +53,6 @@ public interface RuleRepository<T, ID> {
      * Find by id.
      *
      * @param id
-     * @return
      */
     T findById(ID id);
 
@@ -62,7 +60,6 @@ public interface RuleRepository<T, ID> {
      * Find all by machine.
      *
      * @param machineInfo
-     * @return
      */
     List<T> findAllByMachine(MachineInfo machineInfo);
 
