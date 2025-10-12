@@ -6,14 +6,11 @@ package com.jeesite.common.shiro.realm;
 
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.shiro.authc.LdapToken;
-import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -31,7 +28,6 @@ import org.springframework.util.StringUtils;
 import javax.naming.AuthenticationNotSupportedException;
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 系统认证授权实现类
@@ -53,9 +49,6 @@ public class LdapAuthorizingRealm extends BaseAuthorizingRealm  {
      * to acquire connections to the LDAP directory to perform authentication attempts and authorizatino queries.
      */
     private LdapContextFactory contextFactory;
-
-	private UserService userService;
-	private EmpUserService empUserService;
 
     /**
      * Default no-argument constructor that defaults the internal {@link LdapContextFactory} instance to a
@@ -126,41 +119,24 @@ public class LdapAuthorizingRealm extends BaseAuthorizingRealm  {
 	}
 	
 	@Override
-	public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-		super.onLoginSuccess(loginInfo, request);
+	public User onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+		User user = super.onLoginSuccess(loginInfo, request);
 
 		//System.out.print("__sid: "+request.getSession().getId());
 		//System.out.println(" == "+UserUtils.getSession().getId());
-		
-		// 更新登录IP、时间、会话ID等
-		User user = UserUtils.get(loginInfo.getId());
-		getUserService().updateUserLoginInfo(user);
-		
+
 		// 记录用户登录日志
 		LogUtils.saveLog(user, ServletUtils.getRequest(), "系统登录", Log.TYPE_LOGIN_LOGOUT);
+		return user;
 	}
 	
 	@Override
-	public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-		super.onLogoutSuccess(loginInfo, request);
+	public User onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+		User user = super.onLogoutSuccess(loginInfo, request);
 		
 		// 记录用户退出日志
-		User user = UserUtils.get(loginInfo.getId());
 		LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
-	}
-
-	public UserService getUserService() {
-		if (userService == null){
-			userService = SpringUtils.getBean(UserService.class);
-		}
-		return userService;
-	}
-
-	public EmpUserService getEmpUserService() {
-		if (empUserService == null){
-			empUserService = SpringUtils.getBean(EmpUserService.class);
-		}
-		return empUserService;
+		return user;
 	}
 
     /**
