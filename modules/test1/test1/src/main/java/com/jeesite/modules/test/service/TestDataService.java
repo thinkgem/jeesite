@@ -4,11 +4,6 @@
  */
 package com.jeesite.modules.test.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
@@ -20,8 +15,10 @@ import com.jeesite.modules.test.dao.TestDataChildDao;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestDataChild;
-
 import org.apache.seata.spring.annotation.GlobalTransactional;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 测试数据Service
@@ -33,9 +30,12 @@ import org.apache.seata.spring.annotation.GlobalTransactional;
 public class TestDataService extends CrudService<TestDataDao, TestData>
 		implements TestDataServiceApi{
 	
-	@Autowired
-	private TestDataChildDao testDataChildDao;
-	
+	private final TestDataChildDao testDataChildDao;
+
+	public TestDataService(TestDataChildDao testDataChildDao) {
+		this.testDataChildDao = testDataChildDao;
+	}
+
 	/**
 	 * 获取单条数据
 	 * @param testData 主键

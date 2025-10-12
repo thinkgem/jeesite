@@ -4,10 +4,6 @@
  */
 package com.jeesite.modules.test.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
@@ -15,8 +11,9 @@ import com.jeesite.modules.test.client.TestDataServiceClient;
 import com.jeesite.modules.test.client.TestTreeServiceClient;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestTree;
-
 import org.apache.seata.spring.annotation.GlobalTransactional;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 分布式事务测试
@@ -26,11 +23,14 @@ import org.apache.seata.spring.annotation.GlobalTransactional;
 @Service
 public class TransTestService extends BaseService{
 	
-	@Autowired
-	private TestDataServiceClient testDataService;
-	@Autowired
-	private TestTreeServiceClient testTreeService;
-	
+	private final TestDataServiceClient testDataService;
+	private final TestTreeServiceClient testTreeService;
+
+	public TransTestService(TestDataServiceClient testDataService, TestTreeServiceClient testTreeService) {
+		this.testDataService = testDataService;
+		this.testTreeService = testTreeService;
+	}
+
 	/**
 	 * 事务测试，第二个接口调用故意抛出异常
 	 */

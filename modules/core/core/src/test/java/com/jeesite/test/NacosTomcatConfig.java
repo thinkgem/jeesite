@@ -1,21 +1,22 @@
 package com.jeesite.test;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration;
-
 @Configuration
 public class NacosTomcatConfig implements ApplicationRunner {
 
-    @Autowired(required = false)
-    private NacosAutoServiceRegistration registration;
+    private final NacosAutoServiceRegistration registration;
 
     @Value("${server.port}")
     private Integer port;
+
+	public NacosTomcatConfig(NacosAutoServiceRegistration registration) {
+		this.registration = registration;
+	}
 
 	@Override
 	@SuppressWarnings("deprecation")
