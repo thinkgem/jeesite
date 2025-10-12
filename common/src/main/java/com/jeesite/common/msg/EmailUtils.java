@@ -21,7 +21,6 @@ public class EmailUtils {
 
 	/**
 	 * 发送邮件
-	 * @return
 	 */
 	public static boolean send(String toAddress, String subject, String content) {
 		PropertiesUtils props = PropertiesUtils.getInstance();
@@ -52,7 +51,6 @@ public class EmailUtils {
 	 * @param toAddress 接收地址
 	 * @param subject 标题
 	 * @param content 内容
-	 * @return
 	 */
 	public static boolean send(String fromAddress, String fromPassword, String fromHostName, Integer smtpPort,
 							   String sslOnConnect, String sslSmtpPort, String toAddress, String subject, String content) {

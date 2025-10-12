@@ -16,7 +16,6 @@ import com.jeesite.modules.sys.service.DictDataService;
 import com.jeesite.modules.sys.service.DictTypeService;
 import com.jeesite.modules.sys.utils.DictUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,11 +42,14 @@ import java.util.Map;
 @ApiIgnore
 public class DictDataController extends BaseController {
 
-	@Autowired
-	private DictDataService dictDataService;
-	@Autowired
-	private DictTypeService dictTypeService;
-	
+	private final DictDataService dictDataService;
+	private final DictTypeService dictTypeService;
+
+	public DictDataController(DictDataService dictDataService, DictTypeService dictTypeService) {
+		this.dictDataService = dictDataService;
+		this.dictTypeService = dictTypeService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -176,7 +178,6 @@ public class DictDataController extends BaseController {
 	
 	/**
 	 * 停用字典
-	 * @param dictData
 	 */
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "disable")
@@ -201,7 +202,6 @@ public class DictDataController extends BaseController {
 
 	/**
 	 * 启用字典
-	 * @param dictData
 	 */
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "enable")
@@ -283,7 +283,6 @@ public class DictDataController extends BaseController {
 	
 	/**
 	 * 树结构数据修复
-	 * @return
 	 */
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "fixTreeData")

@@ -4,11 +4,13 @@
  */
 package com.jeesite.modules.sys.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.Config;
+import com.jeesite.modules.sys.service.ConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,20 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.Config;
-import com.jeesite.modules.sys.service.ConfigService;
-
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 参数设置Controller
  * @author ThinkGem
- * @version 2014-07-31
+ * @version 2019-07-31
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/config")
@@ -38,13 +35,14 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class ConfigController extends BaseController {
 
-	@Autowired
-	private ConfigService configService;
-	
+	private final ConfigService configService;
+
+	public ConfigController(ConfigService configService) {
+		this.configService = configService;
+	}
+
 	/**
 	 * 获取数据
-	 * @param id
-	 * @return
 	 */
 	@ModelAttribute
 	public Config get(String id, boolean isNewRecord) {
@@ -53,9 +51,6 @@ public class ConfigController extends BaseController {
 	
 	/**
 	 * 查询列表
-	 * @param config
-	 * @param model
-	 * @return
 	 */
 	@RequiresPermissions("sys:config:view")
 	@RequestMapping(value = "list")
@@ -66,10 +61,6 @@ public class ConfigController extends BaseController {
 	
 	/**
 	 * 查询列表
-	 * @param config
-	 * @param request
-	 * @param response
-	 * @return
 	 */
 	@RequiresPermissions("sys:config:view")
 	@RequestMapping(value = "listData")
@@ -82,9 +73,6 @@ public class ConfigController extends BaseController {
 
 	/**
 	 * 查看编辑表单
-	 * @param config
-	 * @param model
-	 * @return
 	 */
 	@RequiresPermissions("sys:config:view")
 	@RequestMapping(value = "form")
@@ -95,8 +83,6 @@ public class ConfigController extends BaseController {
 	
 	/**
 	 * 保存数据
-	 * @param config
-	 * @return
 	 */
 	@RequiresPermissions("sys:config:edit")
 	@PostMapping(value = "save")
@@ -136,8 +122,6 @@ public class ConfigController extends BaseController {
 	
 	/**
 	 * 删除数据
-	 * @param config
-	 * @return
 	 */
 	@RequiresPermissions("sys:config:edit")
 	@RequestMapping(value = "delete")

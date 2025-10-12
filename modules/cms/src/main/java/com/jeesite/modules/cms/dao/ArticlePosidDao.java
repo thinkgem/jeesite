@@ -10,7 +10,7 @@ import com.jeesite.modules.cms.entity.ArticlePosid;
 
 /**
  * 文章推荐位DAO接口
- * @author 长春叭哥
+ * @author 长春叭哥、ThinkGem
  * @version 2018-10-15
  */
 @MyBatisDao

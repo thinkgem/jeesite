@@ -240,7 +240,6 @@ public class Log extends DataEntity<Log> {
 
 	/**
 	 * 设置请求参数
-	 * @param paramsMap
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setRequestParams(Map paramsMap){
@@ -275,8 +274,6 @@ public class Log extends DataEntity<Log> {
 
 	/**
 	 * 根据名称获取参数（只有先执行setParams(Map)后才有效）
-	 * @param name
-	 * @return
 	 */
 	public String getRequestParam(String name) {
 		if (paramsMap == null){

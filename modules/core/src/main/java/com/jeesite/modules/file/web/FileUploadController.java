@@ -10,16 +10,15 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.file.entity.FileUploadParams;
 import com.jeesite.modules.file.service.FileUploadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
@@ -33,9 +32,12 @@ import java.util.Map;
 @ConditionalOnProperty(name={"file.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class FileUploadController extends BaseController {
 
-	@Autowired
-	private FileUploadService fileUploadService;
-	
+	private final FileUploadService fileUploadService;
+
+	public FileUploadController(FileUploadService fileUploadService) {
+		this.fileUploadService = fileUploadService;
+	}
+
 	/**
 	 * 上传文件参数
 	 */

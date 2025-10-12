@@ -9,9 +9,10 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.app.entity.AppComment;
 import com.jeesite.modules.app.service.AppCommentService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
@@ -33,9 +32,12 @@ import java.util.Date;
 @RequestMapping(value = "${adminPath}/app/appComment")
 public class AppCommentController extends BaseController {
 
-	@Autowired
-	private AppCommentService appCommentService;
-	
+	private final AppCommentService appCommentService;
+
+	public AppCommentController(AppCommentService appCommentService) {
+		this.appCommentService = appCommentService;
+	}
+
 	/**
 	 * 获取数据
 	 */

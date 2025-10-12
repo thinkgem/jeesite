@@ -22,8 +22,7 @@ public class BizCategoryServiceSupport extends TreeService<BizCategoryDao, BizCa
 	
 	/**
 	 * 获取单条数据
-	 * @param bizCategory
-	 * @return
+	 * @param bizCategory 主键编码
 	 */
 	@Override
 	public BizCategory get(BizCategory bizCategory) {
@@ -32,8 +31,7 @@ public class BizCategoryServiceSupport extends TreeService<BizCategoryDao, BizCa
 	
 	/**
 	 * 查询列表数据
-	 * @param bizCategory
-	 * @return
+	 * @param bizCategory 查询条件
 	 */
 	@Override
 	public List<BizCategory> findList(BizCategory bizCategory) {
@@ -42,7 +40,7 @@ public class BizCategoryServiceSupport extends TreeService<BizCategoryDao, BizCa
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param bizCategory
+	 * @param bizCategory 数据对象
 	 */
 	@Override
 	@Transactional
@@ -56,7 +54,7 @@ public class BizCategoryServiceSupport extends TreeService<BizCategoryDao, BizCa
 	
 	/**
 	 * 更新状态
-	 * @param bizCategory
+	 * @param bizCategory 数据对象
 	 */
 	@Override
 	@Transactional
@@ -66,7 +64,7 @@ public class BizCategoryServiceSupport extends TreeService<BizCategoryDao, BizCa
 	
 	/**
 	 * 删除数据
-	 * @param bizCategory
+	 * @param bizCategory 数据对象
 	 */
 	@Override
 	@Transactional

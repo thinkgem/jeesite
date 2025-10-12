@@ -23,8 +23,7 @@ public class AppCommentService extends CrudService<AppCommentDao, AppComment> {
 	
 	/**
 	 * 获取单条数据
-	 * @param appComment
-	 * @return
+	 * @param appComment 主键
 	 */
 	@Override
 	public AppComment get(AppComment appComment) {
@@ -35,7 +34,6 @@ public class AppCommentService extends CrudService<AppCommentDao, AppComment> {
 	 * 查询分页数据
 	 * @param appComment 查询条件
 	 * @param appComment page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<AppComment> findPage(AppComment appComment) {
@@ -44,7 +42,7 @@ public class AppCommentService extends CrudService<AppCommentDao, AppComment> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param appComment
+	 * @param appComment 查询条件
 	 */
 	@Override
 	@Transactional
@@ -56,7 +54,7 @@ public class AppCommentService extends CrudService<AppCommentDao, AppComment> {
 	
 	/**
 	 * 更新状态
-	 * @param appComment
+	 * @param appComment 数据对象
 	 */
 	@Override
 	@Transactional
@@ -66,7 +64,7 @@ public class AppCommentService extends CrudService<AppCommentDao, AppComment> {
 	
 	/**
 	 * 删除数据
-	 * @param appComment
+	 * @param appComment 数据对象
 	 */
 	@Override
 	@Transactional

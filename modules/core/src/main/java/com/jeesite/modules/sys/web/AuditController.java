@@ -4,20 +4,6 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.entity.Page;
@@ -26,11 +12,21 @@ import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.Audit;
+import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.service.AuditService;
-
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 安全审计Controller
@@ -43,8 +39,11 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class AuditController extends BaseController {
 
-	@Autowired
-	private AuditService auditService;
+	private final AuditService auditService;
+
+	public AuditController(AuditService auditService) {
+		this.auditService = auditService;
+	}
 
 	/**
 	 * 安全审计列表

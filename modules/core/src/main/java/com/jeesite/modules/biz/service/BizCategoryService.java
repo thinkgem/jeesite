@@ -18,37 +18,35 @@ public interface BizCategoryService extends TreeServiceApi<BizCategory> {
 	
 	/**
 	 * 获取单条数据
-	 * @param bpmCategory
-	 * @return
+	 * @param bpmCategory 主键
 	 */
 	@Override
 	BizCategory get(BizCategory bpmCategory);
 	
 	/**
 	 * 查询列表数据
-	 * @param bpmCategory
-	 * @return
+	 * @param bpmCategory 查询条件
 	 */
 	@Override
 	List<BizCategory> findList(BizCategory bpmCategory);
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param bpmCategory
+	 * @param bpmCategory 数据对象
 	 */
 	@Override
 	void save(BizCategory bpmCategory);
 	
 	/**
 	 * 更新状态
-	 * @param bpmCategory
+	 * @param bpmCategory 数据对象
 	 */
 	@Override
 	void updateStatus(BizCategory bpmCategory);
 	
 	/**
 	 * 删除数据
-	 * @param bpmCategory
+	 * @param bpmCategory 数据对象
 	 */
 	@Override
 	void delete(BizCategory bpmCategory);

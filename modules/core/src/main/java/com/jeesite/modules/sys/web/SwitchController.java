@@ -40,8 +40,11 @@ import java.util.Set;
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class SwitchController extends BaseController{
 
-	@Autowired
-	private PostService postService;
+	private final PostService postService;
+
+	public SwitchController(PostService postService) {
+		this.postService = postService;
+	}
 
 	/**
 	 * 切换系统菜单（菜单归属子系统）

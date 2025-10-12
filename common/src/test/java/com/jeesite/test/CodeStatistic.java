@@ -48,8 +48,6 @@ public class CodeStatistic {
 	
 	/**
 	 * 获得目录下的文件和子目录下的文件
-	 * @param f
-	 * @return
 	 */
 	public static ArrayList<File> getFile(File f) {
 		File[] ff = f.listFiles();
@@ -66,7 +64,6 @@ public class CodeStatistic {
 
 	/**
 	 * 统计方法
-	 * @param f
 	 */
 	private static void count(File f) {
 		FileReader fr = null;

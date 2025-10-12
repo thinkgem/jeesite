@@ -9,9 +9,6 @@
 package ${packageName}.${moduleName}.service${subModuleNameDot};
 
 import java.util.List;
-<% if (table.childList.~size > 0){ %>
-import org.springframework.beans.factory.annotation.Autowired;
-<% } %>
 import org.springframework.stereotype.Service;
 
 import com.jeesite.common.entity.Page;
@@ -32,14 +29,16 @@ import ${packageName}.${moduleName}.dao${subModuleNameDot}.${@StringUtils.cap(ch
 public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Service<${ClassName}Dao, ${ClassName}> {
 	<% for (child in table.childList){ %>
 	
-	@Autowired
-	private ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+	private final ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+
+	public ${ClassName}Service(${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao) {
+		this.${@StringUtils.uncap(child.className)}Dao = ${@StringUtils.uncap(child.className)}Dao;
+	}
 	<% } %>
 	
 	/**
 	 * 获取单条数据
-	 * @param ${className}
-	 * @return
+	 * @param ${className} 主键
 	 */
 	@Override
 	public ${ClassName} get(${ClassName} ${className}) {
@@ -62,7 +61,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 	 * 查询分页数据
 	 * @param ${className} 查询条件
 	 * @param ${className} page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<${ClassName}> findPage(${ClassName} ${className}) {
@@ -71,8 +69,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 	
 	/**
 	 * 查询列表数据
-	 * @param ${className}
-	 * @return
+	 * @param ${className} 查询条件
 	 */
 	@Override
 	public List<${ClassName}> findList(${ClassName} ${className}) {
@@ -82,9 +79,8 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 	
 	/**
 	 * 查询子表分页数据
-	 * @param ${@StringUtils.uncap(child.className)}
+	 * @param ${@StringUtils.uncap(child.className)} 查询条件
 	 * @param ${@StringUtils.uncap(child.className)} page 分页对象
-	 * @return
 	 */
 	public Page<${@StringUtils.cap(child.className)}> findSubPage(${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)}) {
 		Page<${@StringUtils.cap(child.className)}> page = ${@StringUtils.uncap(child.className)}.getPage();

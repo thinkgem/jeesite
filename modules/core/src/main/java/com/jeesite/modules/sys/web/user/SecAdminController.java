@@ -4,14 +4,16 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.mapper.JsonMapper;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.entity.UserDataScope;
+import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.utils.ModuleUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.mapper.JsonMapper;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.entity.UserDataScope;
-import com.jeesite.modules.sys.service.UserService;
-import com.jeesite.modules.sys.utils.ModuleUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 二级管理员Controller
@@ -41,8 +38,11 @@ import com.jeesite.modules.sys.utils.ModuleUtils;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class SecAdminController extends BaseController {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+
+	public SecAdminController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@ModelAttribute
 	public User get(String userCode, boolean isNewRecord) {
@@ -84,8 +84,6 @@ public class SecAdminController extends BaseController {
 
 	/**
 	 * 设置为二级管理员身份
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("sys:secAdmin:edit")
 	@PostMapping(value = "save")
@@ -104,8 +102,6 @@ public class SecAdminController extends BaseController {
 	
 	/**
 	 * 取消二级管理员身份
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("sys:secAdmin:edit")
 	@RequestMapping(value = "delete")

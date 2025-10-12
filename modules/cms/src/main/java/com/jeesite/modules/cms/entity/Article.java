@@ -16,6 +16,7 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 /**
@@ -280,7 +281,6 @@ public class Article extends DataEntity<Article> {
 
 	/**
 	 * 是否查询文章内容
-	 * @return
 	 */
 	public Boolean getIsQueryArticleData() {
 		return isQueryArticleData;

@@ -15,7 +15,6 @@ import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.service.PostService;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +40,11 @@ import java.util.Map;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class PostController extends BaseController {
 
-	@Autowired
-	private PostService postService;
+	private final PostService postService;
+
+	public PostController(PostService postService) {
+		this.postService = postService;
+	}
 
 	@ModelAttribute
 	public Post get(String postCode, boolean isNewRecord) {
@@ -131,9 +133,6 @@ public class PostController extends BaseController {
 
 	/**
 	 * 验证岗位名是否有效
-	 * @param oldPostName
-	 * @param postName
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "checkPostName")
@@ -152,7 +151,6 @@ public class PostController extends BaseController {
 	/**
 	 * 获取岗位树结构数据
 	 * @param isShowCode    是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")

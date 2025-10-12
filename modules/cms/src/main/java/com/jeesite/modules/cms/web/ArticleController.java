@@ -17,8 +17,9 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.FileTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -27,8 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,12 +40,15 @@ import java.util.List;
 @RequestMapping(value = "${adminPath}/cms/article")
 public class ArticleController extends BaseController {
 
-	@Autowired
-	private ArticleService articleService;
-	@Autowired
-	private CategoryService categoryService;
-	@Autowired
-	private FileTemplateService fileTemplateService;
+	private final ArticleService articleService;
+	private final CategoryService categoryService;
+	private final FileTemplateService fileTemplateService;
+
+	public ArticleController(ArticleService articleService, CategoryService categoryService, FileTemplateService fileTemplateService) {
+		this.articleService = articleService;
+		this.categoryService = categoryService;
+		this.fileTemplateService = fileTemplateService;
+	}
 
 	/**
 	 * 获取数据
@@ -58,7 +60,6 @@ public class ArticleController extends BaseController {
 
 	/**
 	 * 查询列表
-	 * @throws IOException
 	 */
 	@RequiresPermissions("cms:article:view")
 	@RequestMapping(value = { "list", "" })
@@ -73,7 +74,7 @@ public class ArticleController extends BaseController {
 			Page<Article> page = new Page<>(1, 1, -1);
 			article.setPage(page);
 			page = articleService.findPage(article);
-			if (page.getList().size() > 0) {
+			if (!page.getList().isEmpty()) {
 				article = page.getList().get(0);
 				article.setArticleData(articleService.get(new ArticleData(article.getId())));
 			}
@@ -116,7 +117,6 @@ public class ArticleController extends BaseController {
 
 	/**
 	 * 查看编辑表单
-	 * @throws IOException
 	 */
 	@RequiresPermissions("cms:article:view")
 	@RequestMapping(value = "form")

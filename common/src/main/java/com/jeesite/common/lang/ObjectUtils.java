@@ -31,7 +31,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		String[] ver = StringUtils.split(System.getProperty("java.version"), StringUtils.DOT);
 		isJavaSerialize = ver.length > 0 && Integer.parseInt(ver[0]) > 1;
 	}
-	
+
 	/**
 	 * 转换为 Double 类型
 	 */
@@ -150,8 +150,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
 	/**
 	 * 拷贝一个对象（但是子对象无法拷贝）
-	 * @param source
-	 * @param ignoreProperties
+	 * @param source 原对象
+	 * @param ignoreProperties 忽略的属性
 	 */
 	public static Object copyBean(Object source, String... ignoreProperties){
 		if (source == null){
@@ -169,7 +169,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	
 	/**
 	 * 克隆一个对象（完全拷贝）
-	 * @param source
+	 * @param source 原对象
 	 */
 	public static Object cloneBean(Object source){
 		if (source == null){
@@ -181,8 +181,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	
 	/**
 	 * 序列化对象
-	 * @param object
-	 * @return
 	 */
 	public static byte[] serialize(Object object) {
 		try {
@@ -199,8 +197,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
 	/**
 	 * 反序列化对象
-	 * @param bytes
-	 * @return
 	 */
 	public static Object unserialize(byte[] bytes) {
 		try {
@@ -217,8 +213,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	
 	/**
 	 * 序列化对象
-	 * @param object
-	 * @return
 	 */
 	public static byte[] serializeJava(Object object) {
 		if (object == null){
@@ -242,8 +236,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
 	/**
 	 * 反序列化对象
-	 * @param bytes
-	 * @return
 	 */
 	public static Object unserializeJava(byte[] bytes) {
 		if (bytes == null){

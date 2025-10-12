@@ -4,24 +4,6 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -30,13 +12,23 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.service.DictTypeService;
-
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 字典分类管理Controller
  * @author ThinkGem
- * @version 2017-3-24
+ * @version 2019-3-24
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/dictType")
@@ -44,9 +36,12 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class DictTypeController extends BaseController {
 
-	@Autowired
-	private DictTypeService dictTypeService;
-	
+	private final DictTypeService dictTypeService;
+
+	public DictTypeController(DictTypeService dictTypeService) {
+		this.dictTypeService = dictTypeService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -111,7 +106,6 @@ public class DictTypeController extends BaseController {
 	
 	/**
 	 * 验证字段类型是否有效
-	 * @return
 	 */
 	@RequiresPermissions("sys:dictType:edit")
 	@RequestMapping(value = "checkDictType")
