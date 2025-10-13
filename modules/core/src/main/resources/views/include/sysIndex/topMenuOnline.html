@@ -15,7 +15,8 @@
 						location.reload(true);
 					});
 				}
-				try{$('#onlineCount').html(Number(data || 0))}catch(e){}
+				let num = Number(data || 0);
+				try{$('#onlineCount').html(num !== num ? 0 : num)}catch(e){}
 			}
 			$.ajax({
 				url: ctx+'/sys/online/count?__notUpdateSession=true&__t=' + new Date().getTime(),
