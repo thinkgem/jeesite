@@ -22,7 +22,7 @@
 	<properties>
 
 		<!-- common version setting -->
-		<commons-io.version>2.13.0</commons-io.version>
+		<commons-io.version>2.18.0</commons-io.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<commons-email.version>1.5</commons-email.version>
 
