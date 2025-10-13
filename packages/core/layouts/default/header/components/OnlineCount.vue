@@ -46,7 +46,8 @@
           });
           return;
         }
-        count.value = Number(data || 0);
+        let num = Number(data || 0);
+        count.value = num !== num ? 0 : num;
       }
 
       onMounted(async () => {
