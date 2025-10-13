@@ -24,7 +24,7 @@ export function generateModifyVars(dark = false) {
   // const modifyVars = getThemeVariables({ dark: false });
   const { darkAlgorithm, defaultAlgorithm, defaultSeed } = theme;
   const mapToken = dark ? darkAlgorithm(defaultSeed) : defaultAlgorithm(defaultSeed);
-  const modifyVars = (convertLegacyToken as any).default(mapToken);
+  const modifyVars = convertLegacyToken(mapToken);
   // const modifyVars = convertLegacyToken(mapToken);
   // !!dark && console.log('modifyVars', dark, modifyVars);
 

@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/core",
-  "version": "5.13.1",
+  "version": "5.14.0-dev",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,8 +9,8 @@
     "update": "ncu -u -x codemirror,pinia,cropperjs"
   },
   "dependencies": {
-    "@vueuse/core": "13.6.0",
-    "@vueuse/shared": "13.6.0",
+    "@vueuse/core": "13.9.0",
+    "@vueuse/shared": "13.9.0",
     "@wangeditor/editor": "5.1.23",
     "@wangeditor/editor-for-vue": "5.1.12",
     "@zxcvbn-ts/core": "3.0.4",
@@ -18,7 +18,7 @@
     "cropperjs": "1.6.2",
     "crypto-js": "4.2.0",
     "echarts": "6.0.0",
-    "path-to-regexp": "8.2.0",
+    "path-to-regexp": "8.3.0",
     "pinia": "2.3.1",
     "print-js": "1.6.0",
     "qrcode": "1.5.4",
@@ -26,8 +26,8 @@
     "resize-observer-polyfill": "1.5.1",
     "sortablejs": "1.15.6",
     "spark-md5": "3.0.2",
-    "vditor": "3.11.1",
-    "vue-i18n": "11.1.11",
+    "vditor": "3.11.2",
+    "vue-i18n": "11.1.12",
     "vue-json-pretty": "2.5.0",
     "vue-types": "6.0.0",
     "xlsx": "0.18.5"
@@ -41,7 +41,7 @@
     "@types/showdown": "2.0.6",
     "@types/sortablejs": "1.15.8",
     "@vitejs/plugin-vue": "6.0.1",
-    "rollup-plugin-visualizer": "6.0.3",
+    "rollup-plugin-visualizer": "6.0.4",
     "vite-plugin-theme-vite3": "2.0.1",
     "vite-plugin-dts": "4.5.4"
   },

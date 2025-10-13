@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/dfm",
-  "version": "5.13.1",
+  "version": "5.14.0-dev",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,18 +10,31 @@
   },
   "dependencies": {
     "@jeesite/dfm-lib": "5.13.1-rc.1",
-    "@vueuse/core": "13.6.0",
-    "dayjs": "1.11.13",
-    "less": "4.4.0",
+    "@vueuse/core": "13.9.0",
+    "dayjs": "1.11.18",
+    "less": "4.4.2",
     "lodash-es": "4.17.21",
-    "monaco-editor": "0.52.2",
+    "monaco-editor": "0.54.0",
     "vuedraggable": "4.1.0",
-    "vue-i18n": "11.1.11",
+    "vue-i18n": "11.1.12",
     "vue-types": "6.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "6.0.1",
     "vite-plugin-dts": "4.5.4",
     "vitest": "3.2.4"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
   }
 }

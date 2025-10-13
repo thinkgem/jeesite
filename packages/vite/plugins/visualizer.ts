@@ -14,7 +14,7 @@ export function configVisualizerPlugin(): PluginOption {
   if (!isReportMode()) {
     return [];
   }
-  return (visualizer as any).default({
+  return visualizer({
     filename: './node_modules/.cache/visualizer/stats.html',
     open: true,
     gzipSize: true,
