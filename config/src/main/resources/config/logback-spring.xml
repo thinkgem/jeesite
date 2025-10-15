@@ -3,6 +3,18 @@
 
 	<!-- Log file path -->
 	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
+
+	<!-- Project level setting -->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<logger name="com.netflix.config.sources.URLConfigurationSource" level="ERROR" />
+	<logger name="org.springframework.boot.web.embedded" level="INFO" />
+	<logger name="org.springframework.cloud" level="INFO" />
+<!-- 	<logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" /> -->
+<!-- 	<logger name="org.springframework.core.env.StandardEnvironment" level="DEBUG" /> -->
+<!-- 	<logger name="org.springframework.boot.env.OriginTrackedYamlLoader" level="DEBUG" /> -->
+	<logger name="org.springframework.boot.context.config.ConfigFileApplicationListener" level="DEBUG" />
+
+	<logger name="com.jeesite.modules" level="INFO" />
 	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -51,16 +63,5 @@
 		<appender-ref ref="debug" />
 		<appender-ref ref="error" />
 	</root>
-	
-	<!-- Project level setting -->
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
-	<logger name="com.netflix.config.sources.URLConfigurationSource" level="ERROR" />
-	<logger name="org.springframework.boot.web.embedded" level="INFO" />
-	<logger name="org.springframework.cloud" level="INFO" />
-	<logger name="com.jeesite" level="DEBUG" />
-<!-- 	<logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" /> -->
-<!-- 	<logger name="org.springframework.core.env.StandardEnvironment" level="DEBUG" /> -->
-<!-- 	<logger name="org.springframework.boot.env.OriginTrackedYamlLoader" level="DEBUG" /> -->
-	<logger name="org.springframework.boot.context.config.ConfigFileApplicationListener" level="DEBUG" />
 	
 </configuration>
