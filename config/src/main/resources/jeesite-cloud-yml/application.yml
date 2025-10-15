@@ -392,7 +392,7 @@ spring:
 #logging:
 #  level:
 #    root: warn
-#    com.jeesite: debug
+#    com.jeesite.modules: debug
 
 # MyBatis 相关
 mybatis:
