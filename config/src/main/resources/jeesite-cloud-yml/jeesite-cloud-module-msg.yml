@@ -24,7 +24,7 @@ msg:
   client:
     enabled: false
 
-# 任务调度（个人版）
+# 任务调度（标准版）
 job:
   enabled: true
 
