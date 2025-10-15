@@ -1,50 +1,6 @@
 <included>
-	
-	<!-- https://github.com/spring-projects/spring-boot/blob/v2.7.18/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
-	<logger name="org.apache.catalina.core.StandardEngine" level="INFO" />
-	<logger name="org.apache.fury.serializer.ObjectStreamSerializer" level="ERROR" />
-	<logger name="org.apache.fury.config.FuryBuilder" level="ERROR" />
-	<logger name="org.springframework.boot.devtools" level="DEBUG" />
-	<logger name="org.springframework.boot.web.embedded" level="INFO" />
-	<logger name="org.springframework.web.servlet.PageNotFound" level="ERROR" />
-	<logger name="org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker" level="ERROR" />
-
-<!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
-<!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
-	<logger name="ShardingSphere-SQL" level="DEBUG" />
-	<logger name="org.mybatis.spring.transaction" level="DEBUG" />
-	<logger name="com.atomikos.icatch.config.UserTransactionServiceImp" level="ERROR" />
-	<logger name="com.atomikos.icatch.provider.imp.AssemblerImp" level="ERROR" />
-	<logger name="com.atomikos.jdbc.AbstractDataSourceBean" level="ERROR" />
-	<logger name="com.atomikos.jdbc.AtomikosConnectionProxy" level="ERROR" />
-	<logger name="com.atomikos.recovery.xa.XaResourceRecoveryManager" level="ERROR" />
-	<logger name="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator" level="DEBUG" />
-	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
-	<logger name="springfox.documentation.schema.property.CachingModelPropertiesProvider" level="ERROR" />
-
-	<logger name="org.flowable.ui.modeler.domain" level="DEBUG" />
-	<logger name="org.flowable.idm.engine.impl.persistence" level="DEBUG" />
-	<logger name="org.flowable.task.service.impl.persistence" level="DEBUG" />
-	<logger name="org.flowable.identitylink.service.impl.persistence" level="DEBUG" />
-	<logger name="org.flowable.variable.service.impl.persistence" level="DEBUG" />
-	<logger name="org.flowable.engine.impl.persistence" level="DEBUG" />
-	<logger name="com.bstek.ureport" level="DEBUG" />
-
-	<logger name="com.jeesite.common" level="INFO" />
-	<logger name="com.jeesite.modules" level="DEBUG" />
-
-	<!-- Production profile
-	<springProfile name="prod">
-		<logger name="org.mybatis.spring.transaction" level="INFO" />
-		<logger name="org.flowable.ui.modeler.domain" level="INFO" />
-		<logger name="org.flowable.idm.engine.impl.persistence" level="INFO" />
-		<logger name="org.flowable.task.service.impl.persistence" level="INFO" />
-		<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
-		<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
-		<logger name="org.flowable.engine.impl.persistence" level="INFO" />
-		<logger name="com.jeesite.modules" level="INFO" />
-	</springProfile> -->
+	<!-- Framework level setting -->
+	<include resource="config/logger-default.xml" />
 	
 </included>
