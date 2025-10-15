@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @version 2018年1月10日
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(name="web.interceptor.log.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name="web.interceptor.log.enabled", havingValue="true", matchIfMissing=false)
 public class LogInterceptorConfig implements WebMvcConfigurer {
 
 	@Override

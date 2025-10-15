@@ -143,11 +143,11 @@ user:
 
 # 国际化管理（专业版）
 lang:
-  enabled: true
+  enabled: false
 
 # 任务调度（标准版）
 job:
-  enabled: true
+  enabled: false
 
 # 代码生成
 gen:

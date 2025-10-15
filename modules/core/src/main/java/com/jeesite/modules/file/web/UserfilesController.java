@@ -28,7 +28,7 @@ import java.io.IOException;
  * @version 2022-09-27
  */
 @Controller
-@ConditionalOnProperty(name="file.isFileStreamDown", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"file.enabled","file.isFileStreamDown"}, havingValue="true", matchIfMissing=true)
 @Hidden
 public class UserfilesController extends BaseController {
 

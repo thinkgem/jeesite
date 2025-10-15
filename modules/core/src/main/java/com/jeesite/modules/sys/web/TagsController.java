@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value = "tags")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @Hidden
 public class TagsController extends BaseController {
 

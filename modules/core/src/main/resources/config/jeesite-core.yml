@@ -200,6 +200,10 @@ page:
   # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
   maxPageSize: 999
 
+# 基础配置（参数、模块、字典）
+config:
+  enabled: true
+
 # 用户相关
 user:
   enabled: true
