@@ -5,7 +5,7 @@
 	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
 	
 	<!-- Framework level setting -->
-	<include resource="config/logger-core.xml"/>
+	<include resource="config/logger-default.xml"/>
 	
 	<!-- Project level setting -->
 	<!-- <logger name="your.package" level="DEBUG" /> -->

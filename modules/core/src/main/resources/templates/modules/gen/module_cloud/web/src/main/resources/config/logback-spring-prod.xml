@@ -13,9 +13,6 @@
 
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
-
-	<!-- Project level setting -->
-	<!-- <logger name="your.package" level="DEBUG" /> -->
 	<logger name="io.seata" level="INFO" />
 	<logger name="zipkin2.reporter.AsyncReporter$BoundedAsyncReporter" level="ERROR" />
 	<logger name="org.springframework.cloud.openfeign.FeignClientFactoryBean" level="ERROR" />
@@ -30,8 +27,8 @@
 	<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
 	<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
 	<logger name="org.flowable.engine.impl.persistence" level="INFO" />
-	<logger name="com.jeesite" level="INFO" />
-	<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
+	<logger name="com.bstek.ureport" level="INFO" />
+	<logger name="com.jeesite.modules" level="INFO" />
 
 	<!-- Project level setting -->
 	<!-- <logger name="your.package" level="DEBUG" /> -->
