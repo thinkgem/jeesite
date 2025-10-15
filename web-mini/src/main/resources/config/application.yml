@@ -99,8 +99,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-    
-  # JTA事务
+
+  # JTA XA 事务（spring boot 3）
   jta:
     enabled: false
 
@@ -115,6 +115,9 @@ logging:
 
 # MyBatis 相关
 mybatis:
+
+  # MyBatis 配置文件
+  configLocation: /mybatis/mybatis-default.xml
 
   # Mapper文件刷新线程
   mapper:
@@ -149,7 +152,6 @@ gen:
 
 # 系统监控（默认开启，可关闭）访问地址如下：
 #   服务监控：http://127.0.0.1:8980/js/a/state/server/index
-#   缓存监控：http://127.0.0.1:8980/js/a/state/cache/index
 state:
   enabled: true
 
@@ -163,7 +165,7 @@ web:
     mobile:
       enabled: false
 
-  # 是否启用核心内置功能的Controller加载
+  # 核心模块的Web功能开启
   core:
     enabled: false
   
