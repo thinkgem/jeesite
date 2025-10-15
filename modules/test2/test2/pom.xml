@@ -29,7 +29,7 @@
 
 	<dependencies>
 		
-		<!-- 核心模块 -->
+		<!-- 核心模块 --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-core-client</artifactId>

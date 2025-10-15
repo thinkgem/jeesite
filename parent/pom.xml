@@ -88,7 +88,7 @@
 
 	<dependencies>
 
-		<!-- JeeSite Common -->
+		<!-- Common --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-common</artifactId>

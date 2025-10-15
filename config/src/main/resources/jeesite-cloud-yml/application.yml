@@ -429,11 +429,11 @@ menu:
   # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
   updateStatusByModuleStatus: false
 
-# 国际化管理（专业版+）
+# 国际化管理（专业版）
 lang:
   enabled: false
   
-# 任务调度（个人版+）
+# 任务调度（标准版）
 job:
   enabled: false
 
