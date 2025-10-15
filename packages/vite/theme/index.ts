@@ -116,7 +116,7 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
         'button-cancel-hover-border-color': '#4a4a4a',
         'header-light-bottom-border-color': '#303030',
       },
-    }),
+    } as any),
   ];
   return plugin as unknown as PluginOption[];
 }
