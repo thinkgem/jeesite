@@ -57,7 +57,7 @@ jdbc:
 #  # Mysql 数据库配置
 #  type: mysql
 #  driver: com.mysql.cj.jdbc.Driver
-#  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#  url: jdbc:mysql://127.0.0.1:3306/jeesite_mini?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
 #  username: root
 #  password: 123456
 #  testSql: SELECT 1
@@ -108,6 +108,17 @@ spring:
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
+
+# MyBatis 相关
+mybatis:
+
+  # MyBatis 配置文件
+  configLocation: /mybatis/mybatis-default.xml
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: false
   
 # 管理基础路径
 adminPath: /a
@@ -115,7 +126,11 @@ adminPath: /a
 # 前端基础路径
 frontPath: /f
 
-# 用户权限相关
+# 配置相关功能（参数、模块、字典）
+config:
+  enabled: false
+
+# 用户权限相关（用户、角色、菜单）
 user:
   enabled: false
 
@@ -133,7 +148,6 @@ gen:
 
 # 系统监控（默认开启，可关闭）访问地址如下：
 #   服务监控：http://127.0.0.1:8980/js/a/state/server/index
-#   缓存监控：http://127.0.0.1:8980/js/a/state/cache/index
 state:
   enabled: true
 
@@ -147,19 +161,14 @@ web:
     mobile:
       enabled: false
 
-  # 是否启用核心内置功能的Controller加载
+  # 核心模块的Web功能开启
   core:
     enabled: false
-  
+
   # 在线API文档工具
-  swagger: 
+  swagger:
     enabled: false
 
-# Mapper文件刷新线程
-mybatis:
-  mapper:
-    refresh:
-      enabled: false
 
 # 文件上传
 file:

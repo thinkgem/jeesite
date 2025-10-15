@@ -128,6 +128,9 @@ logging:
 # MyBatis 相关
 mybatis:
 
+  # MyBatis 配置文件
+  #configLocation: /mybatis/mybatis-config.xml
+
   # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
   #scanBasePackage: com.jeesite.modules.**.dao
 
