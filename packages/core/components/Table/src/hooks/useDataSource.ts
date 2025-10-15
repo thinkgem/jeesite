@@ -33,6 +33,7 @@ interface SearchState {
 }
 export function useDataSource(
   propsRef: ComputedRef<BasicTableProps>,
+  dictTypesRef: Ref<Set<string>>,
   {
     getPaginationInfo,
     setPagination,
@@ -50,10 +51,11 @@ export function useDataSource(
     sortInfo: {},
     filterInfo: {},
   });
-  const dataSourceRef = ref<TableRecordable[]>([]);
-  const delDataSourceRef = ref<TableRecordable[]>([]);
-  const rawDataSourceRef = ref<TableRecordable>({});
-  const getDataSourceRef: Ref<TableRecordable<any>[]> = ref([]);
+  const dataSourceRef: Ref<TableRecordable[]> = ref([]);
+  const delDataSourceRef: Ref<TableRecordable[]> = ref([]);
+  const rawDataSourceRef: Ref<TableRecordable> = ref({});
+  const getDataSourceRef: Ref<TableRecordable[]> = ref([]);
+  const { initDict } = useDict();
 
   watchEffect(() => {
     tableData.value = unref(dataSourceRef);
@@ -70,7 +72,7 @@ export function useDataSource(
     },
   );
 
-  function handleTableChange(
+  async function handleTableChange(
     pagination: PaginationProps,
     filters: Partial<Recordable<string[]>>,
     sorter: SorterResult,
@@ -93,7 +95,7 @@ export function useDataSource(
       searchState.filterInfo = filterInfo;
       params.filterInfo = filterInfo;
     }
-    fetch(params);
+    await fetch(params);
   }
 
   function setTableKey(items: any[]) {
@@ -119,7 +121,8 @@ export function useDataSource(
 
   watch(
     () => dataSourceRef.value,
-    () => {
+    async (value, oldValue) => {
+      if (value === oldValue) return;
       const dataSource = unref(dataSourceRef);
       if (!dataSource || dataSource.length === 0) {
         getDataSourceRef.value = unref(dataSourceRef);
@@ -143,6 +146,8 @@ export function useDataSource(
           }
         }
       }
+      await initDict(dictTypesRef.value);
+      //console.log('datasource', dictTypesRef.value);
       getDataSourceRef.value = unref(dataSourceRef);
     },
     {
@@ -297,9 +302,6 @@ export function useDataSource(
       if (beforeFetch && isFunction(beforeFetch)) {
         params = (await beforeFetch(params)) || params;
       }
-
-      const { initDict } = useDict();
-      await initDict(propsRef.value.dictTypes);
 
       const res = await api(params);
       rawDataSourceRef.value = res;

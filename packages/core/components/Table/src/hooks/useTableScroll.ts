@@ -12,7 +12,7 @@ import { useScroll } from '@jeesite/core/hooks/event/useScroll';
 export function useTableScroll(
   propsRef: ComputedRef<BasicTableProps>,
   tableRef: Ref<ComponentRef>,
-  columnsRef: ComputedRef<BasicColumn[]>,
+  columnsRef: Ref<BasicColumn[]>,
   rowSelectionRef: ComputedRef<TableRowSelection | null>,
   getDataSourceRef: Ref<Recordable[]>,
   wrapRef: Ref<ComponentRef>,

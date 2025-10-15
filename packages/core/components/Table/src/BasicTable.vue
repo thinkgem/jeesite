@@ -198,6 +198,17 @@
   );
 
   const {
+    getViewColumns,
+    getColumns,
+    // setCacheColumnsByField,
+    setColumns,
+    updateColumn,
+    getColumnsRef,
+    getCacheColumns,
+    dictTypesRef,
+  } = useColumns(getProps, getPaginationInfo);
+
+  const {
     handleTableChange: onTableChange,
     getDataSourceRef,
     getDataSource,
@@ -214,6 +225,7 @@
     reload,
   } = useDataSource(
     getProps,
+    dictTypesRef,
     {
       tableData,
       getPaginationInfo,
@@ -241,16 +253,6 @@
     const { onExpand } = unref(getProps);
     onExpand && isFunction(onExpand) && onExpand(expanded, record);
   }
-
-  const {
-    getViewColumns,
-    getColumns,
-    // setCacheColumnsByField,
-    setColumns,
-    updateColumn,
-    getColumnsRef,
-    getCacheColumns,
-  } = useColumns(getProps, getPaginationInfo);
 
   const { getScrollRef, redoHeight } = useTableScroll(
     getProps,

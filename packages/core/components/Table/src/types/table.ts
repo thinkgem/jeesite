@@ -428,9 +428,8 @@ export interface BasicTableProps<T = any> {
    */
   onExpandedRowsChange?: (expandedRows: string[] | number[]) => void;
 
+  // 表格列更改事件
   onColumnsChange?: (data: ColumnChangeParam[]) => void;
-
-  dictTypes?: Set<string>;
 }
 
 export type CellFormat<T = Recordable> =

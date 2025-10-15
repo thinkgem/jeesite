@@ -1,7 +1,7 @@
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import { ComputedRef, h } from 'vue';
-import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue';
+import { Ref, ref, reactive, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
 import { usePermission } from '@jeesite/core/hooks/web/usePermission';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -13,6 +13,7 @@ import { cloneDeep, isEqual, uniqBy } from 'lodash-es';
 import { formatToDate } from '@jeesite/core/utils/dateUtil';
 import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, DRAG_COLUMN_FLAG, PAGE_SIZE } from '../const';
 import { Icon } from '@jeesite/core/components/Icon';
+import { useDebounceFn } from '@vueuse/core';
 
 function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
   const { key, dataIndex, children } = item;
@@ -86,7 +87,7 @@ function handleIndexColumn(
     return;
   }
 
-  let pushIndexColumns = false;
+  let pushIndexColumns = showIndexColumn;
 
   columns.forEach(() => {
     const indIndex = columns.findIndex((column) => column.flag === INDEX_COLUMN_FLAG);
@@ -166,52 +167,56 @@ export function useColumns(
   propsRef: ComputedRef<BasicTableProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
 ) {
-  const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
-  let cacheColumns = unref(propsRef).columns;
+  const { hasPermission } = usePermission();
 
-  const getColumnsRef = computed(() => {
+  let cacheColumns: BasicColumn[] = unref(propsRef).columns;
+  let currentColumns: BasicColumn[] = cacheColumns;
+
+  const getColumnsRef: Ref<BasicColumn[]> = ref([]);
+  const getViewColumns: Ref<BasicColumn[]> = ref([]);
+
+  const dictTypesRef: Ref<Set<string>> = ref([] as unknown as Set<string>);
+  const updateColumnsDebounceFn = useDebounceFn(updateColumnsRef, 100);
+
+  watch(
+    () => unref(propsRef),
+    async () => {
+      await updateColumnsDebounceFn();
+    },
+  );
+
+  function updateColumnsRef() {
     // const columns = cloneDeep(unref(columnsRef)); // 暂且注释，克隆会导致拖拽失效
-    const columns = unref(columnsRef);
+    // const columns = unref(columnsRef);
+    const columns = currentColumns;
 
     handleIndexColumn(propsRef, getPaginationRef, columns);
     handleActionColumn(propsRef, columns);
+
     if (!columns) {
-      return [];
+      getColumnsRef.value = [];
+      updateViewColumns();
+      return;
     }
+
     const { ellipsis } = unref(propsRef);
 
-    propsRef.value.dictTypes = new Set<string>();
-    const dictTypes = propsRef.value.dictTypes;
-
+    dictTypesRef.value = new Set<string>();
     columns.forEach((item) => {
       // const { customRender, slots } = item;
-
       handleItem(
         item,
         // Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
         Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && item.dataIndex !== 'actions', // 自定义渲染列应和非自定义的省略条件一样
-        dictTypes,
+        dictTypesRef.value,
       );
     });
-    return columns;
-  });
-
-  function isIfShow(column: BasicColumn): boolean {
-    const ifShow = column.ifShow;
-
-    let isIfShow = true;
-
-    if (isBoolean(ifShow)) {
-      isIfShow = ifShow;
-    }
-    if (isFunction(ifShow)) {
-      isIfShow = ifShow(column);
-    }
-    return isIfShow;
+    // console.log('column', columns);
+    getColumnsRef.value = columns;
+    updateViewColumns();
   }
-  const { hasPermission } = usePermission();
 
-  const getViewColumns = computed(() => {
+  function updateViewColumns() {
     const viewColumns = sortFixedColumn(unref(getColumnsRef));
     const columns = cloneDeep(viewColumns);
     function buildColumns(columns: BasicColumn[]) {
@@ -245,13 +250,28 @@ export function useColumns(
           return reactive(column);
         });
     }
-    return buildColumns(columns);
-  });
+    getViewColumns.value = buildColumns(columns) as unknown as BasicColumn[];
+  }
+
+  function isIfShow(column: BasicColumn): boolean {
+    const ifShow = column.ifShow;
+
+    let isIfShow = true;
+
+    if (isBoolean(ifShow)) {
+      isIfShow = ifShow;
+    }
+    if (isFunction(ifShow)) {
+      isIfShow = ifShow(column);
+    }
+    return isIfShow;
+  }
 
   watch(
     () => unref(propsRef).columns,
     (columns) => {
-      columnsRef.value = columns;
+      currentColumns = columns;
+      updateColumnsRef();
       cacheColumns = columns?.filter((item) => !item.flag) ?? [];
     },
   );
@@ -277,16 +297,16 @@ export function useColumns(
     if (!isArray(columns)) return;
 
     if (columns.length <= 0) {
-      columnsRef.value = [];
+      currentColumns = [];
+      updateColumnsRef();
       return;
     }
 
     const firstColumn = columns[0];
-
     const cacheKeys = cacheColumns.map((item) => item.dataIndex_);
 
     if (!isString(firstColumn) && !isArray(firstColumn)) {
-      columnsRef.value = columns as BasicColumn[];
+      currentColumns = columns as BasicColumn[];
     } else {
       const columnKeys = (columns as (string | string[])[]).map((m) => m.toString());
       const newColumns: BasicColumn[] = [];
@@ -295,7 +315,7 @@ export function useColumns(
           ...item,
           defaultHidden: !columnKeys.includes(item.dataIndex_ || (item.key as string)),
         };
-        columnsRef.value.forEach((item) => {
+        currentColumns.forEach((item) => {
           if (column.dataIndex_ == item.dataIndex_ && item.fixed) {
             column.fixed = item.fixed;
             return;
@@ -309,8 +329,9 @@ export function useColumns(
           return columnKeys.indexOf(prev.dataIndex_ as string) - columnKeys.indexOf(next.dataIndex_ as string);
         });
       }
-      columnsRef.value = newColumns;
+      currentColumns = newColumns;
     }
+    updateColumnsRef();
   }
 
   function updateColumn(data: Partial<BasicColumn> | Partial<BasicColumn>[]) {
@@ -329,7 +350,7 @@ export function useColumns(
 
     const column: BasicColumn[] = [];
     updateData.forEach((item) => {
-      columnsRef.value.forEach((val) => {
+      currentColumns.forEach((val) => {
         if (val.dataIndex_ === item.dataIndex) {
           const newColumn = deepMerge(val, item);
           column.push(newColumn as BasicColumn);
@@ -338,7 +359,8 @@ export function useColumns(
         }
       });
     });
-    columnsRef.value = uniqBy(column, 'dataIndex');
+    currentColumns = uniqBy(column, 'dataIndex');
+    updateColumnsRef();
   }
 
   function getColumns(opt?: GetColumnsParams) {
@@ -369,6 +391,7 @@ export function useColumns(
     updateColumn,
     getViewColumns,
     // setCacheColumnsByField,
+    dictTypesRef,
   };
 }
 
