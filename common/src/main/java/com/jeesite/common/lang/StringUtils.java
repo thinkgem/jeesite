@@ -119,6 +119,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
+	 * 比较字符串，是否相等（忽略大小写）
+	 */
+	public static boolean equalsIgnoreCase(final CharSequence cs1, final CharSequence cs2) {
+		return Strings.CI.equals(cs1, cs2);
+	}
+
+	/**
 	 * 比较字符串，是否相等，只要有一个匹配就成立
 	 */
 	public static boolean equalsAny(final CharSequence string, final CharSequence... searchStrings) {
@@ -126,10 +133,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 比较字符串，是否相等（忽略大小写）
+	 * 比较字符串，是否相等，只要有一个匹配就成立（忽略大小写）
 	 */
-	public static boolean equalsIgnoreCase(final CharSequence cs1, final CharSequence cs2) {
-		return Strings.CI.equals(cs1, cs2);
+	public static boolean equalsAnyIgnoreCase(final CharSequence string, final CharSequence... searchStrings) {
+		return Strings.CI.equalsAny(string, searchStrings);
 	}
 
 	/**
