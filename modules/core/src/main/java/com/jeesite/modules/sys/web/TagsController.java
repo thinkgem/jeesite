@@ -4,26 +4,24 @@
  */
 package com.jeesite.modules.sys.web;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.jeesite.common.web.BaseController;
+import com.jeesite.common.web.http.ServletUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.jeesite.common.web.BaseController;
-import com.jeesite.common.web.http.ServletUtils;
-
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 公共标签Controller
  * @author ThinkGem
- * @version 2017-5-7
+ * @version 2020-5-7
  */
 @Controller
 @RequestMapping(value = "tags")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @ApiIgnore
 public class TagsController extends BaseController {
 

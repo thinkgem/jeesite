@@ -22,7 +22,6 @@ import com.jeesite.modules.sys.interceptor.MobileInterceptor;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name="web.interceptor.mobile.enabled", havingValue="true", matchIfMissing=false)
-@EnableWebMvc
 public class MobileViewInterceptorConfig implements WebMvcConfigurer {
 
 	@Override
