@@ -6,12 +6,7 @@
 	<springProperty name="appname" source="spring.application.name" />
 
 	<!-- Framework level setting -->
-	<include resource="config/logger-core.xml"/>
-	<logger name="io.seata" level="INFO" />
-	<logger name="zipkin2.reporter.AsyncReporter$BoundedAsyncReporter" level="ERROR" />
-	<logger name="org.springframework.cloud.openfeign.FeignClientFactoryBean" level="ERROR" />
-<!-- 	<logger name="org.springframework.cloud.openfeign.support.SpringMvcContract" level="DEBUG" /> -->
-	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
+	<include resource="config/logger-default-cloud.xml" />
 
 	<!-- Project level setting -->
 	<!-- <logger name="your.package" level="DEBUG" /> -->
