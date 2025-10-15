@@ -26,7 +26,8 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<dependencies>
-			
+
+		<!-- 核心模块 --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>

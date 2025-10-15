@@ -19,6 +19,7 @@
 
 	<dependencies>
 
+		<!-- 核心模块 --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>

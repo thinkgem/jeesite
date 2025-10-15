@@ -94,14 +94,14 @@
 			<!--<artifactId>spring-boot-starter-undertow</artifactId>-->
 		</dependency>
 
-		<!-- Common -->
+		<!-- Common --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-common</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- Framework -->
+		<!-- Framework --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-framework</artifactId>
