@@ -1,6 +1,6 @@
 <included>
 	
-	<!-- https://github.com/spring-projects/spring-boot/blob/v2.0.5.RELEASE/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
+	<!-- https://github.com/spring-projects/spring-boot/blob/v3.5.6/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
 	<logger name="org.apache.catalina.core.StandardEngine" level="INFO" />
