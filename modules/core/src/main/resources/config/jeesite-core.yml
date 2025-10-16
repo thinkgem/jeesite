@@ -9,7 +9,7 @@ productVersion: V5.14
 copyrightYear: 2025
 
 #======================================#
-#========== Database sttings ==========#
+#========= Database settings ==========#
 #======================================#
 
 # 数据库连接
@@ -131,7 +131,7 @@ logging:
 mybatis:
 
   # MyBatis 配置文件
-  #configLocation: /mybatis/mybatis-config.xml
+  #configLocation: /mybatis/mybatis-default.xml
 
   # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
   #scanBasePackage: com.jeesite.modules.**.dao
