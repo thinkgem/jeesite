@@ -113,7 +113,7 @@ service:
     path: ${server.servlet.context-path}
   
 #======================================#
-#========== Database sttings ==========#
+#========= Database settings ==========#
 #======================================#
 
 # 数据库连接
@@ -375,6 +375,15 @@ logging:
     root: warn
     com.codingapi.txlcn: debug
 
+# MyBatis 相关
+mybatis:
+
+  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules.**.dao
+
+  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
+  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
+
 #======================================#
 #========== System settings ===========#
 #======================================#
@@ -431,15 +440,6 @@ shiro:
     /inner/api/** = inner
     /api/** = user
     ${adminPath}/** = user
-  
-# MyBatis 相关
-mybatis:
-
-  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
-  scanBasePackage: com.jeesite.modules.**.dao
-
-  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
-  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
   
 # Web 相关
 web:
