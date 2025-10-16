@@ -2,5 +2,6 @@
 
 	<!-- Framework level setting -->
 	<include resource="config/logger-default.xml" />
+	<logger name="com.jeesite.modules.sys.dao.LogDao" level="INFO" />
 	
 </included>
