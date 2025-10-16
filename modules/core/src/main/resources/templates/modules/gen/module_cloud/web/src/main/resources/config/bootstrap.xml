@@ -91,6 +91,7 @@ spring:
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
+<% %>
 ]]>
 	</content>
 </template>
