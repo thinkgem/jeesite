@@ -2,10 +2,10 @@
 <p align="center">
  <img alt="JeeSite" src="https://jeesite.com/assets/images/logo.png" width="120" height="120" style="margin-bottom: 10px;">
 </p>
-<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">微服务开发平台 - Spring Cloud 2024</h3>
+<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">微服务开发平台 - Spring Cloud 2025</h3>
 <p align="center">
- <a href="https://spring.io/projects/spring-cloud" target="__blank"><img alt="SpringCloud-2021/2024" src="https://img.shields.io/badge/SpringCloud-2021/2024-blue.svg"></a>
- <a href="https://spring.io/projects/spring-boot" target="__blank"><img alt="SpringBoot-V2.7/3.4" src="https://img.shields.io/badge/SpringBoot-V2.7/3.4-blue.svg"></a>
+ <a href="https://spring.io/projects/spring-cloud" target="__blank"><img alt="SpringCloud-2025 or 2021" src="https://img.shields.io/badge/SpringCloud-2025 or 2021-blue.svg"></a>
+ <a href="https://spring.io/projects/spring-boot" target="__blank"><img alt="SpringBoot-V3.5 or 2.7" src="https://img.shields.io/badge/SpringBoot-V3.5 or 2.7-blue.svg"></a>
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
  <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.x" src="https://img.shields.io/badge/JeeSite-V5.x-success.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
@@ -24,13 +24,19 @@
 
 ## 引言
 
-JeeSite Cloud 具备 [JeeSite 4.x、5.x](https://gitee.com/thinkgem/jeesite5) 的所有功能，是在 JeeSite 4.x、5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x、5.x 的开发便利性巧妙地简化了分布式系统开发。
+JeeSite Cloud 具备 [JeeSite 5.x](https://gitee.com/thinkgem/jeesite5) 的所有功能，是在 JeeSite 5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 5.x 的开发便利性巧妙地简化了分布式系统开发。
 
 JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，重新了设计架构和新增了很多实用的工具，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发平台。
 
 集成阿里优秀组件 Nacos 服务治理与配置中心、集成 Sentinel 流量卫兵；集成 Zipkin 链路追踪；集成 Seata 分布式事务等，详见技术选型章节。
 
-**特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
+**主要特点：用经典开发模式，开发分布式微服务应用，上手简单，开发快**
+
+**什么场景下，需要用 JeeSite Cloud 微服务：**
+
+* 微服务化的核心就是将传统的系统，根据业务进行拆分一个个的小服务，一个服务出现问题不会有影响其他服务的运行
+* 某一个服务并发要求比较高时，可单独增加该服务节点（如果传统应用，需要整体增加会浪费资源）提高服务可用性
+* 可直观的看到服务的运行状态，可统一配置各个微服务的配置参数，统一的基础数据管理（人员组织基础架构）
 
 ## 技术交流
 
@@ -62,7 +68,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
   [GitHub](https://github.com/thinkgem/jeesite-vue)
 * 源码合集仓库地址：
   [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3.cloud)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=v5.springboot3.cloud)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot2.cloud)、
   [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3.cloud)
 
 ## 我们的优势
@@ -82,20 +88,20 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud 2024.0.0 + Alibaba 2023.0.3
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.5
-* 分布式统一配置中心：Spring Cloud Config / Nacos 2.5
+* 分布式系统套件版本：Spring Cloud 2025.0 + Alibaba 2023.0
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 3.0
+* 分布式统一配置中心：Spring Cloud Config / Nacos 3.0
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
 * 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
-* 分布式事务框架：Seata 1.8 (可选组件)
+* 分布式事务框架：Seata 2.3 (可选组件)
 * 分布式链路追踪：Zipkin / SkyWalking (可选组件)
-* 工作流引擎框架：Flowable 7.1 (可选组件)
+* 工作流引擎框架：Flowable 7.x (可选组件)
 * 多租户 Saas 架构：表共享、独立模式、独立库方式
 * ShardingSphere 分库分表、读写分离
-* Spring Boot Admin 监控系统
-* ELK 日志搜集分析
+* Spring Boot Admin 系统监控管理
+* ELK 日志采集、日志分析和可视化
 
 ## 子项目介绍
 
@@ -104,23 +110,29 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8849/index.html#/login>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 核心模块（**统一授权认证服务、平台基础数据服务**）：
-  - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
-  - 客户端项目（提供其它模块调用）：jeesite-cloud-module-core-client
-* 测试模块1（单表增删改查示例）：
-  - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
-  - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
-* 测试模块2（树表增删改查示例）：
-  - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
-  - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
-* 测试模块3（代码生成的模块和代码生成的增删改查，**该模块完全没有手写，全部为生成的**）：
-  - 模块3主项目：jeesite-cloud-module-test3 ： <http://127.0.0.1:8985/js>
-  - 模块3客户端项目（提供其它模块调用）：jeesite-cloud-module-test3-client
-* 业务流程基础服务（流程引擎服务，客户端只需调用接口，无需加载引擎逻辑）：
-  - 流程主项目：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
-  - 客户端项目（提供其它模块调用）：jeesite-cloud-module-bpm-client
-* 分布式事务 Seata 服务（1.5之后新增监控界面，端口7091）：
-  - 服务主项目：jeesite-cloud-module-seata ： <http://127.0.0.1:7091>
-  - 客户端项目（提供其它模块调用）：jeesite-cloud-module-seata-client
+    - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-core-client
+* 测试模块1（可选，单表增删改查示例）：
+    - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
+    - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
+* 测试模块2（可选，树表增删改查示例）：
+    - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
+    - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
+* 测试模块3（可选，代码生成的模块和代码生成的增删改查，**该模块完全没有手写，全部为生成的**）：
+    - 模块3主项目：jeesite-cloud-module-test3 ： <http://127.0.0.1:8985/js>
+    - 模块3客户端项目（提供其它模块调用）：jeesite-cloud-module-test3-client
+* 业务流程基础服务（可选，流程引擎服务，客户端只需调用接口，无需加载引擎逻辑）：
+    - 流程主项目：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-bpm-client
+* 分布式事务 Seata 服务（可选，1.5之后新增监控界面，端口7091）：
+    - 服务主项目：jeesite-cloud-module-seata ： <http://127.0.0.1:7091>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-seata-client
+* 消息推送服务（可选，消息接受，消息推送，消息心跳）：
+    - 服务主项目：jeesite-cloud-module-msg ： <http://127.0.0.1:7998>
+* 文件管理服务（可选，文件上传、文件预览、文件管理）：
+    - 服务主项目：jeesite-cloud-module-files ： <http://127.0.0.1:7999>
+* 扩展模块服务（可选，报表，大屏，APP，CMS，ES 等）：
+    - 服务主项目：jeesite-cloud-module-extends ： <http://127.0.0.1:8999>
 * 熔断限流：jeesite-cloud-sentinel ： <http://127.0.0.1:9311>
 * 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
 * 解释：主项目为服务提供者、客户端项目为服务消费者
@@ -154,9 +166,9 @@ JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，您可以
 
 数据库初始化文档：<http://jeesite.com/docs/install-deploy/#初始化数据库>
 
-### 安装 Redis
+### 安装 Redis 服务
 
-Redis 是一个缓存数据库，主要用来集中式管理共享会话和系统缓存的，如果你已安装 Redis，可以忽略这个步骤。
+Redis 是一个缓存数据库，主要用来集中式管理共享会话和系统缓存的，如果您已安装 Redis，可以忽略这个步骤。
 
 由于 Windows 版本的 Redis 安装不太方便，所以我们提供了该版本的安装文件和安装脚本。
 
@@ -168,10 +180,8 @@ Redis 是一个缓存数据库，主要用来集中式管理共享会话和系�
 
 ### 启动 Nacos 服务
 
-Nacos 致力于帮助您发现、配置和管理微服务。
-Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
-Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。
-Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。
+Nacos 致力于帮助您发现、配置和管理微服务。 Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。
 
 如果使用 Nacos 就不用部署 `jeesite-cloud-eureka` 和 `jeesite-cloud-config` 了。
 
@@ -179,19 +189,19 @@ JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启�
 
 **src 方式：**
 
-1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-nacos 项目。
+1. 在 IDEA 或 Eclipse 中 找到 jeesite-cloud-nacos 项目。
 2. 运行 NacosApplication 类的 main 方法，即可启动服务。
 
 **jar 方式：**
 
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.5.1/nacos-server-2.5.1.zip>
-2. 解压 `nacos-server-2.5.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/3.0.2/nacos-server-3.0.2.zip>
+2. 解压 `nacos-server-3.0.2.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **配置 mysql 存储：**
 
-1. 默认情况 Nacos 采用 Derby 数据库，你可以将数据库切换到 MySQL 下。
+1. 按需配置，默认情况 Nacos 采用 Derby 数据库，您也可以将数据库切换到 MySQL 下。
 2. 找到 `/nacos/src/main/resources/META-INF/mysql-schema.sql` 文件导入数据表。
-3. 找到 Nacos 的配置文件 application.properties 如下：
+3. 找到 Nacos 的配置文件（application.properties 或 application.yml）如下：
 
 ```properties
 spring.sql.init.platform=mysql
@@ -200,86 +210,244 @@ spring.sql.init.platform=mysql
 db.num=1
 
 ### Connect URL of DB:
-db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
 db.user.0=root
 db.password.0=123456
 ```
 
-**注意事项：**
+::: tip 注意事项
 
-生产环境，请务必修改 `application.properties` 配置文件中的秘钥，
+生产环境，请务必修改 `application.properties` 配置文件中的秘钥：
 
-属性 `nacos.core.auth.plugin.nacos.token.secret.key` 值，为一个新的秘钥。
+```properties
+# 身份认证秘钥，随便写
+nacos.core.auth.server.identity.key=
+nacos.core.auth.server.identity.value=
+# 生成随机密钥，设置为 Base64 编码，参考命令：openssl rand -base64 32
+nacos.core.auth.plugin.nacos.token.secret.key=
+```
 
-支持自定义鉴权：<https://nacos.io/zh-cn/docs/v2/plugin/auth-plugin.html>
+更多文档：<https://nacos.io/docs/next/plugin/auth-plugin/>
+
+:::
 
 **启动完成后：**
 
-浏览器访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
+浏览器访问：
+
+* <http://127.0.0.1:8849/index.html#/login> 
+
+默认用户名和密码均为：nacos
 
 登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
 
 然后编辑 Data Id 为 `application.yml` 的文件里的 JDBC 和 Redis 信息。
 
-### 启动 Sentinel 服务
-
-随着微服务的流行，服务和服务之间的稳定性变得越来越重要。
-Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，
-从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性。
-
-1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-sentinel 项目。
-2. 运行 SentinelApplication 类的 main 方法，即可启动服务。
-3. 此服务为可选服务，按需启动。
-
-浏览器访问：<http://127.0.0.1:9311>  用户名密码：sentinel
-
-### 启动 Zipkin 服务
-
-Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin 报告计时数据，Zipkin会根据调用关系通过 Zipkin UI 生成依赖关系图。
-
-1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-zipkin 项目。
-2. 运行 ZipkinApplication 类的 main 方法，即可启动服务。
-3. 此服务为可选服务，按需启动。
-
-浏览器访问：<http://127.0.0.1:9411>
-
-如果使用 SkyWalking，安装文档见：<https://jeesite.com/docs/skywalking/>
-
 ### 启动微服务项目
 
-* 在每个微服务中可以找的 `config/application.yml` 配置服务注册和配置中心地址。
-* 按顺序运行以下启动类的main方法：（因为服务直接有依赖，请启动完成一个再启下一个）
-  - /jeesite-cloud-gateway/../GatewayApplication.java
-  - /jeesite-cloud-module-core/../CoreApplication.java
-  - /jeesite-cloud-module-test1/../Test1Application.java
-  - /jeesite-cloud-module-test2/../Test2Application.java
-* 以上都启动成功后，浏览器访问网关项目地址即可：
-  - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
-  - 若访问报错，请再等待一会，可能服务未完全启动完成
+* 在每个微服务中可以找的 `application.yml` 设置注册和配置服务地址
+* 启动网关和核心基础服务（运行 Application 启动类的main方法）
+    - /jeesite-cloud-gateway/../GatewayApplication.java
+    - /jeesite-cloud-module-core/../CoreApplication.java
+* 因为服务有直接依赖，请启动完成基础服务后再继续启动下面的服务
+    - /jeesite-cloud-module-test1/../Test1Application.java
+    - /jeesite-cloud-module-test2/../Test2Application.java
+* 其外一些子微服务模块，可根据需要是否启动，无顺序要求
+    - /jeesite-cloud-module-files/../FilesApplication.java
+    - /jeesite-cloud-module-msg/../MsgApplication.java
+    - /jeesite-cloud-module-bpm/../BpmApplication.java
+    - /jeesite-cloud-module-extends/../ExtendsApplication.java
+* 服务启动成功后，浏览器访问网关项目地址即可：
+    - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
+    - 若访问报错，请再等待一会，可能服务未完全启动完成
 
-**常见问题：**
+### 常见问题
 
-* 如果提示 `获取不到 ${service.core.name} 属性，请检查配置` 错误，说明没有从 nacos 或 config 配置中心获取到配置信息。一般有以下原因。1：Nacos 里未导入 `jeesite-cloud-yml.zip` 配置文件；2：如果你自定义了 Nacos 的 Group Name，请于 application.yml 里的 Group Name 一致；3：如果 Nacos 提示了 yml 读取错误，请在启动参数，配上环境变量 JAVA_OPTS，值为 `-Dfile.encoding=UTF-8`（不同IDE里的设置方法：Eclipse：Window->Preferences->General->Workspace->Text file encoding->Other->UTF-8；IDEA：File->Settings->Editor->FileEncodings->Project Encodeing->UTF-8）
-
-![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
+* 如果提示 `获取不到 ${service.core.name} 属性，请检查配置` 错误，说明没有从 nacos 或 config 配置中心获取到配置信息。一般有以下原因。1：Nacos 里未导入 `jeesite-cloud-yml.zip` 配置文件；2：如果您自定义了 Nacos 的 Group Name，请于 `application.yml` 或 `bootstrap.yml` 里的 Group Name 一致；3：如果 Nacos 提示了 yml 读取错误，请在启动参数，配上环境变量 JAVA_OPTS，值为 `-Dfile.encoding=UTF-8`（不同IDE里的设置方法：IDEA：File->Settings->Editor->FileEncodings->Project Encodeing->UTF-8；Eclipse：Window->Preferences->General->Workspace->Text file encoding->Other->UTF-8）
 
 ## 调用实例演示
 
 ### 网关代理模块调用
 
 * 代理 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test1/testData/list>
-  - 控制器位置：/jeesite-cloud-module-test1/../web/TestData1Controller.java
+    - 控制器位置：/jeesite-cloud-module-test1/../web/TestData1Controller.java
 * 代理 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test2/testTree/list>
-  - 控制器位置：/jeesite-cloud-module-test2/../web/TestTree2Controller.java
+    - 控制器位置：/jeesite-cloud-module-test2/../web/TestTree2Controller.java
 
 ### 模块之间互相调用
 
 * test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test2/testData/list>
-  - 服务消费者位置：/jeesite-cloud-module-test2/../web/TestData2Controller.java
-  - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
+    - 服务消费者位置：/jeesite-cloud-module-test2/../web/TestData2Controller.java
+    - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
 * test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
-  - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
-  - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
+    - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
+    - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
+
+## 快速启用延伸功能
+
+### 启用分布式事务
+
+1、全局搜索 jeesite-cloud-module-seata-client 开启所有 pom.xml 中的依赖
+
+```xml
+<!-- 分布式事务 -->
+<dependency>
+    <groupId>com.jeesite</groupId>
+    <artifactId>jeesite-cloud-module-seata-client</artifactId>
+    <version>${project.parent.version}</version>
+</dependency>
+```
+
+2、进入 Nacos 管理界面，配置 application.yml 开启参数 seata.enabled: true
+
+3、在需要启动事务的 Controller 映射方法上声明 @GlobalTransactional 注解
+
+4、更多参考：[请点击进入 Seata 专题文章](/springcloud-seata/)
+
+### 启用流量防卫兵
+
+可选组件，随着微服务的流行，服务和服务之间的稳定性变得越来越重要。
+Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，
+从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性。
+
+1、修改 /jeesite-cloud/parent/web/pom.xml 文件，添加 Sentinel 依赖
+
+```xml
+<!-- 流量防卫兵 -->
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+</dependency>
+```
+
+2、修改 /jeesite-cloud/gateway/pom.xml 文件，添加 Sentinel 依赖
+
+```xml
+<!-- 流量防卫兵 -->
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+</dependency>
+```
+
+3、在 IDEA 或 Eclipse 中 找到 jeesite-cloud-sentinel 项目。
+
+4、运行 SentinelApplication 类的 main 方法，即可启动服务。
+
+5、此服务为可选服务，按需启动。
+
+浏览器访问：<http://127.0.0.1:9311>  用户名密码：sentinel
+
+### 启用链路追踪服务
+
+可选组件，Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin 报告计时数据，Zipkin会根据调用关系通过 Zipkin UI 生成依赖关系图。
+
+1、修改 /jeesite-cloud/parent/web/pom.xml 文件，添加 链路追踪 依赖
+
+```xml
+<!-- 链路追踪服务 -->
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-tracing-bridge-brave</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-micrometer</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.zipkin.reporter2</groupId>
+    <artifactId>zipkin-reporter-brave</artifactId>
+</dependency>
+```
+
+2、在 IDEA 或 Eclipse 中 找到 jeesite-cloud-zipkin 项目。
+
+3、运行 ZipkinApplication 类的 main 方法，即可启动服务。
+
+4、此服务为可选服务，按需启动。
+
+浏览器访问：<http://127.0.0.1:9411>
+
+如果使用 SkyWalking，安装文档见：<https://jeesite.com/docs/skywalking/>
+
+### 切换到 Eureka
+
+1、修改 /jeesite-cloud/parent/web/pom.xml 文件，添加 Eureka，注释掉 Nacos、Sentinel 依赖
+
+```xml
+<!-- 服务发现和配置中心 Eureka、Config -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+<!-- 服务发现 Consul
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+</dependency> -->
+
+<!-- 服务发现和配置中心 Nacos
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-client</artifactId>
+</dependency> -->
+
+<!-- <dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+</dependency> -->
+```
+
+2、修改 /jeesite-cloud/gateway/pom.xml 文件，注释掉 Sentinel Nacos 依赖
+
+```xml
+<!-- <dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+</dependency> -->
+```
+
+3、全局替换 application.yml 文件的，添加 optional: 注释掉 nacos:
+
+```yml
+spring:
+  # 加载的配置文件
+  config:
+    import:
+      - 'optional:configserver:'
+#    import:
+#      - 'nacos:application.yml'
+#      - 'nacos:application-${spring.profiles.active}.yml'
+#      - 'nacos:${spring.application.name}.yml'
+#      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
+```
+
+4、替换完成。
 
 ## 新增微服务工程
 
@@ -346,8 +514,9 @@ spring:
 
 ## 技术支持与服务
 
+* 本软件免费，我们也提供了相应的收费服务，因为：
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系我们**：请访问技术支持与服务页面：<http://s.jeesite.com>
+* **联系我们**：请访问技术支持与服务页面：<http://s.jeesite.com> 
 
 # Git 全局设置技巧
 
