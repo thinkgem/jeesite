@@ -62,7 +62,7 @@
   [GitHub](https://github.com/thinkgem/jeesite-vue)
 * 源码合集仓库地址：
   [GVP](https://gitee.com/thinkgem/jeesite/tree/main)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=main)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/main)、
   [GitHub](https://github.com/thinkgem/jeesite/tree/main)
 
 ## 平台介绍
