@@ -49,16 +49,6 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		this.employeeService = employeeService;
 		this.employeeOfficeDao = employeeOfficeDao;
 	}
-
-	/**
-	 * 租户功能验证
-	 */
-	@PostConstruct
-	private void corpModelValid() throws Exception{
-		if (!Global.isUseCorpModel().equals(Global.getPropertyToBoolean("user.useCorpModel", "false"))){
-			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，似乎你的当前版本不是JeeSite专业版。\n");
-		}
-	}
 	
 	/**
 	 * 获取单条数据
