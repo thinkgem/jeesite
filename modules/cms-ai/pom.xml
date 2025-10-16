@@ -19,18 +19,20 @@
 
 	<properties>
 
-		<spring-ai.version>1.0.0</spring-ai.version>
+		<spring-ai.version>1.0.3</spring-ai.version>
 
 	</properties>
 	
 	<dependencies>
-			
+
+		<!-- 核心模块 --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- 内容管理模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-cms</artifactId>
