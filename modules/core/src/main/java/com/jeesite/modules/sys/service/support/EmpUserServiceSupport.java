@@ -27,7 +27,6 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -48,16 +47,6 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		this.userService = userService;
 		this.employeeService = employeeService;
 		this.employeeOfficeDao = employeeOfficeDao;
-	}
-
-	/**
-	 * 租户功能验证
-	 */
-	@PostConstruct
-	private void corpModelValid() throws Exception{
-		if (!Global.isUseCorpModel().equals(Global.getPropertyToBoolean("user.useCorpModel", "false"))){
-			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，似乎你的当前版本不是JeeSite专业版。\n");
-		}
 	}
 	
 	/**
