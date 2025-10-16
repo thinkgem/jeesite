@@ -35,7 +35,7 @@ server:
   schemeHttps: false
   
 #======================================#
-#========== Database sttings ==========#
+#========= Database settings ==========#
 #======================================#
 
 # 数据库连接
@@ -98,9 +98,6 @@ logging:
 
 # MyBatis 相关
 mybatis:
-
-  # MyBatis 配置文件
-  configLocation: /mybatis/mybatis-default.xml
 
   # Mapper文件刷新线程
   mapper:
