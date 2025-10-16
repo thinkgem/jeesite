@@ -13,22 +13,40 @@ spring:
     # 在线大模型【请在 pom.xml 中打开 openai 的注释，并注释上其它模型】
     openai:
 
-      # 硅基流动
-      base-url: https://api.siliconflow.cn
-      api-key: ${SFLOW_APP_KEY}
-      # 聊天对话模型
+      # 聊天对话模型使用阿里百炼
       chat:
+        base-url: https://dashscope.aliyuncs.com/compatible-mode
+        api-key: ${BAILIAN_APP_KEY}
         options:
-          model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+          model: deepseek-r1-distill-llama-8b
           max-tokens: 1024
           temperature: 0.6
-          top-p: 0.9
+          top-p: 0.7
           frequency-penalty: 0
-      # 向量库知识库模型（注意：不同的模型维度不同）
+      # 嵌入向量模型使用硅基流动
       embedding:
+        base-url: https://api.siliconflow.cn
+        api-key: ${SFLOW_APP_KEY}
         options:
           model: BAAI/bge-m3
           dimensions: 512
+
+#      # 硅基流动
+#      base-url: https://api.siliconflow.cn
+#      api-key: ${SFLOW_APP_KEY}
+#      # 聊天对话模型
+#      chat:
+#        options:
+#          model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+#          max-tokens: 1024
+#          temperature: 0.6
+#          top-p: 0.9
+#          frequency-penalty: 0
+#      # 向量库知识库模型（注意：不同的模型维度不同）
+#      embedding:
+#        options:
+#          model: BAAI/bge-m3
+#          dimensions: 512
 
 #      # 模力方舟
 #      base-url: https://ai.gitee.com
@@ -41,7 +59,6 @@ spring:
 #          temperature: 0.6
 #          top-p: 0.9
 #          frequency-penalty: 0
-#          #logprobs: true
 #      # 向量库知识库模型（注意：不同的模型维度不同）
 #      embedding:
 #        options:
@@ -59,7 +76,6 @@ spring:
 #          temperature: 0.6
 #          top-p: 0.9
 #          frequency-penalty: 0
-#          #logprobs: true
 #      # 向量库知识库模型（注意：不同的模型维度不同）
 #      embedding:
 #        options:
