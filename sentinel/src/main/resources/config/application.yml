@@ -88,12 +88,12 @@ spring:
   # 打印横幅
   main:
     banner-mode: "off"
-    lazy-initialization: true
+    lazy-initialization: false
 
-#  # MVC 映射匹配策略
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ANT_PATH_MATCHER
+  # MVC 映射匹配策略
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
 # 日志配置
 logging:
