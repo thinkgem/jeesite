@@ -12,7 +12,7 @@ server:
     context-path: /js
 
 #======================================#
-#========== Database sttings ==========#
+#========= Database settings ==========#
 #======================================#
 
 # 数据库连接
@@ -43,3 +43,11 @@ jdbc:
 # 日志配置
 logging:
   config: classpath:config/logback-spring-prod.xml
+
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: false

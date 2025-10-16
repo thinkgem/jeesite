@@ -25,7 +25,7 @@ jdbc:
 # 日志配置
 logging:
   config: classpath:config/logback-spring-prod.xml
-  
+
 # MyBatis 相关
 mybatis:
 
@@ -33,7 +33,7 @@ mybatis:
   mapper:
     refresh:
       enabled: false
-      
+
 # 文件相关
 file:
 
