@@ -51,7 +51,7 @@
   [GitHub](https://github.com/thinkgem/jeesite-vue)
 * 源码合集仓库地址：
   [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=v5.springboot3)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot3)、
   [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3)
 
 ## 平台介绍
@@ -106,8 +106,8 @@
 * 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）已支持数据库：<http://jeesite.com/docs/technology/>
 * JeeSite Vue 前后分离版：<https://gitee.com/thinkgem/jeesite-vue>
-* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/>
-* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2/>
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2>
 
 ## 更多介绍
 
