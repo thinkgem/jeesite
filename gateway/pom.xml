@@ -48,7 +48,7 @@
 			<classifier>osx-aarch_64</classifier>
 		</dependency>
 
-		<!-- 流量防卫兵 -->
+		<!-- 流量防卫兵
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>com.alibaba.csp</groupId>
 			<artifactId>sentinel-datasource-nacos</artifactId>
-		</dependency>
+		</dependency> -->
 		
 	</dependencies>
 	
