@@ -7,6 +7,7 @@ package com.jeesite.modules.cms.ai.service;
 import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -152,7 +153,7 @@ public class CmsAiChatService extends BaseService {
 		return spec.stream()
 			.chatResponse()
 			.doOnNext(response -> {
-				if (response.getResult() != null && StringUtils.isNotBlank(response.getResult().getOutput().getText())) {
+				if (StringUtils.isNotBlank(response.getResult().getOutput().getText())) {
 					AssistantMessage assistantMessage = (AssistantMessage)request.getAttribute("assistantMessage");
 					AssistantMessage currAssistantMessage = response.getResult().getOutput();
 					if (assistantMessage == null) {
@@ -176,8 +177,12 @@ public class CmsAiChatService extends BaseService {
 			})
 			.onErrorResume(error -> {
 				String errorMessage = error.getMessage();
-				if (error instanceof WebClientResponseException webClientError) {
-					errorMessage = webClientError.getResponseBodyAsString();
+				if (Global.getPropertyToBoolean("error.page.printErrorInfo", "true")){
+					if (error instanceof WebClientResponseException webClientError) {
+						errorMessage = webClientError.getResponseBodyAsString();
+					} else if (error.getCause() instanceof WebClientResponseException webClientError) {
+						errorMessage = webClientError.getResponseBodyAsString();
+					}
 				}
 				AssistantMessage assistantMessage = new AssistantMessage(errorMessage);
 				chatMemory.add(conversationId, assistantMessage);

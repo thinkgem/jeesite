@@ -4,8 +4,8 @@
  */
 package com.jeesite.modules.cms.ai.config;
 
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
