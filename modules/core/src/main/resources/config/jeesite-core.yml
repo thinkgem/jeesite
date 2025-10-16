@@ -129,7 +129,7 @@ logging:
 mybatis:
 
   # MyBatis 配置文件
-  #configLocation: /mybatis/mybatis-config.xml
+  #configLocation: /mybatis/mybatis-default.xml
 
   # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
   #scanBasePackage: com.jeesite.modules.**.dao
@@ -485,8 +485,8 @@ shiro:
   
   # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
   # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
-  rememberMe:
-    secretKey: ~
+  #rememberMe:
+  #  secretKey: ~
   
   # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
   remoteAddrHeaderName: X-Forwarded-For

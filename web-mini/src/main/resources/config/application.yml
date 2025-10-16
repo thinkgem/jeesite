@@ -99,9 +99,6 @@ logging:
 # MyBatis 相关
 mybatis:
 
-  # MyBatis 配置文件
-  configLocation: /mybatis/mybatis-default.xml
-
   # Mapper文件刷新线程
   mapper:
     refresh:
