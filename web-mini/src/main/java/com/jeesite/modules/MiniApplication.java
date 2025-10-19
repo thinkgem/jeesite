@@ -25,12 +25,12 @@ public class MiniApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(MiniApplication.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   启动完成，监控地址：http://127.0.0.1:"
-				+ Global.getProperty("server.port") + FileUtils.path("/"
+				"\n\n==============================================================\n"
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}\n"
+				+ "\n==============================================================\n",
+				Global.getProperty("server.port") + FileUtils.path("/"
 				+ Global.getProperty("server.servlet.context-path")
-				+ Global.getAdminPath()) + "/state/server/index"
-				+ "\r\n\r\n==============================================================\r\n");
+				+ Global.getAdminPath()) + "/state/server/index");
 	}
 	
 	@Override

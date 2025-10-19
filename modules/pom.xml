@@ -13,9 +13,9 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-		<module>core</module>
 		<module>app</module>
 		<module>cms</module>
+		<module>core</module>
 		<module>static</module>
 		<module>test</module>
 	</modules>

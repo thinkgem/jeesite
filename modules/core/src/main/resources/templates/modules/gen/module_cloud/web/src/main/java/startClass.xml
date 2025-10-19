@@ -12,8 +12,6 @@
  */
 package com.jeesite.modules;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.jeesite.modules.cloud.feign.EnableFeignClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +36,9 @@ public class ${@StringUtils.capCamelCase(moduleCode)}Application extends SpringB
 	public static void main(String[] args) {
 		SpringApplication.run(${@StringUtils.capCamelCase(moduleCode)}Application.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + ${@StringUtils.capCamelCase(moduleCode)}Application.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + ${@StringUtils.capCamelCase(moduleCode)}Application.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 	
 	@Override
