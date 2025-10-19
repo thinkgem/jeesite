@@ -25,9 +25,9 @@ public class ConfigApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConfigApplication.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + ConfigApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + ConfigApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 
 }

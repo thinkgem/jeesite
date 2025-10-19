@@ -38,9 +38,9 @@ public class SentinelApplication {
         triggerSentinelInit();
         SpringApplication.run(SentinelApplication.class, args);
         logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + SentinelApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + SentinelApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
     }
 
     private static void triggerSentinelInit() {

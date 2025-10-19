@@ -27,9 +27,9 @@ public class CoreApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(CoreApplication.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + CoreApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + CoreApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 	
 	@Override

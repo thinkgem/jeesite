@@ -23,13 +23,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class FilesApplication extends SpringBootServletInitializer {
 
 	private static final Logger logger = LoggerFactory.getLogger(FilesApplication.class);
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(FilesApplication.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + FilesApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + FilesApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 	
 	@Override

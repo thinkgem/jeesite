@@ -27,9 +27,9 @@ public class Test2Application extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(Test2Application.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + Test2Application.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + Test2Application.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 
 	@Override

@@ -68,9 +68,9 @@ public class NacosApplication {
                 throw new IllegalArgumentException("Unsupported nacos deployment type " + type);
         }
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + NacosApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + NacosApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 
     private static void prepareCoreContext(ConfigurableApplicationContext coreContext) {

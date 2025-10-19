@@ -25,9 +25,9 @@ public class EurekaApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(EurekaApplication.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + EurekaApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + EurekaApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 
 	@Override
