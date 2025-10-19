@@ -25,12 +25,12 @@ public class Application extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   启动完成，访问地址：http://127.0.0.1:"
-				+ Global.getProperty("server.port") + FileUtils.path("/"
-				+ Global.getProperty("server.servlet.context-path"))
-				+ "\r\n\r\n   默认管理账号： system   密码： admin"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}\n"
+				+ "\n   默认管理账号： system   密码： admin\n"
+				+ "\n==============================================================\n",
+				Global.getProperty("server.port") + FileUtils.path("/"
+				+ Global.getProperty("server.servlet.context-path")));
 	}
 	
 	@Override
