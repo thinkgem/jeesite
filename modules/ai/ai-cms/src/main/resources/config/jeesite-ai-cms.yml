@@ -7,10 +7,16 @@ spring:
     model:
       chat: openai
       embedding: ${spring.ai.model.chat}
-      image: ${spring.ai.model.chat}
-      audio: ${spring.ai.model.chat}
+      embedding.text: ${spring.ai.model.chat}
+      embedding.multimodal: ${spring.ai.model.chat}
+      audio.transcription: none
+      audio.speech: none
+      moderation: none
+      image: none
 
-    # 在线大模型【请在 pom.xml 中打开 openai 的注释，并注释上其它模型】
+# ========= 聊天对话 相关配置 =========
+
+    # 云端模型【请在 pom.xml 中打开 openai 的注释，并注释上其它模型】
     openai:
 
       # 聊天对话模型使用阿里百炼
@@ -88,7 +94,7 @@ spring:
       # 聊天对话模型
       chat:
         options:
-          model: qwen2.5
+          model: qwen3:8b
           #model: deepseek-r1:7b
           max-tokens: 1024
           temperature: 0.6
@@ -98,10 +104,10 @@ spring:
       embedding:
         # 维度 dimensions 设置为 384
         #model: all-minilm:33m
-        # 维度 dimensions 设置为 768
-        #model: nomic-embed-text
         # 维度 dimensions 设置为 1024
         model: bge-m3
+
+# ========= 向量数据库 相关配置 =========
 
     # 向量数据库配置
     vectorstore:
@@ -153,8 +159,31 @@ spring:
         index-type: HNSW
         metric-type: COSINE
 
-    # 是否启用工具调用【例子详见 CmsAiTools.java 】
-    tool-calls: false
+# ========= 本地工具调用 相关配置 =========
+
+    # 是否启用 Tool calling 工具调用【例子详见 TestAiTools.java、UserAiTools.java 】
+    tools:
+      enabled: false
+
+# ========= MPC 远程工具调用 相关配置 =========
+
+    # https://docs.spring.io/spring-ai/reference/api/mcp/mcp-client-boot-starter-docs.html
+    mcp:
+      client:
+        enabled: false
+        name: jeesite-mcp-client
+        version: 1.0.0
+        request-timeout: 30s
+        type: SYNC
+        sse:
+          connections:
+            jeesite:
+              url: http://127.0.0.1:8981
+              sse-endpoint: /api/v1/sse
+        toolcallback:
+          enabled: true
+
+# ========= 默认提示词、默认回答模版 =========
 
     # 默认系统提示词
     default-system: |
@@ -166,7 +195,6 @@ spring:
       {query}
       请根据知识库和提供的历史信息作答。如果知识库中没有答案，请自我发挥。
       以下是知识库信息：{question_answer_context}
-      
 
 # ========= Postgresql 向量数据库数据源 =========
 
@@ -192,6 +220,8 @@ spring:
 #    username: elastic
 #    password: elastic
 
+# ========= 其他配置选项 =========
+
 # 对话消息存缓存，可自定义存数据库
 j2cache:
   caffeine:
@@ -199,7 +229,3 @@ j2cache:
       # 对话消息的超期时间，默认 30天，根据需要可以设置更久。
       cmsChatCache: 100000, 30d
       cmsChatMsgCache: 100000, 30d
-
-#logging:
-#  level:
-#    org.springframework: debug

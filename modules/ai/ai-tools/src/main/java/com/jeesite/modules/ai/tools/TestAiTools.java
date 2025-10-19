@@ -23,7 +23,7 @@ public class TestAiTools {
 	/**
 	 * 获取服务器时间
 	 */
-	@Tool(name="获取服务器时间", description = "获取当前的日期和时间，格式为 yyyy-MM-dd HH:mm:ss。")
+	@Tool(name="当前服务器时间", description = "当前服务器日期时间，格式为 yyyy-MM-dd HH:mm:ss。")
 	public String getCurrentDateTime() {
 		String dateTime = "当前日期时间：" + DateUtils.getDateTime();
 		logger.info("当前日期时间 ============== {}", dateTime);

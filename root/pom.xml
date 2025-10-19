@@ -14,6 +14,7 @@
 	
 	<modules>
 		<module>../parent</module>
+		<module>../parent/ai</module>
 		<module>../common</module>
 		<module>../modules</module>
 		<module>../web</module>

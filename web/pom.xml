@@ -69,7 +69,7 @@
 		<!-- 内容管理 AI + RAG 模块
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms-ai</artifactId>
+			<artifactId>jeesite-module-ai-cms</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
