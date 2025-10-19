@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.cms.ai.service;
+package com.jeesite.modules.ai.cms.service;
 
 import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.collect.ListUtils;
@@ -13,11 +13,12 @@ import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.BaseService;
-import com.jeesite.modules.cms.ai.properties.CmsAiProperties;
+import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.utils.AreaUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.shiro.util.ThreadContext;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
@@ -51,7 +52,7 @@ import java.util.Map;
  * @author ThinkGem
  */
 @Service
-public class CmsAiChatService extends BaseService {
+public class AiCmsChatService extends BaseService {
 
 	private static final String CMS_CHAT_CACHE = "cmsChatCache";
 	private static final String[] USER_MESSAGE_SEARCH = new String[]{"{", "}"};
@@ -60,12 +61,12 @@ public class CmsAiChatService extends BaseService {
 	private final ChatClient chatClient;
 	private final ChatMemory chatMemory;
 	private final VectorStore vectorStore;
-	private final CmsAiProperties properties;
+	private final AiCmsProperties properties;
 
-	public CmsAiChatService(ChatClient chatClient,
+	public AiCmsChatService(ChatClient chatClient,
 							ChatMemory chatMemory,
 							ObjectProvider<VectorStore> vectorStore,
-							CmsAiProperties properties) {
+							AiCmsProperties properties) {
 		this.chatClient = chatClient;
 		this.chatMemory = chatMemory;
 		this.vectorStore = vectorStore.getIfAvailable();
@@ -150,6 +151,7 @@ public class CmsAiChatService extends BaseService {
 					.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
 					.build());
 		}
+		spec.toolContext(Map.of("subject", ThreadContext.getSubject()));
 		return spec.stream()
 			.chatResponse()
 			.doOnNext(response -> {
