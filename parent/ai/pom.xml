@@ -3,19 +3,37 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.jeesite</groupId>
-	<artifactId>jeesite-module-web-ai</artifactId>
-	<version>5.14.0.springboot3-SNAPSHOT</version>
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-parent</artifactId>
+		<version>5.14.0.springboot3-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>jeesite-parent-ai</artifactId>
 	<packaging>pom</packaging>
 
-	<name>JeeSite Module Web AI</name>
+	<name>JeeSite Module AI Parent</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
-	<modules>
-		<module>web-ai-cms</module>
-		<module>web-ai-mcp</module>
-	</modules>
+	<properties>
+
+		<spring-ai.version>1.0.3</spring-ai.version>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-bom</artifactId>
+				<version>${spring-ai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<developers>
 		<developer>
