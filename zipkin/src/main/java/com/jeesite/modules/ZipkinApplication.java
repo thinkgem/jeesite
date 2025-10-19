@@ -59,9 +59,9 @@ public class ZipkinApplication {
       .properties(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY + "=false",
     	        "spring.config.name=zipkin-server").run(args);
       logger.info(
-              "\r\n\r\n==============================================================\r\n"
-              + "\r\n   " + ZipkinApplication.class.getName() + " 启动完成。"
-              + "\r\n\r\n==============================================================\r\n");
+              "\n\n==============================================================\n"
+              + "\n   " + ZipkinApplication.class.getName() + " 启动完成。\n"
+              + "\n==============================================================\n");
   }
   
 }

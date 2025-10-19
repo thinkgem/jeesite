@@ -23,9 +23,9 @@ public class GatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + GatewayApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + GatewayApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 	
 }

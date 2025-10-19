@@ -36,7 +36,9 @@ public class NacosApplication extends SpringBootServletInitializer {
 	private static final Logger logger = LoggerFactory.getLogger(StartingApplicationListener.class);
 
 	private static void initialize() {
-		System.setProperty("nacos.standalone", "true");
+		if (StringUtils.isBlank(System.getProperty("nacos.dev"))) {
+			System.setProperty("nacos.standalone", "true");
+		}
 		if (StringUtils.isBlank(System.getProperty("nacos.home"))) {
 			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5boot2");
 		}
@@ -48,9 +50,9 @@ public class NacosApplication extends SpringBootServletInitializer {
 		NacosApplication.initialize();
 	    new SpringApplicationBuilder(NacosApplication.class).run(args);
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   " + NacosApplication.class.getName() + " 启动完成。"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   " + NacosApplication.class.getName() + " 启动完成。\n"
+				+ "\n==============================================================\n");
 	}
 	
 	@Override
