@@ -6,7 +6,7 @@ package com.jeesite.test;
 
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.tests.BaseSpringContextTests;
-import com.jeesite.modules.cms.ai.service.CmsAiChatService;
+import com.jeesite.modules.ai.cms.service.AiCmsChatService;
 import com.jeesite.modules.sys.entity.Area;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -26,20 +26,20 @@ import java.util.Map;
 @ActiveProfiles("test")
 @SpringBootApplication
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SpringBootTest(properties = {"spring.ai.tool-calls=true"})
+@SpringBootTest(properties = {"spring.ai.tools.enabled=true"})
 public class AiChatServiceTest extends BaseSpringContextTests {
 
-	private final CmsAiChatService cmsAiChatService;
+	private final AiCmsChatService aiCmsChatService;
 
-	public AiChatServiceTest(CmsAiChatService cmsAiChatService) {
-		this.cmsAiChatService = cmsAiChatService;
+	public AiChatServiceTest(AiCmsChatService aiCmsChatService) {
+		this.aiCmsChatService = aiCmsChatService;
 	}
 
 	@Test
 	public void test01Text() {
 		logger.info("===== 聊天对话，文本输出");
 		String message = "你好";
-		String text = cmsAiChatService.chatText(message);
+		String text = aiCmsChatService.chatText(message);
 		System.out.println(text);
 	}
 
@@ -47,7 +47,7 @@ public class AiChatServiceTest extends BaseSpringContextTests {
 	public void test02Json() {
 		logger.info("===== 聊天对话，结构化输出 JSON");
 		String message = "张三";
-		Map<String, Object> map = cmsAiChatService.chatJson(message);
+		Map<String, Object> map = aiCmsChatService.chatJson(message);
 		System.out.println(JsonMapper.toJson(map));
 	}
 
@@ -55,10 +55,10 @@ public class AiChatServiceTest extends BaseSpringContextTests {
 	public void test03Tool() {
 		logger.info("===== 聊天对话，结构化输出 Tool Calling");
 		String message = "打开客厅的灯";
-		Map<String, Object> map = cmsAiChatService.chatJson(message);
+		Map<String, Object> map = aiCmsChatService.chatJson(message);
 		System.out.println(JsonMapper.toJson(map));
 		message = "关闭客厅的灯";
-		map = cmsAiChatService.chatJson(message);
+		map = aiCmsChatService.chatJson(message);
 		System.out.println(JsonMapper.toJson(map));
 	}
 
@@ -66,7 +66,7 @@ public class AiChatServiceTest extends BaseSpringContextTests {
 	public void test04Entity() {
 		logger.info("===== 聊天对话，结构化输出 Entity");
 		String message = "北京";
-		List<Area> list = cmsAiChatService.chatArea(message);
+		List<Area> list = aiCmsChatService.chatArea(message);
 		System.out.println(JsonMapper.toJson(list));
 	}
 

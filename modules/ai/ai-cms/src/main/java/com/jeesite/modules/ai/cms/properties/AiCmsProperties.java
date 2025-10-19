@@ -1,15 +1,22 @@
-package com.jeesite.modules.cms.ai.properties;
+package com.jeesite.modules.ai.cms.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 @ConfigurationProperties("spring.ai")
-public class CmsAiProperties {
+public class AiCmsProperties {
 
 	/**
-	 * 是否启用 Tool calling 工具调用
+	 * 向量数据库设置
 	 */
-	private Boolean toolCalls = false;
+	@NestedConfigurationProperty
+	private final Vectorstore vectorstore = new Vectorstore();
+
+	/**
+	 * 是否启用 Tool calling 工具调用【例子详见 TestAiTools.java、UserAiTools.java 】
+	 */
+	@NestedConfigurationProperty
+	private final Tools tools = new Tools();
 
 	/**
 	 * 默认系统提示词
@@ -21,18 +28,12 @@ public class CmsAiProperties {
 	 */
 	private String defaultPromptTemplate = "";
 
-	/**
-	 * 向量数据库设置
-	 */
-	@NestedConfigurationProperty
-	private final Vectorstore vectorstore = new Vectorstore();
-
-	public Boolean getToolCalls() {
-		return toolCalls;
+	public Vectorstore getVectorstore() {
+		return vectorstore;
 	}
 
-	public void setToolCalls(Boolean toolCalls) {
-		this.toolCalls = toolCalls;
+	public Tools getTools() {
+		return tools;
 	}
 
 	public String getDefaultSystem() {
@@ -51,10 +52,6 @@ public class CmsAiProperties {
 		this.defaultPromptTemplate = defaultPromptTemplate;
 	}
 
-	public Vectorstore getVectorstore() {
-		return vectorstore;
-	}
-
 	public static class Vectorstore {
 
 		/**
@@ -68,6 +65,22 @@ public class CmsAiProperties {
 
 		public void setType(String type) {
 			this.type = type;
+		}
+	}
+
+	public static class Tools {
+
+		/**
+		 * 是否启用 Tool calling 工具调用【例子详见 TestAiTools.java、UserAiTools.java 】
+		 */
+		private Boolean enabled = false;
+
+		public Boolean getEnabled() {
+			return enabled;
+		}
+
+		public void setEnabled(Boolean enabled) {
+			this.enabled = enabled;
 		}
 	}
 }
