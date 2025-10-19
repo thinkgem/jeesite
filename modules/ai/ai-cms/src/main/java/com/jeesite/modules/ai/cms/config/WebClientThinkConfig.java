@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.cms.ai.config;
+package com.jeesite.modules.ai.cms.config;
 
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
@@ -38,6 +38,7 @@ public class WebClientThinkConfig {
 
 	@Bean
 	@ConditionalOnMissingBean
+	@SuppressWarnings("unchecked")
 	public WebClientCustomizer webClientCustomizerThink() {
 		return webClientBuilder -> {
 			ExchangeFilterFunction requestFilter = ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
@@ -59,11 +60,12 @@ public class WebClientThinkConfig {
 						List<String> lines = new ArrayList<>();
 						String[] list = eventString.split("\\n", -1);
 						for (String line : list) {
-							if (!line.startsWith("data: ")) {
-								lines.add(line);
-								continue;
+							String jsonPart = line;
+							boolean dataPrefix = false;
+							if (line.startsWith("data: ")) {
+								jsonPart = line.substring("data: ".length()).trim();
+								dataPrefix = true;
 							}
-							String jsonPart = line.substring("data: ".length()).trim();
 							if (!(StringUtils.startsWith(jsonPart, "{")
 									&& StringUtils.endsWith(jsonPart, "}")
 									&& !"data: [DONE]".equals(line))) {
@@ -76,38 +78,54 @@ public class WebClientThinkConfig {
 								continue;
 							}
 							// 修改内容字段
-							List<Object> choices = (List<Object>)map.get("choices");
+							boolean ollamaEvent = false;
+							List<Object> choices = (List<Object>) map.get("choices");
 							if (choices == null) {
-								lines.add(line);
-								continue;
+								Map<String, Object> message = (Map<String, Object>) map.get("message");
+								if (message == null) {
+									lines.add(line);
+									continue;
+								}
+								choices = List.of(message);
+								ollamaEvent = true;
 							}
 							for (Object o : choices) {
 								Map<String, Object> choice = (Map<String, Object>) o;
 								if (choice == null) {
 									continue;
 								}
+								String content;
+								String reasoningContent;
 								Map<String, Object> delta = (Map<String, Object>) choice.get("delta");
-								if (delta == null) {
-									continue;
+								if (delta != null) {
+									content = (String) delta.get("content");
+									reasoningContent = (String) delta.get("reasoning_content");
+								} else {
+									content = (String) choice.get("content");
+									reasoningContent = (String) choice.get("thinking");
 								}
-								String reasoningContent = (String) delta.get("reasoning_content");
-								String content = (String) delta.get("content");
 								if (StringUtils.isNotEmpty(reasoningContent) && StringUtils.isEmpty(content)) {
 									if (!thinkingFlag.get()) {
 										thinkingFlag.set(true);
-										delta.put("content", "<think>\n" + reasoningContent);
+										content = "<think>\n" + reasoningContent;
 									} else {
-										delta.put("content", reasoningContent);
+										content = reasoningContent;
 									}
 								} else {
 									if (thinkingFlag.get()) {
 										thinkingFlag.set(false);
-										delta.put("content", "</think>\n" + (content == null ? "" : content));
+										content = "</think>\n" + (content == null ? "" : content);
 									}
+								}
+								if (ollamaEvent) {
+									choice.put("content", content);
+									map.put("message", choice);
+								} else if (delta != null) {
+									delta.put("content", content);
 								}
 							}
 							// 重新生成事件字符串
-							lines.add("data: " + JsonMapper.toJson(map));
+							lines.add((dataPrefix ? "data: " : "") + JsonMapper.toJson(map));
 						}
 						String finalLine = StringUtils.join(lines, "\n");
 						logger.trace("Modified response: ==> {}", finalLine);
