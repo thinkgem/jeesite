@@ -1,7 +1,7 @@
 
 ## 模块简介
 
-本模块基于 Spring AI 和 JeeSite 内容管理系统（CMS）并结合了检索增强生成（Retrieval-Augmented Generation, RAG）技术
+该模块基于 Spring AI 和 JeeSite 内容管理系统（CMS）并结合了检索增强生成（Retrieval-Augmented Generation, RAG）技术
 和先进的人工智能算法（AI），打造了一个强大的企业级知识管理和智能对话平台。该模块专为企业设计，旨在通过高效的知识获取和精准的对话能力，
 提升企业的信息管理效率和员工的工作效能。
 
@@ -9,10 +9,12 @@
 能获得最新且准确的结果。这种检索与生成相结合的方式，不仅提高了信息检索的准确性，还增强了回答的上下文关联性，
 特别适合处理复杂的企业知识库。
 
-此外该模块，支持在线大模型和本地部署的大模型，如：Ollama、DeepSeek、通义千问，理论上支持所有 OpenAPI 标准接口的 AI 提供商。
+此外该模块，支持云端模型和本地部署的大模型，如：Ollama、DeepSeek、通义千问，理论上支持所有 OpenAPI 标准接口的 AI 提供商。
 并能无缝集成多种嵌入式 AI 模型的向量数据库，如 Chroma、PGVector、Elasticsearch、Milvus 等，实现高效的数据存储、检索及分析。
 无论是大规模数据集还是高度专业化的领域知识，JeeSite CMS + RAG + AI 都能提供定制化解决方案，满足企业多样化的业务需求和技术要求。
 企业可以轻松管理和访问复杂的信息资源，促进内部知识共享和创新，从而在竞争激烈的市场环境中保持领先地位。
+
+提供大模型 Tool 本地工具调用及 MCP 服务端和客户端工具调用，助力大模型与您的业务深度融合，实现高效交互。
 
 优势：本模块结构清晰，代码简洁易懂，不管是正式项目、或是学习 AI 技术、都能轻松应对读懂源代码。
 
@@ -22,14 +24,14 @@
 
 ## 源码下载
 
-* 后端：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/modules/cms-ai>
+* 后端：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/modules/ai>
 * 前端：<https://gitee.com/thinkgem/jeesite-vue/tree/main/packages/cms>
 
 ## AI 模型配置
 
 支持的 AI 模型列表：<https://docs.spring.io/spring-ai/reference/1.0/api/index.html>
 
-* 线上模型：理论上支持所有 [OpenAPI](https://help.aliyun.com/zh/model-studio/developer-reference/use-qwen-by-calling-api) 标准接口的 AI 提供商。
+* 云端模型：理论上支持所有 [OpenAPI](https://help.aliyun.com/zh/model-studio/developer-reference/use-qwen-by-calling-api) 标准接口的 AI 提供商。
 
 * 本地模型：使用 [Ollama](https://ollama.com) 安装方法，本文不多赘述，网上有很多安装资料。
 
@@ -40,7 +42,7 @@
 spring.ai.model.chat: openai
 ```
 
-具体配置项详见 [jeesite-cms-ai.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/resources/config/jeesite-cms-ai.yml) 文件，有注释。
+具体配置项详见 [jeesite-ai-cms.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/ai/ai-cms/src/main/resources/config/jeesite-ai-cms.yml) 文件，有注释。
 
 ## 向量数据库配置
 
@@ -57,7 +59,7 @@ spring.ai.model.chat: openai
 spring.ai.vectorstore.type: none
 ```
 
-具体配置项详见 [jeesite-cms-ai.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/resources/config/jeesite-cms-ai.yml) 文件，有注释。
+具体配置项详见 [jeesite-ai-cms.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/ai/ai-cms/src/main/resources/config/jeesite-ai-cms.yml) 文件，有注释。
 
 ### 安装 Chroma
 
@@ -133,7 +135,42 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 
 工具调用 Tool Calling（也称 Function Calling）是人工智能应用程序中的常见模式，允许模型与一组 API 或工具交互，从而增强其功能。
 
-实例代码，详见 [CmsAiTools.java](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai/src/main/java/com/jeesite/modules/cms/ai/tools/CmsAiTools.java) 让 AI 调用你的 java 实现你的业务联动。
+实例代码，详见 [TestAiTools.java、UserAiTools.java](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/ai/ai-tools/src/main/java/com/jeesite/modules/ai/tools/) 让 AI 调用你的 java 实现你的业务联动。并能保持当前用户会话，进行数据权限控制。
+
+## MCP 模型上下文协议
+
+实现 MCP（Model Context Protocol）服务端，基于 SSE（Server-Sent Events）的标准接入。
+
+* 服务端：[web-mcp](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/web-ai/web-mcp/)
+
+```yml
+spring:
+  ai:
+    mcp:
+      server:
+        enabled: true
+        sse-endpoint: /api/v1/sse
+        sse-message-endpoint: /api/v1/mcp
+```
+MCP SSE 接口地址：http://127.0.0.1:8981/api/v1/sse
+
+* 客户端：[web-cms](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/web-ai/web-cms/)
+
+```yml
+spring:
+  ai:
+    model:
+      chat: ollama
+    mcp:
+      client:
+        enabled: true
+        sse:
+          connections:
+            jeesite:
+              url: http://127.0.0.1:8981
+              sse-endpoint: /api/v1/sse
+```
+聊天窗口，询问“当前服务器时间”，在 MCP 服务端会显示调用日志，并返回相应信息。
 
 ## 支持结构化输出
 
