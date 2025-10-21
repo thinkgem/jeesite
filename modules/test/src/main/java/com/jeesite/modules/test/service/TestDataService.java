@@ -8,7 +8,9 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.service.CrudService;
+import com.jeesite.common.utils.ThreadUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.job.entity.JobContext;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.test.dao.TestDataChildDao;
 import com.jeesite.modules.test.dao.TestDataDao;
@@ -142,13 +144,36 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		testDataChild.setTestData(testData);
 		testDataChildDao.deleteByEntity(testDataChild);
 	}
-	
+
 	/**
 	 * 任务调度测试：testDataService.executeTestTask(userService, 1, 2L, 3F, 4D, 'abc')
 	 */
 	public void executeTestTask(UserService userService, Integer i, Long l, Float f, Double d, String s){
 		System.out.println(DateUtils.getTime() + " 任务执行了~~~  bean: " + userService + ", i: " + i
 				+ ", l: " + l + ", f: " + f + ", d: " + d + ", s: " + s);
+	}
+
+	/**
+	 * 任务手动中断操作的回调
+	 */
+	private final Runnable interruptedCallback = () -> {
+		System.out.println(DateUtils.getTime() + " 任务中断了~~~");
+	};
+	
+	/**
+	 * 任务调度测试：testDataService.executeTestTask(userService, 1, 2L, 3F, 4D, 'abc', jobContext)
+	 * 支持 JobContext 接收：支持获取 JobExecutionContext；当暂停或运行一次的时候，将会手动调用中断参数 v5.14.0
+	 */
+	public void executeTestTask(UserService userService, Integer i, Long l, Float f, Double d, String s, JobContext jobContext){
+		System.out.println(DateUtils.getTime() + " 任务开始了~~~  bean: " + userService + ", i: " + i
+				+ ", l: " + l + ", f: " + f + ", d: " + d + ", s: " + s + ", jobContext, " + jobContext);
+		jobContext.setInterruptedCallback(interruptedCallback);
+		for (int n = 1; n < 6; n++) {
+			System.out.println(Thread.currentThread().getName() + " interrupted: " + jobContext.isInterrupted() + ", num: " + n);
+			if (jobContext.isInterrupted()) { break; }
+			ThreadUtils.sleep(3000);
+		}
+		System.out.println(DateUtils.getTime() + " 任务结束了~~~");
 	}
 	
 	/**
