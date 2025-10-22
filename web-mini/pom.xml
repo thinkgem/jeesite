@@ -7,7 +7,7 @@
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
 		<version>5.14.0-SNAPSHOT</version>
-		<relativePath>../../jeesite/parent/pom.xml</relativePath>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-web-mini</artifactId>
@@ -15,7 +15,7 @@
 	
 	<description>Web 服务，最小化加载，是一个小的微服务</description>
 	
-	<name>JeeSite Web</name>
+	<name>JeeSite Web Mini</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	

@@ -13,7 +13,13 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-		<module>root</module>
+		<module>parent</module>
+		<module>common</module>
+		<module>modules</module>
+		<module>web</module>
+		<module>web-api</module>
+		<module>web-fast</module>
+		<module>web-mini</module>
 	</modules>
 	
 	<developers>
