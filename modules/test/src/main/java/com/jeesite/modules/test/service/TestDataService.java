@@ -146,6 +146,13 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	}
 
 	/**
+	 * 任务调度测试：testDataService.executeTestTask('on')
+	 */
+	public void executeTestTask(String flag){
+		System.out.println(DateUtils.getTime() + " 任务执行了~~~  flag: " + flag);
+	}
+
+	/**
 	 * 任务调度测试：testDataService.executeTestTask(userService, 1, 2L, 3F, 4D, 'abc')
 	 */
 	public void executeTestTask(UserService userService, Integer i, Long l, Float f, Double d, String s){
