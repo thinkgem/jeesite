@@ -43,6 +43,7 @@
 		<joda-time.version>2.12.7</joda-time.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<logstash-logback.version>8.1</logstash-logback.version>
+		<logback.version>1.5.19</logback.version>
 
 		<!-- framework version -->
 		<mybatis.version>3.5.19</mybatis.version>
