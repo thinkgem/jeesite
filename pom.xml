@@ -13,7 +13,7 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-		<!--<module>../common</module>-->
+		<!--<module>common</module>-->
 		<module>parent</module>
 		<module>parent/web</module>
 		<module>eureka</module>
