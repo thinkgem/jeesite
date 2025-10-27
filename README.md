@@ -715,6 +715,73 @@ VITE_GLOB_API_URL_PREFIX = /js
 </script>
 ```
 
+## 更多介绍
+
+* 架构特点：<https://jeesite.com/docs/feature/>
+* 内置功能：<https://jeesite.com/docs/function/>
+* 目录结构：<https://jeesite.com/docs/catalog/>
+* 参数配置：<https://jeesite.com/docs/config/>
+* 开发规范：<https://jeesite.com/docs/standard/>
+* 数表设计：<https://jeesite.com/docs/treetable/>
+
+## 学习文档
+
+* 库表生成、代码生成：<https://jeesite.com/docs/code-gen/>
+* 菜单权限、按钮权限：<https://jeesite.com/docs/permi-shiro/>
+* 数据权限、库事务：<https://jeesite.com/docs/service-datascope/#数据权限>
+* 表结构、数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
+* 持久层框架、SQL：<https://jeesite.com/docs/dao-mybatis/>
+* 后端常用工具：<https://jeesite.com/docs/sys-utils/>
+
+**分离版**
+
+* 版本介绍：<https://jeesite.com/docs/jeesite-vue/>
+* 源码解析：<https://jeesite.com/docs/vue-crud-view/>
+* 表单组件：<https://jeesite.com/docs/vue-basic-form/>
+* 表格组件：<https://jeesite.com/docs/vue-basic-table/>
+* 参数配置：<https://jeesite.com/docs/vue-settings/>
+* 常用组件：<https://jeesite.com/docs/vue-comp/>
+* 前端权限：<https://jeesite.com/docs/vue-auth/>
+* 图标组件：<https://jeesite.com/docs/vue-icon/>
+* 前端样式库：<https://jeesite.com/docs/vue-style/>
+* 多语言国际化：<https://jeesite.com/docs/vue-i18n/>
+
+**经典版**
+
+* 表单组件：<https://jeesite.com/docs/views-beetl/>
+* 表格组件：<https://jeesite.com/docs/datagrid/>
+* 常用工具：<https://jeesite.com/docs/jeesite-js/>
+* 自定义主题：<https://jeesite.com/docs/custom-views/>
+
+## 更多文档
+
+* AI、CMS、RAG、Tool、MCP 人工智能助手：<https://jeesite.com/docs/ai-cms>
+* BPM 业务流程引擎（Flowable）：<http://jeesite.com/docs/bpm/>
+* CMS 多站点内容管理模块：<https://jeesite.com/docs/cms/>
+
+* 消息推送消息提醒：<https://jeesite.com/docs/msg-push-use/>
+* 对象存储模块：<https://jeesite.com/docs/oss-client>
+* 单点登录模块：<https://jeesite.com/docs/sso-cas>
+* 在线任务调度：<https://jeesite.com/docs/job/>
+
+* 大屏设计器：<https://jeesite.com/docs/visual/>
+* 报表设计器：<https://jeesite.com/docs/ureport/>
+* 文件管理分享：<https://jeesite.com/docs/filemanager/>
+* 文件在线预览：<https://jeesite.com/docs/filepreview/>
+
+* 集群、高可用架构：<https://jeesite.com/docs/cluster/>
+* SaaS 多租户架构：<https://jeesite.com/docs/saas-corp-use/>
+* 读写分离分片分表：<https://jeesite.com/docs/sharding/>
+* Spring监控系统：<https://jeesite.com/docs/webadmin/>
+* 分布式跨应用事务：<https://jeesite.com/docs/seata/>
+* 追踪系统集成：<https://jeesite.com/docs/skywalking/>
+* ELK 日志收集：<https://jeesite.com/docs/elk-log/>
+
+* MybatisPlus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* 接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+* 统一认证平台：<https://jeesite.com/docs/oauth2-server>
+
 ## 授权许可协议条款
 
 1. 基于 Apache License Version 2.0 协议发布，可用于商业项目，但必须遵守以下补充条款。
