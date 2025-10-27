@@ -146,7 +146,6 @@ public class VideoUtils {
 
 	/**
 	 * 检查文件是否存在
-	 * @param inputFile
 	 * @return boolean
 	 */
 	public boolean checkfile(String inputFile) {
@@ -160,8 +159,7 @@ public class VideoUtils {
 
 	/**
 	 * ffmpeg 截取缩略图
-	 * @param inputFile
-	 * @return boolean  
+	 * @return boolean
 	 */
 	public boolean processFfmpegCutpic(String inputFile, String outputFile) {
 		List<String> command = new java.util.ArrayList<String>();
@@ -274,8 +272,7 @@ public class VideoUtils {
 
 	/**
 	 * 执行命令
-	 * @param command
-	 * @return boolean  
+	 * @return boolean
 	 */
 	private boolean process(List<String> command) {
 		try {

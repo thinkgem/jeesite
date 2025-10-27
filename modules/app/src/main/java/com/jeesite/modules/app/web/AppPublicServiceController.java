@@ -4,21 +4,19 @@
  */
 package com.jeesite.modules.app.web;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.app.entity.AppComment;
 import com.jeesite.modules.app.entity.AppUpgrade;
 import com.jeesite.modules.app.service.AppCommentService;
 import com.jeesite.modules.app.service.AppUpgradeService;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * APP公共服务 Controller
@@ -29,12 +27,14 @@ import com.jeesite.modules.app.service.AppUpgradeService;
 @RequestMapping(value = "/app")
 public class AppPublicServiceController extends BaseController {
 
-	@Autowired
-	private AppUpgradeService appUpgradeService;
+	private final AppUpgradeService appUpgradeService;
+	private final AppCommentService appCommentService;
 
-	@Autowired
-	private AppCommentService appCommentService;
-	
+	public AppPublicServiceController(AppUpgradeService appUpgradeService, AppCommentService appCommentService) {
+		this.appUpgradeService = appUpgradeService;
+		this.appCommentService = appCommentService;
+	}
+
 	/**
 	 * 升级检测
 	 */

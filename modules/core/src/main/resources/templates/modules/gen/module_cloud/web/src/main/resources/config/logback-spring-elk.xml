@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>logback-spring</name>
+	<name>logback-spring-elk</name>
 	<filePath>${baseDir}/${modulePath}/${moduleCode}/src/main/resources/config</filePath>
 	<fileName>logback-spring-elk.xml</fileName>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -13,15 +13,10 @@
 	<springProperty name="appname" source="spring.application.name" />
 
 	<!-- Framework level setting -->
-	<include resource="config/logger-core.xml"/>
+	<include resource="config/logger-default-cloud.xml" />
 
 	<!-- Project level setting -->
 	<!-- <logger name="your.package" level="DEBUG" /> -->
-	<logger name="io.seata" level="INFO" />
-	<logger name="zipkin2.reporter.AsyncReporter$BoundedAsyncReporter" level="ERROR" />
-	<logger name="org.springframework.cloud.openfeign.FeignClientFactoryBean" level="ERROR" />
-<!-- 	<logger name="org.springframework.cloud.openfeign.support.SpringMvcContract" level="DEBUG" /> -->
-	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

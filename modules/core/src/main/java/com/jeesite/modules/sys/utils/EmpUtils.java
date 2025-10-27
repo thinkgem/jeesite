@@ -107,17 +107,12 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<EmployeeOffice> getEmployeeOfficeList(){
-		List<EmployeeOffice> list = UserUtils.getCache(CACHE_EMPLOYEE_OFFICE_LIST);
-		if (list == null){
-			list = Static.employeeService.findEmployeeOfficeList(getEmployee());
-			UserUtils.putCache(CACHE_EMPLOYEE_OFFICE_LIST, list);
-		}
-		return list;
+		return UserUtils.computeIfAbsentCache(CACHE_EMPLOYEE_OFFICE_LIST, k ->
+				Static.employeeService.findEmployeeOfficeList(getEmployee()));
 	}
 	
 	/**
 	 * 根据机构编码获取机构对象
-	 * @param officeCode
 	 * @author ThinkGem
 	 */
 	public static Office getOffice(String officeCode){
@@ -143,14 +138,19 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<Office> getOfficeAllList(){
-		List<Office> officeList = CorpUtils.getCache(CACHE_OFFICE_ALL_LIST);
-		if (officeList == null){
+//		List<Office> officeList = CorpUtils.getCache(CACHE_OFFICE_ALL_LIST);
+//		if (officeList == null){
+//			Office where = new Office();
+//			where.setStatus(Office.STATUS_NORMAL);
+//			officeList = Static.officeService.findList(where);
+//			CorpUtils.putCache(CACHE_OFFICE_ALL_LIST, officeList);
+//		}
+//		return officeList;
+		return CorpUtils.computeIfAbsentCache(CACHE_OFFICE_ALL_LIST, k -> {
 			Office where = new Office();
 			where.setStatus(Office.STATUS_NORMAL);
-			officeList = Static.officeService.findList(where);
-			CorpUtils.putCache(CACHE_OFFICE_ALL_LIST, officeList);
-		}
-		return officeList;
+			return Static.officeService.findList(where);
+		});
 	}
 
 	/**
@@ -268,7 +268,6 @@ public class EmpUtils {
 	
 	/**
 	 * 根据公司编码获取公司对象
-	 * @param companyCode
 	 * @author ThinkGem
 	 */
 	public static Company getCompany(String companyCode){
@@ -304,14 +303,19 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<Company> getCompanyAllList(){
-		List<Company> companyList = CorpUtils.getCache(CACHE_COMPANY_ALL_LIST);
-		if (companyList == null){
+//		List<Company> companyList = CorpUtils.getCache(CACHE_COMPANY_ALL_LIST);
+//		if (companyList == null){
+//			Company where = new Company();
+//			where.setStatus(Office.STATUS_NORMAL);
+//			companyList = Static.companyService.findList(where);
+//			CorpUtils.putCache(CACHE_COMPANY_ALL_LIST, companyList);
+//		}
+//		return companyList;
+		return CorpUtils.computeIfAbsentCache(CACHE_COMPANY_ALL_LIST, k -> {
 			Company where = new Company();
 			where.setStatus(Office.STATUS_NORMAL);
-			companyList = Static.companyService.findList(where);
-			CorpUtils.putCache(CACHE_COMPANY_ALL_LIST, companyList);
-		}
-		return companyList;
+			return Static.companyService.findList(where);
+		});
 	}
 	
 	/**
@@ -348,21 +352,14 @@ public class EmpUtils {
 
 	/**
 	 * 获取当前员工岗位（返回岗位编码和名称）
-	 * @return
 	 */
 	public static List<EmployeePost> getEmployeePostList(){
-		List<EmployeePost> list = UserUtils.getCache(CACHE_EMPLOYEE_POST_LIST);
-		if (list == null){
-			list = getEmployeePostList(getEmployee().getEmpCode());
-			UserUtils.putCache(CACHE_EMPLOYEE_POST_LIST, list);
-		}
-		return list;
+		return UserUtils.computeIfAbsentCache(CACHE_EMPLOYEE_POST_LIST, k ->
+				getEmployeePostList(getEmployee().getEmpCode()));
 	}
 
 	/**
 	 * 根据员工编号，获取员工岗位（返回岗位编码和名称）
-	 * @param empCode
-	 * @return
 	 */
 	public static List<EmployeePost> getEmployeePostList(String empCode){
 		Employee employee = new Employee();
@@ -384,7 +381,6 @@ public class EmpUtils {
 
 	/**
 	 * 获取当前登录用户的部门代码
-	 * @return
 	 */
 	public static String getCurrentOfficeCode() {
 		String officeCode = StringUtils.EMPTY;
@@ -411,7 +407,6 @@ public class EmpUtils {
 
 	/**
 	 * 获取当前登录用户的部门名称
-	 * @return
 	 */
 	public static String getCurrentOfficeName() {
 		String officeName = StringUtils.EMPTY;

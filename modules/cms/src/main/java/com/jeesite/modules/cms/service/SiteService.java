@@ -12,27 +12,30 @@ import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 站点表Service
- * @author 长春叭哥、ThinkGem
- * @version 2023-4-10
+ * 站点Service
+ * @author ThinkGem
+ * @version 2025-10-12
  */
 @Service
 public class SiteService extends CrudService<SiteDao, Site> {
 
-	@Autowired(required = false)
-	private ArticleIndexService articleIndexService;
-	@Autowired(required = false)
-	private PageCacheService pageCacheService;
+	private final ArticleIndexService articleIndexService;
+	private final PageCacheService pageCacheService;
+
+	public SiteService(ObjectProvider<ArticleIndexService> articleIndexService,
+					   ObjectProvider<PageCacheService> pageCacheService) {
+		this.articleIndexService = articleIndexService.getIfAvailable();
+		this.pageCacheService = pageCacheService.getIfAvailable();
+	}
 
 	/**
 	 * 获取单条数据
-	 * @param site
-	 * @return
+	 * @param site 主键
 	 */
 	@Override
 	public Site get(Site site) {
@@ -43,7 +46,6 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * 查询分页数据
 	 * @param site 查询条件
 	 * @param site page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<Site> findPage(Site site) {
@@ -52,63 +54,61 @@ public class SiteService extends CrudService<SiteDao, Site> {
 
 	/**
 	 * 保存数据（插入或更新）
-	 * @param site
+	 * @param site 数据对象
 	 */
 	@Override
 	@Transactional
 	public void save(Site site) {
 		super.save(site);
-		CmsUtils.removeCache("siteList");
-		// 保存logo
 		FileUploadUtils.saveFileUpload(site, site.getId(), "site_logo");
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(site);
-		}
+		// 清理站点缓存
+		clearCache(site);
 	}
 
 	/**
 	 * 更新状态
-	 * @param site
+	 * @param site 数据对象
 	 */
 	@Override
 	@Transactional
 	public void updateStatus(Site site) {
 		super.updateStatus(site);
-		CmsUtils.removeCache("siteList");
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(site);
-		}
+		// 清理站点缓存
+		clearCache(site);
 	}
 
 	/**
 	 * 删除数据
-	 * @param site
+	 * @param site 数据对象
 	 */
 	@Override
 	@Transactional
 	public void delete(Site site) {
 		site.sqlMap().markIdDelete();
 		super.delete(site);
+		// 清理站点缓存
+		clearCache(site);
+	}
+
+	/**
+	 * 清理站点缓存
+	 */
+	public void clearCache(Site site) {
+		// 清理栏目缓存
+		CmsUtils.removeCacheByKeyPrefix("category_");
+		// 清理栏目列表缓存
+		CmsUtils.removeCacheByKeyPrefix("categoryList_" + site.getId() + "_");
+		// 清理主导航缓存
+		CmsUtils.removeCache("mainNavList_" + site.getId());
+		// 清理站点缓存
+		CmsUtils.removeCache("site_" + site.getId());
+		// 清理站点列表缓存
 		CmsUtils.removeCache("siteList");
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(site);
 		}
 	}
-
-//	/**
-//	 * 删除站点
-//	 * @param site
-//	 * @param isRe
-//	 */
-//	@Transactional
-//	public void delete(Site site, Boolean isRe) {
-//		site.setStatus(isRe != null && isRe ? Site.STATUS_NORMAL : Site.STATUS_DELETE);
-//		super.delete(site);
-//		CmsUtils.removeCache("siteList");
-//	}
 
 	/**
 	 * 重建索引

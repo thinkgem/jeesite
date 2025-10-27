@@ -9,20 +9,14 @@ import com.jeesite.common.codec.SM3Utils;
 import com.jeesite.common.codec.ShaUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.shiro.authc.FormToken;
-import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 系统认证授权实现类
@@ -34,8 +28,6 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	public static final int HASH_ITERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
 
-	private UserService userService;
-	
 	public AuthorizingRealm() {
 		super();
 	}
@@ -71,8 +63,8 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	 * 获取用户授权信息，默认返回类型 SimpleAuthorizationInfo
 	 */
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, Subject subject, Session session, User user) {
-		return super.doGetAuthorizationInfo(loginInfo, subject, session, user);
+	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, User user) {
+		return super.doGetAuthorizationInfo(loginInfo, user);
 	}
 	
 	/**
@@ -115,31 +107,21 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	}
 	
 	@Override
-	public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-		super.onLoginSuccess(loginInfo, request);
-		
-		// 更新登录IP、时间、会话ID等
-		User user = UserUtils.get(loginInfo.getId());
-		getUserService().updateUserLoginInfo(user);
-		
+	public User onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+		User user = super.onLoginSuccess(loginInfo, request);
+
 		// 记录用户登录日志
 		LogUtils.saveLog(user, request, "系统登录", Log.TYPE_LOGIN_LOGOUT);
-	}
-	
-	@Override
-	public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-		super.onLogoutSuccess(loginInfo, request);
-		
-		// 记录用户退出日志
-		User user = UserUtils.get(loginInfo.getId());
-		LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
+		return user;
 	}
 
-	public UserService getUserService() {
-		if (userService == null){
-			userService = SpringUtils.getBean(UserService.class);
-		}
-		return userService;
+	@Override
+	public User onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
+		User user = super.onLogoutSuccess(loginInfo, request);
+
+		// 记录用户退出日志
+		LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
+		return user;
 	}
 	
 }

@@ -10,6 +10,7 @@
 .error-page > .error-content button {margin-top:20px;}
 .error-page > .headline {margin-left:20px;padding:20px;letter-spacing:-10px;line-height:78px;}
 .error-page > .copyright {clear:both;text-align:center;margin-top:50px;margin-right:50px;}
+.error-page .btn-default {background:#d9d9d9;border-color:#b5b5b5;}
 @media (max-width: 991px){
 	.error-page > .headline{float:left;text-align:left;}
 	.error-page > .error-content>h3{text-align:left;}

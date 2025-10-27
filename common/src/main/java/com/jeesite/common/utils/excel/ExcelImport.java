@@ -235,7 +235,6 @@ public class ExcelImport implements Closeable {
 
 	/**
 	 * 获取行对象
-	 * @param rownum
 	 * @return 返回Row对象，如果空行返回null
 	 */
 	public Row getRow(int rownum){
@@ -262,7 +261,6 @@ public class ExcelImport implements Closeable {
 
 	/**
 	 * 获取数据行号
-	 * @return
 	 */
 	public int getDataRowNum(){
 		return headerNum;
@@ -270,7 +268,6 @@ public class ExcelImport implements Closeable {
 	
 	/**
 	 * 获取最后一个数据行号
-	 * @return
 	 */
 	public int getLastDataRowNum(){
 		//return this.sheet.getLastRowNum() + headerNum;
@@ -279,7 +276,6 @@ public class ExcelImport implements Closeable {
 	
 	/**
 	 * 获取最后一个列号
-	 * @return
 	 */
 	public int getLastCellNum(){
 		Row row = this.getRow(headerNum);
@@ -542,15 +538,13 @@ public class ExcelImport implements Closeable {
 						ReflectUtils.invokeSetter(e, ef.attrName(), val);
 					}else{
 						if (os[1] instanceof Field){
-							//ReflectUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
-							((Field)os[1]).set(e, val);
+							ReflectUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
 						}else if (os[1] instanceof Method){
-							//String mthodName = ((Method)os[1]).getName();
-							//if ("get".equals(mthodName.substring(0, 3))){
-							//	mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
-							//}
-							//ReflectUtils.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
-							((Method)os[1]).invoke(e, val);
+							String mthodName = ((Method)os[1]).getName();
+							if ("get".equals(mthodName.substring(0, 3))){
+								mthodName = "set"+mthodName.substring(3);
+							}
+							ReflectUtils.invokeMethodByAsm(e, mthodName, val);
 						}
 					}
 				}

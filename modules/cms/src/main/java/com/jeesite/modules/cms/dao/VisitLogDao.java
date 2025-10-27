@@ -10,7 +10,7 @@ import com.jeesite.modules.cms.entity.VisitLog;
 
 /**
  * 访问日志表DAO接口
- * @author 长春叭哥
+ * @author 长春叭哥、ThinkGem
  * @version 2018-10-15
  */
 @MyBatisDao

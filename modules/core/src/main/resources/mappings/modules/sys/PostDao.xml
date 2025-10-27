@@ -22,7 +22,8 @@
 				AND u.user_code = #{userCode}
 			</if>
 		</where>
-		ORDER BY ${sqlMap.order.toSql()}
+		${sqlMap.group.toGroupSql()}
+		${sqlMap.order.toOrderSql()}
 	</select>
 
 	<!-- 重写 Dao 中的 insert 查询方法 v5.11.1

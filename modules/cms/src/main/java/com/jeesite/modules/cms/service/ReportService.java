@@ -23,8 +23,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	
 	/**
 	 * 获取单条数据
-	 * @param report
-	 * @return
+	 * @param report 主键
 	 */
 	@Override
 	public Report get(Report report) {
@@ -35,7 +34,6 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	 * 查询分页数据
 	 * @param report 查询条件
 	 * @param report page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<Report> findPage(Report report) {
@@ -44,7 +42,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param report
+	 * @param report 数据对象
 	 */
 	@Override
 	@Transactional
@@ -58,7 +56,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	
 	/**
 	 * 更新状态
-	 * @param report
+	 * @param report 数据对象
 	 */
 	@Override
 	@Transactional
@@ -68,7 +66,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	
 	/**
 	 * 删除数据
-	 * @param report
+	 * @param report 数据对象
 	 */
 	@Override
 	@Transactional

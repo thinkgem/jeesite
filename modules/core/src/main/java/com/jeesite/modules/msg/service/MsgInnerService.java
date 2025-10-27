@@ -21,8 +21,7 @@ public interface MsgInnerService extends CrudServiceApi<MsgInner> {
 	
 	/**
 	 * 获取单条数据
-	 * @param msgInner
-	 * @return
+	 * @param msgInner 主键
 	 */
 	@Override
 	MsgInner get(MsgInner msgInner);
@@ -30,7 +29,6 @@ public interface MsgInnerService extends CrudServiceApi<MsgInner> {
 	/**
 	 * 查询分页数据
 	 * @param msgInner 查询条件； page 分页对象
-	 * @return
 	 */
 	@Override
 	Page<MsgInner> findPage(MsgInner msgInner);
@@ -42,7 +40,7 @@ public interface MsgInnerService extends CrudServiceApi<MsgInner> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param msgInner
+	 * @param msgInner 数据对象
 	 */
 	@Override
 	@Transactional
@@ -56,7 +54,7 @@ public interface MsgInnerService extends CrudServiceApi<MsgInner> {
 	
 	/**
 	 * 更新状态
-	 * @param msgInner
+	 * @param msgInner 数据对象
 	 */
 	@Override
 	@Transactional
@@ -64,7 +62,7 @@ public interface MsgInnerService extends CrudServiceApi<MsgInner> {
 	
 	/**
 	 * 删除数据
-	 * @param msgInner
+	 * @param msgInner 数据对象
 	 */
 	@Override
 	@Transactional

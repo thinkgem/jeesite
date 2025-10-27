@@ -10,7 +10,7 @@ import com.jeesite.modules.cms.entity.Site;
 
 /**
  * 站点表DAO接口
- * @author 长春叭哥
+ * @author 长春叭哥、ThinkGem
  * @version 2018-10-15
  */
 @MyBatisDao

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?><!--suppress VulnerableLibrariesLocal -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite</artifactId>
-	<version>5.13.1-SNAPSHOT</version>
+	<version>5.14.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite</name>
@@ -13,7 +13,13 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-		<module>root</module>
+		<module>parent</module>
+		<module>common</module>
+		<module>modules</module>
+		<module>web</module>
+		<module>web-api</module>
+		<module>web-fast</module>
+		<module>web-mini</module>
 	</modules>
 	
 	<developers>

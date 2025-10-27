@@ -1,14 +1,20 @@
 package com.jeesite.common.ueditor;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jeesite.common.io.IOUtils;
 import com.jeesite.common.io.ResourceUtils;
+import com.jeesite.common.lang.ExceptionUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.ueditor.define.ActionMap;
+import org.springframework.core.io.Resource;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 配置管理器
@@ -18,6 +24,7 @@ import com.jeesite.common.ueditor.define.ActionMap;
 public final class ConfigManager {
 
     private final String rootPath;
+    private static final String defaultConfigFileName = "config/ueditor-core.json";
     private static final String configFileName = "config/ueditor.json";
     private JSONObject jsonConfig = null;
     // 涂鸦上传filename定义
@@ -120,11 +127,27 @@ public final class ConfigManager {
     }
 
     private void initEnv() {
-        String configContent = ResourceUtils.getResourceFileContent(
-                ConfigManager.configFileName).replaceAll("/\\*[\\s\\S]*?\\*/", "");
+		String configContent = StringUtils.EMPTY;
+		Resource resource = ResourceUtils.getResource(ConfigManager.configFileName);
+		if (resource.exists()) {
+			try(InputStream is = resource.getInputStream()){
+				configContent = IOUtils.toString(is, StandardCharsets.UTF_8);
+			}catch (IOException e) {
+				throw ExceptionUtils.unchecked(e);
+			}
+		} else {
+			resource = ResourceUtils.getResource(ConfigManager.defaultConfigFileName);
+			if (resource.exists()) {
+				try(InputStream is = resource.getInputStream()){
+					configContent = IOUtils.toString(is, StandardCharsets.UTF_8);
+				}catch (IOException e) {
+					throw ExceptionUtils.unchecked(e);
+				}
+			}
+		}
         try {
-            JSONObject jsonConfig = JSONObject.parseObject(configContent);
-            this.jsonConfig = jsonConfig;
+			configContent = configContent.replaceAll("/\\*[\\s\\S]*?\\*/", "");
+			this.jsonConfig = JSONObject.parseObject(configContent);
         } catch (Exception e) {
             this.jsonConfig = null;
         }

@@ -69,7 +69,6 @@ public class LogUtils {
 	
 	/**
 	 * 保存日志
-	 * @param executeTime 
 	 */
 	public static void saveLog(User user, HttpServletRequest request, Object handler, Exception ex, String logTitle, String logType, long executeTime){
 		if (user == null || StringUtils.isBlank(user.getUserCode()) || request == null

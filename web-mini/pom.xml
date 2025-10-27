@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?><!--suppress VulnerableLibrariesLocal -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -6,8 +6,8 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.13.1-SNAPSHOT</version>
-		<relativePath>../../jeesite/parent/pom.xml</relativePath>
+		<version>5.14.0-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-web-mini</artifactId>
@@ -15,7 +15,7 @@
 	
 	<description>Web 服务，最小化加载，是一个小的微服务</description>
 	
-	<name>JeeSite Web</name>
+	<name>JeeSite Web Mini</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
@@ -23,7 +23,7 @@
 		
 		<finalName>web</finalName><!-- war or jar 包的名称 -->
 		<start-class>com.jeesite.modules.MiniApplication</start-class>
-		
+
 		<!-- docker setting -->
 		<docker.run.port>8980:8980</docker.run.port>
 		
@@ -43,7 +43,66 @@
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-framework</artifactId>
 			<version>${project.parent.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.quartz-scheduler</groupId>
+					<artifactId>quartz</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.atomikos</groupId>
+					<artifactId>transactions-jdbc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.atomikos</groupId>
+					<artifactId>transactions-jta</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-data-redis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-scratchpad</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.jmimemagic</groupId>
+					<artifactId>jmimemagic</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.coobird</groupId>
+					<artifactId>thumbnailator</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.zxing</groupId>
+					<artifactId>core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.zxing</groupId>
+					<artifactId>javase</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.belerweb</groupId>
+					<artifactId>pinyin4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.bladejava</groupId>
+					<artifactId>blade-patchca</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk18on</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>

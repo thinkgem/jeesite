@@ -28,10 +28,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * 封装 Jackson，实现 JSON String 与 Java Object 互转
@@ -73,10 +70,15 @@ public class JsonMapper extends ObjectMapper {
 	 * @author ThinkGem
 	 */
 	public JsonMapper setLocaleTimeZoneDateFormat(){
-		this.setLocale(LocaleUtils.toLocale(PropertiesUtils.getInstance()
-					.getProperty("lang.defaultLocale", "zh_CN")));
-		this.setTimeZone(TimeZone.getTimeZone(PropertiesUtils.getInstance()
-					.getProperty("lang.defaultTimeZone", "GMT+08:00")));
+		PropertiesUtils props = PropertiesUtils.getInstance();
+		// 设置默认语言环境
+		props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
+			this.setLocale(LocaleUtils.toLocale(defaultLocale));
+		});
+		// 设置默认时区
+		props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
+			this.setTimeZone(TimeZone.getTimeZone(defaultTimeZone));
+		});
 		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
 			private static final long serialVersionUID = 1L;
 			@Override

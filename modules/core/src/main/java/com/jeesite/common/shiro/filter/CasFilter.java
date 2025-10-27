@@ -20,6 +20,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CAS过滤器
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("deprecation")
 public class CasFilter extends CasBaseFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(CasFilter.class);
 	private BaseAuthorizingRealm authorizingRealm;
 
 	public CasFilter() {
@@ -40,7 +43,7 @@ public class CasFilter extends CasBaseFilter {
 	 */
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), (HttpServletRequest)request);
+		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(subject), (HttpServletRequest)request);
 		ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, getSuccessUrl());
 		return false;
 	}
@@ -65,7 +68,7 @@ public class CasFilter extends CasBaseFilter {
 	                WebUtils.issueRedirect(request, response, getLoginUrl());
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 	        return false;
 		}

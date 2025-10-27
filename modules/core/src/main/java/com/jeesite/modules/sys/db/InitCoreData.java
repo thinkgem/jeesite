@@ -15,11 +15,11 @@ import com.jeesite.modules.job.entity.JobEntity;
 import com.jeesite.modules.msg.task.impl.MsgLocalMergePushTask;
 import com.jeesite.modules.msg.task.impl.MsgLocalPushTask;
 import com.jeesite.modules.sys.dao.RoleMenuDao;
-import com.jeesite.modules.sys.entity.Module;
 import com.jeesite.modules.sys.entity.*;
+import com.jeesite.modules.sys.entity.Module;
 import com.jeesite.modules.sys.service.*;
 import org.quartz.CronTrigger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +31,28 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitCoreData extends BaseInitDataTests {
-	
+
+	public InitCoreData(ConfigService configService, ModuleService moduleService, DictTypeService dictTypeService,
+						DictDataService dictDataService, RoleService roleService, MenuService menuService,
+						RoleMenuDao roleMenuDao, UserService userService, OfficeService officeService,
+						CompanyService companyService, PostService postService, EmpUserService empUserService,
+						ObjectProvider<JobDao> jobDao, BizCategoryService bizCategoryService) {
+		this.configService = configService;
+		this.moduleService = moduleService;
+		this.dictTypeService = dictTypeService;
+		this.dictDataService = dictDataService;
+		this.roleService = roleService;
+		this.menuService = menuService;
+		this.roleMenuDao = roleMenuDao;
+		this.userService = userService;
+		this.officeService = officeService;
+		this.companyService = companyService;
+		this.postService = postService;
+		this.empUserService = empUserService;
+		this.jobDao = jobDao.getIfAvailable();
+		this.bizCategoryService = bizCategoryService;
+	}
+
 	@Override
 	public boolean initData() throws Exception {
 		if (GenUtils.isTableExists(Global.getTablePrefix() + "sys_module")) {
@@ -56,8 +77,7 @@ public class InitCoreData extends BaseInitDataTests {
 		return true;
 	}
 	
-//	@Autowired
-//	private AreaService areaService;
+//	private final AreaService areaService;
 	/**
 	 * 区域、行政区划表
 	 */
@@ -85,8 +105,7 @@ public class InitCoreData extends BaseInitDataTests {
 //		});
 	}
 	
-	@Autowired
-	private ConfigService configService;
+	private final ConfigService configService;
 	/**
 	 * 参数配置表
 	 */
@@ -105,8 +124,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 
-	@Autowired
-	private ModuleService moduleService;
+	private final ModuleService moduleService;
 	/**
 	 * 系统模块表
 	 */
@@ -124,10 +142,8 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private DictTypeService dictTypeService;
-	@Autowired
-	private DictDataService dictDataService;
+	private final DictTypeService dictTypeService;
+	private final DictDataService dictDataService;
 	/**
 	 * 系统字典、用户字典表
 	 */
@@ -158,8 +174,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private RoleService roleService;
+	private final RoleService roleService;
 	/**
 	 * 角色表
 	 */
@@ -179,10 +194,8 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 
-	@Autowired
-	private MenuService menuService;
-	@Autowired
-	private RoleMenuDao roleMenuDao;
+	private final MenuService menuService;
+	private final RoleMenuDao roleMenuDao;
 	/**
 	 * 菜单表
 	 */
@@ -205,8 +218,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	/**
 	 * 用户表
 	 */
@@ -226,8 +238,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private OfficeService officeService;
+	private final OfficeService officeService;
 	/**
 	 * 组织机构、部门表
 	 */
@@ -245,8 +256,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 
-	@Autowired
-	private CompanyService companyService;
+	private final CompanyService companyService;
 	/**
 	 * 公司表
 	 */
@@ -265,8 +275,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 
-	@Autowired
-	private PostService postService;
+	private final PostService postService;
 	/**
 	 * 岗位表
 	 */
@@ -284,8 +293,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 	
-	@Autowired
-	private EmpUserService empUserService;
+	private final EmpUserService empUserService;
 	/**
 	 * 员工、用户表
 	 */
@@ -322,8 +330,7 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 
-	@Autowired(required = false)
-	private JobDao jobDao; // 默认情况下job是关闭状态，需要注入jobDao
+	private final JobDao jobDao; // 默认情况下job是关闭状态，需要注入jobDao
 	/**
 	 * 初始化消息推送服务
 	 */
@@ -363,8 +370,7 @@ public class InitCoreData extends BaseInitDataTests {
 		jobDao.insert(job);
 	}
 
-	@Autowired
-	private BizCategoryService bizCategoryService;
+	private final BizCategoryService bizCategoryService;
 	public void initBizCategory() throws Exception{
 //		clearTable(BizCategory.class);
 		initExcelData(BizCategory.class, params -> {

@@ -12,6 +12,7 @@
 # 日志配置
 logging:
   config: classpath:config/logback-spring-elk.xml
+<% %>
 ]]>
 	</content>
 </template>

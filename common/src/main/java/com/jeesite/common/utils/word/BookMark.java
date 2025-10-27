@@ -59,8 +59,6 @@ public class BookMark {
 
 	/**
 	 * 构造函数
-	 * @param ctBookmark
-	 * @param para
 	 */
 	public BookMark(CTBookmark ctBookmark, XWPFParagraph para) {
 		this._ctBookmark = ctBookmark;
@@ -72,9 +70,6 @@ public class BookMark {
 
 	/**
 	 * 构造函数，用于表格中的标签
-	 * @param ctBookmark
-	 * @param para
-	 * @param tableCell
 	 */
 	public BookMark(CTBookmark ctBookmark, XWPFParagraph para, XWPFTableCell tableCell) {
 		this(ctBookmark, para);

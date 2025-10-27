@@ -5,8 +5,10 @@
 package com.jeesite.autoconfigure.sys;
 
 import com.jeesite.common.mybatis.MyBatisFactoryBean;
+import com.jeesite.modules.msg.dao.MsgInnerRecordDao;
 import com.jeesite.modules.msg.service.MsgInnerService;
 import com.jeesite.modules.msg.service.support.MsgInnerServiceSupport;
+import com.jeesite.modules.sys.service.EmpUserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,8 +27,8 @@ public class MsgAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public MsgInnerService msgInnerService(){
-		return new MsgInnerServiceSupport();
+	public MsgInnerService msgInnerService(EmpUserService empUserService, MsgInnerRecordDao msgInnerRecordDao){
+		return new MsgInnerServiceSupport(empUserService, msgInnerRecordDao);
 	}
 
 }

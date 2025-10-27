@@ -9,7 +9,6 @@ import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -24,9 +23,12 @@ import java.util.List;
 @SpringBootTest(classes = ApplicationTest.class)
 public class InsertBatchTest extends BaseSpringContextTests {
 
-	@Autowired
-	private TestDataDao testDataDao;
-	
+	private final TestDataDao testDataDao;
+
+	public InsertBatchTest(TestDataDao testDataDao) {
+		this.testDataDao = testDataDao;
+	}
+
 	@Test
 	public void testData1() throws Exception{
 		List<TestData> list = ListUtils.newArrayList();

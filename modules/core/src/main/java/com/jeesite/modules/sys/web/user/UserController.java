@@ -17,7 +17,6 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +40,11 @@ import javax.servlet.http.HttpServletResponse;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class UserController extends BaseController {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 	
 	/**
 	 * 获取用户列表

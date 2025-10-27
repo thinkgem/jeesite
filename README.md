@@ -42,17 +42,17 @@
 </p>
 
 * 源码仓库地址：
-  [Gitee](https://gitee.com/thinkgem/jeesite5)、
-  [GitCode](https://gitcode.com/thinkgem/jeesite5)、
-  [GitHub](https://github.com/thinkgem/jeesite5)
+  [Gitee](https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite5/tree/v5.springboot2)、
+  [GitHub](https://github.com/thinkgem/jeesite5/tree/v5.springboot2)
 * 分离版源码仓库地址：
   [Gitee](https://gitee.com/thinkgem/jeesite-vue)、
   [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
   [GitHub](https://github.com/thinkgem/jeesite-vue)
 * 源码合集仓库地址：
-  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=v5.springboot3)、
-  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3)
+  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot2)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot2)、
+  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot2)
 
 ## 平台介绍
 
@@ -70,7 +70,11 @@
 
 * 2021 年终发布 Vue3 的前后分离版本，使得 JeeSite 拥有同一个后台服务 Web 来支撑分离版和全栈版两套前端技术栈。
 
-* 支持国产化软硬件环境，如国产芯片、操作系统、数据库、中间件、国密算法等。
+* 对接 OpenAPI、Ollama、DeepSeek 等热门 AI 大模型，凭借检索增强生成 RAG 技术，为企业知识库打造专属智能对话。
+
+* 提供大模型 Tool 本地工具调用及 MCP 服务端和客户端工具调用，助力大模型与您的业务深度融合，实现高效交互。
+
+* 支持国产化软件和硬件环境，如国产芯片、操作系统、数据库、中间件、国密算法等。
 
 ## 核心优势
 
@@ -88,7 +92,7 @@
 
 * 至今 JeeSite 平台架构已经非常稳定，我们持续升级，并不失架构的先进性。
 * JeeSite 精益求精，用心打磨每一个细节，界面 UI 操作便捷，体验性好。
-* JeeSite 是一个专业的平台，是一个可以让您使用放心的平台。
+* JeeSite 是一个专业的平台，是一个可以让您，用着省心的平台。
 * 社区版基于 Apache License 2.0 开源协议，永久免费使用。
 
 ### 架构特点及安全方面的优势：<https://jeesite.com/docs/feature/>
@@ -105,7 +109,7 @@
 * 技术选型（详细）已支持数据库：<http://jeesite.com/docs/technology/>
 * JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
 * Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3>
-* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2/>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2>
 
 ## 更多介绍
 
@@ -114,21 +118,8 @@
 * 架构特点：<https://jeesite.com/docs/feature/>
 * 参数配置：<https://jeesite.com/docs/config/>
 * 开发规范：<https://jeesite.com/docs/standard/>
+* 数表设计：<https://jeesite.com/docs/treetable/>
 * 代码生成：<https://jeesite.com/docs/code-gen/>
-
-## 生态系统
-
-* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
-* Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
-* 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
-* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
-* PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
-* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
-* JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
-* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
-* Mybatis-Plus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
-* Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
-* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
 
 ## 快速体验
 
@@ -141,7 +132,7 @@
 
 1. 免安装数据库，使用内嵌 H2 DB、包含 Vue 和 全栈双版本
 2. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库
-3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.9.zip> 并解压
+3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot2.zip> 并解压
 4. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
 5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
 6. 全栈版本地址：<http://127.0.0.1:8980/a/login>
@@ -151,7 +142,7 @@
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.9.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot2.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
@@ -183,9 +174,9 @@ docker logs -f js5
 3. 分离端运行文档：<https://jeesite.com/docs/vue-install-deploy/>
 4. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
-## 技术文章
+## 学习文档
 
-* 库表生成、代码生成：https://jeesite.com/docs/code-gen/>
+* 库表生成、代码生成：<https://jeesite.com/docs/code-gen/>
 * 菜单权限、按钮权限：<https://jeesite.com/docs/permi-shiro/>
 * 数据权限、库事务：<https://jeesite.com/docs/service-datascope/#数据权限>
 * 表结构、数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
@@ -212,36 +203,34 @@ docker logs -f js5
 * 常用工具：<https://jeesite.com/docs/jeesite-js/>
 * 自定义主题：<https://jeesite.com/docs/custom-views/>
 
-## 专题文章
+## 更多文档
 
-* 系统接口文档：<https://jeesite.com/docs/mobile-rest-api/>
-* 多语言国际化：<https://jeesite.com/docs/i18n-locale/>
-* BPM工作流引擎：<https://jeesite.com/docs/bpm/>
-* CMS内容管理：<https://jeesite.com/docs/cms/>
-* AI知识库助手：<https://jeesite.com/docs/cms-ai/>
-* 用户类型：<https://jeesite.com/docs/user-type/>
-* 消息推送：<https://jeesite.com/docs/msg-push-use/>
-* 单点登录：<https://jeesite.com/docs/sso-cas/>
+* AI、CMS、RAG、Tool、MCP 人工智能助手：<https://jeesite.com/docs/ai-cms>
+* BPM 业务流程引擎（Flowable）：<http://jeesite.com/docs/bpm/>
+* CMS 多站点内容管理模块：<https://jeesite.com/docs/cms/>
+
+* 消息推送消息提醒：<https://jeesite.com/docs/msg-push-use/>
+* 对象存储模块：<https://jeesite.com/docs/oss-client>
+* 单点登录模块：<https://jeesite.com/docs/sso-cas>
 * 在线任务调度：<https://jeesite.com/docs/job/>
-* 对象存储：<https://jeesite.com/docs/oss-client/>
+
 * 大屏设计器：<https://jeesite.com/docs/visual/>
 * 报表设计器：<https://jeesite.com/docs/ureport/>
+* 文件管理分享：<https://jeesite.com/docs/filemanager/>
 * 文件在线预览：<https://jeesite.com/docs/filepreview/>
-* 三员管理员：<https://jeesite.com/docs/manager3/>
-* 手机端框架：<https://jeesite.com/docs/uniapp/>
-* 统一认证服务：<https://jeesite.com/docs/oauth2-server/>
-* 树表结构设计：<https://jeesite.com/docs/tree-table-use/>
 
-## 云服务架构
-
-* 多租户、SaaS服务：<https://jeesite.com/docs/saas-corp-use/>
-* 集群、负载均衡、高可用：<https://jeesite.com/docs/cluster/>
-* Spring Cloud 微服务：<https://jeesite.com/docs/springcloud/>
-* 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
-* 读写分离、分库分表：<https://jeesite.com/docs/sharding/>
-* 监控系统集成：<https://jeesite.com/docs/webadmin/>
+* 集群、高可用架构：<https://jeesite.com/docs/cluster/>
+* SaaS 多租户架构：<https://jeesite.com/docs/saas-corp-use/>
+* 读写分离分片分表：<https://jeesite.com/docs/sharding/>
+* Spring监控系统：<https://jeesite.com/docs/webadmin/>
+* 分布式跨应用事务：<https://jeesite.com/docs/seata/>
 * 追踪系统集成：<https://jeesite.com/docs/skywalking/>
-* ELK日志收集：<https://jeesite.com/docs/elk-log/>
+* ELK 日志收集：<https://jeesite.com/docs/elk-log/>
+
+* MybatisPlus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* 接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+* 统一认证平台：<https://jeesite.com/docs/oauth2-server>
 
 ## 授权协议声明
 

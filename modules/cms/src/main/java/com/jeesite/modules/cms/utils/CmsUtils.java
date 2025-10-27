@@ -5,6 +5,7 @@
 package com.jeesite.modules.cms.utils;
 
 import com.jeesite.common.cache.CacheUtils;
+import com.jeesite.common.codec.Md5Utils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
@@ -20,10 +21,10 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
 import org.springframework.ui.Model;
 
-import javax.servlet.ServletContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * CmsUtils
@@ -52,30 +53,22 @@ public class CmsUtils {
 	 * @param siteCode 站点编号
 	 */
 	public static Site getSite(String siteCode) {
-		String code = Site.MAIN_SITE_CODE;
-		if (StringUtils.isNotBlank(siteCode)) {
-			code = siteCode;
-		}
-		// 根据编码获取站点
-		for (Site site : getSiteList()) {
-			if (site.getSiteCode().equals(code)) {
-				return site;
+		String code = StringUtils.isNotBlank(siteCode) ? siteCode : Site.MAIN_SITE_CODE;
+		return CmsUtils.computeIfAbsentCache("site_" + code, k -> {
+			Site site = Static.siteService.get(code);
+			if (site == null) {
+				site = new Site(code);
 			}
-		}
-		return new Site(code);
+			return site;
+		});
 	}
 
 	/**
 	 * 获得站点列表
 	 */
 	public static List<Site> getSiteList() {
-		@SuppressWarnings("unchecked")
-		List<Site> siteList = (List<Site>) getCache("siteList");
-		if (siteList == null) {
-			siteList = Static.siteService.findList(new Site());
-			putCache("siteList", siteList);
-		}
-		return siteList;
+		return CmsUtils.computeIfAbsentCache("siteList", k ->
+				Static.siteService.findList(new Site()));
 	}
 
 	/**
@@ -83,26 +76,22 @@ public class CmsUtils {
 	 * @param siteCode 站点编号
 	 */
 	public static List<Category> getMainNavList(String siteCode) {
-		@SuppressWarnings("unchecked")
-		List<Category> mainNavList = (List<Category>) getCache("mainNavList_" + siteCode);
-		if (mainNavList == null) {
+		return CmsUtils.computeIfAbsentCache("mainNavList_" + siteCode, k -> {
 			Category category = new Category();
 			category.setSite(new Site(siteCode));
 			category.setParent(new Category(Category.ROOT_CODE));
 			category.setInMenu(Global.SHOW);
-			mainNavList = Static.categoryService.findList(category);
-			putCache("mainNavList_" + siteCode, mainNavList);
-		}
-		return mainNavList;
+			return Static.categoryService.findList(category);
+		});
 	}
 
 	/**
 	 * 获取栏目
 	 * @param categoryCode 栏目编号
-	 * @return
 	 */
 	public static Category getCategory(String categoryCode) {
-		return Static.categoryService.get(categoryCode);
+		return CmsUtils.computeIfAbsentCache("category_" + categoryCode, k ->
+				Static.categoryService.get(categoryCode));
 	}
 
 	/**
@@ -123,46 +112,49 @@ public class CmsUtils {
 		if (StringUtils.isBlank(siteCode) || StringUtils.isBlank(parentCode)) {
 			return ListUtils.newArrayList();
 		}
-		Page<Category> page = new Page<>(1, number, -1);
-		Category category = new Category();
-		category.setSite(new Site(siteCode));
-		category.setParentCode(parentCode);
-		Boolean isChildList = false; // 是否进行childList转换
-		if (StringUtils.isNotBlank(params)) {
-			@SuppressWarnings({ "rawtypes" })
-			Map map = JsonMapper.fromJson("{" + params.trim() + "}", Map.class);
+		String key = "categoryList_" + siteCode + "_" + parentCode + "_" + Md5Utils.md5(number + "_" + params);
+		return CmsUtils.computeIfAbsentCache(key, k -> {
+			Page<Category> page = new Page<>(1, number, -1);
+			Category category = new Category();
+			category.setSite(new Site(siteCode));
+			category.setParentCode(parentCode);
+			boolean isChildList = false; // 是否进行childList转换
+			if (StringUtils.isNotBlank(params)) {
+				@SuppressWarnings({ "rawtypes" })
+				Map map = JsonMapper.fromJson("{" + params.trim() + "}", Map.class);
 
-			// 获取的层级级别
-			String sortGrades = ObjectUtils.toString(map.get("sortGrades"));
-			if (StringUtils.isNotBlank(sortGrades)) {
+				// 获取的层级级别
+				String sortGrades = ObjectUtils.toString(map.get("sortGrades"));
+				if (StringUtils.isNotBlank(sortGrades)) {
 
-				// 如果设置了级别，则清理ParentCode，并使用ParentCodes进行查询
-				category.setParentCode(null);
+					// 如果设置了级别，则清理ParentCode，并使用ParentCodes进行查询
+					category.setParentCode(null);
 
-				// 如果是跟节点则不加入条件，代表查询全部，不是跟节点的时候获取指定节点的所有下级
-				if (!Category.ROOT_CODE.equals(parentCode)) {
-					category.setParentCodes("%," + parentCode + ",%");
+					// 如果是跟节点则不加入条件，代表查询全部，不是跟节点的时候获取指定节点的所有下级
+					if (!Category.ROOT_CODE.equals(parentCode)) {
+						category.setParentCodes("%," + parentCode + ",%");
+					}
+
+					// 增加获取层次级别条件
+					List<Integer> sortGradeList = ListUtils.newArrayList();
+					for (String s : StringUtils.splitComma(sortGrades)) {
+						sortGradeList.add(ObjectUtils.toInteger(s));
+					}
+					category.setSortGradeList(sortGradeList);
 				}
-
-				// 增加获取层次级别条件
-				List<Integer> sortGradeList = ListUtils.newArrayList();
-				for (String s : StringUtils.splitComma(sortGrades)) {
-					sortGradeList.add(ObjectUtils.toInteger(s));
-				}
-				category.setSortGradeList(sortGradeList);
+				// 是否进行childList转换
+				isChildList = ObjectUtils.toBoolean(map.get("isChildList"));
 			}
-			// 是否进行childList转换
-			isChildList = ObjectUtils.toBoolean(map.get("isChildList"));
-		}
-		category.setPage(page);
-		page = Static.categoryService.findPage(category);
-		// 进行childList转换
-		if (isChildList) {
-			List<Category> sourceList = page.getList();
-			List<Category> targetList = Static.categoryService.convertTreeList(sourceList, parentCode);
-			page.setList(targetList);
-		}
-		return page.getList();
+			category.setPage(page);
+			page = Static.categoryService.findPage(category);
+			// 进行childList转换
+			if (isChildList) {
+				List<Category> sourceList = page.getList();
+				List<Category> targetList = Static.categoryService.convertTreeList(sourceList, parentCode);
+				page.setList(targetList);
+			}
+			return page.getList();
+		});
 	}
 	
 	/**
@@ -237,8 +229,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得文章动态URL地址
-	 * @param article
-	 * @return url
 	 */
 	public static String getUrlDynamic(Article article) {
 		StringBuilder str = new StringBuilder();
@@ -259,8 +249,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得栏目动态URL地址
-	 * @param category
-	 * @return url
 	 */
 	public static String getUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
@@ -279,8 +267,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得站点动态URL地址
-	 * @param site
-	 * @return url
 	 */
 	public static String getUrlDynamic(Site site) {
 		StringBuilder str = new StringBuilder();
@@ -299,8 +285,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得栏目动态URL地址
-	 * @param category
-	 * @return url
 	 */
 	public static String getAdminUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
@@ -381,8 +365,6 @@ public class CmsUtils {
 
 	/**
 	 * 从图片地址中去除ContextPath地址
-	 * @param src
-	 * @return
 	 */
 	public static String formatImageSrcToDb(String src) {
 		if (StringUtils.isBlank(src)) {
@@ -397,8 +379,6 @@ public class CmsUtils {
 
 	/**
 	 * 从图片地址中加入ContextPath地址
-	 * @param src
-	 * @return
 	 */
 	public static String formatImageSrcToWeb(String src) {
 		if (StringUtils.isBlank(src)) {
@@ -413,8 +393,6 @@ public class CmsUtils {
 
 	/**
 	 * 获取文章视图
-	 * @param article
-	 * @return
 	 */
 	public static String getArticleView(Article article) {
 		if (StringUtils.isBlank(article.getCustomContentView())) {
@@ -441,8 +419,6 @@ public class CmsUtils {
 
 	/**
 	 * 视图配置属性设置
-	 * @param model
-	 * @param params
 	 */
 	public static void addViewConfigAttribute(Model model, String params) {
 		if (StringUtils.isNotBlank(params)) {
@@ -458,8 +434,6 @@ public class CmsUtils {
 
 	/**
 	 * 视图配置属性设置
-	 * @param model
-	 * @param category
 	 */
 	public static void addViewConfigAttribute(Model model, Category category) {
 		List<Category> categoryList = ListUtils.newArrayList();
@@ -481,33 +455,77 @@ public class CmsUtils {
 		}
 	}
 
+	/**
+	 * 获取站点服务
+	 */
 	public static SiteService getSiteService() {
 		return Static.siteService;
 	}
 
+	/**
+	 * 获取栏目服务
+	 */
 	public static CategoryService getCategoryService() {
 		return Static.categoryService;
 	}
 
+	/**
+	 * 获取文章服务
+	 */
 	public static ArticleService getArticleService() {
 		return Static.articleService;
 	}
 
+	/**
+	 * 获取缓存值
+	 * @param key 缓存键
+	 */
 	public static <V> V getCache(String key) {
 		return CacheUtils.get(CMS_CACHE, key);
 	}
 
+	/**
+	 * 获取缓存值
+	 * @param key 缓存键
+	 * @param defaultValue 默认值
+	 */
 	public static <V> V getCache(String key, V defaultValue) {
 		V value = CacheUtils.get(CMS_CACHE, key);
 		return value != null ? value : defaultValue;
 	}
 
+	/**
+	 * 设置缓存值
+	 * @param key 缓存键
+	 * @param value 缓存值
+	 */
 	public static void putCache(String key, Object value) {
 		CacheUtils.put(CMS_CACHE, key, value);
 	}
 
+	/**
+	 * 获取缓存，如果不存在，则设置新值
+	 * @param key 缓存键
+	 * @param mappingFunction 新值
+	 */
+	public static <V> V computeIfAbsentCache(String key, Function<String, V> mappingFunction) {
+		return CacheUtils.computeIfAbsent(CMS_CACHE, key, mappingFunction);
+	}
+
+	/**
+	 * 移除缓存值
+	 * @param key 缓存键
+	 */
 	public static void removeCache(String key) {
 		CacheUtils.remove(CMS_CACHE, key);
+	}
+
+	/**
+	 * 根据key前缀从缓存中移除
+	 * @param key 缓存键
+	 */
+	public static void removeCacheByKeyPrefix(String key) {
+		CacheUtils.removeByKeyPrefix(CMS_CACHE, key);
 	}
 
 }

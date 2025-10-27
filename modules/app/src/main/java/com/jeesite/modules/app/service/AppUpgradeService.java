@@ -22,8 +22,7 @@ public class AppUpgradeService extends CrudService<AppUpgradeDao, AppUpgrade> {
 	
 	/**
 	 * 获取单条数据
-	 * @param appUpgrade
-	 * @return
+	 * @param appUpgrade 主键
 	 */
 	@Override
 	public AppUpgrade get(AppUpgrade appUpgrade) {
@@ -34,7 +33,6 @@ public class AppUpgradeService extends CrudService<AppUpgradeDao, AppUpgrade> {
 	 * 查询分页数据
 	 * @param appUpgrade 查询条件
 	 * @param appUpgrade page 分页对象
-	 * @return
 	 */
 	@Override
 	public Page<AppUpgrade> findPage(AppUpgrade appUpgrade) {
@@ -43,7 +41,7 @@ public class AppUpgradeService extends CrudService<AppUpgradeDao, AppUpgrade> {
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param appUpgrade
+	 * @param appUpgrade 数据对象
 	 */
 	@Override
 	@Transactional
@@ -53,7 +51,7 @@ public class AppUpgradeService extends CrudService<AppUpgradeDao, AppUpgrade> {
 	
 	/**
 	 * 更新状态
-	 * @param appUpgrade
+	 * @param appUpgrade 数据对象
 	 */
 	@Override
 	@Transactional
@@ -63,7 +61,7 @@ public class AppUpgradeService extends CrudService<AppUpgradeDao, AppUpgrade> {
 	
 	/**
 	 * 删除数据
-	 * @param appUpgrade
+	 * @param appUpgrade 数据对象
 	 */
 	@Override
 	@Transactional

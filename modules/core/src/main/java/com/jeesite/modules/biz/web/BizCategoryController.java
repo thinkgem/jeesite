@@ -14,7 +14,6 @@ import com.jeesite.modules.biz.entity.BizCategory;
 import com.jeesite.modules.biz.service.BizCategoryService;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -37,9 +36,12 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}/biz/bizCategory")
 public class BizCategoryController extends BaseController {
 
-	@Autowired
-	private BizCategoryService bizCategoryService;
-	
+	private final BizCategoryService bizCategoryService;
+
+	public BizCategoryController(BizCategoryService bizCategoryService) {
+		this.bizCategoryService = bizCategoryService;
+	}
+
 	/**
 	 * 获取数据
 	 */
@@ -191,7 +193,6 @@ public class BizCategoryController extends BaseController {
 	 * @param excludeCode 排除的Code
 	 * @param parentCode 设置父级编码返回一级
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
 	 */
 	@RequiresPermissions("biz:bizCategory:view")
 	@RequestMapping(value = "treeData")

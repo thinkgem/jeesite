@@ -4,19 +4,17 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import java.util.Date;
 
 /**
  * 文章评论表Entity
@@ -45,7 +43,7 @@ public class Comment extends DataEntity<Comment> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Category category;// 分类编号
+	private Category category;		// 分类编号
 	
 	private String categoryCode;	// 栏目编码
 	private String articleId;		// 内容编号 （Article.id、Photo.id、Download.id）

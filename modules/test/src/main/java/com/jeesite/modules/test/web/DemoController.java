@@ -4,18 +4,16 @@
  */
 package com.jeesite.modules.test.web;
 
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.service.TestDataService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.test.entity.TestData;
-import com.jeesite.modules.test.service.TestDataService;
 
 /**
  * 演示实例Controller
@@ -26,9 +24,12 @@ import com.jeesite.modules.test.service.TestDataService;
 @RequestMapping(value = "${adminPath}/demo")
 public class DemoController extends BaseController {
 
-	@Autowired
-	private TestDataService testDataService;
-	
+	private final TestDataService testDataService;
+
+	public DemoController(TestDataService testDataService) {
+		this.testDataService = testDataService;
+	}
+
 	/**
 	 * 获取数据
 	 */

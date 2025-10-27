@@ -15,7 +15,6 @@ import com.jeesite.modules.sys.service.MenuService;
 import com.jeesite.modules.sys.service.ModuleService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,10 +41,13 @@ import java.util.Map;
 @ApiIgnore
 public class MenuController extends BaseController {
 
-	@Autowired
-	private MenuService menuService;
-	@Autowired
-	private ModuleService moduleService;
+	private final MenuService menuService;
+	private final ModuleService moduleService;
+
+	public MenuController(MenuService menuService, ModuleService moduleService) {
+		this.menuService = menuService;
+		this.moduleService = moduleService;
+	}
 
 	@ModelAttribute
 	public Menu get(String menuCode, boolean isNewRecord, HttpServletRequest request) {
@@ -202,7 +204,6 @@ public class MenuController extends BaseController {
 	 * 返回树结构数据
 	 * @param excludeCode 排除的编码
 	 * @param isShowRawName 是否显示原文（默认false）
-	 * @return
 	 */
 	@RequiresPermissions("sys:menu:view")
 	@RequestMapping(value = "treeData")

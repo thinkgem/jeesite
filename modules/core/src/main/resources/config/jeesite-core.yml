@@ -5,11 +5,11 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V5.13
+productVersion: V5.14
 copyrightYear: 2025
 
 #======================================#
-#========== Database sttings ==========#
+#========= Database settings ==========#
 #======================================#
 
 # 数据库连接
@@ -115,17 +115,21 @@ spring:
     
   # 打印横幅
   main:
-    bannerMode: "off"
+    banner-mode: "off"
+    lazy-initialization: true
 
 # 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
 #  level:
 #    root: warn
-#    com.jeesite: debug
+#    com.jeesite.modules: debug
 
 # MyBatis 相关
 mybatis:
+
+  # MyBatis 配置文件
+  #configLocation: /mybatis/mybatis-default.xml
 
   # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
   #scanBasePackage: com.jeesite.modules.**.dao
@@ -193,6 +197,10 @@ page:
   
   # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
   maxPageSize: 999
+
+# 基础配置（参数、模块、字典）
+config:
+  enabled: true
 
 # 用户相关
 user:
@@ -477,8 +485,8 @@ shiro:
   
   # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
   # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
-  rememberMe:
-    secretKey: ~
+  #rememberMe:
+  #  secretKey: ~
   
   # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
   remoteAddrHeaderName: X-Forwarded-For
@@ -624,16 +632,17 @@ j2cache:
     region:
       #[cacheName]: size, xxxx[s|m|h|d]
       default: 10000, 1h
+      sysCache: 100000, 365d
       sessionCache: 100000, 12h
     
   # 二级缓存
   redis:
     # 存储模式 （generic|hash）
     storage: hash
-    # 通知订阅的通道名
-    channel: jeesite
     # 缓存命名空间名
     namespace: jeesite
+    # 通知订阅的通道名
+    channel: ${j2cache.redis.namespace}
     # 消息监听器
     #listener:
     #  taskPool:
@@ -649,6 +658,15 @@ j2cache:
     # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
     # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
     cache_clean_mode: passive
+
+# 锁管理器（支持本地锁和分布式锁，当isClusterMode开启时，自动使用分布式锁）
+lockManager:
+  # 分布式锁
+  redis:
+    # 锁名称前缀（多系统共用Redis时修改）
+    keyPrefix: ${j2cache.redis.namespace}:lockKey
+    # 检查锁的等待毫秒数
+    sleepMillis: 100
 
 # Web 相关
 web:
@@ -774,7 +792,7 @@ file:
   # 设置允许上传的文件后缀（全局设置）
   imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,.webp,
   mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
-  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.ofd,.vsd,.txt,.md,.xml,.rar,.zip,.7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.ipa,.apk,
+  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.ofd,.vsd,.txt,.md,.xml,.rar,.zip,.7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.dmg,.ipa,.apk,
   
   # 允许上传的文件内容类型（图片、word、excel、ppt）防止修改后缀恶意上传文件（默认不启用验证）
 #  allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
@@ -792,7 +810,6 @@ file:
   
   # 是否启用秒传
   checkmd5: true
-  
   # 是否开启分片上传
   chunked: true
   # 分片大小，单位字节（10M）

@@ -13,6 +13,8 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -31,6 +33,8 @@ import java.util.Map.Entry;
  * @version 2014-8-19
  */
 public class ServletUtils {
+
+	private static final Logger logger = LoggerFactory.getLogger(ServletUtils.class);
 
 	public static final String EXT_PARAMS_PREFIX = "param_";	// 扩展参数前缀
 	
@@ -107,7 +111,7 @@ public class ServletUtils {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -121,7 +125,7 @@ public class ServletUtils {
 				throw new Exception("检测到“application.yml”中没有配置“web.staticFile”属性。配置示例：\n#静态文件后缀\nweb.staticFile=" +
 						".css,.js,.map,.png,.jpg,.gif,.jpeg,.webp,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2");
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 		if (StringUtils.containsAny(uri, STATIC_FILE_EXCLUDE_URI)) {
@@ -363,7 +367,7 @@ public class ServletUtils {
 			}
 			response.getWriter().print(string);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}

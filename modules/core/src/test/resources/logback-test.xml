@@ -3,7 +3,7 @@
 	
 	<!-- Logger level setting -->
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
-	<include resource="config/logger-core.xml"/>
+	<include resource="config/logger-default.xml" />
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

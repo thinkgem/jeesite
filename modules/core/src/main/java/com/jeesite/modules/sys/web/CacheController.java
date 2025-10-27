@@ -1,20 +1,20 @@
 package com.jeesite.modules.sys.web;
 
-import javax.annotation.PostConstruct;
-
-import io.swagger.annotations.Api;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.MapperHelper;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.UserUtils;
+import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.PostConstruct;
 
 /**
  * 缓存管理
@@ -22,13 +22,13 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 20167-8-27
  */
 @Controller
+@Lazy(false)
 @Api(tags = "Cache - 缓存管理")
 @RequestMapping(value = "${adminPath}/sys/cache")
 public class CacheController extends BaseController {
 
 	/**
 	 * 清理全部缓存，可清理属性文件里的缓存
-	 * @return
 	 */
 	@RequiresPermissions(value={"sys:config:edit", "sys:state:cache"}, logical=Logical.OR)
 	@RequestMapping(value = "clearAll")
@@ -40,15 +40,19 @@ public class CacheController extends BaseController {
 		UserUtils.clearCache();
 		return renderResult(Global.TRUE, text("清理缓存成功"));
 	}
-	
+
 	@PostConstruct
-	public void postConstruct(){
-		String rebel = System.getProperty("rebel.base");
-		if (StringUtils.isNotBlank(rebel) && Global
-				.getPropertyToBoolean("spring.cache.isClusterMode", "false")){
+	public void postConstruct() throws Exception {
+		// 如果使用了 JRebel 插件，则清理缓存
+		if (StringUtils.isNotBlank(System.getProperty("rebel.base")) && Global.getPropertyToBoolean("spring.cache.isClusterMode", "false")){
 			logger.info("JRebel: Cache clear...");
 			CacheUtils.clearCache();
+		}
+		// 则开启了租户参数，但无法使用，则给予提示
+		if (!Global.isUseCorpModel().equals(Global.getPropertyToBoolean("user.useCorpModel", "false"))){
+			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，似乎你的当前版本不是JeeSite专业版。\n");
 		}
 	}
 
 }
+

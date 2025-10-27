@@ -25,7 +25,7 @@ public class FileTemplateService {
 
 	/**
 	 * 获取对应视图模板列表，兼容 Select 字典
-	 * @param prefix
+	 * @param prefix 路径前缀
 	 */
 	public List<DictData> getTemplateContentDict(String prefix) throws IOException {
 		List<DictData> listSite = ListUtils.newArrayList();

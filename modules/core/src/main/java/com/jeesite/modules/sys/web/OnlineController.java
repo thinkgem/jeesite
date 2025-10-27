@@ -20,7 +20,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 在线用户Controller
@@ -42,15 +43,18 @@ import java.util.*;
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class OnlineController extends BaseController{
 
-	@Autowired
-	private SessionDAO sessionDAO;
+	private final SessionDAO sessionDAO;
+
+	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+	public OnlineController(SessionDAO sessionDAO) {
+		this.sessionDAO = sessionDAO;
+	}
 
 	/**
 	 * 在线用户数
-	 * @param request
-	 * @param response
 	 * @author ThinkGem
 	 */
+	@RequiresPermissions("user")
 	@RequestMapping(value = "count")
 	@ResponseBody
 	public Integer count(HttpServletRequest request, HttpServletResponse response) {
@@ -60,7 +64,6 @@ public class OnlineController extends BaseController{
 
 	/**
 	 * 在线用户列表
-	 * @param model
 	 */
 	@RequiresPermissions("sys:online:view")
 	@RequestMapping(value = "list")
@@ -158,7 +161,7 @@ public class OnlineController extends BaseController{
 			if (pc instanceof PrincipalCollection){
 				Object pp = ((PrincipalCollection)pc).getPrimaryPrincipal();
 				if (pp instanceof LoginInfo){
-					LoginInfo loginInfo = ((LoginInfo)pp);
+					LoginInfo loginInfo = (LoginInfo)pp;
 					String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
 					onlineTickOutMap.put(key, StringUtils.EMPTY);
 				}

@@ -24,11 +24,9 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -41,21 +39,14 @@ import java.util.List;
 public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		implements EmpUserService{
 
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private EmployeeService employeeService;
-	@Autowired
-	private EmployeeOfficeDao employeeOfficeDao;
-	
-	/**
-	 * 租户功能验证
-	 */
-	@PostConstruct
-	private void corpModelValid() throws Exception{
-		if (!Global.isUseCorpModel().equals(Global.getPropertyToBoolean("user.useCorpModel", "false"))){
-			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，似乎你的当前版本不是JeeSite专业版。\n");
-		}
+	protected final UserService userService;
+	protected final EmployeeService employeeService;
+	protected final EmployeeOfficeDao employeeOfficeDao;
+
+	public EmpUserServiceSupport(UserService userService, EmployeeService employeeService, EmployeeOfficeDao employeeOfficeDao) {
+		this.userService = userService;
+		this.employeeService = employeeService;
+		this.employeeOfficeDao = employeeOfficeDao;
 	}
 	
 	/**

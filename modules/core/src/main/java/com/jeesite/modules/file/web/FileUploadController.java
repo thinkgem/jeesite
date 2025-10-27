@@ -10,7 +10,6 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.file.entity.FileUploadParams;
 import com.jeesite.modules.file.service.FileUploadService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +32,12 @@ import java.util.Map;
 @ConditionalOnProperty(name={"file.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class FileUploadController extends BaseController {
 
-	@Autowired
-	private FileUploadService fileUploadService;
-	
+	private final FileUploadService fileUploadService;
+
+	public FileUploadController(FileUploadService fileUploadService) {
+		this.fileUploadService = fileUploadService;
+	}
+
 	/**
 	 * 上传文件参数
 	 */
@@ -43,14 +45,19 @@ public class FileUploadController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> params() {
 		Map<String, Object> model = MapUtils.newHashMap();
+		model.put("maxFileSize", Global.getConfigToLong("file.maxFileSize", "500*1024*1024"));
+
 		model.put("imageAllowSuffixes", Global.getConfig("file.imageAllowSuffixes", FileUploadParams.DEFAULT_IMAGE_ALLOW_SUFFIXES));
 		model.put("mediaAllowSuffixes", Global.getConfig("file.mediaAllowSuffixes", FileUploadParams.DEFAULT_MEDIA_ALLOW_SUFFIXES));
 		model.put("fileAllowSuffixes", Global.getConfig("file.fileAllowSuffixes", FileUploadParams.DEFAULT_FILE_ALLOW_SUFFIXES));
-		model.put("chunked", Global.getConfig("file.chunked", "true"));
-		model.put("chunkSize", Global.getConfigToInteger("file.chunkSize", "10*1024*1024"));
-		model.put("threads", Global.getConfigToInteger("file.threads", "3"));
+
 		model.put("imageMaxWidth", Global.getConfigToInteger("file.imageMaxWidth", "1024"));
 		model.put("imageMaxHeight", Global.getConfigToInteger("file.imageMaxHeight", "768"));
+
+		model.put("checkmd5", Global.getConfigToBoolean("file.checkmd5", "true"));
+		model.put("chunked", Global.getConfigToBoolean("file.chunked", "true"));
+		model.put("chunkSize", Global.getConfigToInteger("file.chunkSize", "10*1024*1024"));
+		model.put("threads", Global.getConfigToInteger("file.threads", "3"));
 		return model;
 	}
 	

@@ -65,16 +65,13 @@ spring:
         
     # 服务注册和配置
     nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
       discovery:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
         group: jeesite-cloud
       config:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
         file-extension: yml
         group: jeesite-cloud-yml
@@ -88,12 +85,13 @@ spring:
 
   # 打印横幅
   main:
-    bannerMode: "off"
-    allow-bean-definition-overriding: true
+    banner-mode: "off"
+    lazy-initialization: true
     
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
+<% %>
 ]]>
 	</content>
 </template>

@@ -4,7 +4,6 @@
  */
 package com.jeesite.common.io;
 
-import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.lang.ExceptionUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -14,6 +13,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 资源供给类
@@ -53,9 +53,7 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	
 	/**
 	 * 获取资源文件流（用后记得关闭）
-	 * @param location
 	 * @author ThinkGem
-	 * @throws IOException 
 	 */
 	public static InputStream getResourceFileStream(String location) throws IOException{
 		Resource resource = resourceLoader.getResource(location);
@@ -64,12 +62,11 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	
 	/**
 	 * 获取资源文件内容
-	 * @param location
 	 * @author ThinkGem
 	 */
 	public static String getResourceFileContent(String location){
 		try(InputStream is = ResourceUtils.getResourceFileStream(location)){
-			return IOUtils.toString(is, EncodeUtils.UTF_8);
+			return IOUtils.toString(is, StandardCharsets.UTF_8);
 		}catch (IOException e) {
 			throw ExceptionUtils.unchecked(e);
 		}
@@ -77,13 +74,11 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	
 	/**
 	 * Spring 搜索资源文件
-	 * @param locationPattern
 	 * @author ThinkGem
 	 */
 	public static Resource[] getResources(String locationPattern){
 		try {
-			Resource[] resources = resourceResolver.getResources(locationPattern);
-			return resources;
+			return resourceResolver.getResources(locationPattern);
 		} catch (IOException e) {
 			throw ExceptionUtils.unchecked(e);
 		}

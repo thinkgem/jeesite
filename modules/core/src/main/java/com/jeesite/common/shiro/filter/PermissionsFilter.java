@@ -9,15 +9,15 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.common.web.http.wrapper.GetHttpServletRequestWrapper;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -34,10 +34,6 @@ public class PermissionsFilter extends org.apache.shiro.web.filter.authz.Permiss
 	
 	/**
 	 * 无访问权限时，跳转到403页面
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws IOException
 	 * @author ThinkGem
 	 */
 	public static boolean redirectTo403Page(ServletRequest request, ServletResponse response) throws IOException {

@@ -41,19 +41,20 @@ public class FastApplication extends SpringBootServletInitializer {
 		String ctxPath = Global.getProperty("server.servlet.context-path");
 		if (StringUtils.isNoneBlank(vuePath, ctxPath)) {
 			logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   提示：您修改了 server.servlet.context-path 参数，需要您"
-				+ "\r\n   同步修改 _app.config.js 中的 VITE_GLOB_API_URL_PREFIX 参数 "
-				+ "\r\n   请修改为 VITE_GLOB_API_URL_PREFIX=\"" + ctxPath + "\""
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   提示：您修改了 server.servlet.context-path 参数，需要您"
+				+ "\n   同步修改 _app.config.js 中的 VITE_GLOB_API_URL_PREFIX 参数 "
+				+ "\n   请修改为 VITE_GLOB_API_URL_PREFIX=\"{}\" 并重新打包 Vue\n"
+				+ "\n==============================================================\n",
+				ctxPath);
 		}
 		logger.info(
-				"\r\n\r\n==============================================================\r\n"
-				+ "\r\n   启动完成，访问地址：http://127.0.0.1:"
-				+ Global.getProperty("server.port") + FileUtils.path("/"
-				+ Global.getProperty("server.servlet.context-path"))
-				+ "\r\n\r\n   默认管理账号： system   密码： admin"
-				+ "\r\n\r\n==============================================================\r\n");
+				"\n\n==============================================================\n"
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}\n"
+				+ "\n   默认管理账号： system   密码： admin\n"
+				+ "\n==============================================================\n",
+				Global.getProperty("server.port") + FileUtils.path("/"
+				+ Global.getProperty("server.servlet.context-path")));
 	}
 	
 	@Override

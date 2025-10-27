@@ -59,7 +59,6 @@ public class IpUtils {
 	 * 172.16.0.0/12：172.16.0.0～172.31.255.255
 	 * 192.168.0.0/16：192.168.0.0～192.168.255.255
 	 * @param ip 地址
-	 * @return
 	 */
 	public static boolean isInternalAddr(String ip) {
 

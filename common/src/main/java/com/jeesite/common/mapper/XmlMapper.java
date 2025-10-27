@@ -4,8 +4,8 @@
  */
 package com.jeesite.common.mapper;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.jeesite.common.io.PropertiesUtils;
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import java.util.TimeZone;
  * @version 2016-9-2
  */
 public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(XmlMapper.class);
@@ -36,11 +36,17 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	 * 构造方法
 	 */
 	public XmlMapper() {
+		PropertiesUtils props = PropertiesUtils.getInstance();
+		// 设置默认语言环境
+		props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
+			this.setLocale(LocaleUtils.toLocale(defaultLocale));
+		});
+		// 设置默认时区
+		props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
+			this.setTimeZone(TimeZone.getTimeZone(defaultTimeZone));
+		});
 		// Spring ObjectMapper 初始化配置，支持 @JsonView
 		new Jackson2ObjectMapperBuilder().configure(this);
-		// 设置默认时区
-		this.setTimeZone(TimeZone.getTimeZone(PropertiesUtils.getInstance()
-				.getProperty("lang.defaultTimeZone", "GMT+08:00")));
 	}
 	
 	/**
@@ -50,7 +56,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 		try {
 			return this.writeValueAsString(object);
 		} catch (IOException e) {
-			logger.warn("write to xml string error:" + object, e);
+			logger.warn("write to xml string error: {}", object, e);
 			return null;
 		}
 	}
@@ -62,14 +68,14 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 		try {
 			return this.writerWithView(jsonView).writeValueAsString(object);
 		} catch (IOException e) {
-			logger.warn("write to xml string error:" + object, e);
+			logger.warn("write to xml string error: {}", object, e);
 			return null;
 		}
 	}
 	
 	/**
 	 * 反序列化POJO或简单Collection如List<String>.
-	 * @see #fromJson(String, JavaType)
+	 * @see #fromXml(String, Class)
 	 */
 	public <T> T fromXmlString(String xmlString, Class<T> clazz) {
 		if (StringUtils.isEmpty(xmlString) || "<CLOB>".equals(xmlString)) {
@@ -78,7 +84,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 		try {
 			return this.readValue(xmlString, clazz);
 		} catch (IOException e) {
-			logger.warn("parse xml string error:" + xmlString, e);
+			logger.warn("parse xml string error: {}", xmlString, e);
 			return null;
 		}
 	}
