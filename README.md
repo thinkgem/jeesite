@@ -118,20 +118,8 @@
 * 架构特点：<https://jeesite.com/docs/feature/>
 * 参数配置：<https://jeesite.com/docs/config/>
 * 开发规范：<https://jeesite.com/docs/standard/>
+* 数表设计：<https://jeesite.com/docs/treetable/>
 * 代码生成：<https://jeesite.com/docs/code-gen/>
-
-## 生态系统
-
-* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
-* Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
-* 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
-* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
-* PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
-* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
-* JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
-* Mybatis-Plus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
-* Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
-* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
 
 ## 快速体验
 
@@ -186,9 +174,9 @@ docker logs -f js5
 3. 分离端运行文档：<https://jeesite.com/docs/vue-install-deploy/>
 4. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
-## 技术文章
+## 学习文档
 
-* 库表生成、代码生成：https://jeesite.com/docs/code-gen/>
+* 库表生成、代码生成：<https://jeesite.com/docs/code-gen/>
 * 菜单权限、按钮权限：<https://jeesite.com/docs/permi-shiro/>
 * 数据权限、库事务：<https://jeesite.com/docs/service-datascope/#数据权限>
 * 表结构、数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
@@ -215,36 +203,34 @@ docker logs -f js5
 * 常用工具：<https://jeesite.com/docs/jeesite-js/>
 * 自定义主题：<https://jeesite.com/docs/custom-views/>
 
-## 专题文章
+## 更多文档
 
-* 系统接口文档：<https://jeesite.com/docs/mobile-rest-api/>
-* 多语言国际化：<https://jeesite.com/docs/i18n-locale/>
-* BPM工作流引擎：<https://jeesite.com/docs/bpm/>
-* CMS内容管理：<https://jeesite.com/docs/cms/>
-* AI知识库助手：<https://jeesite.com/docs/cms-ai/>
-* 用户类型：<https://jeesite.com/docs/user-type/>
-* 消息推送：<https://jeesite.com/docs/msg-push-use/>
-* 单点登录：<https://jeesite.com/docs/sso-cas/>
+* AI、CMS、RAG、Tool、MCP 人工智能助手：<https://jeesite.com/docs/ai-cms>
+* BPM 业务流程引擎（Flowable）：<http://jeesite.com/docs/bpm/>
+* CMS 多站点内容管理模块：<https://jeesite.com/docs/cms/>
+
+* 消息推送消息提醒：<https://jeesite.com/docs/msg-push-use/>
+* 对象存储模块：<https://jeesite.com/docs/oss-client>
+* 单点登录模块：<https://jeesite.com/docs/sso-cas>
 * 在线任务调度：<https://jeesite.com/docs/job/>
-* 对象存储：<https://jeesite.com/docs/oss-client/>
+
 * 大屏设计器：<https://jeesite.com/docs/visual/>
 * 报表设计器：<https://jeesite.com/docs/ureport/>
+* 文件管理分享：<https://jeesite.com/docs/filemanager/>
 * 文件在线预览：<https://jeesite.com/docs/filepreview/>
-* 三员管理员：<https://jeesite.com/docs/manager3/>
-* 手机端框架：<https://jeesite.com/docs/uniapp/>
-* 统一认证服务：<https://jeesite.com/docs/oauth2-server/>
-* 树表结构设计：<https://jeesite.com/docs/tree-table-use/>
 
-## 云服务架构
-
-* 多租户、SaaS服务：<https://jeesite.com/docs/saas-corp-use/>
-* 集群、负载均衡、高可用：<https://jeesite.com/docs/cluster/>
-* Spring Cloud 微服务：<https://jeesite.com/docs/springcloud/>
-* 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
-* 读写分离、分库分表：<https://jeesite.com/docs/sharding/>
-* 监控系统集成：<https://jeesite.com/docs/webadmin/>
+* 集群、高可用架构：<https://jeesite.com/docs/cluster/>
+* SaaS 多租户架构：<https://jeesite.com/docs/saas-corp-use/>
+* 读写分离分片分表：<https://jeesite.com/docs/sharding/>
+* Spring监控系统：<https://jeesite.com/docs/webadmin/>
+* 分布式跨应用事务：<https://jeesite.com/docs/seata/>
 * 追踪系统集成：<https://jeesite.com/docs/skywalking/>
-* ELK日志收集：<https://jeesite.com/docs/elk-log/>
+* ELK 日志收集：<https://jeesite.com/docs/elk-log/>
+
+* MybatisPlus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* 接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+* 统一认证平台：<https://jeesite.com/docs/oauth2-server>
 
 ## 授权协议声明
 
