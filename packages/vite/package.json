@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/vite",
-  "version": "5.14.0-dev",
+  "version": "5.14.0",
   "private": true,
   "type": "module",
   "scripts": {
