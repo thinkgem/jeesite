@@ -51,13 +51,18 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, toRefs, unref, computed, useAttrs } from 'vue';
+  /**
+   * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law.
+   * @author ThinkGem
+   */
+  import { ref, unref, computed } from 'vue';
   import { Upload, Alert } from 'ant-design-vue';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   // import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import FileList from './FileList.vue';
   import { uploadProps } from './props';
-  import { useUploadType } from './useUpload';
+  import { useUpload } from './useUpload';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { FileItem, UploadResultStatus } from './typing';
   import { createTableColumns, createActionColumn } from './data';
@@ -73,20 +78,12 @@
   const props = defineProps(uploadProps);
   const emit = defineEmits(['change', 'register', 'delete']);
 
-  const { uploadType, accept, helpText, maxNumber, maxSize, directory } = toRefs(props);
   const { t } = useI18n();
   const [register, { closeModal }] = useModalInner();
-  const { filePreview } = useGlobSetting();
   const fileItemList = ref<FileItem[]>([]);
   const uploading = ref(false);
 
-  const { getStringAccept, getHelpText } = useUploadType({
-    uploadTypeRef: uploadType,
-    acceptRef: accept,
-    helpTextRef: helpText,
-    maxNumberRef: maxNumber,
-    maxSizeRef: maxSize,
-  });
+  const { getStringAccept, getHelpText, getMaxFileSize, getUploadParams } = useUpload(props);
 
   const { createMessage } = useMessage();
 
@@ -115,20 +112,21 @@
   // 上传前校验
   function beforeUpload(file: File) {
     const { size, name } = file;
-    const { maxSize, bizKey, bizType, uploadType } = props;
+    const { bizKey, bizType, uploadType } = props;
     // 设置最大值，则判断
-    if (maxSize && file.size / 1024 / 1024 >= maxSize) {
-      createMessage.error(t('component.upload.maxSizeMultiple', [maxSize]));
+    if (file.size >= unref(getMaxFileSize)) {
+      createMessage.error(t('component.upload.maxSizeMultiple', [unref(getMaxFileSize) / 1024 / 1024]));
       return false;
     }
+    const id = buildUUID();
     const commonItem = {
-      id: buildUUID(),
+      id,
       file,
       size,
       name,
       percent: 0,
       type: name.split('.').pop(),
-      fileMd5: buildUUID(), // 专业版支持 MD5 秒传
+      fileMd5: id,
       fileName: name,
       fileUploadId: '',
       fileEntityId: '',
@@ -136,21 +134,24 @@
       bizType,
       uploadType,
     } as FileItem;
-    // 生成图片缩略图
-    if (checkImgType(file)) {
-      getBase64WithFile(file).then(({ result: fileUrl }) => {
-        addFileItem({
-          fileUrl,
-          ...commonItem,
+    function addFileItem() {
+      // 生成图片缩略图
+      if (checkImgType(file)) {
+        getBase64WithFile(file).then(({ result: fileUrl }) => {
+          addFileItemList({
+            fileUrl,
+            ...commonItem,
+          });
         });
-      });
-    } else {
-      addFileItem(commonItem);
+      } else {
+        addFileItemList(commonItem);
+      }
     }
+    addFileItem();
     return false;
   }
 
-  function addFileItem(record: FileItem) {
+  function addFileItemList(record: FileItem) {
     const { maxNumber } = props;
     if (fileItemList.value.length + (props.previewFileList?.length || 0) >= maxNumber) {
       createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
@@ -174,54 +175,17 @@
     }
   }
 
+  // 开始上传文件
   async function uploadApiByItem(item: FileItem) {
-    const { checkmd5, api } = props;
+    const { api } = props;
     if (!api || !isFunction(api)) {
       return warn('upload api must exist and be a function');
     }
+
     try {
       item.status = UploadResultStatus.UPLOADING;
-      if (checkmd5) {
-        const data = await api(
-          {
-            bizKey: item.bizKey,
-            bizType: item.bizType,
-            fileMd5: item.fileMd5,
-            fileName: item.fileName,
-          },
-          () => {},
-          props.apiUploadUrl,
-        );
-        if (data.result == 'true') {
-          item.percent = 100;
-          item.responseData = data;
-        } else {
-          item.fileUploadId = data.fileUploadId;
-          item.fileEntityId = data.fileEntityId;
-        }
-      }
       if (item.percent != 100) {
-        const { data } = await api(
-          {
-            bizKey: item.bizKey,
-            bizType: item.bizType,
-            uploadType: item.uploadType,
-            fileMd5: item.fileMd5,
-            fileName: item.fileName,
-            fileUploadId: item.fileUploadId,
-            fileEntityId: item.fileEntityId,
-            imageMaxWidth: props.imageMaxWidth || '',
-            imageMaxHeight: props.imageMaxHeight || '',
-            ...(props.uploadParams || {}),
-            file: item.file,
-          },
-          (progressEvent: ProgressEvent) => {
-            const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-            item.percent = complete;
-          },
-          props.apiUploadUrl,
-        );
-        item.responseData = data;
+        await uploadFile(item);
       }
       item.status = UploadResultStatus.SUCCESS;
       return {
@@ -235,6 +199,36 @@
         success: false,
         error: e,
       };
+    }
+  }
+
+  // 上传文件
+  async function uploadFile(item: FileItem) {
+    const { api } = props;
+    try {
+      const params = unref(getUploadParams);
+      const { data } = await api(
+        {
+          bizKey: item.bizKey,
+          bizType: item.bizType,
+          uploadType: item.uploadType,
+          fileMd5: item.fileMd5,
+          fileName: item.fileName,
+          fileUploadId: item.fileUploadId,
+          fileEntityId: item.fileEntityId,
+          imageMaxWidth: params.imageMaxWidth || '',
+          imageMaxHeight: params.imageMaxHeight || '',
+          ...(props.uploadParams || {}),
+          file: item.file,
+        },
+        (progressEvent: ProgressEvent) => {
+          item.percent = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+        },
+        props.apiUploadUrl,
+      );
+      item.responseData = data;
+    } catch (e) {
+      throw e;
     }
   }
 

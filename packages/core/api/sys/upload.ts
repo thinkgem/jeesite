@@ -37,14 +37,16 @@ export interface FileUpload extends BasicModel<FileUpload> {
   fileUrl?: string;
 }
 export interface UploadParams {
+  maxFileSize: number;
   imageAllowSuffixes: string;
   mediaAllowSuffixes: string;
   fileAllowSuffixes: string;
+  imageMaxWidth?: number;
+  imageMaxHeight?: number;
+  checkmd5?: boolean;
   chunked?: boolean;
   chunkSize?: number;
   threads?: number;
-  imageMaxWidth?: number;
-  imageMaxHeight?: number;
 }
 
 /**

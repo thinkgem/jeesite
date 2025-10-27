@@ -1,54 +1,66 @@
-import { Ref, unref, computed, onMounted, ref } from 'vue';
-import { uploadParams } from '@jeesite/core/api/sys/upload';
+import { computed, ComputedRef, onMounted, Ref, ref, ToRefs, unref } from 'vue';
+import { UploadParams, uploadParams } from '@jeesite/core/api/sys/upload';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-const { t } = useI18n();
 
-export function useUploadType({
-  uploadTypeRef,
-  acceptRef,
-  helpTextRef,
-  maxNumberRef,
-  maxSizeRef,
-}: {
-  uploadTypeRef: Ref<string>;
-  acceptRef: Ref<string[]>;
-  helpTextRef: Ref<string>;
-  maxNumberRef: Ref<number>;
-  maxSizeRef: Ref<number>;
-}) {
-  const imageAllowSuffixes = ref<string[]>([]);
-  const mediaAllowSuffixes = ref<string[]>([]);
-  const fileAllowSuffixes = ref<string[]>([]);
-  const allowSuffixes = ref<string[]>([]);
+export function useUpload(props: any) {
+  const { t } = useI18n();
+
+  const uploadParamsRef = ref<UploadParams>({} as any);
 
   onMounted(async () => {
-    const params = await uploadParams();
-    imageAllowSuffixes.value = params.imageAllowSuffixes.split(',');
-    mediaAllowSuffixes.value = params.mediaAllowSuffixes.split(',');
-    fileAllowSuffixes.value = params.fileAllowSuffixes.split(',');
-    allowSuffixes.value = [...unref(imageAllowSuffixes), ...unref(mediaAllowSuffixes), ...unref(fileAllowSuffixes)];
+    uploadParamsRef.value = await uploadParams();
+  });
+
+  const getUploadParams = computed(() => {
+    const params = unref(uploadParamsRef);
+    if (props.checkmd5 != null) {
+      params.checkmd5 = props.checkmd5;
+    }
+    if (props.imageMaxWidth) {
+      params.imageMaxWidth = props.imageMaxWidth;
+    }
+    if (props.imageMaxHeight) {
+      params.imageMaxHeight = props.imageMaxHeight;
+    }
+    return params;
+  });
+
+  // 上传最大文件大小（字节）
+  const getMaxFileSize = computed(() => {
+    const maxSize = props.maxSize;
+    if (maxSize) {
+      return maxSize * 1024 * 1024;
+    } else {
+      const { maxFileSize } = unref(uploadParamsRef);
+      if (maxFileSize) {
+        return maxFileSize;
+      }
+    }
+    return 500 * 1024 * 1024;
   });
 
   // 文件类型限制
   const getAccept = computed(() => {
-    const accept = unref(acceptRef);
+    const accept = props.accept;
     if (accept && accept.length > 0) {
       return accept;
     }
-    const uploadType = unref(uploadTypeRef);
+    const { imageAllowSuffixes, mediaAllowSuffixes, fileAllowSuffixes } = unref(uploadParamsRef);
+    const uploadType = props.uploadType;
     if (uploadType == 'image') {
-      return unref(imageAllowSuffixes);
+      return imageAllowSuffixes.split(',');
     } else if (uploadType == 'media') {
-      return unref(mediaAllowSuffixes);
+      return mediaAllowSuffixes.split(',');
     } else if (uploadType == 'file') {
-      return unref(fileAllowSuffixes);
+      return fileAllowSuffixes.split(',');
     } else {
-      return unref(allowSuffixes);
+      return [...imageAllowSuffixes.split(','), ...mediaAllowSuffixes.split(','), ...fileAllowSuffixes.split(',')];
     }
   });
 
+  // 文件类型限制（文件选择框类型）
   const getStringAccept = computed(() => {
-    const accept = unref(getAccept)
+    return unref(getAccept)
       .map((item: any) => {
         if (item.indexOf('/') > 0 || item.startsWith('.')) {
           return item;
@@ -57,32 +69,32 @@ export function useUploadType({
         }
       })
       .join(',');
-    return accept;
   });
 
-  // 支持jpg、jpeg、png格式，不超过2M，最多可选择10张图片，。
+  // 支持jpg、jpeg、png格式，不超过2M，最多可选择10张图片
   const getHelpText = computed(() => {
-    const helpText = unref(helpTextRef);
+    const helpText = props.helpText;
     if (helpText) {
       return helpText;
     }
     const helpTexts: string[] = [];
 
-    const accept = unref(acceptRef);
+    const accept = props.accept;
     if (accept.length > 0) {
       helpTexts.push(t('component.upload.accept', [accept.join(',')]));
     }
 
-    const maxSize = unref(maxSizeRef);
+    const maxSize = unref(getMaxFileSize);
     if (maxSize) {
-      helpTexts.push(t('component.upload.maxSize', [maxSize]));
+      helpTexts.push(t('component.upload.maxSize', [maxSize / 1024 / 1024]));
     }
 
-    const maxNumber = unref(maxNumberRef);
+    const maxNumber = props.maxNumber;
     if (maxNumber && maxNumber !== Infinity) {
       helpTexts.push(t('component.upload.maxNumber', [maxNumber]));
     }
     return helpTexts.join('，');
   });
-  return { getAccept, getStringAccept, getHelpText };
+
+  return { getUploadParams, getMaxFileSize, getAccept, getStringAccept, getHelpText };
 }

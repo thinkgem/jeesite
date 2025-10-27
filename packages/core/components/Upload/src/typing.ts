@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
 import { UploadApiResult } from '@jeesite/core/api/sys/upload';
 
 export enum UploadResultStatus {
@@ -25,6 +30,7 @@ export interface FileItem {
   imageMaxWidth?: string | number;
   imageMaxHeight?: string | number;
   fileUrl?: string;
+  uploadInfo?: string;
 }
 
 // export interface PreviewFileItem extends FileItem {

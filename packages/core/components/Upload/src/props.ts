@@ -7,6 +7,11 @@ import { DEFAULT_SIZE } from '@jeesite/core/components/Table/src/const';
 
 type UploadType = 'image' | 'media' | 'file' | 'all';
 
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
 const { ctxAdminPath } = useGlobSetting();
 
 export const basicProps = {
@@ -21,7 +26,7 @@ export const basicProps = {
   // 文件最大多少MB
   maxSize: {
     type: Number as PropType<number>,
-    default: 50,
+    default: null, // 默认从后台获取
   },
   // 最大数量的文件，Infinity不限制
   maxNumber: {
@@ -48,11 +53,6 @@ export const basicProps = {
   disabled: {
     type: Boolean as PropType<boolean>,
     default: false,
-  },
-  // 秒传功能（标准版/专业版）
-  checkmd5: {
-    type: Boolean as PropType<boolean>,
-    default: true,
   },
   api: {
     type: Function as PropType<PromiseFn>,
@@ -93,15 +93,37 @@ export const basicProps = {
   // 图片压缩最大宽度
   imageMaxWidth: {
     type: Number as PropType<number>,
+    default: null, // 默认从后台获取
   },
   // 图片压缩最大高度
   imageMaxHeight: {
     type: Number as PropType<number>,
+    default: null, // 默认从后台获取
   },
   // 如果开启了图片缩略图，这里可以指定缩略图名称，例如：150x150.jpg  v5.4.2
   imageThumbName: {
     type: String as PropType<string>,
     default: '',
+  },
+  // 是否启用秒传（标准版/专业版）
+  checkmd5: {
+    type: Boolean as PropType<boolean>,
+    default: null, // 默认从后台获取
+  },
+  // 是否开启分片上传（标准版/专业版）
+  chunked: {
+    type: Boolean as PropType<boolean>,
+    default: null, // 默认从后台获取
+  },
+  // 分片大小（字节）（标准版/专业版）
+  chunkSize: {
+    type: Number as PropType<number>,
+    default: null, // 默认从后台获取
+  },
+  // 最大上传线程数（标准版/专业版）
+  threads: {
+    type: Number as PropType<number>,
+    default: null, // 默认从后台获取
   },
   // 是否文件夹上传（caniuse）
   directory: {
