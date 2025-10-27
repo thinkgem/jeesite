@@ -18,4 +18,4 @@ ENTRYPOINT if [ -f "app.war" ]; then jar -xvf app.war && rm app.war; \
 
 EXPOSE 8970
 
-#docker run -p 8970:8970 thinkgem/jeesite-cloud-module-eureka:5.10
+#docker run -p 8970:8970 thinkgem/jeesite-cloud-module-eureka:latest

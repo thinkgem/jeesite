@@ -18,4 +18,4 @@ ENTRYPOINT if [ -f "app.war" ]; then jar -xvf app.war && rm app.war; \
 
 EXPOSE 9311
 
-#docker run -p 9311:9311 thinkgem/jeesite-cloud-sentinel:5.10
+#docker run -p 9311:9311 thinkgem/jeesite-cloud-sentinel:latest
