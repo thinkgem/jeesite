@@ -45,14 +45,19 @@ public class FileUploadController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> params() {
 		Map<String, Object> model = MapUtils.newHashMap();
+		model.put("maxFileSize", Global.getConfigToLong("file.maxFileSize", "500*1024*1024"));
+
 		model.put("imageAllowSuffixes", Global.getConfig("file.imageAllowSuffixes", FileUploadParams.DEFAULT_IMAGE_ALLOW_SUFFIXES));
 		model.put("mediaAllowSuffixes", Global.getConfig("file.mediaAllowSuffixes", FileUploadParams.DEFAULT_MEDIA_ALLOW_SUFFIXES));
 		model.put("fileAllowSuffixes", Global.getConfig("file.fileAllowSuffixes", FileUploadParams.DEFAULT_FILE_ALLOW_SUFFIXES));
-		model.put("chunked", Global.getConfig("file.chunked", "true"));
-		model.put("chunkSize", Global.getConfigToInteger("file.chunkSize", "10*1024*1024"));
-		model.put("threads", Global.getConfigToInteger("file.threads", "3"));
+
 		model.put("imageMaxWidth", Global.getConfigToInteger("file.imageMaxWidth", "1024"));
 		model.put("imageMaxHeight", Global.getConfigToInteger("file.imageMaxHeight", "768"));
+
+		model.put("checkmd5", Global.getConfigToBoolean("file.checkmd5", "true"));
+		model.put("chunked", Global.getConfigToBoolean("file.chunked", "true"));
+		model.put("chunkSize", Global.getConfigToInteger("file.chunkSize", "10*1024*1024"));
+		model.put("threads", Global.getConfigToInteger("file.threads", "3"));
 		return model;
 	}
 	
