@@ -26,6 +26,11 @@
 		<nacos.version>3.0.2.1</nacos.version>
 		<seata.version>2.3.0</seata.version>
 
+		<!-- docker setting -->
+		<docker.dockerHost>http://docker.local:2375</docker.dockerHost>
+		<docker.imageName>thinkgem/${project.artifactId}:latest</docker.imageName>
+		<docker.run.port>8980:8980</docker.run.port>
+
 	</properties>
 
 	<dependencyManagement>
