@@ -22,7 +22,7 @@
 
 		<!-- Spring Cloud -->
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
-		<spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
+		<spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
 		<nacos.version>3.0.2.1</nacos.version>
 		<seata.version>2.3.0</seata.version>
 
