@@ -1,13 +1,9 @@
-
--- 打开 my.ini 给 [mysqld] 增加如下配置：
--- sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
-
-set global read_only=0;
-
+-- set global read_only=0;
+-- set global optimizer_switch='derived_merge=off';
 create user 'jeesite'@'%' identified by 'jeesite';
-
 create database jeesite DEFAULT CHARSET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
-
-grant all privileges on jeesite.* to 'jeesite'@'%' identified by 'jeesite';
-
+-- MySql 5.x
+-- grant all privileges on jeesite.* to 'jeesite'@'%' identified by 'jeesite';
+-- MySql 8.x
+grant all privileges on jeesite.* to 'jeesite'@'%';
 flush privileges;
