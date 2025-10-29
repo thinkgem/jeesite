@@ -17,6 +17,6 @@ ENV JAVA_OPTS "$JAVA_OPTS -Dnacos.home=/app"
 ENTRYPOINT if [ -f "app.war" ]; then jar -xvf app.war && rm app.war; \
            fi && cd WEB-INF && sh startup.sh && cd WEB-INF && sh startup.sh
 
-EXPOSE 8848
+EXPOSE 8848 9848 8849
 
-#docker run -p 8848:8848 thinkgem/jeesite-cloud-nacos:latest
+#docker run -p 8848:8848 -p 9848:9848 -p 8849:8849 thinkgem/jeesite-cloud-nacos:latest
