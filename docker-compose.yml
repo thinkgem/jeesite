@@ -1,0 +1,13 @@
+name: jeesite-fast
+
+services:
+
+  # JeeSite Web Fast
+  jeesite-web-fast:
+    container_name: jeesite-web-fast
+    image: crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
+    ports:
+      - "8980:8980"
+    restart: unless-stopped
+
+# docker compose up
