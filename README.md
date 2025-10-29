@@ -210,7 +210,7 @@ spring.sql.init.platform=mysql
 db.num=1
 
 ### Connect URL of DB:
-db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&serverTimezone=Asia/Shanghai
 db.user.0=root
 db.password.0=123456
 ```
