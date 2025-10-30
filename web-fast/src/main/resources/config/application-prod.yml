@@ -8,8 +8,8 @@ jdbc:
   type: h2
   driver: org.h2.Driver
   url: jdbc:h2:/data/jeesite-db/jeesite5140
-  username: jeesite
-  password: jeesite
+  username: ${MYSQL_USERNAME:jeesite}
+  password: ${MYSQL_PASSWORD:jeesite}
   testSql: SELECT 1
 
   # 数据库连接池配置
