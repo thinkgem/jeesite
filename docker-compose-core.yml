@@ -1,0 +1,81 @@
+#
+# Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+# No deletion without permission, or be held responsible to law.
+# @author ThinkGem
+#
+# 执行 docker compose up 前，请先编译项目 mvn package
+#
+name: jeesite-cloud-core
+
+# ==================== Environment ====================
+x-common-env: &common-env
+  TZ: Asia/Shanghai
+  LANG: C.UTF-8
+  MYSQL_HOST: jeesite-mysql
+  REDIS_HOST: jeesite-redis
+  NACOS_HOST: jeesite-nacos
+
+# ==================== Service Base ====================
+x-service-base: &service-base
+  image: docker.m.daocloud.io/openjdk:17
+  environment: *common-env
+  working_dir: /http
+  command: |
+    bash -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
+    rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh && cd WEB-INF && sh startup.sh"
+  restart: unless-stopped
+  networks:
+    - jeesite-cloud-network
+
+services:
+
+  # ==================== Gateway ====================
+  jeesite-gateway:
+    <<: *service-base
+    container_name: jeesite-gateway
+    ports:
+      - "8980:8980"
+    environment:
+      <<: *common-env
+      JAVA_OPTS: -Dspring.profiles.active=prod
+    volumes:
+      - ./.docker/modules:/data
+      - ./gateway/target:/http
+
+  # ==================== Core ====================
+  jeesite-core:
+    <<: *service-base
+    container_name: jeesite-core
+    ports:
+      - "8981:8981"
+    environment:
+      <<: *common-env
+      JAVA_OPTS: -Dspring.profiles.active=prod -Dserver.port=8981 -Djeesite.initdata=true
+    volumes:
+      - ./.docker/modules:/data
+      - ./modules/core/core/target:/http
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8981/js"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  # ==================== Files ====================
+  jeesite-files:
+    <<: *service-base
+    container_name: jeesite-files
+    environment:
+      <<: *common-env
+      JAVA_OPTS: -Dspring.profiles.active=prod
+    volumes:
+      - ./.docker/modules:/data
+      - ./modules/core/files/target:/http
+    depends_on:
+      jeesite-core:
+        condition: service_healthy
+
+# ==================== Networks ====================
+networks:
+  jeesite-cloud-network:
+    name:  jeesite-cloud-network
+    external: true

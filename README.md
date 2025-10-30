@@ -237,7 +237,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 * <http://127.0.0.1:8849/index.html#/login> 
 
-默认用户名和密码均为：nacos
+初始化用户名和密码均为：nacos
 
 登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
 
@@ -282,6 +282,18 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 * test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
     - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
     - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
+
+## 使用 Docker 运行
+
+1、部署 MySQL、Redis、Nacos 镜像，运行脚本：`/bin/docker-compose-basic.sh`
+
+2、浏览器访问 `http://127.0.0.1:18849/#/login` 初始化用户名和密码均为：nacos
+
+3、登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
+
+4、部署 Gateway、Core、Files 镜像，运行脚本：`/bin/docker-compose-core.sh`
+
+5、部署 Test1、Test2、Test3 镜像，运行脚本：`/bin/docker-compose-test.sh`
 
 ## 快速启用延伸功能
 

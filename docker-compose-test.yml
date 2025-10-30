@@ -1,0 +1,62 @@
+#
+# Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+# No deletion without permission, or be held responsible to law.
+# @author ThinkGem
+#
+# 执行 docker compose up 前，请先编译项目 mvn package
+#
+name: jeesite-cloud-test
+
+# ==================== Environment ====================
+x-common-env: &common-env
+  TZ: Asia/Shanghai
+  LANG: C.UTF-8
+  MYSQL_HOST: jeesite-mysql
+  REDIS_HOST: jeesite-redis
+  NACOS_HOST: jeesite-nacos
+
+# ==================== Service Base ====================
+x-service-base: &service-base
+  image: docker.m.daocloud.io/openjdk:17
+  environment:
+    <<: *common-env
+    JAVA_OPTS: -Dspring.profiles.active=prod
+  working_dir: /http
+  command: |
+    bash -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
+    rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh && cd WEB-INF && sh startup.sh"
+  restart: unless-stopped
+  networks:
+    - jeesite-cloud-network
+
+services:
+
+  # ==================== Test1 ====================
+  jeesite-test1:
+    <<: *service-base
+    container_name: jeesite-test1
+    volumes:
+      - ./.docker/modules:/data
+      - ./modules/test1/test1/target:/http
+
+  # ==================== Test2 ====================
+  jeesite-test2:
+    <<: *service-base
+    container_name: jeesite-test2
+    volumes:
+      - ./.docker/modules:/data
+      - ./modules/test2/test2/target:/http
+
+  # ==================== Test3 ====================
+  jeesite-test3:
+    <<: *service-base
+    container_name: jeesite-test3
+    volumes:
+      - ./.docker/modules:/data
+      - ./modules/test3/test3/target:/http
+
+# ==================== Networks ====================
+networks:
+  jeesite-cloud-network:
+    name:  jeesite-cloud-network
+    external: true
