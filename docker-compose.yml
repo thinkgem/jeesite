@@ -2,12 +2,16 @@ name: jeesite-fast
 
 services:
 
-  # JeeSite Web Fast
-  jeesite-web-fast:
-    container_name: jeesite-web-fast
+  # JeeSite Fast
+  jeesite-fast:
+    container_name: jeesite-fast
     image: crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
     ports:
       - "8980:8980"
+    environment:
+      JAVA_OPTS: -Dspring.profiles.active=prod
+    volumes:
+      - ./.docker/fast:/data
     restart: unless-stopped
 
 # docker compose up
