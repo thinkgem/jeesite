@@ -6,6 +6,7 @@
 **/logs/*.log*
 *.epoch
 *.lic
+.docker
 
 .settings
 .apt_generated
