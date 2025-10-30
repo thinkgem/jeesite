@@ -139,21 +139,9 @@
 7. 初始登录账号：超级管理员：system  密码：admin
 8. 部署常见问题：<https://jeesite.com/docs/faq/>
 
-### 本地运行
-
-1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot2.zip> 并解压
-3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
-4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
-5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
-6. 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
-7. 部署常见问题：<https://jeesite.com/docs/faq/>
-8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
-9. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
-
 ### 容器运行
 
-- 拉取 Docker 镜像（JeeSite版本不是最新）：
+- 拉取 Docker 镜像：
 ```sh
 docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
 ```
@@ -166,6 +154,18 @@ docker run --name js5 -p 8980:8980 -d crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.
 docker logs -f js5
 ```
 - 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
+
+### 本地运行
+
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot2.zip> 并解压
+3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
+4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
+5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
+6. 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
+7. 部署常见问题：<https://jeesite.com/docs/faq/>
+8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
+9. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
 ### 开发环境
 
