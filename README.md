@@ -141,14 +141,11 @@
 
 ### 容器运行
 
-- 拉取 Docker 镜像：
-```sh
-docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
-```
-- 启动镜像：
+- 拉取并启动 Docker 镜像：
 ```sh
 docker run --name js5 -p 8980:8980 -d crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
 ```
+
 - 查看日志：
 ```sh
 docker logs -f js5
