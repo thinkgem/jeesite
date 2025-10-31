@@ -7,7 +7,7 @@
 #  * 
 #  */
 echo ""
-echo "[信息] 部署Docker镜像。"
+echo "[信息] 运行Docker镜像。"
 echo ""
 
 echo "请按回车键继续 ... "
