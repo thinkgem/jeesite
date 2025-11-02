@@ -8,10 +8,8 @@ services:
     image: crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
     ports:
       - "8980:8980"
-    environment:
-      JAVA_OPTS: -Dspring.profiles.active=prod
     volumes:
       - ./.docker/fast:/data
     restart: unless-stopped
 
-# docker compose up
+# docker-compose up

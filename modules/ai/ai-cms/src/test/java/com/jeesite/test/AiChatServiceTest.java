@@ -11,6 +11,7 @@ import com.jeesite.modules.sys.entity.Area;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,12 +27,13 @@ import java.util.Map;
 @ActiveProfiles("test")
 @SpringBootApplication
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SpringBootTest(properties = {"spring.ai.tools.enabled=true"})
+@SpringBootTest(properties = {"spring.ai.model.chat=ollama","spring.ai.tools.enabled=true"})
 public class AiChatServiceTest extends BaseSpringContextTests {
 
-	private final AiCmsChatService aiCmsChatService;
+	private AiCmsChatService aiCmsChatService;
 
-	public AiChatServiceTest(AiCmsChatService aiCmsChatService) {
+	@Autowired
+	public void setAiChatServiceTest(AiCmsChatService aiCmsChatService) {
 		this.aiCmsChatService = aiCmsChatService;
 	}
 
