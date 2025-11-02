@@ -287,15 +287,25 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 ## 使用 Docker 运行
 
+### 构建并运行基础服务
+
 1、部署 MySQL、Redis、Nacos 镜像，运行脚本：`/bin/docker-compose-basic.sh`
 
-2、浏览器访问 `http://127.0.0.1:18849/#/login` 初始化用户名和密码均为：nacos
+2、浏览器访问 `http://127.0.0.1:18849/#/login` 初始化用户名和密码均为 nacos
 
 3、登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
 
-4、部署 Gateway、Core、Files 镜像，运行脚本：`/bin/docker-compose-core.sh`
+### 构建并运行核心服务
 
-5、部署 Test1、Test2、Test3 镜像，运行脚本：`/bin/docker-compose-test.sh`
+1、部署 Gateway、Core、Files 镜像，运行脚本：`/bin/docker-compose-core.sh`
+
+2、浏览器访问 `http://127.0.0.1:8980/js` 默认账号 system 密码 admin
+
+### 构建并运行业务服务
+
+1、部署 Test1、Test2、Test3 镜像，运行脚本：`/bin/docker-compose-test.sh`
+
+2、进入系统，首页仪表盘，点击 test1、test2 相关服务地址按钮
 
 ## 快速启用延伸功能
 
