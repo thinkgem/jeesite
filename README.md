@@ -102,6 +102,8 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * ShardingSphere 分库分表、读写分离
 * Spring Boot Admin 系统监控管理
 * ELK 日志采集、日志分析和可视化
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot3.cloud>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot2.cloud>
 
 ## 子项目介绍
 
@@ -210,7 +212,7 @@ spring.sql.init.platform=mysql
 db.num=1
 
 ### Connect URL of DB:
-db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&serverTimezone=Asia/Shanghai
 db.user.0=root
 db.password.0=123456
 ```
@@ -237,7 +239,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 * <http://127.0.0.1:8849/index.html#/login> 
 
-默认用户名和密码均为：nacos
+初始化用户名和密码均为：nacos
 
 登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
 
