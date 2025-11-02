@@ -102,6 +102,8 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * ShardingSphere 分库分表、读写分离
 * Spring Boot Admin 系统监控管理
 * ELK 日志采集、日志分析和可视化
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot3.cloud>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot2.cloud>
 
 ## 子项目介绍
 
