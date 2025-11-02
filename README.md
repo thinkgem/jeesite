@@ -130,30 +130,39 @@
 
 ### 快速运行
 
+1. 环境准备：[Docker](https://www.docker.com)
+2. 根据您的操作系统，选择以下对应命令一键拉取 Docker 镜像并启动 JeeSite：
+
+* Linux 或 macOS
+```sh
+docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker run --name js5 -p 8980:8980 -d --restart unless-stopped -v ~/jeesite-data:/data crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker logs -f js5
+```
+
+* Windows
+```cmd
+cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker run --name js5 -p 8980:8980 -d --restart unless-stopped -v %USERPROFILE%\jeesite-data:/data crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker logs -f js5"
+```
+
+> 容器启动后，系统数据将持久化保存在本地 ~/jeesite-data（Linux/macOS）或 %USERPROFILE%\jeesite-data（Windows）目录中。
+
+3. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
+4. 全栈版本地址：<http://127.0.0.1:8980/a/login>
+5. 初始登录账号：（管理员）`system`，密码：`admin`
+
+### 本地编译运行
+
+**1）使用内嵌数据库：**
+
 1. 免安装数据库，使用内嵌 H2 DB、包含 Vue 和 全栈双版本
 2. 环境准备：`JDK 17 或更高版本`、`Maven 3.8+`、无需准备数据库
 3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
 4. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
 5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
 6. 全栈版本地址：<http://127.0.0.1:8980/a/login>
-7. 初始登录账号：超级管理员：system  密码：admin
+7. 初始登录账号：（管理员）`system`，密码：`admin`
 8. 部署常见问题：<https://jeesite.com/docs/faq/>
 
-### 容器运行
-
-- 拉取并启动 Docker 镜像：
-```sh
-docker run --name js5 -p 8980:8980 -d crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
-```
-
-- 查看日志：
-```sh
-docker logs -f js5
-```
-
-- 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
-
-### 本地运行
+**2）使用 MySQL 或其它数据库：**
 
 1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 8.0+` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
 2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
@@ -165,7 +174,7 @@ docker logs -f js5
 8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 9. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
-### 开发环境
+### 开发环境部署
 
 1. 部署运行文档：<https://jeesite.com/docs/install-deploy/>
 2. 部署常见问题：<https://jeesite.com/docs/faq/>
