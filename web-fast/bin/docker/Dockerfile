@@ -1,18 +1,21 @@
 FROM docker.m.daocloud.io/openjdk:17
 LABEL maintainer="ThinkGem@163.com"
-ENV TZ "Asia/Shanghai"
-ENV LANG C.UTF-8
-VOLUME /tmp
-VOLUME /data
-
+ENV TZ=Asia/Shanghai
+ENV LANG=C.UTF-8
 WORKDIR /app
 
-#ADD jeesite.lic ./
-ADD ./maven/web.jar ./app.jar
+#RUN mkdir -p WEB-INF
+#COPY jeesite.lic WEB-INF/
+COPY ./maven/web.jar ./
 
-#ENV JAVA_OPTS "$JAVA_OPTS -Xms256m -Xmx1024m"
-ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=prod"
+ENV JAVA_OPTS "-Dspring.profiles.active=prod"
+ENV JAVA_OPTS "$JAVA_OPTS -DcustomLogPath=/data"
 
-ENTRYPOINT java -jar $JAVA_OPTS app.jar
+VOLUME /tmp /data
+
+ENTRYPOINT ["bash", "-c", "java -jar $JAVA_OPTS web.jar"]
 
 EXPOSE 8980
+
+#docker run -p 8980:8980 thinkgem/jeesite-fast:latest
+
