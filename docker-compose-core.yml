@@ -3,7 +3,7 @@
 # No deletion without permission, or be held responsible to law.
 # @author ThinkGem
 #
-# 执行 docker compose up 前，请先编译项目 mvn package
+# 执行 docker-compose up 前，请先编译项目 mvn package
 #
 name: jeesite-cloud-core
 
@@ -19,10 +19,10 @@ x-common-env: &common-env
 x-service-base: &service-base
   image: docker.m.daocloud.io/openjdk:17
   environment: *common-env
-  working_dir: /http
+  working_dir: /app
   command: |
     bash -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
-    rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh && cd WEB-INF && sh startup.sh"
+    rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh"
   restart: unless-stopped
   networks:
     - jeesite-cloud-network
@@ -37,10 +37,10 @@ services:
       - "8980:8980"
     environment:
       <<: *common-env
-      JAVA_OPTS: -Dspring.profiles.active=prod
+      JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
     volumes:
       - ./.docker/modules:/data
-      - ./gateway/target:/http
+      - ./gateway/target:/app
 
   # ==================== Core ====================
   jeesite-core:
@@ -50,10 +50,11 @@ services:
       - "8981:8981"
     environment:
       <<: *common-env
-      JAVA_OPTS: -Dspring.profiles.active=prod -Dserver.port=8981 -Djeesite.initdata=true
+      JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data ->
+        -Dserver.port=8981 -Djeesite.initdata=true
     volumes:
       - ./.docker/modules:/data
-      - ./modules/core/core/target:/http
+      - ./modules/core/core/target:/app
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8981/js"]
       interval: 1s
@@ -66,10 +67,10 @@ services:
     container_name: jeesite-files
     environment:
       <<: *common-env
-      JAVA_OPTS: -Dspring.profiles.active=prod
+      JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
     volumes:
       - ./.docker/modules:/data
-      - ./modules/core/files/target:/http
+      - ./modules/core/files/target:/app
     depends_on:
       jeesite-core:
         condition: service_healthy

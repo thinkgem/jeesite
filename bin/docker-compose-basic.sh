@@ -18,16 +18,17 @@ read text
 cd ..
 
 # 停止并移除容器，如果存在
-docker compose -f docker-compose-basic.yml stop
-docker compose -f docker-compose-basic.yml rm -f
+docker-compose -f docker-compose-basic.yml stop
+docker-compose -f docker-compose-basic.yml rm -f
 
+# 打包工程
 mvn clean package -Dmaven.test.skip=true -U
 
 # 运行容器
-docker compose -f docker-compose-basic.yml up -d
+docker-compose -f docker-compose-basic.yml up -d
 
 # 查看日志
-docker compose -f docker-compose-basic.yml logs -f
+docker-compose -f docker-compose-basic.yml logs -f
 
 echo ""
 echo "启动完成 ... "

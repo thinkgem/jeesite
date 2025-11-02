@@ -16,14 +16,14 @@ read text
 cd ..
 
 # 停止并移除容器，如果存在
-docker compose -f docker-compose-core.yml stop
-docker compose -f docker-compose-core.yml rm -f
+docker-compose -f docker-compose-core.yml stop
+docker-compose -f docker-compose-core.yml rm -f
 
 # 运行容器
-docker compose -f docker-compose-core.yml up -d
+docker-compose -f docker-compose-core.yml up -d
 
 # 查看日志
-docker compose -f docker-compose-core.yml logs -f
+docker-compose -f docker-compose-core.yml logs -f
 
 echo ""
 echo "启动完成 ... "

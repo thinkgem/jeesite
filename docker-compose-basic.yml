@@ -3,7 +3,7 @@
 # No deletion without permission, or be held responsible to law.
 # @author ThinkGem
 #
-# 执行 docker compose up 前，请先编译项目 mvn package
+# 执行 docker-compose up 前，请先编译项目 mvn package
 #
 name: jeesite-cloud-basic
 
@@ -83,11 +83,11 @@ services:
       JAVA_OPTS: -Dspring.profiles.active=prod -Dnacos.home=/nacos
     volumes:
       - ./.docker/nacos:/nacos
-      - ./nacos/target:/http
-    working_dir: /http
+      - ./nacos/target:/app
+    working_dir: /app
     command: |
       bash -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
-      rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh && cd WEB-INF && sh startup.sh"
+      rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh"
     depends_on:
       jeesite-mysql:
         condition: service_healthy
