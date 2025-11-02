@@ -20,6 +20,7 @@ import com.jeesite.modules.sys.dao.*;
 import com.jeesite.modules.sys.entity.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -35,14 +36,15 @@ import java.util.List;
 @SpringBootTest(classes = ApplicationTest.class)
 public class DaoMapperTest extends BaseSpringContextTests {
 
-	private final PostDao postDao;
-	private final UserDao userDao;
-	private final AreaDao areaDao;
-	private final CompanyDao companyDao;
-	private final FileUploadDao fileUploadDao;
-	private final EmpUserDao empUserDao;
+	private PostDao postDao;
+	private UserDao userDao;
+	private AreaDao areaDao;
+	private CompanyDao companyDao;
+	private FileUploadDao fileUploadDao;
+	private EmpUserDao empUserDao;
 
-	public DaoMapperTest(PostDao postDao, UserDao userDao, AreaDao areaDao, CompanyDao companyDao,
+	@Autowired
+	public void setDaoMapperTest(PostDao postDao, UserDao userDao, AreaDao areaDao, CompanyDao companyDao,
 						 FileUploadDao fileUploadDao, EmpUserDao empUserDao) {
 		this.postDao = postDao;
 		this.userDao = userDao;
