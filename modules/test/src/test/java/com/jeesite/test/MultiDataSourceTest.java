@@ -11,6 +11,7 @@ import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestDataChild;
 import com.jeesite.modules.test.service.TestDataService;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -31,9 +32,10 @@ import java.util.concurrent.Executors;
 @SpringBootTest(classes = ApplicationTest.class)
 public class MultiDataSourceTest extends BaseSpringContextTests {
 	
-	private final TestDataService testDataService;
+	private TestDataService testDataService;
 
-	public MultiDataSourceTest(TestDataService testDataService) {
+	@Autowired
+	public void setMultiDataSourceTest(TestDataService testDataService) {
 		this.testDataService = testDataService;
 	}
 

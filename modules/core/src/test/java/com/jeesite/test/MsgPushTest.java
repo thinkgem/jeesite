@@ -23,6 +23,7 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -40,10 +41,11 @@ import java.util.List;
 @Rollback(false)
 public class MsgPushTest extends BaseSpringContextTests {
 
-	private final UserService userService;
-	private final MsgTemplateService msgTemplateService;
+	private UserService userService;
+	private MsgTemplateService msgTemplateService;
 
-	public MsgPushTest(UserService userService, MsgTemplateService msgTemplateService) {
+	@Autowired
+	public void setMsgPushTest(UserService userService, MsgTemplateService msgTemplateService) {
 		this.userService = userService;
 		this.msgTemplateService = msgTemplateService;
 	}
