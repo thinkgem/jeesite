@@ -23,11 +23,6 @@
 		
 		<finalName>web</finalName><!-- war 或 jar 包的名称 -->
 		<start-class>com.jeesite.modules.FastApplication</start-class>
-
-		<!-- docker setting -->
-		<docker.dockerHost>unix:///var/run/docker.sock</docker.dockerHost>
-		<docker.imageName>thinkgem/jeesite-web-fast:latest</docker.imageName>
-		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 
@@ -138,7 +133,7 @@
 			<id>docker-buildx</id>
 			<build>
 				<plugins>
-					<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin - https://dmp.fabric8.io -->
+					<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin -->
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
