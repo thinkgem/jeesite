@@ -326,8 +326,8 @@
 					</configuration>
 				</plugin>
 
-				<!-- Eclipse m2e settings only -->
-				<plugin>
+				<!-- This plugin will be ignored by Maven CLI, but recognized by Eclipse M2E -->
+				<!-- <plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
 					<version>1.0.0</version>
@@ -338,8 +338,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.apache.maven.plugins</groupId>
 										<artifactId>maven-dependency-plugin</artifactId>
-										<!--suppress UnresolvedMavenProperty -->
-										<versionRange>${maven-dependency-plugin.version}</versionRange>
+										<versionRange>[3.0.0,)</versionRange>
 										<goals>
 											<goal>copy-dependencies</goal>
 										</goals>
@@ -351,7 +350,7 @@
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
-				</plugin>
+				</plugin> -->
 
 				<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin -->
 				<plugin>
