@@ -27,7 +27,7 @@ services:
   jeesite-mysql:
     <<: *service-base
     container_name: jeesite-mysql
-    image: docker.m.daocloud.io/mysql:8.0
+    image: docker.m.daocloud.io/mysql:8.4
     ports:
       - "23306:3306"
     environment:
@@ -73,7 +73,7 @@ services:
   jeesite-nacos:
     <<: *service-base
     container_name: jeesite-nacos
-    image: docker.m.daocloud.io/openjdk:17
+    image: docker.m.daocloud.io/eclipse-temurin:17
     ports:
       - "8848:8848"
       - "9848:9848"
