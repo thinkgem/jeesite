@@ -17,7 +17,7 @@ x-common-env: &common-env
 
 # ==================== Service Base ====================
 x-service-base: &service-base
-  restart: unless-stopped
+  #restart: unless-stopped
   networks:
     - jeesite-cloud-network
 
@@ -29,7 +29,7 @@ services:
     container_name: jeesite-mysql
     image: docker.m.daocloud.io/mysql:8.0
     ports:
-      - "13306:3306"
+      - "23306:3306"
     environment:
       <<: *common-env
       MYSQL_ROOT_HOST: "%"
@@ -38,7 +38,7 @@ services:
       - ./.docker/mysql/log:/var/log/mysql
       - ./.docker/mysql/data:/var/lib/mysql
       - ./.docker/mysql/conf:/etc/mysql/conf.d
-      - ./nacos/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/01-nacos.sql
+      - ./nacos/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/01-init.sql
       - ./nacos/db/mysql/nacos.sql:/docker-entrypoint-initdb.d/02-nacos.sql
       - ./modules/core/core/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/03-core.sql
     command: |
@@ -56,7 +56,7 @@ services:
     container_name: jeesite-redis
     image: docker.m.daocloud.io/redis:7.2
     ports:
-      - "16379:6379"
+      - "26379:6379"
     environment:
       <<: *common-env
       REDISCLI_AUTH: 1234
@@ -75,9 +75,9 @@ services:
     container_name: jeesite-nacos
     image: docker.m.daocloud.io/openjdk:17
     ports:
-      - "18848:8848"
-      - "19848:9848"
-      - "18849:8849"
+      - "8848:8848"
+      - "9848:9848"
+      - "8849:8849"
     environment:
       <<: *common-env
       JAVA_OPTS: -Dspring.profiles.active=prod -Dnacos.home=/nacos
