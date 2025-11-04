@@ -10,7 +10,7 @@ services:
   # JeeSite MySQL，数据文件存放在 ./.docker/mysql 目录
   jeesite-mysql:
     container_name: jeesite-mysql
-    image: docker.m.daocloud.io/mysql:8.0
+    image: docker.m.daocloud.io/mysql:8.4
     ports:
       - "13306:3306"
     environment:
