@@ -121,6 +121,16 @@
 * 数表设计：<https://jeesite.com/docs/treetable/>
 * 代码生成：<https://jeesite.com/docs/code-gen/>
 
+## 产品列表
+
+* JeeSite 源码仓库：<https://gitee.com/thinkgem/jeesite5>
+* JeeSite Vue 前端源码：<https://gitee.com/thinkgem/jeesite-vue>
+* JeeSite Cloud 微服务：<https://gitee.com/thinkgem/jeesite-cloud>
+* JeeSite 跨平台手机端：<https://gitee.com/thinkgem/jeesite-uniapp>
+* JeeSite 客户端安装程序：<https://gitee.com/thinkgem/jeesite-client>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+* 统一认证平台：<https://jeesite.com/docs/oauth2-server>
+
 ## 快速体验
 
 ### 在线演示
