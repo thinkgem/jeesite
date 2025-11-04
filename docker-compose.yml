@@ -1,8 +1,13 @@
+#
+# Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+# No deletion without permission, or be held responsible to law.
+# @author ThinkGem
+#
 name: jeesite-fast
 
 services:
 
-  # JeeSite Fast
+  # JeeSite Fast（使用 H2 数据库）
   jeesite-fast:
     container_name: jeesite-fast
     image: crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
@@ -10,6 +15,6 @@ services:
       - "8980:8980"
     volumes:
       - ./.docker/fast:/data
-    restart: unless-stopped
+    #restart: unless-stopped
 
-# docker-compose up
+# docker-compose -f docker-compose.yml up -d

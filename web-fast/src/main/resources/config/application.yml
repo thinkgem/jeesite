@@ -89,7 +89,7 @@ spring:
 
   # 应用程序名称
   application:
-    name: jeesite-web-h2db
+    name: jeesite-web-fast
 
   # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
@@ -205,7 +205,7 @@ shiro:
 # Session 相关
 session:
   # 会话唯一标识SessionId在Cookie中的名称。
-  sessionIdCookieName: h2db.jeesite.session.id
+  sessionIdCookieName: fast.jeesite.session.id
   sessionIdCookiePath: ${server.servlet.context-path}
 
 # Web 相关

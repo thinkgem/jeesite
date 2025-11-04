@@ -23,6 +23,9 @@
 		
 		<finalName>web</finalName><!-- war 或 jar 包的名称 -->
 		<start-class>com.jeesite.modules.FastApplication</start-class>
+
+		<!-- docker setting -->
+		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 

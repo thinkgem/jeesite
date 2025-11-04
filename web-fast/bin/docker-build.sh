@@ -13,13 +13,4 @@ echo ""
 cd ..
 mvn clean package docker:remove docker:build -Dmaven.test.skip=true -U
 
-echo ""
-echo ""
-echo "参考下面的脚本，拷贝到 Docker 服务器上运行："
-echo ""
-echo "docker run --name js5 -p 8980:8980 -d --restart unless-stopped -v ~/jeesite-data:/data thinkgem/jeesite-web-fast && docker logs -f js5"
-echo ""
-echo "启动完成后，访问地址：http://127.0.0.1:8980   用户名：system   密码：admin"
-echo ""
-
 cd bin

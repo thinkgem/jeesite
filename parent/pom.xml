@@ -374,11 +374,25 @@
 									<containerNamePattern>${project.artifactId}</containerNamePattern>
 									<ports>
 										<port>${docker.run.port}</port>
+										<!--suppress UnresolvedMavenProperty -->
+										<port>${docker.run.port2}</port>
+										<!--suppress UnresolvedMavenProperty -->
+										<port>${docker.run.port3}</port>
 									</ports>
-									<network>
+									<!--<network>
 										<mode>host</mode>
-									</network>
+									</network>-->
+									<volumes>
+										<bind>
+											<volume>${user.home}/jeesite-data/${project.artifactId}:/data</volume>
+										</bind>
+									</volumes>
+									<!--<restartPolicy>
+										<name>unless-stopped</name>
+									</restartPolicy>-->
 								</run>
+								<removeNamePattern>${project.artifactId}</removeNamePattern>
+								<stopNamePattern>${project.artifactId}</stopNamePattern>
 							</image>
 						</images>
 					</configuration>
