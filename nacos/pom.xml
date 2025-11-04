@@ -28,6 +28,8 @@
 
 		<!-- docker setting -->
 		<docker.run.port>8848:8848</docker.run.port>
+		<docker.run.port2>9848:9848</docker.run.port2>
+		<docker.run.port3>8849:8849</docker.run.port3>
 
 	</properties>
 
