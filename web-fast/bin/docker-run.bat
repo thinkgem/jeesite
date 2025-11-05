@@ -6,14 +6,14 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [信息] 打包Web工程，编译并运行Docker镜像
+echo [信息] 运行Docker镜像
 echo.
 
 %~d0
 cd %~dp0
 
 cd ..
-call mvn clean package docker:remove docker:build docker:stop docker:start docker:logs -Dmaven.test.skip=true -U -Ddocker.follow
+mvn docker:stop docker:start docker:logs -Ddocker.follow
 
 echo.
 echo 启动完成后访问：http://127.0.0.1:8980   用户名：system   密码：admin
