@@ -23,7 +23,7 @@ apiMode: false
 
 server:
 
-  port: 8980
+  port: 8991
   servlet:
     context-path: /js
     register-default-servlet: false
@@ -131,7 +131,7 @@ gen:
   enabled: false
 
 # 系统监控（默认开启，可关闭）访问地址如下：
-#   服务监控：http://127.0.0.1:8980/js/a/state/server/index
+#   服务监控：http://127.0.0.1:8991/js/a/state/server/index
 state:
   enabled: true
 

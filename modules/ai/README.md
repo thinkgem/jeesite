@@ -152,7 +152,7 @@ spring:
         sse-endpoint: /api/v1/sse
         sse-message-endpoint: /api/v1/mcp
 ```
-MCP SSE 接口地址：http://127.0.0.1:8981/api/v1/sse
+MCP SSE 接口地址：http://127.0.0.1:8992/api/v1/sse
 
 * 客户端：[web-cms](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/web-ai/web-cms/)
 
@@ -167,7 +167,7 @@ spring:
         sse:
           connections:
             jeesite:
-              url: http://127.0.0.1:8981
+              url: http://127.0.0.1:8992
               sse-endpoint: /api/v1/sse
 ```
 聊天窗口，询问“当前服务器时间”，在 MCP 服务端会显示调用日志，并返回相应信息。

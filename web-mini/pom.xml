@@ -25,7 +25,7 @@
 		<start-class>com.jeesite.modules.MiniApplication</start-class>
 
 		<!-- docker setting -->
-		<docker.run.port>8980:8980</docker.run.port>
+		<docker.run.port>8991:8991</docker.run.port>
 		
 	</properties>
 

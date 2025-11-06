@@ -178,7 +178,7 @@ spring:
         sse:
           connections:
             jeesite:
-              url: http://127.0.0.1:8981
+              url: http://127.0.0.1:8992
               sse-endpoint: /api/v1/sse
         toolcallback:
           enabled: true

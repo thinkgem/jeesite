@@ -12,7 +12,7 @@ COPY ./maven/web.war ./
 
 VOLUME /tmp /data
 
-EXPOSE 8980
+EXPOSE 8991
 
 ENTRYPOINT ["sh", "-c","\
 if [ -f 'web.war' ]; then jar -xvf web.war && rm web.war; fi && \
