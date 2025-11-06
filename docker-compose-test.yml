@@ -23,8 +23,8 @@ x-service-base: &service-base
     JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
   working_dir: /app
   command: |
-    bash -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
-    rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh"
+    sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
+    rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
   #restart: unless-stopped
   networks:
     - jeesite-cloud-network

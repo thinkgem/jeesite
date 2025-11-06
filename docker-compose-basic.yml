@@ -42,7 +42,7 @@ services:
       - ./nacos/db/mysql/nacos.sql:/docker-entrypoint-initdb.d/02-nacos.sql
       - ./modules/core/core/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/03-core.sql
     command: |
-      bash -c "ln -snf /usr/share/zoneinfo/$${TZ} /etc/localtime && 
+      sh -c "ln -snf /usr/share/zoneinfo/$${TZ} /etc/localtime && 
       echo $${TZ} > /etc/timezone && docker-entrypoint.sh mysqld"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
@@ -86,8 +86,8 @@ services:
       - ./nacos/target:/app
     working_dir: /app
     command: |
-      bash -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
-      rm web.war && cd ..; fi && cd web/WEB-INF && sh startup.sh"
+      sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
+      rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
     depends_on:
       jeesite-mysql:
         condition: service_healthy
