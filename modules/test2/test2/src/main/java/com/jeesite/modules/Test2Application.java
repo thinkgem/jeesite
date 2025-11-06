@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
 /**
  * Application
@@ -25,11 +27,13 @@ public class Test2Application extends SpringBootServletInitializer {
 	private static final Logger logger = LoggerFactory.getLogger(Test2Application.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(Test2Application.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(Test2Application.class, args);
+		Environment env = context.getEnvironment();
 		logger.info(
 				"\n\n==============================================================\n"
-				+ "\n   " + Test2Application.class.getName() + " 启动完成。\n"
-				+ "\n==============================================================\n");
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}{}\n"
+				+ "\n==============================================================\n",
+				env.getProperty("local.server.port"), env.getProperty("server.servlet.context-path"));
 	}
 
 	@Override

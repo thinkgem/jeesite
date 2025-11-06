@@ -23,6 +23,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.jmx.support.RegistrationPolicy;
@@ -51,26 +52,29 @@ public class NacosApplication {
 
 	public static void main(String[] args) {
 		NacosApplication.initialize();
+		ConfigurableApplicationContext context;
         String type = System.getProperty(Constants.NACOS_DEPLOYMENT_TYPE, Constants.NACOS_DEPLOYMENT_TYPE_MERGED);
         DeploymentType deploymentType = DeploymentType.getType(type);
         EnvUtil.setDeploymentType(deploymentType);
         switch (deploymentType) {
             case MERGED:
-                startWithConsole(args);
+                context = startWithConsole(args);
                 break;
             case SERVER:
-                startWithoutConsole(args);
+                context = startWithoutConsole(args);
                 break;
             case CONSOLE:
-                startOnlyConsole(args);
+                context = startOnlyConsole(args);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported nacos deployment type " + type);
         }
+		Environment env = context.getEnvironment();
 		logger.info(
 				"\n\n==============================================================\n"
-				+ "\n   " + NacosApplication.class.getName() + " 启动完成。\n"
-				+ "\n==============================================================\n");
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}/#/login\n"
+				+ "\n==============================================================\n",
+				env.getProperty("local.server.port"));
 	}
 
     private static void prepareCoreContext(ConfigurableApplicationContext coreContext) {
@@ -80,16 +84,17 @@ public class NacosApplication {
         }
     }
 
-    private static void startWithoutConsole(String[] args) {
+    private static ConfigurableApplicationContext startWithoutConsole(String[] args) {
         ConfigurableApplicationContext coreContext = startCoreContext(args);
         prepareCoreContext(coreContext);
         ConfigurableApplicationContext webContext = startServerWebContext(args, coreContext);
         if (isEnabledMcpRegistryApi(coreContext)) {
             ConfigurableApplicationContext mcpRegistryContext = startMcpRegistryContext(args, coreContext);
         }
+		return webContext;
     }
 
-    private static void startWithConsole(String[] args) {
+    private static ConfigurableApplicationContext startWithConsole(String[] args) {
         ConfigurableApplicationContext coreContext = startCoreContext(args);
         prepareCoreContext(coreContext);
         ConfigurableApplicationContext serverWebContext = startServerWebContext(args, coreContext);
@@ -97,6 +102,7 @@ public class NacosApplication {
         if (isEnabledMcpRegistryApi(coreContext)) {
             ConfigurableApplicationContext mcpRegistryContext = startMcpRegistryContext(args, coreContext);
         }
+		return consoleContext;
     }
 
     private static ConfigurableApplicationContext startCoreContext(String[] args) {
@@ -126,10 +132,11 @@ public class NacosApplication {
                 .banner(getBanner("nacos-mcp-registry-banner.txt")).run(args);
     }
 
-    private static void startOnlyConsole(String[] args) {
+    private static ConfigurableApplicationContext startOnlyConsole(String[] args) {
         NacosStartUpManager.start(NacosStartUp.CONSOLE_START_UP_PHASE);
         ConfigurableApplicationContext consoleContext = new SpringApplicationBuilder(NacosConsole.class).banner(
                 getBanner("nacos-console-banner.txt")).run(args);
+		return consoleContext;
     }
 
     private static Banner getBanner(String bannerFileName) {

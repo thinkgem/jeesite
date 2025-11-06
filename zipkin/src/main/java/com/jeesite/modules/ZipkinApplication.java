@@ -19,6 +19,8 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import zipkin2.server.internal.EnableZipkinServer;
 import zipkin2.server.internal.ZipkinActuatorImporter;
 import zipkin2.server.internal.ZipkinModuleImporter;
@@ -51,17 +53,19 @@ public class ZipkinApplication {
   }
 
   public static void main(String[] args) {
-    new SpringApplicationBuilder(ZipkinApplication.class)
+    ConfigurableApplicationContext content = new SpringApplicationBuilder(ZipkinApplication.class)
       .banner(new ZipkinBanner())
       .initializers(new ZipkinModuleImporter(), new ZipkinActuatorImporter())
       // Avoids potentially expensive DNS lookup and inaccurate startup timing
       .logStartupInfo(false)
       .properties(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY + "=false",
     	        "spring.config.name=zipkin-server").run(args);
-      logger.info(
-              "\n\n==============================================================\n"
-              + "\n   " + ZipkinApplication.class.getName() + " 启动完成。\n"
-              + "\n==============================================================\n");
+	Environment env = content.getEnvironment();
+	logger.info(
+			"\n\n==============================================================\n"
+			+ "\n   启动完成，访问地址：http://127.0.0.1:{}\n"
+			+ "\n==============================================================\n",
+			env.getProperty("local.server.port"));
   }
   
 }

@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
 /**
  * Sentinel dashboard application.
@@ -36,11 +38,13 @@ public class SentinelApplication {
 
     public static void main(String[] args) {
         triggerSentinelInit();
-        SpringApplication.run(SentinelApplication.class, args);
-        logger.info(
+        ConfigurableApplicationContext context = SpringApplication.run(SentinelApplication.class, args);
+		Environment env = context.getEnvironment();
+		logger.info(
 				"\n\n==============================================================\n"
-				+ "\n   " + SentinelApplication.class.getName() + " 启动完成。\n"
-				+ "\n==============================================================\n");
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}\n"
+				+ "\n==============================================================\n",
+				env.getProperty("local.server.port"));
     }
 
     private static void triggerSentinelInit() {
