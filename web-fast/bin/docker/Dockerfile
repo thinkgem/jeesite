@@ -1,21 +1,17 @@
 FROM docker.m.daocloud.io/eclipse-temurin:17
 LABEL maintainer="ThinkGem@163.com"
-ENV TZ=Asia/Shanghai
-ENV LANG=C.UTF-8
+
+ENV TZ=Asia/Shanghai LANG=C.UTF-8 JAVA_OPTS="\
+-Dspring.profiles.active=prod \
+-DcustomLogPath=/data"
+
 WORKDIR /app
 
-#RUN mkdir -p WEB-INF
 #COPY jeesite.lic WEB-INF/
 COPY ./maven/web.jar ./
 
-ENV JAVA_OPTS "-Dspring.profiles.active=prod"
-ENV JAVA_OPTS "$JAVA_OPTS -DcustomLogPath=/data"
-
 VOLUME /tmp /data
-
-ENTRYPOINT ["bash", "-c", "java -jar $JAVA_OPTS web.jar"]
 
 EXPOSE 8980
 
-#docker run -p 8980:8980 thinkgem/jeesite-fast:latest
-
+ENTRYPOINT ["bash", "-c", "java -jar $JAVA_OPTS web.jar"]
