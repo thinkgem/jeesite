@@ -8,7 +8,7 @@ jeesite-web-ai-cms 拷贝自 jeesite-web 只保留了 CMS 和 AI 模块的引用
 
 ## 更多介绍
 
-1. <https://jeesite.com/docs/cms-ai/>
+1. <https://jeesite.com/docs/ai-cms/>
 2. <https://jeesite.com/docs/cms/>
 
 ## 文档
