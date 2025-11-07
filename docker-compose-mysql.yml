@@ -8,8 +8,8 @@ name: jeesite-fast-mysql
 services:
 
   # JeeSite MySQL，数据文件存放在 ./.docker/mysql 目录
-  jeesite-mysql:
-    container_name: jeesite-mysql
+  jeesite-fast-mysql:
+    container_name: jeesite-fast-mysql
     image: docker.m.daocloud.io/mysql:8.4
     ports:
       - "13306:3306"
@@ -23,39 +23,39 @@ services:
       - ./.docker/mysql/data:/var/lib/mysql
       - ./.docker/mysql/conf:/etc/mysql/conf.d
       - ./modules/core/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/01-init.sql
-    command: |
-      bash -c "ln -snf /usr/share/zoneinfo/$${TZ} /etc/localtime && 
+    command: >
+      sh -c "ln -snf /usr/share/zoneinfo/$${TZ} /etc/localtime && 
       echo $${TZ} > /etc/timezone && docker-entrypoint.sh mysqld"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
-      interval: 1s
-      timeout: 3s
-      retries: 30
+      interval: 5s
+      timeout: 5s
+      retries: 60
     #restart: unless-stopped
     networks:
-      - jeesite-network
+      - jeesite-fast-network
 
   # JeeSite Fast，使用 MySQL 数据库，上传文件和日志等数据存放在 ./.docker/fast 目录
-  jeesite-fast:
-    container_name: jeesite-fast
+  jeesite-fast-web:
+    container_name: jeesite-fast-web
     image: crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest
     ports:
       - "8980:8980"
     environment:
-      MYSQL_HOST: jeesite-mysql
+      MYSQL_HOST: jeesite-fast-mysql
       JAVA_OPTS: -Dspring.profiles.active=mysql -DcustomLogPath=/data
     volumes:
       - ./.docker/fast:/data
     #restart: unless-stopped
     networks:
-      - jeesite-network
+      - jeesite-fast-network
     depends_on:
-      jeesite-mysql:
+      jeesite-fast-mysql:
         condition: service_healthy
 
 networks:
-  jeesite-network:
-    name:  jeesite-network
+  jeesite-fast-network:
+    name:  jeesite-fast-network
     driver: bridge
 
 # docker-compose -f docker-compose-mysql.yml up -d
