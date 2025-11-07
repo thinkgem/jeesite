@@ -5,7 +5,7 @@
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-module-web-ai</artifactId>
-	<version>5.14.0.springboot3-SNAPSHOT</version>
+	<version>5.14.1.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Module Web AI</name>
