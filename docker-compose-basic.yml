@@ -11,9 +11,9 @@ name: jeesite-cloud-basic
 x-common-env: &common-env
   TZ: Asia/Shanghai
   LANG: C.UTF-8
-  MYSQL_HOST: jeesite-mysql
-  REDIS_HOST: jeesite-redis
-  NACOS_HOST: jeesite-nacos
+  MYSQL_HOST: jeesite-cloud-mysql
+  REDIS_HOST: jeesite-cloud-redis
+  NACOS_HOST: jeesite-cloud-nacos
 
 # ==================== Service Base ====================
 x-service-base: &service-base
@@ -24,9 +24,9 @@ x-service-base: &service-base
 services:
 
   # ==================== MySQL ====================
-  jeesite-mysql:
+  jeesite-cloud-mysql:
     <<: *service-base
-    container_name: jeesite-mysql
+    container_name: jeesite-cloud-mysql
     image: docker.m.daocloud.io/mysql:8.4
     ports:
       - "23306:3306"
@@ -41,19 +41,19 @@ services:
       - ./nacos/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/01-init.sql
       - ./nacos/db/mysql/nacos.sql:/docker-entrypoint-initdb.d/02-nacos.sql
       - ./modules/core/core/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/03-core.sql
-    command: |
+    command: >
       sh -c "ln -snf /usr/share/zoneinfo/$${TZ} /etc/localtime && 
       echo $${TZ} > /etc/timezone && docker-entrypoint.sh mysqld"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
-      interval: 1s
-      timeout: 3s
-      retries: 30
+      interval: 5s
+      timeout: 5s
+      retries: 60
 
   # ==================== Redis ====================
-  jeesite-redis:
+  jeesite-cloud-redis:
     <<: *service-base
-    container_name: jeesite-redis
+    container_name: jeesite-cloud-redis
     image: docker.m.daocloud.io/redis:7.2
     ports:
       - "26379:6379"
@@ -65,14 +65,14 @@ services:
     command: redis-server --requirepass 1234
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 1s
-      timeout: 3s
-      retries: 30
+      interval: 5s
+      timeout: 5s
+      retries: 60
 
   # ==================== Nacos ====================
-  jeesite-nacos:
+  jeesite-cloud-nacos:
     <<: *service-base
-    container_name: jeesite-nacos
+    container_name: jeesite-cloud-nacos
     image: docker.m.daocloud.io/eclipse-temurin:17
     ports:
       - "8848:8848"
@@ -85,13 +85,13 @@ services:
       - ./.docker/nacos:/nacos
       - ./nacos/target:/app
     working_dir: /app
-    command: |
-      sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
+    command: >
+      sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && 
       rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
     depends_on:
-      jeesite-mysql:
+      jeesite-cloud-mysql:
         condition: service_healthy
-      jeesite-redis:
+      jeesite-cloud-redis:
         condition: service_healthy
 
 # ==================== Networks ====================

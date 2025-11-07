@@ -11,9 +11,9 @@ name: jeesite-cloud-test
 x-common-env: &common-env
   TZ: Asia/Shanghai
   LANG: C.UTF-8
-  MYSQL_HOST: jeesite-mysql
-  REDIS_HOST: jeesite-redis
-  NACOS_HOST: jeesite-nacos
+  MYSQL_HOST: jeesite-cloud-mysql
+  REDIS_HOST: jeesite-cloud-redis
+  NACOS_HOST: jeesite-cloud-nacos
 
 # ==================== Service Base ====================
 x-service-base: &service-base
@@ -22,8 +22,8 @@ x-service-base: &service-base
     <<: *common-env
     JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
   working_dir: /app
-  command: |
-    sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && \
+  command: >
+    sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && 
     rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
   #restart: unless-stopped
   networks:
@@ -32,25 +32,25 @@ x-service-base: &service-base
 services:
 
   # ==================== Test1 ====================
-  jeesite-test1:
+  jeesite-cloud-test1:
     <<: *service-base
-    container_name: jeesite-test1
+    container_name: jeesite-cloud-test1
     volumes:
       - ./.docker/modules:/data
       - ./modules/test1/test1/target:/app
 
   # ==================== Test2 ====================
-  jeesite-test2:
+  jeesite-cloud-test2:
     <<: *service-base
-    container_name: jeesite-test2
+    container_name: jeesite-cloud-test2
     volumes:
       - ./.docker/modules:/data
       - ./modules/test2/test2/target:/app
 
   # ==================== Test3 ====================
-  jeesite-test3:
+  jeesite-cloud-test3:
     <<: *service-base
-    container_name: jeesite-test3
+    container_name: jeesite-cloud-test3
     volumes:
       - ./.docker/modules:/data
       - ./modules/test3/test3/target:/app

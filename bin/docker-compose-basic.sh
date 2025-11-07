@@ -17,6 +17,9 @@ read text
 
 cd ..
 
+mvn -v
+echo ""
+
 # 停止并移除容器，如果存在
 docker-compose -f docker-compose-basic.yml stop
 docker-compose -f docker-compose-basic.yml rm -f
