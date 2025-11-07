@@ -29,19 +29,6 @@ x-service-base: &service-base
 
 services:
 
-  # ==================== Gateway ====================
-  jeesite-cloud-gateway:
-    <<: *service-base
-    container_name: jeesite-cloud-gateway
-    ports:
-      - "8980:8980"
-    environment:
-      <<: *common-env
-      JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
-    volumes:
-      - ./.docker/modules:/data
-      - ./gateway/target:/app
-
   # ==================== Core ====================
   jeesite-cloud-core:
     <<: *service-base
@@ -68,12 +55,37 @@ services:
     container_name: jeesite-cloud-files
     environment:
       <<: *common-env
-      JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8988
     volumes:
       - ./.docker/modules:/data
       - ./modules/core/files/target:/app
     depends_on:
       jeesite-cloud-core:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8988/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+
+  # ==================== Gateway ====================
+  jeesite-cloud-gateway:
+    <<: *service-base
+    container_name: jeesite-cloud-gateway
+    ports:
+      - "8980:8980"
+    environment:
+      <<: *common-env
+      JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
+    volumes:
+      - ./.docker/modules:/data
+      - ./gateway/target:/app
+    depends_on:
+      jeesite-cloud-core:
+        condition: service_healthy
+      jeesite-cloud-files:
         condition: service_healthy
 
 # ==================== Networks ====================
