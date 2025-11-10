@@ -19,6 +19,12 @@ pause
 %~d0
 cd %~dp0
 
+if defined JAVA_HOME17 (
+  set "JAVA_HOME=%JAVA_HOME17%" & set "PATH=%JAVA_HOME17%\bin;%PATH%"
+)
+call mvn -v
+echo.
+
 cd ..
 
 call mvn clean compile -Dmaven.test.skip=true -U

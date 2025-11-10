@@ -10,6 +10,12 @@ echo ""
 echo "[信息] 运行Docker镜像。"
 echo ""
 
+if [ -n "$JAVA_HOME17" ] && [ -d "$JAVA_HOME17" ]; then
+  export JAVA_HOME="$JAVA_HOME17" PATH="$JAVA_HOME/bin:$PATH"
+fi
+mvn -v
+echo ""
+
 cd ..
 mvn docker:stop docker:start docker:logs -Ddocker.follow
 

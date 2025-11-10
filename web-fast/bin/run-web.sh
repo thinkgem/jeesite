@@ -10,11 +10,15 @@ echo ""
 echo "[信息] 打包Web工程，并运行Web工程。"
 echo ""
 
-# 打包Web工程（开始）
+if [ -n "$JAVA_HOME17" ] && [ -d "$JAVA_HOME17" ]; then
+  export JAVA_HOME="$JAVA_HOME17" PATH="$JAVA_HOME/bin:$PATH"
+fi
+mvn -v
+echo ""
+
 cd ..
 mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
-# 打包Web工程（结束）
 
-# 启动服务
+# web.jar 与 pom.xml 中 finalName、packaging 一致
 cd target
 java -jar web.jar

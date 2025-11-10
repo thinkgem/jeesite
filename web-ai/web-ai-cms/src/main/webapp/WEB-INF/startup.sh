@@ -9,6 +9,12 @@ echo ""
 echo "[信息] 运行Web工程。"
 echo ""
 
+if [ -n "$JAVA_HOME17" ] && [ -d "$JAVA_HOME17" ]; then
+  export JAVA_HOME="$JAVA_HOME17" PATH="$JAVA_HOME/bin:$PATH"
+fi
+mvn -v
+echo ""
+
 cd "$(cd "$(dirname "$0")"; pwd)"
 
 # 设置JDK目录
