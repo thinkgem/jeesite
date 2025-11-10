@@ -12,12 +12,15 @@ echo.
 %~d0
 cd %~dp0
 
-rem 打包Web工程（开始）
+if defined JAVA_HOME17 (
+  set "JAVA_HOME=%JAVA_HOME17%" & set "PATH=%JAVA_HOME17%\bin;%PATH%"
+)
+call mvn -v
+echo.
+
 cd ..
 call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
 cd target
-rem 打包Web工程（结束）
-
 
 rem web.war 与 pom.xml 中 finalName、packaging 一致
 mkdir app
