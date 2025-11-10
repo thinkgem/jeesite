@@ -214,8 +214,8 @@ public class EncodeUtils {
 		if (request != null && StringUtils.containsAny(request.getRequestURI(), ServletUtils.XSS_FILE_EXCLUDE_URI)) {
 			return text;
 		}
-		String oriValue = StringUtils.trim(text);
 		if (text != null){
+			String oriValue = StringUtils.trim(text);
 			String value = oriValue;
 			for (Pattern pattern : xssPatterns) {
 				Matcher matcher = pattern.matcher(value);

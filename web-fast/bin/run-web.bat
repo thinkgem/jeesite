@@ -12,12 +12,16 @@ echo.
 %~d0
 cd %~dp0
 
-rem 打包Web工程（开始）
+if defined JAVA_HOME8 (
+  set "JAVA_HOME=%JAVA_HOME8%" & set "PATH=%JAVA_HOME8%\bin;%PATH%"
+)
+call mvn -v
+echo.
+
 cd ..
 call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
-rem 打包Web工程（结束）
 
-rem 启动服务
+rem web.jar 与 pom.xml 中 finalName、packaging 一致
 cd target
 call java -jar web.jar
 
