@@ -9,6 +9,12 @@ echo ""
 echo "[信息] 运行Web工程。"
 echo ""
 
+if [ -n "$JAVA_HOME8" ] && [ -d "$JAVA_HOME8" ]; then
+  export JAVA_HOME="$JAVA_HOME8" PATH="$JAVA_HOME/bin:$PATH"
+fi
+mvn -v
+echo ""
+
 cd "$(cd "$(dirname "$0")"; pwd)"
 
 # 设置JDK目录
@@ -20,7 +26,7 @@ CLASS_PATH="$PWD/../"
 # 优化JVM参数
 JAVA_OPTS="$JAVA_OPTS -Xms512m -Xmx1024m -Dfile.encoding=utf-8"
 
-JAVA_OPTS="$JAVA_OPTS -Dnacos.home=./data"
+# JAVA_OPTS="$JAVA_OPTS -Dnacos.home=./data"
 
 # 方式一、配置外部自定义的属性文件（建议）
 # JAVA_OPTS="$JAVA_OPTS -Dspring.config.location=$PWD/app.yml"
@@ -34,4 +40,4 @@ else
   RUN_JAVA="$JAVA_HOME"/bin/java
 fi
 
-exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.launch.WarLauncher
+exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.launch.WarLauncher $@

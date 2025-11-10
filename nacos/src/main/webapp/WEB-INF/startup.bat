@@ -15,6 +15,12 @@ rem echo.
 %~d0
 cd %~dp0
 
+if defined JAVA_HOME8 (
+  set "JAVA_HOME=%JAVA_HOME8%" & set "PATH=%JAVA_HOME8%\bin;%PATH%"
+)
+call mvn -v
+echo.
+
 title %cd%
 
 rem 设置JDK目录
@@ -26,7 +32,7 @@ set "CLASS_PATH=%cd%/../"
 rem 优化JVM参数
 set "JAVA_OPTS=%JAVA_OPTS% -Xms512m -Xmx1024m -Dfile.encoding=utf-8"
 
-set "JAVA_OPTS=%JAVA_OPTS% -Dnacos.home=./data"
+rem set "JAVA_OPTS=%JAVA_OPTS% -Dnacos.home=./data"
 
 rem 方式一、配置外部自定义的属性文件（建议）
 rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml"
@@ -47,7 +53,7 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.launch.WarLauncher
+call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.launch.WarLauncher %*
 goto end
 
 :end

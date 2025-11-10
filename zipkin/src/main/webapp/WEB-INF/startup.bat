@@ -15,6 +15,12 @@ rem echo.
 %~d0
 cd %~dp0
 
+if defined JAVA_HOME8 (
+  set "JAVA_HOME=%JAVA_HOME8%" & set "PATH=%JAVA_HOME8%\bin;%PATH%"
+)
+call mvn -v
+echo.
+
 title %cd%
 
 rem 设置JDK目录
@@ -45,7 +51,7 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.WarLauncher %*
+call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.launch.WarLauncher %*
 goto end
 
 :end
