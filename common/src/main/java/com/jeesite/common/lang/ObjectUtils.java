@@ -203,7 +203,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.serializeFury(object);
 			}
 		} catch (Exception e) {
-			logger.error("serialize: {}", e.getMessage());
+			logger.error("Serialize: {}", e.getMessage());
 		}
 		return null;
 	}
@@ -219,7 +219,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.unserializeFury(bytes);
 			}
 		} catch (Exception e) {
-			logger.error("unserialize: {}", e.getMessage());
+			logger.error("Unserialize: {}", e.getMessage());
 		}
 		return null;
 	}
@@ -241,8 +241,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			throw new RuntimeException(e);
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 30000){
-			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatTime(totalTime));
+		if (totalTime > 30000 && logger.isWarnEnabled()){
+			logger.warn("Serialize {}, time: {}", object.getClass(), TimeUtils.formatTime(totalTime));
 		}
 		return bytes;
 	}
@@ -265,8 +265,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			}
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatTime(totalTime));
+		if (totalTime > 30000 && object != null && logger.isWarnEnabled()){
+			logger.warn("Unserialize {}, time: {}", object.getClass(), TimeUtils.formatTime(totalTime));
 		}
 		return object;
 	}
@@ -282,8 +282,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		long beginTime = System.currentTimeMillis();
 		byte[] bytes = Static.fury.serialize(object);
 		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 30000){
-			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatTime(totalTime));
+		if (totalTime > 30000 && logger.isWarnEnabled()){
+			logger.warn("Serialize {}, time: {}", object.getClass(), TimeUtils.formatTime(totalTime));
 		}
 		return bytes;
 	}
@@ -298,8 +298,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		long beginTime = System.currentTimeMillis();
 		Object object = Static.fury.deserialize(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatTime(totalTime));
+		if (totalTime > 30000 && object != null && logger.isWarnEnabled()){
+			logger.warn("Unserialize {}, time: {}", object.getClass(), TimeUtils.formatTime(totalTime));
 		}
 		return object;
 	}

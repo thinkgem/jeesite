@@ -124,11 +124,7 @@ public class AuditController extends BaseController {
 		List<Menu> menuList = auditService.findMenuList(audit);
 		Map<String, List<Map<String, String>>> map = MapUtils.newLinkedHashMap();
 		for (Menu menu : menuList){
-			List<Map<String, String>> list = map.get(menu.getSysCode());
-			if (list == null){
-				list = ListUtils.newArrayList();
-				map.put(menu.getSysCode(), list);
-			}
+			List<Map<String, String>> list = map.computeIfAbsent(menu.getSysCode(), k -> ListUtils.newArrayList());
 			Map<String, String> m = MapUtils.newHashMap();
 			m.put("id", menu.getMenuCode());
 			m.put("pId", menu.getParentCode());
