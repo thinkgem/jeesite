@@ -203,7 +203,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.serializeFury(object);
 			}
 		} catch (Exception e) {
-			logger.error("Serialize: {}", e.getMessage());
+			logger.error("Serialize: {} {}", object, e.getMessage());
 		}
 		return null;
 	}
