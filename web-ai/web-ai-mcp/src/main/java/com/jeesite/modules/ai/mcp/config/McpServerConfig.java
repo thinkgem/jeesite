@@ -4,11 +4,6 @@
  */
 package com.jeesite.modules.ai.mcp.config;
 
-import com.jeesite.modules.ai.tools.TestAiTools;
-import com.jeesite.modules.ai.tools.UserAITools;
-import org.springframework.ai.tool.ToolCallbackProvider;
-import org.springframework.ai.tool.method.MethodToolCallbackProvider;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
@@ -20,9 +15,12 @@ import org.springframework.context.annotation.Lazy;
 @Configuration
 public class McpServerConfig {
 
-	@Bean
-	public ToolCallbackProvider mcpServerTools(TestAiTools testAiTools, UserAITools userAITools) {
-		return MethodToolCallbackProvider.builder().toolObjects(testAiTools, userAITools).build();
-	}
+//	/**
+//	 * Spring AI 1.1.0 中自动扫描 McpTool 无需手动配置
+//	 */
+//	@Bean
+//	public ToolCallbackProvider mcpServerTools(TestMcpAiTools testMcpAiTools, UserMcpAiTools userMcpAiTools) {
+//		return MethodToolCallbackProvider.builder().toolObjects(testMcpAiTools, userMcpAiTools).build();
+//	}
 
 }

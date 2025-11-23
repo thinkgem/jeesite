@@ -14,6 +14,7 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
+import com.jeesite.modules.ai.tools.utils.SubjectHolder;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.utils.AreaUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -151,7 +152,12 @@ public class AiCmsChatService extends BaseService {
 					.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
 					.build());
 		}
-		spec.toolContext(Map.of("subject", ThreadContext.getSubject()));
+//		if (Global.getPropertyToBoolean("spring.ai.mcp.client.enabled", "false")) {
+//			AiMcpClientConfig.subject.set(ThreadContext.getSubject());
+//		} else {
+//			spec.toolContext(Map.of("subject", ThreadContext.getSubject()));
+//		}
+		SubjectHolder.setSubject(ThreadContext.getSubject());
 		return spec.stream()
 			.chatResponse()
 			.doOnNext(response -> {
@@ -161,11 +167,12 @@ public class AiCmsChatService extends BaseService {
 					if (assistantMessage == null) {
 						request.setAttribute("assistantMessage", currAssistantMessage);
 					} else {
-						request.setAttribute("assistantMessage", new AssistantMessage(
-								assistantMessage.getText() + currAssistantMessage.getText(),
-								currAssistantMessage.getMetadata()));
+						request.setAttribute("assistantMessage", AssistantMessage.builder()
+								.content(assistantMessage.getText() + currAssistantMessage.getText())
+								.properties(currAssistantMessage.getMetadata()).build());
 					}
 				}
+				SubjectHolder.remove();
 			})
 			.doFinally((signalType) -> {
 				if (signalType != SignalType.ON_COMPLETE) {
@@ -176,6 +183,7 @@ public class AiCmsChatService extends BaseService {
 						chatMemory.add(conversationId, new AssistantMessage(text("暂无消息，你已主动停止响应。")));
 					}
 				}
+				SubjectHolder.remove();
 			})
 			.onErrorResume(error -> {
 				String errorMessage = error.getMessage();
@@ -189,6 +197,7 @@ public class AiCmsChatService extends BaseService {
 				AssistantMessage assistantMessage = new AssistantMessage(errorMessage);
 				chatMemory.add(conversationId, assistantMessage);
 				logger.error("Error message: {}", errorMessage);
+				SubjectHolder.remove();
 				return Flux.just(ChatResponse.builder()
 						.generations(List.of(new Generation(assistantMessage)))
 						.build());
