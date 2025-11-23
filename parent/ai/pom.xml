@@ -19,7 +19,7 @@
 
 	<properties>
 
-		<spring-ai.version>1.0.3</spring-ai.version>
+		<spring-ai.version>1.1.0</spring-ai.version>
 
 	</properties>
 
