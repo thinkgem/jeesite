@@ -144,6 +144,7 @@
 							<configuration>
 								<name>build.time</name>
 								<pattern>yyyy-MM-dd HH:mm</pattern>
+								<locale>zh_CN</locale>
 								<timeZone>GMT+8</timeZone>
 							</configuration>
 						</execution>
