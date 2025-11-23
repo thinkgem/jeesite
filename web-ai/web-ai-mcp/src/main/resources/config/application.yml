@@ -87,10 +87,27 @@ spring:
   jta:
     enabled: false
 
-  # 缓存配置
-  cache:
-    # 缓存及会话共享（专业版）
-    isClusterMode: false
+#  # Redis 连接参数 （RedisProperties）
+#  data:
+#    redis:
+#      host: 127.0.0.1
+#      port: 6379
+#      ssl:
+#        enabled: false
+#      database: 0
+#      password: 1234
+#      timeout: 20000
+#      lettuce:
+#        pool:
+#          # 最大空闲连接数
+#          maxIdle: 3
+#          # 最大活动连接数
+#          maxActive: 20
+#
+#  # 缓存配置
+#  cache:
+#    # 缓存及会话共享（专业版）
+#    isClusterMode: true
 
 # ========= MPC Server 相关配置 =========
 
@@ -102,13 +119,24 @@ spring:
         name: jeesite-mcp-server
         version: 1.0.0
         type: SYNC
-        sse-endpoint: /api/v1/sse
-        sse-message-endpoint: /api/v1/mcp
+#        sse-endpoint: /api/v1/sse
+#        sse-message-endpoint: /api/v1/mcp
+        protocol: STREAMABLE
+        streamable-http:
+          mcp-endpoint: /api/v1/mcp
         capabilities:
           tool: true
           resource: true
           prompt: true
           completion: true
+
+# Shiro 相关
+shiro:
+  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
+  # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
+  filterChainDefinitions: |
+    /api/v1/mcp/** = anon
+    ${adminPath}/** = user
 
 # 日志配置
 logging:

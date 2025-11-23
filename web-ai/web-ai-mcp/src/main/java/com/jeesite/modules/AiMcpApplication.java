@@ -6,6 +6,7 @@ package com.jeesite.modules;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.io.FileUtils;
+import com.jeesite.common.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -26,10 +27,11 @@ public class AiMcpApplication extends SpringBootServletInitializer {
 		SpringApplication.run(AiMcpApplication.class, args);
 		logger.info(
 				"\n\n==============================================================\n"
-				+ "\n   启动完成，MCP 地址：http://127.0.0.1:{}/api/v1/sse\n"
+				+ "\n   启动完成，MCP 地址：http://127.0.0.1:{}/api/v1/{}\n"
 				+ "\n==============================================================\n",
 				Global.getProperty("server.port") + FileUtils.path(
-				Global.getProperty("server.servlet.context-path")));
+				Global.getProperty("server.servlet.context-path")),
+				StringUtils.equalsIgnoreCase(Global.getProperty("spring.ai.mcp.server.protocol"), "STREAMABLE") ? "mcp" : "sse");
 	}
 	
 	@Override

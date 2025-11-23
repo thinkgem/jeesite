@@ -175,11 +175,16 @@ spring:
         version: 1.0.0
         request-timeout: 30s
         type: SYNC
-        sse:
+        streamable-http:
           connections:
             jeesite:
               url: http://127.0.0.1:8992
-              sse-endpoint: /api/v1/sse
+              endpoint: /api/v1/mcp
+#        sse:
+#          connections:
+#            jeesite:
+#              url: http://127.0.0.1:8992
+#              sse-endpoint: /api/v1/sse
         toolcallback:
           enabled: true
 
