@@ -6,20 +6,21 @@ package com.jeesite.modules.ai.cms.config;
 
 import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.cms.service.CacheChatMemoryRepository;
-import com.jeesite.modules.ai.tools.TestAiTools;
-import com.jeesite.modules.ai.tools.UserAITools;
+import com.jeesite.modules.ai.tools.annotation.AiTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
-import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Map;
 
 /**
  * AI 聊天配置类
@@ -35,29 +36,16 @@ public class AiCmsChatConfig {
 	 */
 	@Bean("chatClient")
 	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "false", matchIfMissing = true)
-	public ChatClient chatClient(ChatClient.Builder builder, AiCmsProperties properties,
-								 TestAiTools testAiTools, UserAITools userAITools) {
+	public ChatClient chatClient(ChatClient.Builder builder, AiCmsProperties properties) {
 		if (StringUtils.isNotBlank(properties.getDefaultSystem())) {
 			builder.defaultSystem(properties.getDefaultSystem());
 		}
 		if (properties.getTools().getEnabled()) {
-			builder.defaultTools(testAiTools, userAITools);
+			Map<String, Object> tools = SpringUtils.getApplicationContext().getBeansWithAnnotation(AiTools.class);
+			if (!tools.isEmpty()) {
+				builder.defaultTools(tools.values().toArray());
+			}
 		}
-		return builder.build();
-	}
-
-	/**
-	 * 聊天对话客户端（使用 MCP Tools）
-	 * @author ThinkGem
-	 */
-	@Bean("chatClient")
-	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)
-	public ChatClient chatClientMcp(ChatClient.Builder builder, AiCmsProperties properties,
-								 SyncMcpToolCallbackProvider syncMcpToolCallbackProvider) {
-		if (StringUtils.isNotBlank(properties.getDefaultSystem())) {
-			builder.defaultSystem(properties.getDefaultSystem());
-		}
-		builder.defaultToolCallbacks(syncMcpToolCallbackProvider.getToolCallbacks());
 		return builder.build();
 	}
 

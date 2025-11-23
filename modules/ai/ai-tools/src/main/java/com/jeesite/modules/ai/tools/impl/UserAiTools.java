@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.ai.tools;
+package com.jeesite.modules.ai.tools.impl;
 
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
@@ -13,10 +13,6 @@ import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.chat.model.ToolContext;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -24,22 +20,20 @@ import java.util.List;
  * AI MCP 工具调用
  * @author ThinkGem
  */
-@Component
-public class UserAITools {
+public class UserAiTools {
 
-	private final Logger logger = LoggerFactory.getLogger(UserAITools.class);
+	private final Logger logger = LoggerFactory.getLogger(UserAiTools.class);
 
 	private final EmpUserService empUserService;
 
-	public UserAITools(EmpUserService empUserService) {
+	public UserAiTools(EmpUserService empUserService) {
 		this.empUserService = empUserService;
 	}
 
 	/**
 	 * 获取当前会话的用户信息
 	 */
-	@Tool(name="当前用户信息", description = "无条件获取当前用户信息")
-	public String getCurrentUser(ToolContext toolContext) {
+	public String getCurrentUser() {
 		User currentUser = UserUtils.getUser();
 		if (StringUtils.isBlank(currentUser.getUserCode())) {
 			logger.info("当前用户信息 ============== 当前用户未登录。");
@@ -54,11 +48,7 @@ public class UserAITools {
 	/**
 	 * 查询用户信息
 	 */
-	@Tool(name="查询用户信息", description = "根据用户名（登录账号）或员工姓名模糊查询用户信息。" +
-			"结果以表格形式展示，包含用户名userName、姓名empUser、部门officeName等基本信息。")
-	public String findEmpUserInfo(ToolContext toolContext,
-		@ToolParam(description = "用户的登录名或员工的真实姓名，支持模糊匹配") String userName
-	) {
+	public String findEmpUserInfo(String userName) {
 		EmpUser where = new EmpUser();
 		where.sqlMap().getWhere().and(w -> w
 				.or("a.user_name", QueryType.LIKE, userName)
