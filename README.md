@@ -229,7 +229,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 ## 更多文档
 
 * AI、CMS、RAG、Tool、MCP 人工智能助手：<https://jeesite.com/docs/ai-cms>
-* BPM 业务流程引擎（Flowable）：<http://jeesite.com/docs/bpm/>
+* BPM 业务流程引擎（Flowable）：<https://jeesite.com/docs/bpm/>
 * CMS 多站点内容管理模块：<https://jeesite.com/docs/cms/>
 
 * 消息推送消息提醒：<https://jeesite.com/docs/msg-push-use/>
