@@ -257,7 +257,7 @@ public class Log extends DataEntity<Log> {
 			if (!params.isEmpty()) {
 				params.append("&");
 			}
-			params.append(param.getKey() + "=");
+			params.append(param.getKey()).append("=");
 			if (StringUtils.endsWithIgnoreCase(param.getKey(), "password")){
 				params.append("*");
 			}else if (param.getValue() != null) {
@@ -282,7 +282,7 @@ public class Log extends DataEntity<Log> {
 		if (paramsMap == null){
 			return null;
 		}
-        String[] values = (String[])paramsMap.get(name);
+        String[] values = paramsMap.get(name);
         return values != null && values.length > 0 ? values[0] : null;
     }
 
