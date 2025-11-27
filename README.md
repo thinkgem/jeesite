@@ -56,6 +56,11 @@
   [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=main)、
   [GitHub](https://github.com/thinkgem/jeesite/tree/main)
 
+## 该分支暂停维护，请关注更先进技术栈：
+
+基于 Turborepo + Monorepo 快速构建、模块化、代码复用、支持分包开发，
+详见主分支：<https://gitee.com/thinkgem/jeesite-vue>
+
 ## 平台介绍
 
 * JeeSite 快速开发平台，低代码，轻量级，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，后端基于经典组合 Spring Boot、Shiro、MyBatis，前端采用分离版 Vue3、Vite、Ant Design Vue、TypeScript、Vben Admin 最先进技术栈，或者 Beetl、Bootstrap、AdminLTE 经典开发模式。
@@ -104,9 +109,6 @@
 用户界面专为信息化管理后台量身打造，在界面设计上精益求精，每一处细节都彰显着精致，为用户带来优雅且直观的操作体验。
 它提供多样化的菜单布局、智能的页签管理、高效的树表操作体验、强大的表格组件、灵活的表单组件设计，具备强大的扩展能力，
 同时支持黑暗布局风格，为用户提供高效、灵活且美观的操作体验，满足各类管理后台的复杂需求。
-
-另外我们还支持 Turborepo + Monorepo 快速构建、模块化、代码复用、支持分包开发
-详见：<https://gitee.com/thinkgem/jeesite-vue/tree/monorepo/>
 
 ## 前端技术特点
 
