@@ -300,7 +300,7 @@
 				<plugin>
 					<groupId>com.jeesite.maven</groupId>
 					<artifactId>compressor-maven-plugin</artifactId>
-					<version>1.0.0-SNAPSHOT</version>
+					<version>1.1.0-SNAPSHOT</version>
 					<executions>
 						<execution>
 							<phase>prepare-package</phase>
@@ -310,11 +310,6 @@
 						</execution>
 					</executions>
 					<configuration>
-						<encoding>UTF-8</encoding>
-						<jswarn>false</jswarn>
-						<nosuffix>true</nosuffix>
-						<linebreakpos>30000</linebreakpos>
-						<force>true</force>
 						<includes>
 							<include>**/*.js</include>
 							<include>**/*.css</include>
