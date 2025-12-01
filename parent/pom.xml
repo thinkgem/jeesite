@@ -124,7 +124,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<!--<version>3.8.1</version>-->
 					<configuration>
 						<parameters>true</parameters>
 						<showWarnings>true</showWarnings>
@@ -155,7 +154,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<!--<version>3.2.2</version>-->
 					<configuration>
 						<archive>
 							<manifest>
@@ -193,7 +191,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<!--<version>3.3.2</version>-->
 					<configuration>
 						<warSourceExcludes>
 							userfiles/**
@@ -220,7 +217,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<!--<version>3.2.0</version>-->
 					<configuration>
 						<propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
 						<delimiters>
@@ -234,7 +230,6 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<!--<version>3.1.0</version>-->
 				</plugin>
 
 				<!-- springboot插件 -->
