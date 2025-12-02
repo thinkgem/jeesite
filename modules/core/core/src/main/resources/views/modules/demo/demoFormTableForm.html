@@ -145,6 +145,11 @@
 	</div>
 </div>
 <% } %>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
 <script>
 //初始化测试数据子表DataGrid对象
 $('#testDataChildDataGrid').dataGrid({
@@ -216,13 +221,6 @@ $('#testDataChildDataGrid').dataGrid({
 		
 	}
 });
-</script>
-<script id="treeselectTpl" type="text/template">//<!--<div>
-<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
-	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
-</div>//--></script>
-<script>
 $('#inputForm').validate({
 	submitHandler: function(form){
 // 		js.ajaxSubmitForm($(form), function(data){

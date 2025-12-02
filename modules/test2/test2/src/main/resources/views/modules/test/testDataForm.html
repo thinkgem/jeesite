@@ -192,6 +192,21 @@
 	</div>
 </div>
 <% } %>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"/>
+</div>//--></script>
+<script id="listselectTpl" type="text/template">//<!--<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
+</div>//--></script>
+<script id="fileuploadTpl" type="text/template">//<!--<div>
+<#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}" uploadType="all"
+	class="{{d.cssClass}}" isMini="true" preview="true" readonly="{{d.readonly}}"/>
+</div>//--></script>
 <script>
 //初始化测试数据子表DataGrid对象
 $('#testDataChildDataGrid').dataGrid({
@@ -371,23 +386,6 @@ $('#testDataChildDataGrid').dataGrid({
 // 				+ '<i class="fa fa-plus"></i></a>');
 	}
 });
-</script>
-<script id="treeselectTpl" type="text/template">//<!--<div>
-<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
-	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"/>
-</div>//--></script>
-<script id="listselectTpl" type="text/template">//<!--<div>
-<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
-	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"
-	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
-</div>//--></script>
-<script id="fileuploadTpl" type="text/template">//<!--<div>
-<#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}" uploadType="all" 
-	class="{{d.cssClass}}" isMini="true" preview="true" readonly="{{d.readonly}}"/>
-</div>//--></script>
-<script>
 $('#inputForm').validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
