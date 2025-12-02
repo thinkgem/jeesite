@@ -120,6 +120,17 @@
 	</div>
 </div>
 <% } %>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
+<script id="listselectTpl" type="text/template">//<!--<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
@@ -252,14 +263,3 @@ $('#btnGetData').click(function(){
 	js.showMessage('请按 F12 打开控制台，查看数据');
 });
 </script>
-<script id="treeselectTpl" type="text/template">//<!--<div>
-<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
-	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
-</div>//--></script>
-<script id="listselectTpl" type="text/template">//<!--<div>
-<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
-	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
-</div>//--></script>
