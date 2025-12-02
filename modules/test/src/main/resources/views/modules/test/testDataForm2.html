@@ -281,7 +281,7 @@ $('#testDataChildDataGrid').dataGrid({
 		},
 		{header:'${text("复选框")}', name:'testCheckbox', width:135, fixed: true,
 			formatter: function(val, obj, row, act){
-				return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
+				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
 			},
 			unformat: function(val, obj, cell){
 				return val;
@@ -337,7 +337,7 @@ $('#testDataChildDataGrid').dataGrid({
 					// 初始化控件后设置只读模式（实例）
 					// $(element).find('.form-control, .btn').addClass('disabled');
 				}
-			},
+			}
 		},
 		{header:'${text("列表选择")}', name:'testUser2', width:100,
 			formatter: function(val, obj, row, act){
@@ -414,10 +414,13 @@ $('#testDataChildDataGrid').dataGrid({
 				}
 			}
 		},
-		{header:'${text("文件上传")}', name:'id', width:200, classes:'editable',
+		{header:'${text("文件上传")}', name:'fileupload', width:200, classes:'editable',
 			formatter: function(val, obj, row, act){
 				return '<button type="button" class="btn btn-xs btn-default uploaderFile" data-val="'
 						+(obj.rowId)+'">查看文件</button>';
+			},
+			unformat: function(val, obj, cell){
+				return '';
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
@@ -426,6 +429,9 @@ $('#testDataChildDataGrid').dataGrid({
 						id: 'fileupload_'+editOptions.rowId, bizKey: editOptions.rowId,
 						bizType: 'testDataChild_file', cssClass: '', readonly: false
 					});
+				},
+				custom_value: function(){
+					return {};
 				}
 			}
 		}

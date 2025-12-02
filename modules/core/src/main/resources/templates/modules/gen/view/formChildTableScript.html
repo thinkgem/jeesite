@@ -1,5 +1,12 @@
 <% // 输出子表 Script脚本
 if (table.childList.~size > 0){ %>
+<% if(treeselectExists){ %>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<${'#'}form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
+<% } %>
 <script>
 <%
 var treeselectExists = false;
@@ -193,11 +200,4 @@ if (table.tplCategory != 'query'){
 });
 <% } %>
 </script>
-<% if(treeselectExists){ %>
-<script id="treeselectTpl" type="text/template">//<!--<div>
-<${'#'}form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
-	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
-</div>//--></script>
-<% } %>
 <% } %>
