@@ -240,9 +240,6 @@ $('#testDataChildDataGrid').dataGrid({
 			formatter: function(val, obj, row, act){
 				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
 			},
-			unformat: function(val, obj, cell){
-				return val;
-			},
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				// items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{toJson(testSelectItems![])}"),
@@ -255,9 +252,6 @@ $('#testDataChildDataGrid').dataGrid({
 			formatter: function(val, obj, row, act){
 				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
 			},
-			unformat: function(val, obj, cell){
-				return val;
-			},
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -269,9 +263,6 @@ $('#testDataChildDataGrid').dataGrid({
 			formatter: function(val, obj, row, act){
 				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
 			},
-			unformat: function(val, obj, cell){
-				return val;
-			},
 			editable:true, edittype:'radio', editoptions:{'class':'form-control icheck',
 				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -282,9 +273,6 @@ $('#testDataChildDataGrid').dataGrid({
 		{header:'${text("复选框")}', name:'testCheckbox', width:135, fixed: true,
 			formatter: function(val, obj, row, act){
 				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
-			},
-			unformat: function(val, obj, cell){
-				return val;
 			},
 			editable:true, edittype:'checkbox', editoptions:{'class':'form-control icheck',
 				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
@@ -314,24 +302,21 @@ $('#testDataChildDataGrid').dataGrid({
 		},
 		{header:'${text("用户选择")}', name:'testUser', width:100,
 			formatter: function(val, obj, row, act){
-				return js.val(row, 'testUser.userName');
-			},
-			unformat: function(val, obj, cell){
-				return js.val(obj.colModel.data[obj.rowId], 'userCode')
-						+ '|' + js.val(obj.colModel.data[obj.rowId], 'userName');
+				return js.val(obj.colModel.data[obj.rowId], 'userName');
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
+					var colData = editOptions.colModel.data[editOptions.rowId];
 					return js.template('treeselectTpl', {
 						id: 'user_'+editOptions.id, title: '用户选择',
-						name: 'testUser.userCode', value: val.split('|')[0],
-						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+						name: 'testUser.userCode', value: js.val(colData, 'userCode'),
+						labelName: 'testUser.userName', labelValue: js.val(colData, 'userName'),
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: '', readonly: false
 					});
 				},
 				custom_value: function(element, act){
-					return {userCode: element.find('[type=hidden]').val(),
-						userName: element.find('[type=text]').val()};
+					return { userCode: element.find('[type=hidden]:first').val(),
+						userName: element.find('[type=text]:first').val() };
 				},
 				dataInit: function(element){
 					// 初始化控件后设置只读模式（实例）
@@ -341,97 +326,88 @@ $('#testDataChildDataGrid').dataGrid({
 		},
 		{header:'${text("列表选择")}', name:'testUser2', width:100,
 			formatter: function(val, obj, row, act){
-				obj.colModel.data[obj.rowId] = row.testUser;
-				return js.val(row, 'testUser.userName');
-			},
-			unformat: function(val, obj, cell){
-				return js.val(obj.colModel.data[obj.rowId], 'userCode')
-						+ '|' + js.val(obj.colModel.data[obj.rowId], 'userName');
+				obj.colModel.data[obj.rowId] = row.testUser2 || row.testUser; // 给一个默认值
+				return js.val(obj.colModel.data[obj.rowId], 'userName');
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
+					var colData = editOptions.colModel.data[editOptions.rowId];
 					return js.template('listselectTpl', {
 						id: 'user_'+editOptions.id, title: '用户选择',
-						name: 'testUser2.userCode', value: val.split('|')[0],
-						labelName: 'testUser2.userName', labelValue: val.split('|')[1],
+						name: 'testUser2.userCode', value: js.val(colData, 'userCode'),
+						labelName: 'testUser2.userName', labelValue: js.val(colData, 'userName'),
 						url: '${ctx}/sys/empUser/empUserSelect', cssClass: '', readonly: false,
 						itemCode: 'userCode', itemName: 'userName'
 					});
 				},
 				custom_value: function(element, act){
-					return {userCode2: element.find('[type=hidden]').val(),
-						userName2: element.find('[type=text]').val()};
+					return { userCode: element.find('[type=hidden]:first').val(),
+						userName: element.find('[type=text]:first').val() };
 				}
 			}
 		},
 		{header:'${text("机构选择")}', name:'testOffice', width:100, title:false,
 			formatter: function(val, obj, row, act){
-				return js.val(row, 'testOffice.officeName');
-			},
-			unformat: function(val, obj, cell){
-				return js.val(obj.colModel.data[obj.rowId], 'officeCode')
-						+ '|' + js.val(obj.colModel.data[obj.rowId], 'officeName');
+				return js.val(obj.colModel.data[obj.rowId], 'officeName');
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
+					var colData = editOptions.colModel.data[editOptions.rowId];
 					return js.template('treeselectTpl', {
 						id: 'office_'+editOptions.id, title: '机构选择',
-						name: 'testOffice.officeCode', value: val.split('|')[0],
-						labelName: 'testOffice.officeName', labelValue: val.split('|')[1],
+						name: 'testOffice.officeCode', value: js.val(colData, 'officeCode'),
+						labelName: 'testOffice.officeName', labelValue: js.val(colData, 'officeName'),
 						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: '', readonly: false
 					});
 				},
 				custom_value: function(element, act){
-					return {officeCode: element.find('[type=hidden]').val(),
-						officeName: element.find('[type=text]').val()};
+					return { officeCode: element.find('[type=hidden]:first').val(),
+						officeName: element.find('[type=text]:first').val() };
 				}
 			}
 		},
-		{header:'${text("区域选择")}', name:'testAreaCode', width:100,
+		{header:'${text("区域选择")}', name:'testAreaCode', labelName:'testAreaName', width:100,
 			formatter: function(val, obj, row, act){
-				obj.colModel.data[obj.rowId] = {
-					testAreaCode: row.testAreaCode,
-					testAreaName: row.testAreaName
-				};
-				return js.val(row, 'testAreaName');
-			},
-			unformat: function(val, obj, cell){
-				return js.val(obj.colModel.data[obj.rowId], 'testAreaCode')
-						+ '|' + js.val(obj.colModel.data[obj.rowId], 'testAreaName');
+				return obj.colModel.data[obj.rowId+'_label'] || '';
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
 					return js.template('treeselectTpl', {
 						id: 'area_'+editOptions.id, title: '区域选择',
-						name: 'testAreaCode', value: val.split('|')[0],
-						labelName: 'testAreaName', labelValue: val.split('|')[1],
+						name: 'testAreaCode', value: editOptions.colModel.data[editOptions.rowId],
+						labelName: 'testAreaName', labelValue: editOptions.colModel.data[editOptions.rowId+'_label'],
 						url: '${ctx}/sys/area/treeData', cssClass: '', readonly: false
 					});
 				},
-				custom_value: function(element, act){
-					return {areaCode: element.find('[type=hidden]').val(),
-						areaName: element.find('[type=text]').val()};
+				custom_value: function(element, act, row){
+					if (!row || act !== 'get') { return; }
+					row['testAreaCode'] = element.find('[type=hidden]:first').val();
+					row['testAreaName'] = element.find('[type=text]:first').val();
 				}
 			}
 		},
-		{header:'${text("文件上传")}', name:'fileupload', width:200, classes:'editable',
+		{header:'${text("文件上传")}', name:'dataMap', width:200, classes:'editable',
 			formatter: function(val, obj, row, act){
 				return '<button type="button" class="btn btn-xs btn-default uploaderFile" data-val="'
-						+(obj.rowId)+'">查看文件</button>';
+						+ (obj.rowId) + '">查看文件</button>';
 			},
 			unformat: function(val, obj, cell){
-				return '';
+				if ($(cell).find('[type=text]:first').length <= 0){
+					return obj.colModel.data[obj.rowId] || {};
+				}
+				return { '[testDataChild_file]': $(cell).find('[type=text]:first').val(),
+					'[testDataChild_file_del]': $(cell).find('[type=hidden]:first').val() };
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
-					// log(val, editOptions)
 					return js.template('fileuploadTpl', {
 						id: 'fileupload_'+editOptions.rowId, bizKey: editOptions.rowId,
 						bizType: 'testDataChild_file', cssClass: '', readonly: false
 					});
 				},
-				custom_value: function(){
-					return {};
+				custom_value: function(element, act, row){
+					return { '[testDataChild_file]': element.find('[type=text]:first').val(),
+						'[testDataChild_file_del]': element.find('[type=hidden]:first').val() };
 				}
 			}
 		}
