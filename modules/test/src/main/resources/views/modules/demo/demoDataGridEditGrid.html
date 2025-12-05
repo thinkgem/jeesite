@@ -137,99 +137,166 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	// 设置数据表格列
 	columnModel: [
-		{header:'状态', name:'status', editable:true, hidden:true, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
-		{header:'主键', name:'id', editable:true, hidden:true, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
-		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
-		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
-		{header:'下拉框', name:'testSelect', width:100, 
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'id', editable:true, hidden:true},
+		{header:'${text("单行文本")}', name:'testInput', width:100, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("多行文本")}', name:'testTextarea', width:100, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
+		{header:'${text("下拉框")}', name:'testSelect', width:100,
+			formatter: function(val, obj, row, act){
+				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
+			},
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
+				// items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{toJson(testSelectItems![])}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
-			}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
+			}
 		},
-// 		{header:'下拉多选', name:'testSelectMultiple', width:100, 
-// 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
-// 				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
-// 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-// 					js.select2(element).on("change",function(){$(this).resetValid()});
-// 				}
-// 			}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
-// 		},
-		{header:'日期选择', name:'testDate', width:150, 
-			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control laydate required', 'readonly':'true',
-				dataInit: function(element){
-					laydate.render({elem:element, type:'date', format:'yyyy-MM-dd'});
+		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:147, fixed: true,
+			formatter: function(val, obj, row, act){
+				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
+			},
+			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
+				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
-			}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
+			}
 		},
-		{header:'日期时间', name:'testDatetime', width:150, 
-			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control laydate required', 'readonly':'true',
+		{header:'${text("单选框")}', name:'testRadio', width:135, fixed: true,
+			formatter: function(val, obj, row, act){
+				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
+			},
+			editable:true, edittype:'radio', editoptions:{'class':'form-control icheck',
+				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.iCheck(element).on("ifChanged",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("复选框")}', name:'testCheckbox', width:135, fixed: true,
+			formatter: function(val, obj, row, act){
+				return js.getDictLabel(obj.colModel.editoptions.items, val, '${text("未知")}', true);
+			},
+			editable:true, edittype:'checkbox', editoptions:{'class':'form-control icheck',
+				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.iCheck(element).on("ifChanged",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("日期选择")}', name:'testDate', width:120,
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'date', format:'yyyy-MM-dd', done: function(){
+						// 选择日期后，自动给下一个输入框赋值（联动实例）
+						// $(element).closest('td').next().find('.form-control').val('2020-11-26 10:10');
+					}});
+				}
+			}
+		},
+		{header:'${text("日期时间")}', name:'testDatetime', width:155,
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
 				dataInit: function(element){
 					laydate.render({elem:element, type:'datetime', format:'yyyy-MM-dd HH:mm'});
 				}
-			}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
+			}
 		},
-		{header:'用户选择', name:'testUser', width:150,
+		{header:'${text("用户选择")}', name:'testUser', width:100,
 			formatter: function(val, obj, row, act){
-				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
-			}, editable: true, edittype: "custom", editoptions: {
+				return js.val(obj.colModel.data[obj.rowId], 'userName');
+			},
+			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
+					var colData = editOptions.colModel.data[editOptions.rowId];
 					return js.template('treeselectTpl', {
-						id: 'user_'+editOptions.id, title: '用户选择', 
-						name: 'testUser.userCode', value: val.split('|')[0], 
-						labelName: 'testUser.userName', labelValue: val.split('|')[1],
-						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
+						id: 'user_'+editOptions.id, title: '用户选择',
+						name: 'testUser.userCode', value: js.val(colData, 'userCode'),
+						labelName: 'testUser.userName', labelValue: js.val(colData, 'userName'),
+						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: '', readonly: false
 					});
+				},
+				custom_value: function(element, act){
+					return { userCode: element.find('[type=hidden]:first').val(),
+						userName: element.find('[type=text]:first').val() };
+				},
+				dataInit: function(element){
+					// 初始化控件后设置只读模式（实例）
+					// $(element).find('.form-control, .btn').addClass('disabled');
 				}
-			}, unformat: function(val, obj, cell){return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
+			}
 		},
-		{header:'机构选择', name:'testOffice', width:150,
+		{header:'${text("列表选择")}', name:'testUser2', width:100,
 			formatter: function(val, obj, row, act){
-				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
-			}, editable: true, edittype: "custom", editoptions: {
+				obj.colModel.data[obj.rowId] = row.testUser2 || row.testUser; // 给一个默认值
+				return js.val(obj.colModel.data[obj.rowId], 'userName');
+			},
+			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
-					return js.template('treeselectTpl', {
-						id: 'office_'+editOptions.id, title: '机构选择', 
-						name: 'testOffice.officeCode', value: val.split('|')[0], 
-						labelName: 'testOffice.officeName', labelValue: val.split('|')[1],
-						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: ''
-					});
-				}
-			}, unformat: function(val, obj, cell){return $('#office_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
-		},
-		{header:'区域选择', name:'testAreaCode', width:150,
-			formatter: function(val, obj, row, act){
-				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
-			}, editable: true, edittype: "custom", editoptions: {
-				custom_element: function(val, editOptions) {
-					return js.template('treeselectTpl', {
-						id: 'area_'+editOptions.id, title: '区域选择', 
-						name: 'testAreaCode', value: val.split('|')[0], 
-						labelName: 'testAreaName', labelValue: val.split('|')[1],
-						url: '${ctx}/sys/area/treeData', cssClass: ''
-					});
-				}
-			}, unformat: function(val, obj, cell){return $('#area_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
-		},
-		{header:'列表选择', name:'testListSelect', width:150,
-			formatter: function(val, obj, row, act){
-				return js.val(row, 'testListSelectCode')+'|'+js.val(row, 'testListSelectName');
-			}, editable: true, edittype: "custom", editoptions: {
-				custom_element: function(val, editOptions) {
+					var colData = editOptions.colModel.data[editOptions.rowId];
 					return js.template('listselectTpl', {
-						id: 'user_'+editOptions.id, title: '用户选择', 
-						name: 'testListSelectCode', value: val.split('|')[0], 
-						labelName: 'testListSelectName', labelValue: val.split('|')[1],
-						url: '${ctx}/sys/empUser/empUserSelect', 
-						itemCode: 'userCode', itemName: 'userName',
-						cssClass: ''
+						id: 'user_'+editOptions.id, title: '用户选择',
+						name: 'testUser2.userCode', value: js.val(colData, 'userCode'),
+						labelName: 'testUser2.userName', labelValue: js.val(colData, 'userName'),
+						url: '${ctx}/sys/empUser/empUserSelect', cssClass: '', readonly: false,
+						itemCode: 'userCode', itemName: 'userName'
 					});
+				},
+				custom_value: function(element, act){
+					return { userCode: element.find('[type=hidden]:first').val(),
+						userName: element.find('[type=text]:first').val() };
 				}
-			}, unformat: function(val, obj, cell){return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
+			}
+		},
+		{header:'${text("机构选择")}', name:'testOffice', width:100, title:false,
+			formatter: function(val, obj, row, act){
+				return js.val(obj.colModel.data[obj.rowId], 'officeName');
+			},
+			editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					var colData = editOptions.colModel.data[editOptions.rowId];
+					return js.template('treeselectTpl', {
+						id: 'office_'+editOptions.id, title: '机构选择',
+						name: 'testOffice.officeCode', value: js.val(colData, 'officeCode'),
+						labelName: 'testOffice.officeName', labelValue: js.val(colData, 'officeName'),
+						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: '', readonly: false
+					});
+				},
+				custom_value: function(element, act){
+					return { officeCode: element.find('[type=hidden]:first').val(),
+						officeName: element.find('[type=text]:first').val() };
+				}
+			}
+		},
+		{header:'${text("区域选择")}', name:'testAreaCode', labelName:'testAreaName', width:100,
+			formatter: function(val, obj, row, act){
+				obj.colModel.data[obj.rowId+'_label'] = row.testAreaName || '';
+				return obj.colModel.data[obj.rowId+'_label'];
+			},
+			editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					// return js.template('treeselectTpl', {
+					// 	id: 'area_'+editOptions.id, title: '区域选择',
+					// 	name: 'testAreaCode', value: val.split('|')[0],
+					// 	labelName: 'testAreaName', labelValue: val.split('|')[1],
+					// 	url: '${ctx}/sys/area/treeData', cssClass: '', readonly: false
+					// });
+					return js.template('treeselectTpl', {
+						id: 'area_'+editOptions.id, title: '区域选择',
+						name: 'testAreaCode', value: editOptions.colModel.data[editOptions.rowId],
+						labelName: 'testAreaName', labelValue: editOptions.colModel.data[editOptions.rowId+'_label'],
+						url: '${ctx}/sys/area/treeData', cssClass: '', readonly: false
+					});
+				},
+				custom_value: function(element, act, row){
+					if (!row || act !== 'get') { return; }
+					row['testAreaCode'] = element.find('[type=hidden]:first').val();
+					row['testAreaName'] = element.find('[type=text]:first').val();
+				}
+			}
 		},
 		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
@@ -237,16 +304,38 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="#" onclick="js.confirm(\'你确认要删除这条数据吗？\', function(){$(\'#dataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}else{
 				actions.push('<a href="#" onclick="js.confirm(\'你确认要删除这条数据吗？\', function(){$(\'#dataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				// actions.push('<a href="${ctx}/test/testData/form?id='+row.id+'&flag=3" class="btnList" title="${text("编辑数据")}"><i class="fa icon-note"></i></a>&nbsp;');
 			}
 			return actions.join('');
 		}, editoptions: {defaultValue: 'new'}, unformat: function(val, obj, cell){return '';}}
 	],
+	onSelectRow: function(id, stat, e) {
+		if (id && e && !$(e.target).hasClass('btn')){
+			// $('#dataGrid').dataGrid('editRow', id,{keys:true,focusField:true});
+			// if(!$('#inputForm').valid()) {
+			// 	js.showMessage('您填写的信息有误，请根据提示修正。');
+			// 	return false;
+			// }
+			$('#dataGrid').dataGrid('saveEditRow', id).dataGrid('setEditRow', id);
+		}
+	},
 	
 	// 编辑表格参数
 	editGrid: true,				// 是否是编辑表格
 	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridInitAllRowEdit: false,  // 是否初始化就编辑所有行（*** 重点 ***）
 	editGridAddRowBtn: $('#dataGridAddRowBtn'),	// 子表增行按钮
-	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	// editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	editGridAddRow: function(action){	// 添加行事件方法
+		if (action == 'new' || action == 'init'){
+			// if(!$('#inputForm').valid()) {
+			// 	js.showMessage('您填写的信息有误，请根据提示修正。');
+			// 	return false;
+			// }
+			$('#dataGrid').dataGrid('saveEditRow')
+				.dataGrid('addEditRow', { copyLastRow: true });
+		}
+	},
 	
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
@@ -258,6 +347,7 @@ $('#dataGrid').dataGrid({
 	}
 });
 $('#btnGetData').click(function(){
+	$('#dataGrid').dataGrid('saveEditRow');
 	var data = $('#dataGrid').dataGrid('getRowData');
 	log(data)
 	js.showMessage('请按 F12 打开控制台，查看数据');

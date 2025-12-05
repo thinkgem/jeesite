@@ -97,29 +97,31 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		FileUploadUtils.saveFileUpload(testData, testData.getId(), "testData_image");
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(testData, testData.getId(), "testData_file");
-		// 保存 TestData子表
-		int index = 0;
-		for (TestDataChild testDataChild : testData.getTestDataChildList()){
-			if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
-				testDataChild.setTestData(testData);
-				if (testDataChild.getIsNewRecord()){
-					testDataChild.preInsert();
-					testDataChildDao.insert(testDataChild);
+		// 保存 TestData子表（批量提交数据）
+		testDataChildDao.executeBatch(dao -> {
+			int index = 0;
+			for (TestDataChild testDataChild : testData.getTestDataChildList()){
+				if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
+					testDataChild.setTestData(testData);
+					if (testDataChild.getIsNewRecord()){
+						testDataChild.preInsert();
+						testDataChildDao.insert(testDataChild);
+					}else{
+						testDataChild.preUpdate();
+						testDataChildDao.update(testDataChild);
+					}
 				}else{
-					testDataChild.preUpdate();
-					testDataChildDao.update(testDataChild);
+					testDataChildDao.delete(testDataChild);
 				}
-			}else{
-				testDataChildDao.delete(testDataChild);
+				// 保存上传图片
+				FileUploadUtils.saveFileUpload(testDataChild, testDataChild.getId(),
+						"testDataChildList["+index+"].testDataChild_image");
+				// 保存上传附件
+				FileUploadUtils.saveFileUpload(testDataChild, testDataChild.getId(),
+						"testDataChildList["+index+"].testDataChild_file");
+				index++;
 			}
-			// 保存上传图片
-			FileUploadUtils.saveFileUpload(testDataChild, testDataChild.getId(),
-					"testDataChildList["+index+"].testDataChild_image");
-			// 保存上传附件
-			FileUploadUtils.saveFileUpload(testDataChild, testDataChild.getId(),
-					"testDataChildList["+index+"].testDataChild_file");
-			index++;
-		}
+		});
 	}
 	
 	/**
