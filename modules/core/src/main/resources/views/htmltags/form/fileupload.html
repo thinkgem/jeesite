@@ -80,8 +80,8 @@ if (p.dataMap){
 
 %>
 <div id="${p.id}_wup" class="wup_container ${p.isMini?'mini':''}">
-	<input id="${p.id}" name="${p.name}" value="" autocomplete="off" class="wup_input ${p.uploadType} ${p.class}" data-msg-required="${p.dataMsgRequired}"/>
-	<input id="${p.id}__del" name="${p.nameDel}" value="" type="hidden"/>
+	<input id="${p.id}" type="text" name="${p.name}" value="" autocomplete="off" class="wup_input ${p.uploadType} ${p.class}" data-msg-required="${p.dataMsgRequired}" />
+	<input id="${p.id}__del" type="hidden" name="${p.nameDel}" value="" />
 	<div class="area">
 		<% if(p.uploadType == 'image'){ %>
 			<div id="${p.id}Uploader" class="wup_img">

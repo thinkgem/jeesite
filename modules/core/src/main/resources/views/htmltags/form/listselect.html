@@ -75,9 +75,9 @@ if (allowClear == null && @StringUtils.contains(p.class, 'required')){
 	
 %><div class="input-group treeselect" id="${p.id}Div" data-url="${p.url}">
 	<input id="${p.id}Name" type="text" name="${p.labelName}" value="${p.labelValue}"
-		class="form-control ${p.class} ${p.labelClass} isReset"${p.labelAttrs}
-	/><input id="${p.id}Code" type="hidden" name="${p.name}" value="${p.value}" class="isReset"
-	/><span class="input-group-btn"><a id="${p.id}Button" href="javascript:"
+		class="form-control ${p.class} ${p.labelClass} isReset"${p.labelAttrs} />
+	<input id="${p.id}Code" type="hidden" name="${p.name}" value="${p.value}" class="isReset" />
+	<span class="input-group-btn"><a id="${p.id}Button" href="javascript:"
 		class="btn btn-default ${p.btnClass}"><i class="fa fa-search"></i></a>
 	</span>
 </div>
