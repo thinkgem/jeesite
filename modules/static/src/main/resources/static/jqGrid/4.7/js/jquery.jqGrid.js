@@ -5,7 +5,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl-2.0.html
  * https://gitee.com/thinkgem/jeesite5
- * Date: 2023-09-20
+ * Date: 2025-12-03
  */
 (function ($) {
 'use strict';
@@ -13,11 +13,57 @@ $.jgrid = $.jgrid || {};
 $.extend($.jgrid,{
 	version : '4.7.0',
 	htmlDecode : function(value){
-		if(value && (value==='&nbsp;' || value==='&#160;' || (value.length===1 && value.charCodeAt(0)===160))) {return '';}
-		return !value ? value : String(value).replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+		if (value == null) {
+			return value;
+		}
+		if (typeof value === 'string') {
+			if (value === '&nbsp;' || value === '&#160;' || (value.length === 1 && value.charCodeAt(0) === 160)) {
+				return '';
+			}
+			return value.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+		}
+		if (Array.isArray(value)) {
+			var result = [];
+			for (var i = 0; i < value.length; i++) {
+				result[i] = $.jgrid.htmlDecode(value[i]); // 嵌套数组的支持 ThinkGem
+			}
+			return result;
+		}
+		if (typeof value === 'object') {
+			var decoded = {};
+			for (var key in value) {
+				if (value.hasOwnProperty(key)) {
+					decoded[key] = $.jgrid.htmlDecode(value[key]); // 嵌套对象的支持 ThinkGem
+				}
+			}
+			return decoded;
+		}
+		return value;
 	},
 	htmlEncode : function (value){
-		return !value ? value : String(value).replace(/&/g, "&amp;").replace(/\"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		if (value == null) {
+			return value;
+		}
+		if (typeof value === 'string') {
+			return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		}
+		if (Array.isArray(value)) {
+			var result = [];
+			for (var i = 0; i < value.length; i++) {
+				result[i] = $.jgrid.htmlEncode(value[i]); // 嵌套数组的支持 ThinkGem
+			}
+			return result;
+		}
+		if (typeof value === 'object') {
+			var encoded = {};
+			for (var key in value) {
+				if (value.hasOwnProperty(key)) {
+					encoded[key] = $.jgrid.htmlEncode(value[key]); // 嵌套对象的支持 ThinkGem
+				}
+			}
+			return encoded;
+		}
+		return value;
 	},
 	format : function(format){ //jqgformat
 		var args = $.makeArray(arguments).slice(1);
@@ -1161,7 +1207,8 @@ $.fn.jqGrid = function( pin ) {
 			var cm = ts.p.colModel[colpos],v;
 			// ThinkGem 格式化formatter前，将当前值存入colModel，方便unformat获取该值
 			rowId = String(ts.p.idPrefix) !== "" ? $.jgrid.stripPref(ts.p.idPrefix, rowId) : rowId; // 移动到上面（下面已过来的）
-			if(!cm.data){ cm.data = {}; }; cm.data[rowId] = cellval || '';
+			if(!cm.data){ cm.data = {}; }; cm.data[rowId] = cellval == null ? '' : cellval;
+			if(cm.labelName){ cm.data[rowId+'_label'] = rwdat[cm.labelName] == null ? '' : rwdat[cm.labelName]; }
 			// ThinkGem end
 			if(cm.formatter !== undefined) {
 //				rowId = String(ts.p.idPrefix) !== "" ? $.jgrid.stripPref(ts.p.idPrefix, rowId) : rowId; // 移动到上面
@@ -3327,7 +3374,7 @@ $.jgrid.extend({
 	getRowData : function( rowid ) {
 		var res = {}, resall, getall=false, len, j=0;
 		this.each(function(){
-			var $t = this,nm,ind;
+			var $t = this,cm,nm,ind;
 			if(rowid === undefined) {
 				getall = true;
 				resall = [];
@@ -3341,15 +3388,25 @@ $.jgrid.extend({
 				if(getall) { ind = $t.rows[j]; }
 				if( $(ind).hasClass('jqgrow') ) {
 					$('td[role="gridcell"]',ind).each( function(i) {
-						nm = $t.p.colModel[i].name;
-						if ( nm !== 'cb' && nm !== 'subgrid' && nm !== 'rn') {
+						cm = $t.p.colModel[i]; nm = cm.name;
+						if ( nm !== 'cb' && nm !== 'subgrid' && nm !== 'rn' && nm !== 'actions') {  // 排除 actions 列 ThinkGem
 							if($t.p.treeGrid===true && nm === $t.p.ExpandColumn) {
 								res[nm] = $.jgrid.htmlDecode($("span:first",this).html());
 							} else {
 								try {
-									res[nm] = $.unformat.call($t,this,{rowId:ind.id, colModel:$t.p.colModel[i]},i);
+									var value = $.unformat.call($t,this,{rowId:ind.id, colModel:$t.p.colModel[i]},i,res);
+									if (value !== undefined) {
+										res[nm] = value; // unformat 支持返回空，并增加 res 参数 ThinkGem
+									}
 								} catch (e){
 									res[nm] = $.jgrid.htmlDecode($(this).html());
+								}
+							}
+							// 存储数选择的名称数据 ThinkGem
+							if (cm.labelName) {
+								var dval = cm.data[ind.id+'_label'];
+								if(dval !== undefined) {
+									res[cm.labelName] = dval;
 								}
 							}
 						}
@@ -3428,6 +3485,13 @@ $.jgrid.extend({
 								$("td[role='gridcell']:eq("+i+")",ind).html(vl).attr(title);
 							}
 						}
+						// 存储数选择的名称数据 ThinkGem
+						if (this.labelName) {
+							var dval = $.jgrid.getAccessor(data,this.labelName);
+							if(dval !== undefined) {
+								lcdata[this.labelName] = dval;
+							}
+						}
 					});
 					if(t.p.datatype === 'local') {
 						var id = $.jgrid.stripPref(t.p.idPrefix, rowid),
@@ -3441,6 +3505,7 @@ $.jgrid.extend({
 						}
 						if(pos !== undefined) {
 							t.p.data[pos] = $.extend(true, t.p.data[pos], lcdata);
+							// t.p.data[pos] = lcdata; // 这里按需设置，可替换为干净的数据，避免一些无用数据提交到后端 ThinkGem
 						}
 						lcdata = null;
 					}
@@ -4294,6 +4359,13 @@ $.jgrid.extend({
 				var cc = $("td:eq("+iCol+")",$t.rows[iRow]),v,v2,
 				cm = $t.p.colModel[iCol], nm = cm.name, nmjq = $.jgrid.jqID(nm) ;
 				switch (cm.edittype) {
+					case "text":
+					case "password":
+					case "textarea":
+					case "button" :
+						v = $("#"+iRow+"_"+nmjq,$t.rows[iRow]).val();
+						v2=v;
+						break;
 					case "select":
 						if(!cm.editoptions.multiple) {
 							v = $("#"+iRow+"_"+nmjq+" option:selected",$t.rows[iRow]).val();
@@ -4317,13 +4389,6 @@ $.jgrid.extend({
 							cbv = cm.editoptions.value.split(":");
 						}
 						v = $("#"+iRow+"_"+nmjq,$t.rows[iRow]).is(":checked") ? cbv[0] : cbv[1];
-						v2=v;
-						break;
-					case "password":
-					case "text":
-					case "textarea":
-					case "button" :
-						v = $("#"+iRow+"_"+nmjq,$t.rows[iRow]).val();
 						v2=v;
 						break;
 					case 'custom' :
@@ -7352,38 +7417,37 @@ $.jgrid.extend({
 							}
 						});
 					} else {
-					switch ($(this).get(0).type) {
-						case "checkbox":
-							if($(this).is(":checked")) {
-								postdata[this.name]= $(this).val();
-							}else {
-								var ofv = $(this).attr("offval");
-								postdata[this.name]= ofv;
-							}
-						break;
-						case "select-one":
-							postdata[this.name]= $("option:selected",this).val();
-						break;
-						case "select-multiple":
-							postdata[this.name]= $(this).val();
-							if(postdata[this.name]) {postdata[this.name] = postdata[this.name].join(",");}
-							else {postdata[this.name] ="";}
-							var selectedText = [];
-							$("option:selected",this).each(
-								function(i,selected){
-									selectedText[i] = $(selected).text();
+						switch ($(this).get(0).type) {
+							case "checkbox":
+								if($(this).is(":checked")) {
+									postdata[this.name]= $(this).val();
+								}else {
+									var ofv = $(this).attr("offval");
+									postdata[this.name]= ofv;
 								}
-							);
-						break;
-						case "password":
-						case "text":
-						case "textarea":
-						case "button":
-							postdata[this.name] = $(this).val();
-
-						break;
-					}
-					if($t.p.autoencode) {postdata[this.name] = $.jgrid.htmlEncode(postdata[this.name]);}
+								break;
+							case "select-one":
+								postdata[this.name]= $("option:selected",this).val();
+								break;
+							case "select-multiple":
+								postdata[this.name]= $(this).val();
+								if(postdata[this.name]) {postdata[this.name] = postdata[this.name].join(",");}
+								else {postdata[this.name] ="";}
+								var selectedText = [];
+								$("option:selected",this).each(
+									function(i,selected){
+										selectedText[i] = $(selected).text();
+									}
+								);
+								break;
+							case "password":
+							case "text":
+							case "textarea":
+							case "button":
+								postdata[this.name] = $(this).val();
+								break;
+						}
+						if($t.p.autoencode) { postdata[this.name] = $.jgrid.htmlEncode(postdata[this.name]); }
 					}
 				});
 				return true;
@@ -7421,7 +7485,7 @@ $.jgrid.extend({
 								if(!tmp || tmp === "&nbsp;" || tmp === "&#160;" || (tmp.length===1 && tmp.charCodeAt(0)===160) ) {tmp='';}
 							}
 						}
-						var opt = $.extend({}, this.editoptions || {} ,{id:nm,name:nm, rowId: rowid}),
+						var opt = $.extend({}, this.editoptions || {}, {id: nm, name: nm, rowId: rowid, colModel: this}), // editOptions 增加 colModel 参数 ThinkGem
 						frmopt = $.extend({}, {elmprefix:'',elmsuffix:'',rowabove:false,rowcontent:''}, this.formoptions || {}),
 						rp = parseInt(frmopt.rowpos,10) || cnt+1,
 						cp = parseInt((parseInt(frmopt.colpos,10) || 1)*2,10);
@@ -7530,11 +7594,11 @@ $.jgrid.extend({
 						if(rp_ge[$t.p.id].checkOnSubmit===true || rp_ge[$t.p.id].checkOnUpdate) {rp_ge[$t.p.id]._savedData[nm] = tmp;}
 						nm = $.jgrid.jqID(nm);
 						switch (cm[i].edittype) {
-							case "password":
 							case "text":
+							case "password":
+							case "textarea":
 							case "button" :
 							case "image":
-							case "textarea":
 								if(tmp === "&nbsp;" || tmp === "&#160;" || (tmp.length===1 && tmp.charCodeAt(0)===160) ) {tmp='';}
 								$("#"+nm,"#"+fmid).val(tmp);
 								break;
@@ -9809,6 +9873,86 @@ $.jgrid.extend({
 (function($){
 "use strict";
 $.jgrid.inlineEdit = $.jgrid.inlineEdit || {};
+// 获取编辑行的值 ThinkGem
+$.jgrid.editRowVal = function ($t, colModel, tmp, tmp2) {
+	var cm = colModel, nm = cm.name;
+	switch (colModel.edittype) {
+		case 'select':
+			var $this = $(this);
+			if ($this.find('.select2').length) {  // 支持美化的组件 ThinkGem
+				tmp[nm] = $this.find('select').val();
+				if ($.isArray(tmp[nm])) {
+					tmp[nm] = tmp[nm].join(',');
+				}
+			} else {
+				if(!cm.editoptions.multiple) {
+					tmp[nm] = $("select option:selected",this).val();
+					tmp2[nm] = $("select option:selected", this).text();
+				} else {
+					var sel = $("select",this), selectedText = [];
+					tmp[nm] = $(sel).val();
+					if(tmp[nm]) { tmp[nm]= tmp[nm].join(","); } else { tmp[nm] =""; }
+					$("select option:selected",this).each(
+						function(i,selected){
+							selectedText[i] = $(selected).text();
+						}
+					);
+					tmp2[nm] = selectedText.join(",");
+				}
+				if(cm.formatter && cm.formatter === 'select') { tmp2={}; }
+			}
+			break;
+		case "radio":
+			var $this = $(this);
+			if ($this.find('.icheck').length) {  // 支持美化的组件 ThinkGem
+				tmp[nm] = $this.find('.checked input:radio').val();
+			} else {
+				tmp[nm] = $this.find('input:radio:checked').val();
+			}
+			break;
+		case "checkbox":
+			var $this = $(this);
+			if ($this.find('.icheck').length) {  // 支持美化的组件 ThinkGem
+				tmp[nm] = '';
+				$this.find('.checked input:checkbox').each(function() {
+					if (tmp[nm] != '') {
+						tmp[nm] += ',';
+					}
+					tmp[nm] += $(this).val();
+				});
+			} else {
+				var cbv = ["Yes","No"];
+				if(cm.editoptions && cm.editoptions.value) {
+					cbv = cm.editoptions.value.split(":");
+				}
+				tmp[nm] = $("input",this).is(":checked") ? cbv[0] : cbv[1];
+			}
+			break;
+		case 'custom':
+			try {
+				if(cm.editoptions && $.isFunction(cm.editoptions.custom_value)) {
+					var custom_value = cm.editoptions.custom_value.call($t, $(".customelement",this),'get',tmp);
+					if (custom_value !== undefined) {
+						tmp[nm] = custom_value; // custom_value 支持返回空，并增加 tmp(row) 参数 ThinkGem
+					}
+				}
+			} catch (e) {
+				if (e==="e1") { $.jgrid.info_dialog($.jgrid.errors.errcap,cm.name+" function 'custom_value' "+$.jgrid.edit.msg.nodefined,$.jgrid.edit.bClose); }
+				else if (e==="e2") { $.jgrid.info_dialog($.jgrid.errors.errcap,cm.name+" function 'custom_value' "+$.jgrid.edit.msg.novalue,$.jgrid.edit.bClose); }
+				else { $.jgrid.info_dialog($.jgrid.errors.errcap,e.message,$.jgrid.edit.bClose); }
+			}
+			break;
+		case 'text':
+		case 'password':
+		case 'textarea':
+		case "button" :
+			tmp[nm]=$("input, textarea", this).val();
+			break;
+	}
+	if (tmp[nm] == null) {
+		tmp[nm] = '';
+	}
+}
 $.jgrid.extend({
 //Editing
 	editRow : function(rowid,keys,oneditfunc,successfunc, url, extraparam, aftersavefunc,errorfunc, afterrestorefunc) {
@@ -9873,10 +10017,13 @@ $.jgrid.extend({
 						if($t.p.autoencode) { tmp = $.jgrid.htmlDecode(tmp); }
 						svr[nm]=tmp;
 						if(cm[i].editable===true) {
+							if(cm[i].editoptions && $.isFunction(cm[i].editoptions.custom_element)) {
+								tmp = $(this).text(); // 兼容旧版本，否则会提示 val.split 未定义 ThinkGem
+							}
 							if(focus===null) { focus = i; }
 							if (treeg) { $("span:first",this).html(""); }
 							else { $(this).html(""); }
-							var opt = $.extend({},cm[i].editoptions || {},{id:rowid+"_"+nm,name:nm,rowId:rowid});
+							var opt = $.extend({},cm[i].editoptions || {}, {id: rowid+"_"+nm, name:nm, rowId:rowid, colModel: cm[i]}); // editOptions 增加 colModel 参数 ThinkGem
 							if(!cm[i].edittype) { cm[i].edittype = "text"; }
 							if(tmp === "&nbsp;" || tmp === "&#160;" || (tmp.length===1 && tmp.charCodeAt(0)===160) ) {tmp='';}
 							var elc = $.jgrid.createEl.call($t,cm[i].edittype,opt,tmp,true,$.extend({},$.jgrid.ajaxOptions,$t.p.ajaxSelectOptions || {}));
@@ -10038,53 +10185,9 @@ $.jgrid.extend({
 		if (editable==="1") {
 			var cm;
 			$('td[role="gridcell"]',ind).each(function(i) {
-				cm = $t.p.colModel[i];
-				nm = cm.name;
+				cm = $t.p.colModel[i]; nm = cm.name;
 				if ( nm !== 'cb' && nm !== 'subgrid' && cm.editable===true && nm !== 'rn' && !$(this).hasClass('not-editable-cell')) {
-					switch (cm.edittype) {
-						case "checkbox":
-							var cbv = ["Yes","No"];
-							if(cm.editoptions && cm.editoptions.value) {
-								cbv = cm.editoptions.value.split(":");
-							}
-							tmp[nm]=  $("input",this).is(":checked") ? cbv[0] : cbv[1];
-							break;
-						case 'text':
-						case 'password':
-						case 'textarea':
-						case "button" :
-							tmp[nm]=$("input, textarea",this).val();
-							break;
-						case 'select':
-							if(!cm.editoptions.multiple) {
-								tmp[nm] = $("select option:selected",this).val();
-								tmp2[nm] = $("select option:selected", this).text();
-							} else {
-								var sel = $("select",this), selectedText = [];
-								tmp[nm] = $(sel).val();
-								if(tmp[nm]) { tmp[nm]= tmp[nm].join(","); } else { tmp[nm] =""; }
-								$("select option:selected",this).each(
-									function(i,selected){
-										selectedText[i] = $(selected).text();
-									}
-								);
-								tmp2[nm] = selectedText.join(",");
-							}
-							if(cm.formatter && cm.formatter === 'select') { tmp2={}; }
-							break;
-						case 'custom' :
-							try {
-								if(cm.editoptions && $.isFunction(cm.editoptions.custom_value)) {
-									tmp[nm] = cm.editoptions.custom_value.call($t, $(".customelement",this),'get');
-									if (tmp[nm] === undefined) { throw "e2"; }
-								} else { throw "e1"; }
-							} catch (e) {
-								if (e==="e1") { $.jgrid.info_dialog($.jgrid.errors.errcap,"function 'custom_value' "+$.jgrid.edit.msg.nodefined,$.jgrid.edit.bClose); }
-								else if (e==="e2") { $.jgrid.info_dialog($.jgrid.errors.errcap,"function 'custom_value' "+$.jgrid.edit.msg.novalue,$.jgrid.edit.bClose); }
-								else { $.jgrid.info_dialog($.jgrid.errors.errcap,e.message,$.jgrid.edit.bClose); }
-							}
-							break;
-					}
+					$.jgrid.editRowVal.call(this, $t, cm, tmp, tmp2); // ThinkGem
 					cv = $.jgrid.checkValues.call($t,tmp[nm],i);
 					if(cv[0] === false) {
 						return false;
@@ -11628,7 +11731,7 @@ $.jgrid.extend({
 			}
 			// ThinkGem 不限制树表添加复选框
 			if ($t.p.multiselect){
-				$t.p.expColInd++; 
+				$t.p.expColInd++;
 			}
 			// ThinkGem end
 			$.each($t.p.treeReader,function(j,n){
@@ -11638,7 +11741,7 @@ $.jgrid.extend({
 					$t.p.colNames.push(n);
 					$t.p.colModel.push({name:n,width:1,hidden:true,sortable:false,resizable:false,hidedlg:true,editable:true,search:false});
 				}
-			});			
+			});
 		});
 	},
 	expandRow: function (record){
@@ -11816,7 +11919,7 @@ $.jgrid.extend({
 			}
 		});
 		return result;
-	},	
+	},
 	// End NS, adjacency Model
 	getNodeAncestors : function(rc) {
 		var ancestors = [];
@@ -11825,7 +11928,7 @@ $.jgrid.extend({
 			var parent = $(this).jqGrid("getNodeParent",rc);
 			while (parent) {
 				ancestors.push(parent);
-				parent = $(this).jqGrid("getNodeParent",parent);	
+				parent = $(this).jqGrid("getNodeParent",parent);
 			}
 		});
 		return ancestors;
@@ -11897,7 +12000,7 @@ $.jgrid.extend({
 					if(this.p.treeGridModel === 'nested') {
 						$(this).jqGrid("setGridParam",{postData:{nodeid:'',n_left:'',n_right:'',n_level:''}});
 					} else {
-						$(this).jqGrid("setGridParam",{postData:{nodeid:'',parentid:'',n_level:''}}); 
+						$(this).jqGrid("setGridParam",{postData:{nodeid:'',parentid:'',n_level:''}});
 					}
 				}
 			}
@@ -11953,11 +12056,11 @@ $.jgrid.extend({
 			for (i = 0, len = children.length; i < len; i++) {
 				child = children[i];
 				records.push(child);
-				$(this).jqGrid("collectChildrenSortTree",records, child, sortname, newDir, st, datefmt); 
+				$(this).jqGrid("collectChildrenSortTree",records, child, sortname, newDir, st, datefmt);
 			}
 		});
 	},
-	// experimental 
+	// experimental
 	setTreeRow : function(rowid, data) {
 		var success=false;
 		this.each(function(){
@@ -12144,10 +12247,9 @@ $.jgrid.extend({
  * Copyright (c) 2007 Brice Burgess <bhb@iceburg.net>, http://www.iceburg.net
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * $Version: 2007.08.19 +r2
  */
-
 (function($){
 $.fn.jqDrag=function(h){return i(this,h,'d');};
 $.fn.jqResize=function(h,ar){return i(this,h,'r',ar);};
@@ -12196,7 +12298,7 @@ i=function(e,h,k,aR){
 					pY:v.pageY,
 					k:d.k
 				};
-			} else {M1 = false;}			
+			} else {M1 = false;}
 			//E.css({opacity:0.8});
 			if($("input.hasDatepicker",E[0])[0]) {
 			try {$("input.hasDatepicker",E[0]).datepicker('hide');}catch (dpe){}
@@ -12208,7 +12310,8 @@ i=function(e,h,k,aR){
 },
 f=function(k){return parseInt(E.css(k),10)||false;},
 f1=function(k){return parseInt(E1.css(k),10)||false;};
-})(jQuery);/*
+})(jQuery);
+/*
  * jqModal - Minimalist Modaling with jQuery
  *   (http://dev.iceburg.net/jquery/jqmodal/)
  *
@@ -12216,30 +12319,32 @@ f1=function(k){return parseInt(E1.css(k),10)||false;};
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * $Version: 07/06/2008 +r13
  */
 (function($) {
 $.fn.jqm=function(o){
-var p={
-overlay: 50,
-closeoverlay : true,
-overlayClass: 'jqmOverlay',
-closeClass: 'jqmClose',
-trigger: '.jqModal',
-ajax: F,
-ajaxText: '',
-target: F,
-modal: F,
-toTop: F,
-onShow: F,
-onHide: F,
-onLoad: F
+	var p={
+		overlay: 50,
+		closeoverlay : true,
+		overlayClass: 'jqmOverlay',
+		closeClass: 'jqmClose',
+		trigger: '.jqModal',
+		ajax: F,
+		ajaxText: '',
+		target: F,
+		modal: F,
+		toTop: F,
+		onShow: F,
+		onHide: F,
+		onLoad: F
+	};
+	return this.each(function(){
+		if(this._jqm)return H[this._jqm].c=$.extend({},H[this._jqm].c,o);s++;this._jqm=s;
+		H[s]={c:$.extend(p,$.jqm.params,o),a:F,w:$(this).addClass('jqmID'+s),s:s};
+		if(p.trigger)$(this).jqmAddTrigger(p.trigger);
+	});
 };
-return this.each(function(){if(this._jqm)return H[this._jqm].c=$.extend({},H[this._jqm].c,o);s++;this._jqm=s;
-H[s]={c:$.extend(p,$.jqm.params,o),a:F,w:$(this).addClass('jqmID'+s),s:s};
-if(p.trigger)$(this).jqmAddTrigger(p.trigger);
-});};
 
 $.fn.jqmAddClose=function(e){return hs(this,e,'jqmHide');};
 $.fn.jqmAddTrigger=function(e){return hs(this,e,'jqmShow');};
@@ -12247,53 +12352,56 @@ $.fn.jqmShow=function(t){return this.each(function(){$.jqm.open(this._jqm,t);});
 $.fn.jqmHide=function(t){return this.each(function(){$.jqm.close(this._jqm,t)});};
 
 $.jqm = {
-hash:{},
-open:function(s,t){var h=H[s],c=h.c,cc='.'+c.closeClass,z=(parseInt(h.w.css('z-index')));z=(z>0)?z:3000;var o=$('<div></div>').css({height:'100%',width:'100%',position:'fixed',left:0,top:0,'z-index':z-1,opacity:c.overlay/100});if(h.a)return F;h.t=t;h.a=true;h.w.css('z-index',z);
- if(c.modal) {if(!A[0])setTimeout(function(){L('bind');},1);A.push(s);}
- else if(c.overlay > 0) {if(c.closeoverlay) h.w.jqmAddClose(o);}
- else o=F;
+	hash:{},
+	open:function(s,t){var h=H[s],c=h.c,cc='.'+c.closeClass,z=(parseInt(h.w.css('z-index')));z=(z>0)?z:3000;var o=$('<div></div>').css({height:'100%',width:'100%',position:'fixed',left:0,top:0,'z-index':z-1,opacity:c.overlay/100});if(h.a)return F;h.t=t;h.a=true;h.w.css('z-index',z);
+	 if(c.modal) {if(!A[0])setTimeout(function(){L('bind');},1);A.push(s);}
+	 else if(c.overlay > 0) {if(c.closeoverlay) h.w.jqmAddClose(o);}
+	 else o=F;
 
- h.o=(o)?o.addClass(c.overlayClass).prependTo('body'):F;
+	 h.o=(o)?o.addClass(c.overlayClass).prependTo('body'):F;
 
- if(c.ajax) {var r=c.target||h.w,u=c.ajax;r=(typeof r == 'string')?$(r,h.w):$(r);u=(u.substr(0,1) == '@')?$(t).attr(u.substring(1)):u;
-  r.html(c.ajaxText).load(u,function(){if(c.onLoad)c.onLoad.call(this,h);if(cc)h.w.jqmAddClose($(cc,h.w));e(h);});}
- else if(cc)h.w.jqmAddClose($(cc,h.w));
+	 if(c.ajax) {var r=c.target||h.w,u=c.ajax;r=(typeof r == 'string')?$(r,h.w):$(r);u=(u.substr(0,1) == '@')?$(t).attr(u.substring(1)):u;
+	  r.html(c.ajaxText).load(u,function(){if(c.onLoad)c.onLoad.call(this,h);if(cc)h.w.jqmAddClose($(cc,h.w));e(h);});}
+	 else if(cc)h.w.jqmAddClose($(cc,h.w));
 
- if(c.toTop&&h.o)h.w.before('<span id="jqmP'+h.w[0]._jqm+'"></span>').insertAfter(h.o);	
- (c.onShow)?c.onShow(h):h.w.show();e(h);return F;
-},
-close:function(s){var h=H[s];if(!h.a)return F;h.a=F;
- if(A[0]){A.pop();if(!A[0])L('unbind');}
- if(h.c.toTop&&h.o)$('#jqmP'+h.w[0]._jqm).after(h.w).remove();
- if(h.c.onHide)h.c.onHide(h);else{h.w.hide();if(h.o)h.o.remove();} return F;
-},
-params:{}};
+	 if(c.toTop&&h.o)h.w.before('<span id="jqmP'+h.w[0]._jqm+'"></span>').insertAfter(h.o);
+	 (c.onShow)?c.onShow(h):h.w.show();e(h);return F;
+	},
+	close:function(s){var h=H[s];if(!h.a)return F;h.a=F;
+	 if(A[0]){A.pop();if(!A[0])L('unbind');}
+	 if(h.c.toTop&&h.o)$('#jqmP'+h.w[0]._jqm).after(h.w).remove();
+	 if(h.c.onHide)h.c.onHide(h);else{h.w.hide();if(h.o)h.o.remove();} return F;
+	},
+	params:{}
+};
+
 var s=0,H=$.jqm.hash,A=[],F=false,
 e=function(h){f(h);},
 f=function(h){try{$(':input:visible',h.w)[0].focus();}catch(_){}},
 L=function(t){$(document)[t]("keypress",m)[t]("keydown",m)[t]("mousedown",m);},
 m=function(e){var h=H[A[A.length-1]],r=(!$(e.target).parents('.jqmID'+h.s)[0]);if(r){$('.jqmID'+h.s).each(function(){var $self=$(this),offset=$self.offset();if(offset.top<=e.pageY && e.pageY<=offset.top+$self.height() && offset.left<=e.pageX && e.pageX<=offset.left+$self.width()){r=false;return false;}});f(h);}return !r;},
 hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function() {
- if(!this[c]){this[c]=[];$(this).click(function(){for(var i in {jqmShow:1,jqmHide:1})for(var s in this[i])if(H[this[i][s]])H[this[i][s]].w[i](this);return F;});}this[c].push(s);});});};
-})(jQuery);/*
-**
+ if(!this[c]){this[c]=[];$(this).click(function(){for(var i in {jqmShow:1,jqmHide:1})for(var s in this[i])if(H[this[i][s]])H[this[i][s]].w[i](this);return F;});}this[c].push(s);});});
+};
+
+})(jQuery);
+/*
  * formatter for values but most of the values if for jqGrid
  * Some of this was inspired and based on how YUI does the table datagrid but in jQuery fashion
  * we are trying to keep it as light as possible
- * Joshua Burnett josh@9ci.com	
+ * Joshua Burnett josh@9ci.com
  * http://www.greenbill.com
  *
  * Changes from Tony Tomov tony@trirand.com
  * Dual licensed under the MIT and GPL licenses:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl-2.0.html
- * 
-**/
+ *
+ */
 /*jshint eqeqeq:false */
 /*global jQuery */
-
 (function($) {
-"use strict";	
+"use strict";
 	$.fmatter = {};
 	//opts can be id:row id for the row, rowdata:the data for the row, colmodel:the column model for this column
 	//example {id:1234,}
@@ -12321,7 +12429,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 				return true;
 			}
 			o = $.trim(o).replace(/\&nbsp\;/ig,'').replace(/\&#160\;/ig,'');
-			return o==="";	
+			return o==="";
 		}
 	});
 	$.fn.fmatter = function(formatType, cellval, opts, rwd, act) {
@@ -12386,7 +12494,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 				// Append suffix
 				sOutput = (opts.suffix) ? sOutput + opts.suffix : sOutput;
 				return sOutput;
-				
+
 			}
 			return nData;
 		}
@@ -12633,48 +12741,11 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 	};
 	$.unformat = function (cellval,options,pos,cnt) {
 		// specific for jqGrid only
-		var ret, formatType = options.colModel.formatter,
-		op =options.colModel.formatoptions || {}, sep,
-		re = /([\.\*\_\'\(\)\{\}\+\?\\])/g,
-		unformatFunc = options.colModel.unformat||($.fn.fmatter[formatType] && $.fn.fmatter[formatType].unformat);
-		// ThinkGem 如果是编辑列，则获取编辑框的值
-//		var val = $(cellval).text();
-//		if (options.colModel.editable){
-//			log(options.colModel)
-//			log($(cellval).html())
-//			switch(options.colModel.edittype){
-//			case 'text':
-//				var elem = $(cellval);
-//				if (String(elem.prop("tagName")).toLowerCase() == 'input'){
-//					options.colModel.data[options.rowId] = elem.val();
-//				}else{
-//					elem = elem.find('input');
-//					if (elem.length > 0){
-//						options.colModel.data[options.rowId] = elem.val();
-//					}
-//				}
-//				break;
-//			case 'select':
-//				var elem = $(cellval);
-//				if (String(elem.prop("tagName")).toLowerCase() == 'select'){
-//					options.colModel.data[options.rowId] = elem.val();
-//				}else if (elem.hashClass('select2-container')){
-//					options.colModel.data[options.rowId] = elem.select2('val');
-//				}else{
-//					if (elem.find('select2-container') > 0){
-//						options.colModel.data[options.rowId] = select.select2('val');
-//					}else{
-//						options.colModel.data[options.rowId] = select.val();
-//					}
-//				}
-//				break;
-//			}
-//			val = options.colModel[options.rowId] || '';
-//		}
-		// ThinkGem end
+		var $t = this, ret, cm = options.colModel, formatType = cm.formatter,
+		op = cm.formatoptions || {}, sep, re = /([\.\*\_\'\(\)\{\}\+\?\\])/g,
+		unformatFunc = cm.unformat||($.fn.fmatter[formatType] && $.fn.fmatter[formatType].unformat);
 		if(unformatFunc !== undefined && $.isFunction(unformatFunc) ) {
 			ret = unformatFunc.call(this, $(cellval).text(), options, cellval);
-//			ret = unformatFunc.call(this, val, options, cellval); // ThinkGem 获取原始数值
 		} else if(formatType !== undefined && $.fmatter.isString(formatType) ) {
 			var opts = $.jgrid.formatter || {}, stripTag;
 			switch(formatType) {
@@ -12704,7 +12775,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 					ret = ret.replace(stripTag,'').replace(op.decimalSeparator,'.');
 					break;
 				case 'checkbox':
-					var cbv = (options.colModel.editoptions) ? options.colModel.editoptions.value.split(":") : ["Yes","No"];
+					var cbv = (cm.editoptions) ? cm.editoptions.value.split(":") : ["Yes","No"];
 					ret = $('input',cellval).is(":checked") ? cbv[0] : cbv[1];
 					break;
 				case 'select' :
@@ -12713,10 +12784,28 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 				case 'actions':
 					return "";
 				default:
-					ret= $(cellval).text();
+					ret = $.trim($(cellval).text());
+			}
+		} else {
+			// ThinkGem 如果是编辑列，则获取编辑框的值
+			if(cm.editable && $('.editable', cellval).length > 0){
+				var tmp = {}, tmp2 = {};
+				$.jgrid.editRowVal.call(cellval, $t, cm, tmp, tmp2);
+				ret = tmp[cm.name];
+				// 存储到 colName 中，方便 getRowData 获取 ThinkGem
+				if (cm.data && cm.labelName) {
+					var rowId = cnt[this.p.dataId];
+					cm.data[rowId+'_label'] = tmp[cm.labelName] == null ? '' : tmp[cm.labelName];
+				}
+			}
+			// ThinkGem 格式化formatter前，已将当前值存入colModel，在unformat时获取该值
+			else if(cm.data){
+				var tmp = cm.data[options.rowId];
+				if (tmp) { ret = tmp; }
 			}
 		}
-		return ret !== undefined ? ret : cnt===true ? $(cellval).text() : $.jgrid.htmlDecode($(cellval).html());
+		// return ret !== undefined ? ret : cnt===true ? $(cellval).text() : $.jgrid.htmlDecode($(cellval).html());
+		return ret !== undefined ? ret : cm.edittype === 'textarea' ? $(cellval).html() : $.trim($(cellval).text());
 	};
 	$.unformat.select = function (cellval,options,pos,cnt) {
 		// Spacial case when we have local data and perform a sort
@@ -12727,7 +12816,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 		var op = $.extend({}, options.colModel.formatoptions !== undefined ? options.colModel.formatoptions: options.colModel.editoptions),
 		sep = op.separator === undefined ? ":" : op.separator,
 		delim = op.delimiter === undefined ? ";" : op.delimiter;
-		
+
 		if(op.value){
 			var oSelect = op.value,
 			msl =  op.multiple === true ? true : false,
@@ -12739,7 +12828,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 					sv = so[i].split(sep);
 					if(sv.length > 2 ) {
 						sv[1] = $.map(sv,function(n,i){if(i>0) {return n;}}).join(sep);
-					}					
+					}
 					if(msl) {
 						if($.inArray(sv[1],scell)>-1) {
 							ret[j] = sv[0];
@@ -12771,7 +12860,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 		var op = $.jgrid.formatter.date || {};
 		if(opts.formatoptions !== undefined) {
 			op = $.extend({},op,opts.formatoptions);
-		}		
+		}
 		if(!$.fmatter.isEmpty(cellval)) {
 			return $.jgrid.parseDate(op.newformat,cellval,op.srcformat,op);
 		}
@@ -12785,7 +12874,7 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 
 	License:     http://creativecommons.org/licenses/LGPL/2.1/
 	Author:      Stefan Goessner/2006
-	Web:         http://goessner.net/ 
+	Web:         http://goessner.net/
 
 	Modifications made:
 
@@ -12794,12 +12883,11 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 	             added handling of empty arrays, empty strings, and int/floats values.
 	Author:      Michael Schøler/2008-01-29
 	Web:         http://michael.hinnerup.net/blog/2008/01/26/converting-json-to-xml-and-xml-to-json/
-	
+
 	Description: json2xml added support to convert functions as CDATA
 	             so it will be easy to write characters that cause some problems when convert
 	Author:      Tony Tomov
 */
-
 /*global alert */
 var xmlJsonClass = {
 	// Param "xml": Element or document DOM node.
