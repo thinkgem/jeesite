@@ -9,7 +9,7 @@
 **/
 $.jgrid = $.jgrid || {};
 $.extend($.jgrid,{
-	extend : {
+	extends : {
 		btnSearch: '検索',
 		btnHideSearch: '隠匿',
 		expandTooMany: '今回は“{0}”のノードを展開しなければならない。展開ノードが多すぎるため、キャンセルが実行される。',
