@@ -3,14 +3,14 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa icon-note"></i> ${text(testData.isNewRecord ? '新增数据' : '编辑数据')}（子表-点哪行改哪行-JSON方式提交）
+				<i class="fa icon-note"></i> ${text(testData.isNewRecord ? '新增数据' : '编辑数据')}（高性能子表-点哪行改哪行-保留一行编辑）
 			</div>
 			<div class="box-tools pull-right hide">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			</div>
 		</div>
 		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal"
-				enctype="application/json" data-url-params="isNewRecord,id">
+				enctype2="application/json" data-url-params2="isNewRecord,id">
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
@@ -20,7 +20,7 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required hide">*</span> ${text('单行文本')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:input path="testInput" maxlength="200" class="form-control"/>
+								<#form:input path="testInput" maxlength="200" class="form-control required"/>
 							</div>
 						</div>
 					</div>
@@ -414,7 +414,14 @@ $('#testDataChildDataGrid').dataGrid({
 	],
 	onSelectRow: function(id, stat, e) {
 		if (id && e && !$(e.target).hasClass('btn')){
-			$('#testDataChildDataGrid').dataGrid('editRow', id,{keys:true,focusField:true});
+			// $('#testDataChildDataGrid').dataGrid('editRow', id,{keys:true,focusField:true});
+			if($('#testDataChildDataGrid')[0].p.data.length > 0 && !$('#inputForm').valid()) {
+				js.showMessage('您填写的信息有误，请根据提示修正。');
+				return false;
+			}
+			$('#testDataChildDataGrid').dataGrid('saveEditRow', id).dataGrid('setEditRow', id);
+			// log($('#testDataChildDataGrid')[0].p.data)
+			// log($('#testDataChildDataGrid').dataGrid('getRowData'))
 		}
 	},
 	shrinkToFit: false,	// 是否按百分比自动调整列宽
@@ -425,7 +432,17 @@ $('#testDataChildDataGrid').dataGrid({
 	editGridInitAllRowEdit: false,  // 是否初始化就编辑所有行（*** 重点 ***）
 	editGridAddRowBtn: $('#testDataChildDataGridAddRowBtn'),	// 子表增行按钮
 	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上 v4.1.7
-	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	// editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	editGridAddRow: function(action){	// 添加行事件方法
+		if (action == 'new' || action == 'init'){
+			if($('#testDataChildDataGrid')[0].p.data.length > 0 && !$('#inputForm').valid()) {
+				js.showMessage('您填写的信息有误，请根据提示修正。');
+				return false;
+			}
+			$('#testDataChildDataGrid').dataGrid('saveEditRow')
+				.dataGrid('addEditRow', { copyLastRow: true });
+		}
+	},
 
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
@@ -447,16 +464,28 @@ $('#testDataChildDataGrid').on('click', '.uploaderFile', function(){
 		})
 	});
 });
+
 $('#inputForm').validate({
 	submitHandler: function(form){
-		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
-			if(data.result == Global.TRUE){
-				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.page();
-				});
-			}
-		}, "json");
+		js.ajaxSubmitForm($(form), {
+			beforeSubmit: function(formData, $form, options) {
+				if(!$('#inputForm').valid()) {
+					js.showMessage('您填写的信息有误，请根据提示修正。');
+					return false;
+				}
+				$('#testDataChildDataGrid').dataGrid('saveEditRow')
+					.dataGrid('serializeFormData', formData, 'testDataChildList');
+			},
+			callback: function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.closeCurrentTabPage(function(contentWindow){
+						contentWindow.page();
+					});
+				}
+			},
+			dataType: "json"
+		});
     }
 });
 </script>
