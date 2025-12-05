@@ -9,7 +9,7 @@
 **/
 $.jgrid = $.jgrid || {};
 $.extend($.jgrid,{
-	extend : {
+	extends : {
 		btnSearch: '查询',
 		btnHideSearch: '隐藏',
 		expandTooMany: '本次需要展开“{0}”个节点，因为展开节点过多，执行取消。',

@@ -9,7 +9,7 @@
 **/
 $.jgrid = $.jgrid || {};
 $.extend($.jgrid,{
-	extend : {
+	extends : {
 		btnSearch: 'Search',
 		btnHideSearch: 'Hide Search',
 		expandTooMany: 'You need to expand the "{0}" node, because there are too many nodes, and the execution is canceled.',
