@@ -100,12 +100,7 @@
 			<artifactId>commons-email</artifactId>
 			<version>${commons-email.version}</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>${activation.version}</version>
-		</dependency> -->
-		
+
 		<!-- User Agent -->
 		<dependency>
 			<groupId>eu.bitwalker</groupId>
@@ -113,12 +108,13 @@
 			<version>${UserAgentUtils.version}</version>
 		</dependency>
 		
-		<!-- 图片Meta获取
+		<!-- 图片Meta获取 -->
 		<dependency>
 			<groupId>com.drewnoakes</groupId>
 			<artifactId>metadata-extractor</artifactId>
 			<version>${metadata-extractor.version}</version>
-		</dependency> -->
+			<optional>true</optional>
+		</dependency>
 		<!-- 缩略图工具 -->
 		<dependency>
 			<groupId>net.coobird</groupId>

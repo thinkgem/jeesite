@@ -10,7 +10,19 @@ import com.jeesite.common.io.FileUtils;
 /**
  * 条形码和二维码编码解码
  * @author ThinkGem
- * @version 2023-6-9
+ * @version 2025-12-07
+ * @code pom.xml 中添加依赖：<pre>{@code
+ * 		<dependency>
+ * 			<groupId>com.google.zxing</groupId>
+ * 			<artifactId>core</artifactId>
+ * 			<version>${zxing.version}</version>
+ * 		</dependency>
+ * 		<dependency>
+ * 			<groupId>com.google.zxing</groupId>
+ * 			<artifactId>javase</artifactId>
+ * 			<version>${zxing.version}</version>
+ * 		</dependency>
+ * 	}</pre>
  */
 public class ZxingUtilsTest {
 

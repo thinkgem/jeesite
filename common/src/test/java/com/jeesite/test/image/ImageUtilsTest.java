@@ -14,12 +14,12 @@ import java.io.File;
  * @author ThinkGem
  * @version 2023-6-9
  */
-public class ImageTest {
+public class ImageUtilsTest {
 
 	public static void main(String[] args) {
 		String baseDir = FileUtils.getProjectPath();
-		String imgPath2 = baseDir + "\\target\\zxing.png";
-		ImageUtils.thumbnails(new File(imgPath2), 100, 100, "jpg");
+		String imgPath2 = baseDir + "/target/zxing.png";
+		ImageUtils.thumbnails(new File(imgPath2), 200, 200, "jpg");
 	}
 
 }
