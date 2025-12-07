@@ -14,8 +14,8 @@
 	
 	<modules>
 		<module>parent</module>
-		<module>parent/ai</module>
 		<module>common</module>
+		<module>common/static</module>
 		<module>modules</module>
 		<module>web</module>
 		<module>web-ai</module>

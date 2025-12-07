@@ -10,10 +10,10 @@
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-module-static</artifactId>
+	<artifactId>jeesite-common-static</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>JeeSite Module Static</name>
+	<name>JeeSite Common Static</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
