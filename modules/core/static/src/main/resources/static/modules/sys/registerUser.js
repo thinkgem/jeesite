@@ -14,7 +14,7 @@ $(function(){
 			$('#reg_loginCode').focus();
 		}, 100);
 		if (val == 'mobile' || val == 'email'){
-			var txt = (val == 'mobile' ? '手机' : '邮箱')
+			var txt = (val == 'mobile' ? '手机' : '邮箱');
 			$('#regValidCode').attr('placeholder', txt+'验证码')
 				.attr('data-msg-required', '请填写'+txt+'验证码.');
 			$('#sendRegValidCode').val('获取'+txt+'验证码');

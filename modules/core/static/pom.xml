@@ -3,23 +3,27 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.jeesite</groupId>
-	<artifactId>jeesite-modules</artifactId>
-	<version>5.15.0.springboot3-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-parent</artifactId>
+		<version>5.15.0.springboot3-SNAPSHOT</version>
+		<relativePath>../../../parent/pom.xml</relativePath>
+	</parent>
 	
-	<name>JeeSite Modules</name>
+	<artifactId>jeesite-module-core-static</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>JeeSite Module Static</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
-	<modules>
-		<module>ai</module>
-		<module>app</module>
-		<module>cms</module>
-		<module>core</module>
-		<module>core/static</module>
-		<module>test</module>
-	</modules>
+	<properties>
+	
+	</properties>
+	
+	<dependencies>
+		
+	</dependencies>
 	
 	<developers>
 		<developer>

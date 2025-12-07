@@ -118,7 +118,7 @@
 		<!-- Core Static -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-static</artifactId>
+			<artifactId>jeesite-module-core-static</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
