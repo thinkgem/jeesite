@@ -4,7 +4,7 @@
  */
 package com.jeesite.modules.msg.send;
 
-import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.springframework.stereotype.Service;
 
 import com.jeesite.common.codec.EncodeUtils;

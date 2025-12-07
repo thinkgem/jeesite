@@ -7,6 +7,7 @@ package com.jeesite.common.io;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
+import jakarta.activation.MimetypesFileTypeMap;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

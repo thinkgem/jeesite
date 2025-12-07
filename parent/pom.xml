@@ -25,7 +25,7 @@
 		<commons-lang3.version>3.18.0</commons-lang3.version>
 		<commons-text.version>1.13.1</commons-text.version>
 		<commons-io.version>2.20.0</commons-io.version>
-		<commons-email.version>1.6.0</commons-email.version>
+		<commons-email2.version>2.0.0-M1</commons-email2.version>
 
 		<metadata-extractor.version>2.19.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.20</thumbnailator.version>

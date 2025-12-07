@@ -4,7 +4,7 @@
  */
 package com.jeesite.common.msg;
 
-import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,19 +32,6 @@ public class EmailUtils {
 		String sslSmtpPort = props.getProperty("msg.email.sslSmtpPort");
 		return send(fromAddress, fromPassword, fromHostName, smtpPort, sslOnConnect, sslSmtpPort, toAddress, subject, content);
 	}
-
-//	/**
-//	 * 发送邮件
-//	 * @param toAddress 接收地址
-//	 * @param subject 标题
-//	 * @param content 内容
-//	 * @return
-//	 */
-//	@Deprecated
-//	public static boolean send(String fromAddress, String fromPassword, String fromHostName,
-//							   String sslOnConnect, String sslSmtpPort, String toAddress, String subject, String content) {
-//		return send(fromAddress, fromPassword, fromHostName, 25, sslOnConnect, sslSmtpPort, toAddress, subject, content);
-//	}
 
 	/**
 	 * 发送邮件
@@ -90,10 +77,5 @@ public class EmailUtils {
 		}
 		return false;
 	}
-
-//	public static void main(String[] args) {
-//		EmailUtils.send("jeesite_demo@163.com", "jeesitedemo1234", "smtp.163.com", 
-//				"false", "465", "jeesite_demo@163.com", "测试邮件", "测试<b>邮件</b>的内容");
-//	}
 
 }

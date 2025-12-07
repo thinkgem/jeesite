@@ -101,14 +101,20 @@
 		<!-- Email -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-email</artifactId>
-			<version>${commons-email.version}</version>
+			<artifactId>commons-email2-jakarta</artifactId>
+			<version>${commons-email2.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.mail</groupId>
+					<artifactId>jakarta.mail</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<!-- <dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>${activation.version}</version>
-		</dependency> -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>jakarta.mail</artifactId>
+			<version>2.0.2</version>
+		</dependency>
 		
 		<!-- User Agent -->
 		<dependency>
