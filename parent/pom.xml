@@ -51,7 +51,7 @@
 		<jsqlparser.version>4.9</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
 		<druid.version>1.2.27</druid.version>
-		<shiro.version>2.0.5</shiro.version>
+		<shiro.version>2.0.6</shiro.version>
 		<quartz.version>2.5.0</quartz.version>
 		<swagger3.version>2.2.36</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
