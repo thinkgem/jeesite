@@ -5,9 +5,9 @@
 
 	<parent>
 		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-parent-ai</artifactId>
+		<artifactId>jeesite-module-ai-parent</artifactId>
 		<version>5.15.0.springboot3-SNAPSHOT</version>
-		<relativePath>../../parent/ai/pom.xml</relativePath>
+		<relativePath>./ai-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>jeesite-module-ai</artifactId>
@@ -19,6 +19,7 @@
 
 	<modules>
 		<module>ai-cms</module>
+		<module>ai-parent</module>
 		<module>ai-tools</module>
 	</modules>
 

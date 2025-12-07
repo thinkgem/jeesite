@@ -7,10 +7,10 @@
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
 		<version>5.15.0.springboot3-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../../../parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jeesite-parent-ai</artifactId>
+	<artifactId>jeesite-module-ai-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Module AI Parent</name>
