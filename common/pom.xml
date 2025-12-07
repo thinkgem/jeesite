@@ -171,11 +171,13 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>${zxing.version}</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>${zxing.version}</version>
+			<optional>true</optional>
 		</dependency>
 		
 		<!-- Office Tools -->
@@ -269,6 +271,13 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+		</dependency>
+
+		<!-- Common Static -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-common-static</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 	</dependencies>
