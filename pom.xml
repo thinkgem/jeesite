@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Cloud</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
@@ -38,7 +38,7 @@
 	
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 	
 </project>
