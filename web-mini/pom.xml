@@ -16,7 +16,7 @@
 	<description>Web 服务，最小化加载，是一个小的微服务</description>
 	
 	<name>JeeSite Web Mini</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<properties>
@@ -158,7 +158,7 @@
 	
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 	
 	<repositories>

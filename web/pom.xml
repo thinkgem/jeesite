@@ -16,7 +16,7 @@
 	<description>Web 服务，也可为分离端提供接口服务</description>
 	
 	<name>JeeSite Web</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<properties>
@@ -143,7 +143,7 @@
 	
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 	
 	<repositories>

@@ -16,7 +16,7 @@
 	<packaging>pom</packaging>
 
 	<name>JeeSite Parent</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
 	<properties>
@@ -430,7 +430,7 @@
 
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 
 	<repositories>

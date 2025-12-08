@@ -8,8 +8,8 @@ jeesite-web-mini 是一个 JeeSite 极小的内核服务，1秒启动项目。
 
 ## 文档
 
-部署文档：http://jeesite.com/docs/install-deploy/
+部署文档：https://jeesite.com/docs/install-deploy/
 
-常见问题：http://jeesite.com/docs/faq/
+常见问题：https://jeesite.com/docs/faq/
 
-更多文档：http://jeesite.com/docs
+更多文档：https://jeesite.com/docs
