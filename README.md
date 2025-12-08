@@ -84,7 +84,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 9. 使用 Seata AT 事务管理，入侵性小，跨 web 服务的情况、支持单个微服务独立数据库。
 10. 集成工作流，提供BPM引擎独立的服务，客户端只需调用API，无需加载复杂流程引擎。
 11. 支持两套前端技术选型实现，全栈版(Bootstrap+Beetl)、分离版（TS+Vue3+Antdv)。
-12. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
+12. 其它优势（按 Ctrl + Shift 点击链接）：<https://jeesite.com/docs/feature/>
 
 ## 技术选型
 
@@ -164,9 +164,9 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 ### 初始化数据库
 
-JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，您可以 [下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite5/attach_files)(仅适应于社区版)，推荐使用 [init-data.bat(sh)](http://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种类型的数据库）
+JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，您可以 [下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite5/attach_files)(仅适应于社区版)，推荐使用 [init-data.bat(sh)](https://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种类型的数据库）
 
-数据库初始化文档：<http://jeesite.com/docs/install-deploy/#初始化数据库>
+数据库初始化文档：<https://jeesite.com/docs/install-deploy/#初始化数据库>
 
 ### 安装 Redis 服务
 
@@ -489,7 +489,7 @@ spring:
    规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`Copyright`和`@author`信息）
    更不要，全局替换源代码中的 jeesite 或 ThinkGem 等字样，否则你将违反本协议条款承担责任。
 5. 您若套用本软件的一些代码或功能参考，请保留源文件中的版权和作者，需要在您的软件介绍明显位置
-   说明出处，举例：本软件基于 JeeSite 快速开发平台，并附带链接：http://jeesite.com
+   说明出处，举例：本软件基于 JeeSite 快速开发平台，并附带链接：https://jeesite.com
 6. 任何基于本软件而产生的一切法律纠纷和责任，均于我司无关。
 7. 如果你对本软件有改进，希望可以贡献给我们，共同进步。
 8. 本项目已申请软件著作权，请尊重开源，感谢阅读。
