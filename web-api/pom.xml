@@ -16,7 +16,7 @@
 	<description>专为分离端提供接口服务，关闭内置登录页和主框架页视图</description>
 	
 	<name>JeeSite Web Api</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<properties>
@@ -136,7 +136,7 @@
 	
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 	
 	<repositories>

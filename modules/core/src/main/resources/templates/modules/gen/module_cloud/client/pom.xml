@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+<!-- Copyright (c) 2013-Now https://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>pom</name>
@@ -22,7 +22,7 @@
 	<packaging>jar</packaging>
 	
 	<name>JeeSite Cloud Module ${moduleName} Client</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<dependencies>
@@ -48,7 +48,7 @@
 	
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 	
 </project>

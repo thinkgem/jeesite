@@ -112,7 +112,7 @@
 * 分离版：支持所有现代浏览器，如：谷歌 Chrome 87+、微软 Edge、火狐、国产浏览器 等
 * 经典版：支持 IE10 和以上版本，以及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
-* 技术选型（详细）已支持数据库：<http://jeesite.com/docs/technology/>
+* 技术选型（详细）已支持数据库：<https://jeesite.com/docs/technology/>
 * JeeSite Vue 前后分离版：<https://gitee.com/thinkgem/jeesite-vue>
 * Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3>
 * Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2>
@@ -264,7 +264,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
    规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`Copyright`和`@author`信息）
    更不要，全局替换源代码中的 jeesite 或 ThinkGem 等字样，否则你将违反本协议条款承担责任。
 5. 您若套用本软件的一些代码或功能参考，请保留源文件中的版权和作者，需要在您的软件介绍明显位置
-   说明出处，举例：本软件基于 JeeSite 快速开发平台，并附带链接：http://jeesite.com
+   说明出处，举例：本软件基于 JeeSite 快速开发平台，并附带链接：https://jeesite.com
 6. 任何基于本软件而产生的一切法律纠纷和责任，均于我司无关。
 7. 如果你对本软件有改进，希望可以贡献给我们，共同进步。
 8. 本项目已申请软件著作权，请尊重开源，感谢阅读。

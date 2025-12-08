@@ -17,5 +17,5 @@
 
 ======= 更多资料：
 
-http://jeesite.com/docs/custom-views/
+https://jeesite.com/docs/custom-views/
 

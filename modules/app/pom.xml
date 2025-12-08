@@ -14,7 +14,7 @@
 	<packaging>jar</packaging>
 	
 	<name>JeeSite Module App</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<dependencies>
@@ -51,7 +51,7 @@
 	
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 	
 </project>

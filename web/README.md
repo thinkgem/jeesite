@@ -8,8 +8,8 @@ jeesite-web 是 JeeSite 的 Web 启动入口项目工程，
 
 ## 文档
 
-部署文档：http://jeesite.com/docs/install-deploy/
+部署文档：https://jeesite.com/docs/install-deploy/
 
-常见问题：http://jeesite.com/docs/faq/
+常见问题：https://jeesite.com/docs/faq/
 
-更多文档：http://jeesite.com/docs
+更多文档：https://jeesite.com/docs

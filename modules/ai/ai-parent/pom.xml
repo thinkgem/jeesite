@@ -14,12 +14,12 @@
 	<packaging>pom</packaging>
 
 	<name>JeeSite Module AI Parent</name>
-	<url>http://jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
 	<properties>
 
-		<spring-ai.version>1.1.0</spring-ai.version>
+		<spring-ai.version>1.1.1</spring-ai.version>
 
 	</properties>
 
@@ -47,7 +47,7 @@
 
 	<organization>
 		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 
 </project>
