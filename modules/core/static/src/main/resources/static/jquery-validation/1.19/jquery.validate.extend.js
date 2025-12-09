@@ -45,7 +45,7 @@
 			var element = $(this), errorLabel;
 			if (element.closest('.icheck').length > 0) { 
 				errorLabel = element.closest('.icheck').parent();
-			}else if (element.closest('.input-group').size() > 0) {
+			}else if (element.closest('.input-group').length > 0) {
 				errorLabel = element.closest('.input-group').parent();
 			}else{
 				errorLabel = element.parent();

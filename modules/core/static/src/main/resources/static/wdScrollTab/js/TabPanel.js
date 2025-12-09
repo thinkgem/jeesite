@@ -576,7 +576,7 @@ TabPanel.prototype = {
   refreshShowStatus: function() {
 	if (this.maxLength == 1) return;
 	var tabContent = $(this.render).find('.tabpanel_tab_content');
-	if (tabContent.find('.tabpanel_mover li').size() > 1){
+	if (tabContent.find('.tabpanel_mover li').length > 1){
 		tabContent.removeClass('hide');
 	}else{
 		tabContent.addClass('hide');
