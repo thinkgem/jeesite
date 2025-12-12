@@ -105,7 +105,9 @@
 　3、Vue 组件位置存放规则为：/views/ + 路由地址（上面举例的路由地址）
 　　　例如：组件位置应	为：/views/sys/menu/list，组件名称应与路由名称相同
 　4、组件名称定义在 script 标签的 name 属性，如 name=“ViewsSysMenuList”
-　5、注意：如果组件名称与路由名称不同，则会造成页面缓存失效。">
+　5、注意：如果组件名称与路由名称不同，则会造成页面缓存失效。
+四、其他技巧（Vue下使用）：
+　1、地址添加 ?__full__ 参数，目标为 __blank，支持新窗口全屏打开。">
 								${text('链接(Href)')}：<i class="fa icon-question"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="menuHref" maxlength="2000" class="form-control"/>
@@ -132,7 +134,7 @@
 　1、填写 IFRAME 则强制使用 iframe 打开链接
 　2、填写 LAYOUT 将不在 Beetl 视图中显示菜单项
 　3、填写 BEETL 则只在 Beetl 视图中显示菜单项
-　4、填写 BLANK 则不显示主框架（仅顶部菜单设置即可）">${text('组件位置')}：<i class="fa icon-question "></i></label>
+　4、填写 BLANK 则不显示主框架（仅顶部菜单设置）">${text('组件位置')}：<i class="fa icon-question "></i></label>
 							<div class="col-sm-8">
 								<#form:input path="component" maxlength="200" class="form-control "/>
 							</div>
