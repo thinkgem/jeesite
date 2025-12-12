@@ -43,25 +43,22 @@ public class MultiDataSourceTest extends BaseSpringContextTests {
 	public void testData() throws Exception{
 		ExecutorService pool = Executors.newCachedThreadPool();
 		CountDownLatch latch = new CountDownLatch(10);
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				try{
-					Thread.sleep(IdGen.randomInt(1000, 3000));
-					TestData testData = new TestData();
-					testData.setTestDataChildList(ListUtils.newArrayList(
-							new TestDataChild(), new TestDataChild(), new TestDataChild()));
-					testDataService.save(testData);
-					List<TestData> list = testDataService.findList(new TestData());
-					System.out.println("size: " + list.size());
-					list.forEach(e -> {
-						System.out.println("get: " + testDataService.get(e));
-					});
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				} finally {
-					latch.countDown();
-				}
+		Runnable runnable = () -> {
+			try{
+				Thread.sleep(IdGen.randomInt(1000, 3000));
+				TestData testData = new TestData();
+				testData.setTestDataChildList(ListUtils.newArrayList(
+						new TestDataChild(), new TestDataChild(), new TestDataChild()));
+				testDataService.save(testData);
+				List<TestData> list = testDataService.findList(new TestData());
+				System.out.println("size: " + list.size());
+				list.forEach(e -> {
+					System.out.println("get: " + testDataService.get(e));
+				});
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			} finally {
+				latch.countDown();
 			}
 		};
 		for (int i = 0; i < latch.getCount(); i++) {
