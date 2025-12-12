@@ -460,7 +460,7 @@ CREATE TABLE js_sys_menu
 	is_show char(1) NOT NULL COMMENT '是否显示（1显示 0隐藏）',
 	sys_code varchar(64) NOT NULL COMMENT '归属系统（default:主导航菜单、mobileApp:APP菜单）',
 	module_codes varchar(500) NOT NULL COMMENT '归属模块（多个用逗号隔开）',
-	component varchar(500) COMMENT '组件路径',
+	component varchar(500) COMMENT '组件位置',
 	params varchar(500) COMMENT '组件参数',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
