@@ -1364,7 +1364,7 @@ COMMENT ON COLUMN js_sys_menu.weight IS '菜单权重';
 COMMENT ON COLUMN js_sys_menu.is_show IS '是否显示（1显示 0隐藏）';
 COMMENT ON COLUMN js_sys_menu.sys_code IS '归属系统（default:主导航菜单、mobileApp:APP菜单）';
 COMMENT ON COLUMN js_sys_menu.module_codes IS '归属模块（多个用逗号隔开）';
-COMMENT ON COLUMN js_sys_menu.component IS '组件路径';
+COMMENT ON COLUMN js_sys_menu.component IS '组件位置';
 COMMENT ON COLUMN js_sys_menu.params IS '组件参数';
 COMMENT ON COLUMN js_sys_menu.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_menu.create_by IS '创建者';

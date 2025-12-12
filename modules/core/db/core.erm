@@ -531,7 +531,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>组件路径</logical_name>
+			<logical_name>组件位置</logical_name>
 			<physical_name>component</physical_name>
 			<type>varchar(n)</type>
 		</word>
