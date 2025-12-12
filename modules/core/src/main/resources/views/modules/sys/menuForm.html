@@ -1,6 +1,6 @@
 <%/* Copyright (c) 2013-Now https://jeesite.com All rights reserved.
    * No deletion without permission, or be held responsible to law. */ %>
-<% layout('/layouts/default.html', {title: '菜单管理', libs: ['validate']}){ %>
+<% layout('/layouts/default.html', {title: '菜单管理', libs: ['validate', 'dataGrid']}){ %>
 <link rel="stylesheet" href="${ctxStatic}/colorpicker/bootstrap-colorpicker.css"/>
 <div class="main-content">
 	<div class="box box-main">
@@ -102,8 +102,8 @@
 　1、设置菜单的路由地址，对应组件目录为 /views/ 下的 .vue 文件
 　2、路由名称生成规则为：Views + 去除地址的 “/”，并后一个字母大写，
 　　　例如：路由地址为：/sys/menu/list，则生成路由名称为：ViewsSysMenuList
-　3、Vue 组件路径存放规则为：/views/ + 路由地址（上面举例的路由地址）
-　　　例如：组件路径应	为：/views/sys/menu/list，组件名称应与路由名称相同
+　3、Vue 组件位置存放规则为：/views/ + 路由地址（上面举例的路由地址）
+　　　例如：组件位置应	为：/views/sys/menu/list，组件名称应与路由名称相同
 　4、组件名称定义在 script 标签的 name 属性，如 name=“ViewsSysMenuList”
 　5、注意：如果组件名称与路由名称不同，则会造成页面缓存失效。">
 								${text('链接(Href)')}：<i class="fa icon-question"></i></label>
@@ -125,14 +125,14 @@
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="control-label col-sm-4" title="一、组件路径说明（Vue下使用）：
-　1、自定义 Vue 组件路径，一般不需要填写，默认是根据 “链接地址” 进行自动生成
-　2、当 “链接地址” 或 “路由地址” 与 Vue 组件路径匹配规则不一致的时候配置
+							<label class="control-label col-sm-4" title="一、组件位置说明（Vue下使用）：
+　1、自定义 Vue 组件位置，一般不需要填写，默认是根据 “链接地址” 进行自动生成
+　2、当 “链接地址” 或 “路由地址” 与 Vue 组件位置匹配规则不一致的时候配置
 二、也可以设置内置组件名称（Vue下使用）：
 　1、填写 IFRAME 则强制使用 iframe 打开链接
 　2、填写 LAYOUT 将不在 Beetl 视图中显示菜单项
 　3、填写 BEETL 则只在 Beetl 视图中显示菜单项
-　4、填写 BLANK 则不显示主框架（仅顶部菜单设置即可）">${text('组件路径')}：<i class="fa icon-question "></i></label>
+　4、填写 BLANK 则不显示主框架（仅顶部菜单设置即可）">${text('组件位置')}：<i class="fa icon-question "></i></label>
 							<div class="col-sm-8">
 								<#form:input path="component" maxlength="200" class="form-control "/>
 							</div>
@@ -251,7 +251,7 @@ Vue：const props = defineProps({ aa: String, bb: String })">
 					</div>
 				</div>
 				<% */} %>
-				<#form:extend collapsed="true" />
+				<#form:extend collapsed="false" model="${menu}" extendMap="${text('自定义属性')}" />
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -275,7 +275,7 @@ $('#inputForm').validate({
 			js.showMessage('请选择归属模块！');
 			return;
 		}
-		js.ajaxSubmitForm($(form), function(data){
+		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){
