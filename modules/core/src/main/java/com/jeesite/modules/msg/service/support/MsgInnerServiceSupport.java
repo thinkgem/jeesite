@@ -191,14 +191,11 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 		msgInnerRecordDao.insertBatch(recordList, null);
 		// 手动触发消息推送任务
 		if (Global.TRUE.equals(Global.getProperty("msg.realtime.enabled"))){
-			msgPushThreadPool.submit(new Runnable() {
-				@Override
-				public void run() {
-					try{
-						MsgPushUtils.getMsgPushTask().execute();
-					}catch(Exception ex){
-						logger.error("实时消息发送失败，推送服务配置不正确。", ex);
-					}
+			msgPushThreadPool.submit(() -> {
+				try{
+					MsgPushUtils.getMsgPushTask().execute();
+				}catch(Exception ex){
+					logger.error("实时消息发送失败，推送服务配置不正确。", ex);
 				}
 			});
 		}
