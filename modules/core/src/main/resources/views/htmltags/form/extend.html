@@ -28,8 +28,8 @@ var p = {
 	extendF2: extendF2!(text('小数') + ' 2'),
 	extendF3: extendF3!(text('小数') + ' 3'),
 	extendF4: extendF4!(text('小数') + ' 4'),
-	extendD1: extendD1!(text('日期') + ' 1'),
-	extendD2: extendD2!(text('日期') + ' 2'),
+	extendD1: extendD1!(text('日期时间') + ' 1'),
+	extendD2: extendD2!(text('日期时间') + ' 2'),
 	extendD3: extendD3!(text('日期时间') + ' 3'),
 	extendD4: extendD4!(text('日期时间') + ' 4'),
 
@@ -215,7 +215,7 @@ var p = {
 						<span class="required hide">*</span> ${p.extendD1}：<i class="fa icon-question hide"></i></label>
 					<div class="col-sm-8">
 						<#form:input path="${p.pathPrefix}.extendD1" readonly="readonly" maxlength="20" class="form-control laydate "
-							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+							dataFormat="date" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss"/>
 					</div>
 				</div>
 			</div>
@@ -225,7 +225,7 @@ var p = {
 						<span class="required hide">*</span> ${p.extendD2}：<i class="fa icon-question hide"></i></label>
 					<div class="col-sm-8">
 						<#form:input path="${p.pathPrefix}.extendD2" readonly="readonly" maxlength="20" class="form-control laydate "
-							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+							dataFormat="date" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss"/>
 					</div>
 				</div>
 			</div>
