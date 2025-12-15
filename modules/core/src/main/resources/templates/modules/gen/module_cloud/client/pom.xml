@@ -30,7 +30,7 @@
 		<!-- 云客户端 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-framework</artifactId>
+			<artifactId>jeesite-framework-cloud</artifactId>
 			<version>\${project.parent.version}</version>
 		</dependency>
 		
