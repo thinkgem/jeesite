@@ -101,7 +101,7 @@
 		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>-->
 		<plugins>
 			
-			<!-- Spring Boot -->
+			<!-- Spring Boot 插件 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
