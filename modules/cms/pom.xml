@@ -38,9 +38,7 @@
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
-			<roles>
-				<role>Project lead</role>
-			</roles>
+			<roles><role>Project lead</role></roles>
 			<timezone>+8</timezone>
 		</developer>
 	</developers>
@@ -49,24 +47,5 @@
 		<name>JeeSite</name>
 		<url>https://jeesite.com</url>
 	</organization>
-	<repositories>
-		<repository>
-			<id>aliyun-repos</id>
-			<url>https://maven.aliyun.com/repository/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>aliyun-repos</id>
-			<url>https://maven.aliyun.com/repository/public</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>
