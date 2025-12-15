@@ -40,7 +40,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<!-- docker setting -->
+		<!-- Docker setting -->
 		<docker.dockerHost>http://127.0.0.1:2375</docker.dockerHost>
 		<docker.imageName>thinkgem/${project.artifactId}:latest</docker.imageName>
 		<docker.run.port>8980:8980</docker.run.port>
@@ -91,19 +91,19 @@
 
 		<plugins>
 
-			<!-- compiler插件 -->
+			<!-- Compiler 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 
-			<!-- jar插件 -->
+			<!-- Jar 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 
-			<!-- resource插件 -->
+			<!-- Resource 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -115,7 +115,7 @@
 
 			<plugins>
 
-				<!-- compiler插件，设定JDK版本 -->
+				<!-- Compiler插件，设定JDK版本 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -130,7 +130,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- jar插件，配置manifest文件，加入lib包的jar依赖 -->
+				<!-- Jar 插件，配置 manifest 文件，加入 lib 包的 jar 依赖 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -167,7 +167,7 @@
 					</executions>
 				</plugin>
 
-				<!-- war插件，war包名称不带版本号 -->
+				<!-- War 插件，自定义 war 包名称 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -193,7 +193,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- resource插件 -->
+				<!-- Resource 插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
@@ -207,14 +207,14 @@
 					</configuration>
 				</plugin>
 
-				<!-- exec插件 -->
+				<!-- Exec 插件 -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>3.1.0</version>
 				</plugin>
 
-				<!-- springboot插件 -->
+				<!-- Spring Boot 插件 -->
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>

@@ -26,7 +26,7 @@
 		<nacos.version>3.0.2.1</nacos.version>
 		<derby.version>10.14.2.0</derby.version>
 
-		<!-- docker setting -->
+		<!-- Docker setting -->
 		<docker.run.port>8848:8848</docker.run.port>
 		<docker.run.port2>9848:9848</docker.run.port2>
 		<docker.run.port3>8849:8849</docker.run.port3>
@@ -58,7 +58,7 @@
 		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>-->
 		<plugins>
 
-			<!-- Spring Boot -->
+			<!-- Spring Boot 插件 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -67,7 +67,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- war插件，war包名称不带版本号 -->
+			<!-- War 插件，自定义 war 包名称 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>

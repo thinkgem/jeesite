@@ -26,7 +26,7 @@
 		<sentinel.version>1.8.8</sentinel.version>
 		<curator.version>4.0.1</curator.version>
 
-		<!-- docker setting -->
+		<!-- Docker setting -->
 		<docker.run.port>9311:9311</docker.run.port>
 
 	</properties>
@@ -170,7 +170,7 @@
 		</resources>
 		<plugins>
 
-			<!-- Spring Boot -->
+			<!-- Spring Boot 插件 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -179,7 +179,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- war插件，war包名称不带版本号 -->
+			<!-- War 插件，自定义 war 包名称 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
