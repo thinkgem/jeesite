@@ -13,7 +13,7 @@
  * @author ${functionAuthor}
 -->
 <template>
-  <PageWrapper :sidebarWidth="230">
+  <PageWrapper :sidebarWidth="200">
     <template #sidebar>
       <BasicTree
         :title="t('${functionNameSimple}')"
