@@ -24,7 +24,7 @@
 		<finalName>web</finalName><!-- war 或 jar 包的名称 -->
 		<start-class>com.jeesite.modules.MiniApplication</start-class>
 
-		<!-- docker setting -->
+		<!-- Docker setting -->
 		<docker.run.port>8991:8991</docker.run.port>
 		
 	</properties>
@@ -127,7 +127,7 @@
 		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>-->
 		<plugins>
 			
-			<!-- Spring Boot -->
+			<!-- Spring Boot 插件 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -136,7 +136,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- war插件，war包名称不带版本号 -->
+			<!-- War 插件，自定义 war 包名称 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>

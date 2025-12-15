@@ -21,7 +21,7 @@
 
 	<properties>
 
-		<!-- commons version -->
+		<!-- Commons version -->
 		<commons-lang3.version>3.20.0</commons-lang3.version>
 		<commons-text.version>1.14.0</commons-text.version>
 		<commons-io.version>2.21.0</commons-io.version>
@@ -45,7 +45,7 @@
 		<logstash-logback.version>8.1</logstash-logback.version>
 		<logback.version>1.5.19</logback.version>
 
-		<!-- framework version -->
+		<!-- Framework version -->
 		<mybatis.version>3.5.19</mybatis.version>
 		<mybatis-spring.version>3.0.5</mybatis-spring.version>
 		<jsqlparser.version>4.9</jsqlparser.version>
@@ -56,7 +56,7 @@
 		<swagger3.version>2.2.36</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
 
-		<!-- jdbc driver for your db version -->
+		<!-- JDBC driver for your db version -->
 		<!--<mysql.version>9.3.0</mysql.version>-->
 		<!--<oracle-database.version>23.7.0.25.01</oracle-database.version>-->
 		<!--<jtds.version>1.3.1</jtds.version>-->
@@ -66,7 +66,7 @@
 		<kingbase.version>8.6.1</kingbase.version>
 		<h2.version>2.3.232</h2.version>
 
-		<!-- environment setting -->
+		<!-- Environment setting -->
 		<java.version>17</java.version>
 		<maven.test.skip>true</maven.test.skip>
 		<resource.delimiter>@</resource.delimiter>
@@ -79,7 +79,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<!-- docker setting -->
+		<!-- Docker setting -->
 		<docker.dockerHost>http://127.0.0.1:2375</docker.dockerHost>
 		<docker.imageName>thinkgem/${project.artifactId}:latest</docker.imageName>
 		<docker.run.port>8980:8980</docker.run.port>
@@ -90,25 +90,25 @@
 
 		<plugins>
 
-			<!-- compiler插件 -->
+			<!-- Compiler 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 
-			<!-- jar插件 -->
+			<!-- Jar 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 
-			<!-- resource插件 -->
+			<!-- Resource 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
 
-			<!-- timestamp插件 -->
+			<!-- Timestamp 插件 -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -120,7 +120,7 @@
 
 			<plugins>
 
-				<!-- compiler插件，设定JDK版本 -->
+				<!-- Compiler插件，设定JDK版本 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -130,7 +130,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- timestamp插件，生成编译时间 -->
+				<!-- Timestamp 插件，生成编译时间 -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
@@ -150,7 +150,7 @@
 					</executions>
 				</plugin>
 
-				<!-- jar插件，配置manifest文件，加入lib包的jar依赖 -->
+				<!-- Jar 插件，配置 manifest 文件，加入 lib 包的 jar 依赖 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -187,7 +187,7 @@
 					</executions>
 				</plugin>
 
-				<!-- war插件，war包名称不带版本号 -->
+				<!-- War 插件，自定义 war 包名称 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -213,7 +213,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- resource插件 -->
+				<!-- Resource 插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
@@ -226,13 +226,13 @@
 					</configuration>
 				</plugin>
 
-				<!-- exec插件 -->
+				<!-- Exec 插件 -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
 				</plugin>
 
-				<!-- springboot插件 -->
+				<!-- Spring Boot 插件 -->
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
