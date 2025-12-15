@@ -21,7 +21,7 @@
 
 	<properties>
 
-		<!-- Commons version -->
+		<!-- Dependencies tools version -->
 		<commons-lang3.version>3.20.0</commons-lang3.version>
 		<commons-text.version>1.14.0</commons-text.version>
 		<commons-io.version>2.21.0</commons-io.version>
@@ -40,12 +40,10 @@
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<snakeyaml.version>2.4</snakeyaml.version>
 		<fastjson.version>2.0.57</fastjson.version>
-		<joda-time.version>2.12.7</joda-time.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
-		<logstash-logback.version>8.1</logstash-logback.version>
-		<logback.version>1.5.19</logback.version>
+		<joda-time.version>2.12.7</joda-time.version>
 
-		<!-- Framework version -->
+		<!-- Dependencies framework version -->
 		<mybatis.version>3.5.19</mybatis.version>
 		<mybatis-spring.version>3.0.5</mybatis-spring.version>
 		<jsqlparser.version>4.9</jsqlparser.version>
@@ -55,6 +53,8 @@
 		<quartz.version>2.5.0</quartz.version>
 		<swagger3.version>2.2.36</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
+		<logstash-logback.version>8.1</logstash-logback.version>
+		<logback.version>1.5.19</logback.version>
 
 		<!-- JDBC driver for your db version -->
 		<!--<mysql.version>9.3.0</mysql.version>-->
