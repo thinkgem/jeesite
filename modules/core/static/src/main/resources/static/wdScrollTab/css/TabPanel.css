@@ -178,11 +178,11 @@
 	top: 0;
 }
 
-.div_RightMenu{position:absolute;list-style:none;width:130px;z-index:999999;display:none;} 
-.div_RightMenu div{background:#eee;position:relative;font-size:13px;}
-.div_RightMenu ul{position:relative;background:#fff;border:1px solid #ddd;left:-2px;top:-2px;margin:0;padding:1px 0;border-radius:3px;}
-.div_RightMenu ul li{list-style:none;padding:5px 12px;cursor:pointer;text-align:left;}
-.div_RightMenu ul li.RM_mouseover{background-color:#e1e3e9;}
+.div_RightMenu{position:absolute;list-style:none;width:130px;z-index:999999;display:none;}
+.div_RightMenu div{background:#eee;position:relative;font-size:13px;border-radius:6px;}
+.div_RightMenu ul{position:relative;background:#fff;border:1px solid #ddd;left:-2px;top:-2px;margin:0;padding:3px;border-radius:6px;}
+.div_RightMenu ul li{list-style:none;padding:5px 12px;cursor:pointer;text-align:left;border-radius:6px;}
+.div_RightMenu ul li.RM_mouseover{background-color:#f1f2f4;}
 .div_RightMenu ul li i{width:18px;color:#666;}
 
 .skin-dark .div_RightMenu div,
