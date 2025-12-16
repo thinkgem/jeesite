@@ -181,7 +181,7 @@
 							<div class="col-sm-10 table-form">
 								<table id="empOfficeGrid"></table>
 								<% if (hasPermi('sys:empUser:edit')){ %>
-									<a href="#" id="empOfficeGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+									<a href="#" id="empOfficeGridAddRowBtn" class="btn btn-default btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
 								<% } %>
 							</div>
 						</div>
@@ -213,7 +213,7 @@
 				</div>
 			    <% } %>
 				<% if(op == 'add' || op == 'edit') { %>
-				<#form:extend collapsed="true" />
+				<#form:extend collapsed="true" model="${empUser}" extendMap="${text('自定义属性')}" />
 				<% } %>
 			</div>
 			<div class="box-footer">
@@ -315,7 +315,7 @@ $('#inputForm').validate({
 		if (empNo == ''){
 			$('#employee_empNo').val($('#loginCode').val());
 		}
-		js.ajaxSubmitForm($(form), function(data){
+		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				// emitter.emit('emp-user-list-page');

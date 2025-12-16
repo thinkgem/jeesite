@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title: '机构管理', libs: ['validate']}){ %>
+<% layout('/layouts/default.html', {title: '机构管理', libs: ['validate','dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header">
@@ -139,7 +139,7 @@
 						</div>
 					</div>
 				</div>
-				<#form:extend collapsed="true" />
+				<#form:extend collapsed="true" model="${office}" extendMap="${text('自定义属性')}" />
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -156,9 +156,9 @@
 </div>
 <% } %>
 <script>
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
-		js.ajaxSubmitForm($(form), function(data){
+		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){

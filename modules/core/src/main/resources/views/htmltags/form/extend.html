@@ -12,26 +12,26 @@ var p = {
 	
 	title: text('扩展字段'),					// 显示标题、折叠标题，v4.2.3 版本以后版本生效
 	
-	extendS1: extendS1!(text('字符串') + ' 1'),	// extendS1 及以下属性的标签名 v4.2.3 版本以后版本生效
-	extendS2: extendS2!(text('字符串') + ' 2'),
-	extendS3: extendS3!(text('字符串') + ' 3'),
-	extendS4: extendS4!(text('字符串') + ' 4'),
-	extendS5: extendS5!(text('字符串') + ' 5'),
-	extendS6: extendS6!(text('字符串') + ' 6'),
-	extendS7: extendS7!(text('字符串') + ' 7'),
-	extendS8: extendS8!(text('字符串') + ' 8'),
-	extendI1: extendI1!(text('整数') + ' 1'),
-	extendI2: extendI2!(text('整数') + ' 2'),
-	extendI3: extendI3!(text('整数') + ' 3'),
-	extendI4: extendI4!(text('整数') + ' 4'),
-	extendF1: extendF1!(text('小数') + ' 1'),
-	extendF2: extendF2!(text('小数') + ' 2'),
-	extendF3: extendF3!(text('小数') + ' 3'),
-	extendF4: extendF4!(text('小数') + ' 4'),
-	extendD1: extendD1!(text('日期时间') + ' 1'),
-	extendD2: extendD2!(text('日期时间') + ' 2'),
-	extendD3: extendD3!(text('日期时间') + ' 3'),
-	extendD4: extendD4!(text('日期时间') + ' 4'),
+	extendS1: extendS1!text('字符串 1'),		// extendS1 及以下属性的标签名 v4.2.3 版本以后版本生效
+	extendS2: extendS2!text('字符串 2'),
+	extendS3: extendS3!text('字符串 3'),
+	extendS4: extendS4!text('字符串 4'),
+	extendS5: extendS5!text('字符串 5'),
+	extendS6: extendS6!text('字符串 6'),
+	extendS7: extendS7!text('字符串 6'),
+	extendS8: extendS8!text('字符串 8'),
+	extendI1: extendI1!text('整数 1'),
+	extendI2: extendI2!text('整数 2'),
+	extendI3: extendI3!text('整数 3'),
+	extendI4: extendI4!text('整数 4'),
+	extendF1: extendF1!text('小数 5'),
+	extendF2: extendF2!text('小数 6'),
+	extendF3: extendF3!text('小数 7'),
+	extendF4: extendF4!text('小数 8'),
+	extendD1: extendD1!text('日期时间 1'),
+	extendD2: extendD2!text('日期时间 2'),
+	extendD3: extendD3!text('日期时间 3'),
+	extendD4: extendD4!text('日期时间 4'),
 
 	model: model!,							// 绑定Model对象，例如：${user!}
 	extendMap: extendMap!'',				// 自定义属性，默认不显示 v5.15.0
@@ -260,7 +260,7 @@ var p = {
 						<span class="required hide">*</span> ${text(p.extendMap)}：<i class="fa icon-question hide"></i></label>
 					<div class="col-sm-10 table-form">
 						<table id="extendMapGrid"></table>
-						<a href="#" id="extendMapGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10 hide"><i class="fa fa-plus"></i> ${text('增行')}</a>
+						<a href="#" id="extendMapGridAddRowBtn" class="btn btn-default btn-sm mt10 mb10 hide"><i class="fa fa-plus"></i> ${text('增行')}</a>
 					</div>
 				</div>
 			</div>
@@ -288,6 +288,9 @@ var p = {
 					editGridInitRowNum: 0,
 					emptyDataHint: true
 				});
+				$('.collapsed-box').on('expanded.boxwidget', function() {
+					$('#extendMapGrid').dataGrid('resize');
+				});
 			});
 			function getExtendMapFormData(formData, $form, options) {
 				for (var i = 0, n; i < formData.length; i++) {
@@ -304,7 +307,7 @@ var p = {
 						extendJson[item.extendMapKey] = item.extendMapValue == null ? '' : item.extendMapValue;
 					}
 				});
-				formData.push({ name: 'extend.extendJson', value: JSON.stringify(extendJson)});
+				formData.push({ name: '${p.pathPrefix}.extendJson', value: JSON.stringify(extendJson)});
 			}
 		</script>
 		<% } %>
