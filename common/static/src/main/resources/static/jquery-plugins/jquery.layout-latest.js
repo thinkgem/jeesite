@@ -1556,7 +1556,7 @@ $.fn.layout = function (opts) {
 		initHotkeys();
 
 		// bind window.onunload
-		$(window).bind("unload."+ sID, unload);
+		// $(window).bind("unload."+ sID, unload);
 
 		// init plugins for this layout, if there are any (eg: customButtons)
 		runPluginCallbacks( Instance, $.layout.onLoad );
