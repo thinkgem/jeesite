@@ -125,7 +125,7 @@
 					<table id="roleGrid"></table>
 					<#form:hidden name="userRoleString"/>
 				</div>
-				<#form:extend collapsed="true" />
+				<#form:extend collapsed="true" model="${user}" extendMap="${text('自定义属性')}" />
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -154,7 +154,7 @@ $('#inputForm').validate({
 		// 获取选中角色
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
 		// 提交表单
-		js.ajaxSubmitForm($(form), function(data){
+		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){

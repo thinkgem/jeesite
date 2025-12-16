@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title: '文章管理', libs: ['validate','fileupload','ueditor']}){ %>
+<% layout('/layouts/default.html', {title: '文章管理', libs: ['validate','fileupload','ueditor','dataGrid']}){ %>
 <link rel="stylesheet" href="${ctxStatic}/colorpicker/bootstrap-colorpicker.css"/>
 <div class="main-content">
 	<div class="box box-main">
@@ -207,7 +207,7 @@
 						</div>
 					</div>
 				</div>
-				<#form:extend collapsed="true" pathPrefix="articleData"/>
+				<#form:extend collapsed="true" model="${article}" extendMap="${text('自定义属性')}" pathPrefix="articleData" />
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -238,7 +238,7 @@ $('#weightTop input').on('ifChecked ifUnchecked', function(){
 $('#inputForm').validate({
 	submitHandler: function(form){
 		$('#wordCount').val(contentUE.getContentTxt().length);
-		js.ajaxSubmitForm($(form), function(data){
+		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
 			js.showMessage(data.message);
 			//# if(parameter['category.showModes'] != '3'){
 			if(data.result == Global.TRUE){

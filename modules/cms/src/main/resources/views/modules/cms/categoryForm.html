@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title: '栏目添加', libs: ['validate','fileupload']}){ %>
+<% layout('/layouts/default.html', {title: '栏目添加', libs: ['validate','fileupload','dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
@@ -236,7 +236,7 @@
 						</div>
 					</div>
 				</div>
-				<#form:extend collapsed="true" />
+				<#form:extend collapsed="true" model="${category}" extendMap="${text('自定义属性')}" />
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -255,7 +255,7 @@
 <script>
 $('#inputForm').validate({
 	submitHandler : function(form) {
-		js.ajaxSubmitForm($(form), function(data) {
+		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data) {
 			js.showMessage(data.message);
 			if (data.result == Global.TRUE) {
 				js.closeCurrentTabPage(function(contentWindow) {
