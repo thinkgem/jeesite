@@ -2,12 +2,12 @@
 <script src="${ctxStatic}/laydate/5.3/laydate.js?${_version}"></script>
 <style type="text/css">
 	form.search {margin:12px 20px 5px;}
-	form.search input.txt {padding:4px 8px;font-size:18px;width:300px;margin:5px;border:1px solid #bbb;border-radius:3px;}
+	form.search input.txt {padding:4px 8px;font-size:18px;width:300px;margin:5px;border:1px solid #bbb;border-radius:15px;}
 	form.search input.txt.date {width:133px;}
 	form.search input.txt:hover, form.search input.txt:focus {outline:none;border:1px solid #4e71f2;}
 	form.search .sel {margin:0 0 15px 0;padding:10px 5px;border-bottom:1px solid #efefef;font-size:18px;}
 	form.search .act {font-weight:bold;}
-	form.search .btn {padding:4px 18px;font-size:18px;margin-top:-3px;margin-right:5px;border:1px solid #bbb;border-radius:3px;}
+	form.search .btn {padding:4px 18px;font-size:18px;margin-top:-3px;margin-right:5px;border:1px solid #bbb;border-radius:15px;}
 	form.search .btn:hover, form.search .btn:focus {outline:none;color:#333;background:#d1d1d1}
 	dl.search {line-height:25px;border-bottom:1px solid #efefef;margin:10px 20px 15px 20px;}
 	dl.search dt {border-top:1px solid #efefef;padding:13px 5px 5px;font-size:18px;font-weight:normal;font-family:Arial,sans-serif;}
@@ -25,7 +25,7 @@ if (message != ''){
 function page(n,s){
 	$("#pageNo").val(n);
 	$("#pageSize").val(s);
-	$("#searchForm").submit();
+	$('#searchForm').submit();
 	return false;
 }
 function sel(th, val){

@@ -22,10 +22,13 @@ p{margin:5px 0 10px;line-height:1.75;}
 .bs-component .popover{position:relative;display:inline-block;width:220px;margin:20px}
 #source-button{position:absolute;top:0;right:0;z-index:100;font-weight:700}
 .nav-tabs{margin-bottom:15px}
+.navbar-inverse .navbar-nav>li>a {border-radius:10px;padding:10px;margin-top:4px;margin-right:4px;}
+.navbar-nav>li>.dropdown-menu, .dropdown-menu>li>a{border-radius:10px;}
+.dropdown-menu>li>a {margin: 5px 10px;}
 .progress{margin-bottom:10px}
 footer{margin:1.5em 0}
 footer li{float:left;margin-right:1.5em;margin-bottom:1.5em}
-footer p{clear:left;margin-bottom:0}
+footer p{clear:left;margin-bottom:0;opacity:0.7}
 .splash{padding:9em 0 2em;background-color:#141d27;background-image:url(../img/bg.jpg);background-size:cover;background-attachment:fixed;color:#fff;text-align:center}
 .splash .logo{width:160px}
 .splash h1{font-size:3em}
@@ -58,18 +61,18 @@ footer p{clear:left;margin-bottom:0}
 .navbar-inverse {border-bottom:0;}
 .breadcrumb {border-radius:8px;background:transparent;padding:0;margin:2px 15px 21px 15px;}
 
-.jumbotron {background:#fff;margin:48px auto;border:1px solid #ededed;box-shadow:0 1px 4px 0 rgb(0 0 0 / 5%);border-radius:8px!important;}
-.jumbotron h1, .jumbotron .h1 {font-size:43px;margin: 0 0 30px;}
-.jumbotron .btn-sm {font-size:17px;}
+.jumbotron {background:#fff;margin:48px auto;border:1px solid #ededed;box-shadow:0 1px 4px 0 rgb(0 0 0 / 5%);border-radius:10px!important;}
+.jumbotron h1, .jumbotron .h1 {font-size:43px;margin:0 0 30px;}
+.jumbotron .btn-sm {font-size:17px;border-radius:15px;padding:5px 15px;}
 
-.panel {border-radius:8px}
-.panel-heading {border-radius:8px 8px 0 0}
-.panel-footer {border-radius:0 0 8px 8px}
+.panel {border-radius:10px}
+.panel-heading {border-radius:10px 10px 0 0}
+.panel-footer {border-radius:0 0 10px 10px}
 .panel-title {font-size:18px;}
 .panel-title small .more {padding-top:4px;font-size:14px}
 
 .nav-search {margin-top:9px;}
-.nav-search .form-control {height:30px;line-height:30px;padding:5px;border-radius:4px;}
+.nav-search .form-control {height:30px;line-height:30px;padding:5px;border:0;border-radius:15px;}
 .nav-search .btn {height:31px;padding:5px 10px;border-radius:15px;outline:none;}
 .nav-search .btn:focus {outline:none;}
 
@@ -86,11 +89,14 @@ footer p{clear:left;margin-bottom:0}
 .article-desc {padding:8px 10px 8px;margin:10px 20px 20px 35px;font-size:14px;}
 .article-content {padding-top:10px;}
 
-.pagination {margin:8px 0;display:block;/* text-align:center; */font-size:13px;} /* .pagination .controls a{border:0;} */
-.pagination>li>a, .pagination>li>span {min-width:37px;text-align:center;padding:6px;border:1px solid #ddd;background:transparent;/* border-radius:3px; */}
+.pagination {margin:10px 0 0;display:block;font-size:14px;}
+.pagination>li>a, .pagination>li>span, .pagination>.disabled>a {min-width:24px;height:24px;line-height:24px;text-align:center;
+	border-width:0;border-radius:4px!important;background:#f4f4f5;margin:0 4px;padding:0 5px;color:#555;}
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
-.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {background:#eee;color:#333;border-color:#ddd}
-.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, 
-.pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus {cursor:default!important;color:#ccc;}
-.pagination .controls {float:left;border:0;padding:7px 0 0 15px;color:#777;}
-.pagination .controls input{border:0;width:22px;padding:0;margin:-3px 0 0 0;text-align:center;font-size:13px;background:transparent;box-shadow:none;}
+.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {background:#2177d8;color:#fff;font-weight:bold;}
+.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus,
+.pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus {background:#f4f4f5;border-width:0;color:#aaa;}
+.pagination .fa.fa-angle-left,.pagination .fa.fa-angle-right {font-size:18px;padding-top:2px;}
+.pagination .controls {float:left;border:0;padding:2px 10px 0 10px;color:#555;line-height:20px;}
+.pagination .controls input {width:22px;padding:0;margin:-3px 0 0 0;border:1px solid #eee;border-radius:4px;vertical-align:middle;text-align:center;font-size:14px;background:transparent;box-shadow:none;}
+.pagination .controls.after {padding-right:0}
