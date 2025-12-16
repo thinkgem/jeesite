@@ -181,7 +181,7 @@ $('#dataGrid').dataGrid({
 			url: '${ctx}/test/testData/subListData',
 			postData: {'testData.id': rowId},
 			autoGridHeight: function(){return 'auto'}, // 设置自动高度
-			autoGridWidth:  function(){return $("#"+subgridId).width()}, // 设置自动高度
+			autoGridWidth:  function(){return $("#"+subgridId).width()}, // 设置自动宽度
 			// 设置数据表格列
 			columnModel: [
 				{header:'${text("单行文本")}', name:'testInput', width:150},
