@@ -15,24 +15,30 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   color: #ffffff;
   margin: 4.5px 2px 0;
   padding: 10px 13px;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 .main-header .navbar .nav > li > a > i {
   font-size: 16px;
   vertical-align: bottom;
   line-height: 20px;
 }
-.navbar-nav>.user-menu>.dropdown-menu {
+.main-header .navbar-nav .treeview-menu,
+.main-header .navbar-nav>.user-menu>.dropdown-menu {
   margin-top: 7px;
-  border-radius: 6px;
+  border-radius: 10px;
 }
-.navbar-nav .treeview-menu,
-.navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+.main-header .navbar-custom-menu>.navbar-nav>li> {
+  font-size: 14px;
+}
+.main-header .navbar-custom-menu>.navbar-nav>li> a > i {
+  font-size: 18px;
+}
+.main-header .navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
   margin-top: 5px;
-  border-radius: 6px;
+  border-radius: 10px;
 }
-.navbar-nav .treeview-menu a {
-  border-radius: 6px;
+.main-header .navbar-nav .treeview-menu a {
+  border-radius: 10px;
 }
 .main-header .navbar .nav > li > a:hover,
 .main-header .navbar .nav > li > a:active,
@@ -184,18 +190,18 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .sidebar-menu {padding:0 8px 0 7px;}
 .sidebar-menu li>a>.pull-right-container {left:0;}
-.sidebar-menu .treeview-item.active>a {color:#1677ff;background-color:#e7f4ff;border-right:0;border-radius:6px;}
+.sidebar-menu .treeview-item.active>a {color:#1677ff;background-color:#e7f4ff;border-right:0;border-radius:10px;}
 
 /* 页签添加内边距 */
 .content-wrapper, .tabpanel_content, .tabpanel_content .html_content, body {background-color:#f0f2f5;}
-.box-main, .nav-main, .ui-layout-pane, iframe {border-radius:5px;}
+.box-main, .nav-main, .ui-layout-pane, iframe {border-radius:10px;}
 .tabpanel_content .html_content {padding:12px 14px 12px 15px;}
 .tabpanel_tab_content {border-bottom:0;}
 .ui-layout-resizer {background:none;}
 .content {padding:0!important}
 
 /* 页签-无界风格 */
-.tabpanel_mover li {height:26px;padding:2px 16px 2px 3px;margin:11px 0 0px 9px;border:0;border-radius:4px;background:#fff;}
+.tabpanel_mover li {height:26px;padding:2px 16px 2px 3px;margin:11px 0 0px 9px;border:0;border-radius:7px;background:#fff;}
 .tabpanel_mover li .title {padding-left:0;text-align:center;}
 .tabpanel_mover li.active {background-color:#3aa0ff;}
 .tabpanel_mover li.active div {color:#fff;}
@@ -221,6 +227,8 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .tabpanel_tab_content .tabpanel_move_content {min-height:32px;}
 .tabpanel_tab_content .tabpanel_left_scroll, .tabpanel_tab_content .tabpanel_right_scroll {top:4px;} */
 
+.btn {border-radius:15px;}
+.layui-layer-btn a {border-radius:15px!important;}
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
 .btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover,
@@ -236,8 +244,14 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit {border-bottom:1px solid #eee;}
 .form-unit:before {background-color:#1677ff;}
 
+.box, .info-box, .nav-tabs-custom {border-radius: 10px;}
+.info-box .info-box-icon {border-radius: 10px 0 0 10px;}
+.box-footer, .nav-tabs-custom>.tab-content {border-bottom-right-radius:10px; border-bottom-left-radius:10px;}
+.main-footer {border-radius: 10px;}
+
 .box-main>.box-header {border-bottom-color:#eeeeee;}
-.box-main>.box-header .box-title .fa {color:#1677ff;}
+.box-main>.box-header .box-title i {color:#1677ff;}
+.box-main>.box-header .btn-default i {color:#6e6e6e;}
 .nav-tabs-custom>.nav-tabs>li.active {border-top-color:#3aa0ff;}
 .form-control:focus,.select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field,
