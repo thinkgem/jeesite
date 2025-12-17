@@ -244,10 +244,11 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit {border-bottom:1px solid #eee;}
 .form-unit:before {background-color:#1677ff;}
 
-.box, .info-box, .nav-tabs-custom {border-radius: 10px;}
-.info-box .info-box-icon {border-radius: 10px 0 0 10px;}
-.box-footer, .nav-tabs-custom>.tab-content {border-bottom-right-radius:10px; border-bottom-left-radius:10px;}
-.main-footer {border-radius: 10px;}
+.box, .info-box, .nav-tabs-custom {border-radius:10px;}
+.info-box .info-box-icon {border-radius:10px 0 0 10px;}
+.box-footer, .nav-tabs-custom>.tab-content {border-bottom-right-radius:10px;border-bottom-left-radius:10px;}
+.layui-layer {border-radius:10px!important;} .layui-layer-title {border-radius:10px 10px 0 0!important;;}
+.main-footer {border-radius:10px;}
 
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title i {color:#1677ff;}
@@ -270,6 +271,8 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .ui-jqgrid .ui-jqgrid-frozen .ui-jqgrid-htable th div {height:46px!important;}
 .ui-jqgrid .ui-jqgrid-htable th div {padding:15px 0 15px 2px;}
 .ui-jqgrid tr.jqgrow td {height: 49px;}
+.ui-jqgrid .actions .moreItems {border-radius: 10px;}
+.ui-jqgrid .actions .moreItems .btn {border-radius: 6px;}
 .table-form .ui-jqgrid .ui-jqgrid-frozen .ui-jqgrid-htable th div {height:36px!important;}
 .table-form .ui-jqgrid .ui-jqgrid-htable th div {padding:9px 0 8px 2px;}
 .table-form .ui-jqgrid tr.jqgrow td {height: 39px;}
