@@ -195,6 +195,7 @@
 		<dict value="com.jeesite.modules.sys.entity.User" label="User" attrName="userCode|userName"/>
 		<dict value="com.jeesite.modules.sys.entity.Office" label="Office" attrName="officeCode|officeName"/>
 		<dict value="com.jeesite.modules.sys.entity.Company" label="Company" attrName="companyCode|companyName"/>
+		<dict value="com.jeesite.modules.sys.entity.Area" label="Area" attrName="areaCode|areaName"/>
 		<dict value="Parent" label="Parent" description="生成父对象"/>
 	</attrType>
 	<!-- 查询类型 -->
