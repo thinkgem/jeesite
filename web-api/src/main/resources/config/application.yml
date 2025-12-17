@@ -371,7 +371,7 @@ mybatis:
   mapper:
     refresh:
       enabled: true
-#      delaySeconds: 60
+#      delaySeconds: 10
 #      sleepSeconds: 3
 #      mappingPath: mappings
   
