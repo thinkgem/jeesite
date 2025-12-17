@@ -9,7 +9,7 @@
 	</resultMap> -->
 
 	<!-- 查询数据
-	<select id="findList" resultMap="empUserResult">  -->
+	<select id="findList" resultMap="empUserResult"> -->
 	<select id="findList" resultType="EmpUser">
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
