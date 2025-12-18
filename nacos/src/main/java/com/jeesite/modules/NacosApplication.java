@@ -4,13 +4,13 @@
  */
 package com.jeesite.modules;
 
+import com.alibaba.nacos.core.listener.StartingApplicationListener;
+import com.alibaba.nacos.mcpregistry.NacosMcpRegistry;
 import com.alibaba.nacos.NacosServerBasicApplication;
 import com.alibaba.nacos.NacosServerWebApplication;
 import com.alibaba.nacos.console.NacosConsole;
-import com.alibaba.nacos.core.listener.StartingApplicationListener;
 import com.alibaba.nacos.core.listener.startup.NacosStartUp;
 import com.alibaba.nacos.core.listener.startup.NacosStartUpManager;
-import com.alibaba.nacos.mcpregistry.NacosMcpRegistry;
 import com.alibaba.nacos.sys.env.Constants;
 import com.alibaba.nacos.sys.env.DeploymentType;
 import com.alibaba.nacos.sys.env.EnvUtil;
@@ -29,14 +29,14 @@ import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.jmx.support.RegistrationPolicy;
 
 /**
- * Nacos Application
- * @author ThinkGem
+ * Nacos bootstrap class.
+ * @author xiweng.yy, jeesite
  */
 @SpringBootApplication
 public class NacosApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(StartingApplicationListener.class);
-    private static final String SPRING_JXM_ENABLED = "spring.jmx.enabled";
+    private static final String SPRING_JMX_ENABLED = "spring.jmx.enabled";
 
 	private static void initialize() {
 		if (StringUtils.isBlank(System.getProperty("nacos.dev"))) {
@@ -45,12 +45,18 @@ public class NacosApplication {
 		if (StringUtils.isBlank(System.getProperty("nacos.home"))) {
 			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos6boot3");
 		}
+		if (StringUtils.isBlank(System.getProperty("nacos.deployment.type"))) {
+			System.setProperty("nacos.deployment.type", "merged");
+		}
+		if (StringUtils.isBlank(System.getProperty("nacos.server.ip"))) {
+			System.setProperty("nacos.server.ip", "127.0.0.1");
+		}
 		System.setProperty("nacos.logs.path", System.getProperty("nacos.home") + "/logs");
 		System.setProperty("derby.stream.error.file", System.getProperty("nacos.home") + "/.derby.log");
 		System.setProperty("logging.config", "classpath:nacos-logback.xml");
 	}
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		NacosApplication.initialize();
 		ConfigurableApplicationContext context;
         String type = System.getProperty(Constants.NACOS_DEPLOYMENT_TYPE, Constants.NACOS_DEPLOYMENT_TYPE_MERGED);
@@ -75,10 +81,10 @@ public class NacosApplication {
 				+ "\n   启动完成，访问地址：http://127.0.0.1:{}/#/login\n"
 				+ "\n==============================================================\n",
 				env.getProperty("local.server.port"));
-	}
+    }
 
     private static void prepareCoreContext(ConfigurableApplicationContext coreContext) {
-        if (coreContext.getEnvironment().getProperty(SPRING_JXM_ENABLED, Boolean.class, false)) {
+        if (coreContext.getEnvironment().getProperty(SPRING_JMX_ENABLED, Boolean.class, false)) {
             // Avoid duplicate registration MBean to exporter.
             coreContext.getBean(MBeanExporter.class).setRegistrationPolicy(RegistrationPolicy.IGNORE_EXISTING);
         }
@@ -89,7 +95,7 @@ public class NacosApplication {
         prepareCoreContext(coreContext);
         ConfigurableApplicationContext webContext = startServerWebContext(args, coreContext);
         if (isEnabledMcpRegistryApi(coreContext)) {
-            ConfigurableApplicationContext mcpRegistryContext = startMcpRegistryContext(args, coreContext);
+            webContext = startMcpRegistryContext(args, coreContext);
         }
 		return webContext;
     }
@@ -146,5 +152,4 @@ public class NacosApplication {
     private static boolean isEnabledMcpRegistryApi(ConfigurableApplicationContext coreContext) {
         return coreContext.getEnvironment().getProperty("nacos.ai.mcp.registry.enabled", Boolean.class, false);
     }
-
 }

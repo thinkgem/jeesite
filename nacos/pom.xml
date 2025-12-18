@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 
 		<!-- version setting -->
-		<nacos.version>3.0.2.1</nacos.version>
+		<nacos.version>3.1.1.1</nacos.version>
 		<derby.version>10.14.2.0</derby.version>
 
 		<!-- Docker setting -->
@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-mcp-regsitry-adaptor</artifactId>
+            <artifactId>nacos-mcp-registry-adaptor</artifactId>
 			<version>${nacos.version}</version>
         </dependency>
 
