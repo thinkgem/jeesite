@@ -246,7 +246,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .box, .info-box, .nav-tabs-custom {border-radius:10px;}
 .info-box .info-box-icon {border-radius:10px 0 0 10px;}
-.box-footer, .nav-tabs-custom>.tab-content {border-bottom-right-radius:10px;border-bottom-left-radius:10px;}
+.box-body, .box-footer, .nav-tabs-custom>.tab-content {border-bottom-right-radius:10px;border-bottom-left-radius:10px;}
 .layui-layer {border-radius:10px!important;} .layui-layer-title {border-radius:10px 10px 0 0!important;;}
 .main-footer {border-radius:10px;}
 
