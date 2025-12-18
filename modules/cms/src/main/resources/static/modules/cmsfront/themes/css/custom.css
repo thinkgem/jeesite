@@ -61,7 +61,7 @@ footer p{clear:left;margin-bottom:0;opacity:0.7}
 .navbar-inverse {border-bottom:0;}
 .breadcrumb {border-radius:8px;background:transparent;padding:0;margin:2px 15px 21px 15px;}
 
-.jumbotron {background:#fff;margin:48px auto;border:1px solid #ededed;box-shadow:0 1px 4px 0 rgb(0 0 0 / 5%);border-radius:10px!important;}
+.jumbotron {background:#fff;margin:35px auto;border:1px solid #ededed;box-shadow:0 1px 4px 0 rgb(0 0 0 / 5%);border-radius:10px!important;}
 .jumbotron h1, .jumbotron .h1 {font-size:43px;margin:0 0 30px;}
 .jumbotron .btn-sm {font-size:17px;border-radius:15px;padding:5px 15px;}
 
