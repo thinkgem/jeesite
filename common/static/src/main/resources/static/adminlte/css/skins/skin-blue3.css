@@ -227,7 +227,9 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .tabpanel_tab_content .tabpanel_move_content {min-height:32px;}
 .tabpanel_tab_content .tabpanel_left_scroll, .tabpanel_tab_content .tabpanel_right_scroll {top:4px;} */
 
-.btn {border-radius:15px;}
+.btn, .btn.active {border-radius:15px;box-shadow:0 2px 0 rgba(0, 0, 0, 0.02);}
+.btn-primary {box-shadow:0 2px 0 rgba(5, 88, 255, 0.06);}
+.btn-link {box-shadow:none;}
 .layui-layer-btn a {border-radius:15px!important;}
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
