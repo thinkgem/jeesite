@@ -1,6 +1,14 @@
 <% // 输出子表 Script脚本
 if (table.childList.~size > 0){ %>
-<% if(treeselectExists){ %>
+<% var treeselectExists = false;
+for(child in table.childList){
+	for (c in child.columnList){
+		if(@StringUtils.inString(c.showType, 'userselect', 'officeselect', 'companyselect', 'areaselect')){
+			treeselectExists = true;
+		}
+	}
+}
+if(treeselectExists){ %>
 <script id="treeselectTpl" type="text/template">//<!--<div>
 <${'#'}form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
@@ -9,7 +17,6 @@ if (table.childList.~size > 0){ %>
 <% } %>
 <script>
 <%
-var treeselectExists = false;
 for(child in table.childList){
 %>
 \//# // 初始化${child.comments}DataGrid对象
@@ -94,7 +101,7 @@ for (c in child.columnList){
 		},
 <% 
 	}else if(c.showType == 'userselect'){
-		treeselectExists =  true; %>
+%>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.simpleAttrName}', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, '${c.attrName}')+'|'+js.val(row, '${c.attrName2}');
@@ -111,7 +118,6 @@ for (c in child.columnList){
 		},
 <% 
 	}else if(c.showType == 'officeselect'){
-		treeselectExists =  true;
 %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.simpleAttrName}', width:150,
 			formatter: function(val, obj, row, act){
@@ -129,7 +135,6 @@ for (c in child.columnList){
 		},
 <%
 	}else if(c.showType == 'companyselect'){
-		treeselectExists =  true;
 %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.simpleAttrName}', width:150,
 			formatter: function(val, obj, row, act){
@@ -147,7 +152,6 @@ for (c in child.columnList){
 		},
 <%
 	}else if(c.showType == 'areaselect'){
-		treeselectExists =  true;
 %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.simpleAttrName}', width:150,
 			formatter: function(val, obj, row, act){
