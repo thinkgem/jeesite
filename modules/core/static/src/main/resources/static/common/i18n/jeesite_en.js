@@ -9,12 +9,12 @@
 (function($) {
 	window.js = window.js || {};
 	js.i18n = $.extend({}, js.i18n, {
-		'tabpanel.newTabPage':'New Page',
-		'loading.message':'Loading ...',
-		'loading.submitMessage':'Submission ...',
-		'showMessage.error':'failure,error',
-		'showMessage.warning':'no,not,Not,already exists',
-		'showMessage.success':'success,completion'
+		'tabpanel.newTabPage': 'New Page',
+		'loading.message': 'Loading ...',
+		'loading.submitMessage': 'Submission ...',
+		'showMessage.error': 'failure,error',
+		'showMessage.warning': 'no,not,Not,already exists',
+		'showMessage.success': 'success,completion'
 	});
 	// ============ layer ============
 	window.layer = window.layer || {};

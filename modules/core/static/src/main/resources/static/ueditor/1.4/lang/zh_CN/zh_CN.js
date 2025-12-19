@@ -443,8 +443,6 @@ UE.I18N['zh_CN'] = {
         'resume':"个人简历",
         'richText':"图文混排",
         'sciPapers':"科技论文"
-
-
     },
     'scrawl':{
         'static':{
