@@ -106,14 +106,14 @@ $('#dataGrid').dataGrid({
 			//# }
 			return html.join('');
 		}},
-		{header:'${text("类型")}', name:'menuType', width:50, fixed:true, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("类型")}', name:'menuType', width:60, fixed:true, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '未知', true);
 		}},
-		{header:'${text("可见")}', name:'isShow', width:50, fixed:true, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("可见")}', name:'isShow', width:60, fixed:true, align:"center", formatter: function(val, obj, row, act){
 			if (row.component && row.component != 'BEETL' && row.component != 'IFRAME') {
-				return '<font color="#aaa" title="为什么设置 “显示隐藏” 不能改变可见性，通常是 Vue 版本中设置了\n'
+				return '<span class="tag orange" title="为什么设置 “显示隐藏” 不能改变可见性，通常是 Vue 版本中设置了\n'
 						+'组件名称（component字段），不是 BEELT 或 IFRAME 值，\n'
-						+'所以在 Beetl 视图中不会显示该菜单项">${text("隐藏")}</font>';
+						+'所以在 Beetl 视图中不会显示该菜单项">${text("隐藏")}</span>';
 			}
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_show_hide')}", val, '未知', true);
 		}},
