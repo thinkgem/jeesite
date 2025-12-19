@@ -72,7 +72,7 @@ footer p{clear:left;margin-bottom:0;opacity:0.7}
 .panel-title small .more {padding-top:4px;font-size:14px}
 
 .nav-search {margin-top:9px;}
-.nav-search .form-control {height:30px;line-height:30px;padding:5px;border:0;border-radius:15px;}
+.nav-search .form-control {height:30px;line-height:30px;padding:4px 10px;border:0;border-radius:15px;}
 .nav-search .btn {height:31px;padding:5px 10px;border-radius:15px;outline:none;}
 .nav-search .btn:focus {outline:none;}
 
