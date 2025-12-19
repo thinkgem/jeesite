@@ -14,16 +14,16 @@
 /* 头部下拉框样式 */
 .main-header .logo small {font-size:17px;}
 .main-header .navbar .dropdow-menu{border-top:0;}
-.main-header .navbar .dropdown-menu li a {color:#555;padding: 5px 15px 5px 25px;}
-.main-header .navbar .dropdown-menu li a:hover {background:#e1e3e9;color:#555;}
+.main-header .navbar .dropdown-menu li a {color:#555;padding:5px 15px 5px 25px;margin:2px}
+.main-header .navbar .dropdown-menu li a:hover {background:#eff1f6;color:#555;}
 .main-header .navbar .dropdown-menu li.divider {border-top:1px solid #ddd;background:none;height:0;}
 .navbar-nav > .user-menu > .dropdown-menu {width:auto;}
 
 /* 下拉菜单样式 */
 .navbar-nav .treeview-menu{position:absolute;z-index:100;background:#fff;width:190px;
     padding-left:0;border:1px solid #ccc;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
-.navbar-nav .treeview-menu a{color:#666;padding:10px 15px!important;}
-.navbar-nav .treeview-menu a:hover{color:#000;background:#fafafa;}
+.navbar-nav .treeview-menu a{color:#666;padding:10px 15px!important;margin:2px;}
+.navbar-nav .treeview-menu a:hover{color:#000;background:#f1f1f1;}
 .navbar-nav > .treeview > a > .pull-right-container > .fa-angle-left{display:none;}
 .navbar-nav li > a > .pull-right-container > .fa-angle-left {margin-top:3px;transition:transform 0.5s ease;}
 .navbar-nav .menu-open > a > .pull-right-container > .fa-angle-left {transform: rotate(-90deg);}
