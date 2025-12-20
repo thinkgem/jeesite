@@ -304,10 +304,16 @@ public class Category extends TreeEntity<Category> {
 		this.roleCodeList = roleCodeList;
 	}
 
+	/**
+	 * 获取栏目地址
+	 */
 	public String getUrl() {
 		return CmsUtils.getUrlDynamic(this);
 	}
 
+	/**
+	 * 获取栏目管理地址
+	 */
 	public String getAdminUrl() {
 		return CmsUtils.getAdminUrlDynamic(this);
 	}
