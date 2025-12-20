@@ -8,7 +8,7 @@
 .login-page .login-box {width:auto;}
 .login-page .login-logo a {color:#666;}
 .login-page .login-logo small {font-size:16px;}
-.login-page .login-box-body {width:360px;margin:auto;padding:28px;background:#fff;box-shadow:0 0 8px #999;border-radius:20px;}
+.login-page .login-box-body {width:380px;margin:auto;padding:28px;background:#fff;box-shadow:0 0 8px #999;border-radius:20px;}
 .login-page .login-box-body .nav-tabs {margin-bottom:25px;}
 .login-page .login-box-body .form-control-feedback {cursor:pointer;pointer-events:auto;}
 .login-page .form-group {margin-top:5px;margin-bottom:20px;}
