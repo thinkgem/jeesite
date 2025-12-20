@@ -306,6 +306,9 @@ public class Article extends DataEntity<Article> {
 		this.endDate = endDate;
 	}
 
+	/**
+	 * 获取文章地址
+	 */
 	public String getUrl() {
 		return CmsUtils.getUrlDynamic(this);
 	}

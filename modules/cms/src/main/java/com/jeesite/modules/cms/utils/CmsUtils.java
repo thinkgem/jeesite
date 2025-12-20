@@ -228,7 +228,7 @@ public class CmsUtils {
 	}
 
 	/**
-	 * 获得文章动态URL地址
+	 * 获得文章动态 URL 地址
 	 */
 	public static String getUrlDynamic(Article article) {
 		StringBuilder str = new StringBuilder();
@@ -248,7 +248,7 @@ public class CmsUtils {
 	}
 
 	/**
-	 * 获得栏目动态URL地址
+	 * 获得栏目动态 URL 地址
 	 */
 	public static String getUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
@@ -266,7 +266,7 @@ public class CmsUtils {
 	}
 
 	/**
-	 * 获得站点动态URL地址
+	 * 获得站点动态 URL 地址
 	 */
 	public static String getUrlDynamic(Site site) {
 		StringBuilder str = new StringBuilder();
