@@ -348,17 +348,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *   例如：row.user.id
      *   返回：!row?'':!row.user?'':!row.user.id?'':row.user.id
      */
-    public static String jsGetVal(String objectString){
-    	StringBuilder result = new StringBuilder();
-    	StringBuilder val = new StringBuilder();
-    	String[] vals = split(objectString, ".");
-    	for (int i=0; i<vals.length; i++){
-    		val.append("." + vals[i]);
-    		result.append("!"+(val.substring(1))+"?'':");
-    	}
-    	result.append(val.substring(1));
-    	return result.toString();
-    }
+	public static String jsGetVal(String objectString) {
+		StringBuilder result = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
+		String[] vals = split(objectString, ".");
+		for (String s : vals) {
+			sb.append(".").append(s);
+			result.append("!").append(sb.substring(1)).append("?'':");
+		}
+		result.append(sb.substring(1));
+		return result.toString();
+	}
 
 	/**
 	 * 获取随机字符串
