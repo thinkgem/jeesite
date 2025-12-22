@@ -7,6 +7,8 @@ import com.jeesite.common.io.ResourceUtils;
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.ueditor.define.ActionMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 import java.io.FileNotFoundException;
@@ -23,6 +25,7 @@ import java.util.Map;
  */
 public final class ConfigManager {
 
+	private static final Logger logger = LoggerFactory.getLogger(ConfigManager.class);
     private final String rootPath;
     private static final String defaultConfigFileName = "config/ueditor-core.json";
     private static final String configFileName = "config/ueditor.json";
@@ -53,7 +56,7 @@ public final class ConfigManager {
         try {
             return new ConfigManager(rootPath, contextPath, uri);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug(e.getMessage(), e);
             return null;
         }
 

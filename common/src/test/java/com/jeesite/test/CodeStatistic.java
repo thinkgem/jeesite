@@ -6,7 +6,6 @@ package com.jeesite.test;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class CodeStatistic {
 	static long codeLines = 0;
 	static long commentLines = 0;
 	static long blankLines = 0;
-	static ArrayList<File> fileArray = new ArrayList<File>();
+	static ArrayList<File> fileArray = new ArrayList<>();
 	
 	/**
 	 * 获得目录下的文件和子目录下的文件
@@ -94,8 +93,6 @@ public class CodeStatistic {
 				}
 			}
 			files++;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

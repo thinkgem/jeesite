@@ -13,6 +13,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletOutputStream;
@@ -813,7 +814,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @author ThinkGem
 	 */
 	public static String getFileExtensionByImageBase64(String imageBase64){
-		String extension = null;
+		String extension;
 		String type = StringUtils.substringBetween(imageBase64, "data:", ";base64,");
 		if (StringUtils.inStringIgnoreCase(type, "image/jpeg")){
 			extension = "jpg";
@@ -829,28 +830,31 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * 获取工程源文件所在路径
      */
     public static String getProjectPath(){
-		String projectPath = "";
+		String projectPath = StringUtils.EMPTY;
 		try {
-			File file = ResourceUtils.getResource("").getFile();
-			while (true) {
-				File f = new File(path(file.getPath() + "/src/main"));
-				if (f.exists()) {
-					break;
+        	Resource resource = ResourceUtils.getResource(StringUtils.EMPTY);
+            if (resource.isFile()) {
+				File file = resource.getFile();
+				while (true) {
+					File f = new File(file.getPath(), "src/main");
+					if (f.exists()) {
+						break;
+					}
+					f = new File(file.getPath(), "target/classes");
+					if (f.exists()) {
+						break;
+					}
+					File p = file.getParentFile();
+					if (p != null) {
+						file = p;
+					} else {
+						break;
+					}
 				}
-				f = new File(path(file.getPath() + "/target/classes"));
-				if (f.exists()) {
-					break;
-				}
-				File p = file.getParentFile();
-				if (p != null) {
-					file = p;
-				} else {
-					break;
-				}
+				projectPath = file.toString();
 			}
-			projectPath = file.toString();
 		} catch (IOException e) {
-			// 忽略异常
+			logger.debug(e.getMessage(), e);
 		}
 		// 取不到，取当前工作路径
 		if (StringUtils.isBlank(projectPath)){
@@ -861,36 +865,61 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     
     /**
      * 获取工程源文件所在路径
+	 * @author ThinkGem
      */
     public static String getWebappPath(){
-    	String webappPath = "";
+    	String webappPath = StringUtils.EMPTY;
 		try {
-			File file = ResourceUtils.getResource("").getFile();
-			while (true) {
-				File f = new File(path(file.getPath() + "/WEB-INF/classes"));
-				if (f.exists()) {
-					break;
+        	Resource resource = ResourceUtils.getResource(StringUtils.EMPTY);
+            if (resource.isFile()) {
+				File file = resource.getFile();
+				while (true) {
+					File f = new File(file.getPath(), "WEB-INF/classes");
+					if (f.exists()) {
+						break;
+					}
+					f = new File(file.getPath(), "src/main/webapp");
+					if (f.exists()) {
+						return f.getPath();
+					}
+					File p = file.getParentFile();
+					if (p != null) {
+						file = p;
+					} else {
+						break;
+					}
 				}
-				f = new File(path(file.getPath() + "/src/main/webapp"));
-				if (f.exists()) {
-					return f.getPath();
-				}
-				File p = file.getParentFile();
-				if (p != null) {
-					file = p;
-				} else {
-					break;
-				}
+				webappPath = file.toString();
 			}
-			webappPath = file.toString();
 		} catch (IOException e) {
-			// 忽略异常
+			logger.debug(e.getMessage(), e);
 		}
 		// 取不到，取当前工作路径
 		if (StringUtils.isBlank(webappPath)){
 			webappPath = System.getProperty("user.dir");
 		}
 		return webappPath;
+    }
+
+	/**
+	 * 获取 classes 路径，若非文件路径，返回空
+	 * @author ThinkGem
+	 */
+    public static String getClassesPath() {
+        try {
+        	Resource resource = ResourceUtils.getResource(StringUtils.EMPTY);
+            if (resource.isFile()) {
+                String filePath = resource.getFile().getPath();
+                File webInfoClasses = new File(filePath, "WEB-INF/classes");
+                if (webInfoClasses.exists()) {
+                    return webInfoClasses.getPath();
+                }
+                return filePath;
+            }
+        } catch (IOException e) {
+            logger.debug(e.getMessage(), e);
+        }
+        return null;
     }
     
 }
