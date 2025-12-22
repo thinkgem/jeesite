@@ -17,6 +17,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -26,6 +28,8 @@ import java.io.IOException;
  * @version 2017-03-22
  */
 public class PermissionsFilter extends org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(PermissionsFilter.class);
 
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
@@ -77,7 +81,7 @@ public class PermissionsFilter extends org.apache.shiro.web.filter.authz.Permiss
 				request.getRequestDispatcher(loginUrl).forward(
 						new GetHttpServletRequestWrapper(request), response);
 			} catch (ServletException e) {
-				e.printStackTrace();
+				logger.debug(e.getMessage(), e);
 			}
     	}else{
     		loginUrl += StringUtils.contains(loginUrl, "?") ? "&" : "?";

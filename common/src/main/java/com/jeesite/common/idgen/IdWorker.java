@@ -85,13 +85,9 @@ public class IdWorker {
 	public synchronized long nextId() {
 		long timestamp = timeGen();
 		if (timestamp < lastTimestamp) {
-			try {
-				throw new Exception(
-						"Clock moved backwards.  Refusing to generate id for "
-								+ (lastTimestamp - timestamp) + " milliseconds");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			throw new RuntimeException(
+					"Clock moved backwards.  Refusing to generate id for "
+							+ (lastTimestamp - timestamp) + " milliseconds");
 		}
 
 		if (lastTimestamp == timestamp) {

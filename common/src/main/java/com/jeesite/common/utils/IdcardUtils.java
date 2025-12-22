@@ -1,7 +1,7 @@
 package com.jeesite.common.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.jeesite.common.lang.DateUtils;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -127,12 +127,7 @@ public class IdcardUtils {
 		if (isNum(idCard)) {
 			// 获取出生年月日
 			String birthday = idCard.substring(6, 12);
-			Date birthDate = null;
-			try {
-				birthDate = new SimpleDateFormat("yyMMdd").parse(birthday);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			Date birthDate = DateUtils.parseDate(birthday, "yyMMdd");
 			Calendar cal = Calendar.getInstance();
 			if (birthDate != null) {
 				cal.setTime(birthDate);
@@ -228,13 +223,7 @@ public class IdcardUtils {
 				return false;
 			}
 			String birthCode = idCard.substring(6, 12);
-			Date birthDate = null;
-			try {
-				birthDate = new SimpleDateFormat("yy").parse(birthCode
-						.substring(0, 2));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			Date birthDate = DateUtils.parseDate(birthCode.substring(0, 2), "yy");
 			Calendar cal = Calendar.getInstance();
 			if (birthDate != null) {
 				cal.setTime(birthDate);
@@ -378,9 +367,7 @@ public class IdcardUtils {
 			for (int i = 0; i < len; i++) {
 				iArr[i] = Integer.parseInt(String.valueOf(ca[i]));
 			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
+		} catch (NumberFormatException ignored) { }
 		return iArr;
 	}
 

@@ -7,6 +7,8 @@ import com.jeesite.common.media.VideoUtils;
 import com.jeesite.common.ueditor.PathFormat;
 import com.jeesite.common.ueditor.define.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BinaryUploader {
+
+	private static final Logger logger = LoggerFactory.getLogger(BinaryUploader.class);
 
     public static final State save(HttpServletRequest request, Map<String, Object> conf) {
         String contentType = request.getContentType();
@@ -99,8 +103,8 @@ public class BinaryUploader {
                                 try {
                                     Thread.sleep(5000);
                                     v.convert();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                } catch (Exception e) {
+                                    logger.error(e.getMessage(), e);
                                 }
                             }
                         };

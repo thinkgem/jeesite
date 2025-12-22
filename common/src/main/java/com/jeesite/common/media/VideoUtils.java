@@ -128,14 +128,14 @@ public class VideoUtils {
 		int type = checkContentType();
 		String tempFile = outputFile + ".tmp";
 		if (statusTemp && type == 0) {
-			logger.debug("使用ffmpage进行视频转换");
+			logger.debug("使用 ffmpage 进行视频转换");
 			statusTemp = processFfmpeg(inputFile, tempFile);
 		} else if (statusTemp && type == 1) {
-			logger.debug("使用mencoder进行视频转换");
+			logger.debug("使用 mencoder 进行视频转换");
 			statusTemp = processMencoder(inputFile, tempFile);
 		}
 		if (statusTemp){
-			logger.debug("将mp4视频的元数据信息转到视频第一帧");
+			logger.debug("将 mp4 视频的元数据信息转到视频第一帧");
 			statusTemp = processQtFaststart(tempFile, outputFile);
 		}
 		logger.debug("删除临时文件");
