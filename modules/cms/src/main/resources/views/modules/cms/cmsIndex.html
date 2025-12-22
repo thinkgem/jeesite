@@ -36,20 +36,20 @@
 <script>
 //# // 初始化布局
 $('body').layout({
-	west__size : 180
+	west__size: 180
 });
 //# // 主页框架
 var win = $("#mainFrame")[0].contentWindow;
 //# // 树结构初始化加载
 var setting = {
-	view : {selectedMulti : false},
-	data : {key : {title : "title"}, simpleData : {enable : true}},
-	callback : {
-		onClick : function(event, treeId, treeNode) {
-			var adminUrl = (treeNode.adminUrl && treeNode.adminUrl != '' ? treeNode.adminUrl : '');
-			adminUrl += (adminUrl.indexOf('?') == -1 ? '?' : '&');
+	view: {selectedMulti: false},
+	data: {key: {title: "title"}, simpleData: {enable: true}},
+	callback: {
+		onClick: function(event, treeId, treeNode) {
+			var adminUrl = (treeNode.adminUrl && treeNode.adminUrl != '' ? treeNode.adminUrl: '');
+			adminUrl += (adminUrl.indexOf('?') == -1 ? '?': '&');
 			// 如果栏目展现方式，是展现第一条内容（3：简介类栏目，栏目第一条内容），则加上显示模式条件。
-			adminUrl += (treeNode.showModes == "3" && treeNode.module == "article") ? '&category.showModes=3' : '';
+			adminUrl += (treeNode.showModes == "3" && treeNode.module == "article") ? '&category.showModes=3': '';
 			// 设置刷新内容管理列表
 			var ifr = $("#mainFrame"), src = ifr.attr("src");
 			if (src.indexOf("://") == -1 // 不是外部链接
