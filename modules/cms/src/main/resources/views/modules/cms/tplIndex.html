@@ -36,21 +36,20 @@
 <script>
 //# // 初始化布局
 $('body').layout({
-	west__size : 300
+	west__size: 300
 });
 //# // 主页框架
 var win = $("#mainFrame")[0].contentWindow;
 //# // 树结构初始化加载
 var setting = {
-	view : { selectedMulti : false },
-	data : { key : { title : "title" }, simpleData : { enable : true } },
-	callback : {
-		onClick : function(event, treeId, treeNode) {
+	view: { selectedMulti: false },
+	data: { key: { title: "title" }, simpleData: { enable: true } },
+	callback: {
+		onClick: function(event, treeId, treeNode) {
 			tree.expandNode(treeNode);
 			if (!treeNode.isDirectory) {
 				window.open("${ctx}/cms/template/form?name=" + treeNode.id, "mainFrame");
 			}
-
 		}
 	}
 }, tree, loadTree = function() {
