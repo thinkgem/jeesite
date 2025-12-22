@@ -453,13 +453,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 */
 	public static String jsGetVal(String objectString) {
 		StringBuilder result = new StringBuilder();
-		StringBuilder val = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		String[] vals = split(objectString, ".");
 		for (String s : vals) {
-			val.append(".").append(s);
-			result.append("!").append(val.substring(1)).append("?'':");
+			sb.append(".").append(s);
+			result.append("!").append(sb.substring(1)).append("?'':");
 		}
-		result.append(val.substring(1));
+		result.append(sb.substring(1));
 		return result.toString();
 	}
 
