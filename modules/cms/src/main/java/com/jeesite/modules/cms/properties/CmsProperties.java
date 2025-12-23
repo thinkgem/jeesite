@@ -2,17 +2,43 @@
  * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.cms.properties.properties;
+package com.jeesite.modules.cms.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * CmsProperties
  * @author ThinkGem
- * @version 2022-4-10
+ * @version 2025-12-22
  */
 @ConfigurationProperties(prefix = "cms")
 public class CmsProperties {
+
+	private Template template = new Template();
+
+	public static class Template {
+
+		/**
+		 * 是否开启在线模版编辑
+		 */
+		private Boolean edit = false;
+
+		public Boolean getEdit() {
+			return edit;
+		}
+
+		public void setEdit(Boolean edit) {
+			this.edit = edit;
+		}
+	}
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Template template) {
+		this.template = template;
+	}
 
 	private PageCache pageCache = new PageCache();
 

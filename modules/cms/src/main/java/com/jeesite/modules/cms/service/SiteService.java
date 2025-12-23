@@ -24,9 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SiteService extends CrudService<SiteDao, Site> {
 
-	private final ArticleIndexService articleIndexService;
-	private final ArticleVectorStore articleVectorStore;
-	private final PageCacheService pageCacheService;
+	protected final ArticleIndexService articleIndexService;
+	protected final ArticleVectorStore articleVectorStore;
+	protected final PageCacheService pageCacheService;
 
 	public SiteService(ObjectProvider<ArticleIndexService> articleIndexService,
 					   ObjectProvider<ArticleVectorStore> articleVectorStore,

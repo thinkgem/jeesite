@@ -4,11 +4,14 @@
  */
 package com.jeesite.modules.cms.web;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.cms.entity.FileTemplate;
-import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.FileTemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,7 @@ import java.util.Map;
 /**
  * 模板管理
  * @author 长春叭哥、ThinkGem
- * @version 2020-7-24
+ * @version 2025-12-22
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cms/template")
@@ -54,34 +57,42 @@ public class FileTemplateController extends BaseController {
 		return "modules/cms/tplForm";
 	}
 
-	/*@RequiresPermissions("cms:template:edit")
+	/**
+	 * 保存模版文件
+	 */
+	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "saveFileTemplate")
 	@ResponseBody
 	public String saveFileTemplate(String fileName, String fileContent) throws IOException {
-		FileTemplate template = fileTemplateService.getFileTemplate(fileName);
-		String newFileName = FileUtils.path(FileUtils.getWebappPath() + "/WEB-INF/classes/" + fileName);
-		File templateFile = template.resource().getFile();
-		if (templateFile.getAbsoluteFile().exists()) {
-			String bakFileName = StringUtils.replace(templateFile.getAbsolutePath(), templateFile.getName(),
-					templateFile.getName() + "." + DateUtils.getDate("yyyyMMddHHmmssSSS"));
-			FileUtils.copyFile(templateFile.getAbsolutePath(), bakFileName);
+		if (!Global.getPropertyToBoolean("cms.template.edit", "false")) {
+			return renderResult(Global.FALSE, "模版编辑功能已禁用，请在配置文件中开启！");
 		}
-		FileUtils.writeToFile(newFileName, EncodeUtils.decodeBase64String(fileContent), false);
-		return renderResult(Global.TRUE, "模版保存成功！");
+		fileContent = EncodeUtils.decodeBase64String(fileContent);
+		try {
+			fileTemplateService.saveFileTemplate(fileName, fileContent);
+			return renderResult(Global.TRUE, "保存模版成功！");
+		} catch (ServiceException e) {
+			return renderResult(Global.FALSE, text(e.getMessage()));
+		}
 	}
 
+	/**
+	 * 删除模版文件
+	 */
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "deleteFileTemplate")
 	@ResponseBody
 	public String deleteFileTemplate(String fileName) throws IOException {
-		FileTemplate template = fileTemplateService.getFileTemplate(fileName);
-		File templateFile = template.resource().getFile();
-		if (templateFile.getAbsoluteFile().exists()) {
-			FileUtils.deleteFile(templateFile.getAbsolutePath());
-			return renderResult(Global.TRUE, "模版删除成功！");
+		if (!Global.getPropertyToBoolean("cms.template.edit", "false")) {
+			return renderResult(Global.FALSE, "模版编辑功能已禁用，请在配置文件中开启！");
 		}
-		return renderResult(Global.FALSE, "模版文件不存在！");
-	}*/
+		try {
+			fileTemplateService.deleteFileTemplate(fileName);
+			return renderResult(Global.TRUE, "删除模版成功！");
+		} catch (ServiceException e) {
+			return renderResult(Global.FALSE, text(e.getMessage()));
+		}
+	}
 
 	/**
 	 * 模版帮助页
@@ -100,15 +111,14 @@ public class FileTemplateController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData() throws IOException {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		List<FileTemplate> listFileTemplate = fileTemplateService.getFileTemplateListForEdit(Site.TEMPLATE_BASE_DIRECTION);
-		for (int i = 0; i < listFileTemplate.size(); i++) {
-			FileTemplate e = listFileTemplate.get(i);
+		for (FileTemplate e : fileTemplateService.getTemplateListForEdit(StringUtils.EMPTY)) {
 			Map<String, Object> map = MapUtils.newHashMap();
-			map.put("id", e.getFilePath() + "/" + e.getFileName());
-			map.put("isDirectory", e.isDirectory());
+			String path = e.getFilePath();
+			String separator = (StringUtils.isNotBlank(path) ? "/" : "");
+			map.put("id", e.getFilePath() + separator + e.getFileName());
 			map.put("pId", e.getFilePath());
-			map.put("title", e.getFileName());
 			map.put("name", e.getFileName());
+			map.put("isDirectory", e.isDirectory());
 			mapList.add(map);
 		}
 		return mapList;

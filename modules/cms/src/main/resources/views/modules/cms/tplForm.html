@@ -6,8 +6,7 @@
 				<i class="fa fa-list-alt"></i> ${text('模板内容')}
 			</div>
 			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool"
-					data-widget="collapse">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse">
 					<i class="fa fa-minus"></i>
 				</button>
 			</div>
@@ -25,20 +24,18 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<#form:textarea path="fileContent" rows="23"
-							encodeHtml="true" maxlength="990000"
-							class="form-control autoHeight" />
+						<#form:textarea path="fileContent" rows="10" encodeHtml="true" class="form-control autoHeight" />
 					</div>
 				</div>
 			</div>
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% /*if (hasPermi('cms:template:edit')){ %>
+						<% if (hasPermi('cms:template:edit')){ %>
  							<button type="button" class="btn btn-sm btn-primary" id="btnSave"><i class="fa fa-check"></i> ${text('保 存')}</button> &nbsp;
  							<button type="button" class="btn btn-sm btn-danger" id="btnDelete"><i class="fa fa-trash-o"></i> ${text('删 除')}</button> &nbsp;
-						<% }*/ %>
-						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+						<% } %>
+						<!--<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>-->
 					</div>
 				</div>
 			</div>
@@ -46,7 +43,7 @@
 	</div>
 </div>
 <% } %>
-<% /*if (hasPermi('cms:template:edit')){ %>
+<% if (hasPermi('cms:template:edit')){ %>
 <script>
 	$('#btnSave').click(function(){
 		js.confirm('${text("确认要保存当前模板吗？")}', function(){
@@ -74,4 +71,4 @@
 		});
 	});
 </script>
-<% }*/ %>
+<% } %>
