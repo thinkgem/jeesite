@@ -39,9 +39,13 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class ArticleService extends CrudService<ArticleDao, Article> {
 
-	private final ArticleDataDao articleDataDao;
-	private final ArticleIndexService articleIndexService;
-	private final PageCacheService pageCacheService;
+	protected static final ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
+			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
+			new DefaultThreadFactory("cms-update-expired-weight"));
+
+	protected final ArticleDataDao articleDataDao;
+	protected final ArticleIndexService articleIndexService;
+	protected final PageCacheService pageCacheService;
 
 	public ArticleService(ArticleDataDao articleDataDao,
 						  ObjectProvider<ArticleIndexService> articleIndexService,
@@ -50,10 +54,6 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		this.articleIndexService = articleIndexService.getIfAvailable();
 		this.pageCacheService = pageCacheService.getIfAvailable();
 	}
-
-	private static final ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
-			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
-			new DefaultThreadFactory("cms-update-expired-weight"));
 	
 	/**
 	 * 获取单条数据

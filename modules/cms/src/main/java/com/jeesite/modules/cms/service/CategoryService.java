@@ -24,8 +24,8 @@ import java.util.List;
 @Service
 public class CategoryService extends TreeService<CategoryDao, Category> {
 
-	private final ArticleIndexService articleIndexService;
-	private final PageCacheService pageCacheService;
+	protected final ArticleIndexService articleIndexService;
+	protected final PageCacheService pageCacheService;
 
 	public CategoryService(ObjectProvider<ArticleIndexService> articleIndexService,
 						   ObjectProvider<PageCacheService> pageCacheService) {
