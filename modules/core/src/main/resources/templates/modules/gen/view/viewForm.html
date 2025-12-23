@@ -88,7 +88,7 @@ $('#btnDraft').click(function(){
 // 流程按钮操作事件
 BpmButton = window.BpmButton || {};
 BpmButton.init = function(task){
-	if (task.status != '2') {
+	if (task.id != '' && task.status != '2') {
 		$('.taskComment').removeClass('hide');
 	}
 }

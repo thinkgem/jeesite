@@ -9,10 +9,37 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * CmsProperties
  * @author ThinkGem
- * @version 2025-12-22
+ * @version 2025-12-23
  */
 @ConfigurationProperties(prefix = "cms")
 public class CmsProperties {
+
+	private Bpm bpm = new Bpm();
+
+	public static class Bpm {
+
+		/**
+		 * 是否启用 BPM 审核
+		 */
+		private Boolean enabled = false;
+
+		public Boolean getEnabled() {
+			return enabled;
+		}
+
+		public void setEnabled(Boolean enabled) {
+			this.enabled = enabled;
+		}
+
+	}
+
+	public Bpm getBpm() {
+		return bpm;
+	}
+
+	public void setBpm(Bpm bpm) {
+		this.bpm = bpm;
+	}
 
 	private Template template = new Template();
 

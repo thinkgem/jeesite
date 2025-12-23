@@ -16,9 +16,6 @@ import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.FileTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -80,6 +79,7 @@ public class ArticleController extends BaseController {
 			}
 			return form(article, model);
 		}
+		model.addAttribute("isCanUseAuth", ArticleService.isCanUseAuth);
 		model.addAttribute("isAll", isAll);
 		return "modules/cms/articleList";
 	}
@@ -103,14 +103,14 @@ public class ArticleController extends BaseController {
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			articleService.addDataScopeFilter(article);
 		}
-		if (!article.currentUser().isAdmin()) {
-			// 如果没有审核权限，或者 草稿状态的文章 则只查看自己创建的文章。
-			if (!UserUtils.getSubject().isPermitted("cms:article:audit")) {
-				article.setCreateBy(article.currentUser().getUserCode());
-			} else if (Article.STATUS_DRAFT.equals(article.getStatus())) {
-				article.setCreateBy(article.currentUser().getUserCode());
-			}
-		}
+//		if (!article.currentUser().isAdmin()) {
+//			// 如果没有审核权限，或者 草稿状态的文章 则只查看自己创建的文章。
+//			if (!UserUtils.getSubject().isPermitted("cms:article:audit")) {
+//				article.setCreateBy(article.currentUser().getUserCode());
+//			} else if (Article.STATUS_DRAFT.equals(article.getStatus())) {
+//				article.setCreateBy(article.currentUser().getUserCode());
+//			}
+//		}
 		Page<Article> page = articleService.findPage(article);
 		return page;
 	}
@@ -132,9 +132,10 @@ public class ArticleController extends BaseController {
 				article.setCategory(CmsUtils.getCategory(article.getCategory().getCategoryCode()));
 			}
 		}
-		if (StringUtils.isBlank(article.getId())) {
-			article.setStatus(Article.STATUS_DRAFT);
-		}
+//		if (StringUtils.isBlank(article.getId())) {
+//			article.setStatus(Article.STATUS_DRAFT);
+//		}
+		model.addAttribute("isCanUseAuth", ArticleService.isCanUseAuth);
 		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
 		model.addAttribute("article", article);

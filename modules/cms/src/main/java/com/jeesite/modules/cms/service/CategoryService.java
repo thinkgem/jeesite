@@ -8,6 +8,8 @@ import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.cms.dao.CategoryDao;
 import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
+import com.jeesite.modules.cms.service.extend.ArticleIndexService;
+import com.jeesite.modules.cms.service.extend.PageCacheService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import org.springframework.beans.factory.ObjectProvider;
