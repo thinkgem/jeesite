@@ -30,7 +30,8 @@ public class ReflectUtils {
 	private static final String SETTER_PREFIX = "set";
 	private static final String GETTER_PREFIX = "get";
 	private static final String CGLIB_CLASS_SEPARATOR = "$$";
-	private static final Map<String, Map<String, Method>> methodClassCache = MapUtils.newHashMap();
+	private static final Map<String, Map<String, Method>> methodClassCache = MapUtils.newConcurrentMap();
+	private static final Map<String, Class<?>> classCache = MapUtils.newConcurrentMap();
 
 	/**
 	 * 调用Getter方法，v5.3.0+ 变更为ASM方式，不支持私有方法调用，高性能，
@@ -163,7 +164,7 @@ public class ReflectUtils {
 		try {
 			return (E)method.invoke(obj.getClass() == Class.class ? null : obj, args);
 		} catch (Exception e) {
-			String msg = "method: "+method+", obj: "+obj+", args: "+args+"";
+			String msg = "method: " + method + ", obj: " + obj + ", args: " + args;
 			throw convertReflectionExceptionToUnchecked(msg, e);
 		}
 	}
@@ -190,7 +191,7 @@ public class ReflectUtils {
 			methodParameterTypesConverter(cs, args);
 			return (E)method.invoke(obj.getClass() == Class.class ? null : obj, args);
 		} catch (Exception e) {
-			String msg = "method: "+method+", obj: "+obj+", args: "+args+"";
+			String msg = "method: " + method + ", obj: " + obj + ", args: " + args;
 			throw convertReflectionExceptionToUnchecked(msg, e);
 		}
 	}
@@ -311,18 +312,6 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 缓存方法类，因 for methods 比较耗时，提高性能
-	 */
-	private static Map<String, Method> getMethodClassCache(String className) {
-		Map<String, Method> classCache = methodClassCache.get(className);
-		if (classCache == null) {
-			classCache = MapUtils.newHashMap();
-			methodClassCache.put(className, classCache);
-		}
-		return classCache;
-	}
-
-	/**
 	 * 循环向上转型，获取对象的DeclaredMethod，并强制设置为可访问，
 	 * 如向上转型到Object仍无法找到，返回null，
 	 * 只匹配函数名。
@@ -339,7 +328,8 @@ public class ReflectUtils {
 			clazz = (Class) obj;
 		}
 		Validate.notBlank(methodName, "methodName can't be blank");
-		Map<String, Method> methodCache = getMethodClassCache(clazz.getName());
+		// 缓存方法类，因 for methods 比较耗时，提高性能
+		Map<String, Method> methodCache = methodClassCache.computeIfAbsent(clazz.getName(), k -> MapUtils.newHashMap());
 		String cacheKey = methodName + "#" + argsNum;
 		Method cacheMethod = methodCache.get(cacheKey);
 		if (cacheMethod != null) {
@@ -433,9 +423,8 @@ public class ReflectUtils {
 			}
 		}
 		return clazz;
-
 	}
-	
+
 	/**
 	 * 将反射时的checked exception转换为unchecked exception
 	 */
@@ -447,6 +436,19 @@ public class ReflectUtils {
 			return new RuntimeException(msg, ((InvocationTargetException) e).getTargetException());
 		}
 		return new RuntimeException(msg, e);
+	}
+
+	/**
+	 * 缓存类加载，因 for 可能比较耗时，提高性能
+	 */
+	public static Class<?> loadClass(String className) {
+		return classCache.computeIfAbsent(className, k -> {
+			try {
+				return Class.forName(className);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 }

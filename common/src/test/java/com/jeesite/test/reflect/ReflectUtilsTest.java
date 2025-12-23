@@ -233,7 +233,6 @@ class ReflectUtils2 {
 	private static final Logger logger = LoggerFactory.getLogger(ReflectUtils2.class);
 	private static final String SETTER_PREFIX = "set";
 	private static final String GETTER_PREFIX = "get";
-	private static Class baseEntityClass = null;
 
 	/**
 	 * 调用Getter方法，
@@ -298,9 +297,7 @@ class ReflectUtils2 {
 						if (method != null) {
 							Class<?> returnType = method.getReturnType();
 							try {
-								if (baseEntityClass == null) {
-									baseEntityClass = Class.forName("com.jeesite.common.entity.BaseEntity");
-								}
+								Class<?> baseEntityClass = ReflectUtils.loadClass("com.jeesite.common.entity.BaseEntity");
 								if (baseEntityClass.isAssignableFrom(returnType)) {
 									childObj = returnType.getDeclaredConstructor().newInstance();
 									methodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
@@ -347,9 +344,7 @@ class ReflectUtils2 {
 						if (method != null) {
 							Class<?> returnType = method.getReturnType();
 							try {
-								if (baseEntityClass == null) {
-									baseEntityClass = Class.forName("com.jeesite.common.entity.BaseEntity");
-								}
+								Class<?> baseEntityClass = ReflectUtils.loadClass("com.jeesite.common.entity.BaseEntity");
 								if (baseEntityClass.isAssignableFrom(returnType)) {
 									childObj = returnType.getDeclaredConstructor().newInstance();
 									methodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
