@@ -15,6 +15,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.FieldType;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -23,7 +24,6 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -70,9 +70,6 @@ public class ExcelExport implements Closeable{
 	 * 存储字段类型临时数据
 	 */
 	private final Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
-
-	@SuppressWarnings("rawtypes")
-	private static Class dictUtilsClass = null;
 
 	/**
 	 * 构造函数
@@ -485,7 +482,7 @@ public class ExcelExport implements Closeable{
 					defaultDataFormat = "yyyy-MM-dd HH:mm";
 				}else {
 					// 如果没有指定 fieldType，切自行根据类型查找相应的转换类（com.jeesite.common.utils.excel.fieldtype.值的类名+Type）
-					fieldType = (Class<? extends FieldType>)Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
+					fieldType = (Class<? extends FieldType>)ReflectUtils.loadClass(this.getClass().getName().replaceAll(this.getClass().getSimpleName(),
 							"fieldtype."+val.getClass().getSimpleName()+"Type"));
 					FieldType ft = getFieldType(fieldType);
 					cell.setCellValue(ft.setValue(val));
@@ -551,11 +548,9 @@ public class ExcelExport implements Closeable{
 					}
 					// If is dict, get dict label
 					if (StringUtils.isNotBlank(ef.dictType())){
-						if (dictUtilsClass == null) {
-							dictUtilsClass = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
-						}
-						val = ReflectUtils.invokeMethodByAsm(dictUtilsClass, "getDictLabels",
-									ef.dictType(), val == null ? "" : val.toString(), "");
+						val = ReflectUtils.invokeMethodByAsm(
+								ReflectUtils.loadClass("com.jeesite.modules.sys.utils.DictUtils"),
+								"getDictLabels", ef.dictType(), val == null ? "" : val.toString(), "");
 						//val = dictUtils.getMethod("getDictLabels", String.class, String.class,
 						//			String.class).invoke(null, ef.dictType(), val==null?"":val.toString(), "");
 						//val = DictUtils.getDictLabel(val==null?"":val.toString(), ef.dictType(), "");
@@ -579,7 +574,7 @@ public class ExcelExport implements Closeable{
 //					}
 //				}
 				this.addCell(row, colunm++, val, ef.align(), ef.fieldType(), ef.dataFormat());
-				sb.append(val + ", ");
+				sb.append(val).append(", ");
 			}
 			log.debug("Write success: [{}] {}", row.getRowNum(), sb.toString());
 		}

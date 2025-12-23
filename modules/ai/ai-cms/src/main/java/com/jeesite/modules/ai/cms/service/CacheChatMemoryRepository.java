@@ -5,7 +5,7 @@
 package com.jeesite.modules.ai.cms.service;
 
 import com.jeesite.common.cache.CacheUtils;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.stereotype.Service;

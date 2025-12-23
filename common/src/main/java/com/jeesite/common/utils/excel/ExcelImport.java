@@ -63,9 +63,6 @@ public class ExcelImport implements Closeable {
 	 */
 	private final Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
 
-	@SuppressWarnings("rawtypes")
-	private static Class dictUtilsClass = null;
-
 	/**
 	 * 构造函数
 	 * @param fileName 导入文件对象，读取第一个工作表
@@ -451,11 +448,9 @@ public class ExcelImport implements Closeable {
 					// If is dict type, get dict value
 					if (StringUtils.isNotBlank(ef.dictType())){
 						try{
-							if (dictUtilsClass == null) {
-								dictUtilsClass = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
-							}
-							val = ReflectUtils.invokeMethodByAsm(dictUtilsClass, "getDictValues",
-									ef.dictType(), val.toString(), "");
+							val = ReflectUtils.invokeMethodByAsm(
+									ReflectUtils.loadClass("com.jeesite.modules.sys.utils.DictUtils")
+									, "getDictValues", ef.dictType(), val.toString(), "");
 							//val = dictUtilsClass.getMethod("getDictValues", String.class, String.class,
 							//			String.class).invoke(null, ef.dictType(), val.toString(), "");
 							//val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
@@ -515,7 +510,8 @@ public class ExcelImport implements Closeable {
 										val = ft.getValue(ObjectUtils.toString(val));
 									}else{
 										// 如果没有指定 fieldType，切自行根据类型查找相应的转换类（com.jeesite.common.utils.excel.fieldtype.值的类名+Type）
-										Class<? extends FieldType> fieldType = (Class<? extends FieldType>)Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
+										Class<? extends FieldType> fieldType = (Class<? extends FieldType>)
+												ReflectUtils.loadClass(this.getClass().getName().replaceAll(this.getClass().getSimpleName(),
 												"fieldtype."+valType.getSimpleName()+"Type"));
 										FieldType ft = getFieldType(fieldType);
 										val = ft.getValue(ObjectUtils.toString(val));
