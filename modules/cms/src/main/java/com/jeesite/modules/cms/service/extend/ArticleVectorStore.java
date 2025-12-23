@@ -2,12 +2,9 @@
  * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.cms.service;
+package com.jeesite.modules.cms.service.extend;
 
-import com.jeesite.common.entity.Page;
 import com.jeesite.modules.cms.entity.Article;
-
-import java.util.Map;
 
 /**
  * 文章向量存储服务类

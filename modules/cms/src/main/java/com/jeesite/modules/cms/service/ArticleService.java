@@ -10,14 +10,17 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
+import com.jeesite.common.service.ServiceException;
 import com.jeesite.modules.cms.dao.ArticleDao;
 import com.jeesite.modules.cms.dao.ArticleDataDao;
 import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.ArticleData;
-import com.jeesite.modules.cms.entity.Category;
+import com.jeesite.modules.cms.service.extend.ArticleAuthService;
+import com.jeesite.modules.cms.service.extend.ArticleIndexService;
+import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
+import com.jeesite.modules.cms.service.extend.PageCacheService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
@@ -46,16 +49,23 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	protected final ArticleDataDao articleDataDao;
 	protected final ArticleIndexService articleIndexService;
 	protected final ArticleVectorStore articleVectorStore;
+	protected final ArticleAuthService articleAuthService;
 	protected final PageCacheService pageCacheService;
+
+	// 是否能使用审核功能
+	public static boolean isCanUseAuth;
 
 	public ArticleService(ArticleDataDao articleDataDao,
 						  ObjectProvider<ArticleIndexService> articleIndexService,
 						  ObjectProvider<ArticleVectorStore> articleVectorStore,
+						  ObjectProvider<ArticleAuthService> bpmArticleService,
 						  ObjectProvider<PageCacheService> pageCacheService) {
 		this.articleDataDao = articleDataDao;
 		this.articleIndexService = articleIndexService.getIfAvailable();
 		this.articleVectorStore = articleVectorStore.getIfAvailable();
+		this.articleAuthService = bpmArticleService.getIfAvailable();
 		this.pageCacheService = pageCacheService.getIfAvailable();
+		ArticleService.isCanUseAuth = articleAuthService != null;
 	}
 	
 	/**
@@ -140,22 +150,27 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Transactional
 	public void save(Article article) {
 		Global.assertDemoMode();
-		// 设置内容状态
-		if (article.getCategory() != null && StringUtils.isNotBlank(article.getCategory().getId())) {
-			Category category = CmsUtils.getCategory(article.getCategory().getId());
-			// 如果栏目不需要审核，或者当前用户有审核权限，则将该内容设为发布状态
-			if (Global.YES.equals(category.getIsNeedAudit())
-					&& !UserUtils.getSubject().isPermitted("cms:article:audit")) {
-				// 并且不是草稿状态
-				if (!article.getStatus().equals(Article.STATUS_DRAFT)){
-					article.setStatus(Article.STATUS_AUDIT);
-				}
-			}
-			// 将栏目信息设置到实体对象（全文检索需要）
-			article.setCategory(category);
-		} else {
-			throw new RuntimeException("归属栏目不能为空。");
+		// 补充栏目信息（全文检索和流程审核需要）
+		if (StringUtils.isNotBlank(article.getCategory().getId())) {
+			article.setCategory(CmsUtils.getCategory(article.getCategory().getId()));
 		}
+		if (StringUtils.isBlank(article.getCategory().getId())) {
+			throw new ServiceException(text("归属栏目不正确或为空。"));
+		}
+		// 如果需要文章审核流程，则进行下一步流程操作
+		if (isCanUseAuth && Global.YES.equals(article.getCategory().getIsNeedAudit())) {
+			articleAuthService.submit(article, this::saveArticle);
+		} else {
+			// 保存文章
+			saveArticle(article);
+			// 发布文章
+			if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+				updateStatus(article);
+			}
+		}
+	}
+
+	private void saveArticle(Article article) {
 		// 保存详细内容
 		if (article.getIsNewRecord()) {
 			dao.insert(article);
@@ -168,17 +183,20 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		}
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(article, article.getId(), "article_image");
-		// 保存文章全文检索索引
-		if (articleIndexService != null && Article.STATUS_NORMAL.equals(article.getStatus())) {
-			articleIndexService.save(article);
-		}
-		// 保存文章到向量数据库
-		if (articleVectorStore != null && Article.STATUS_NORMAL.equals(article.getStatus())) {
-			articleVectorStore.save(article);
-		}
-		// 清理首页、栏目和文章页面缓存
-		if (pageCacheService != null) {
-			pageCacheService.clearCache(article);
+		// 文章发布后的一些处理
+		if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+			// 保存文章全文检索索引
+			if (articleIndexService != null) {
+				articleIndexService.save(article);
+			}
+			// 保存文章到向量数据库
+			if (articleVectorStore != null) {
+				articleVectorStore.save(article);
+			}
+			// 清理首页、栏目和文章页面缓存
+			if (pageCacheService != null) {
+				pageCacheService.clearCache(article);
+			}
 		}
 	}
 

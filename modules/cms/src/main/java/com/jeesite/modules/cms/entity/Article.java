@@ -7,10 +7,13 @@ package com.jeesite.modules.cms.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
+import com.jeesite.common.entity.api.BpmEntityApi;
+import com.jeesite.common.entity.api.BpmParamsApi;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 
 import jakarta.validation.constraints.NotBlank;
@@ -45,12 +48,8 @@ import java.util.Date;
 		@Column(name = "word_count", attrName = "wordCount", label = "字数", comment = "字数（不包含html）"),
 		@Column(name = "custom_content_view", attrName = "customContentView", label = "自定义内容视图"),
 		@Column(name = "view_config", attrName = "viewConfig", label = "视图配置"),
-		@Column(name = "status", attrName = "status", label = "状态", isUpdate = false),
-		@Column(name = "create_by", attrName = "createBy", label = "创建者"),
-		@Column(name = "create_date", attrName = "createDate", label = "创建时间", isUpdate = false, isQuery = false),
-		@Column(name = "update_by", attrName = "updateBy", label = "更新者"),
-		@Column(name = "update_date", attrName = "updateDate", label = "更新时间", isQuery = false),
-		@Column(name = "remarks", attrName = "remarks", label = "备注信息", queryType = QueryType.LIKE),
+		@Column(name = "create_date", attrName = "createDate", label = "创建时间", isQuery = false), // 允许修改文章发布时间
+		@Column(includeEntity = DataEntity.class),
 		@Column(includeEntity = BaseEntity.class),
 	}, joinTable = {
 		@JoinTable(entity = Category.class, alias = "c",
@@ -65,7 +64,7 @@ import java.util.Date;
 			})
 	}, orderBy = "a.weight DESC, a.update_date DESC"
 )
-public class Article extends DataEntity<Article> {
+public class Article extends DataEntity<Article> implements BpmEntityApi<Article> {
 	
 	public static final String DEFAULT_TEMPLATE = "viewArticle"; // 默认文章内容模板
 	@Serial
@@ -96,6 +95,8 @@ public class Article extends DataEntity<Article> {
 
 	private Date beginDate; 			// 开始时间
 	private Date endDate; 				// 结束时间
+
+	private BpmParamsApi bpm;		// 流程相关参数
 
 	public Article() {
 		super();
@@ -313,6 +314,20 @@ public class Article extends DataEntity<Article> {
 	 */
 	public String getUrl() {
 		return CmsUtils.getUrlDynamic(this);
+	}
+
+
+	@Override
+	public BpmParamsApi getBpm() {
+		if (ArticleService.isCanUseAuth && bpm == null){
+			bpm = createBpmParams();
+		}
+		return bpm;
+	}
+
+	@Override
+	public void setBpm(BpmParamsApi bpm) {
+		this.bpm = bpm;
 	}
 
 }

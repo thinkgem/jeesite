@@ -315,7 +315,11 @@ $('#inputForm').validate({
 		if (empNo == ''){
 			$('#employee_empNo').val($('#loginCode').val());
 		}
+		//# if(op == 'add' || op == 'edit') {
 		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
+		//# } else {
+		js.ajaxSubmitForm($(form), function(data){
+		//# }
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				// emitter.emit('emp-user-list-page');

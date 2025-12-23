@@ -208,12 +208,34 @@
 					</div>
 				</div>
 				<#form:extend collapsed="true" model="${article}" extendMap="${text('自定义属性')}" pathPrefix="articleData" />
+				<% if(isCanUseAuth && article.category.isNeedAudit == @Global.YES) { %>
+					<div class="form-unit taskComment hide">${text('审核流程')}</div>
+					<div class="row taskComment hide">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-xs-2">${text('审批意见')}：</label>
+								<div class="col-xs-10">
+									<#bpm:comment bpmEntity="${article}" showCommWords="true"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<#bpm:nextTaskInfo bpmEntity="${article}" />
+				<% } %>
 			</div>
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
 						<% if (hasPermi('cms:article:edit')){ %>
-							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+							<#form:hidden path="status"/>
+							<% if (article.isNewRecord || article.status == '9'){ %>
+								<button type="submit" class="btn btn-sm btn-info" id="btnDraft"><i class="fa fa-save"></i> ${text('暂 存')}</button>&nbsp;
+							<% } %>
+							<% if(isCanUseAuth && article.category.isNeedAudit == @Global.YES) { %>
+								<#bpm:button bpmEntity="${article}" formKey="article" completeText="${text('提 交')}" restartText="${text('重新提交')}"/>
+							<% } else { %>
+								<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${article.status == '0' ? text('更 新') : text('发 布')}</button>&nbsp;
+							<% } %>
 						<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
 					</div>
@@ -235,6 +257,32 @@ $('#weightTop input').on('ifChecked ifUnchecked', function(){
 		$('#weight').val('0');
 	}
 });
+// 业务实现草稿按钮
+$('#btnDraft').click(function(){
+	$('#status').val(Global.STATUS_DRAFT);
+});
+// 业务实现发布按钮
+$('#btnSubmit').click(function(){
+	$('#status').val(Global.STATUS_NORMAL);
+});
+//# if(isCanUseAuth && article.category.isNeedAudit == @Global.YES) {
+// 流程按钮提交事件
+BpmButton = window.BpmButton || {};
+BpmButton.init = function(task){
+	if (task.id != '' && task.status != '2') {
+		$('.taskComment').removeClass('hide');
+	}
+}
+BpmButton.complete = function($this, task){
+	$('#status').val(Global.STATUS_AUDIT);
+};
+BpmButton.restart = function($this, task){
+	js.confirm('${text("确认要重启流程吗？")}', function(){
+		$('#status').val("6");
+		$('#inputForm').submit();
+	});
+};
+//# }
 $('#inputForm').validate({
 	submitHandler: function(form){
 		$('#wordCount').val(contentUE.getContentTxt().length);

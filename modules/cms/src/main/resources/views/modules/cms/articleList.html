@@ -9,7 +9,7 @@
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<a href="${ctxFront}/index" target="_blank" class="btn btn-default" title="${text('访问站点')}"><i class="fa fa-globe"></i> ${text('访问网站')}</a>
 				<% if(hasPermi('cms:article:edit')){ %>
-					<a href="javascript:" onclick="$(this).data('href', '${ctx}/cms/article/form?category.categoryCode='+$('#categoryCode').val())" class="btn btn-primary btnTool" title="${text('新增文章')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="javascript:" id="btnForm" class="btn btn-primary" title="${text('新增文章')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-90">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+						<#form:select path="status" dictType="${isCanUseAuth?'bpm_biz_status':'sys_search_status'}" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -64,7 +64,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("点击数")}', name:'hits', index:'a.hits', width:100, align:"center"},
 		{header:'${text("字数")}', name:'wordCount', index:'a.word_count', width:100, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_search_status')}", val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson(isCanUseAuth?'bpm_biz_status':'sys_search_status')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
 // 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
@@ -91,4 +91,14 @@ $('#dataGrid').dataGrid({
 		
 	}
 });
+$('#btnForm').click(function() {
+	var categoryCode = $('#categoryCode').val();
+	if (categoryCode == '') {
+		js.showMessage('${text("请先选择栏目")}');
+		return false;
+	}
+	var $this = $(this), title = $this.attr('title');
+	js.addTabPage($this, title, '${ctx}/cms/article/form?category.categoryCode='+categoryCode);
+	return true;
+})
 </script>

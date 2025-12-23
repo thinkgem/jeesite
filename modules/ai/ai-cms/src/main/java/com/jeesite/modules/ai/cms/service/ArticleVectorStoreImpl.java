@@ -14,7 +14,7 @@ import com.jeesite.common.utils.PageUtils;
 import com.jeesite.common.web.http.HttpClientUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.service.ArticleVectorStore;
+import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.vladsch.flexmark.html.renderer.LinkType;
 import com.vladsch.flexmark.html.renderer.ResolvedLink;
