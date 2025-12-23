@@ -13,7 +13,6 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * 站点表Entity
  * @author 长春叭哥、ThinkGem
- * @version 2018-10-15
+ * @version 2025-12-22
  */
 @Table(name = "${_prefix}cms_site", alias = "a", columns = {
 		@Column(name = "site_code", attrName = "siteCode", label = "站点编码", isPK = true),
@@ -46,9 +45,9 @@ public class Site extends DataEntity<Site> {
 	 */
 	public static final String MAIN_SITE_CODE = Global.getProperty("cms.mainSiteCode", "main");
 	/**
-	 * 模板路径
+	 * 模板路径（必须以 / 结尾）
 	 */
-	public static final String TEMPLATE_BASE_DIRECTION = "views/modules/cmsfront/themes";
+	public static final String TEMPLATE_BASE_DIRECTION = "views/modules/cmsfront/themes/";
 	/**
 	 * 默认模版
 	 */
@@ -176,21 +175,6 @@ public class Site extends DataEntity<Site> {
 	public void setCustomIndexView(String customIndexView) {
 		this.customIndexView = customIndexView;
 	}
-
-	/**
-	 * 获取当前编辑的站点编号
-	 */
-	public static String getCurrentSiteCode() {
-		String siteCode = UserUtils.getCache("currentSiteCode");
-		return StringUtils.isNotBlank(siteCode) ? siteCode : MAIN_SITE_CODE;
-	}
-
-	/**
-	 * 获得模板方案路径。如：/WEB-INF/views/modules/cmsfront/themes/jeesite
-	 */
-	public String getSolutionPath() {
-		return TEMPLATE_BASE_DIRECTION + "/" + getTheme();
-	}
 	
 	public List<String> getCategoryCodes() {
 		return categoryCodes;
@@ -209,12 +193,23 @@ public class Site extends DataEntity<Site> {
 	}
 
 	/**
+	 * 获取当前编辑的站点编号
+	 */
+	public static String getCurrentSiteCode() {
+		String siteCode = UserUtils.getCache("currentSiteCode");
+		return StringUtils.isNotBlank(siteCode) ? siteCode : MAIN_SITE_CODE;
+	}
+
+	/**
 	 * 判断是否为当前站点
 	 */
 	public Boolean getIsCurrentSite(){
 		return getCurrentSiteCode().equals(siteCode);
 	}
 
+	/**
+	 * 获取站点地址
+	 */
 	public String getUrl() {
 		return CmsUtils.getUrlDynamic(this);
 	}
@@ -235,14 +230,5 @@ public class Site extends DataEntity<Site> {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

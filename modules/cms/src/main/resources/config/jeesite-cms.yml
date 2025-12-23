@@ -1,6 +1,12 @@
 # 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
 
 cms:
+
+  # 模版编辑（脚本编辑权限较大，请根据业务进行严格权限管理控制 cms:template:edit ）
+  template:
+    edit: false
+
+  # 页面缓存
   pageCache:
     # 是否开启页面静态化缓存
     enabled: false
@@ -20,5 +26,7 @@ j2cache:
 #spring:
 #  elasticsearch:
 #    enabled: true
-#    uris: http://Win11:9200
+#    uris: http://127.0.0.1:9200
 #    connection-timeout: 120s
+#    username: elastic
+#    password: elastic
