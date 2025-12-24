@@ -53,11 +53,11 @@ public class FileTemplate implements Comparable<FileTemplate>, Serializable {
 		this.resource = resource;
 		this.fileName = resource.getFilename();
 		try {
-			String filePath = resource.getURI().getPath();
+			String filePath = resource.getURI().toString();
 			this.filePath = StringUtils.defaultString(StringUtils.substringBetween(
 					filePath, Site.TEMPLATE_BASE_DIRECTION, "/" + this.fileName));
 		} catch (IOException e) {
-			logger.trace(e.getMessage());
+			logger.debug(e.getMessage(), e);
 			this.resource = null;
 		}
 		this.fileExtension = FileUtils.getFileExtension(this.fileName);

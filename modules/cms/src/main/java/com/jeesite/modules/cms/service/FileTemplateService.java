@@ -45,7 +45,7 @@ public class FileTemplateService extends BaseService {
 		}
 		List<FileTemplate> list = ListUtils.newArrayList();
 		Resource[] resources = ResourceUtils.getResources("classpath*:"
-				+ Site.TEMPLATE_BASE_DIRECTION + path + "/**/*.html");
+				+ FileUtils.path(Site.TEMPLATE_BASE_DIRECTION + path + "/**/*.html"));
 		for (Resource resource : resources) {
 			if (resource.exists()) {
 				list.add(new FileTemplate(resource));
