@@ -10,7 +10,7 @@ echo "[信息] 打包安装工程，生成jar包文件。"
 echo ""
 
 if [ -n "$JAVA_HOME17" ] && [ -d "$JAVA_HOME17" ]; then
-  export JAVA_HOME="$JAVA_HOME17" PATH="$JAVA_HOME/bin:$PATH"
+  export JAVA_HOME="$JAVA_HOME17" PATH="$JAVA_HOME17/bin:$PATH"
 fi
 mvn -v
 echo ""

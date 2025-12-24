@@ -193,15 +193,15 @@ public class FileTemplateService extends BaseService {
 			if (saveFileName == null) {
 				throw new ServiceException(Global.getText("模版文件不能保存！"));
 			}
-			saveFileName = new File(saveFileName, fileName).getAbsolutePath();
+			saveFileName = new File(saveFileName, Site.TEMPLATE_BASE_DIRECTION + fileName).getAbsolutePath();
 			// 备份 classes 下的文件
 			backFileTemplate(saveFileName);
 			// 更新 classes 下的文件
 			FileUtils.writeToFile(saveFileName, fileContent, false);
 			logger.debug("Update: {}", saveFileName);
-			// 清理 beetl 缓存
-			BeetlUtils.clearResourceTemplateCache();
 		}
+		// 清理 beetl 缓存
+		BeetlUtils.clearResourceTemplateCache();
 	}
 
 	/**
@@ -234,14 +234,14 @@ public class FileTemplateService extends BaseService {
 			if (saveFileName == null) {
 				throw new ServiceException(Global.getText("模版文件不能删除！"));
 			}
-			saveFileName = new File(saveFileName, fileName).getAbsolutePath();
+			saveFileName = new File(saveFileName, Site.TEMPLATE_BASE_DIRECTION + fileName).getAbsolutePath();
 			// 备份 classes 下的文件
 			backFileTemplate(saveFileName);
 			// 删除 classes 下的文件
 			FileUtils.deleteFile(saveFileName);
-			// 清理 beetl 缓存
-			BeetlUtils.clearResourceTemplateCache();
 		}
+		// 清理 beetl 缓存
+		BeetlUtils.clearResourceTemplateCache();
 	}
 	
 }
