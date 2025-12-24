@@ -64,7 +64,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("点击数")}', name:'hits', index:'a.hits', width:100, align:"center"},
 		{header:'${text("字数")}', name:'wordCount', index:'a.word_count', width:100, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel("#{@DictUtils.getDictListJson(isCanUseAuth?'bpm_biz_status':'sys_search_status')}", val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson(isCanUseAuth?'bpm_biz_status':'sys_status')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
 // 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
