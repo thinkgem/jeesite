@@ -19,7 +19,7 @@ echo "请按回车键继续 ... "
 read text
 
 if [ -n "$JAVA_HOME8" ] && [ -d "$JAVA_HOME8" ]; then
-  export JAVA_HOME="$JAVA_HOME8" PATH="$JAVA_HOME/bin:$PATH"
+  export JAVA_HOME="$JAVA_HOME8" PATH="$JAVA_HOME8/bin:$PATH"
 fi
 mvn -v
 echo ""

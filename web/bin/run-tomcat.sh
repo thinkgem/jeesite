@@ -11,7 +11,7 @@ echo "[信息] 使用 Spring Boot Tomcat 运行 Web 工程。"
 echo ""
 
 if [ -n "$JAVA_HOME8" ] && [ -d "$JAVA_HOME8" ]; then
-  export JAVA_HOME="$JAVA_HOME8" PATH="$JAVA_HOME/bin:$PATH"
+  export JAVA_HOME="$JAVA_HOME8" PATH="$JAVA_HOME8/bin:$PATH"
 fi
 mvn -v
 echo ""
