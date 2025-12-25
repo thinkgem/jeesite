@@ -20,8 +20,8 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.StringUtils;
 import org.apache.commons.lang3.LocaleUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -29,7 +29,10 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.io.IOException;
 import java.io.Serial;
 import java.lang.reflect.AnnotatedElement;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * 封装 Jackson，实现 JSON String 与 Java Object 互转
@@ -149,7 +152,7 @@ public class JsonMapper extends ObjectMapper {
 			this.pattern = pattern;
 		}
 		@Override
-		public Date deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+		public Date deserialize(JsonParser parser, DeserializationContext ctx) throws IOException {
 			if (StringUtils.isNotBlank(pattern)) {
 				return DateUtils.parseDate(parser.getText(), pattern);
 			} else {
@@ -179,7 +182,7 @@ public class JsonMapper extends ObjectMapper {
 	public JsonMapper enabledXssFilter(){
 		this.registerModule(new SimpleModule().addDeserializer(String.class, new JsonDeserializer<String>() {
 			@Override
-			public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+			public String deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
 				String text = p.getText();
 				if (text != null) {
 					return EncodeUtils.xssFilter(text);
