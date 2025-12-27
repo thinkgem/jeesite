@@ -224,6 +224,20 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
+	 * 替换一个匹配的字符串
+	 */
+    public static String replaceOnce(final String text, final String searchString, final String replacement) {
+        return Strings.CS.replaceOnce(text, searchString, replacement);
+    }
+
+	/**
+	 * 替换一个匹配的字符串（忽略大小写）
+	 */
+	public static String replaceOnceIgnoreCase(final String text, final String searchString, final String replacement) {
+        return Strings.CI.replaceOnce(text, searchString, replacement);
+    }
+
+	/**
 	 * 去除左右空格（包含中文空格）
 	 */
 	public static String trim2(final String str) {
