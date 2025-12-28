@@ -90,9 +90,21 @@ public class DictDataController extends BaseController {
 	 */
 	@RequiresPermissions("sys:dictData:view")
 	@RequestMapping(value = "form")
-	public String form(DictData dictData, Model model) {
-		// 创建并初始化下一个节点信息
-		dictData = createNextNode(dictData);
+	public String form(DictData dictData, String op, Model model) {
+		// 复制字典数据
+		if (StringUtils.equals(op, "copy")) {
+			dictData.setIsNewRecord(true);
+			dictData.setId(null);
+			if (dictData.getIsRoot()) {
+				dictData.setParent(null);
+			}
+			if (StringUtils.isNotBlank(dictData.getParentCode())) {
+				dictData.setParent(dictDataService.get(dictData.getParentCode()));
+			}
+		} else {
+			// 创建并初始化下一个节点信息
+			dictData = createNextNode(dictData);
+		}
 		model.addAttribute("dictData", dictData);
 		return "modules/sys/dictDataForm";
 	}
