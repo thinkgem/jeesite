@@ -751,6 +751,8 @@ session:
 #      default: 10000, 1h
 #      sysCache: 100000, 365d
 #      sessionCache: 100000, 12h
+#      oauth2StateCache: 3000, 10m
+#      wxMpQrcodeCache: 3000, 10m
 #
 #  # 二级缓存
 #  redis:
