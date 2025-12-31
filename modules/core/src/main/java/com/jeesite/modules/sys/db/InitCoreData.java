@@ -371,6 +371,9 @@ public class InitCoreData extends BaseInitDataTests {
 	}
 
 	private final BizCategoryService bizCategoryService;
+	/**
+	 * 业务分类表
+	 */
 	public void initBizCategory() throws Exception{
 //		clearTable(BizCategory.class);
 		initExcelData(BizCategory.class, params -> {
