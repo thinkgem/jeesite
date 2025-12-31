@@ -452,7 +452,7 @@ for (c in table.columnList){
     form${@StringUtils.cap(child.classNameSimple)}ListRef.value?.setTableData(record.value);
   <% } %>
   <% if(updateSchemas.~size > 0){ %>
-    updateSchema([
+    await updateSchema([
     <% for(updateSchema in updateSchemas){
       print(updateSchema + '\n');  
     } %>
