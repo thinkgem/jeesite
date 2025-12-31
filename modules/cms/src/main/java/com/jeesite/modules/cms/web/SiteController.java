@@ -80,6 +80,9 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = "form")
 	public String form(Site site, Model model) throws IOException {
+		if (site.getSiteSort() == null) {
+			site.setSiteSort(30);
+		}
 		model.addAttribute("indexViewList", fileTemplateService.getTemplateContentDict(Site.DEFAULT_TEMPLATE));
 		model.addAttribute("site_DEFAULT_TEMPLATE", Site.DEFAULT_TEMPLATE);
 		model.addAttribute("site", site);
