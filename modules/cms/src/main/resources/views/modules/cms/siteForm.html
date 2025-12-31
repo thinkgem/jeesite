@@ -18,7 +18,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required ">*</span> ${text('站点名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="siteName" maxlength="100"  placeholder="默认站点" class="form-control required"/>
+								<#form:input path="siteName" maxlength="100" placeholder="默认站点" class="form-control required"/>
 							</div>
 						</div>
 					</div>
@@ -30,6 +30,17 @@
 								<#form:hidden path="isNewRecord" />
 								<#form:input path="siteCode" maxlength="64" readonly="${!site.isNewRecord}"
 									class="form-control required abc" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('站点标题')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:input path="title" maxlength="100" placeholder="演示站点" class="form-control required"/>
 							</div>
 						</div>
 					</div>
@@ -47,7 +58,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('站点排序')}：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('站点排序')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="siteSort" maxlength="500" class="form-control required digits"/>
 							</div>
@@ -57,18 +68,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2" title="">
-								<span class="required ">*</span> ${text('站点标题')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-10">
-								<#form:input path="title" maxlength="100"  placeholder="演示站点"  class="form-control required"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="form-group">
-							<label class="control-label col-sm-2">${text('站点logo')}</label>
+							<label class="control-label col-sm-2">${text('站点Logo')}</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadLogo" bizKey="${site.id}" bizType="site_logo" returnPath="true"
 									filePathInputId="logo" uploadType="image" readonly="false" maxUploadNum="1" isMini="false"/>
@@ -95,7 +95,7 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required hide">*</span> ${text('关键字')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:input path="keywords" maxlength="500"  placeholder="填写关键词，通过,或|分割，有助于搜索引擎优化" class="form-control"/>
+								<#form:input path="keywords" maxlength="500" placeholder="填写关键词，通过,或|分割，有助于搜索引擎优化" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -106,7 +106,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('主题风格')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="theme" dictType="cms_theme"  class="form-control" />
+								<#form:select path="theme" dictType="cms_theme" class="form-control" />
 							</div>
 						</div>
 					</div>
