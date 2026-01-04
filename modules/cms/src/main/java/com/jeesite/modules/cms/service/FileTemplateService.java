@@ -63,9 +63,10 @@ public class FileTemplateService extends BaseService {
 		Site site = CmsUtils.getSite(Site.getCurrentSiteCode());
 		List<FileTemplate> tplList = getTemplateListByPath(site.getTheme());
 		for (FileTemplate tpl : tplList) {
-			if (tpl.getFileName().startsWith(prefix)) {
-				listSite.add(new DictData(tpl.getFileName()
-						.substring(0, tpl.getFileName().indexOf("."))));
+			String fileName = tpl.getFileName();
+			if (fileName.startsWith(prefix)) {
+				String value = fileName.substring(0, fileName.indexOf("."));
+				listSite.add(new DictData(fileName, value));
 			}
 		}
 		return listSite;

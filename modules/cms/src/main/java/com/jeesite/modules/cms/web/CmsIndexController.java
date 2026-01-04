@@ -4,12 +4,12 @@
  */
 package com.jeesite.modules.cms.web;
 
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.cms.utils.CmsUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.jeesite.common.web.BaseController;
 
 /**
  * 内容管理Controller
@@ -25,7 +25,9 @@ public class CmsIndexController extends BaseController {
 	 */
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "index")
-	public String index() {
+	public String index(Model model) {
+		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
+		model.addAttribute("siteList", CmsUtils.getSiteList());
 		return "modules/cms/cmsIndex";
 	}
 
