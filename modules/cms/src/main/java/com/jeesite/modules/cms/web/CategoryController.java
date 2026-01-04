@@ -207,17 +207,17 @@ public class CategoryController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated Category category) {
-		// 如果保存的时候，没有上一级，或者是根级别，给一个默认的站点
-		if (Category.ROOT_CODE.equals(category.getParentCode())) {
+		// 归属站点，和上级栏目必须一致（忽略前端传参）只允许根节点更改归属站点
+		String parentCode = category.getParentCode();
+		if (StringUtils.isNotBlank(parentCode)) {
+			Category parent = categoryService.get(parentCode);
+			if (parent != null) {
+				category.setSite(parent.getSite());
+			}
+		}
+		// 如果仍没有站点，则设置默认站点
+		if (category.getSite() == null) {
 			category.setSite(new Site(Site.getCurrentSiteCode()));
-		}
-		// 如果存在上级则保存时，归属站点与上一级同步
-		else if (StringUtils.isNotBlank(category.getParent().getId())) {
-			category.setSite(categoryService.get(category.getParent()).getSite());
-		}
-		// 同步到ID
-		if (category.getParent() != null) {
-			category.getParent().setId(category.getParent().getCategoryCode());
 		}
 		categoryService.save(category);
 		return renderResult(Global.TRUE, text("保存栏目表成功！"));

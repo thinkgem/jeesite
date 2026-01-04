@@ -4,7 +4,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa icon-note"></i> ${text(article.isNewRecord ? '新增文章' : '编辑文章')}（${@CmsUtils.getCurrentSite().getSiteName()}）
+				<i class="fa icon-note"></i> ${text(article.isNewRecord ? '新增文章' : '编辑文章')}（${currentSite.siteName}）
 			</div>
 			<div class="box-tools pull-right hide">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -180,7 +180,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('自定义内容视图')}：<i class="fa icon-question" title="自定义内容视图名称必须以'${article_DEFAULT_TEMPLATE}'开始"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="customContentView" items="${contentViewList}" itemLabel="id" itemValue="id" blankOption="true" class="form-control " />
+								<#form:select path="customContentView" items="${contentViewList}" itemLabel="dictLabel" itemValue="dictValue" blankOption="true" class="form-control " />
 							</div>
 						</div>
 					</div>

@@ -136,8 +136,9 @@ public class ArticleController extends BaseController {
 //			article.setStatus(Article.STATUS_DRAFT);
 //		}
 		model.addAttribute("isCanUseAuth", ArticleService.isCanUseAuth);
-		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
+		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
 		model.addAttribute("article", article);
 		CmsUtils.addViewConfigAttribute(model, article.getCategory());
 		return "modules/cms/articleForm";

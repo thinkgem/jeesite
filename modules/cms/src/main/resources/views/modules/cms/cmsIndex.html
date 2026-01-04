@@ -5,10 +5,10 @@
 			<div class="box-header">
 				<div class="box-title dropdown input-inline">
 					<div class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
-						${@CmsUtils.getCurrentSite().getSiteName()}<b class="caret"></b>
+						${currentSite.siteName}<b class="caret"></b>
 					</div>
 					<ul class="dropdown-menu">
-						<% for(var site in @CmsUtils.getSiteList()){ %>
+						<% for(var site in siteList){ %>
 						<li><a href="${ctx}/cms/site/select?siteCode=${site.siteCode}&redirect=${@Global.getProperty('adminPath')}/cms/index"> <i
 								class="fa fa-angle-right"></i> ${site.siteName}
 						</a></li>
