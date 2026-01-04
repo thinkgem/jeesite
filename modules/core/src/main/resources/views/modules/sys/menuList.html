@@ -5,9 +5,10 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-book-open"></i> ${text('菜单管理')}<!--（
+				<i class="fa icon-book-open"></i> ${text('菜单管理')}
 			</div>
-			<div class="box-title dropdown input-inline">
+			<div class="box-title switchSys hide">（</div>
+			<div class="box-title dropdown input-inline switchSys hide">
 				<div class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
 					<span id="sysCodeLabel">${@DictUtils.getDictLabel('sys_menu_sys_code',
 						menu.sysCode, text('全部菜单'))}</span><b class="caret"></b>
@@ -20,7 +21,7 @@
 					<% } %>
 				</ul>
 			</div>
-			<div class="box-title">）--></div>
+			<div class="box-title switchSys hide">）</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<a href="#" class="btn btn-default" id="btnRefreshTree" title="${text('刷新')}"><i class="fa fa-refresh"></i> ${text('刷新')}</a>
@@ -76,6 +77,9 @@
 </div>
 <% } %>
 <script>
+if (!js.endsWith(parent.location.pathname, '/sys/menu/index')) {
+	$('.switchSys').removeClass('hide');
+}
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
