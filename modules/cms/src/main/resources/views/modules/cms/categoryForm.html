@@ -30,7 +30,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required ">*</span>${text('归属站点')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="site.siteCode" items="${@CmsUtils.getSiteList()}" itemLabel="siteName" itemValue="siteCode" class="form-control required" />
+								<#form:select path="site.siteCode" items="${siteList}" itemLabel="siteName" itemValue="siteCode" class="form-control required" />
 							</div>
 						</div>
 					</div>
@@ -104,7 +104,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('超链接目标窗口')}：<i class="fa icon-question "
+								<span class="required hide">*</span> ${text('链接目标')}：<i class="fa icon-question "
 									title="栏目超链接打开的目标窗口，如：“_blank”"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="target" maxlength="20" placeholder="栏目超链接打开的目标窗口，新窗口打开，请填写：“_blank”" class="form-control" />
@@ -116,7 +116,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('栏目描述信息')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('栏目描述')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="description" maxlength="500" placeholder="填写描述，有助于搜搜引擎优化" class="form-control" />
 							</div>
@@ -137,7 +137,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="是否在导航中显示该栏目">
-								<span class="required hide">*</span> ${text('是否在导航中显示')}：<i class="fa icon-question"></i></label>
+								<span class="required hide">*</span> ${text('在导航中显示')}：<i class="fa icon-question"></i></label>
 							<div class="col-sm-8">
 								<#form:radio path="inMenu" dictType="sys_show_hide" class="form-control" />
 							</div>
@@ -157,7 +157,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="是否在分类页中显示该栏目的文章列表">
-								<span class="required hide">*</span> ${text('是否在分类页中显示')}：<i class="fa icon-question" ></i></label>
+								<span class="required hide">*</span> ${text('在分类页显示')}：<i class="fa icon-question" ></i></label>
 							<div class="col-sm-8">
 								<#form:radio path="inList" dictType="sys_show_hide" class="form-control" />
 							</div>
@@ -187,10 +187,10 @@
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="control-label col-sm-4" title="自定义内容视图名称必须以'${category_DEFAULT_TEMPLATE}'开始">
+							<label class="control-label col-sm-4" title="自定义列表视图名称必须以'${category_DEFAULT_TEMPLATE}'开始">
 								${text('自定义列表视图')}：<i class="fa icon-question "></i></label>
 							<div class="col-sm-8">
-								<#form:select path="customListView" items="${listViewList}" itemLabel="id" itemValue="id" blankOption="true" class="form-control " />
+								<#form:select path="customListView" items="${listViewList}" itemLabel="dictLabel" itemValue="dictValue" blankOption="true" class="form-control " />
 							</div>
 						</div>
 					</div>
@@ -199,7 +199,7 @@
 							<label class="control-label col-sm-4" title="自定义内容视图名称必须以'${article_DEFAULT_TEMPLATE}'开始"> <span class="required hide">*</span>
 								${text('自定义内容视图')}：<i class="fa icon-question "></i></label>
 							<div class="col-sm-8">
-								<#form:select path="customContentView" items="${contentViewList}" itemLabel="id" itemValue="id" blankOption="true" class="form-control " />
+								<#form:select path="customContentView" items="${contentViewList}" itemLabel="dictLabel" itemValue="dictValue" blankOption="true" class="form-control " />
 							</div>
 						</div>
 					</div>

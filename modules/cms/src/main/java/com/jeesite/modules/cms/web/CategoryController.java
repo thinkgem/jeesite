@@ -66,6 +66,8 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "index")
 	public String index(Category category, Model model) {
+		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
+		model.addAttribute("siteList", CmsUtils.getSiteList());
 		model.addAttribute("category", category);
 		return "modules/cms/categoryIndex";
 	}
@@ -80,6 +82,8 @@ public class CategoryController extends BaseController {
 			category.setSite(new Site(Site.getCurrentSiteCode()));
 		}
 		category.setSite(CmsUtils.getSite(category.getSite().getSiteCode()));
+		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
+		model.addAttribute("siteList", CmsUtils.getSiteList());
 		model.addAttribute("category", category);
 		return "modules/cms/categoryList";
 	}
@@ -157,10 +161,12 @@ public class CategoryController extends BaseController {
 		if (category.getIsNeedAudit() == null) {
 			category.setIsNeedAudit(Global.NO);
 		}
-		model.addAttribute("listViewList", fileTemplateService.getTemplateContentDict(Category.DEFAULT_TEMPLATE));
 		model.addAttribute("category_DEFAULT_TEMPLATE", Category.DEFAULT_TEMPLATE);
-		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
+		model.addAttribute("listViewList", fileTemplateService.getTemplateContentDict(Category.DEFAULT_TEMPLATE));
+		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
+		model.addAttribute("siteList", CmsUtils.getSiteList());
 		model.addAttribute("category", category);
 		return "modules/cms/categoryForm";
 	}

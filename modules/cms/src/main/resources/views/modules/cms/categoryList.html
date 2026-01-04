@@ -3,21 +3,22 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
- 				<i class="fa icon-organization"></i> ${text('栏目管理')}（
+ 				<i class="fa icon-organization"></i> ${text('栏目管理')}
 			</div>
-			<div class="box-title dropdown input-inline">
+			<div class="box-title switchSite hide">（</div>
+			<div class="box-title dropdown input-inline switchSite hide">
 				<div class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
-					${@CmsUtils.getCurrentSite().getSiteName()}<b class="caret"></b>
+					${currentSite.siteName}<b class="caret"></b>
 				</div>
 				<ul class="dropdown-menu">
-					<% for(var site in @CmsUtils.getSiteList()){ %>
+					<% for(var site in siteList){ %>
 					<li><a href="${ctx}/cms/site/select?siteCode=${site.siteCode}&redirect=${@Global.getProperty('adminPath')}/cms/category/list"> <i
 							class="fa fa-angle-right"></i> ${site.siteName}
 					</a></li>
 					<% } %>
 				</ul>
 			</div>
-			<div class="box-title">）</div>
+			<div class="box-title switchSite hide">）</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i>${text('查询')}</a>
 				<a href="#" class="btn btn-default" id="btnRefreshTree" title="${text('刷新')}"><i class="fa fa-refresh"></i> ${text('刷新')}</a>
@@ -74,6 +75,9 @@
 </div>
 <% } %>
 <script>
+if (!js.endsWith(parent.location.pathname, '/cms/category/index')) {
+	$('.switchSite').removeClass('hide');
+}
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
