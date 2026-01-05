@@ -220,22 +220,25 @@ public class HttpClientUtils {
 	}
 
 	public static HttpClient createHttpClient(long seconds) {
-		HttpClient client;
+		return newBuilder()
+				.connectTimeout(Duration.ofSeconds(seconds))
+				.build();
+	}
+
+	public static HttpClient.Builder newBuilder() {
+		HttpClient.Builder builder;
 		try {
 			SSLContext sslContext = SSLContext.getInstance("TLS");
 			sslContext.init(null, new TrustManager[]{new UnsafeX509ExtendedTrustManager()}, new SecureRandom());
-			client = HttpClient.newBuilder()
-					.sslContext(sslContext)
-					.connectTimeout(Duration.ofSeconds(seconds))
-					.build();
+			builder = HttpClient.newBuilder().sslContext(sslContext);
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
-			client = HttpClient.newHttpClient();
+			builder = HttpClient.newBuilder();
 		}
-		return client;
+		return builder;
 	}
 
-	private static final class UnsafeX509ExtendedTrustManager extends X509ExtendedTrustManager {
+	public static final class UnsafeX509ExtendedTrustManager extends X509ExtendedTrustManager {
 
 		private static final X509Certificate[] EMPTY_CERTIFICATES = new X509Certificate[0];
 
