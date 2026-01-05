@@ -492,7 +492,7 @@ for(c in table.columnList){
     open${modalOrDrawer}(true, record);
     <% } else { %>
     go({
-      path: '/${urlPrefix}/formRoute',
+      path: '/${urlPrefix}/form',
       query: record,
     });
     <% } %>

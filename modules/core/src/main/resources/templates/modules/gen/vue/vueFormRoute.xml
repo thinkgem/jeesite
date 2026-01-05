@@ -4,7 +4,7 @@
 <template>
 	<name>vueFormRoute</name>
 	<filePath>${frontDir}/packages${modulePath}/views/${urlPrefix}</filePath>
-	<fileName>formRoute.vue</fileName>
+	<fileName>form.vue</fileName>
 	<content><![CDATA[
 <!--
  * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
