@@ -741,7 +741,7 @@ session:
 #  # 记住我的请求参数和请求头的名称（v4.2.3）
 #  rememberMeHeaderName: x-remember
 
-# 系统缓存配置
+# 缓存配置
 #j2cache:
 #
 #  # 一级缓存
@@ -751,8 +751,6 @@ session:
 #      default: 10000, 1h
 #      sysCache: 100000, 365d
 #      sessionCache: 100000, 12h
-#      oauth2StateCache: 3000, 10m
-#      wxMpQrcodeCache: 3000, 10m
 #    
 #  # 二级缓存
 #  redis:
