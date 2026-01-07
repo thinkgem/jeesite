@@ -57,7 +57,7 @@ else if (p.dataFormat == 'number'){
 }else if (p.dataFormat == 'number2'){
 	df = {%> value="${p.value,numberFormat='0.00'}"<%};
 }else{
-	df = {%> value="${p.value}"<%};
+	df = {%> value="${p.value,xss='html'}"<%};
 }
 p.attrs = p.attrs!'' + df;
 
