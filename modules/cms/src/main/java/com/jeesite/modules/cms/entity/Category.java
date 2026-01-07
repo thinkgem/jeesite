@@ -58,7 +58,7 @@ public class Category extends TreeEntity<Category> {
 	public static final String DEFAULT_TEMPLATE = "list"; // 默认文章列表模板
 	
 	public static final String SHOW_MODES_AUTO = "1"; 			// 默认展现方式
-	public static final String SHOW_MODES_CENTENT_LIST = "2"; 	// 首栏目内容列表
+	public static final String SHOW_MODES_CONTENT_LIST = "2"; 	// 首栏目内容列表
 	public static final String SHOW_MODES_FIRST_CONTENT = "3"; 	// 简介类栏目，栏目第一条内容
 	
 	@Serial

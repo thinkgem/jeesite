@@ -141,7 +141,7 @@ public class FrontController extends BaseController {
 			}
 
 			// 当前栏目展现方式为：2 、无子栏目或公共模型，显示栏目内容列表；1：无子栏目或一个子栏目，显示栏目内容列表
-			if (Category.SHOW_MODES_CENTENT_LIST.equals(category.getShowModes()) || categoryList.size() <= 1) {
+			if (Category.SHOW_MODES_CONTENT_LIST.equals(category.getShowModes()) || categoryList.size() <= 1) {
 
 				// 有子栏目并展现方式为2，则获取第一个子栏目；无子栏目，则获取同级分类列表。
 				if (!categoryList.isEmpty()) {
