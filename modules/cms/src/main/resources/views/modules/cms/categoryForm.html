@@ -86,7 +86,7 @@
 								<#form:fileupload id="uploadImage" bizKey="${category.id}" bizType="category_image"
 									returnPath="true" filePathInputId="image" uploadType="image" readonly="false"
 									maxUploadNum="1" isMini="false" />
-								<#form:input path="image" maxlength="255" class="form-control" />
+								<#form:hidden path="image" class="form-control" />
 							</div>
 						</div>
 					</div>
