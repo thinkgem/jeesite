@@ -26,4 +26,4 @@ form.path(p);
 // 编译属性参数
 form.attrs(p);
 	
-%><input type="hidden" id="${p.id}" name="${p.name}" value="${p.value}"${p.attrs}/>
+%><input type="hidden" id="${p.id}" name="${p.name}" value="${p.value,xss='html'}"${p.attrs}/>
