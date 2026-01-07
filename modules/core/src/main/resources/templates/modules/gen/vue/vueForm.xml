@@ -42,7 +42,7 @@
         v-model:bpmEntity="record"
         bpmEntityKey="id"
         formKey="${table.optionMap['bpmFormKey']}"
-        completeText="提交"
+        :completeText="t('提交')"
         :completeModal="true"
         :loading="loadingRef"
         :auth="'${permissionPrefix}:edit'"
@@ -475,7 +475,7 @@ for (c in table.columnList){
   }
   <% } %>
 
-  async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event: any<% } %>) {
+  async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event?: any<% } %>) {
     try {
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
       loadingRef.value = true;

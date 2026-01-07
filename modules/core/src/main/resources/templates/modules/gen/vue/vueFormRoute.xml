@@ -20,6 +20,10 @@
     @close="handleClose"
     @ok="handleSubmit"
   >
+    <template #title>
+      <Icon :icon="getTitle.icon" class="m-1 pr-1" />
+      <span> {{ getTitle.value }} </span>
+    </template>
     <template #main>
       <BasicForm @register="registerForm" />
     </template>
@@ -46,7 +50,7 @@
         v-model:bpmEntity="record"
         bpmEntityKey="id"
         formKey="${table.optionMap['bpmFormKey']}"
-        completeText="提交"
+        :completeText="t('提交')"
         :completeModal="true"
         :loading="okLoadingRef"
         :auth="'${permissionPrefix}:edit'"
@@ -126,15 +130,17 @@ for(c in table.columnList){
 
   const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const { setTitle, close } = useTabs(router);
   const record = ref<${ClassName}>({} as ${ClassName});
   const loadingRef = ref<boolean>(false);
   const okLoadingRef = ref<boolean>(false);
   const query = useQuery();
 
-  const updateTabTitle = () => {
-    setTitle(record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'));
-  };
+  const getTitle = computed(() => ({
+    icon: meta.icon || 'i-ant-design:book-outlined',
+    value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
+  }));
 
   const inputFormSchemas: FormSchema<${ClassName}>[] = [
   <% if(table.isTreeEntity){ %>
@@ -698,7 +704,7 @@ for (c in table.columnList){
     } %>
     ]);
   <% } %>
-    updateTabTitle();
+    await setTitle(unref(getTitle).value);
     loadingRef.value = false;
   });
 
@@ -720,7 +726,7 @@ for (c in table.columnList){
   }
   <% } %>
 
-  async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event: any<% } %>) {
+  async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event?: any<% } %>) {
     try {
       okLoadingRef.value = true;
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
@@ -751,7 +757,7 @@ for (c in table.columnList){
       const res = await ${className}Save(params, data);
       showMessage(res.message);
       emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
-      handleClose();
+      setTimeout(close);
     } catch (error: any) {
       if (error && error.errorFields) {
         showMessage(error.message || t('common.validateError'));
