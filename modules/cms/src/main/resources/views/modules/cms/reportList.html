@@ -62,7 +62,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text('举报来源')}', name:'reportSource', index:'a.report_source', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/cms/report/form?id='+row.id+'" class="btnList" data-title="${text('编辑内容举报表')}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/cms/report/form?id='+row.id+'" class="btnList" data-title="${text('编辑内容举报表')}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text('举报内容')}', name:'reportContent', index:'a.report_content', width:150, align:"left"},
 		{header:'${text('举报的URL')}', name:'reportUrl', index:'a.report_url', width:150, align:"left"},

@@ -69,7 +69,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text('请求的URL地址')}', name:'requestUrl', index:'a.request_url', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/cms/visitLog/form?id='+row.id+'" class="btnList" data-title="${text('编辑访问日志表')}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/cms/visitLog/form?id='+row.id+'" class="btnList" data-title="${text('编辑访问日志表')}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text('受访域名')}', name:'requestUrlHost', index:'a.request_url_host', width:150, align:"left"},
 		{header:'${text('来源页面')}', name:'sourceReferer', index:'a.source_referer', width:150, align:"left"},

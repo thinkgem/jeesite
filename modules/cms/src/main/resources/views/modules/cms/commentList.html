@@ -110,7 +110,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text('栏目编码')}', name:'categoryCode', index:'a.category_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/cms/comment/form?id='+row.id+'" class="btnList" data-title="${text('编辑文章评论表')}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/cms/comment/form?id='+row.id+'" class="btnList" data-title="${text('编辑文章评论表')}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text('内容编号')}', name:'articleId', index:'a.article_id', width:150, align:"left"},
 		{header:'${text('父级评论')}', name:'parentId', index:'a.parent_id', width:150, align:"left"},
