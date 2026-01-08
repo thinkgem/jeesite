@@ -756,7 +756,7 @@ for (c in table.columnList){
       // console.log('submit', params, data, record);
       const res = await ${className}Save(params, data);
       showMessage(res.message);
-      emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
+      handleSuccess();
       setTimeout(close);
     } catch (error: any) {
       if (error && error.errorFields) {
@@ -767,12 +767,10 @@ for (c in table.columnList){
       okLoadingRef.value = false;
     }
   }
-  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 
-  async function handleSuccess() {
+  function handleSuccess() {
     emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
   }
-  <% } %>
 </script>
 <% %>
 ]]>
