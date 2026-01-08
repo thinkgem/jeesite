@@ -275,6 +275,9 @@ public class Article extends DataEntity<Article> implements BpmEntityApi<Article
 	}
 
 	public ArticleData getArticleData() {
+		if (articleData == null) {
+			articleData = new ArticleData();
+		}
 		return articleData;
 	}
 

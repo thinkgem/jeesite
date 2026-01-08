@@ -14,7 +14,6 @@
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
-				<#form:hidden path="wordCount"/>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -306,7 +305,6 @@ BpmButton.restart = function($this, task){
 //# }
 $('#inputForm').validate({
 	submitHandler: function(form){
-		$('#wordCount').val(contentUE.getContentTxt().length);
 		js.ajaxSubmitForm($(form), getExtendMapFormData, function(data){
 			js.showMessage(data.message);
 			//# if(parameter['category.showModes'] != '3'){

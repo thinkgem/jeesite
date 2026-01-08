@@ -171,15 +171,18 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	}
 
 	private void saveArticle(Article article) {
+		// 计算内容字数
+		ArticleData articleData = article.getArticleData();
+		article.setWordCount(StringUtils.stripHtml(articleData.getContent()).length());
 		// 保存详细内容
 		if (article.getIsNewRecord()) {
 			dao.insert(article);
-			article.getArticleData().setId(article.getId());
-			articleDataDao.insert(article.getArticleData());
+			articleData.setId(article.getId());
+			articleDataDao.insert(articleData);
 		} else {
 			dao.update(article);
-			article.getArticleData().setId(article.getId());
-			articleDataDao.update(article.getArticleData());
+			articleData.setId(article.getId());
+			articleDataDao.update(articleData);
 		}
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(article, article.getId(), "article_image");
