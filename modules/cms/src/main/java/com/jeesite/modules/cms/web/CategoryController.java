@@ -342,6 +342,8 @@ public class CategoryController extends BaseController {
 				map.put("adminUrl", "".equals(adminUrl) ? "none" : adminUrl);
 				mapList.add(map);
 			}
+			// 是否需要审核
+			map.put("isNeedAudit", e.getIsNeedAudit());
 		}
 		return mapList;
 	}
