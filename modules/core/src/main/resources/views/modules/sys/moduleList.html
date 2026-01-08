@@ -53,7 +53,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
     	{header:'${text("模块名称")}', name:'moduleName', index:'a.module_name', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
-   			return '<a href="${ctx}/sys/module/form?moduleCode='+row.moduleCode+'" class="btnList" data-title="${text("编辑模块")}">'+(val||row.id)+'</a>';
+   			return '<a href="${ctx}/sys/module/form?moduleCode='+row.moduleCode+'" class="btnList" data-title="${text("编辑模块")}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
    		}},
 		{header:'${text("模块编码")}', name:'moduleCode', index:'a.module_code', width:200, align:"center"},
 		{header:'${text("模块描述")}', name:'description', index:'a.description', width:300, align:"left"},

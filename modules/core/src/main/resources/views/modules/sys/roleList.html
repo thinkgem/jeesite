@@ -72,7 +72,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("角色名称")}', name:'roleName', index:'a.role_name', width:150, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" data-title="${text("编辑角色")}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" data-title="${text("编辑角色")}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text("角色编码")}', name:'roleCode', index:'a.role_code', width:150, align:"center"},
 		{header:'${text("排序号")}', name:'roleSort', index:'a.role_sort', width:80, align:"center"},

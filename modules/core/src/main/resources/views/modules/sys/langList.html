@@ -61,7 +61,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("语言编码")}', name:'langCode', index:'a.lang_code', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" data-title="${text("编辑语言")}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" data-title="${text("编辑语言")}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text("语言译文")}', name:'langText', index:'a.lang_text', width:200, align:"left"},
 		{header:'${text("语言类型")}', name:'langType', index:'a.lang_type', width:200, align:"center", formatter: function(val, obj, row, act){

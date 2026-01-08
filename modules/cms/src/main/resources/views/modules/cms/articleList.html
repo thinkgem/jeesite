@@ -57,7 +57,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("标题")}', name:'title', index:'a.category_code', width:350, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/cms/article/form?id='+row.id+'" class="btnList" data-title="${text("编辑文章")}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/cms/article/form?id='+row.id+'" class="btnList" data-title="${text("编辑文章")}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text("栏目")}', name:'category.categoryName', index:'c.category_name', width:130, align:'center'},
 		{header:'${text("权重")}', name:'weight', index:'a.weight', width:100, align:"center"},

@@ -126,7 +126,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:125, align:"center", frozen:true, fixed:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text("编辑用户")}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text("编辑用户")}">'+$.jgrid.htmlEncode(val||row.id)+'</a>';
 		}},
 		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:125, align:"center"},
 		{header:'${text("员工姓名")}', name:'refName', index:'a.ref_name', width:125, align:"center"},
