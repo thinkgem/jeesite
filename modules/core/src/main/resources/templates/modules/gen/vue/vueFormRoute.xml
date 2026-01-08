@@ -58,7 +58,6 @@
         @complete="handleSubmit"
         @success="handleSuccess"
         @close="handleClose"
-        size="small"
       />
     </template>
     <% } %>
@@ -111,21 +110,6 @@ for(c in table.columnList){
   import { useQuery } from '@jeesite/core/hooks/web/usePage';
   import { useTabs } from '@jeesite/core/hooks/web/useTabs';
 
-  const formConfig = ref<any[]>([
-    {
-      label: '基础表单',
-      value: 'main',
-      open: true,
-    },
-    <% for (child in table.childList){ %>
-    {
-      label: '${child.comments}',
-      value: '${@StringUtils.uncap(child.className)}',
-      open: true,
-    },
-    <% } %>
-  ]);
-
   const emitter = useEmitter();
 
   const { t } = useI18n('${moduleName}${subModuleNameDot}.${funName}');
@@ -141,6 +125,21 @@ for(c in table.columnList){
     icon: meta.icon || 'i-ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
   }));
+
+  const formConfig = ref<any[]>([
+    {
+      label: t('基本信息'),
+      value: 'main',
+      open: true,
+    },
+    <% for (child in table.childList){ %>
+    {
+      label: '${child.comments}',
+      value: '${@StringUtils.uncap(child.className)}',
+      open: true,
+    },
+    <% } %>
+  ]);
 
   const inputFormSchemas: FormSchema<${ClassName}>[] = [
   <% if(table.isTreeEntity){ %>
@@ -672,7 +671,7 @@ for (c in table.columnList){
     <% } %>
   }
 
-  async function validate(): Promise<Recordable<any>> {
+  async function validate(): Promise<Recordable<${ClassName}>> {
     return Object.assign(
       await formAction.validate(),
       <% for (child in table.childList){ %>
