@@ -22,8 +22,8 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="category" title="${text('所属栏目')}"
 									path="category.categoryCode" labelPath="category.categoryName"
-									url="${ctx}/cms/category/treeData?excludeCode=${article.category.categoryCode}"
-									class="required" allowClear="false" canSelectRoot="true" canSelectParent="false" />
+									url="${ctx}/cms/category/treeData" class="required" allowClear="false"
+									canSelectRoot="true" canSelectParent="false" />
 							</div>
 						</div>
 					</div>
@@ -218,19 +218,21 @@
 					</div>
 				</div>
 				<#form:extend collapsed="true" model="${article}" extendMap="${text('自定义属性')}" pathPrefix="articleData" />
-				<% if(isCanUseAuth && article.category.isNeedAudit == @Global.YES) { %>
-					<div class="form-unit taskComment hide">${text('审核流程')}</div>
-					<div class="row taskComment hide">
-						<div class="col-xs-12">
-							<div class="form-group">
-								<label class="control-label col-xs-2">${text('审批意见')}：</label>
-								<div class="col-xs-10">
-									<#bpm:comment bpmEntity="${article}" showCommWords="true"/>
+				<% if(isCanUseAuth) { %>
+					<div class="needAudit ${article.category.isNeedAudit == @Global.YES ? '' : 'hide'}">
+						<div class="form-unit taskComment hide">${text('审核流程')}</div>
+						<div class="row taskComment hide">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-xs-2">${text('审批意见')}：</label>
+									<div class="col-xs-10">
+										<#bpm:comment bpmEntity="${article}" showCommWords="true"/>
+									</div>
 								</div>
 							</div>
 						</div>
+						<#bpm:nextTaskInfo bpmEntity="${article}" />
 					</div>
-					<#bpm:nextTaskInfo bpmEntity="${article}" />
 				<% } %>
 			</div>
 			<div class="box-footer">
@@ -241,8 +243,13 @@
 							<% if (article.isNewRecord || article.status == '9'){ %>
 								<button type="submit" class="btn btn-sm btn-info" id="btnDraft"><i class="fa fa-save"></i> ${text('暂 存')}</button>&nbsp;
 							<% } %>
-							<% if(isCanUseAuth && article.category.isNeedAudit == @Global.YES) { %>
-								<#bpm:button bpmEntity="${article}" formKey="article" completeText="${text('提 交')}" restartText="${text('重新提交')}"/>
+							<% if(isCanUseAuth) { %>
+								<span class="needAudit ${article.category.isNeedAudit == @Global.YES ? '' : 'hide'}">
+									<#bpm:button bpmEntity="${article}" formKey="article" completeText="${text('提 交')}" restartText="${text('重新提交')}"/>
+								</span>
+								<span class="notNeedAudit ${article.category.isNeedAudit == @Global.YES ? 'hide' : ''}">
+									<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${article.status == '0' ? text('更 新') : text('发 布')}</button>&nbsp;
+								</span>
 							<% } else { %>
 								<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${article.status == '0' ? text('更 新') : text('发 布')}</button>&nbsp;
 							<% } %>
@@ -285,7 +292,7 @@ $('#btnDraft').click(function(){
 $('#btnSubmit').click(function(){
 	$('#status').val(Global.STATUS_NORMAL);
 });
-//# if(isCanUseAuth && article.category.isNeedAudit == @Global.YES) {
+//# if(isCanUseAuth) {
 // 流程按钮提交事件
 BpmButton = window.BpmButton || {};
 BpmButton.init = function(task){
@@ -317,4 +324,16 @@ $('#inputForm').validate({
 		}, "json");
     }
 });
+function treeselectCallback(id, act, index, layero, nodes){
+	if (id == 'category' && (act == 'ok' || act == 'clear')){
+        var node = nodes.length == 1 ? nodes[0] : {};
+		if (node.isNeedAudit == '1') {
+			$('.needAudit').removeClass('hide');
+			$('.notNeedAudit').addClass('hide');
+		} else {
+			$('.needAudit').addClass('hide');
+			$('.notNeedAudit').removeClass('hide');
+		}
+	}
+}
 </script>

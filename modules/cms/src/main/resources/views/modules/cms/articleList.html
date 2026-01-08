@@ -93,10 +93,10 @@ $('#dataGrid').dataGrid({
 });
 $('#btnForm').click(function() {
 	var categoryCode = $('#categoryCode').val();
-	if (categoryCode == '') {
-		js.showMessage('${text("请先选择栏目")}');
-		return false;
-	}
+	// if (categoryCode == '') {
+	// 	js.showMessage('${text("请先选择栏目")}');
+	// 	return false;
+	// }
 	var $this = $(this), title = $this.attr('title');
 	js.addTabPage($this, title, '${ctx}/cms/article/form?category.categoryCode='+categoryCode);
 	return true;
