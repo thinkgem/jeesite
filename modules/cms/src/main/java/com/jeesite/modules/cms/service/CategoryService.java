@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.cms.service;
 
+import com.jeesite.common.config.Global;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.cms.dao.CategoryDao;
 import com.jeesite.modules.cms.entity.Article;
@@ -134,6 +135,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		if (articleIndexService == null) {
 			return text("您好，系统未安装全文检索模块");
 		}
+		Global.assertDemoMode();
 		return articleIndexService.rebuild(new Article(category));
 	}
 
@@ -145,6 +147,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		if (articleVectorStore == null) {
 			return text("您好，系统未配置向量数据库");
 		}
+		Global.assertDemoMode();
 		return articleVectorStore.rebuild(new Article(category));
 	}
 
