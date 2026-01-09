@@ -118,6 +118,12 @@
   }));
 
   const inputFormSchemas: FormSchema<${ClassName}>[] = [
+    {
+      label: t('基本信息'),
+      field: 'basicInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
   <% if(table.isTreeEntity){ %>
     {
       label: t('上级${functionNameSimple}'),
@@ -148,6 +154,14 @@ for (c in table.columnList){
       }
     }
   %>
+  <% if(c.attrName == 'remarks'){ %>
+    {
+      label: t('其它信息'),
+      field: 'otherInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+  <% } %>
     {
       label: t('${c.columnLabel}'),
       field: '${c.attrName}',
@@ -345,6 +359,11 @@ for (c in table.columnList){
   for (child in table.childList){ %>
     {
       label: t('${child.comments}'),
+      field: '${@StringUtils.uncap(child.classNameSimple)}Info',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
+    {
       field: '${@StringUtils.uncap(child.classNameSimple)}List',
       component: 'Input',
       colProps: { md: 24, lg: 24 },
@@ -353,6 +372,12 @@ for (c in table.columnList){
   <%
   }
   if(false && toBoolean(table.optionMap['isBpmForm'])){ %>
+    {
+      label: t('流程信息'),
+      field: 'bpmInfo',
+      component: 'FormGroup',
+      colProps: { md: 24, lg: 24 },
+    },
     {
       label: t('审批意见'),
       field: 'bpm.comment',
