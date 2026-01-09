@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.cms.service;
 
+import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.cms.dao.SiteDao;
@@ -120,6 +121,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 		if (articleIndexService == null) {
 			return text("您好，系统未安装全文检索模块");
 		}
+		Global.assertDemoMode();
 		return articleIndexService.rebuild(new Article(new Category(site)));
 	}
 	
