@@ -926,6 +926,17 @@ UE.parse.register('video',function(utils){
         },function(){
             var ckplayerInit = function(idx) {
                 var $this = $(this), src = $this.attr('src');
+				if (!src || src == '') {
+					src = $this.find('source').attr('src');
+					var width = $this.attr('width');
+					if(!width || width == 'auto'){
+						$this.attr('width', $this.parent().width());
+					}
+					var height = $this.attr('height');
+					if(!height || width == 'auto'){
+						$this.attr('height', $this.parent().width()/2);
+					}
+				}
                 $this.attr('id', 'video_element'+idx);
                 if ($('#video_container'+idx).length <= 0){
                     $('#video_element'+idx).before('<div id="video_container'+idx+'" style="width:'
