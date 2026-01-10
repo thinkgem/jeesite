@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 测试数据Entity
+ * 测试数据 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */

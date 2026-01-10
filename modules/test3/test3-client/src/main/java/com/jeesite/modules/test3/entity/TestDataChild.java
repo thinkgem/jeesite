@@ -20,7 +20,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
- * 测试数据Entity
+ * 测试数据 Entity
  * @author ThinkGem
  * @version 2021-06-22
  */
