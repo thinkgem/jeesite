@@ -15,13 +15,13 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
-
 import javax.validation.constraints.Size;
+
 import java.util.Date;
 import java.util.List;
 
 /**
- * 测试数据Entity
+ * 测试数据 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */
@@ -46,7 +46,7 @@ import java.util.List;
 				@Column(name="user_code", label="用户编码", isPK=true),
 				@Column(name="user_name", label="用户名称", isQuery=false),
 		}),
-		@JoinTable(type=Type.LEFT_JOIN, entity= Office.class, attrName="testOffice", alias="u11",
+		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="testOffice", alias="u11",
 			on="u11.office_code = a.test_office_code", columns={
 				@Column(name="office_code", label="机构编码", isPK=true),
 				@Column(name="office_name", label="机构名称", isQuery=false),
@@ -93,7 +93,7 @@ public class TestData extends DataEntity<TestData> {
 	public void setTestInput(String testInput) {
 		this.testInput = testInput;
 	}
-
+	
 	@ExcelField(title="多行文本", words=100, align=ExcelField.Align.LEFT, sort=10)
 	@Size(min=0, max=200, message="多行文本长度不能超过 200 个字符")
 	public String getTestTextarea() {

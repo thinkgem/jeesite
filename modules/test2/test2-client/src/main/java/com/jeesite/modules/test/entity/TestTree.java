@@ -4,17 +4,17 @@
  */
 package com.jeesite.modules.test.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
- * 测试树表Entity
+ * 测试树表 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */

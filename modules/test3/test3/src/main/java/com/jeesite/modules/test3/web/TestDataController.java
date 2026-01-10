@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 测试数据Controller
+ * 测试数据 Controller
  * @author ThinkGem
  * @version 2021-06-22
  */

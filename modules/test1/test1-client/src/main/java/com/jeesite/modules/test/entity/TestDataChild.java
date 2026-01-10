@@ -5,6 +5,7 @@
 package com.jeesite.modules.test.entity;
 
 import javax.validation.constraints.Size;
+
 import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
@@ -18,7 +19,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
- * 测试数据Entity
+ * 测试数据 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */

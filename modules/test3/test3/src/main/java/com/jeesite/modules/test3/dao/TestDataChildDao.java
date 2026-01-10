@@ -9,7 +9,7 @@ import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.test3.entity.TestDataChild;
 
 /**
- * 测试数据DAO接口
+ * 测试数据 DAO 接口
  * @author ThinkGem
  * @version 2021-06-22
  */
