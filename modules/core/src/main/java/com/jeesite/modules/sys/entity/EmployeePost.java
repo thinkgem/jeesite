@@ -12,7 +12,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 import java.io.Serial;
 
 /**
- * 员工岗位Entity
+ * 员工岗位 Entity
  * @author ThinkGem
  * @version 2017-03-25
  */

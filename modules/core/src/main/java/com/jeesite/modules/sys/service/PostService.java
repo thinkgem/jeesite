@@ -12,7 +12,7 @@ import com.jeesite.modules.sys.entity.PostRole;
 import java.util.List;
 
 /**
- * 岗位管理Service
+ * 岗位管理 Service
  * @author ThinkGem
  * @version 2017-03-25
  */

@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.Area;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 行政区划DAO接口
+ * 行政区划 DAO 接口
  * @author ThinkGem
  * @version 2017-03-22
  */

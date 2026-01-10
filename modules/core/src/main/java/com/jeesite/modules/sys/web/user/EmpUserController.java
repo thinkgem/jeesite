@@ -47,7 +47,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 员工用户Controller
+ * 员工用户 Controller
  * @author ThinkGem
  * @version 2017-03-26
  */

@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 模块管理Controller
+ * 模块管理 Controller
  * @author ThinkGem
  * @version 2020-3-21
  */

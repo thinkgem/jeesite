@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 公共标签Controller
+ * 公共标签 Controller
  * @author ThinkGem
  * @version 2020-5-7
  */

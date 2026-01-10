@@ -20,8 +20,8 @@ import java.io.Serial;
 import java.util.List;
 
 /**
- * 站点表Entity
- * @author 长春叭哥、ThinkGem
+ * 站点表 Entity
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2025-12-22
  */
 @Table(name = "${_prefix}cms_site", alias = "a", columns = {

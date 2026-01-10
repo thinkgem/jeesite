@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * 模板管理
- * @author 长春叭哥、ThinkGem
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2025-12-22
  */
 @Controller

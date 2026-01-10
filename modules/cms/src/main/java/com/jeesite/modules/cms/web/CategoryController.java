@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 栏目表Controller
- * @author 长春叭哥、ThinkGem
+ * 栏目表 Controller
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2023-4-10
  */
 @Controller

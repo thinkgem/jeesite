@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 字典分类管理Controller
+ * 字典分类管理 Controller
  * @author ThinkGem
  * @version 2019-3-24
  */

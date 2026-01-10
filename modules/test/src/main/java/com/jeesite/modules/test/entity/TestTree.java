@@ -16,7 +16,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import java.io.Serial;
 
 /**
- * 测试树表Entity
+ * 测试树表 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */

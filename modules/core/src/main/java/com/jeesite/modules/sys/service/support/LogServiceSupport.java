@@ -17,7 +17,7 @@ import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.service.LogService;
 
 /**
- * 日志Service
+ * 日志 Service
  * @author ThinkGem
  * @version 2014-05-16
  */

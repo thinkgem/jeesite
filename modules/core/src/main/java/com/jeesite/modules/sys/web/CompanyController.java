@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 公司管理Controller
+ * 公司管理 Controller
  * @author ThinkGem
  * @version 2014-8-19
  */

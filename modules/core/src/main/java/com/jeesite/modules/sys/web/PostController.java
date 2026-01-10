@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 岗位管理Controller
+ * 岗位管理 Controller
  * @author ThinkGem
  * @version 2017-03-25
  */

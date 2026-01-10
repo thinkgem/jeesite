@@ -31,8 +31,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * 文章表Controller
- * @author 长春叭哥、ThinkGem
+ * 文章表 Controller
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2020-7-24
  */
 @Controller

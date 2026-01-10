@@ -24,7 +24,7 @@ import java.io.Serial;
 import java.util.List;
 
 /**
- * 公司管理Entity
+ * 公司管理 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */

@@ -9,7 +9,7 @@ import com.jeesite.common.service.api.CrudServiceApi;
 import com.jeesite.modules.sys.entity.Log;
 
 /**
- * 日志Service
+ * 日志 Service
  * @author ThinkGem
  * @version 2014-05-16
  */

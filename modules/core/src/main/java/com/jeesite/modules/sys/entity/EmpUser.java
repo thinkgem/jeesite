@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 import java.io.Serial;
 
 /**
- * 员工用户管理Entity
+ * 员工用户管理 Entity
  * @author ThinkGem
  * @version 2017-03-25
  */

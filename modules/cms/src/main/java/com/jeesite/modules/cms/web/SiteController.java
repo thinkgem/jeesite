@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 
 /**
- * 站点表Controller
- * @author 长春叭哥、ThinkGem
+ * 站点表 Controller
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2023-4-10
  */
 @Controller

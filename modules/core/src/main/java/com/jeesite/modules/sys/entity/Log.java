@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * 操作日志Entity
+ * 操作日志 Entity
  * @author ThinkGem
  * @version 2017-03-19
  */

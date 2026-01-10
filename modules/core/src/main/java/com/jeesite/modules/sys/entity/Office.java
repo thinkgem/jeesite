@@ -25,7 +25,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serial;
 
 /**
- * 组织机构Entity
+ * 组织机构 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */

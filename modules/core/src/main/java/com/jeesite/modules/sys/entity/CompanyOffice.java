@@ -12,7 +12,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 import java.io.Serial;
 
 /**
- * 公司机构Entity
+ * 公司机构 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */

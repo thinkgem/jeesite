@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 内部消息Controller
+ * 内部消息 Controller
  * @author ThinkGem
  * @version 2019-03-12
  */

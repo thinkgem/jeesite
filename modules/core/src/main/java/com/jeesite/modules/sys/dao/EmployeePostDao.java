@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.EmployeePost;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 员工岗位DAO接口
+ * 员工岗位 DAO 接口
  * @author ThinkGem
  * @version 2017-03-25
  */

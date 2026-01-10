@@ -13,7 +13,7 @@ import com.jeesite.modules.app.entity.AppUpgrade;
 import com.jeesite.modules.app.dao.AppUpgradeDao;
 
 /**
- * APP版本管理Service
+ * APP版本管理 Service
  * @author ThinkGem
  * @version 2021-04-09
  */

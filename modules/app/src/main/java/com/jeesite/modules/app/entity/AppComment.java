@@ -16,7 +16,7 @@ import java.io.Serial;
 import java.util.Date;
 
 /**
- * APP意见反馈Entity
+ * APP意见反馈 Entity
  * @author ThinkGem
  * @version 2021-04-09
  */

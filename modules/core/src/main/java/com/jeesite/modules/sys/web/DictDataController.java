@@ -32,7 +32,7 @@ import java.util.Map;
 
 
 /**
- * 字典管理Controller
+ * 字典管理 Controller
  * @author ThinkGem
  * @version 2019-07-27
  */

@@ -15,7 +15,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serial;
 
 /**
- * 附属机构Entity
+ * 附属机构 Entity
  * @author ThinkGem
  * @version 2019-04-29
  */

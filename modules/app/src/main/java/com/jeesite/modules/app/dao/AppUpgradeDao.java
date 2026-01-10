@@ -9,7 +9,7 @@ import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.app.entity.AppUpgrade;
 
 /**
- * APP版本管理DAO接口
+ * APP版本管理 DAO 接口
  * @author ThinkGem
  * @version 2021-04-09
  */

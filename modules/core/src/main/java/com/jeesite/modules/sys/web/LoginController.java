@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 登录Controller
+ * 登录 Controller
  * @author ThinkGem
  * @version 2020-9-19
  */

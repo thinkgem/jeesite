@@ -9,7 +9,7 @@ import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.app.entity.AppComment;
 
 /**
- * APP意见反馈DAO接口
+ * APP意见反馈 DAO 接口
  * @author ThinkGem
  * @version 2021-04-09
  */

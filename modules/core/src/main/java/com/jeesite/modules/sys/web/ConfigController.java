@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
- * 参数设置Controller
+ * 参数设置 Controller
  * @author ThinkGem
  * @version 2019-07-31
  */

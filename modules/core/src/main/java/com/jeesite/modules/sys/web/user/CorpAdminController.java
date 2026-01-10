@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 租户和系统管理员Controller
+ * 租户和系统管理员 Controller
  * @author ThinkGem
  * @version 2017-03-26
  */

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 日志Controller
+ * 日志 Controller
  * @author ThinkGem
  * @version 2013-6-2
  */

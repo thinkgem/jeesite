@@ -46,7 +46,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
- * ${functionName}Service
+ * ${functionName} Service
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

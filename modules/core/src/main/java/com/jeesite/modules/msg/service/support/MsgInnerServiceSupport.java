@@ -33,7 +33,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 内部消息Service
+ * 内部消息 Service
  * @author ThinkGem
  * @version 2019-03-12
  */

@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
- * 机构Service
+ * 机构 Service
  * @author ThinkGem
  * @version 2016-4-23
  */

@@ -24,8 +24,8 @@ import java.io.Serial;
 import java.util.Date;
 
 /**
- * 文章表Entity
- * @author 长春叭哥、ThinkGem
+ * 文章表 Entity
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
 @Table(name = "${_prefix}cms_article", alias = "a", columns = {

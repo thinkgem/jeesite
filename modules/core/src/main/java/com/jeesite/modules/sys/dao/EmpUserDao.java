@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import java.util.List;
 
 /**
- * 员工管理DAO接口
+ * 员工管理 DAO 接口
  * @author ThinkGem
  * @version 2017-03-25
  */

@@ -42,7 +42,7 @@ import jakarta.validation.ConstraintViolationException;
 <% } %>
 
 /**
- * ${functionName}Service
+ * ${functionName} Service
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

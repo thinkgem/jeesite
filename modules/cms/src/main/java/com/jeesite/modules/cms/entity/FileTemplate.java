@@ -20,8 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
- * CMS模块-模版文件实体
- * @author 长春叭哥、ThinkGem
+ * CMS 模版文件实体
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2025-12-22
  */
 public class FileTemplate implements Comparable<FileTemplate>, Serializable {

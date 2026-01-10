@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * 二级管理员Controller
+ * 二级管理员 Controller
  * @author ThinkGem
  * @version 2017-12-12
  */

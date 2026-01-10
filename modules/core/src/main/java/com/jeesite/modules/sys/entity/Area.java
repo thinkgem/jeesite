@@ -16,7 +16,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import java.io.Serial;
 
 /**
- * 行政区划Entity
+ * 行政区划 Entity
  * @author ThinkGem
  * @version 2017-03-22
  */

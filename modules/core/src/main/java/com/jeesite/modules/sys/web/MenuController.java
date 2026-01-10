@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 菜单管理Controller
+ * 菜单管理 Controller
  * @author ThinkGem
  * @version 2019-8-19
  */

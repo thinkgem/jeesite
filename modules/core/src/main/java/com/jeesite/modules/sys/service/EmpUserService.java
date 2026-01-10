@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
- * 员工管理Service
+ * 员工管理 Service
  * @author ThinkGem
  * @version 2017-03-25
  */

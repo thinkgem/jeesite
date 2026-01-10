@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 机构Controller
+ * 机构 Controller
  * @author ThinkGem
  * @version 2014-8-19
  */

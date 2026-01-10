@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serial;
 
 /**
- * 业务分类Entity
+ * 业务分类 Entity
  * @author ThinkGem
  * @version 2019-08-12
  */

@@ -21,7 +21,7 @@ import ${packageName}.${moduleName}.dao${subModuleNameDot}.${@StringUtils.cap(ch
 <% } %>
 
 /**
- * ${functionName}Service
+ * ${functionName} Service
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

@@ -22,7 +22,7 @@ import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 
 /**
- * 测试数据Entity
+ * 测试数据 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */

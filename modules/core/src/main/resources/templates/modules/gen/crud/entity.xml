@@ -38,7 +38,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import java.io.Serial;
 
 /**
- * ${functionName}Entity
+ * ${functionName} Entity
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
