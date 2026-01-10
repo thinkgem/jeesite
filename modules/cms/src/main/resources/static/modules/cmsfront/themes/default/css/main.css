@@ -1,16 +1,16 @@
 body{padding-top:50px;font-size:15px;background:#f7f8f9;font-family:Arial, sans-serif;}
-body>.navbar{-webkit-transition:background-color .3s ease-in;transition:background-color .3s ease-in}
+body>.container>.navbar{-webkit-transition:background-color .3s ease-in;transition:background-color .3s ease-in}
 @media (min-width:768px){
-	body>.navbar-transparent{background-color:transparent}
-	body>.navbar-transparent .navbar-nav>.open>a{background-color:transparent!important}
+	body>.container>.navbar-transparent{background-color:transparent}
+	body>.container>.navbar-transparent .navbar-nav>.open>a{background-color:transparent!important}
 }
 h1,.h1{font-size:26px}
 h2,.h2{font-size:24px}
 h3,.h3{font-size:22px}
 p{margin:5px 0 10px;line-height:1.75;}
-#home{padding-top:0}
-#home .navbar-brand{padding:13.5px 15px 12.5px}
-#home .navbar-brand>img{display:inline;margin:0 10px;height:100%}
+.container{padding-top:0}
+.container .navbar-brand{padding:13.5px 15px 12.5px}
+.container .navbar-brand>img{display:inline;margin:0 10px;height:100%}
 #banner{min-height:300px;border-bottom:none}
 .table-of-contents{margin-top:1em}
 .page-header h1{font-size:4em}
