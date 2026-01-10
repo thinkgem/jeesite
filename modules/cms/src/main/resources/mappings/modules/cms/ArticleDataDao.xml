@@ -3,7 +3,7 @@
 <mapper namespace="com.jeesite.modules.cms.dao.ArticleDataDao">
 	
 	<!-- 查询数据
-	<select id="findList" resultType="CmsArticleData">
+	<select id="findList" resultType="ArticleData">
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
 		<where>

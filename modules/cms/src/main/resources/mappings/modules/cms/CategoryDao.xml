@@ -3,7 +3,7 @@
 <mapper namespace="com.jeesite.modules.cms.dao.CategoryDao">
 	
 	<!-- 查询数据
-	<select id="findList" resultType="CmsCategory">
+	<select id="findList" resultType="Category">
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
 		<where>
