@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
 /**
- * 网站搜索Controller
+ * 网站搜索 Controller
  * @author ThinkGem
  * @version 2020-7-24
  */
