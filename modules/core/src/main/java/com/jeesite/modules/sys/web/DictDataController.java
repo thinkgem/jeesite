@@ -15,6 +15,8 @@ import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.service.DictDataService;
 import com.jeesite.modules.sys.service.DictTypeService;
 import com.jeesite.modules.sys.utils.DictUtils;
+import springfox.documentation.annotations.ApiIgnore;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -24,21 +26,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
 
 /**
- * 字典管理Controller
+ * 字典管理 Controller
  * @author ThinkGem
  * @version 2019-07-27
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/dictData")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @ApiIgnore
 public class DictDataController extends BaseController {
 

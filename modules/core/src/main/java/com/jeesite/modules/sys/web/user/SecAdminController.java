@@ -13,6 +13,8 @@ import com.jeesite.modules.sys.entity.UserDataScope;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 二级管理员Controller
+ * 二级管理员 Controller
  * @author ThinkGem
  * @version 2017-12-12
  */

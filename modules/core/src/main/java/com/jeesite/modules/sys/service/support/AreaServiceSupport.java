@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 行政区划Service
+ * 行政区划 Service
  * @author ThinkGem
  * @version 2014-8-19
  */

@@ -10,7 +10,7 @@ import com.jeesite.modules.biz.entity.BizCategory;
 import java.util.List;
 
 /**
- * 业务分类Service
+ * 业务分类 Service
  * @author ThinkGem
  * @version 2019-08-12
  */

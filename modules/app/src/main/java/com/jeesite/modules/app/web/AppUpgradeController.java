@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * APP版本管理Controller
+ * APP版本管理 Controller
  * @author ThinkGem
  * @version 2021-04-09
  */

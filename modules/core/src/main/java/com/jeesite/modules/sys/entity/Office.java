@@ -17,14 +17,13 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
 /**
- * 组织机构Entity
+ * 组织机构 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */

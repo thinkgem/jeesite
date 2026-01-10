@@ -34,7 +34,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 文章Service
+ * 文章 Service
  * @author ThinkGem
  * @version 2025-10-12
  */

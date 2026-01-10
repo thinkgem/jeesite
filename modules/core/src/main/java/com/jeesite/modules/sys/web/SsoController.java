@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 单点登录Controller
+ * 单点登录 Controller
  * @author ThinkGem
  * @version 2020-9-19
  */

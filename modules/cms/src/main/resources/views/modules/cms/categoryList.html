@@ -117,9 +117,6 @@ $('#dataGrid').dataGrid({
 				//# if(hasPermi('cms:category:rebuildIndex')){
 				actions.push('<a href="${ctx}/cms/category/rebuildIndex?categoryCode='+row.categoryCode+'" class="btnList" title="${text("重建该栏目索引")}" data-confirm="${text("确认重建该栏目文章索引吗")}？"><i class="fa fa-crosshairs"></i></a>&nbsp;');
 				//# }
-				//# if(hasPermi('cms:category:rebuildVectorStore')){
-				actions.push('<a href="${ctx}/cms/category/rebuildVectorStore?categoryCode='+row.categoryCode+'" class="btnList" title="${text("重建该栏目向量数据库")}" data-confirm="${text("确认重建该栏目文章向量数据库吗")}？"><i class="fa fa-database"></i></a>&nbsp;');
-				//# }
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctxFront}/list-'+row.categoryCode+'" target="_blank" title="${text("访问栏目")}"><i class="fa fa-globe"></i></a>&nbsp;');
 				}

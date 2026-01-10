@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 岗位管理Service
+ * 岗位管理 Service
  * @author ThinkGem
  * @version 2017-03-25
  */

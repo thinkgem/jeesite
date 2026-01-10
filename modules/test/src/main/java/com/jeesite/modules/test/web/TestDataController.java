@@ -11,6 +11,8 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestDataChild;
 import com.jeesite.modules.test.service.TestDataService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 测试数据Controller
+ * 测试数据 Controller
  * @author ThinkGem
  * @version 2018-04-22
  */

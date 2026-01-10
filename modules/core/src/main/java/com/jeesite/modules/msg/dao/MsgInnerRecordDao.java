@@ -10,7 +10,7 @@ import com.jeesite.modules.msg.entity.MsgInnerRecord;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 内部消息发送记录表DAO接口
+ * 内部消息发送记录表 DAO 接口
  * @author ThinkGem
  * @version 2019-03-12
  */

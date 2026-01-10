@@ -13,6 +13,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.biz.entity.BizCategory;
 import com.jeesite.modules.biz.service.BizCategoryService;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 业务分类Controller
+ * 业务分类 Controller
  * @author ThinkGem
  * @version 2019-08-12
  */

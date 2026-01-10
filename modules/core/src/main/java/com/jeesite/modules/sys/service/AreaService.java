@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.Area;
 import java.util.List;
 
 /**
- * 行政区划Service
+ * 行政区划 Service
  * @author ThinkGem
  * @version 2014-8-19
  */

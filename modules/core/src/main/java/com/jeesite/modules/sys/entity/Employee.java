@@ -17,11 +17,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 员工管理Entity
+ * 员工管理 Entity
  * @author ThinkGem
  * @version 2017-03-25
  */

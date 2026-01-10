@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import ${packageName}.${moduleName}.entity${subModuleNameDot}.${ClassName};
 
 /**
- * ${functionName}DAO接口
+ * ${functionName} DAO 接口
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

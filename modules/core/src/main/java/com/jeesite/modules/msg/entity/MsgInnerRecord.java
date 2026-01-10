@@ -17,7 +17,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
- * 内部消息发送记录表Entity
+ * 内部消息发送记录表 Entity
  * @author ThinkGem
  * @version 2019-03-12
  */

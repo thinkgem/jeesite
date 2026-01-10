@@ -4,16 +4,16 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
+import javax.validation.constraints.Size;
+
 /**
- * 文章详情表Entity
- * @author 长春叭哥、ThinkGem
+ * 文章详情表 Entity
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
 @Table(name = "${_prefix}cms_article_data", alias = "a", columns = {

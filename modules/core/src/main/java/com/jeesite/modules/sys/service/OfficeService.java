@@ -12,7 +12,7 @@ import com.jeesite.common.service.api.TreeServiceApi;
 import com.jeesite.modules.sys.entity.Office;
 
 /**
- * 机构Service
+ * 机构 Service
  * @author ThinkGem
  * @version 2016-4-23
  */

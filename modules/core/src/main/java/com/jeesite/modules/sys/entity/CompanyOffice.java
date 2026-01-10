@@ -10,7 +10,7 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
 /**
- * 公司机构Entity
+ * 公司机构 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */

@@ -15,7 +15,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
- * APP版本管理Entity
+ * APP版本管理 Entity
  * @author ThinkGem
  * @version 2021-04-09
  */

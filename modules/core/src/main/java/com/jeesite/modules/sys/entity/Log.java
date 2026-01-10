@@ -18,11 +18,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import java.util.Date;
 import java.util.Map;
 
 /**
- * 操作日志Entity
+ * 操作日志 Entity
  * @author ThinkGem
  * @version 2017-03-19
  */
@@ -254,7 +255,7 @@ public class Log extends DataEntity<Log> {
 			if (params.length() != 0) {
 				params.append("&");
 			}
-			params.append(param.getKey() + "=");
+			params.append(param.getKey()).append("=");
 			if (StringUtils.endsWithIgnoreCase(param.getKey(), "password")){
 				params.append("*");
 			}else if (param.getValue() != null) {
@@ -279,7 +280,7 @@ public class Log extends DataEntity<Log> {
 		if (paramsMap == null){
 			return null;
 		}
-        String[] values = (String[])paramsMap.get(name);
+        String[] values = paramsMap.get(name);
         return values != null && values.length > 0 ? values[0] : null;
     }
 

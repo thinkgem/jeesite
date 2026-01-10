@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.Log;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 日志DAO接口
+ * 日志 DAO 接口
  * @author ThinkGem
  * @version 2017-03-19
  */

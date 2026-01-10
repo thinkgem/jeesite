@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.PostRole;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 岗位角色DAO接口
+ * 岗位角色 DAO 接口
  * @author ThinkGem
  * @version 2023-6-8
  */

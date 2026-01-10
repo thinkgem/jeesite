@@ -42,7 +42,7 @@ import ${packageName}.${moduleName}.entity${subModuleNameDot}.${@StringUtils.cap
 import ${packageName}.${moduleName}.service${subModuleNameDot}.${ClassName}Service;
 
 /**
- * ${functionName}Controller
+ * ${functionName} Controller
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

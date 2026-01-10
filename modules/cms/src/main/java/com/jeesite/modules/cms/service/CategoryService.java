@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 栏目Service
+ * 栏目 Service
  * @author ThinkGem
  * @version 2025-10-12
  */

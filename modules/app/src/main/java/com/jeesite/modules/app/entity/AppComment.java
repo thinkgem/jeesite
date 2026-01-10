@@ -9,13 +9,13 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 /**
- * APP意见反馈Entity
+ * APP意见反馈 Entity
  * @author ThinkGem
  * @version 2021-04-09
  */

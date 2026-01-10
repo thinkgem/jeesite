@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 内部消息Service
+ * 内部消息 Service
  * @author ThinkGem
  * @version 2019-03-12
  */

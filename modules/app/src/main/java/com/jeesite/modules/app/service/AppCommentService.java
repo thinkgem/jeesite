@@ -14,7 +14,7 @@ import com.jeesite.modules.app.dao.AppCommentDao;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 
 /**
- * APP意见反馈Service
+ * APP意见反馈 Service
  * @author ThinkGem
  * @version 2021-04-09
  */

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 演示实例Controller
+ * 演示实例 Controller
  * @author ThinkGem
  * @version 2018-03-24
  */

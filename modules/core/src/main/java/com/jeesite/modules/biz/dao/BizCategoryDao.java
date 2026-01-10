@@ -9,7 +9,7 @@ import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.biz.entity.BizCategory;
 
 /**
- * 业务分类DAO接口
+ * 业务分类 DAO 接口
  * @author ThinkGem
  * @version 2019-08-12
  */

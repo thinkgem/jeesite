@@ -26,6 +26,8 @@ import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -38,15 +40,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 员工用户Controller
+ * 员工用户 Controller
  * @author ThinkGem
  * @version 2017-03-26
  */

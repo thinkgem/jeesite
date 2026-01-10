@@ -15,6 +15,8 @@ import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.AreaUtils;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -25,13 +27,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 区域Controller
+ * 区域 Controller
  * @author ThinkGem
  * @version 2014-8-19
  */

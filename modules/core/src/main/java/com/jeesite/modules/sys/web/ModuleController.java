@@ -14,6 +14,9 @@ import com.jeesite.modules.gen.utils.GenModuleUtils;
 import com.jeesite.modules.gen.utils.GenUtils;
 import com.jeesite.modules.sys.entity.Module;
 import com.jeesite.modules.sys.service.ModuleService;
+import springfox.documentation.annotations.ApiIgnore;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -23,17 +26,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 模块管理Controller
+ * 模块管理 Controller
  * @author ThinkGem
  * @version 2020-3-21
  */

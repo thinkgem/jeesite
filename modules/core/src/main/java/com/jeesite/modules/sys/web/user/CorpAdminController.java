@@ -18,6 +18,8 @@ import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -26,13 +28,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 租户和系统管理员Controller
+ * 租户和系统管理员 Controller
  * @author ThinkGem
  * @version 2017-03-26
  */

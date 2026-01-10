@@ -36,7 +36,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 <% } %>
 
 /**
- * ${functionName}Entity
+ * ${functionName} Entity
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

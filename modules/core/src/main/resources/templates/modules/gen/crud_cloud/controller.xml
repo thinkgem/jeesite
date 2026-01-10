@@ -59,7 +59,7 @@ import ${packageName}.${moduleName}.service${subModuleNameDot}.${ClassName}Servi
 import org.apache.seata.spring.annotation.GlobalTransactional;
 
 /**
- * ${functionName}Controller
+ * ${functionName} Controller
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

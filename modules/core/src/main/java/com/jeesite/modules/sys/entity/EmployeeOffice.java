@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import javax.validation.constraints.Size;
 
 /**
- * 附属机构Entity
+ * 附属机构 Entity
  * @author ThinkGem
  * @version 2019-04-29
  */

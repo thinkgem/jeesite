@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.Office;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 组织机构DAO接口
+ * 组织机构 DAO 接口
  * @author ThinkGem
  * @version 2017-03-23
  */

@@ -15,7 +15,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- * 业务分类Entity
+ * 业务分类 Entity
  * @author ThinkGem
  * @version 2019-08-12
  */

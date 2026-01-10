@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.Post;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 岗位管理DAO接口
+ * 岗位管理 DAO 接口
  * @author ThinkGem
  * @version 2017-03-25
  */

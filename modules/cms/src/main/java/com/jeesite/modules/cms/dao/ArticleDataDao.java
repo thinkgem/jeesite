@@ -9,8 +9,8 @@ import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.cms.entity.ArticleData;
 
 /**
- * 文章详情表DAO接口
- * @author 长春叭哥、ThinkGem
+ * 文章详情表 DAO 接口
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
 @MyBatisDao

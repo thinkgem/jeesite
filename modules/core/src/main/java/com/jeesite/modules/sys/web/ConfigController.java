@@ -24,14 +24,15 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
- * 参数设置Controller
+ * 参数设置 Controller
  * @author ThinkGem
  * @version 2019-07-31
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/config")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @ApiIgnore
 public class ConfigController extends BaseController {
 

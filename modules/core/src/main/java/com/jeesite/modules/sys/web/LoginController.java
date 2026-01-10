@@ -19,6 +19,8 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -30,13 +32,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 登录Controller
+ * 登录 Controller
  * @author ThinkGem
  * @version 2020-9-19
  */

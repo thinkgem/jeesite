@@ -16,11 +16,12 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import java.util.List;
 
 /**
- * 栏目表Entity
- * @author 长春叭哥、ThinkGem
+ * 栏目表 Entity
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2023-4-10
  */
 @Table(name = "${_prefix}cms_category", alias = "a", columns = {

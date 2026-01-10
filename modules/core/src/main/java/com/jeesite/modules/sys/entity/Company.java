@@ -19,10 +19,11 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import java.util.List;
 
 /**
- * 公司管理Entity
+ * 公司管理 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */

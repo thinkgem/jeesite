@@ -42,7 +42,7 @@ import javax.validation.ConstraintViolationException;
 <% } %>
 
 /**
- * ${functionName}Service
+ * ${functionName} Service
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */

@@ -14,6 +14,8 @@ import com.jeesite.modules.sys.entity.Post;
 import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.service.PostService;
 import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -24,13 +26,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 岗位管理Controller
+ * 岗位管理 Controller
  * @author ThinkGem
  * @version 2017-03-25
  */

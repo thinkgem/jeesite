@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
- * 初始化CMS表及数据
+ * 初始化 CMS 表及数据
  * @author ThinkGem
  * @version 2020-5-26
  */

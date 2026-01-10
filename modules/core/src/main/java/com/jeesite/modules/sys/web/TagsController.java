@@ -6,16 +6,15 @@ package com.jeesite.modules.sys.web;
 
 import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.http.ServletUtils;
+import springfox.documentation.annotations.ApiIgnore;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import springfox.documentation.annotations.ApiIgnore;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
- * 公共标签Controller
+ * 公共标签 Controller
  * @author ThinkGem
  * @version 2020-5-7
  */

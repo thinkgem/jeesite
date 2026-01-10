@@ -16,6 +16,9 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import springfox.documentation.annotations.ApiIgnore;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -23,21 +26,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import springfox.documentation.annotations.ApiIgnore;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * 用户Controller
+ * 用户 Controller
  * @author ThinkGem
  * @version 2017-3-21
  */
 @Controller
-@ApiIgnore
 @RequestMapping(value = "${adminPath}/sys/user")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
+@ApiIgnore
 public class UserController extends BaseController {
 
 	private final UserService userService;

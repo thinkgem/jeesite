@@ -18,11 +18,10 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.CompanyType;
 import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.Valid;
 
 /**
- * 员工用户管理Entity
+ * 员工用户管理 Entity
  * @author ThinkGem
  * @version 2017-03-25
  */

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 公司管理Service
+ * 公司管理 Service
  * @author ThinkGem
  * @version 2016-4-23
  */

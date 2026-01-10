@@ -10,7 +10,7 @@ import com.jeesite.modules.sys.entity.Employee;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * 员工管理DAO接口
+ * 员工管理 DAO 接口
  * @author ThinkGem
  * @version 2017-03-25
  * 通过 user.getRefObj() 获取引用对象时，需要给 \@MyBatisDao 指定引用 entity 类型。

@@ -17,6 +17,7 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.FileTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.DictUtils;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -27,14 +28,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 栏目表Controller
- * @author 长春叭哥、ThinkGem
+ * 栏目表 Controller
+ * @author ThinkGem、长春叭哥、一往无前
  * @version 2023-4-10
  */
 @Controller

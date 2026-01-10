@@ -10,8 +10,9 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
+
 /**
- * 岗位角色Entity
+ * 岗位角色 Entity
  * @author ThinkGem
  * @version 2023-6-8
  */
