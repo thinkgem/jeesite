@@ -1,0 +1,183 @@
+/**
+ * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ */
+package com.jeesite.modules.cmsfront.web;
+
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.entity.ArticleData;
+import com.jeesite.modules.cms.entity.Category;
+import com.jeesite.modules.cms.entity.Site;
+import com.jeesite.modules.cms.service.ArticleService;
+import com.jeesite.modules.cms.utils.CmsUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * 网站内容查看 Controller
+ * @author ThinkGem、长春八哥、一往无前
+ * @version 2026-01-10
+ */
+@Controller
+@RequestMapping(value = "${frontPath}")
+public class FrontViewController extends BaseController {
+
+	private final ArticleService articleService;
+
+	public FrontViewController(ArticleService articleService) {
+		this.articleService = articleService;
+	}
+
+	/**
+	 * 显示内容
+	 */
+	@RequestMapping(value = { "view-{categoryCode}-{contentId}", "view-{categoryCode}-{contentId}.html" })
+	public String view(@PathVariable String categoryCode, @PathVariable String contentId, Model model,
+			HttpServletRequest request) {
+
+		// 获取栏目信息
+		Category category = CmsUtils.getCategory(categoryCode);
+		if (category == null || !Category.STATUS_NORMAL.equals(category.getStatus())) {
+			Site site = CmsUtils.getSite(Site.MAIN_SITE_CODE);
+			model.addAttribute("site", site);
+			return "error/404";
+		}
+
+		// 文章模型
+		if ("article".equals(category.getModuleType())) {
+
+			/*// 获取当前级别的栏目列表
+			List<Category> categoryList = ListUtils.newArrayList();
+//			if (category.getIsRoot()){
+//				categoryList.add(category);
+//			}else{
+//				categoryList = categoryService.findListByParentCode(category.getParentCode(), category.getSite().getId());
+				categoryList = CmsUtils.getCategoryList(category.getSite().getSiteCode(), category.getParentCode(), -1, null);
+//			}
+			model.addAttribute("categoryList", categoryList);*/
+
+			// 获取文章
+			Article article = null;
+			// 设置内容ID，则获取文章内容
+			if (StringUtils.isNotBlank(contentId)) {
+				article = articleService.get(new Article(contentId));
+			}
+
+			// 如果没有设置内容ID则获取栏目里的第一篇文章
+			else {
+				Page<Article> page = new Page<>(1, 1, -1);
+				Article entity = new Article(category);
+				entity.setPage(page);
+				page = articleService.findPage(entity);
+				if (!page.getList().isEmpty()) {
+					article = page.getList().get(0);
+					article.setArticleData(articleService.get(new ArticleData(article.getId())));
+				}
+			}
+
+			// 如果没有取到文章，则抛到404页面
+			if (article == null || !Article.STATUS_NORMAL.equals(article.getStatus())) {
+				return "error/404";
+			}
+
+			// 如果设置了外部链接，则跳转到指定链接
+			if (StringUtils.isNotBlank(article.getHref())) {
+				String ctxPath = Global.getCtxPath();
+				if (article.getHref().startsWith(ctxPath)) {
+					article.setHref(article.getHref().replaceFirst(ctxPath, StringUtils.EMPTY));
+				}
+				return REDIRECT + article.getHref();
+			}
+
+			model.addAttribute("article", article);
+
+			// 获取文章归属栏目的全信息
+			article.setCategory(CmsUtils.getCategory(article.getCategory().getId()));
+			model.addAttribute("category", article.getCategory());
+
+			// 获取栏目所在站点全信息
+			Site site = CmsUtils.getSite(category.getSite().getId());
+			model.addAttribute("site", site);
+
+			// 获取推荐文章列表
+			List<Object[]> relationList = articleService.findByIds(article.getArticleData().getRelation());
+			model.addAttribute("relationList", relationList);
+
+			// 将数据信息传递到视图
+			CmsUtils.addViewConfigAttribute(model, article.getCategory());
+			CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
+			return "modules/cmsfront/themes/" + site.getTheme() + "/" + CmsUtils.getArticleView(article);
+		}
+		return "error/404";
+	}
+
+	/**
+	 * 获取文章读取次数并加一
+	 */
+	@RequestMapping(value = { "article-hits-{articleId}" })
+	@ResponseBody
+	public long articleHits(@PathVariable String articleId) {
+		articleService.updateHitsAddOne(articleId);
+		return articleService.getHits(articleId);
+	}
+
+//	/**
+//	 * 内容评论
+//	 */
+//	@RequestMapping(value = "comment-{theme}", method = RequestMethod.GET)
+//	public String comment(Comment comment, @PathVariable String theme, HttpServletRequest request, HttpServletResponse response,
+//			Model model) {
+//		Page<Comment> page = new Page<>(request, response);
+//		Comment c = new Comment();
+//		c.setCategory(comment.getCategory());
+//		c.setArticleId(comment.getArticleId());
+//		c.setStatus(Comment.STATUS_NORMAL);
+//		c.setPage(page);
+//		page = commentService.findPage(c);
+//		model.addAttribute("page", page);
+//		model.addAttribute("comment", comment);
+//		return "modules/cmsfront/themes/" + theme + "/comment";
+//	}
+//
+//	/**
+//	 * 内容评论保存
+//	 */
+//	@RequestMapping(value = "comment", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String commentSave(Comment comment, String validCode, @RequestParam(required = false) String replyId,
+//			HttpServletRequest request) {
+//		if (StringUtils.isNotBlank(validCode)) {
+//			if (ValidCodeUtils.validate(request, validCode)) {
+//				if (StringUtils.isNotBlank(replyId)) {
+//					Comment replyComment = commentService.get(replyId);
+//					if (replyComment != null) {
+//						comment.setContent("<div class=\"reply\">" + replyComment.getName() + ":<br/>"
+//								+ replyComment.getContent() + "</div>" + comment.getContent());
+//					}
+//				}
+//				comment.setIp(request.getRemoteAddr());
+//				comment.setCreateDate(new Date());
+//				Boolean isAudit = ObjectUtils.toBoolean(Global.getConfig("cms.comment.isAudit"));
+//				comment.setStatus(isAudit ? Comment.STATUS_AUDIT : Comment.STATUS_NORMAL);
+//				comment.setStatus(Comment.STATUS_AUDIT);
+//				commentService.save(comment);
+//				return renderResult("1", "提交成功" + (isAudit ? "，请等待审核" : "") + "。");
+//			} else {
+//				return renderResult("2", "验证码不正确。");
+//			}
+//		} else {
+//			return renderResult("2", "验证码不能为空。");
+//		}
+//	}
+
+}
