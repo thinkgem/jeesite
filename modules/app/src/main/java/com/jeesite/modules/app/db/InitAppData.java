@@ -45,7 +45,7 @@ public class InitAppData extends BaseInitDataTests {
 	}
 	
 	private final AppUpgradeService appUpgradeService;
-	public void initAppUpgrade() throws Exception{
+	public void initAppUpgrade() throws Exception {
 //		clearTable(AppUpgrade.class);
 		initExcelData(AppUpgrade.class, params -> {
 			String action = (String)params[0];
@@ -60,7 +60,7 @@ public class InitAppData extends BaseInitDataTests {
 	}
 	
 	private final AppCommentService appCommentService;
-	public void initAppComment() throws Exception{
+	public void initAppComment() throws Exception {
 //		clearTable(AppComment.class);
 		initExcelData(AppComment.class, params -> {
 			String action = (String)params[0];

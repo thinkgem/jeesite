@@ -81,7 +81,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 区域、行政区划表
 	 */
-	public void initArea() throws Exception{
+	public void initArea() throws Exception {
 //		clearTable(Area.class);
 		if (!checkTable(Area.class)) {
 			return;
@@ -109,7 +109,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 参数配置表
 	 */
-	public void initConfig() throws Exception{
+	public void initConfig() throws Exception {
 //		clearTable(Config.class);
 		initExcelData(Config.class, params -> {
 			String action = (String)params[0];
@@ -128,7 +128,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 系统模块表
 	 */
-	public void initModule() throws Exception{
+	public void initModule() throws Exception {
 //		clearTable(Module.class);
 		initExcelData(Module.class, params -> {
 			String action = (String)params[0];
@@ -147,7 +147,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 系统字典、用户字典表
 	 */
-	public void initDict() throws Exception{
+	public void initDict() throws Exception {
 //		clearTable(DictType.class);
 		initExcelData(DictType.class, params -> {
 			String action = (String)params[0];
@@ -178,7 +178,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 角色表
 	 */
-	public void initRole() throws Exception{
+	public void initRole() throws Exception {
 //		clearTable(Role.class);
 //		clearTable(RoleMenu.class);
 //		clearTable(RoleDataScope.class);
@@ -199,7 +199,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 菜单表
 	 */
-	public void initMenu() throws Exception{
+	public void initMenu() throws Exception {
 //		clearTable(Menu.class);
 //		clearTable(RoleMenu.class);
 		initExcelData(Menu.class, params -> {
@@ -222,7 +222,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 用户表
 	 */
-	public void initUser() throws Exception{
+	public void initUser() throws Exception {
 //		clearTable(User.class);
 //		clearTable(UserRole.class);
 //		clearTable(UserDataScope.class);
@@ -242,7 +242,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 组织机构、部门表
 	 */
-	public void initOffice() throws Exception{
+	public void initOffice() throws Exception {
 //		clearTable(Office.class);
 		initExcelData(Office.class, params -> {
 			String action = (String)params[0];
@@ -260,7 +260,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 公司表
 	 */
-	public void initCompany() throws Exception{
+	public void initCompany() throws Exception {
 //		clearTable(Company.class);
 //		clearTable(CompanyOffice.class);
 		initExcelData(Company.class, params -> {
@@ -279,7 +279,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 岗位表
 	 */
-	public void initPost() throws Exception{
+	public void initPost() throws Exception {
 //		clearTable(Post.class);
 		initExcelData(Post.class, params -> {
 			String action = (String)params[0];
@@ -297,7 +297,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 员工、用户表
 	 */
-	public void initEmpUser() throws Exception{
+	public void initEmpUser() throws Exception {
 //		clearTable(Employee.class);
 //		clearTable(EmployeePost.class);
 		initExcelData(EmpUser.class, params -> {
@@ -374,7 +374,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 业务分类表
 	 */
-	public void initBizCategory() throws Exception{
+	public void initBizCategory() throws Exception {
 //		clearTable(BizCategory.class);
 		initExcelData(BizCategory.class, params -> {
 			String action = (String)params[0];

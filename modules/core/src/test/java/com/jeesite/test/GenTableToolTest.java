@@ -34,7 +34,7 @@ public class GenTableToolTest extends BaseSpringContextTests {
 	}
 
 	@Test
-	public void execute() throws Exception{
+	public void execute() throws Exception {
 		GenTable genTable = new GenTable();
 		genTable.setIsNewRecord(true);
 		genTable.setTableName("test_data_demo"); // 表名

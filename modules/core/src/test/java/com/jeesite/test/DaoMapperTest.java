@@ -55,7 +55,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	}
 
 	@Test
-	public void testTableAnnotation() throws Exception{
+	public void testTableAnnotation() throws Exception {
 		try{
 
 			System.out.println("============ 插入测试 ============");
