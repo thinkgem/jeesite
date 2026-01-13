@@ -136,51 +136,43 @@ import java.io.Serial;
 		for(c in table.columnList){
 			if (c.attrType == 'com.jeesite.modules.sys.entity.User'){
 				var joinTable = {
-	%>
-		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
+%>		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
 			on="u${cLP.index}.user_code = a.${c.columnName}", columns={
 				@Column(name="user_code", label="用户编码", isPK=true),
 				@Column(name="user_name", label="用户名称", isQuery=false),
-		}),
-	<%
+		}),<%
 				};
-				joinTables = joinTables + joinTable;
+				joinTables = joinTables + joinTable + '\n';
 			}
 			else if (c.attrType == 'com.jeesite.modules.sys.entity.Office'){
 				var joinTable = {
-	%>
-		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
+%>		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
 			on="u${cLP.index}.office_code = a.${c.columnName}", columns={
 				@Column(name="office_code", label="机构编码", isPK=true),
 				@Column(name="office_name", label="机构名称", isQuery=false),
-		}),
-	<%
+		}),<%
 				};
-				joinTables = joinTables + joinTable;
+				joinTables = joinTables + joinTable + '\n';
 			}
 			else if (c.attrType == 'com.jeesite.modules.sys.entity.Company'){
 				var joinTable = {
-	%>
-		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
+%>		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
 			on="u${cLP.index}.company_code = a.${c.columnName}", columns={
 				@Column(name="company_code", label="公司编码", isPK=true),
 				@Column(name="company_name", label="公司名称", isQuery=false),
-		}),
-	<%
+		}),<%
 				};
-				joinTables = joinTables + joinTable;
+				joinTables = joinTables + joinTable + '\n';
 			}
 			else if (c.attrType == 'com.jeesite.modules.sys.entity.Area'){
 				var joinTable = {
-	%>
-		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
+%>		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
 			on="u${cLP.index}.area_code = a.${c.columnName}", columns={
 				@Column(name="area_code", label="区域编码", isPK=true),
 				@Column(name="area_name", label="区域名称", isQuery=false),
-		}),
-	<%
+		}),<%
 				};
-				joinTables = joinTables + joinTable;
+				joinTables = joinTables + joinTable + '\n';
 			}
 		}
 		if (isNotBlank(joinTables)){
