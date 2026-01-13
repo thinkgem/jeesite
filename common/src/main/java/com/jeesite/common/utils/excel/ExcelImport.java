@@ -348,7 +348,7 @@ public class ExcelImport implements Closeable {
 	 * @param cls 导入对象类型
 	 * @param groups 导入分组
 	 */
-	public <E> List<E> getDataList(Class<E> cls, String... groups) throws Exception{
+	public <E> List<E> getDataList(Class<E> cls, String... groups) throws Exception {
 		return getDataList(cls, false, groups);
 	}
 	
@@ -358,7 +358,7 @@ public class ExcelImport implements Closeable {
 	 * @param isThrowException 遇见错误是否抛出异常
 	 * @param groups 导入分组
 	 */
-	public <E> List<E> getDataList(Class<E> cls, final boolean isThrowException, String... groups) throws Exception{
+	public <E> List<E> getDataList(Class<E> cls, final boolean isThrowException, String... groups) throws Exception {
 		return getDataList(cls, params -> {
 			if (isThrowException){
 				Exception ex = (Exception)params[0];
@@ -376,7 +376,7 @@ public class ExcelImport implements Closeable {
 	 * @param groups 导入分组
 	 */
 	@SuppressWarnings("unchecked")
-	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws Exception{
+	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws Exception {
 		List<Object[]> annotationList = ListUtils.newArrayList();
 		// Get class annotation
 		ExcelFields cfs = cls.getAnnotation(ExcelFields.class);

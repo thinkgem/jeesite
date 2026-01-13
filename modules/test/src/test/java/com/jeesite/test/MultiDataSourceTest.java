@@ -40,7 +40,7 @@ public class MultiDataSourceTest extends BaseSpringContextTests {
 	}
 
 	@Test
-	public void testData() throws Exception{
+	public void testData() throws Exception {
 		ExecutorService pool = Executors.newCachedThreadPool();
 		CountDownLatch latch = new CountDownLatch(10);
 		Runnable runnable = () -> {

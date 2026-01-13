@@ -42,7 +42,7 @@ public class InitTestData extends BaseInitDataTests {
 	/**
 	 * 代码生成测试数据
 	 */
-	public void initGenDemoData() throws Exception{
+	public void initGenDemoData() throws Exception {
 		if (!checkTable(GenTable.class)) {
 			return;
 		}
@@ -55,7 +55,7 @@ public class InitTestData extends BaseInitDataTests {
 	/**
 	 * 代码生成测试数据
 	 */
-	private void initGenTestData() throws Exception{
+	private void initGenTestData() throws Exception {
 		GenTable genTable = new GenTable();
 		genTable.setIsNewRecord(true);
 		genTable.setTableName("test_data");
@@ -161,7 +161,7 @@ public class InitTestData extends BaseInitDataTests {
 	/**
 	 * 代码生成树表测试数据
 	 */
-	private void initGenTreeData() throws Exception{
+	private void initGenTreeData() throws Exception {
 		GenTable genTable = new GenTable();
 		genTable.setIsNewRecord(true);
 		genTable.setTableName("test_tree");

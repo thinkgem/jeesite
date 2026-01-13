@@ -20,7 +20,7 @@ import com.jeesite.modules.FastApplication;
 public class InitData extends BaseInitDataTests {
 	
 	@Test
-	public void initData01() throws Exception{
+	public void initData01() throws Exception {
 		logger.info("数据库初始化完成。");
 	}
 

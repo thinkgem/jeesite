@@ -52,7 +52,7 @@ public class InitCmsData extends BaseInitDataTests {
 	}
 
 	private final SiteService siteService;
-	public void initSite() throws Exception{
+	public void initSite() throws Exception {
 		initExcelData(Site.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
@@ -66,7 +66,7 @@ public class InitCmsData extends BaseInitDataTests {
 	}
 	
 	private final CategoryService categoryService;
-	public void initCategory() throws Exception{
+	public void initCategory() throws Exception {
 		initExcelData(Category.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
@@ -80,7 +80,7 @@ public class InitCmsData extends BaseInitDataTests {
 	}
 	
 	private final ArticleDao articleDao;
-	public void initArticle() throws Exception{
+	public void initArticle() throws Exception {
 		initExcelData(Article.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
@@ -94,7 +94,7 @@ public class InitCmsData extends BaseInitDataTests {
 	}
 	
 	private final ArticleDataDao articleDataDao;
-	public void initArticleData() throws Exception{
+	public void initArticleData() throws Exception {
 		initExcelData(ArticleData.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){

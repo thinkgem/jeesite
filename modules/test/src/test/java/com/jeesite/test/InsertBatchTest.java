@@ -32,7 +32,7 @@ public class InsertBatchTest extends BaseSpringContextTests {
 	}
 
 	@Test
-	public void testData1() throws Exception{
+	public void testData1() throws Exception {
 		List<TestData> list = ListUtils.newArrayList();
 		for(int i=0; i<5000; i++){
 			TestData testData = new TestData();
