@@ -7,7 +7,7 @@
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-module-ai-parent</artifactId>
 		<version>5.15.1.springboot3-SNAPSHOT</version>
-		<relativePath>../../parent/ai/pom.xml</relativePath>
+		<relativePath>../../modules/ai/ai-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>jeesite-web-ai-mcp</artifactId>
