@@ -56,7 +56,7 @@ if (toBoolean(p.multiple)){
 
 // 转换为字符串数组
 if (p.multiple == 'true' && type.name(p.value) == 'String'){
-	// p.value = @ObjectUtils.toString(p.value); 一定是字符串，无需转换
+	// p.value = toString(p.value); 一定是字符串，无需转换
 	p.value = @StringUtils.split(p.value, ',');
 }
 
@@ -85,13 +85,13 @@ var body = {
 		%><option value="${p.blankOptionValue}">${p.blankOptionLabel}</option><%
 	}
 	for (var item in p.items){
-		var iv = @ObjectUtils.toString(invokeGetter(item, p.itemValue));
-		var il = @ObjectUtils.toString(invokeGetter(item, p.itemLabel));
+		var iv = toString(invokeGetter(item, p.itemValue));
+		var il = toString(invokeGetter(item, p.itemLabel));
 		var attr = '';
 		if (p.multiple == 'true'){
 			attr = attr + (@StringUtils.inString(iv, p.value) ? ' selected' : '');
 		}else{
-			attr = attr + (@ObjectUtils.toString(p.value) == iv ? ' selected' : '');
+			attr = attr + (toString(p.value) == iv ? ' selected' : '');
 		}
 		if (type.name(item) == 'DictData'){
 			if (!item['isRoot']) {
@@ -114,7 +114,7 @@ var body = {
 			}
 		}
 		if (isNotBlank(p.itemStatus) && isNotBlank(item[p.itemStatus])){
-			attr = attr + (@ObjectUtils.toString(item[p.itemStatus]) != '0' ? ' disabled' : '');
+			attr = attr + (toString(item[p.itemStatus]) != '0' ? ' disabled' : '');
 		}
 		%><option value="${iv}"${attr}>${il}</option><%
 	}

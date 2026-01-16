@@ -122,7 +122,7 @@ public class ${ClassName}Controller extends BaseController {
 		}
 	  }
 	};
-	where = @StringUtils.trim(@ObjectUtils.toString(where));
+	where = @StringUtils.trim(toString(where));
 	if (isNotBlank(where)){ %>
 		if (${@StringUtils.substring(where, 3)}){
 			${className}.setParentCode(null);
