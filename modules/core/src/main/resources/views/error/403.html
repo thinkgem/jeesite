@@ -1,7 +1,7 @@
 <%/* Copyright (c) 2013-Now https://jeesite.com All rights reserved.
    * No deletion without permission, or be held responsible to law. */
 
-var message = toString(@request.getAttribute("message"));
+var message = toString(global("message"));
 
 if (isBlank(message)){
 	var ex = @ExceptionUtils.getThrowable(request);
