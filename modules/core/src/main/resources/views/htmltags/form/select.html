@@ -85,8 +85,8 @@ var body = {
 		%><option value="${p.blankOptionValue}">${p.blankOptionLabel}</option><%
 	}
 	for (var item in p.items){
-		var iv = @ObjectUtils.toString(@ReflectUtils.invokeGetter(item, p.itemValue));
-		var il = @ObjectUtils.toString(@ReflectUtils.invokeGetter(item, p.itemLabel));
+		var iv = @ObjectUtils.toString(invokeGetter(item, p.itemValue));
+		var il = @ObjectUtils.toString(invokeGetter(item, p.itemLabel));
 		var attr = '';
 		if (p.multiple == 'true'){
 			attr = attr + (@StringUtils.inString(iv, p.value) ? ' selected' : '');

@@ -1,6 +1,5 @@
 <%/* Copyright (c) 2013-Now https://jeesite.com All rights reserved.
    * No deletion without permission, or be held responsible to law. */
-@servlet.getResponse().setStatus(responseStatus!404);
 
 var requestUri = @request.getAttribute('jakarta.servlet.forward.request_uri');
 var message = @ObjectUtils.toString(@request.getAttribute("message"));
@@ -10,9 +9,9 @@ if (isBlank(message)){
 }
 
 // 如果是异步请求或是手机端，则直接返回信息
-if (@ServletUtils.isAjaxRequest(request)) {
+if (isAjaxRequest(request)) {
 	var data = { requestUri: requestUri };
-	print(@ServletUtils.renderResult(@Global.FALSE, message, data));
+	print(renderResult(@Global.FALSE, message, data));
 }
 
 // 输出异常信息页面
