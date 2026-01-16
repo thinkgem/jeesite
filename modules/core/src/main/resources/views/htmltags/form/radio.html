@@ -58,7 +58,7 @@ var body = {
 	}
 	var checked, title;
 	for (var item in p.items){
-		checked = (@ObjectUtils.toString(p.value) == item[p.itemValue] ? ' checked' : '');
+		checked = (toString(p.value) == item[p.itemValue] ? ' checked' : '');
 		if (type.name(item) == 'DictData'){
 			if (!item['isRoot']) {
 				continue;

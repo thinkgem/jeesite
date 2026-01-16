@@ -2,7 +2,7 @@
    * No deletion without permission, or be held responsible to law. */
 
 var requestUri = @request.getAttribute('jakarta.servlet.forward.request_uri');
-var message = @ObjectUtils.toString(@request.getAttribute("message"));
+var message = toString(@request.getAttribute("message"));
 
 if (isBlank(message)){
 	message = text('sys.error.404.message');

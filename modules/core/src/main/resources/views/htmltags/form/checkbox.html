@@ -49,7 +49,7 @@ if (isNotBlank(p.label)){
 
 // 如果不是字符串，则转换为字符串
 if (type.name(p.value) != 'String'){
-	p.value = @ObjectUtils.toString(p.value);
+	p.value = toString(p.value);
 }
 
 // 转换为字符串数组
