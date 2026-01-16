@@ -21,7 +21,7 @@ if (tag != null) {
 		if (isNotEmpty(p.path)){
 			p.name = p.path;
 			if (isNotEmpty(model)){
-				p.value = @ReflectUtils.invokeGetter(model, p.name);
+				p.value = invokeGetter(model, p.name);
 				if (toBoolean(xss!false) && type.name(p.value) == 'String'){
 					p.value = @EncodeUtils.xssFilter(p.value);
 				}else if (toBoolean(encodeHtml!false) && type.name(p.value) == 'String'){
@@ -32,7 +32,7 @@ if (tag != null) {
 		if (isNotEmpty(p.labelPath)){
 			p.labelName = p.labelPath;
 			if (isNotEmpty(model)){
-				p.labelValue = @ReflectUtils.invokeGetter(model, p.labelName);
+				p.labelValue = invokeGetter(model, p.labelName);
 				if (toBoolean(xss!false) && type.name(p.value) == 'String'){
 					p.labelValue = @EncodeUtils.xssFilter(p.labelValue);
 				}if (toBoolean(encodeHtml!false) && type.name(p.value) == 'String'){

@@ -268,7 +268,7 @@ var p = {
 		<script>
 			$(function(){
 				var extendMapDataList = [];
-				$.each("#{toJson(@ReflectUtils.invokeGetter(model, p.pathPrefix + '.extendMap'), '[]')}", function(key, value){
+				$.each("#{toJson(invokeGetter(model, p.pathPrefix + '.extendMap'), '[]')}", function(key, value){
 					extendMapDataList.push({ extendMapKey: key, extendMapValue: value });
 				});
 				$('#extendMapGrid').dataGrid({
