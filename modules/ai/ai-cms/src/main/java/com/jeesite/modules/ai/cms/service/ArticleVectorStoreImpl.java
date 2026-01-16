@@ -11,11 +11,12 @@ import com.jeesite.common.io.IOUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.utils.PageUtils;
+import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.common.web.http.HttpClientUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
-import com.jeesite.modules.cms.utils.CmsUtils;
 import com.vladsch.flexmark.html.renderer.LinkType;
 import com.vladsch.flexmark.html.renderer.ResolvedLink;
 import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter;
@@ -55,6 +56,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final VectorStore vectorStore;
+	private ArticleService articleService;
 
 	public ArticleVectorStoreImpl(ObjectProvider<VectorStore> vectorStore) {
 		this.vectorStore = vectorStore.getIfAvailable();
@@ -203,8 +205,11 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 		long start = System.currentTimeMillis();
 		try{
 			article.setIsQueryArticleData(true); // 查询文章内容
+			if (articleService == null) {
+				articleService = SpringUtils.getBean(ArticleService.class);
+			}
 			PageUtils.findList(article, null, e -> {
-				List<Article> list = CmsUtils.getArticleService().findList((Article) e);
+				List<Article> list = articleService.findList((Article) e);
 				if (!list.isEmpty()) {
 					list.forEach(this::save);
 					return true;

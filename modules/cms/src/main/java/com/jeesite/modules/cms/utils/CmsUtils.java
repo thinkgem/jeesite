@@ -455,26 +455,27 @@ public class CmsUtils {
 		}
 	}
 
-	/**
-	 * 获取站点服务
-	 */
-	public static SiteService getSiteService() {
-		return Static.siteService;
-	}
-
-	/**
-	 * 获取栏目服务
-	 */
-	public static CategoryService getCategoryService() {
-		return Static.categoryService;
-	}
-
-	/**
-	 * 获取文章服务
-	 */
-	public static ArticleService getArticleService() {
-		return Static.articleService;
-	}
+//	取消 CmsUtils 的 getSiteService、getCategoryService、getArticleService 方法，避免 html 视图直接调用
+//	/**
+//	 * 获取站点服务
+//	 */
+//	public static SiteService getSiteService() {
+//		return Static.siteService;
+//	}
+//
+//	/**
+//	 * 获取栏目服务
+//	 */
+//	public static CategoryService getCategoryService() {
+//		return Static.categoryService;
+//	}
+//
+//	/**
+//	 * 获取文章服务
+//	 */
+//	public static ArticleService getArticleService() {
+//		return Static.articleService;
+//	}
 
 	/**
 	 * 获取缓存值
