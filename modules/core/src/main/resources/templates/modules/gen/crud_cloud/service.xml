@@ -54,12 +54,16 @@ import org.apache.seata.spring.annotation.GlobalTransactional;
 @RestController
 public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Service<${ClassName}Dao, ${ClassName}>
 		implements ${ClassName}ServiceApi {
-	<% for (child in table.childList){ %>
-	
-	private final ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+	<% if (table.childList.~size > 0) { %>
 
-	public ${ClassName}Service(${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao) {
+	<% for (child in table.childList){ %>
+	private final ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+	<% } %>
+
+	public ${ClassName}Service(<% for (child in table.childList){ if(childLP.index!=1){print(', ');} %>${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao<% } %>) {
+		<% for (child in table.childList){ %>
 		this.${@StringUtils.uncap(child.className)}Dao = ${@StringUtils.uncap(child.className)}Dao;
+		<% } %>
 	}
 	<% } %>
 	
