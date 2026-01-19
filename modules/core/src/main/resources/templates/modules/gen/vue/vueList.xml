@@ -40,7 +40,7 @@
           <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
-      <template #firstColumn="{ record }">
+      <template #firstColumn="{ record, text, value }">
 <%
 var idParam = '';
 for(pk in table.pkList){
@@ -61,23 +61,11 @@ if(table.isTreeEntity){
         </a>
 <%
 }else{
-  for(c in table.columnList){ 
-    if(c.isList == "1"){
-      // 如果是树结构的字段，则自动忽略
-      if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
-        'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
-          && c.attrName != table.treeViewCodeAttrName
-          && c.attrName != table.treeViewNameAttrName){
-        continue;
-      }
 %>
-        <a @click="handleForm({ ${idParam} })" :title="record.${c.attrName}">
-          {{ record.${c.attrName} }}
+        <a @click="handleForm({ ${idParam} })" :title="value">
+          {{ text }}
         </a>
 <%
-      break;
-    }
-  }
 }
 %>
       </template>
