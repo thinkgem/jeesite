@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class MoneyType implements FieldType {
 	
-	private NumberFormat nf = new DecimalFormat(",##0.00");
+	private final NumberFormat nf = new DecimalFormat(",##0.00");
 
 	/**
 	 * 获取对象值（导入）
