@@ -150,6 +150,9 @@ public class DictDataController extends BaseController {
 		if (dictData.getTreeSort() == null){
 			dictData.setTreeSort(DictData.DEFAULT_TREE_SORT);
 		}
+		if (StringUtils.isBlank(dictData.getIsSys())){
+			dictData.setIsSys(Global.YES);
+		}
 		return dictData;
 	}
 

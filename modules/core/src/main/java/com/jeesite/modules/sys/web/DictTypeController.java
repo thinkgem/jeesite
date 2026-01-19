@@ -163,15 +163,13 @@ public class DictTypeController extends BaseController {
 
 	/**
 	 * 获取树结构数据。
-	 * @param dictType 字典类型
 	 * @param excludeCode 排除的ID
 	 * @param isShowCode 是否显示值（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 */
 	@RequiresPermissions("sys:dictType:view")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String dictType, String excludeCode,
-			@RequestParam(defaultValue="1") String isShowCode) {
+	public List<Map<String, Object>> treeData(String excludeCode, @RequestParam(defaultValue="1") String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		List<DictType> list = dictTypeService.findList(new DictType());
 		for (int i=0; i<list.size(); i++){
