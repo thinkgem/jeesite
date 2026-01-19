@@ -12,16 +12,16 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.service.DictTypeService;
-import springfox.documentation.annotations.ApiIgnore;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -163,15 +163,13 @@ public class DictTypeController extends BaseController {
 
 	/**
 	 * 获取树结构数据。
-	 * @param dictType 字典类型
 	 * @param excludeCode 排除的ID
 	 * @param isShowCode 是否显示值（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 */
 	@RequiresPermissions("sys:dictType:view")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String dictType, String excludeCode,
-			@RequestParam(defaultValue="1") String isShowCode) {
+	public List<Map<String, Object>> treeData(String excludeCode, @RequestParam(defaultValue="1") String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		List<DictType> list = dictTypeService.findList(new DictType());
 		for (int i=0; i<list.size(); i++){

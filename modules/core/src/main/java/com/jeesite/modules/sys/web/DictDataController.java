@@ -15,8 +15,6 @@ import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.service.DictDataService;
 import com.jeesite.modules.sys.service.DictTypeService;
 import com.jeesite.modules.sys.utils.DictUtils;
-import springfox.documentation.annotations.ApiIgnore;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -149,6 +149,9 @@ public class DictDataController extends BaseController {
 		// 以下设置表单默认数据
 		if (dictData.getTreeSort() == null){
 			dictData.setTreeSort(DictData.DEFAULT_TREE_SORT);
+		}
+		if (StringUtils.isBlank(dictData.getIsSys())){
+			dictData.setIsSys(Global.YES);
 		}
 		return dictData;
 	}
