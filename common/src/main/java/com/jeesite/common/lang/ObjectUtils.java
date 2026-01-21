@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 
 /**
  * 对象操作工具类，继承 org.apache.commons.lang3.ObjectUtils 类
@@ -30,6 +31,20 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	static {
 		String[] ver = StringUtils.split(System.getProperty("java.version"), StringUtils.DOT);
 		isJavaSerialize = ver.length > 0 && Integer.parseInt(ver[0]) > 1;
+	}
+
+	/**
+	 * 转换为 BigDecimal 类型
+	 */
+	public static BigDecimal toBigDecimal(Object val) {
+		if (val == null) {
+			return null;
+		}
+		try {
+			return new BigDecimal(val.toString().trim());
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 
 	/**
