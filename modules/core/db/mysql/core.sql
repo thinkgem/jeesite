@@ -515,6 +515,8 @@ CREATE TABLE js_sys_module
 	module_name varchar(100) NOT NULL COMMENT '模块名称',
 	description varchar(500) COMMENT '模块描述',
 	main_class_name varchar(500) COMMENT '主类全名',
+	package_name varchar(500) COMMENT '基础包名',
+	module_sort decimal(10) COMMENT '模块排序（升序）',
 	current_version varchar(50) COMMENT '当前版本',
 	upgrade_info varchar(300) COMMENT '升级信息',
 	gen_base_dir varchar(1000) COMMENT '生成基础路径',

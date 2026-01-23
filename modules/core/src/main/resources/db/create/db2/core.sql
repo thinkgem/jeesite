@@ -514,6 +514,8 @@ CREATE TABLE ${_prefix}sys_module
 	module_name varchar(100) NOT NULL,
 	description vargraphic(500),
 	main_class_name varchar(500),
+	package_name varchar(500),
+	module_sort decimal(10),
 	current_version varchar(50),
 	upgrade_info varchar(300),
 	gen_base_dir vargraphic(1000),
