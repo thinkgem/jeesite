@@ -2,7 +2,7 @@
 <!-- <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysDesktop.css?${_version}"> -->
 <div class="content pb0">
 	<div class="row">
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12 pr0">
 			<div class="info-box">
 				<span class="info-box-icon bg-aqua"><i class="fa fa-cog"></i></span>
 				<div class="info-box-content">
@@ -11,7 +11,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12 pr0">
 			<div class="info-box">
 				<span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
 				<div class="info-box-content">
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="clearfix visible-sm-block"></div>
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12 pr0">
 			<div class="info-box">
 				<span class="info-box-icon bg-green"><i class="fa fa-internet-explorer"></i></span>
 				<div class="info-box-content">
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12 pr0">
 			<div class="info-box">
 				<span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
 
@@ -386,21 +386,23 @@
 <script>
 var chartTheme = $('html').hasClass('skin-dark') > 0 ? 'dark' : 'light';
 $(function(){
-	$(window).resize(function(){
-		var footerHeight = $('.main-footer').outerHeight() || 0;
-		var windowHeight = $(window).height();
-		$('.content').css('min-height', windowHeight - footerHeight);
-		if(myChart1) myChart1.resize();
-	}).resize();
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		$(window).resize();
-	});
-	$('.ui-sortable').sortable({
-		connectWith : '.ui-sortable',
-		handle      : '.box-header, .nav-tabs',
-		placeholder : 'sort-highlight',
-		forcePlaceholderSize: true,
-		zIndex : 999999
-	}).find('.box-header, .nav-tabs').css('cursor', 'move');
+    $(window).resize(function(){
+        var footerHeight = $('.main-footer').outerHeight() || 0;
+        var windowHeight = $(window).height();
+        $('.content').css('min-height', windowHeight - footerHeight);
+        if(myChart1) myChart1.resize();
+        if(myChart2) myChart2.resize();
+        if(myChart3) myChart3.resize();
+    }).resize();
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $(window).resize();
+    });
+    $('.ui-sortable').sortable({
+        connectWith : '.ui-sortable',
+        handle      : '.box-header, .nav-tabs',
+        placeholder : 'sort-highlight',
+        forcePlaceholderSize: true,
+        zIndex : 999999
+    }).find('.box-header, .nav-tabs').css('cursor', 'move');
 });
 </script>
