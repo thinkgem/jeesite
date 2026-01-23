@@ -12,7 +12,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.Module;
 import com.jeesite.modules.sys.service.MenuService;
-import com.jeesite.modules.sys.service.ModuleService;
+import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,11 +42,9 @@ import java.util.Map;
 public class MenuController extends BaseController {
 
 	private final MenuService menuService;
-	private final ModuleService moduleService;
 
-	public MenuController(MenuService menuService, ModuleService moduleService) {
+	public MenuController(MenuService menuService) {
 		this.menuService = menuService;
-		this.moduleService = moduleService;
 	}
 
 	@ModelAttribute
@@ -100,10 +98,7 @@ public class MenuController extends BaseController {
 		// 创建并初始化下一个节点信息
 		menu = createNextNode(menu);
 		model.addAttribute("menu", menu);
-		// 获取所有模块列表
-		Module module = new Module();
-		List<Module> moduleList = moduleService.findList(module);
-		model.addAttribute("moduleList", moduleList);
+		model.addAttribute("moduleList", ModuleUtils.getModuleList().values());
 		return "modules/sys/menuForm";
 	}
 	

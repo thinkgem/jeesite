@@ -104,6 +104,12 @@ public class ModuleController extends BaseController {
 		if (StringUtils.isBlank(module.getMainClassName())){
 			module.setMainClassName("com.jeesite.modules.sys.web.LoginController");
 		}
+		if (StringUtils.isBlank(module.getPackageName())){
+			module.setPackageName(Global.getConfig("gen.defaultPackageName", "com.jeesite.modules"));
+		}
+		if (module.getModuleSort() == null) {
+			module.setModuleSort(50);
+		}
 		if (StringUtils.isBlank(module.getCurrentVersion())) {
 			module.setCurrentVersion(SpringUtils.getLastVersion());
 		}
