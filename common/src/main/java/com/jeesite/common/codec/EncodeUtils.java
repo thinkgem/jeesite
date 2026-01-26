@@ -284,17 +284,26 @@ public class EncodeUtils {
 	public static String sqlFilter(String text, String source){
 		if (text != null){
 			String value = text;
-			if (StringUtils.inString(source, "simple", "orderBy")) {
+			// 如果仅为 AND 或 OR 则不认为是注入
+			if (StringUtils.equalsAnyIgnoreCase(StringUtils.trim(value), "AND", "OR")) {
+				return value;
+			}
+			// 简单数据 或 排序 类型的正则表达式验证
+			else if (StringUtils.inString(source, "simple", "orderBy")) {
 				Matcher matcher = simplePattern.matcher(value);
 				if (!matcher.matches()) {
 					value = StringUtils.EMPTY;
 				}
-			} else if (StringUtils.inString(source, "columnName")) {
+			}
+			// 数据表字段列 类型的正则表达式验证
+			else if (StringUtils.inString(source, "columnName")) {
 				Matcher matcher = columnNamePattern.matcher(value);
 				if (!matcher.matches()) {
 					value = StringUtils.EMPTY;
 				}
-			} else {
+			}
+			// 其它 类型的正则表达式验证
+			else {
 				Matcher matcher = sqlPattern.matcher(value);
 				if (matcher.find()) {
 					value = matcher.replaceAll(StringUtils.EMPTY);
