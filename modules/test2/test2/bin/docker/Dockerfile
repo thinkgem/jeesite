@@ -1,4 +1,4 @@
-FROM docker.m.daocloud.io/openjdk:8
+FROM docker.1ms.run/openjdk:8
 LABEL maintainer="ThinkGem@163.com"
 ENV TZ "Asia/Shanghai"
 ENV LANG C.UTF-8
