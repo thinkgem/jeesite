@@ -17,7 +17,7 @@ x-common-env: &common-env
 
 # ==================== Service Base ====================
 x-service-base: &service-base
-  image: docker.m.daocloud.io/eclipse-temurin:17
+  image: docker.1ms.run/eclipse-temurin:17
   environment: *common-env
   working_dir: /app
   command: >

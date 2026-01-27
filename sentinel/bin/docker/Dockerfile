@@ -1,4 +1,4 @@
-FROM docker.m.daocloud.io/eclipse-temurin:17
+FROM docker.1ms.run/eclipse-temurin:17
 LABEL maintainer="ThinkGem@163.com"
 
 ENV TZ=Asia/Shanghai LANG=C.UTF-8 JAVA_OPTS="\
