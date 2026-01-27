@@ -108,7 +108,7 @@
 * 主框架：Spring Boot 3.5、Spring Framework 6、Apache Shiro 2、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 8、Alibaba Druid 1.2
 * 分离版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
-* 经典版：Beetl 3.10（HTML）、jQuery 3.7、Bootstrap 3.3、AdminLTE 2.4
+* 经典版：Beetl 3.20（HTML）、jQuery 3.7、Bootstrap 3.4、AdminLTE 2.4
 * 分离版：支持所有现代浏览器，如：谷歌 Chrome 87+、微软 Edge、火狐、国产浏览器 等
 * 经典版：支持 IE10 和以上版本，以及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
