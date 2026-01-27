@@ -815,6 +815,8 @@ web:
 #    favorPathExtension: false
 #    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
 #    favorParameter: true
+#    # 修改 Spring MVC 默认 format 参数名，避免 406 错误 v5.15.1
+#    favorParameterName: __format
 #    # 使用 x-ajax=json、x-ajax=xml 请求头匹配返回视图数据
 #    favorHeader: true
 

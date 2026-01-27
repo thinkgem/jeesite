@@ -53,6 +53,7 @@ public class ServletUtils {
 	// MVC 偏好设置，根据后缀、参数、Header 返回特定格式数据
 	public static final Boolean FAVOR_PATH_EXTENSION = PROPS.getPropertyToBoolean("web.view.favorPathExtension", "false");
 	public static final Boolean FAVOR_PARAMETER = PROPS.getPropertyToBoolean("web.view.favorParameter", "true");
+	public static final String FAVOR_PARAMETER_NAME = PROPS.getProperty("web.view.favorParameterName", "__format");
 	public static final Boolean FAVOR_HEADER = PROPS.getPropertyToBoolean("web.view.favorHeader", "true");
 	
 	// JSONP 支持（为兼用旧版保留，建议使用 CORS）
