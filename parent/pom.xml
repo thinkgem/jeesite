@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.8</version>
+		<version>3.5.10</version>
 		<relativePath />
 	</parent>
 
@@ -50,7 +50,7 @@
 		<atomikos.version>6.0.0</atomikos.version>
 		<druid.version>1.2.27</druid.version>
 		<shiro.version>2.0.6</shiro.version>
-		<quartz.version>2.5.0</quartz.version>
+		<quartz.version>2.5.2</quartz.version>
 		<swagger3.version>2.2.36</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
 		<logstash-logback.version>8.1</logstash-logback.version>
