@@ -8,7 +8,7 @@
 	<version>5.15.1.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>JeeSite Module Web AI</name>
+	<name>JeeSite Web AI MCP</name>
 	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
