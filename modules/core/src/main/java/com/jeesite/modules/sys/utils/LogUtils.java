@@ -123,12 +123,12 @@ public class LogUtils {
 	 */
 	public static class SaveLogThread implements Runnable{
 		
-		private Log log;
-		private Object handler;
-		private String contextPath;
-		private Throwable throwable;
-		private Object sourceData;
-		private Object targetData;
+		private final Log log;
+		private final Object handler;
+		private final String contextPath;
+		private final Throwable throwable;
+		private final Object sourceData;
+		private final Object targetData;
 		
 		public SaveLogThread(Log log, Object handler, String contextPath,
 				Throwable throwable, Object sourceData, Object targetData){
@@ -145,13 +145,20 @@ public class LogUtils {
 			// 获取日志标题
 			if (StringUtils.isBlank(log.getLogTitle())){
 				String permission = "";
-				if (handler instanceof HandlerMethod){
+
+				if (this.targetData instanceof BaseEntity<?>){
+					BaseEntity<?> baseEntity = (BaseEntity<?>)this.targetData;
+					log.setBizKey(baseEntity.getId());
+					log.setBizType(baseEntity.getClass().getSimpleName());
+				}
+
+				else if (handler instanceof HandlerMethod){
 					HandlerMethod hm = ((HandlerMethod)handler);
 					Method m = hm.getMethod();
 					// 获取权限字符串
 					RequiresPermissions rp = m.getAnnotation(RequiresPermissions.class);
 					permission = (rp != null ? StringUtils.joinComma(rp.value()) : "");
-					
+
 					// 尝试获取BaseEntity的设置的主键值
 					for (Class<?> type : m.getParameterTypes()){
 						try {
