@@ -326,6 +326,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 				if (StringUtils.isNoneBlank(begin, end)){
 					beginDate = DateUtils.parseDate(begin);
 					endDate = DateUtils.parseDate(end);
+					// 如果字符串不包含时间，则设定开始日期为 0 点 0 分 0 秒
+					if (!StringUtils.contains(begin, ":")) {
+						beginDate = DateUtils.getOfDayFirst(beginDate);
+					}
+					// 如果字符串不包含时间，则设定结束日期为 23 点 59 分 59 秒
+					if (!StringUtils.contains(end, ":")) {
+						endDate = DateUtils.getOfDayLast(endDate);
+					}
 				}
 			}
 		}
