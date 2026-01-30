@@ -99,13 +99,12 @@
         },
       },
       {
-        title: t('字段名'),
+        title: t('列名'),
         dataIndex: 'columnName',
         width: 60,
         align: 'left',
         editRow: true,
         editComponent: 'Input',
-        editComponentProps: {},
       },
       {
         title: t('条件'),
@@ -126,6 +125,8 @@
             { label: t('不等多值'), value: 'NOT_IN' },
             { label: t('包含'), value: 'LIKE' },
             { label: t('不包含'), value: 'NOT_LIKE' },
+            { label: t('在范围内'), value: 'BETWEEN' },
+            { label: t('在范围外'), value: 'NOT_BETWEEN' },
             { label: t('开始以'), value: 'RIGHT_LIKE' },
             { label: t('不开始以'), value: 'RIGHT_NOT_LIKE' },
             { label: t('结束以'), value: 'LEFT_LIKE' },
@@ -139,7 +140,7 @@
         },
       },
       {
-        title: t('值类型'),
+        title: t('类型'),
         dataIndex: 'columnType',
         width: 50,
         align: 'left',
@@ -168,7 +169,6 @@
         align: 'left',
         editRow: true,
         editComponent: 'Input',
-        editComponentProps: {},
       },
     ],
     actionColumn: {
