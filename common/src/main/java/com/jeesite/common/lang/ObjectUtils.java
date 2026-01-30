@@ -17,6 +17,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 对象操作工具类，继承 org.apache.commons.lang3.ObjectUtils 类
@@ -161,6 +165,30 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	public static String toStringIgnoreNull(final Object val, String defaultVal) {
 		String str = ObjectUtils.toString(val);
 		return !"".equals(str) && !"null".equalsIgnoreCase(str.trim()) ? str : defaultVal;
+	}
+
+	/**
+	 * 对象转 Map 类型，仅类型转换，并非 Object Mapper
+	 * @return 永不返回 null
+	 */
+	@SuppressWarnings("unchecked")
+	public static <K, V> Map<K, V> toMap(final Object val) {
+		if (val instanceof Map) {
+			return (Map<K, V>) val;
+		}
+		return new HashMap<>();
+	}
+
+	/**
+	 * 对象转 List 类型，仅类型转换，并非 Object Mapper
+	 * @return 永不返回 null
+	 */
+	@SuppressWarnings("unchecked")
+	public static <V> List<V> toList(final Object val) {
+		if (val instanceof List) {
+			return (List<V>) val;
+		}
+		return new ArrayList<>();
 	}
 
 	/**
