@@ -149,8 +149,8 @@
         editComponentProps: {
           options: [
             { label: t('字符串'), value: 'String' },
-            { label: t('整型'), value: 'Long' },
-            { label: t('长整型'), value: 'Integer' },
+            { label: t('整型'), value: 'Integer' },
+            { label: t('长整型'), value: 'Long' },
             { label: t('浮点型'), value: 'Float' },
             { label: t('双精度'), value: 'Double' },
             { label: t('大数值'), value: 'BigDecimal' },
