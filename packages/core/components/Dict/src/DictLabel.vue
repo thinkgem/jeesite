@@ -40,7 +40,7 @@
   </template>
   <template v-if="dictList.length == 0">
     <span class="jeesite-dict-label">
-      {{ props.defaultValue || t('未知') }}
+      {{ props.defaultValue ?? t('未知') }}
     </span>
   </template>
 </template>
