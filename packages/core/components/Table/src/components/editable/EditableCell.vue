@@ -549,6 +549,7 @@
         border-radius: 0;
         box-shadow: none !important;
         padding: 0 5px !important;
+        min-height: 30px;
 
         &:focus {
           border-bottom: 1px dotted #999 !important;
