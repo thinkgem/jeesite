@@ -314,6 +314,7 @@ $('#inputForm').validate({
 			js.showMessage(data.message);
 			//# if(parameter['category.showModes'] != '3'){
 			if(data.result == Global.TRUE){
+				//top.emitter.emit('bpm-todo-reload');
 				js.closeCurrentTabPage(function(contentWindow){
 					contentWindow.page();
 				});
