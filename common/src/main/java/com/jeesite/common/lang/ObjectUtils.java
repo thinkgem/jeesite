@@ -19,10 +19,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.*;
+import java.util.*;
 
 /**
  * 对象操作工具类，继承 org.apache.commons.lang3.ObjectUtils 类
@@ -178,6 +176,26 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	public static String toStringIgnoreNull(final Object val, String defaultVal) {
 		String str = ObjectUtils.toString(val);
 		return !"".equals(str) && !"null".equalsIgnoreCase(str.trim()) ? str : defaultVal;
+	}
+
+	/**
+	 * 对象转化为日期对象
+	 */
+	public static Date toDate(Object dateObj) {
+		Date value = null;
+		if (dateObj instanceof Date) {
+			value = (Date) dateObj;
+		} else if (dateObj instanceof LocalDateTime) {
+			value = Date.from(((LocalDateTime) dateObj).atZone(ZoneId.systemDefault()).toInstant());
+		} else if (dateObj instanceof LocalDate) {
+			value = Date.from(((LocalDate) dateObj).atStartOfDay(ZoneId.systemDefault()).toInstant());
+		} else if (dateObj instanceof ZonedDateTime) {
+			value = Date.from(((ZonedDateTime) dateObj).toInstant());
+		} else if (dateObj instanceof LocalTime) {
+			LocalDateTime ldt = ((LocalTime) dateObj).atDate(LocalDate.now());
+			value = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+		}
+		return value;
 	}
 
 	/**
