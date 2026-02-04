@@ -9,6 +9,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.lang.management.ManagementFactory;
 import java.text.ParsePosition;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -135,25 +136,35 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static String getWeek() {
 		return formatDate(new Date(), "E");
 	}
-	
+
+	/**
+	 * 判断类型是否为日期类型
+	 */
+	public static boolean isDateType(Class<?> rawType) {
+		return rawType == Date.class
+				|| rawType == LocalDate.class
+				|| rawType == LocalDateTime.class
+				|| rawType == ZonedDateTime.class
+				|| rawType == LocalTime.class;
+	}
+
 	/**
 	 * 日期型字符串转化为日期对象，使用默认格式集
 	 */
-	public static Date parseDate(Object str) {
-		if (str == null){
-			return null;
+	public static Date parseDate(Object dateObj) {
+		if (dateObj instanceof String) {
+			return parseDate((String) dateObj, parsePatterns);
 		}
-		String dateStr = str.toString();
-		if (StringUtils.isBlank(dateStr)){
-			return null;
-		}
-		return parseDate(dateStr, parsePatterns);
+		return null;
 	}
 
 	/**
 	 * 日期型字符串转化为日期对象，指定日期解析格式
 	 */
 	public static Date parseDate(final String str, final String... parsePatterns) {
+		if (StringUtils.isBlank(str)) {
+			return null;
+		}
 //		try {
 //			return DateUtils.parseDate(str, Locale.getDefault(), parsePatterns);
 //		} catch (ParseException e) {
