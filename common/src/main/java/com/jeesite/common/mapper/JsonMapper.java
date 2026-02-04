@@ -20,15 +20,20 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.lang.StringUtils;
 import org.apache.commons.lang3.LocaleUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
-import java.util.*;
+import java.time.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * 封装 Jackson，实现 JSON String 与 Java Object 互转
@@ -81,20 +86,21 @@ public class JsonMapper extends ObjectMapper {
 		});
 		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
 			private static final long serialVersionUID = 1L;
+			private final String[] pattern = new String[] {"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS"};
 			@Override
 			public Object findSerializer(Annotated a) {
 				if (a instanceof AnnotatedMethod) {
 					AnnotatedMethod am = (AnnotatedMethod) a;
-					if (am.getRawReturnType() == Date.class) {
+					if (DateUtils.isDateType(am.getRawReturnType())) {
 						JsonFormat jf = am.getAnnotation(JsonFormat.class);
 						if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
-							return new JeeSiteJsonSerializer(jf.pattern());
+							return new JeeSiteDateJsonSerializer(jf.pattern());
 						}
-						return new JeeSiteJsonSerializer(null);
+						return new JeeSiteDateJsonSerializer(null);
 					}
 				} else if (a instanceof AnnotatedClass) {
-					if (a.getRawType() == Date.class) {
-						return new JeeSiteJsonSerializer(null);
+					if (DateUtils.isDateType(a.getRawType())) {
+						return new JeeSiteDateJsonSerializer(null);
 					}
 				}
 				return super.findSerializer(a);
@@ -103,17 +109,17 @@ public class JsonMapper extends ObjectMapper {
 			public Object findDeserializer(Annotated a) {
 				if (a instanceof AnnotatedMethod) {
 					AnnotatedMethod am = (AnnotatedMethod) a;
-					if (am.getParameterCount() > 0 && am.getParameterType(0).getRawClass() == Date.class) {
+					if (am.getParameterCount() > 0 && DateUtils.isDateType(am.getParameterType(0).getRawClass())) {
 						AnnotatedElement m = am.getAnnotated();
 						JsonFormat jf = m.getAnnotation(JsonFormat.class);
 						if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
-							return new JeeSiteJsonDeserializer(jf.pattern());
+							return new JeeSiteDateJsonDeserializer(jf.pattern());
 						}
-						return new JeeSiteJsonDeserializer(null);
+						return new JeeSiteDateJsonDeserializer(null);
 					}
 				} else if (a instanceof AnnotatedClass) {
-					if (a.getRawType() == Date.class) {
-						return new JeeSiteJsonDeserializer(null);
+					if (DateUtils.isDateType(a.getRawType())) {
+						return new JeeSiteDateJsonDeserializer(null);
 					}
 				}
 				return super.findDeserializer(a);
@@ -122,30 +128,33 @@ public class JsonMapper extends ObjectMapper {
 		return this;
 	}
 
-	private static final String[] pattern = new String[] {"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS"};
-	private static final class JeeSiteJsonSerializer extends JsonSerializer<Date> {
+	public static final class JeeSiteDateJsonSerializer extends JsonSerializer<Object> {
 		private final String pattern;
-		private JeeSiteJsonSerializer(String pattern) {
+		public JeeSiteDateJsonSerializer(String pattern) {
 			this.pattern = pattern;
 		}
 		@Override
-		public void serialize(Date value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-			if (value != null){
+		public void serialize(Object dateObj, JsonGenerator gen, SerializerProvider provider) throws IOException {
+			Date value = ObjectUtils.toDate(dateObj);
+			if (value != null) {
 				if (StringUtils.isNotBlank(pattern)) {
 					gen.writeString(DateUtils.formatDate(value, pattern));
 				} else {
 					gen.writeString(DateUtils.formatDateTime(value));
 				}
+			} else {
+				gen.writeString("");
 			}
 		}
 	}
-	private static final class JeeSiteJsonDeserializer extends JsonDeserializer<Date> {
+
+	public static final class JeeSiteDateJsonDeserializer extends JsonDeserializer<Object> {
 		private final String pattern;
-		private JeeSiteJsonDeserializer(String pattern) {
+		public JeeSiteDateJsonDeserializer(String pattern) {
 			this.pattern = pattern;
 		}
 		@Override
-		public Date deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+		public Date deserialize(JsonParser parser, DeserializationContext ctx) throws IOException {
 			if (StringUtils.isNotBlank(pattern)) {
 				return DateUtils.parseDate(parser.getText(), pattern);
 			} else {
@@ -175,7 +184,7 @@ public class JsonMapper extends ObjectMapper {
 	public JsonMapper enabledXssFilter(){
 		this.registerModule(new SimpleModule().addDeserializer(String.class, new JsonDeserializer<String>() {
 			@Override
-			public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+			public String deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
 				String text = p.getText();
 				if (text != null) {
 					return EncodeUtils.xssFilter(text);
