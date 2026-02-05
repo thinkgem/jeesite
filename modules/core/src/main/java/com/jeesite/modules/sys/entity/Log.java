@@ -27,29 +27,29 @@ import java.util.Map;
  * @author ThinkGem
  * @version 2017-03-19
  */
-@Table(name="${_prefix}sys_log", alias="a", label="操作日志", columns={
-		@Column(includeEntity=BaseEntity.class),
-		@Column(name="id", 				attrName="id", 				label="编码", isPK=true),
-		@Column(name="log_type", 		attrName="logType", 		label="日志类型"),
-		@Column(name="log_title", 		attrName="logTitle", 		label="日志标题", queryType=QueryType.LIKE),
-		@Column(name="create_by", 		attrName="createBy", 		label="创建者", isUpdate=false),
-		@Column(name="create_by_name", 	attrName="createByName",	label="创建者名称", isUpdate=false, queryType=QueryType.LIKE),
-		@Column(name="create_date", 	attrName="createDate", 		label="创建时间", isUpdate=false, isQuery=false),
-		@Column(name="request_uri", 	attrName="requestUri", 		label="请求URI", queryType=QueryType.LIKE),
-		@Column(name="request_method", 	attrName="requestMethod", 	label="操作方式"),
-		@Column(name="request_params", 	attrName="requestParams", 	label="操作提交的数据", queryType=QueryType.LIKE),
-		@Column(name="diff_modify_data",attrName="diffModifyData", 	label="差异修改数据", queryType=QueryType.LIKE),
-		@Column(name="biz_key", 		attrName="bizKey", 			label="业务主键"),
-		@Column(name="biz_type", 		attrName="bizType", 		label="业务类型"),
-		@Column(name="remote_addr", 	attrName="remoteAddr", 		label="操作IP地址"),
-		@Column(name="server_addr", 	attrName="serverAddr", 		label="请求服务器地址"),
-		@Column(name="is_exception", 	attrName="isException", 	label="是否异常"),
-		@Column(name="exception_info", 	attrName="exceptionInfo", 	label="异常信息"),
-		@Column(name="user_agent", 		attrName="userAgent", 		label="用户代理"),
-		@Column(name="device_name", 	attrName="deviceName", 		label="设备名称/操作系统", queryType=QueryType.LIKE),
-		@Column(name="browser_name", 	attrName="browserName", 	label="浏览器名称", queryType=QueryType.LIKE),
-		@Column(name="execute_time", 	attrName="executeTime", 	label="执行时间"),
-	}, orderBy="a.create_date DESC"
+@Table(name = "${_prefix}sys_log", alias = "a", label = "操作日志", columns = {
+		@Column(includeEntity = BaseEntity.class),
+		@Column(name = "id", 			attrName = "id", 			label = "编码", isPK = true),
+		@Column(name = "log_type", 		attrName = "logType", 		label = "日志类型"),
+		@Column(name = "log_title", 	attrName = "logTitle", 		label = "日志标题", queryType = QueryType.LIKE),
+		@Column(name = "create_by", 	attrName = "createBy", 		label = "创建者", isUpdate = false),
+		@Column(name = "create_by_name", attrName = "createByName",	label = "创建者名称", isUpdate = false, queryType = QueryType.LIKE),
+		@Column(name = "create_date", 	attrName = "createDate", 	label = "创建时间", isUpdate = false, isQuery = false),
+		@Column(name = "request_uri", 	attrName = "requestUri", 	label = "请求URI", queryType = QueryType.LIKE),
+		@Column(name = "request_method", attrName = "requestMethod", label = "操作方式"),
+		@Column(name = "request_params", attrName = "requestParams", label = "操作提交的数据", queryType = QueryType.LIKE),
+		@Column(name = "diff_modify_data",attrName = "diffModifyData", label = "差异修改数据", queryType = QueryType.LIKE),
+		@Column(name = "biz_key", 		attrName = "bizKey", 		label = "业务主键"),
+		@Column(name = "biz_type", 		attrName = "bizType", 		label = "业务类型"),
+		@Column(name = "remote_addr", 	attrName = "remoteAddr", 	label = "操作IP地址"),
+		@Column(name = "server_addr", 	attrName = "serverAddr", 	label = "请求服务器地址"),
+		@Column(name = "is_exception", 	attrName = "isException", 	label = "是否异常"),
+		@Column(name = "exception_info", attrName = "exceptionInfo", label = "异常信息"),
+		@Column(name = "user_agent", 	attrName = "userAgent", 	label = "用户代理"),
+		@Column(name = "device_name", 	attrName = "deviceName", 	label = "设备名称/操作系统", queryType = QueryType.LIKE),
+		@Column(name = "browser_name", 	attrName = "browserName", 	label = "浏览器名称", queryType = QueryType.LIKE),
+		@Column(name = "execute_time", 	attrName = "executeTime", 	label = "执行时间"),
+	}, orderBy = "a.create_date DESC"
 )
 public class Log extends DataEntity<Log> {
 

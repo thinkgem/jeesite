@@ -21,15 +21,15 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Table(name="${_prefix}sys_msg_inner_record", alias="a", label="消息发送记录", columns={
-		@Column(name="id", attrName="id", label="编号", isPK=true),
-		@Column(name="msg_inner_id", attrName="msgInnerId", label="所属消息"),
-		@Column(name="receive_user_code", attrName="receiveUserCode", label="接受者用户编码"),
-		@Column(name="receive_user_name", attrName="receiveUserName", label="接受者用户姓名", queryType=QueryType.LIKE),
-		@Column(name="read_status", attrName="readStatus", label="读取状态", comment="读取状态（0未送达 1已读 2未读）"),
-		@Column(name="read_date", attrName="readDate", label="阅读时间"),
-		@Column(name="is_star", attrName="isStar", label="是否标星"),
-	}, orderBy="a.read_date ASC, a.id ASC"
+@Table(name = "${_prefix}sys_msg_inner_record", alias = "a", label = "消息发送记录", columns = {
+		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
+		@Column(name = "msg_inner_id", attrName = "msgInnerId", label = "所属消息"),
+		@Column(name = "receive_user_code", attrName = "receiveUserCode", label = "接受者用户编码"),
+		@Column(name = "receive_user_name", attrName = "receiveUserName", label = "接受者用户姓名", queryType = QueryType.LIKE),
+		@Column(name = "read_status", attrName = "readStatus", label = "读取状态", comment = "读取状态（0未送达 1已读 2未读）"),
+		@Column(name = "read_date", attrName = "readDate", label = "阅读时间"),
+		@Column(name = "is_star", attrName = "isStar", label = "是否标星"),
+	}, orderBy = "a.read_date ASC, a.id ASC"
 )
 public class MsgInnerRecord extends DataEntity<MsgInnerRecord> {
 

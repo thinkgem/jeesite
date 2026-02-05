@@ -14,23 +14,23 @@ import com.jeesite.common.mybatis.annotation.Table;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Table(name="${_prefix}sys_employee_post", alias="a", columns={
-		@Column(name="emp_code",  attrName="empCode",  label="员工编码", isPK=true),
-		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
+@Table(name = "${_prefix}sys_employee_post", alias = "a", columns = {
+		@Column(name = "emp_code",  attrName = "empCode",  label = "员工编码", isPK = true),
+		@Column(name = "post_code", attrName = "postCode", label = "岗位编码", isPK = true),
 	},
-	joinTable={
-		@JoinTable(type=JoinTable.Type.LEFT_JOIN, entity=Post.class, alias="p", lazy = true,
-			on="a.post_code = p.post_code", attrName="post",
-			columns={
-				@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
-				@Column(name="post_name", attrName="postName", label="岗位名称"),
+	joinTable = {
+		@JoinTable(type=JoinTable.Type.LEFT_JOIN, entity=Post.class, alias = "p", lazy = true,
+			on = "a.post_code = p.post_code", attrName = "post",
+			columns = {
+				@Column(name = "post_code", attrName = "postCode", label = "岗位编码", isPK = true),
+				@Column(name = "post_name", attrName = "postName", label = "岗位名称"),
 			}),
-		@JoinTable(type=JoinTable.Type.JOIN, entity=User.class, alias="u", lazy = true,
-			on="a.emp_code = u.ref_code AND u.user_type='employee'", attrName="this",
-			columns={
-				@Column(name="user_code", attrName="userCode", label="用户编码", isPK=true),
+		@JoinTable(type=JoinTable.Type.JOIN, entity=User.class, alias = "u", lazy = true,
+			on = "a.emp_code = u.ref_code AND u.user_type='employee'", attrName = "this",
+			columns = {
+				@Column(name = "user_code", attrName = "userCode", label = "用户编码", isPK = true),
 			})
-	}, orderBy=""
+	}, orderBy = ""
 )
 public class EmployeePost extends DataEntity<EmployeePost> {
 	

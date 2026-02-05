@@ -26,28 +26,28 @@ import java.util.stream.Collectors;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Table(name="${_prefix}sys_employee", alias="a", label="员工信息", columns={
-		@Column(includeEntity=BaseEntity.class),
-		@Column(includeEntity=DataEntity.class),
-		@Column(name="emp_code", 	attrName="empCode", 			label="员工编码", isPK=true),
-		@Column(name="emp_no", 		attrName="empNo", 				label="员工工号"),
-		@Column(name="emp_name", 	attrName="empName", 			label="员工姓名", queryType=QueryType.LIKE),
-		@Column(name="emp_name_en", attrName="empNameEn", 			label="英文名", queryType=QueryType.LIKE),
-		@Column(name="office_code", attrName="office.officeCode", 	label="机构编码", isQuery=false),
-		@Column(name="office_name", attrName="office.officeName", 	label="机构名称", isQuery=false),
-		@Column(name="company_code", attrName="company.companyCode", label="公司编码", isQuery=false),
-		@Column(name="company_name", attrName="company.companyName", label="公司名称", isQuery=false),
-	}, joinTable={
-		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
-			on="o.office_code = a.office_code",
-			columns={@Column(includeEntity=Office.class)}),
-		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
-			on="c.company_code = a.company_code",
-			columns={@Column(includeEntity=Company.class)}),
-		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
-			on="ar.area_code = c.area_code", attrName="company.area",
-			columns={@Column(includeEntity=Area.class)}),
-	}, orderBy="a.update_date DESC"
+@Table(name = "${_prefix}sys_employee", alias = "a", label = "员工信息", columns = {
+		@Column(includeEntity = BaseEntity.class),
+		@Column(includeEntity = DataEntity.class),
+		@Column(name = "emp_code", attrName = "empCode", label = "员工编码", isPK = true),
+		@Column(name = "emp_no", attrName = "empNo", label = "员工工号"),
+		@Column(name = "emp_name", attrName = "empName", label = "员工姓名", queryType = QueryType.LIKE),
+		@Column(name = "emp_name_en", attrName = "empNameEn", label = "英文名", queryType = QueryType.LIKE),
+		@Column(name = "office_code", attrName = "office.officeCode", label = "机构编码", isQuery = false),
+		@Column(name = "office_name", attrName = "office.officeName", label = "机构名称", isQuery = false),
+		@Column(name = "company_code", attrName = "company.companyCode", label = "公司编码", isQuery = false),
+		@Column(name = "company_name", attrName = "company.companyName", label = "公司名称", isQuery = false),
+	}, joinTable = {
+		@JoinTable(type = Type.LEFT_JOIN, entity = Office.class, alias = "o", 
+			on = "o.office_code = a.office_code",
+			columns = {@Column(includeEntity = Office.class)}),
+		@JoinTable(type = Type.LEFT_JOIN, entity = Company.class, alias = "c", 
+			on = "c.company_code = a.company_code",
+			columns = {@Column(includeEntity=Company.class)}),
+		@JoinTable(type = Type.LEFT_JOIN, entity = Area.class, alias = "ar",
+			on = "ar.area_code = c.area_code", attrName = "company.area",
+			columns = {@Column(includeEntity = Area.class)}),
+	}, orderBy = "a.update_date DESC"
 )
 public class Employee extends DataEntity<Employee> {
 	

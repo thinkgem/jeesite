@@ -15,15 +15,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Table(name="${_prefix}sys_post", alias="a", label="岗位信息", columns={
-		@Column(includeEntity=BaseEntity.class),
-		@Column(includeEntity=DataEntity.class),
-		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
-		@Column(name="view_code", attrName="viewCode", label="岗位代码"),
-		@Column(name="post_name", attrName="postName", label="岗位名称"),
-		@Column(name="post_type", attrName="postType", label="岗位分类", comment="岗位分类（高管、中层、基层）"),
-		@Column(name="post_sort", attrName="postSort", label="岗位排序", comment="岗位排序（升序）"),
-	}, orderBy="a.post_sort ASC"
+@Table(name = "${_prefix}sys_post", alias = "a", label = "岗位信息", columns = {
+		@Column(includeEntity = BaseEntity.class),
+		@Column(includeEntity = DataEntity.class),
+		@Column(name = "post_code", attrName = "postCode", label = "岗位编码", isPK = true),
+		@Column(name = "view_code", attrName = "viewCode", label = "岗位代码"),
+		@Column(name = "post_name", attrName = "postName", label = "岗位名称"),
+		@Column(name = "post_type", attrName = "postType", label = "岗位分类", comment = "岗位分类（高管、中层、基层）"),
+		@Column(name = "post_sort", attrName = "postSort", label = "岗位排序", comment = "岗位排序（升序）"),
+	}, orderBy = "a.post_sort ASC"
 )
 public class Post extends DataEntity<Post> {
 	

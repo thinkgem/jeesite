@@ -14,10 +14,10 @@ import com.jeesite.common.mybatis.annotation.Table;
  * @author ThinkGem
  * @version 2017-03-23
  */
-@Table(name="${_prefix}sys_company_office", alias="a", columns={
-		@Column(name="company_code", attrName="companyCode", label="公司编码", isPK=true),
-		@Column(name="office_code",  attrName="officeCode",  label="机构编码", isPK=true),
-	}, orderBy=""
+@Table(name = "${_prefix}sys_company_office", alias = "a", columns = {
+		@Column(name = "company_code", attrName = "companyCode", label = "公司编码", isPK = true),
+		@Column(name = "office_code",  attrName = "officeCode",  label = "机构编码", isPK = true),
+	}, orderBy = ""
 )
 public class CompanyOffice extends DataEntity<CompanyOffice> {
 	
