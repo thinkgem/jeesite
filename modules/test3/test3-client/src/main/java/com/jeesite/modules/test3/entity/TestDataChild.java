@@ -24,34 +24,34 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2021-06-22
  */
-@Table(name="test_data_child", alias="a", label="数据信息", columns={
-		@Column(name="id", attrName="id", label="编号", isPK=true),
-		@Column(name="test_sort", attrName="testSort", label="排序号"),
-		@Column(name="test_data_id", attrName="testData.id", label="父表主键"),
-		@Column(name="test_input", attrName="testInput", label="单行文本", queryType=QueryType.LIKE),
-		@Column(name="test_textarea", attrName="testTextarea", label="多行文本", queryType=QueryType.LIKE),
-		@Column(name="test_select", attrName="testSelect", label="下拉框"),
-		@Column(name="test_select_multiple", attrName="testSelectMultiple", label="下拉多选"),
-		@Column(name="test_radio", attrName="testRadio", label="单选框"),
-		@Column(name="test_checkbox", attrName="testCheckbox", label="复选框"),
-		@Column(name="test_date", attrName="testDate", label="日期选择"),
-		@Column(name="test_datetime", attrName="testDatetime", label="日期时间"),
-		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
-		@Column(name="test_office_code", attrName="testOffice.officeCode", label="机构选择"),
-		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
-		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", isQuery=false),
-	}, joinTable={
-		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="testUser", alias="u12",
-			on="u12.user_code = a.test_user_code", columns={
-				@Column(name="user_code", label="用户编码", isPK=true),
-				@Column(name="user_name", label="用户名称", isQuery=false),
+@Table(name = "test_data_child", alias = "a", label = "数据信息", columns = {
+		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
+		@Column(name = "test_sort", attrName = "testSort", label = "排序号"),
+		@Column(name = "test_data_id", attrName = "testData.id", label = "父表主键"),
+		@Column(name = "test_input", attrName = "testInput", label = "单行文本", queryType = QueryType.LIKE),
+		@Column(name = "test_textarea", attrName = "testTextarea", label = "多行文本", queryType = QueryType.LIKE),
+		@Column(name = "test_select", attrName = "testSelect", label = "下拉框"),
+		@Column(name = "test_select_multiple", attrName = "testSelectMultiple", label = "下拉多选"),
+		@Column(name = "test_radio", attrName = "testRadio", label = "单选框"),
+		@Column(name = "test_checkbox", attrName = "testCheckbox", label = "复选框"),
+		@Column(name = "test_date", attrName = "testDate", label = "日期选择"),
+		@Column(name = "test_datetime", attrName = "testDatetime", label = "日期时间"),
+		@Column(name = "test_user_code", attrName = "testUser.userCode", label = "用户选择"),
+		@Column(name = "test_office_code", attrName = "testOffice.officeCode", label = "机构选择"),
+		@Column(name = "test_area_code", attrName = "testAreaCode", label = "区域选择"),
+		@Column(name = "test_area_name", attrName = "testAreaName", label = "区域名称", isQuery = false),
+	}, joinTable = {
+		@JoinTable(type = Type.LEFT_JOIN, entity = User.class, attrName = "testUser", alias = "u12",
+			on = "u12.user_code = a.test_user_code", columns = {
+				@Column(name = "user_code", label = "用户编码", isPK = true),
+				@Column(name = "user_name", label = "用户名称", isQuery = false),
 		}),
-		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="testOffice", alias="u13",
-			on="u13.office_code = a.test_office_code", columns={
-				@Column(name="office_code", label="机构编码", isPK=true),
-				@Column(name="office_name", label="机构名称", isQuery=false),
+		@JoinTable(type = Type.LEFT_JOIN, entity = Office.class, attrName = "testOffice", alias = "u13",
+			on = "u13.office_code = a.test_office_code", columns = {
+				@Column(name = "office_code", label = "机构编码", isPK = true),
+				@Column(name = "office_name", label = "机构名称", isQuery = false),
 		}),
-	}, orderBy="a.id ASC"
+	}, orderBy = "a.id ASC"
 )
 public class TestDataChild extends DataEntity<TestDataChild> {
 	

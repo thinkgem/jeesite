@@ -26,33 +26,33 @@ import java.util.List;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name="test_data", alias="a", columns={
-		@Column(name="id", attrName="id", label="编号", isPK=true),
-		@Column(name="test_input", attrName="testInput", label="单行文本", queryType=QueryType.LIKE),
-		@Column(name="test_textarea", attrName="testTextarea", label="多行文本", queryType=QueryType.LIKE),
-		@Column(name="test_select", attrName="testSelect", label="下拉框"),
-		@Column(name="test_select_multiple", attrName="testSelectMultiple", label="下拉多选"),
-		@Column(name="test_radio", attrName="testRadio", label="单选框"),
-		@Column(name="test_checkbox", attrName="testCheckbox", label="复选框"),
-		@Column(name="test_date", attrName="testDate", label="日期选择", isUpdateForce=true),
-		@Column(name="test_datetime", attrName="testDatetime", label="日期时间"),
-		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
-		@Column(name="test_office_code", attrName="testOffice.officeCode", label="机构选择"),
-		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
-		@Column(name="test_area_name", attrName="testAreaName", label="区域名称"),
-		@Column(includeEntity=DataEntity.class),
-	}, joinTable={
-		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="testUser", alias="u10",
-			on="u10.user_code = a.test_user_code", columns={
-				@Column(name="user_code", label="用户编码", isPK=true),
-				@Column(name="user_name", label="用户名称", isQuery=false),
+@Table(name = "test_data", alias = "a", columns = {
+		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
+		@Column(name = "test_input", attrName = "testInput", label = "单行文本", queryType = QueryType.LIKE),
+		@Column(name = "test_textarea", attrName = "testTextarea", label = "多行文本", queryType = QueryType.LIKE),
+		@Column(name = "test_select", attrName = "testSelect", label = "下拉框"),
+		@Column(name = "test_select_multiple", attrName = "testSelectMultiple", label = "下拉多选"),
+		@Column(name = "test_radio", attrName = "testRadio", label = "单选框"),
+		@Column(name = "test_checkbox", attrName = "testCheckbox", label = "复选框"),
+		@Column(name = "test_date", attrName = "testDate", label = "日期选择", isUpdateForce = true),
+		@Column(name = "test_datetime", attrName = "testDatetime", label = "日期时间"),
+		@Column(name = "test_user_code", attrName = "testUser.userCode", label = "用户选择"),
+		@Column(name = "test_office_code", attrName = "testOffice.officeCode", label = "机构选择"),
+		@Column(name = "test_area_code", attrName = "testAreaCode", label = "区域选择"),
+		@Column(name = "test_area_name", attrName = "testAreaName", label = "区域名称"),
+		@Column(includeEntity = DataEntity.class),
+	}, joinTable = {
+		@JoinTable(type = Type.LEFT_JOIN, entity = User.class, attrName = "testUser", alias = "u10",
+			on = "u10.user_code = a.test_user_code", columns = {
+				@Column(name = "user_code", label = "用户编码", isPK = true),
+				@Column(name = "user_name", label = "用户名称", isQuery = false),
 		}),
-		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="testOffice", alias="u11",
-			on="u11.office_code = a.test_office_code", columns={
-				@Column(name="office_code", label="机构编码", isPK=true),
-				@Column(name="office_name", label="机构名称", isQuery=false),
+		@JoinTable(type = Type.LEFT_JOIN, entity = Office.class, attrName = "testOffice", alias = "u11",
+			on = "u11.office_code = a.test_office_code", columns = {
+				@Column(name = "office_code", label = "机构编码", isPK = true),
+				@Column(name = "office_name", label = "机构名称", isQuery = false),
 		}),
-	}, orderBy="a.update_date DESC"
+	}, orderBy = "a.update_date DESC"
 )
 public class TestData extends DataEntity<TestData> {
 	
@@ -86,7 +86,7 @@ public class TestData extends DataEntity<TestData> {
 		super(id);
 	}
 
-	@ExcelField(title="单行文本", words=30, align=ExcelField.Align.LEFT, sort=10)
+	@ExcelField(title = "单行文本", words = 30, align=ExcelField.Align.LEFT, sort = 10)
 	@Size(min=0, max=200, message="单行文本长度不能超过 200 个字符")
 	public String getTestInput() {
 		return testInput;
@@ -96,7 +96,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testInput = testInput;
 	}
 	
-	@ExcelField(title="多行文本", words=100, align=ExcelField.Align.LEFT, sort=10)
+	@ExcelField(title = "多行文本", words = 100, align=ExcelField.Align.LEFT, sort = 10)
 	@Size(min=0, max=200, message="多行文本长度不能超过 200 个字符")
 	public String getTestTextarea() {
 		return testTextarea;
