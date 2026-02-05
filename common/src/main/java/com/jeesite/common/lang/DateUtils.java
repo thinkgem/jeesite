@@ -155,7 +155,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (dateObj instanceof String) {
 			return parseDate((String) dateObj, parsePatterns);
 		}
-		return null;
+		return ObjectUtils.toDate(dateObj);
 	}
 
 	/**
@@ -170,13 +170,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 //		} catch (ParseException e) {
 //			return null;
 //		}
+		String dateStr = StringUtils.trim(str);
 		ParsePosition pos = new ParsePosition(0);
 		Calendar calendar = Calendar.getInstance(LocaleUtils.getTimeZone(), LocaleUtils.getLocale());
 		for (final String parsePattern : parsePatterns) {
 			FastDateFormat format = FastDateFormat.getInstance(parsePattern);
 			calendar.clear();
 			try {
-				if (format.parse(str, pos, calendar) && pos.getIndex() == str.length()) {
+				if (format.parse(dateStr, pos, calendar) && pos.getIndex() == dateStr.length()) {
 					return calendar.getTime();
 				}
 			} catch (final IllegalArgumentException ignored) {
@@ -332,8 +333,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (StringUtils.isNotBlank(dateString)){
 			String[] ss = StringUtils.split(dateString, StringUtils.TILDE);
 			if (ss != null && ss.length == 2){
-				String begin = StringUtils.trim(ss[0]);
-				String end = StringUtils.trim(ss[1]);
+				String begin = ss[0]; String end = ss[1];
 				if (StringUtils.isNoneBlank(begin, end)){
 					beginDate = DateUtils.parseDate(begin);
 					endDate = DateUtils.parseDate(end);
