@@ -43,8 +43,8 @@ public class ReflectUtils {
 	public static <E> E invokeGetter(Object obj, String propertyName) {
 		Object object = obj;
 		for (String name : StringUtils.split(propertyName, StringUtils.DOT)){
-			if (obj instanceof Map){
-				object = ((Map)obj).get(name);
+			if (object instanceof Map){
+				object = ((Map)object).get(name);
 			}else{
 				String methodName = GETTER_PREFIX + StringUtils.capitalize(name);
 				// object = invokeMethodByName(object, methodName, new Object[] {});
@@ -66,8 +66,8 @@ public class ReflectUtils {
 		String[] names = StringUtils.split(propertyName, StringUtils.DOT);
 		for (int i=0; i<names.length; i++){
 			if(i<names.length-1){
-				if (obj instanceof Map){
-					object = ((Map)obj).get(names[i]);
+				if (object instanceof Map){
+					object = ((Map)object).get(names[i]);
 				}else{
 					String methodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
 					//Object childObj = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
@@ -93,8 +93,8 @@ public class ReflectUtils {
 					object = childObj;
 				}
 			}else{
-				if (obj instanceof Map){
-					((Map)obj).put(names[i], args != null && args.length == 1 ? args[0] : args);
+				if (object instanceof Map){
+					((Map)object).put(names[i], args != null && args.length == 1 ? args[0] : args);
 				}else{
 					String methodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
 					//invokeMethodByName(object, methodName, new Object[] { value });
