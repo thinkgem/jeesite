@@ -18,12 +18,12 @@ import javax.validation.constraints.Size;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name="test_tree", alias="a", columns={
-		@Column(name="tree_code", attrName="treeCode", label="节点编码", isPK=true),
-		@Column(includeEntity=TreeEntity.class),
-		@Column(name="tree_name", attrName="treeName", label="节点名称", queryType=QueryType.LIKE, isTreeName=true),
-		@Column(includeEntity=DataEntity.class),
-	}, orderBy="a.tree_sorts, a.tree_code"
+@Table(name = "test_tree", alias = "a", columns = {
+		@Column(name = "tree_code", attrName = "treeCode", label = "节点编码", isPK = true),
+		@Column(includeEntity = TreeEntity.class),
+		@Column(name = "tree_name", attrName = "treeName", label = "节点名称", queryType = QueryType.LIKE, isTreeName = true),
+		@Column(includeEntity = DataEntity.class),
+	}, orderBy = "a.tree_sorts, a.tree_code"
 )
 public class TestTree extends TreeEntity<TestTree> {
 	
