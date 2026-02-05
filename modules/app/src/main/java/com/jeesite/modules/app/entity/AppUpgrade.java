@@ -20,18 +20,18 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2021-04-09
  */
-@Table(name="${_prefix}app_upgrade", alias="a", label="版本信息", columns={
-		@Column(name="id", attrName="id", label="编号", isPK=true),
-		@Column(name="app_code", attrName="appCode", label="应用编号"),
-		@Column(name="up_title", attrName="upTitle", label="升级标题", queryType=QueryType.LIKE),
-		@Column(name="up_content", attrName="upContent", label="升级内容"),
-		@Column(name="up_version", attrName="upVersion", label="升级版本"),
-		@Column(name="up_type", attrName="upType", label="升级类型"),
-		@Column(name="up_date", attrName="upDate", label="发布时间"),
-		@Column(name="apk_url", attrName="apkUrl", label="APK下载地址"),
-		@Column(name="res_url", attrName="resUrl", label="资源下载地址"),
-		@Column(includeEntity=DataEntity.class),
-	}, orderBy="a.up_version DESC"
+@Table(name = "${_prefix}app_upgrade", alias = "a", label = "版本信息", columns = {
+		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
+		@Column(name = "app_code", attrName = "appCode", label = "应用编号"),
+		@Column(name = "up_title", attrName = "upTitle", label = "升级标题", queryType = QueryType.LIKE),
+		@Column(name = "up_content", attrName = "upContent", label = "升级内容"),
+		@Column(name = "up_version", attrName = "upVersion", label = "升级版本"),
+		@Column(name = "up_type", attrName = "upType", label = "升级类型"),
+		@Column(name = "up_date", attrName = "upDate", label = "发布时间"),
+		@Column(name = "apk_url", attrName = "apkUrl", label = "APK下载地址"),
+		@Column(name = "res_url", attrName = "resUrl", label = "资源下载地址"),
+		@Column(includeEntity = DataEntity.class),
+	}, orderBy = "a.up_version DESC"
 )
 public class AppUpgrade extends DataEntity<AppUpgrade> {
 	

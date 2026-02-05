@@ -17,19 +17,19 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2023-6-8
  */
-@Table(name="${_prefix}sys_post_role", alias="a", columns={
-		@Column(name="role_code", attrName="roleCode", label="角色编码", isPK=true),
-		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
+@Table(name = "${_prefix}sys_post_role", alias = "a", columns = {
+		@Column(name = "role_code", attrName = "roleCode", label = "角色编码", isPK = true),
+		@Column(name = "post_code", attrName = "postCode", label = "岗位编码", isPK = true),
 	},
-	joinTable={
-		@JoinTable(type=JoinTable.Type.LEFT_JOIN, entity=Role.class, alias="r", lazy = true,
-			on="a.role_code = r.role_code", attrName="role",
-			columns={
-				@Column(name="role_code", attrName="roleCode", label="角色编码", isPK=true),
-				@Column(name="role_name", attrName="roleName", label="角色名称"),
-				@Column(name="status", attrName="status", label="角色状态"),
+	joinTable = {
+		@JoinTable(type=JoinTable.Type.LEFT_JOIN, entity=Role.class, alias = "r", lazy = true,
+			on = "a.role_code = r.role_code", attrName = "role",
+			columns = {
+				@Column(name = "role_code", attrName = "roleCode", label = "角色编码", isPK = true),
+				@Column(name = "role_name", attrName = "roleName", label = "角色名称"),
+				@Column(name = "status", attrName = "status", label = "角色状态"),
 			})
-	}, orderBy=""
+	}, orderBy = ""
 )
 public class PostRole extends DataEntity<PostRole> {
 

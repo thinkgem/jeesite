@@ -42,7 +42,7 @@ import java.io.Serial;
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-@Table(name="${table.genTableName}", alias="a", label="${functionNameSimple}信息", columns={
+@Table(name = "${table.genTableName}", alias = "a", label = "${functionNameSimple}信息", columns = {
 		<%
 		var isBase = false, isData = false,
 			isTree = false, isExtend = false;
@@ -53,7 +53,7 @@ import java.io.Serial;
 				if(!isBase){
 					isBase = true;
 		%>
-		@Column(includeEntity=BaseEntity.class),
+		@Column(includeEntity = BaseEntity.class),
 		<%
 				}
 			// ● 如果是DataEntity类属性
@@ -61,20 +61,20 @@ import java.io.Serial;
 				if(!isData){
 					isData = true;
 		%>
-		@Column(includeEntity=DataEntity.class),
+		@Column(includeEntity = DataEntity.class),
 		<%
 				}
 			// ● 如果是TreeEntity类属性
 			}else if(table.isTreeEntity && c.isTreeEntityColumn){
 				if(c.columnName == 'parent_code'){
 		%>
-		@Column(name="${c.columnName}", attrName="${c.attrName}", label="${c.columnLabel}", isParentCode=true),
+		@Column(name = "${c.columnName}", attrName = "${c.attrName}", label = "${c.columnLabel}", isParentCode = true),
 		<%
 				}
 				if(!isTree){
 					isTree = true;
 		%>
-		@Column(includeEntity=TreeEntity.class),
+		@Column(includeEntity = TreeEntity.class),
 		<%
 				}
 			// ● 如果是Extend类属性
@@ -82,7 +82,7 @@ import java.io.Serial;
 				if(!isExtend){
 					isExtend = true;
 		%>
-		@Column(includeEntity=Extend.class, attrName="extend"),
+		@Column(includeEntity = Extend.class, attrName = "extend"),
 		<%
 				}
 			// ● 其它情况下
@@ -97,32 +97,32 @@ import java.io.Serial;
 					}
 				}
 		%>
-		@Column(name="${c.columnName}", attrName="${c.attrName}", label="${c.columnLabel}"<%
+		@Column(name = "${c.columnName}", attrName = "${c.attrName}", label = "${c.columnLabel}"<%
 				if (c.comments != c.columnLabel){
-					print(', comment="'+c.comments+'"');
+					print(', comment = "'+c.comments+'"');
 				}
 				if (c.isPk == @Global.YES){
-					print(', isPK=true');
+					print(', isPK = true');
 				}else{
 					if (c.isInsert != @Global.YES){
-						print(', isInsert=false');
+						print(', isInsert = false');
 					}
 					if (c.isUpdate != @Global.YES){
-						print(', isUpdate=false');
+						print(', isUpdate = false');
 					}
 					if (c.isQuery == @Global.YES && @StringUtils.inString(c.queryType,
 							'NE', 'GT', 'GTE', 'LT', 'LTE', 'LIKE', 'LEFT_LIKE', 'RIGHT_LIKE')){
-						print(', queryType=QueryType.'+c.queryType);
+						print(', queryType = QueryType.'+c.queryType);
 					}
 					if (c.isQuery != @Global.YES){
-						print(', isQuery=false');
+						print(', isQuery = false');
 					}
 					if (c.attrName == table.treeViewNameAttrName){
-						print(', isTreeName=true');
+						print(', isTreeName = true');
 					}
 					if (c.isNull == @Global.YES && @StringUtils.inString(c.simpleAttrType,
 							'Long', 'Integer', 'Double', 'BigDecimal', 'Date')){
-						print(', isUpdateForce=true');
+						print(', isUpdateForce = true');
 					}
 				}
 		%>),
@@ -136,47 +136,47 @@ import java.io.Serial;
 		for(c in table.columnList){
 			if (c.attrType == 'com.jeesite.modules.sys.entity.User'){
 				var joinTable = {
-%>		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
-			on="u${cLP.index}.user_code = a.${c.columnName}", columns={
-				@Column(name="user_code", label="用户编码", isPK=true),
-				@Column(name="user_name", label="用户名称", isQuery=false),
+%>		@JoinTable(type = Type.LEFT_JOIN, entity = User.class, attrName = "${c.simpleAttrName}", alias = "u${cLP.index}",
+			on = "u${cLP.index}.user_code = a.${c.columnName}", columns = {
+				@Column(name = "user_code", label = "用户编码", isPK = true),
+				@Column(name = "user_name", label = "用户名称", isQuery = false),
 		}),<%
 				};
 				joinTables = joinTables + joinTable + '\n';
 			}
 			else if (c.attrType == 'com.jeesite.modules.sys.entity.Office'){
 				var joinTable = {
-%>		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
-			on="u${cLP.index}.office_code = a.${c.columnName}", columns={
-				@Column(name="office_code", label="机构编码", isPK=true),
-				@Column(name="office_name", label="机构名称", isQuery=false),
+%>		@JoinTable(type = Type.LEFT_JOIN, entity = Office.class, attrName = "${c.simpleAttrName}", alias = "u${cLP.index}",
+			on = "u${cLP.index}.office_code = a.${c.columnName}", columns = {
+				@Column(name = "office_code", label = "机构编码", isPK = true),
+				@Column(name = "office_name", label = "机构名称", isQuery = false),
 		}),<%
 				};
 				joinTables = joinTables + joinTable + '\n';
 			}
 			else if (c.attrType == 'com.jeesite.modules.sys.entity.Company'){
 				var joinTable = {
-%>		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
-			on="u${cLP.index}.company_code = a.${c.columnName}", columns={
-				@Column(name="company_code", label="公司编码", isPK=true),
-				@Column(name="company_name", label="公司名称", isQuery=false),
+%>		@JoinTable(type = Type.LEFT_JOIN, entity = Company.class, attrName = "${c.simpleAttrName}", alias = "u${cLP.index}",
+			on = "u${cLP.index}.company_code = a.${c.columnName}", columns = {
+				@Column(name = "company_code", label = "公司编码", isPK = true),
+				@Column(name = "company_name", label = "公司名称", isQuery = false),
 		}),<%
 				};
 				joinTables = joinTables + joinTable + '\n';
 			}
 			else if (c.attrType == 'com.jeesite.modules.sys.entity.Area'){
 				var joinTable = {
-%>		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
-			on="u${cLP.index}.area_code = a.${c.columnName}", columns={
-				@Column(name="area_code", label="区域编码", isPK=true),
-				@Column(name="area_name", label="区域名称", isQuery=false),
+%>		@JoinTable(type = Type.LEFT_JOIN, entity = Area.class, attrName = "${c.simpleAttrName}", alias = "u${cLP.index}",
+			on = "u${cLP.index}.area_code = a.${c.columnName}", columns = {
+				@Column(name = "area_code", label = "区域编码", isPK = true),
+				@Column(name = "area_name", label = "区域名称", isQuery = false),
 		}),<%
 				};
 				joinTables = joinTables + joinTable + '\n';
 			}
 		}
 		if (isNotBlank(joinTables)){
-			print('joinTable={\n');
+			print('joinTable = {\n');
 			print(joinTables);
 			print('	}, ');
 		}
@@ -242,10 +242,10 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	<% if(!table.parentExists && toBoolean(table.optionMap['isImportExport'])){ %>
 	@ExcelFields({
 		<% for(c in table.columnList){ if(c.optionMap['isImportExport'] == @Global.YES){ %>
-		@ExcelField(title="${c.columnLabel}", attrName="${c.attrName}"${
-			isNotBlank(c.optionMap['dictType'])?', dictType="'+c.optionMap['dictType']+'"':''
-		}, align=Align.CENTER, sort=${c.columnSort}${
-			c.showType == 'date'?', dataFormat="yyyy-MM-dd"':c.showType == 'datetime'?', dataFormat="yyyy-MM-dd hh:mm"':''
+		@ExcelField(title = "${c.columnLabel}", attrName = "${c.attrName}"${
+			isNotBlank(c.optionMap['dictType'])?', dictType = "'+c.optionMap['dictType']+'"':''
+		}, align = Align.CENTER, sort = ${c.columnSort}${
+			c.showType == 'date'?', dataFormat = "yyyy-MM-dd"':c.showType == 'datetime'?', dataFormat = "yyyy-MM-dd hh:mm"':''
 		}),
 		<% } } %>
 	})

@@ -19,29 +19,29 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2019-04-29
  */
-@Table(name="${_prefix}sys_employee_office", alias="a", columns={
-		@Column(name="id", attrName="id", label="编码", isPK=true),
-		@Column(name="emp_code", attrName="empCode", label="员工编码"),
-		@Column(name="office_code", attrName="officeCode", label="机构编码"),
-		@Column(name="post_code", attrName="postCode", label="岗位编码"),
-	}, joinTable={
-		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
-			on="o.office_code=a.office_code", attrName="this",
-			columns={
-				@Column(name="office_code", label="机构编码", isPK=true),
-				@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
-				@Column(name="view_code", label="机构代码", isQuery=false),
-				@Column(name="office_name", label="机构名称", isQuery=false),
-				@Column(name="full_name", label="机构全称", isQuery=false),
-				@Column(name="tree_names", label="全节点名", isQuery=false),
+@Table(name = "${_prefix}sys_employee_office", alias = "a", columns = {
+		@Column(name = "id", attrName = "id", label = "编码", isPK = true),
+		@Column(name = "emp_code", attrName = "empCode", label = "员工编码"),
+		@Column(name = "office_code", attrName = "officeCode", label = "机构编码"),
+		@Column(name = "post_code", attrName = "postCode", label = "岗位编码"),
+	}, joinTable = {
+		@JoinTable(type = Type.LEFT_JOIN, entity = Office.class, alias = "o", 
+			on = "o.office_code=a.office_code", attrName = "this",
+			columns = {
+				@Column(name = "office_code", label = "机构编码", isPK = true),
+				@Column(name = "parent_codes",label = "所有父级编码", queryType = QueryType.LIKE),
+				@Column(name = "view_code", label = "机构代码", isQuery = false),
+				@Column(name = "office_name", label = "机构名称", isQuery = false),
+				@Column(name = "full_name", label = "机构全称", isQuery = false),
+				@Column(name = "tree_names", label = "全节点名", isQuery = false),
 			}),
-		@JoinTable(type=Type.LEFT_JOIN, entity=Post.class, alias="p", 
-			on="p.post_code=a.post_code", attrName="this",
-			columns={
-				@Column(name="post_code", label="岗位编码", isPK=true),
-				@Column(name="post_name", label="岗位名称", isQuery=false),
+		@JoinTable(type = Type.LEFT_JOIN, entity = Post.class, alias = "p", 
+			on = "p.post_code=a.post_code", attrName = "this",
+			columns = {
+				@Column(name = "post_code", label = "岗位编码", isPK = true),
+				@Column(name = "post_name", label = "岗位名称", isQuery = false),
 			}),
-	}, orderBy="a.id ASC"
+	}, orderBy = "a.id ASC"
 )
 public class EmployeeOffice extends DataEntity<EmployeeOffice> {
 	

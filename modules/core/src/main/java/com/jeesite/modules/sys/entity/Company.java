@@ -28,26 +28,26 @@ import java.util.List;
  * @author ThinkGem
  * @version 2017-03-23
  */
-@Table(name="${_prefix}sys_company", alias="a", label="公司信息", columns={
-		@Column(includeEntity=BaseEntity.class),
-		@Column(includeEntity=DataEntity.class),
-		@Column(includeEntity=TreeEntity.class),
-		@Column(name="company_code", attrName="companyCode", label="公司编码", isPK=true),
-		@Column(name="view_code", attrName="viewCode", label="公司代码"),
-		@Column(name="company_name", attrName="companyName", label="公司名称", queryType=QueryType.LIKE, isTreeName=true),
-		@Column(name="full_name", attrName="fullName", label="公司全称", queryType=QueryType.LIKE),
-		@Column(name="area_code", attrName="area.areaCode", label="区域编码"),
-		@Column(includeEntity=Extend.class, attrName="extend"),
-	}, joinTable={
-		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="b",
-			on="b.area_code = a.area_code",
-			columns={
-				@Column(name="area_code", label="区域代码", isPK=true),
-				@Column(name="area_name", label="区域名称", isQuery=false),
-				@Column(name="area_type", label="区域类型"),
-				@Column(name="tree_names", label="区域全称"),
+@Table(name = "${_prefix}sys_company", alias = "a", label = "公司信息", columns = {
+		@Column(includeEntity = BaseEntity.class),
+		@Column(includeEntity = DataEntity.class),
+		@Column(includeEntity = TreeEntity.class),
+		@Column(name = "company_code", attrName = "companyCode", label = "公司编码", isPK = true),
+		@Column(name = "view_code", attrName = "viewCode", label = "公司代码"),
+		@Column(name = "company_name", attrName = "companyName", label = "公司名称", queryType = QueryType.LIKE, isTreeName = true),
+		@Column(name = "full_name", attrName = "fullName", label = "公司全称", queryType = QueryType.LIKE),
+		@Column(name = "area_code", attrName = "area.areaCode", label = "区域编码"),
+		@Column(includeEntity = Extend.class, attrName = "extend"),
+	}, joinTable = {
+		@JoinTable(type = Type.LEFT_JOIN, entity = Area.class, alias = "b",
+			on = "b.area_code = a.area_code",
+			columns = {
+				@Column(name = "area_code", label = "区域代码", isPK = true),
+				@Column(name = "area_name", label = "区域名称", isQuery = false),
+				@Column(name = "area_type", label = "区域类型"),
+				@Column(name = "tree_names", label = "区域全称"),
 			}),
-	}, orderBy="a.tree_sorts, a.company_code"
+	}, orderBy = "a.tree_sorts, a.company_code"
 )
 public class Company extends TreeEntity<Company> {
 

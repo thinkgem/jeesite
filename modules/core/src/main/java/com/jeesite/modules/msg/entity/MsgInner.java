@@ -23,22 +23,22 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Table(name="${_prefix}sys_msg_inner", alias="a", label="内部消息", columns={
-		@Column(name="id", attrName="id", label="编号", isPK=true),
-		@Column(name="msg_title", attrName="msgTitle", label="消息标题", queryType=QueryType.LIKE),
-		@Column(name="content_level", attrName="contentLevel", label="内容等级", comment="内容等级（1普通 2一般 3紧急）"),
-		@Column(name="content_type", attrName="contentType", label="内容类型", comment="内容类型（1公告 2新闻 3会议 4其它）"),
-		@Column(name="msg_content", attrName="msgContent", label="消息内容"),
-		@Column(name="receive_type", attrName="receiveType", label="接受者类型", comment="接受者类型（1用户 2部门 3角色 4岗位）"),
-		@Column(name="receive_codes", attrName="receiveCodes", label="接受者字符串"),
-		@Column(name="receive_names", attrName="receiveNames", label="接受者名称字符串", queryType=QueryType.LIKE),
-		@Column(name="send_user_code", attrName="sendUserCode", label="发送者用户编码"),
-		@Column(name="send_user_name", attrName="sendUserName", label="发送者用户姓名", queryType=QueryType.LIKE),
-		@Column(name="send_date", attrName="sendDate", label="发送时间"),
-		@Column(name="is_attac", attrName="isAttac", label="是否有附件"),
-		@Column(name="notify_types", attrName="notifyTypes", label="通知类型", comment="通知类型（PC APP 短信 邮件 微信）多选"),
-		@Column(includeEntity=DataEntity.class, comment="状态（0正常 1删除 4审核 5驳回 9草稿）"),
-	}, orderBy="a.update_date DESC"
+@Table(name = "${_prefix}sys_msg_inner", alias = "a", label = "内部消息", columns = {
+		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
+		@Column(name = "msg_title", attrName = "msgTitle", label = "消息标题", queryType = QueryType.LIKE),
+		@Column(name = "content_level", attrName = "contentLevel", label = "内容等级", comment = "内容等级（1普通 2一般 3紧急）"),
+		@Column(name = "content_type", attrName = "contentType", label = "内容类型", comment = "内容类型（1公告 2新闻 3会议 4其它）"),
+		@Column(name = "msg_content", attrName = "msgContent", label = "消息内容"),
+		@Column(name = "receive_type", attrName = "receiveType", label = "接受者类型", comment = "接受者类型（1用户 2部门 3角色 4岗位）"),
+		@Column(name = "receive_codes", attrName = "receiveCodes", label = "接受者字符串"),
+		@Column(name = "receive_names", attrName = "receiveNames", label = "接受者名称字符串", queryType = QueryType.LIKE),
+		@Column(name = "send_user_code", attrName = "sendUserCode", label = "发送者用户编码"),
+		@Column(name = "send_user_name", attrName = "sendUserName", label = "发送者用户姓名", queryType = QueryType.LIKE),
+		@Column(name = "send_date", attrName = "sendDate", label = "发送时间"),
+		@Column(name = "is_attac", attrName = "isAttac", label = "是否有附件"),
+		@Column(name = "notify_types", attrName = "notifyTypes", label = "通知类型", comment = "通知类型（PC APP 短信 邮件 微信）多选"),
+		@Column(includeEntity = DataEntity.class, comment = "状态（0正常 1删除 4审核 5驳回 9草稿）"),
+	}, orderBy = "a.update_date DESC"
 )
 public class MsgInner extends DataEntity<MsgInner> {
 

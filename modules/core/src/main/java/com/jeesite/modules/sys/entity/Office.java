@@ -29,22 +29,22 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2017-03-23
  */
-@Table(name="${_prefix}sys_office", alias="a", label="组织机构", columns={
-		@Column(includeEntity=BaseEntity.class),
-		@Column(includeEntity=DataEntity.class),
-		@Column(includeEntity=TreeEntity.class),
-		@Column(name="office_code", attrName="officeCode", 	label="机构编码", isPK=true),
-		@Column(name="view_code", 	attrName="viewCode", 	label="机构代码"),
-		@Column(name="office_name", attrName="officeName", 	label="机构名称", queryType=QueryType.LIKE, isTreeName=true),
-		@Column(name="full_name", 	attrName="fullName", 	label="机构全称", queryType=QueryType.LIKE),
-		@Column(name="office_type", attrName="officeType", 	label="机构类型"),
-		@Column(name="leader", 		attrName="leader", 		label="负责人", queryType=QueryType.LIKE),
-		@Column(name="phone", 		attrName="phone", 		label="电话", queryType=QueryType.LIKE),
-		@Column(name="address", 	attrName="address", 	label="联系地址", queryType=QueryType.LIKE),
-		@Column(name="zip_code", 	attrName="zipCode", 	label="邮政编码", queryType=QueryType.LIKE),
-		@Column(name="email", 		attrName="email", 		label="邮箱", queryType=QueryType.LIKE),
-		@Column(includeEntity=Extend.class, attrName="extend"),
-	}, orderBy="a.tree_sorts, a.office_code"
+@Table(name = "${_prefix}sys_office", alias = "a", label = "组织机构", columns = {
+		@Column(includeEntity = BaseEntity.class),
+		@Column(includeEntity = DataEntity.class),
+		@Column(includeEntity = TreeEntity.class),
+		@Column(name = "office_code", attrName = "officeCode", label = "机构编码", isPK = true),
+		@Column(name = "view_code", attrName = "viewCode", label = "机构代码"),
+		@Column(name = "office_name", attrName = "officeName", label = "机构名称", queryType = QueryType.LIKE, isTreeName = true),
+		@Column(name = "full_name", attrName = "fullName", label = "机构全称", queryType = QueryType.LIKE),
+		@Column(name = "office_type", attrName = "officeType", label = "机构类型"),
+		@Column(name = "leader", attrName = "leader", label = "负责人", queryType = QueryType.LIKE),
+		@Column(name = "phone", attrName = "phone", label = "电话", queryType = QueryType.LIKE),
+		@Column(name = "address", attrName = "address", label = "联系地址", queryType = QueryType.LIKE),
+		@Column(name = "zip_code", attrName = "zipCode", label = "邮政编码", queryType = QueryType.LIKE),
+		@Column(name = "email", attrName = "email", label = "邮箱", queryType = QueryType.LIKE),
+		@Column(includeEntity = Extend.class, attrName = "extend"),
+	}, orderBy = "a.tree_sorts, a.office_code"
 )
 @Schema
 public class Office extends TreeEntity<Office> {
@@ -69,16 +69,16 @@ public class Office extends TreeEntity<Office> {
 	private String companyCode; // 根据公司查询机构，组织机构所属公司
 
 	@ExcelFields({
-		@ExcelField(title="上级编码", attrName="parentCode", align=Align.LEFT, sort=10),
-		@ExcelField(title="机构编码", attrName="officeCode", align=Align.LEFT, sort=20),
-		@ExcelField(title="机构代码", attrName="viewCode", align = Align.LEFT, sort=30),
-		@ExcelField(title="机构名称", attrName="officeName", align=Align.LEFT, sort=40),
-		@ExcelField(title="机构全称", attrName="fullName", align=Align.LEFT, sort=50),
-		@ExcelField(title="机构类型", attrName="officeType", align=Align.CENTER, sort=60, dictType="sys_office_type"),
-		@ExcelField(title="负责人", attrName="leader", align=Align.CENTER, sort=70),
-		@ExcelField(title="电话", attrName="phone", align=Align.CENTER, sort=80),
-		@ExcelField(title="联系地址", attrName="address", align=Align.CENTER, sort=90),
-		@ExcelField(title="邮箱", attrName="email", align=Align.CENTER, sort=90),
+		@ExcelField(title = "上级编码", attrName = "parentCode", align = Align.LEFT, sort = 10),
+		@ExcelField(title = "机构编码", attrName = "officeCode", align = Align.LEFT, sort = 20),
+		@ExcelField(title = "机构代码", attrName = "viewCode", align = Align.LEFT, sort = 30),
+		@ExcelField(title = "机构名称", attrName = "officeName", align = Align.LEFT, sort = 40),
+		@ExcelField(title = "机构全称", attrName = "fullName", align = Align.LEFT, sort = 50),
+		@ExcelField(title = "机构类型", attrName = "officeType", align = Align.CENTER, sort = 60, dictType = "sys_office_type"),
+		@ExcelField(title = "负责人", attrName = "leader", align = Align.CENTER, sort = 70),
+		@ExcelField(title = "电话", attrName = "phone", align = Align.CENTER, sort = 80),
+		@ExcelField(title = "联系地址", attrName = "address", align = Align.CENTER, sort = 90),
+		@ExcelField(title = "邮箱", attrName = "email", align = Align.CENTER, sort = 90),
 	})
 	public Office() {
 		this(null);

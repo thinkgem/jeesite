@@ -20,13 +20,13 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2017-03-22
  */
-@Table(name="${_prefix}sys_area", alias="a", label="区域信息", columns={
-		@Column(includeEntity=DataEntity.class),
-		@Column(includeEntity=TreeEntity.class),
-		@Column(name="area_code", attrName="areaCode", label="区域代码", isPK=true),
-		@Column(name="area_name", attrName="areaName", label="区域名称", queryType=QueryType.LIKE, isTreeName=true),
-		@Column(name="area_type", attrName="areaType", label="区域类型"),
-	}, orderBy="a.tree_sorts, a.area_code"
+@Table(name = "${_prefix}sys_area", alias = "a", label = "区域信息", columns = {
+		@Column(includeEntity = DataEntity.class),
+		@Column(includeEntity = TreeEntity.class),
+		@Column(name = "area_code", attrName = "areaCode", label = "区域代码", isPK = true),
+		@Column(name = "area_name", attrName = "areaName", label = "区域名称", queryType = QueryType.LIKE, isTreeName = true),
+		@Column(name = "area_type", attrName = "areaType", label = "区域类型"),
+	}, orderBy = "a.tree_sorts, a.area_code"
 )
 public class Area extends TreeEntity<Area> {
 

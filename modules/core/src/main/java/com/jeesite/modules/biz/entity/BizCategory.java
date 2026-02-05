@@ -21,14 +21,14 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2019-08-12
  */
-@Table(name="${_prefix}biz_category", alias="a", columns={
-		@Column(name="category_code", attrName="categoryCode", label="业务分类", isPK=true),
-		@Column(name="view_code", attrName="viewCode", label="业务分类"),
-		@Column(includeEntity=TreeEntity.class),
-		@Column(name="category_name", attrName="categoryName", label="分类名称", queryType=QueryType.LIKE, isTreeName=true),
-		@Column(includeEntity=DataEntity.class),
-		@Column(includeEntity=BaseEntity.class),
-	}, orderBy="a.tree_sorts, a.category_code"
+@Table(name = "${_prefix}biz_category", alias = "a", columns = {
+		@Column(name = "category_code", attrName = "categoryCode", label = "业务分类", isPK = true),
+		@Column(name = "view_code", attrName = "viewCode", label = "业务分类"),
+		@Column(includeEntity = TreeEntity.class),
+		@Column(name = "category_name", attrName = "categoryName", label = "分类名称", queryType = QueryType.LIKE, isTreeName = true),
+		@Column(includeEntity = DataEntity.class),
+		@Column(includeEntity = BaseEntity.class),
+	}, orderBy = "a.tree_sorts, a.category_code"
 )
 public class BizCategory extends TreeEntity<BizCategory> {
 
