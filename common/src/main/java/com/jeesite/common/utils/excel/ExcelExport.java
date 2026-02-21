@@ -120,6 +120,23 @@ public class ExcelExport implements Closeable{
 		}
 		this.createSheet(sheetName, title, cls, type, groups);
 	}
+
+	/**
+	 * 构造函数
+	 * @param wb 指定现有工作簿对象
+	 * @param sheetName 指定Sheet名称
+	 * @param title 表格标题，传“空值”，表示无标题
+	 * @param annotationList 注解ExportField获取标题
+	 * @param type 导出类型（1:导出数据；2：导出模板）
+	 */
+	public ExcelExport(Workbook wb, String sheetName, String title, List<Object[]> annotationList, Type type){
+		if (wb != null){
+			this.wb = wb;
+		}else{
+			this.wb = createWorkbook();
+		}
+		this.createSheet(sheetName, title, annotationList, type);
+	}
 	
 	/**
 	 * 构造函数
@@ -180,7 +197,7 @@ public class ExcelExport implements Closeable{
 	public Workbook getWorkbook() {
 		return wb;
 	}
-	
+
 	/**
 	 * 创建工作表
 	 * @param sheetName，指定Sheet名称
@@ -234,6 +251,18 @@ public class ExcelExport implements Closeable{
 			addAnnotation(annotationList, ef, m, type, groups);
 			ReflectUtils.makeAccessible(m);
 		}
+		createSheet(sheetName, title, annotationList, type);
+	}
+	
+	/**
+	 * 创建工作表
+	 * @param sheetName，指定Sheet名称
+	 * @param title 表格标题，传“空值”，表示无标题
+	 * @param annotationList 注解ExportField获取标题
+	 * @param type 导出类型（1:导出数据；2：导出模板）
+	 */
+	public void createSheet(String sheetName, String title, List<Object[]> annotationList, Type type){
+		this.annotationList = annotationList;
 		// Field sorting
 		Collections.sort(annotationList, new Comparator<Object[]>() {
 			@Override
