@@ -116,6 +116,27 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 		return df.format(data);
 	}
 
+	/**
+	 * 判断是否为整数
+	 */
+	public static boolean isInteger(String str) {
+		if (str == null || str.isEmpty()) {
+			return false;
+		}
+		// 先判断是否是可创建的数字
+		if (!NumberUtils.isCreatable(str)) {
+			return false;
+		}
+		try {
+			// 尝试转为 BigDecimal（最通用）
+			BigDecimal bd = new BigDecimal(str.trim());
+			// 检查是否为整数值（scale <= 0 或 小数部分为0）
+			return bd.scale() <= 0 || bd.stripTrailingZeros().scale() <= 0;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 	@Deprecated
 	public NumberUtils() {
 		// empty
