@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -235,6 +236,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 */
 	public static String replaceOnceIgnoreCase(final String text, final String searchString, final String replacement) {
         return Strings.CI.replaceOnce(text, searchString, replacement);
+    }
+
+	/**
+	 * 为空时，返回默认字符串
+	 */
+    public static String defaultString(final String str, final String nullDefault) {
+        return Objects.toString(str, nullDefault);
     }
 
 	/**
