@@ -66,14 +66,16 @@ export async function downloadByUrl({
   data,
   // target = '_self',
   fileName,
+  json,
 }: {
   url: string;
   params?: any;
   data?: any;
   // target?: TargetContext;
   fileName?: string;
+  json?: boolean;
 }): Promise<boolean> {
-  const res = await defHttp.post(
+  const res = await defHttp[json ? 'postJson' : 'post'](
     { url, params, data, responseType: 'blob' },
     { isReturnNativeResponse: true, joinPrefix: false },
   );
