@@ -369,6 +369,7 @@ public class ExcelImport implements Closeable {
 			return null;
 		}, groups);
 	}
+
 	/**
 	 * 获取导入数据列表
 	 * @param cls 导入对象类型
@@ -421,6 +422,16 @@ public class ExcelImport implements Closeable {
 			addAnnotation(annotationList, ef, m, Type.IMPORT, groups);
 			ReflectUtils.makeAccessible(m);
 		}
+		return getDataList(cls, annotationList, exceptionCallback);
+	}
+
+	/**
+	 * 获取导入数据列表
+	 * @param annotationList 注解
+	 * @param exceptionCallback 遇见异常时回调方法
+	 */
+	@SuppressWarnings("unchecked")
+	public <E> List<E> getDataList(Class<E> cls, List<Object[]> annotationList, MethodCallback exceptionCallback) throws Exception {
 		// Field sorting
 		Collections.sort(annotationList, new Comparator<Object[]>() {
 			@Override
