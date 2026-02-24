@@ -64,6 +64,31 @@ public class MapUtils {
 		return new IdentityHashMap<K, V>();
 	}
 
+	/**
+	 * 合并 Map
+	 * @param target 目标 Map
+	 * @param sources 源 Map
+	 * @author ThinkGem
+	 */
+	@SuppressWarnings("unchecked")
+	public static void deepMerge(Map<String, Object> target, Map<String, Object>... sources) {
+		for (Map<String, Object> source : sources) {
+			if (source == null || source.isEmpty()) {
+				continue;
+			}
+			for (Map.Entry<String, Object> entry : source.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				Object targetValue = target.get(key);
+				if (targetValue instanceof Map<?, ?> && value instanceof Map<?, ?>) {
+					deepMerge((Map<String, Object>) targetValue, (Map<String, Object>) value);
+				} else {
+					target.put(key, value);
+				}
+			}
+		}
+	}
+
 //	/**
 //	 * List<Map<String, V>转换为List<T>
 //	 * @param clazz
