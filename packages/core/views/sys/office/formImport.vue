@@ -75,7 +75,7 @@
 
   async function handleDownloadTemplate() {
     const { ctxAdminPath } = useGlobSetting();
-    downloadByUrl({ url: ctxAdminPath + '/sys/office/importTemplate' });
+    await downloadByUrl({ url: ctxAdminPath + '/sys/office/importTemplate' });
   }
 
   function onUploadProgress(progressEvent: AxiosProgressEvent) {

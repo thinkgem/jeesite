@@ -69,8 +69,8 @@
   }
 
   // 下载
-  function handleDownload(record: FileUpload) {
-    downloadByUrl({ url: props.apiDownloadUrl + '/' + record.id });
+  async function handleDownload(record: FileUpload) {
+    await downloadByUrl({ url: props.apiDownloadUrl + '/' + record.id });
   }
 
   const columns = createPreviewColumns(props) as any[];
