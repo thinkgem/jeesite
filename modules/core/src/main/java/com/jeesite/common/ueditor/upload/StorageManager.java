@@ -26,21 +26,10 @@ public class StorageManager {
         if (!state.isSuccess()) {
             return state;
         }
-        BufferedOutputStream bos = null;
-        try {
-            bos = new BufferedOutputStream(new FileOutputStream(file));
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file))){
             bos.write(data);
         } catch (IOException ioe) {
             return new BaseState(false, AppInfo.IO_ERROR);
-        } finally {
-            if (bos != null) {
-                try {
-                    bos.flush();
-                    bos.close();
-                } catch (IOException e) {
-                    ;
-                }
-            }
         }
 
         // 验证允许的上传的文件类型（如果没有设置则不验证，默认不设置）
@@ -63,20 +52,11 @@ public class StorageManager {
         State state = null;
         File tmpFile = getTmpFile();
         byte[] dataBuf = new byte[2048];
-        BufferedInputStream bis = new BufferedInputStream(is, StorageManager.BUFFER_SIZE);
-        BufferedOutputStream bos = null;
-        try {
-            try {
-                bos = new BufferedOutputStream(
-                        new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE);
+        try (BufferedInputStream bis = new BufferedInputStream(is, StorageManager.BUFFER_SIZE)) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE)) {
                 int count = 0;
                 while ((count = bis.read(dataBuf)) != -1) {
                     bos.write(dataBuf, 0, count);
-                }
-            } finally {
-                if (bos != null) {
-                    bos.flush();
-                    bos.close();
                 }
             }
 
@@ -100,16 +80,8 @@ public class StorageManager {
                 tmpFile.delete();
             }
             return state;
-        } catch (IOException e) {
+        } catch (IOException ignored) {
             ;
-        } finally {
-            if (bis != null) {
-                try {
-                    bis.close();
-                } catch (IOException e) {
-                    ;
-                }
-            }
         }
         return new BaseState(false, AppInfo.IO_ERROR);
     }
@@ -120,21 +92,11 @@ public class StorageManager {
         File tmpFile = getTmpFile();
 
         byte[] dataBuf = new byte[2048];
-        BufferedInputStream bis = new BufferedInputStream(is, StorageManager.BUFFER_SIZE);
-
-        try {
-            BufferedOutputStream bos = null;
-            try {
-                bos = new BufferedOutputStream(new FileOutputStream(tmpFile),
-                        StorageManager.BUFFER_SIZE);
+        try (BufferedInputStream bis = new BufferedInputStream(is, StorageManager.BUFFER_SIZE)) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE)) {
                 int count = 0;
                 while ((count = bis.read(dataBuf)) != -1) {
                     bos.write(dataBuf, 0, count);
-                }
-            } finally {
-                if (bos != null) {
-                    bos.flush();
-                    bos.close();
                 }
             }
             state = saveTmpFile(tmpFile, path);
@@ -142,16 +104,8 @@ public class StorageManager {
                 tmpFile.delete();
             }
             return state;
-        } catch (IOException e) {
+        } catch (IOException ignored) {
             ;
-        } finally {
-            if (bis != null) {
-                try {
-                    bis.close();
-                } catch (IOException e) {
-                    ;
-                }
-            }
         }
         return new BaseState(false, AppInfo.IO_ERROR);
     }
