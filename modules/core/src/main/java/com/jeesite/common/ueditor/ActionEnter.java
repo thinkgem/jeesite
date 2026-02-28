@@ -91,8 +91,11 @@ public class ActionEnter {
                 state = new FileManager(conf).listFile(this.request, start);
                 break;
         }
-        return state.toJSONString();
-    }
+		if (state == null) {
+			return null;
+		}
+		return state.toJSONString();
+	}
 
     public int getStartIndex() {
         String start = this.request.getParameter("start");

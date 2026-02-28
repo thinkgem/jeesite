@@ -94,7 +94,7 @@ public class ConfigController extends BaseController {
 			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
 		}
 		// 不是超级管理员，不能修改Name和Key
-		if (!config.currentUser().isSuperAdmin()){
+		if (old != null && !config.currentUser().isSuperAdmin()){
 			config.setConfigName(old.getConfigName());
 			config.setConfigKey(old.getConfigKey());
 			config.setIsSys(Global.NO);

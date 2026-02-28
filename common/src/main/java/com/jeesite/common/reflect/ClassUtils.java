@@ -4,13 +4,11 @@
  */
 package com.jeesite.common.reflect;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import com.jeesite.common.codec.EncodeUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,19 +16,9 @@ import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.jeesite.common.codec.EncodeUtils;
 
 /**
  * Class工具类，借鉴ibatis的io包的ResolverUtil类。
@@ -207,7 +195,12 @@ public class ClassUtils {
 		String path = getPackagePath(packageName);
 
 		try {
-			List<String> children = VFS.getInstance().list(path);
+			VFS vfs = VFS.getInstance();
+			if (vfs == null) {
+				log.error("VFS.getInstance() is null");
+				return this;
+			}
+			List<String> children = vfs.list(path);
 			for (String child : children) {
 				if (child.endsWith(".class")) {
 					addIfMatching(test, child);
@@ -363,7 +356,7 @@ abstract class VFS {
 	 * @param parameters The parameters to pass to the method.
 	 * @return Whatever the method returns.
 	 * @throws IOException If I/O errors occur
-	 * @throws StripesRuntimeException If anything else goes wrong
+	 * @throws RuntimeException If anything else goes wrong
 	 */
 	@SuppressWarnings("unchecked")
 	protected static <T> T invoke(Method method, Object object, Object... parameters) throws IOException, RuntimeException {
@@ -463,11 +456,12 @@ class DefaultVFS extends VFS {
 						// referenced by the URL isn't actually a JAR
 						is = url.openStream();
 //						@SuppressWarnings("resource")
-						JarInputStream jarInput = new JarInputStream(is);
-						log.debug("Listing " + url);
-						for (JarEntry entry; (entry = jarInput.getNextJarEntry()) != null;) {
-							log.debug("Jar entry: " + entry.getName());
-							children.add(entry.getName());
+						try (JarInputStream jarInput = new JarInputStream(is)) {
+							log.debug("Listing " + url);
+							for (JarEntry entry; (entry = jarInput.getNextJarEntry()) != null;) {
+								log.debug("Jar entry: " + entry.getName());
+								children.add(entry.getName());
+							}
 						}
 					} else {
 						/*
@@ -592,13 +586,14 @@ class DefaultVFS extends VFS {
 		log.debug("Find JAR URL: " + url);
 
 		// If the file part of the URL is itself a URL, then that URL probably points to the JAR
-		try {
-			for (;;) {
+		while (true) {
+			try {
 				url = new URL(url.getFile());
 				log.debug("Inner URL: " + url);
+			} catch (MalformedURLException e) {
+				// This will happen at some point and serves as a break in the loop
+				break;
 			}
-		} catch (MalformedURLException e) {
-			// This will happen at some point and serves as a break in the loop
 		}
 
 		// Look for the .jar extension and chop off everything after that

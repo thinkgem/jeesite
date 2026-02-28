@@ -321,6 +321,9 @@ public class ServletUtils {
 	 */
 	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
+		if (request == null) {
+			return null;
+		}
 		String uri = request.getRequestURI();
 		if ((FAVOR_PATH_EXTENSION && StringUtils.endsWithIgnoreCase(uri, ".xml"))
 				|| (FAVOR_PARAMETER && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml"))){
