@@ -449,6 +449,9 @@ public class IdcardUtils {
 		if (idCard.length() == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		if (idCard == null) {
+			return 0;
+		}
 		String year = idCard.substring(6, 10);
 		Calendar cal = Calendar.getInstance();
 		int iCurrYear = cal.get(Calendar.YEAR);
@@ -470,6 +473,9 @@ public class IdcardUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		if (idCard == null) {
+			return null;
+		}
 		return idCard.substring(6, 14);
 	}
 
@@ -486,6 +492,9 @@ public class IdcardUtils {
 			return null;
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
+		}
+		if (idCard == null) {
+			return null;
 		}
 		return Short.valueOf(idCard.substring(6, 10));
 	}
@@ -504,6 +513,9 @@ public class IdcardUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		if (idCard == null) {
+			return null;
+		}
 		return Short.valueOf(idCard.substring(10, 12));
 	}
 
@@ -521,6 +533,9 @@ public class IdcardUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		if (idCard == null) {
+			return null;
+		}
 		return Short.valueOf(idCard.substring(12, 14));
 	}
 
@@ -535,6 +550,9 @@ public class IdcardUtils {
 		String sGender = "N";
 		if (idCard.length() == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
+		}
+		if (idCard == null) {
+			return null;
 		}
 		String sCardNum = idCard.substring(16, 17);
 		if (Integer.parseInt(sCardNum) % 2 != 0) {

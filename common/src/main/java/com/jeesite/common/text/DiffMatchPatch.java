@@ -907,7 +907,7 @@ public class DiffMatchPatch {
     Diff nextDiff = pointer.hasNext() ? pointer.next() : null;
     // Intentionally ignore the first and last element (don't need checking).
     while (nextDiff != null) {
-      if (prevDiff.operation == Operation.EQUAL &&
+      if (thisDiff != null && prevDiff != null && prevDiff.operation == Operation.EQUAL &&
           nextDiff.operation == Operation.EQUAL) {
         // This is a single edit surrounded by equalities.
         equality1 = prevDiff.text;
@@ -1250,7 +1250,7 @@ public class DiffMatchPatch {
     Diff nextDiff = pointer.hasNext() ? pointer.next() : null;
     // Intentionally ignore the first and last element (don't need checking).
     while (nextDiff != null) {
-      if (prevDiff.operation == Operation.EQUAL &&
+      if (thisDiff != null && prevDiff != null && prevDiff.operation == Operation.EQUAL &&
           nextDiff.operation == Operation.EQUAL) {
         // This is a single edit surrounded by equalities.
         if (thisDiff.text.endsWith(prevDiff.text)) {

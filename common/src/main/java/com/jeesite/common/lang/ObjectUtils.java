@@ -71,7 +71,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 						number *= d;
 					}
 				}
-				return number;
+				return number == null ? 0D : number;
 			}
 			return Double.parseDouble(StringUtils.trim(str));
 		} catch (Exception e) {
@@ -108,7 +108,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 						number *= d;
 					}
 				}
-				return number;
+				return number == null ? 0L : number;
 			}
 			return Long.parseLong(StringUtils.trim(str));
 		} catch (Exception e) {

@@ -6,7 +6,6 @@ import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
 import com.jeesite.common.ueditor.define.State;
 import com.jeesite.common.ueditor.hunter.FileManager;
-import com.jeesite.common.ueditor.hunter.ImageHunter;
 import com.jeesite.common.ueditor.upload.Uploader;
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,8 +91,11 @@ public class ActionEnter {
                 state = new FileManager(conf).listFile(this.request, start);
                 break;
         }
-        return state.toJSONString();
-    }
+		if (state == null) {
+			return null;
+		}
+		return state.toJSONString();
+	}
 
     public int getStartIndex() {
         String start = this.request.getParameter("start");
