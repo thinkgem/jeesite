@@ -20,7 +20,7 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name = "test_tree", alias = "a", columns = {
+@Table(name = "test_tree", alias = "a", label = "测试实体树表", columns = {
 		@Column(name = "tree_code", attrName = "treeCode", label = "节点编码", isPK = true),
 		@Column(includeEntity = TreeEntity.class),
 		@Column(name = "tree_name", attrName = "treeName", label = "节点名称", queryType = QueryType.LIKE, isTreeName = true),
