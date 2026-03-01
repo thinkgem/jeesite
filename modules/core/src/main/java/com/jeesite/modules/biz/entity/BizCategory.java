@@ -21,7 +21,7 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2019-08-12
  */
-@Table(name = "${_prefix}biz_category", alias = "a", columns = {
+@Table(name = "${_prefix}biz_category", alias = "a", label = "业务分类", columns = {
 		@Column(name = "category_code", attrName = "categoryCode", label = "业务分类", isPK = true),
 		@Column(name = "view_code", attrName = "viewCode", label = "业务分类"),
 		@Column(includeEntity = TreeEntity.class),

@@ -24,7 +24,7 @@ import java.util.List;
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2025-12-22
  */
-@Table(name = "${_prefix}cms_site", alias = "a", columns = {
+@Table(name = "${_prefix}cms_site", alias = "a", label = "内容站点", columns = {
 		@Column(name = "site_code", attrName = "siteCode", label = "站点编码", isPK = true),
 		@Column(name = "site_name", attrName = "siteName", label = "站点名称", queryType = QueryType.LIKE),
 		@Column(name = "site_sort", attrName = "siteSort", label = "站点排序号"),

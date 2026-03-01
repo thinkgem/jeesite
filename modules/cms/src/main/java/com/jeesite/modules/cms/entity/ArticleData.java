@@ -18,7 +18,7 @@ import java.io.Serial;
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
-@Table(name = "${_prefix}cms_article_data", alias = "a", columns = {
+@Table(name = "${_prefix}cms_article_data", alias = "a", label = "文章详情", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "content", attrName = "content", label = "文章内容"),
 		@Column(name = "relation", attrName = "relation", label = "相关文章"),

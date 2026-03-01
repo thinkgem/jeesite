@@ -24,7 +24,7 @@ import com.jeesite.modules.sys.entity.User;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name = "test_data_child", alias = "a", columns = {
+@Table(name = "test_data_child", alias = "a", label = "测试实体子表", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "test_sort", attrName = "testSort", label = "排序号"),
 		@Column(name = "test_data_id", attrName = "testData.id", label = "父表主键"),

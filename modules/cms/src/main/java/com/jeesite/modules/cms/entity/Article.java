@@ -28,7 +28,7 @@ import java.util.Date;
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
-@Table(name = "${_prefix}cms_article", alias = "a", columns = {
+@Table(name = "${_prefix}cms_article", alias = "a", label = "文章信息", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "category_code", attrName = "category.categoryCode", label = "栏目编码", isQuery = false),
 		@Column(name = "module_type", attrName = "moduleType", label = "模块类型"),

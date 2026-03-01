@@ -17,7 +17,7 @@ import java.io.Serial;
  * @author ThinkGem
  * @version 2023-6-8
  */
-@Table(name = "${_prefix}sys_post_role", alias = "a", columns = {
+@Table(name = "${_prefix}sys_post_role", alias = "a", label = "岗位角色关系", columns = {
 		@Column(name = "role_code", attrName = "roleCode", label = "角色编码", isPK = true),
 		@Column(name = "post_code", attrName = "postCode", label = "岗位编码", isPK = true),
 	},
