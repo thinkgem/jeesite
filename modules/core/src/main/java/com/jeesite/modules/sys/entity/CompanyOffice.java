@@ -9,12 +9,13 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 
+
 /**
  * 公司机构 Entity
  * @author ThinkGem
  * @version 2017-03-23
  */
-@Table(name = "${_prefix}sys_company_office", alias = "a", columns = {
+@Table(name = "${_prefix}sys_company_office", alias = "a", label = "公司部门关系", columns = {
 		@Column(name = "company_code", attrName = "companyCode", label = "公司编码", isPK = true),
 		@Column(name = "office_code",  attrName = "officeCode",  label = "机构编码", isPK = true),
 	}, orderBy = ""

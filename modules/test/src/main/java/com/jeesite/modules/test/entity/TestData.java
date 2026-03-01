@@ -4,11 +4,6 @@
  */
 package com.jeesite.modules.test.entity;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.DataEntity;
@@ -19,13 +14,17 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
+import javax.validation.constraints.Size;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 测试数据 Entity
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name = "test_data", alias = "a", columns = {
+@Table(name = "test_data", alias = "a", label = "测试实体信息", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "test_input", attrName = "testInput", label = "单行文本", queryType = QueryType.LIKE),
 		@Column(name = "test_textarea", attrName = "testTextarea", label = "多行文本", queryType = QueryType.LIKE),

@@ -24,7 +24,7 @@ import java.util.List;
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2023-4-10
  */
-@Table(name = "${_prefix}cms_category", alias = "a", columns = {
+@Table(name = "${_prefix}cms_category", alias = "a", label = "内容栏目", columns = {
 		@Column(includeEntity = TreeEntity.class),
 		@Column(name = "category_code", attrName = "categoryCode", label = "栏目编码", isPK = true),
 		@Column(name = "category_name", attrName = "categoryName", label = "栏目名称", queryType = QueryType.LIKE, isTreeName = true),

@@ -4,14 +4,14 @@
  */
 package com.jeesite.modules.test.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -19,7 +19,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name = "test_tree", alias = "a", columns = {
+@Table(name = "test_tree", alias = "a", label = "测试树表信息", columns = {
 		@Column(name = "tree_code", attrName = "treeCode", label = "节点编码", isPK = true),
 		@Column(includeEntity = TreeEntity.class),
 		@Column(name = "tree_name", attrName = "treeName", label = "节点名称", queryType = QueryType.LIKE, isTreeName = true),

@@ -9,12 +9,13 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 
+
 /**
  * 员工岗位 Entity
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Table(name = "${_prefix}sys_employee_post", alias = "a", columns = {
+@Table(name = "${_prefix}sys_employee_post", alias = "a", label = "员工岗位关系", columns = {
 		@Column(name = "emp_code",  attrName = "empCode",  label = "员工编码", isPK = true),
 		@Column(name = "post_code", attrName = "postCode", label = "岗位编码", isPK = true),
 	},

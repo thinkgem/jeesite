@@ -12,12 +12,13 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import javax.validation.constraints.Size;
 
+
 /**
  * 附属机构 Entity
  * @author ThinkGem
  * @version 2019-04-29
  */
-@Table(name = "${_prefix}sys_employee_office", alias = "a", columns = {
+@Table(name = "${_prefix}sys_employee_office", alias = "a", label = "附属机构", columns = {
 		@Column(name = "id", attrName = "id", label = "编码", isPK = true),
 		@Column(name = "emp_code", attrName = "empCode", label = "员工编码"),
 		@Column(name = "office_code", attrName = "officeCode", label = "机构编码"),
