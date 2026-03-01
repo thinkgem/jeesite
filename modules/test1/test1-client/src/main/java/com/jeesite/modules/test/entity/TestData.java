@@ -25,7 +25,7 @@ import java.util.List;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@Table(name = "test_data", alias = "a", columns = {
+@Table(name = "test_data", alias = "a", label = "测试实体", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "test_input", attrName = "testInput", label = "单行文本", queryType = QueryType.LIKE),
 		@Column(name = "test_textarea", attrName = "testTextarea", label = "多行文本", queryType = QueryType.LIKE),

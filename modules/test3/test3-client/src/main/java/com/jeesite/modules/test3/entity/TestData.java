@@ -4,28 +4,27 @@
  */
 package com.jeesite.modules.test3.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.entity.DataEntity;
+import com.jeesite.common.mybatis.annotation.Column;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+import com.jeesite.common.mybatis.annotation.Table;
+import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.entity.User;
 import javax.validation.constraints.Size;
 
 import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.entity.Office;
 import java.util.List;
-import com.jeesite.common.collect.ListUtils;
-
-import com.jeesite.common.entity.DataEntity;
-import com.jeesite.common.mybatis.annotation.Column;
-import com.jeesite.common.mybatis.annotation.Table;
-import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
  * 测试数据 Entity
  * @author ThinkGem
  * @version 2021-06-22
  */
-@Table(name = "test_data", alias = "a", label = "数据信息", columns = {
+@Table(name = "test_data", alias = "a", label = "测试实体", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "test_input", attrName = "testInput", label = "单行文本", queryType = QueryType.LIKE),
 		@Column(name = "test_textarea", attrName = "testTextarea", label = "多行文本", queryType = QueryType.LIKE),
