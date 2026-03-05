@@ -356,6 +356,7 @@
       const params: any = {
         isNewRecord: record.value.isNewRecord,
         userCode: record.value.userCode,
+        ctrlPermi: ctrlPermi.value,
         op: op.value,
       };
       data.userType = 'employee';

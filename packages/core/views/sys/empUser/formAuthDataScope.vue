@@ -45,6 +45,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: t('数据权限'),
   };
+  const ctrlPermi = ref('');
   const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
 
   const inputFormSchemas: FormSchema[] = [
@@ -89,12 +90,13 @@
     await resetFields();
     const res = await formAuthDataScope(data);
     record.value = (res.empUser || {}) as Recordable;
+    ctrlPermi.value = res.ctrlPermi || '2';
     await setFieldsValue(record.value);
     await customDataScopeRef.value?.loadDataScopeList({
       dataScopes: res.dataScopes || [],
       dataScopeList: res.userDataScopeList || [],
       moduleCodes: res.moduleCodes || [],
-      ctrlPermi: res.ctrlPermi || '2',
+      ctrlPermi: ctrlPermi.value,
     });
     setDrawerProps({ loading: false });
   });
@@ -105,6 +107,7 @@
       setDrawerProps({ confirmLoading: true });
       const params: any = {
         ...data,
+        ctrlPermi: ctrlPermi.value,
         isNewRecord: record.value.isNewRecord,
         userCode: record.value.userCode,
         userDataScopeListJson: customDataScopeRef.value?.getDataScopeListJson(),

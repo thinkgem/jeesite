@@ -370,6 +370,7 @@
   );
 
   function handleForm(record: Recordable) {
+    record.ctrlPermi = ctrlPermi.value;
     openDrawer(true, record);
   }
 
@@ -390,18 +391,21 @@
   }
 
   async function handleDisable(record: Recordable) {
+    record.ctrlPermi = ctrlPermi.value;
     const res = await empUserDisable(record);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
+    record.ctrlPermi = ctrlPermi.value;
     const res = await empUserEnable(record);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
+    record.ctrlPermi = ctrlPermi.value;
     const res = await empUserDelete(record);
     showMessage(res.message);
     handleSuccess(record);
@@ -430,6 +434,7 @@
   }
 
   function handleFormAuthDataScope(record: Recordable) {
+    record.ctrlPermi = ctrlPermi.value;
     openAuthDataScopeDrawer(true, record);
   }
 
@@ -453,6 +458,7 @@
       autoFocusButton: 'cancel',
       maskClosable: true,
       onOk: async () => {
+        record.ctrlPermi = ctrlPermi.value;
         record.newPassword = newPassword;
         const res = await resetpwd(record);
         showMessage(res.message);
