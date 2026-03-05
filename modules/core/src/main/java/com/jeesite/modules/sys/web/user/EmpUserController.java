@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.web.user;
 
 import com.alibaba.fastjson.JSONValidator;
+import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -330,14 +331,19 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:resetpwd")
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
-	public String resetpwd(EmpUser empUser) {
+	public String resetpwd(EmpUser empUser, String newPassword) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
-		userService.updatePassword(empUser.getUserCode(), null);
+		// 登录密码解密（解决密码明文传输安全问题）
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			newPassword = DesUtils.decode(newPassword, secretKey);
+		}
+		userService.updatePassword(empUser.getUserCode(), newPassword);
 		AuthorizingRealm.isValidCodeLogin(empUser.getLoginCode(), empUser.getCorpCode_(), null, "success");
 		return renderResult(Global.TRUE, text("重置用户''{0}''密码成功", empUser.getUserName()));
 	}

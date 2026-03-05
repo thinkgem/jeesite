@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.web.user;
 
+import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -195,11 +196,16 @@ public class CorpAdminController extends BaseController {
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
-	public String resetpwd(User user) {
+	public String resetpwd(User user, String newPassword) {
 		if (User.isSuperAdmin(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
-		userService.updatePassword(user.getUserCode(), null);
+		// 登录密码解密（解决密码明文传输安全问题）
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			newPassword = DesUtils.decode(newPassword, secretKey);
+		}
+		userService.updatePassword(user.getUserCode(), newPassword);
 		return renderResult(Global.TRUE, text("重置管理员''{0}''密码成功", user.getLoginCode()));
 	}
 
