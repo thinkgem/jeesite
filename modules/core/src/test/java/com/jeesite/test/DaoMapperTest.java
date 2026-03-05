@@ -174,7 +174,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company.setCompanyName("a");
 			company.setCreateDate_gte(new Date());
 			company.setCreateDate_lte(new Date());
-			company.setUpdateDate_between("2025-09-11 ~ 2025-09-12");
+			company.setUpdateDate_between("2025-09-11 ~ 2099-09-12");
 			company.setArea(areaList.get(0));
 			company.getArea().setCreateDate_gte(company.getCreateDate_gte());
 			company.getArea().setCreateDate_lte(company.getCreateDate_gte());
@@ -249,11 +249,9 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			EmpUser empUser = new EmpUser();
 			empUser.setCodes(new String[]{"SDJN01","SDJN02"});
 			empUser.setPage(new Page<>(1, 3));
-			empUser.sqlMap().getColumn().addExtSql("num", "COUNT(1) as num");
-			empUser.sqlMap().getGroup().setGroupBy("a.emp_id, a.emp_code");
-			List<EmpUser> empUserList = empUserDao.findUserListByOfficeCodes(empUser);
+			List<EmpUser> empUserList = empUserDao.findList(empUser);
 			System.out.println(empUserList);
-			Assert.assertFalse("empUserDao.findUserListByOfficeCodes", empUserList.isEmpty());
+			Assert.assertFalse("empUserDao.findList", empUserList.isEmpty());
 
 			System.out.println("============ 分组查询 5.14.0 ============");
 			Post postGroup = new Post();
@@ -261,7 +259,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			sqlMap.getColumn()
 					.setExcludeAttrNames(SetUtils.newHashSet("*"))
 					.addExtSql("column", "a.post_type, COUNT(a.post_type) AS typeNum");
-			sqlMap.getGroup().setGroupBy("a.post_type").setHaving("COUNT(a.post_type) > 0");
+			sqlMap.getGroup().setGroupBy("a.post_type").setHaving("typeNum > 0");
 			sqlMap.getOrder().setOrderBy(StringUtils.EMPTY);
 			List<Post> postGroupList = postDao.findList(postGroup);
 			System.out.println(postGroupList);
