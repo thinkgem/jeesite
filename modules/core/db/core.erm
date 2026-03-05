@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>0.8</zoom>
 	<x>1189</x>
-	<y>34</y>
+	<y>19</y>
 	<default_color>
 		<r>255</r>
 		<g>255</g>
@@ -17299,7 +17299,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_menu_fs_fc</name>
+					<name>idx_sys_role_fs_fc</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -17312,7 +17312,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_menu_fs_mc</name>
+					<name>idx_sys_role_fs_mc</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -17325,7 +17325,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_menu_fs_st</name>
+					<name>idx_sys_role_fs_st</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -17338,7 +17338,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_menu_fs_ec</name>
+					<name>idx_sys_role_fs_ec</name>
 					<type></type>
 					<description></description>
 					<columns>
