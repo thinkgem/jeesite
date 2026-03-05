@@ -99,6 +99,9 @@ export function useFormEvents({
       if (!field || !startTimeKey || !endTimeKey) {
         continue;
       }
+      if (values[startTimeKey] == undefined || values[endTimeKey] == undefined) {
+        continue;
+      }
 
       const startTime = values[startTimeKey] && dateUtil(values[startTimeKey], format);
       const endTime = values[endTimeKey] && dateUtil(values[endTimeKey], format);
