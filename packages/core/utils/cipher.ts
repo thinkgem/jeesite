@@ -33,19 +33,23 @@ export class AesEncryption {
   }
 
   encryptByAES(cipherText: string) {
+    if (!cipherText) return cipherText;
     return AES.encrypt(cipherText, this.key, this.getOptions).toString();
   }
 
   decryptByAES(cipherText: string) {
+    if (!cipherText) return cipherText;
     return AES.decrypt(cipherText, this.key, this.getOptions).toString(UTF8);
   }
 }
 
 export function encryptByBase64(cipherText: string) {
+  if (!cipherText) return cipherText;
   return UTF8.parse(cipherText).toString(Base64);
 }
 
 export function decryptByBase64(cipherText: string) {
+  if (!cipherText) return cipherText;
   return Base64.parse(cipherText).toString(UTF8);
 }
 
