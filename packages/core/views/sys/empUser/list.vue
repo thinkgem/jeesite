@@ -38,8 +38,8 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserList">
-  import { onMounted, watch, ref, unref } from 'vue';
-  import { Popconfirm } from 'ant-design-vue';
+  import { onMounted, watch, ref, unref, h } from 'vue';
+  import { Input, Popconfirm } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
@@ -69,7 +69,7 @@
   const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.empUser');
-  const { showMessage } = useMessage();
+  const { showMessage, showMessageModal } = useMessage();
   const { meta } = unref(router.currentRoute);
   const getTitle = {
     icon: meta.icon || 'simple-line-icons:user',
@@ -307,10 +307,11 @@
       {
         icon: 'i-ant-design:reload-outlined',
         label: t('重置密码'),
-        popConfirm: {
-          title: t('是否确认重置密码'),
-          confirm: handleResetpwd.bind(this, { userCode: record.userCode }),
-        },
+        // popConfirm: {
+        //   title: t('是否确认重置密码'),
+        //   confirm: handleResetpwd.bind(this, { userCode: record.userCode }),
+        // },
+        onClick: handleResetpwd.bind(this, { userCode: record.userCode }),
         auth: 'sys:empUser:resetpwd',
       },
     ],
@@ -433,8 +434,30 @@
   }
 
   async function handleResetpwd(record: Recordable) {
-    const res = await resetpwd(record);
-    showMessage(res.message);
+    let newPassword = '';
+    showMessageModal({
+      title: t('重置密码'),
+      content: [
+        h('div', '新密码：'),
+        h(Input.Password, {
+          autocomplete: 'new-password',
+          onChange: (e) => {
+            newPassword = e.target?.value || '';
+          },
+        }),
+        h('div', { style: 'opacity:0.6;' }, '提示：若不填写，则使用系统默认密码。'),
+      ],
+      closable: true,
+      okText: t('确认'),
+      cancelText: t('取消'),
+      autoFocusButton: 'cancel',
+      maskClosable: true,
+      onOk: async () => {
+        record.newPassword = newPassword;
+        const res = await resetpwd(record);
+        showMessage(res.message);
+      },
+    });
   }
 
   function handleSuccess(_record: Recordable) {

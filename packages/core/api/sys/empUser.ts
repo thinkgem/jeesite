@@ -12,6 +12,7 @@ import { UploadFileParams } from '@jeesite/types/axios';
 import { AxiosProgressEvent } from 'axios';
 import { Office } from '@jeesite/core/api/sys/office';
 import { Company } from '@jeesite/core/api/sys/company';
+import { encryptByBase64 } from '@jeesite/core/utils/cipher';
 
 const { ctxPath, adminPath } = useGlobSetting();
 
@@ -67,8 +68,10 @@ export const empUserDisable = (params?: EmpUser | any) =>
 export const empUserEnable = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/enable', params });
 
-export const resetpwd = (params?: EmpUser | any) =>
-  defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/resetpwd', params });
+export const resetpwd = (params?: EmpUser | any) => {
+  params.newPassword = encryptByBase64(params.newPassword);
+  return defHttp.get<User>({ url: adminPath + '/sys/empUser/resetpwd', params });
+};
 
 export const empUserDelete = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/delete', params }, { errorMessageMode: 'none' });

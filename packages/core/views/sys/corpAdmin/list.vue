@@ -30,7 +30,8 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysCorpAdminList">
-  import { onMounted, ref, unref } from 'vue';
+  import { h, onMounted, ref, unref } from 'vue';
+  import { Input } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -43,7 +44,7 @@
   import InputForm from './form.vue';
 
   const { t } = useI18n('sys.empUser');
-  const { showMessage } = useMessage();
+  const { showMessage, showMessageModal } = useMessage();
   const { meta } = unref(router.currentRoute);
   const getTitle = {
     icon: meta.icon || 'simple-line-icons:badge',
@@ -259,8 +260,30 @@
   }
 
   async function handleResetpwd(record: Recordable) {
-    const res = await corpAdminResetpwd(record);
-    showMessage(res.message);
+    let newPassword = '';
+    showMessageModal({
+      title: t('重置密码'),
+      content: [
+        h('div', '新密码：'),
+        h(Input.Password, {
+          autocomplete: 'new-password',
+          onChange: (e) => {
+            newPassword = e.target?.value || '';
+          },
+        }),
+        h('div', { style: 'opacity:0.6;' }, '提示：若不填写，则使用系统默认密码。'),
+      ],
+      closable: true,
+      okText: t('确认'),
+      cancelText: t('取消'),
+      autoFocusButton: 'cancel',
+      maskClosable: true,
+      onOk: async () => {
+        record.newPassword = newPassword;
+        const res = await corpAdminResetpwd(record);
+        showMessage(res.message);
+      },
+    });
   }
 
   function handleSuccess(_record: Recordable) {

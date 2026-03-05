@@ -7,6 +7,7 @@ import { defHttp } from '@jeesite/core/utils/http/axios';
 import { useGlobSetting } from '@jeesite/core/hooks/setting';
 import { Page, TreeDataModel } from '@jeesite/core/api/model/baseModel';
 import { User } from '@jeesite/core/api/sys/user';
+import { encryptByBase64 } from '@jeesite/core/utils/cipher';
 
 const { adminPath } = useGlobSetting();
 
@@ -28,8 +29,10 @@ export const corpAdminDisable = (params?: User | any) =>
 export const corpAdminEnable = (params?: User | any) =>
   defHttp.get<User>({ url: adminPath + '/sys/corpAdmin/enable', params });
 
-export const corpAdminResetpwd = (params?: User | any) =>
-  defHttp.get<User>({ url: adminPath + '/sys/corpAdmin/resetpwd', params });
+export const corpAdminResetpwd = (params?: User | any) => {
+  params.newPassword = encryptByBase64(params.newPassword);
+  return defHttp.get<User>({ url: adminPath + '/sys/corpAdmin/resetpwd', params });
+};
 
 export const corpAdminDelete = (params?: User | any) =>
   defHttp.get<User>({ url: adminPath + '/sys/corpAdmin/delete', params });
