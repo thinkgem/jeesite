@@ -42,7 +42,7 @@ import java.io.Serial;
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-@Table(name = "${table.genTableName}", alias = "a", label = "${functionNameSimple}信息", columns = {
+@Table(name = "${table.genTableName}", alias = "a", label = "${functionName}", columns = {
 		<%
 		var isBase = false, isData = false,
 			isTree = false, isExtend = false;
@@ -181,7 +181,7 @@ import java.io.Serial;
 			print('	}, ');
 		}
 		// ◆ 生成排序字段
-	%>orderBy="<% if (isTree){
+	%>orderBy = "<% if (isTree){
 						%>a.tree_sorts<%
 							for(pk in table.pkList){
 								%>, a.${pk.columnName}<%
