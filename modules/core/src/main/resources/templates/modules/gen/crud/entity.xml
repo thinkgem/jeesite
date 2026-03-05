@@ -40,7 +40,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-@Table(name = "${table.genTableName}", alias = "a", label = "${functionNameSimple}信息", columns = {
+@Table(name = "${table.genTableName}", alias = "a", label = "${functionName}", columns = {
 		<%
 		var isBase = false, isData = false,
 			isTree = false, isExtend = false;
