@@ -24,7 +24,6 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +56,19 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	public EmpUser get(EmpUser empUser) {
 		return super.get(empUser);
 	}
-	
+
+	/**
+	 * 添加字段权限过滤
+	 * @param empUser 控制对象
+	 */
+	@Override
+	public void addFieldScopeFilter(EmpUser empUser) {
+//		// 实例1：角色级别：角色管理 -> 字段权限 -> 角色字段权限
+//		empUser.sqlMap().getFieldScope().addFilter();
+//		// 实例2：菜单级别：角色管理 -> 字段权限 -> 菜单字段权限
+//		empUser.sqlMap().getFieldScope().addFilterByPermission("sys:empUser:view,sys:empUser:edit");
+	}
+
 	/**
 	 * 添加数据权限过滤条件
 	 * @param empUser 控制对象
@@ -72,6 +83,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 			dataScope.addFilter("dsfCompany", "Company",
 					"e.company_code", "a.create_by", ctrlPermi, "office_user");
 		}
+//		// 实例：菜单级别：角色管理 -> 数据权限 -> 菜单数据权限
 //		dataScope.addFilterByPermission("dsfOffice", "sys:empUser:view", "Office",
 //				"e.office_code", "a.create_by", ctrlPermi);
 //		dataScope.addFilterByPermission("dsfOffice", "sys:empUser:view", "User",

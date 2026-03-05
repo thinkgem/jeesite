@@ -2,21 +2,18 @@
  * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.sys.web;
+package com.jeesite.modules.sys.web.role;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
-import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.*;
-import com.jeesite.modules.sys.service.MenuService;
+import com.jeesite.modules.sys.entity.Role;
+import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.utils.DictUtils;
-import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.RoleUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,11 +43,9 @@ import java.util.Map;
 public class RoleController extends BaseController {
 
 	private final RoleService roleService;
-	private final MenuService menuService;
 
-	public RoleController(RoleService roleService, MenuService menuService) {
+	public RoleController(RoleService roleService) {
 		this.roleService = roleService;
-		this.menuService = menuService;
 	}
 
 	@ModelAttribute
@@ -205,129 +200,6 @@ public class RoleController extends BaseController {
 			return RoleUtils.hasCurrentUserRole(roleCode);
 		}
 	}
-	
-	/**
-	 * 查询菜单的树结构数据
-	 */
-	@RequiresPermissions("sys:role:view")
-	@RequestMapping(value = "menuTreeData")
-	@ResponseBody
-	public Map<String, Object> menuTreeData(Role role) {
-		Map<String, Object> model = MapUtils.newHashMap();
-		List<String> sysCodes = ListUtils.newArrayList();
-		for (DictData sysCode : DictUtils.getDictList("sys_menu_sys_code")) {
-			sysCodes.add(sysCode.getDictValue());
-		}
-		List<Menu> menuList = roleService.findManageMenuList(role);
-		Map<String, List<Map<String, String>>> map = MapUtils.newLinkedHashMap();
-		for (Menu menu : menuList){
-			// 过滤已经禁用的子系统
-			if (!sysCodes.contains(menu.getSysCode())) {
-				continue;
-			}
-			List<Map<String, String>> list = map.computeIfAbsent(menu.getSysCode(), k -> ListUtils.newArrayList());
-			Map<String, String> m = MapUtils.newHashMap();
-			m.put("id", menu.getMenuCode());
-			m.put("pId", menu.getParentCode());
-			m.put("name", menu.getMenuName() + "<font color=#888> &nbsp; &nbsp; "
-					+ StringUtils.abbr(ObjectUtils.toString(menu.getPermission()) + " &nbsp; "
-					+ ObjectUtils.toString(menu.getMenuHref()), 50) + "</font>");
-			m.put("title", menu.getMenuName() + "&nbsp;" 
-					+ ObjectUtils.toString(menu.getPermission()) + "\n"
-					+ ObjectUtils.toString(menu.getMenuHref()));
-			list.add(m);
-		}
-		model.put("menuMap", map);
-		if (StringUtils.isNotBlank(role.getRoleCode())) {
-			Menu menuWhere = new Menu();
-			menuWhere.setRoleCode(role.getRoleCode());
-			List<Menu> roleMenuList = menuService.findByRoleCode(menuWhere);
-			model.put("roleMenuList", roleMenuList);
-		}
-		return model;
-	}
-
-	/**
-	 * 查询角色的菜单树结构数据
-	 */
-	@RequiresPermissions("sys:role:view")
-	@RequestMapping(value = "menuTreeDataByRoleCode")
-	@ResponseBody
-	public List<Map<String, Object>> menuTreeDataByRoleCode(String roleCode, String sysCode) {
-		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		if (StringUtils.isBlank(roleCode)) {
-			return mapList;
-		}
-		Menu menuWhere = new Menu();
-		menuWhere.setRoleCode(roleCode);
-		menuWhere.setSysCode(sysCode);
-		menuWhere.setHasDataScope(true);
-		List<Menu> list = menuService.findByRoleCode(menuWhere);
-		for (Menu menu : list){
-			Map<String, Object> m = MapUtils.newHashMap();
-			m.put("id", menu.getId());
-			m.put("pId", menu.getParentCode());
-			m.put("name", menu.getMenuName() + "<font color=#888> &nbsp; &nbsp; "
-					+ ObjectUtils.toString(menu.getPermission()) + "</font>");
-			m.put("title", menu.getMenuName() + "&nbsp;"
-					+ ObjectUtils.toString(menu.getPermission()));
-			m.put("rawName", menu.getMenuName());
-			m.put("isParent", !menu.getIsTreeLeaf());
-			m.put("permission", menu.getPermission());
-			m.put("hasDataScope", menu.getHasDataScope());
-			mapList.add(m);
-		}
-		return mapList;
-	}
-
-	/** 
-	 * 角色授权数据权限
-	 */
-	@RequiresPermissions("sys:role:edit")
-	@RequestMapping(value = "formAuthDataScope")
-	public String formAuthDataScope(Role role, Model model, HttpServletRequest request) {
-		// 查询角色数据权限，包括菜单数据权限
-		if (Global.TRUE.equals(role.getMenuCode())){
-			// 拥有的角色数据权限
-			RoleDataScope roleDataScope = new RoleDataScope();
-			roleDataScope.setRoleCode(role.getRoleCode());
-			List<RoleDataScope> roleDataScopeList = roleService.findDataScopeList(roleDataScope);
-			model.addAttribute("roleDataScopeList", roleDataScopeList);
-			// 拥有的菜单数据权限
-			MenuDataScope menuDataScope = new MenuDataScope();
-			menuDataScope.setRoleCode(role.getRoleCode());
-			List<MenuDataScope> menuDataScopeList = roleService.findMenuDataScopeList(menuDataScope);
-			model.addAttribute("menuDataScopeList", menuDataScopeList);
-		} else {
-			// 拥有的角色数据权限
-			RoleDataScope roleDataScope = new RoleDataScope();
-			roleDataScope.setRoleCode(role.getRoleCode());
-			roleDataScope.setMenuCode(RoleDataScope.DEFAULT_MENU_CODE);
-			List<RoleDataScope> roleDataScopeList = roleService.findDataScopeList(roleDataScope);
-			model.addAttribute("roleDataScopeList", roleDataScopeList);
-		}
-		// 设置其它对象
-		model.addAttribute("role", role);
-		model.addAttribute("moduleCodes", ModuleUtils.getEnableModuleCodes());
-		model.addAttribute("dataScopes", JsonMapper.fromJson(Global.getConfig("user.dataScopes", "[]"), List.class));
-		return "modules/sys/roleFormAuthDataScope";
-	}
-	
-	/** 
-	 * 保存角色授权数据权限
-	 */
-	@RequiresPermissions("sys:role:edit")
-	@RequestMapping(value = "saveAuthDataScope")
-	@ResponseBody
-	public String saveAuthDataScope(Role role, HttpServletRequest request) {
-		// 获取原数据的isSys状态，如果是系统数据，则必须超级管理员编辑
-		Role old = super.getWebDataBinderSource(request);
-		if (old != null && Global.YES.equals(old.getIsSys()) && !role.currentUser().isSuperAdmin()){
-			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
-		}
-		roleService.saveAuthDataScope(role);
-		return renderResult(Global.TRUE, text("角色授权数据权限成功"));
-	}
 
 	/**
 	 * 获取角色树结构数据
@@ -359,47 +231,5 @@ public class RoleController extends BaseController {
 		});
 		return mapList;
 	}
-	
-	/** 
-	 * 角色授权给用户
-	 */
-	@RequiresPermissions("sys:role:edit")
-	@RequestMapping(value = "formAuthUser")
-	public String formAuthUser(Role role, Model model, HttpServletRequest request) {
-		model.addAttribute("role", role);
-		return "modules/sys/roleFormAuthUser";
-	}
-	
-	/** 
-	 * 保存角色授权给用户
-	 */
-	@RequiresPermissions("sys:role:edit")
-	@RequestMapping(value = "saveAuthUser")
-	@ResponseBody
-	public String saveAuthUser(Role role, HttpServletRequest request) {
-//		// 获取原数据的isSys状态，如果是系统数据，则必须超级管理员编辑
-//		Role old = super.getWebDataBinderSource(request);
-//		if (old != null && Global.YES.equals(old.getIsSys()) && !role.currentUser().isSuperAdmin()){
-//			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
-//		}
-		roleService.saveAuthUser(role);
-		return renderResult(Global.TRUE, text("角色授权给用户成功"));
-	}
-	
-	/** 
-	 * 删除角色授权给用户
-	 */
-	@RequiresPermissions("sys:role:edit")
-	@RequestMapping(value = "deleteAuthUser")
-	@ResponseBody
-	public String deleteAuthUser(Role role, HttpServletRequest request) {
-//		// 获取原数据的isSys状态，如果是系统数据，则必须超级管理员编辑
-//		Role old = super.getWebDataBinderSource(request);
-//		if (old != null && Global.YES.equals(old.getIsSys()) && !role.currentUser().isSuperAdmin()){
-//			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
-//		}
-		roleService.deleteAuthUser(role);
-		return renderResult(Global.TRUE, text("取消用户角色授权成功"));
-	}
-	
+
 }

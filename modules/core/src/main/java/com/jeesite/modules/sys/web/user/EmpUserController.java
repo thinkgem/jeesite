@@ -24,6 +24,7 @@ import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.*;
 import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.MenuUtils;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -80,6 +81,7 @@ public class EmpUserController extends BaseController {
 		empUser.setIsNewRecord(isNewRecord);
 		// 更严格的权限控制，对单条数据进行数据权限过滤（isAll 是一个开关，正常不需要添加）
 		if (StringUtils.isNotBlank(userCode) && !(isAll != null && isAll) || Global.isStrictMode()) {
+			empUserService.addFieldScopeFilter(empUser);
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		return empUserService.getAndValid(empUser);
@@ -119,6 +121,7 @@ public class EmpUserController extends BaseController {
 		empUser.getEmployee().getOffice().setIsQueryChildren(true);
 		empUser.getEmployee().getCompany().setIsQueryChildren(true);
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
+			empUserService.addFieldScopeFilter(empUser);
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		empUser.setPage(new Page<>(request, response));
@@ -199,6 +202,7 @@ public class EmpUserController extends BaseController {
 		}
 		Subject subject = UserUtils.getSubject();
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT) && subject.isPermitted("sys:empUser:edit")){
+			empUserService.addFieldScopeFilter(empUser);
 			empUserService.save(empUser);
 		}
 		if (Global.getConfigToBoolean("user.postRolePermi", "false")) {
@@ -544,7 +548,7 @@ public class EmpUserController extends BaseController {
 				session.removeAttribute("roleCode");
 			}
 		}
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		MenuUtils.clearAuthInfo(session);
 		if (ServletUtils.isAjaxRequest(request)) {
 			return renderResult(response, Global.TRUE, text("部门切换成功"));
 		}
