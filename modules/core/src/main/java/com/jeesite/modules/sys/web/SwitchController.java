@@ -14,6 +14,7 @@ import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.MenuUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +61,7 @@ public class SwitchController extends BaseController{
 		// 切换系统时，清除当前岗位和角色状态
 		session.removeAttribute("postCode");
 		session.removeAttribute("roleCode");
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		MenuUtils.clearAuthInfo(session);
 		if (ServletUtils.isAjaxRequest(request)) {
 			return renderResult(response, Global.TRUE, text("子系统切换成功"));
 		}
@@ -84,7 +85,7 @@ public class SwitchController extends BaseController{
 		}else{
 			session.removeAttribute("roleCode");
 		}
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		MenuUtils.clearAuthInfo(session);
 		if (ServletUtils.isAjaxRequest(request)) {
 			return renderResult(response, Global.TRUE, text("角色切换成功"));
 		}
@@ -127,7 +128,7 @@ public class SwitchController extends BaseController{
 			session.removeAttribute("postCode");
 			session.removeAttribute("roleCode");
 		}
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		MenuUtils.clearAuthInfo(session);
 		if (ServletUtils.isAjaxRequest(request)) {
 			return renderResult(response, Global.TRUE, text("岗位切换成功"));
 		}
