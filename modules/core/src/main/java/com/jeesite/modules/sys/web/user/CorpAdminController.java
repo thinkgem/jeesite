@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.web.user;
 
+import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -18,8 +19,6 @@ import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,6 +27,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -195,11 +196,16 @@ public class CorpAdminController extends BaseController {
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
-	public String resetpwd(User user) {
+	public String resetpwd(User user, String newPassword) {
 		if (User.isSuperAdmin(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
-		userService.updatePassword(user.getUserCode(), null);
+		// 登录密码解密（解决密码明文传输安全问题）
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			newPassword = DesUtils.decode(newPassword, secretKey);
+		}
+		userService.updatePassword(user.getUserCode(), newPassword);
 		return renderResult(Global.TRUE, text("重置管理员''{0}''密码成功", user.getLoginCode()));
 	}
 
