@@ -498,10 +498,10 @@ CREATE TABLE js_sys_menu_data_scope
 	id varchar(64) NOT NULL,
 	role_code varchar(64) NOT NULL,
 	menu_code varchar(64) NOT NULL,
-	rule_name varchar(100),
-	rule_type char(1),
-	rule_config text,
-	status char(1),
+	rule_name varchar(100) NOT NULL,
+	rule_type char(1) NOT NULL,
+	rule_config text NOT NULL,
+	status char(1) NOT NULL,
 	remarks varchar(500),
 	PRIMARY KEY (id)
 ) WITHOUT OIDS;
@@ -781,11 +781,31 @@ CREATE TABLE js_sys_role
 CREATE TABLE js_sys_role_data_scope
 (
 	role_code varchar(64) NOT NULL,
+	menu_code varchar(64) DEFAULT '0' NOT NULL,
 	ctrl_type varchar(20) NOT NULL,
 	ctrl_data varchar(64) NOT NULL,
 	ctrl_permi varchar(64) NOT NULL,
-	menu_code varchar(64) DEFAULT '0' NOT NULL,
-	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi, menu_code)
+	PRIMARY KEY (role_code, menu_code, ctrl_type, ctrl_data, ctrl_permi)
+) WITHOUT OIDS;
+
+
+-- 角色字段权限
+CREATE TABLE js_sys_role_field_scope
+(
+	id varchar(64) NOT NULL,
+	role_code varchar(64) NOT NULL,
+	menu_code varchar(64) NOT NULL,
+	entity_name varchar(50) NOT NULL,
+	entity_label varchar(100) NOT NULL,
+	entity_class varchar(100) NOT NULL,
+	field_config text NOT NULL,
+	status char(1) DEFAULT '0' NOT NULL,
+	create_by varchar(64) NOT NULL,
+	create_date timestamp NOT NULL,
+	update_by varchar(64) NOT NULL,
+	update_date timestamp NOT NULL,
+	remarks varchar(500),
+	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
 
@@ -888,6 +908,13 @@ CREATE TABLE js_sys_user_role
 
 /* Create Indexes */
 
+CREATE INDEX idx_biz_category_vc ON js_biz_category (view_code);
+CREATE INDEX idx_biz_category_pc ON js_biz_category (parent_code);
+CREATE INDEX idx_biz_category_pcc ON js_biz_category (parent_codes);
+CREATE INDEX idx_biz_category_ts ON js_biz_category (tree_sort);
+CREATE INDEX idx_biz_category_tss ON js_biz_category (tree_sorts);
+CREATE INDEX idx_biz_category_st ON js_biz_category (status);
+CREATE INDEX idx_biz_category_cc ON js_biz_category (corp_code);
 CREATE INDEX idx_gen_table_ptn ON js_gen_table (parent_table_name);
 CREATE INDEX idx_gen_table_column_tn ON js_gen_table_column (table_name);
 CREATE INDEX idx_sys_area_pc ON js_sys_area (parent_code);
@@ -954,6 +981,7 @@ CREATE INDEX idx_sys_menu_mcs ON js_sys_menu (module_codes);
 CREATE INDEX idx_sys_menu_wt ON js_sys_menu (weight);
 CREATE INDEX idx_sys_menu_ds_mc ON js_sys_menu_data_scope (menu_code);
 CREATE INDEX idx_sys_menu_ds_rc ON js_sys_menu_data_scope (role_code);
+CREATE INDEX idx_sys_menu_ds_st ON js_sys_menu_data_scope (status);
 CREATE INDEX idx_sys_module_status ON js_sys_module (status);
 CREATE INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner (create_by);
 CREATE INDEX idx_sys_msg_inner_status ON js_sys_msg_inner (status);
@@ -1002,6 +1030,10 @@ CREATE INDEX idx_sys_role_cc ON js_sys_role (corp_code);
 CREATE INDEX idx_sys_role_is ON js_sys_role (is_sys);
 CREATE INDEX idx_sys_role_status ON js_sys_role (status);
 CREATE INDEX idx_sys_role_rs ON js_sys_role (role_sort);
+CREATE INDEX idx_sys_menu_fs_fc ON js_sys_role_field_scope (role_code);
+CREATE INDEX idx_sys_menu_fs_mc ON js_sys_role_field_scope (menu_code);
+CREATE INDEX idx_sys_menu_fs_st ON js_sys_role_field_scope (status);
+CREATE INDEX idx_sys_menu_fs_ec ON js_sys_role_field_scope (entity_class);
 CREATE INDEX idx_sys_user_lc ON js_sys_user (login_code);
 CREATE INDEX idx_sys_user_email ON js_sys_user (email);
 CREATE INDEX idx_sys_user_mobile ON js_sys_user (mobile);
@@ -1020,7 +1052,7 @@ CREATE INDEX idx_sys_user_cc ON js_sys_user (corp_code);
 /* Comments */
 
 COMMENT ON TABLE js_biz_category IS '业务分类';
-COMMENT ON COLUMN js_biz_category.category_code IS '流程分类';
+COMMENT ON COLUMN js_biz_category.category_code IS '业务分类';
 COMMENT ON COLUMN js_biz_category.view_code IS '分类代码';
 COMMENT ON COLUMN js_biz_category.category_name IS '分类名称';
 COMMENT ON COLUMN js_biz_category.parent_code IS '父级编号';
@@ -1579,11 +1611,11 @@ COMMENT ON COLUMN js_sys_role.view_code IS '角色代码';
 COMMENT ON COLUMN js_sys_role.role_type IS '角色分类（高管、中层、基层、其它）';
 COMMENT ON COLUMN js_sys_role.role_sort IS '角色排序（升序）';
 COMMENT ON COLUMN js_sys_role.is_sys IS '系统内置（1是 0否）';
-COMMENT ON COLUMN js_sys_role.is_show IS '是否显示';
+COMMENT ON COLUMN js_sys_role.is_show IS '是否显示（1是 0否）';
 COMMENT ON COLUMN js_sys_role.user_type IS '用户类型（employee员工 member会员）';
 COMMENT ON COLUMN js_sys_role.desktop_url IS '桌面地址（仪表盘地址）';
 COMMENT ON COLUMN js_sys_role.data_scope IS '数据范围（0未设置 1全部数据 2自定义数据）';
-COMMENT ON COLUMN js_sys_role.biz_scope IS '适应业务范围（不同的功能，不同的数据权限支持）';
+COMMENT ON COLUMN js_sys_role.biz_scope IS '适应业务范围(不同的功能不同的数据权限)';
 COMMENT ON COLUMN js_sys_role.sys_codes IS '包含系统（多个用逗号隔开）';
 COMMENT ON COLUMN js_sys_role.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_role.create_by IS '创建者';
@@ -1616,10 +1648,24 @@ COMMENT ON COLUMN js_sys_role.extend_d4 IS '扩展 Date 4';
 COMMENT ON COLUMN js_sys_role.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_role_data_scope IS '角色数据权限表';
 COMMENT ON COLUMN js_sys_role_data_scope.role_code IS '控制角色编码';
+COMMENT ON COLUMN js_sys_role_data_scope.menu_code IS '菜单编码';
 COMMENT ON COLUMN js_sys_role_data_scope.ctrl_type IS '控制类型';
 COMMENT ON COLUMN js_sys_role_data_scope.ctrl_data IS '控制数据';
 COMMENT ON COLUMN js_sys_role_data_scope.ctrl_permi IS '控制权限';
-COMMENT ON COLUMN js_sys_role_data_scope.menu_code IS '菜单编码';
+COMMENT ON TABLE js_sys_role_field_scope IS '角色字段权限';
+COMMENT ON COLUMN js_sys_role_field_scope.id IS '编号';
+COMMENT ON COLUMN js_sys_role_field_scope.role_code IS '角色编码';
+COMMENT ON COLUMN js_sys_role_field_scope.menu_code IS '菜单编码';
+COMMENT ON COLUMN js_sys_role_field_scope.entity_name IS '实体名称';
+COMMENT ON COLUMN js_sys_role_field_scope.entity_label IS '实体标签';
+COMMENT ON COLUMN js_sys_role_field_scope.entity_class IS '实体类名';
+COMMENT ON COLUMN js_sys_role_field_scope.field_config IS '范围配置（JSON）';
+COMMENT ON COLUMN js_sys_role_field_scope.status IS '状态（0正常 1删除 2停用）';
+COMMENT ON COLUMN js_sys_role_field_scope.create_by IS '创建者';
+COMMENT ON COLUMN js_sys_role_field_scope.create_date IS '创建时间';
+COMMENT ON COLUMN js_sys_role_field_scope.update_by IS '更新者';
+COMMENT ON COLUMN js_sys_role_field_scope.update_date IS '更新时间';
+COMMENT ON COLUMN js_sys_role_field_scope.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_role_menu IS '角色与菜单关联表';
 COMMENT ON COLUMN js_sys_role_menu.role_code IS '角色编码';
 COMMENT ON COLUMN js_sys_role_menu.menu_code IS '菜单编码';

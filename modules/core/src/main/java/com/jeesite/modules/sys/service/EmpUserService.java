@@ -23,7 +23,14 @@ public interface EmpUserService extends CrudServiceApi<EmpUser> {
 	 */
 	@Override
 	EmpUser get(EmpUser empUser);
-	
+
+	/**
+	 * 添加字段权限过滤
+	 * @param empUser 控制对象
+	 */
+	@Override
+	void addFieldScopeFilter(EmpUser empUser);
+
 	/**
 	 * 添加数据权限过滤条件
 	 * @param empUser 控制对象
