@@ -42,7 +42,7 @@
     },
     labelInValue: propTypes.bool,
     treeData: {
-      type: Array as PropType<Recordable[] | TreeItem[]>,
+      type: Object as PropType<Recordable[] | TreeItem[]>,
       default: () => [],
     },
     api: {

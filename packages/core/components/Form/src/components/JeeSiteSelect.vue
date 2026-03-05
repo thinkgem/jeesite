@@ -45,7 +45,7 @@
     },
     labelInValue: propTypes.bool,
     options: {
-      type: Array as PropType<Recordable[] | OptionsItem[]>,
+      type: Object as PropType<Recordable[] | OptionsItem[]>,
       default: () => [],
     },
     api: {
