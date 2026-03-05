@@ -10,6 +10,7 @@
 			</div>
 		</div>
 		<#form:form id="inputForm" model="${empUser}" action="${ctx}/sys/empUser/saveAuthDataScope" method="post" class="form-horizontal">
+			<#form:hidden name="ctrlPermi" value="${ctrlPermi}"/>
 			<#form:hidden path="userCode"/>
 			<div class="box-body"><br/>
 				<div class="row">

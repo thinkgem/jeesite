@@ -10,6 +10,7 @@
 			</div>
 		</div>
 		<#form:form id="inputForm" model="${empUser}" action="${ctx}/sys/empUser/save" method="post" class="form-horizontal">
+			<#form:hidden name="ctrlPermi" value="${ctrlPermi}"/>
 			<#form:hidden name="op" value="${op}"/>
 			<#form:hidden name="userType" value="employee"/>
 			<#form:hidden path="userCode"/>
