@@ -4,6 +4,7 @@ Thumbs.db
 .vercel
 .turbo
 .cache
+.trae
 dist
 
 upgrade
