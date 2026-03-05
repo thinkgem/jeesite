@@ -16,6 +16,7 @@ import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.utils.MenuUtils;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
@@ -193,7 +194,7 @@ public class LoginController extends BaseController{
 					}
 					if (sysCode != null) {
 						session.setAttribute("sysCode", sysCode);
-						UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+						MenuUtils.clearAuthInfo(session);
 						break;
 					}
 				}
@@ -326,7 +327,7 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "authInfo")
 	@ResponseBody
 	public AuthorizationInfo authInfo() {
-		return UserUtils.getAuthInfo();
+		return MenuUtils.getAuthInfo(UserUtils.getSession());
 	}
 
 	/**
@@ -337,7 +338,7 @@ public class LoginController extends BaseController{
 	@ResponseBody
 	@JsonView(Menu.SimpleView.class)
 	public List<Menu> menuTree(String parentCode) {
-		return UserUtils.getMenuTreeByParentCode(parentCode);
+		return MenuUtils.getMenuTreeByParentCode(parentCode);
 	}
 
 	/**
@@ -347,7 +348,7 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "menuRoute")
 	@ResponseBody
 	public List<Map<String, Object>> menuRoute(String parentCode) {
-		return UserUtils.getMenuRouteByParentCode(parentCode);
+		return MenuUtils.getMenuRouteByParentCode(parentCode);
 	}
 	
 	/**

@@ -19,7 +19,6 @@ import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.LogService;
-import com.jeesite.modules.sys.service.MenuService;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.apache.ibatis.mapping.SqlCommandType;
@@ -54,7 +53,6 @@ public class LogUtils {
 	 */
 	private static final class Static {
 		private static final LogService logService = SpringUtils.getBean(LogService.class);
-		private static final MenuService menuService = SpringUtils.getBean(MenuService.class);
 	}
 	
 	// 参数名获取工具（尝试获取标注为@ModelAttribute注解的方法，第一个参数名一般为主键名）
@@ -214,7 +212,7 @@ public class LogUtils {
 				if (StringUtils.startsWith(href, Global.getFrontPath() + "/")){
 					href = StringUtils.substringAfter(href, Global.getFrontPath());
 				}
-				log.setLogTitle(Static.menuService.getMenuNamePath(href, permission));
+				log.setLogTitle(MenuUtils.getMenuNamePath(href, permission));
 			}
 			if (StringUtils.isBlank(log.getLogTitle())){
 				log.setLogTitle("未知操作");
