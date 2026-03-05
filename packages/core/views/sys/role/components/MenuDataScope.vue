@@ -5,13 +5,13 @@
 -->
 <template>
   <ARow class="h-full pl-4">
-    <ACol :span="9" :style="getTreeStyle">
+    <ACol :span="8" :style="getTreeStyle">
       <BasicTree
         ref="treeRef"
         :search="true"
         :toolbar="true"
         :showIcon="true"
-        :api="menuTreeDataByRoleCode"
+        :api="roleMenuTreeDataByRoleCode"
         :params="apiParams"
         :immediate="false"
         :defaultExpandLevel="1"
@@ -30,8 +30,8 @@
         </template>
       </BasicTree>
     </ACol>
-    <ACol :span="15" :style="getMainStyle">
-      <Tabs class="jeesite-role-auth-data-scope-tabs" v-model:activeKey="ruleType" @change="handleTabChange">
+    <ACol :span="16" :style="getMainStyle">
+      <Tabs class="jeesite-role-auth-data-scope-tabs2" v-model:activeKey="ruleType" @change="handleTabChange">
         <Tabs.TabPane key="1" :forceRender="true">
           <template #tab>
             <Icon v-if="ruleType == '1'" icon="i-ant-design:check-circle-outlined" />
@@ -76,7 +76,7 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { Dropdown, DropMenu } from '@jeesite/core/components/Dropdown';
   import { BasicTree, TreeActionType } from '@jeesite/core/components/Tree';
-  import { menuTreeDataByRoleCode } from '@jeesite/core/api/sys/role';
+  import { roleMenuTreeDataByRoleCode } from '@jeesite/core/api/sys/role';
   import { useWindowSizeFn } from '@jeesite/core/hooks/event/useWindowSizeFn';
   import { onMountedOrActivated } from '@jeesite/core/hooks/core/onMountedOrActivated';
   import { encryptByBase64 } from '@jeesite/core/utils/cipher';
@@ -117,7 +117,8 @@
     return {
       height: `${mainHeight}px`,
       minHeight: `${mainHeight}px`,
-      overflowX: 'auto',
+      overflowX: 'hidden',
+      overflowY: 'auto',
     };
   });
   function calcTreeHeight() {
@@ -126,10 +127,8 @@
   useWindowSizeFn(calcTreeHeight, 280);
   onMountedOrActivated(calcTreeHeight);
 
-  async function loadDataScopeFormData(res: Recordable) {
-    // 初始化变量值
-    const { roleCode, roleName } = (res.role || {}) as Recordable;
-    record.value = { roleCode, roleName, dataScope: '0' };
+  async function loadDataScopeFormData(role: Recordable, res: Recordable) {
+    record.value = { roleCode: role.roleCode, roleName: role.roleName, dataScope: '0' };
     sysCode.value = 'default';
     menuCode.value = '0';
     ruleType.value = '0';

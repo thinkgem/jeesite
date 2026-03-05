@@ -32,12 +32,6 @@ export const roleListData = (params?: Role | any) =>
 
 export const roleForm = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/form', params });
 
-export const roleMenuTreeData = (params?: any) =>
-  defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeData', params });
-
-export const menuTreeDataByRoleCode = (params?: any) =>
-  defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeDataByRoleCode', params });
-
 export const roleSave = (params?: any, data?: Role | any) =>
   defHttp.postJson<Role>({ url: adminPath + '/sys/role/save', params, data });
 
@@ -53,13 +47,37 @@ export const roleEnable = (params?: Role | any) => defHttp.get<Role>({ url: admi
 
 export const roleDelete = (params?: Role | any) => defHttp.get<Role>({ url: adminPath + '/sys/role/delete', params });
 
-export const roleFormAuthDataScope = (params?: Role | any) =>
-  defHttp.get<Role>({ url: adminPath + '/sys/role/formAuthDataScope', params });
+export const roleMenuTreeData = (params?: any) =>
+  defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeData', params });
+
+export const roleMenuTreeDataByRoleCode = (params?: any) =>
+  defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeDataByRoleCode', params });
+
+export const roleEntityListData = (params?: Recordable | any) =>
+  defHttp.get<Recordable[]>({ url: adminPath + '/sys/role/entityListData', params });
+
+export const roleEntityAttrListData = (params?: Recordable | any) =>
+  defHttp.get<Recordable[]>({ url: adminPath + '/sys/role/entityAttrListData', params });
+
+export const roleFieldScopeListData = (params?: Recordable | any) =>
+  defHttp.post<Page<Recordable>>({ url: adminPath + '/sys/role/roleFieldScopeListData', params });
+
+export const roleFormAuthFieldScope = (params?: Recordable | any) =>
+  defHttp.get<Recordable>({ url: adminPath + '/sys/role/formAuthFieldScope', params });
+
+export const roleSaveAuthFieldScope = (params?: Recordable | any, data?: Recordable) =>
+  defHttp.postJson<Recordable>({ url: adminPath + '/sys/role/saveAuthFieldScope', params, data });
+
+export const roleDeleteAuthFieldScope = (params?: Recordable | any) =>
+  defHttp.post<Role>({ url: adminPath + '/sys/role/deleteAuthFieldScope', params });
 
 export const roleCtrlDataTreeData = (params?: any) => {
   const { url, ...params2 } = params;
   return defHttp.get<Role>({ url: adminPath + url, params: params2 });
 };
+
+export const roleFormAuthDataScope = (params?: Role | any) =>
+  defHttp.get<Recordable>({ url: adminPath + '/sys/role/formAuthDataScope', params });
 
 export const roleSaveAuthDataScope = (params?: Role | any) =>
   defHttp.post<Role>({ url: adminPath + '/sys/role/saveAuthDataScope', params });

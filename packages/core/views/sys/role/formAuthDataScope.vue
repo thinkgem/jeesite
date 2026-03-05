@@ -58,17 +58,10 @@
   const getTitle = computed(() => {
     const r = record.value;
     const { getDictLabel } = useDict();
+    const type = getDictLabel('sys_user_type', r.userType, t('未设置'));
     return {
       icon: meta.icon || 'ant-design:book-outlined',
-      value:
-        t('角色分配数据权限') +
-        ' (' +
-        r.roleName +
-        '-' +
-        r.viewCode +
-        '-' +
-        getDictLabel('sys_user_type', r.userType, t('未设置')) +
-        ')',
+      value: t('角色分配数据权限') + ' (' + r.roleName + '-' + r.viewCode + '-' + type + ')',
     };
   });
 
@@ -83,7 +76,7 @@
     const res = await roleFormAuthDataScope(data);
     record.value = (res.role || {}) as Recordable;
     roleDataScopeRef.value?.loadDataScopeFormData(record.value, res);
-    menuDataScopeRef.value?.loadDataScopeFormData(res);
+    menuDataScopeRef.value?.loadDataScopeFormData(record.value, res);
     setDrawerProps({ loading: false });
   });
 
@@ -127,7 +120,7 @@
 
     &-tabs.ant-tabs {
       margin-top: 0 !important;
-      padding-right: 5px;
+      margin-right: 15px !important;
 
       .ant-tabs-nav {
         margin-left: 20px;
@@ -136,6 +129,10 @@
       .ant-tabs-tab {
         padding: 7px 0;
       }
+    }
+
+    &-tabs2.ant-tabs {
+      padding-right: 10px;
     }
   }
 </style>

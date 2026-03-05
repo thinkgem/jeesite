@@ -23,6 +23,7 @@
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
     <FormAuthDataScope @register="registerAuthDataSourceDrawer" @success="handleSuccess" />
+    <FormAuthFieldScope @register="registerAuthFieldSourceDrawer" @success="handleSuccess" />
     <FormAuthUser @register="registerAuthUserDrawer" @success="handleSuccess" />
   </div>
 </template>
@@ -39,6 +40,7 @@
   import { FormProps } from '@jeesite/core/components/Form';
   import InputForm from './form.vue';
   import FormAuthDataScope from './formAuthDataScope.vue';
+  import FormAuthFieldScope from './formAuthFieldScope.vue';
   import FormAuthUser from './formAuthUser.vue';
 
   const { t } = useI18n('sys.role');
@@ -245,9 +247,16 @@
     ],
     dropDownActions: (record: Recordable) => [
       {
-        icon: 'i-ant-design:check-square-outlined',
-        label: t('授权菜单'),
-        onClick: handleForm.bind(this, { roleCode: record.roleCode, op: 'auth' }),
+        icon: 'i-ant-design:user-outlined',
+        label: t('分配用户'),
+        onClick: handleFormAuthUser.bind(this, { roleCode: record.roleCode }),
+        auth: 'sys:role:edit',
+        ifShow: () => record.userType === 'employee',
+      },
+      {
+        icon: 'i-ant-design:profile-outlined',
+        label: t('字段权限'),
+        onClick: handleFormAuthFieldScope.bind(this, { roleCode: record.roleCode }),
         auth: 'sys:role:edit',
       },
       {
@@ -257,17 +266,17 @@
         auth: 'sys:role:edit',
       },
       {
-        icon: 'i-ant-design:user-outlined',
-        label: t('分配用户'),
-        onClick: handleFormAuthUser.bind(this, { roleCode: record.roleCode }),
+        icon: 'i-ant-design:check-square-outlined',
+        label: t('授权菜单'),
+        onClick: handleForm.bind(this, { roleCode: record.roleCode, op: 'auth' }),
         auth: 'sys:role:edit',
-        ifShow: () => record.userType === 'employee',
       },
     ],
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerAuthDataSourceDrawer, { openDrawer: openAuthDataScopeDrawer }] = useDrawer();
+  const [registerAuthFieldSourceDrawer, { openDrawer: openAuthFieldScopeDrawer }] = useDrawer();
   const [registerAuthUserDrawer, { openDrawer: openAuthUserDrawer }] = useDrawer();
   const [registerTable, { reload }] = useTable({
     api: roleListData,
@@ -306,6 +315,10 @@
 
   function handleFormAuthDataScope(record: Recordable) {
     openAuthDataScopeDrawer(true, record);
+  }
+
+  function handleFormAuthFieldScope(record: Recordable) {
+    openAuthFieldScopeDrawer(true, record);
   }
 
   function handleFormAuthUser(record: Recordable) {
