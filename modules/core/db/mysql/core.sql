@@ -520,6 +520,7 @@ CREATE TABLE js_sys_module
 	current_version varchar(50) COMMENT '当前版本',
 	upgrade_info varchar(300) COMMENT '升级信息',
 	gen_base_dir varchar(1000) COMMENT '生成基础路径',
+	gen_front_dir varchar(1000) COMMENT '生成前端路径',
 	tpl_category varchar(200) COMMENT '使用的模板',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',

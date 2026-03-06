@@ -519,6 +519,7 @@ CREATE TABLE js_sys_module
 	current_version varchar2(50),
 	upgrade_info varchar2(300),
 	gen_base_dir nvarchar2(1000),
+	gen_front_dir nvarchar2(1000),
 	tpl_category varchar2(200),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,
@@ -1446,6 +1447,7 @@ COMMENT ON COLUMN js_sys_module.module_sort IS '模块排序（升序）';
 COMMENT ON COLUMN js_sys_module.current_version IS '当前版本';
 COMMENT ON COLUMN js_sys_module.upgrade_info IS '升级信息';
 COMMENT ON COLUMN js_sys_module.gen_base_dir IS '生成基础路径';
+COMMENT ON COLUMN js_sys_module.gen_front_dir IS '生成前端路径';
 COMMENT ON COLUMN js_sys_module.tpl_category IS '使用的模板';
 COMMENT ON COLUMN js_sys_module.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_module.create_by IS '创建者';

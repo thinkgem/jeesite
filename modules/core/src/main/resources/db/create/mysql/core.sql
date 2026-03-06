@@ -6,7 +6,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 -- 业务分类
 CREATE TABLE ${_prefix}biz_category
 (
-	category_code varchar(64) NOT NULL COMMENT '流程分类',
+	category_code varchar(64) NOT NULL COMMENT '业务分类',
 	view_code varchar(500) COMMENT '分类代码',
 	category_name varchar(64) NOT NULL COMMENT '分类名称',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
@@ -499,10 +499,10 @@ CREATE TABLE ${_prefix}sys_menu_data_scope
 	id varchar(64) NOT NULL COMMENT '编号',
 	role_code varchar(64) NOT NULL COMMENT '角色编码',
 	menu_code varchar(64) NOT NULL COMMENT '菜单编码',
-	rule_name varchar(100) COMMENT '规则名称',
-	rule_type char(1) COMMENT '规则类型（1 角色数据范围 2自定义条件规则 3自定义SQL）',
-	rule_config text COMMENT '规则配置（JSON）',
-	status char(1) COMMENT '状态（0正常 1删除 2停用）',
+	rule_name varchar(100) NOT NULL COMMENT '规则名称',
+	rule_type char(1) NOT NULL COMMENT '规则类型（1 角色数据范围 2自定义条件规则 3自定义SQL）',
+	rule_config text NOT NULL COMMENT '规则配置（JSON）',
+	status char(1) NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (id)
 ) COMMENT = '菜单数据权限';
@@ -520,6 +520,7 @@ CREATE TABLE ${_prefix}sys_module
 	current_version varchar(50) COMMENT '当前版本',
 	upgrade_info varchar(300) COMMENT '升级信息',
 	gen_base_dir varchar(1000) COMMENT '生成基础路径',
+	gen_front_dir varchar(1000) COMMENT '生成前端路径',
 	tpl_category varchar(200) COMMENT '使用的模板',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
@@ -739,11 +740,11 @@ CREATE TABLE ${_prefix}sys_role
 	role_type varchar(100) COMMENT '角色分类（高管、中层、基层、其它）',
 	role_sort decimal(10) COMMENT '角色排序（升序）',
 	is_sys char(1) COMMENT '系统内置（1是 0否）',
-	is_show char(1) DEFAULT '1' COMMENT '是否显示',
+	is_show char(1) DEFAULT '1' COMMENT '是否显示（1是 0否）',
 	user_type varchar(16) COMMENT '用户类型（employee员工 member会员）',
 	desktop_url varchar(255) COMMENT '桌面地址（仪表盘地址）',
 	data_scope char(1) COMMENT '数据范围（0未设置 1全部数据 2自定义数据）',
-	biz_scope varchar(255) COMMENT '适应业务范围（不同的功能，不同的数据权限支持）',
+	biz_scope varchar(255) COMMENT '适应业务范围(不同的功能不同的数据权限)',
 	sys_codes varchar(500) COMMENT '包含系统（多个用逗号隔开）',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
@@ -782,12 +783,32 @@ CREATE TABLE ${_prefix}sys_role
 CREATE TABLE ${_prefix}sys_role_data_scope
 (
 	role_code varchar(64) NOT NULL COMMENT '控制角色编码',
+	menu_code varchar(64) DEFAULT '0' NOT NULL COMMENT '菜单编码',
 	ctrl_type varchar(20) NOT NULL COMMENT '控制类型',
 	ctrl_data varchar(64) NOT NULL COMMENT '控制数据',
 	ctrl_permi varchar(64) NOT NULL COMMENT '控制权限',
-	menu_code varchar(64) DEFAULT '0' NOT NULL COMMENT '菜单编码',
-	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi, menu_code)
+	PRIMARY KEY (role_code, menu_code, ctrl_type, ctrl_data, ctrl_permi)
 ) COMMENT = '角色数据权限表';
+
+
+-- 角色字段权限
+CREATE TABLE ${_prefix}sys_role_field_scope
+(
+	id varchar(64) NOT NULL COMMENT '编号',
+	role_code varchar(64) NOT NULL COMMENT '角色编码',
+	menu_code varchar(64) NOT NULL COMMENT '菜单编码',
+	entity_name varchar(50) NOT NULL COMMENT '实体名称',
+	entity_label varchar(100) NOT NULL COMMENT '实体标签',
+	entity_class varchar(100) NOT NULL COMMENT '实体类名',
+	field_config text NOT NULL COMMENT '范围配置（JSON）',
+	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
+	create_by varchar(64) NOT NULL COMMENT '创建者',
+	create_date datetime NOT NULL COMMENT '创建时间',
+	update_by varchar(64) NOT NULL COMMENT '更新者',
+	update_date datetime NOT NULL COMMENT '更新时间',
+	remarks varchar(500) COMMENT '备注信息',
+	PRIMARY KEY (id)
+) COMMENT = '角色字段权限';
 
 
 -- 角色与菜单关联表
@@ -889,6 +910,13 @@ CREATE TABLE ${_prefix}sys_user_role
 
 /* Create Indexes */
 
+CREATE INDEX idx_biz_category_vc ON ${_prefix}biz_category (view_code ASC);
+CREATE INDEX idx_biz_category_pc ON ${_prefix}biz_category (parent_code ASC);
+CREATE INDEX idx_biz_category_pcc ON ${_prefix}biz_category (parent_codes ASC);
+CREATE INDEX idx_biz_category_ts ON ${_prefix}biz_category (tree_sort ASC);
+CREATE INDEX idx_biz_category_tss ON ${_prefix}biz_category (tree_sorts ASC);
+CREATE INDEX idx_biz_category_st ON ${_prefix}biz_category (status ASC);
+CREATE INDEX idx_biz_category_cc ON ${_prefix}biz_category (corp_code ASC);
 CREATE INDEX idx_gen_table_ptn ON ${_prefix}gen_table (parent_table_name ASC);
 CREATE INDEX idx_gen_table_column_tn ON ${_prefix}gen_table_column (table_name ASC);
 CREATE INDEX idx_sys_area_pc ON ${_prefix}sys_area (parent_code ASC);
@@ -955,6 +983,7 @@ CREATE INDEX idx_sys_menu_mcs ON ${_prefix}sys_menu (module_codes ASC);
 CREATE INDEX idx_sys_menu_wt ON ${_prefix}sys_menu (weight ASC);
 CREATE INDEX idx_sys_menu_ds_mc ON ${_prefix}sys_menu_data_scope (menu_code ASC);
 CREATE INDEX idx_sys_menu_ds_rc ON ${_prefix}sys_menu_data_scope (role_code ASC);
+CREATE INDEX idx_sys_menu_ds_st ON ${_prefix}sys_menu_data_scope (status ASC);
 CREATE INDEX idx_sys_module_status ON ${_prefix}sys_module (status ASC);
 CREATE INDEX idx_sys_msg_inner_cb ON ${_prefix}sys_msg_inner (create_by ASC);
 CREATE INDEX idx_sys_msg_inner_status ON ${_prefix}sys_msg_inner (status ASC);
@@ -1003,6 +1032,10 @@ CREATE INDEX idx_sys_role_cc ON ${_prefix}sys_role (corp_code ASC);
 CREATE INDEX idx_sys_role_is ON ${_prefix}sys_role (is_sys ASC);
 CREATE INDEX idx_sys_role_status ON ${_prefix}sys_role (status ASC);
 CREATE INDEX idx_sys_role_rs ON ${_prefix}sys_role (role_sort ASC);
+CREATE INDEX idx_sys_role_fs_fc ON ${_prefix}sys_role_field_scope (role_code ASC);
+CREATE INDEX idx_sys_role_fs_mc ON ${_prefix}sys_role_field_scope (menu_code ASC);
+CREATE INDEX idx_sys_role_fs_st ON ${_prefix}sys_role_field_scope (status ASC);
+CREATE INDEX idx_sys_role_fs_ec ON ${_prefix}sys_role_field_scope (entity_class ASC);
 CREATE INDEX idx_sys_user_lc ON ${_prefix}sys_user (login_code ASC);
 CREATE INDEX idx_sys_user_email ON ${_prefix}sys_user (email ASC);
 CREATE INDEX idx_sys_user_mobile ON ${_prefix}sys_user (mobile ASC);

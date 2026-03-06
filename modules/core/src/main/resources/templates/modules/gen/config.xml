@@ -258,7 +258,7 @@
 	</gridRowCol>
 	<!-- 模块生成模板分类 -->
 	<moduleTplCategory>
-		<category value="module" label="生成模块代码（Maven）">
+		<category value="module" 			label="后端模块代码（Maven）">
 			<template>module/bin/deploy.bat.xml</template>
 			<template>module/bin/deploy.sh.xml</template>
 			<template>module/bin/package.bat.xml</template>
@@ -271,7 +271,7 @@
 			<template>module/src/main/resources/application-assistant.xml</template>
 			<template>module/pom.xml</template>
 		</category>
-		<category value="module_vue" label="生成前端模块代码（Vue）">
+		<category value="module_vue" 		label="前端模块包代码（Vue）">
 			<template>module_vue/api/api.xml</template>
 			<template>module_vue/views/views.xml</template>
 			<template>module_vue/index.ts.xml</template>
@@ -279,7 +279,7 @@
 			<template>module_vue/README.md.xml</template>
 			<template>module_vue/tsconfig.json.xml</template>
 		</category>
-		<category value="module_cloud" label="生成微服务模块代码（Cloud）">
+		<category value="module_cloud" 		label="微服务模块代码（Cloud）">
 			<template>module_cloud/client/bin/deploy.bat.xml</template>
 			<template>module_cloud/client/bin/deploy.sh.xml</template>
 			<template>module_cloud/client/bin/package.bat.xml</template>
@@ -309,6 +309,14 @@
 			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.sh.xml</template>
 			<template>module_cloud/web/pom.xml</template>
 			<template>module_cloud/pom.xml</template>
+		</category>
+		<category value="module_maven_vue" 	label="后端模块和前端代码（Maven + Vue）">
+			<template>category-ref:module</template>
+			<template>category-ref:module_vue</template>
+		</category>
+		<category value="module_cloud_vue" 	label="微服务模块和前端代码（Cloud + Vue）">
+			<template>category-ref:module</template>
+			<template>category-ref:module_vue</template>
 		</category>
 	</moduleTplCategory>
 </config>

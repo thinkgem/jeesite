@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.8</zoom>
-	<x>1189</x>
-	<y>19</y>
+	<x>55</x>
+	<y>1972</y>
 	<default_color>
 		<r>255</r>
 		<g>255</g>
@@ -11633,6 +11633,39 @@
 				<normal_column>
 					<word_id>893d64272ea667d194b7302cffca1b3f52fa0a7b</word_id>
 					<id>e7eaf31498ae6187c1581c139231f45bf40ed94a</id>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>nvarchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>false</foreign_key>
+					<not_null>false</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
+					<word_id>e7038062700a18c2b992dd41e831e5cd29514d2d</word_id>
+					<id>f4a3d75c79f97198855253d00ed2fea686916c7a</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>

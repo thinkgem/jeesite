@@ -519,6 +519,7 @@ CREATE TABLE js_sys_module
 	current_version varchar(50),
 	upgrade_info varchar(300),
 	gen_base_dir vargraphic(1000),
+	gen_front_dir vargraphic(1000),
 	tpl_category varchar(200),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
