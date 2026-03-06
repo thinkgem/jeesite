@@ -60,6 +60,11 @@
         component: 'Input',
       },
       {
+        label: t('模块编码'),
+        field: 'moduleCode_like',
+        component: 'Input',
+      },
+      {
         label: t('主类全名'),
         field: 'mainClassName',
         component: 'Input',

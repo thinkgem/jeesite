@@ -31,6 +31,15 @@
           </template>
         </Input>
       </template>
+      <template #genFrontDir>
+        <Input v-model:value="genFrontDir">
+          <template #addonAfter>
+            <Dropdown class="cursor-pointer" :trigger="['click']" :dropMenuList="genFrontDirList">
+              {{ t('生成路径快速选择') }} <Icon icon="i-ant-design:down-outlined" />
+            </Dropdown>
+          </template>
+        </Input>
+      </template>
     </BasicForm>
   </BasicDrawer>
 </template>
@@ -54,6 +63,8 @@
   const record = ref<Module>({} as Module);
   const genBaseDir = ref<string>('');
   const genBaseDirList = ref<DropMenu[]>([]);
+  const genFrontDir = ref<string>('');
+  const genFrontDirList = ref<DropMenu[]>([]);
   const genTplCategoryList = ref<string[]>([]);
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
@@ -192,6 +203,14 @@
       ifShow: () => isCustomModule.value,
     },
     {
+      label: t('生成前端路径'),
+      field: 'genFrontDir',
+      component: 'Input',
+      slot: 'genFrontDir',
+      colProps: { md: 24, lg: 24 },
+      ifShow: () => isCustomModule.value,
+    },
+    {
       label: t('代码生成模板'),
       field: 'tplCategory',
       component: 'Select',
@@ -229,9 +248,18 @@
         },
       };
     });
+    genFrontDir.value = res.genFrontDir || '';
+    genFrontDirList.value = (res.genFrontDirList || []).map((s: string) => {
+      return {
+        text: s,
+        onClick: () => {
+          genFrontDir.value = s;
+        },
+      };
+    });
     genTplCategoryList.value = res.config?.moduleTplCategory?.tplCategoryList || [];
     isCustomModule.value = !moduleNames.includes(record.value.moduleCode || '');
-    record.value.tplCategory = ''; // 不回显代码生成模版，选择生成模版后再编译或生成模版
+    // record.value.tplCategory = ''; // 不回显代码生成模版，选择生成模版后再编译或生成模版
     await setFieldsValue(record.value);
     await updateSchema([
       {
@@ -257,7 +285,7 @@
   async function handleSubmitAndGen() {
     createConfirm({
       title: t('提示'),
-      content: t('是否要生成模块源码到 ‘' + genBaseDir.value + '’ 目录下？'),
+      content: t('是否要生成模块源码到 ‘' + genBaseDir.value + '’ <br/>和 ‘' + genFrontDir.value + '’ 目录下？'),
       iconType: 'warning',
       width: '50%',
       onOk: () => {
@@ -275,7 +303,8 @@
         moduleCode: record.value.moduleCode,
       };
       data.genBaseDir = genBaseDir.value;
-      data.genFlag = flag ? flag : '1';
+      data.genFrontDir = genFrontDir.value;
+      data.genFlag = flag;
       data.replaceFile = data.replaceFile ? '1' : '0';
       // console.log('submit', params, data, record);
       const res = await moduleSave(params, data);
