@@ -8,7 +8,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
+import com.jeesite.common.mybatis.mapper.SqlMap;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.utils.excel.ExcelImport;
@@ -63,10 +63,11 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 */
 	@Override
 	public void addFieldScopeFilter(EmpUser empUser) {
-//		// 实例1：角色级别：角色管理 -> 字段权限 -> 角色字段权限
-//		empUser.sqlMap().getFieldScope().addFilter();
-//		// 实例2：菜单级别：角色管理 -> 字段权限 -> 菜单字段权限
-//		empUser.sqlMap().getFieldScope().addFilterByPermission("sys:empUser:view,sys:empUser:edit");
+//		SqlMap sqlMap = empUser.sqlMap();
+//		// 举例1：角色级别：角色管理 -> 字段权限 -> 角色字段权限
+//		sqlMap.getFieldScope().addFilter();
+//		// 举例2：菜单级别：角色管理 -> 字段权限 -> 菜单字段权限
+//		sqlMap.getFieldScope().addFilterByPermission("sys:empUser:view,sys:empUser:edit");
 	}
 
 	/**
@@ -76,17 +77,19 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 */
 	@Override
 	public void addDataScopeFilter(EmpUser empUser, String ctrlPermi) {
-		QueryDataScope dataScope = empUser.sqlMap().getDataScope();
-		dataScope.addFilter("dsfOffice", "Office",
+		SqlMap sqlMap = empUser.sqlMap();
+		// 根据部门类型进行数据权限过滤
+		sqlMap.getDataScope().addFilter("dsfOffice", "Office",
 				"e.office_code", "a.create_by", ctrlPermi, "office_user");
+		// 根据公司类型进行数据权限过滤
 		if (StringUtils.isNotBlank(EmpUtils.getCompany().getCompanyCode())){
-			dataScope.addFilter("dsfCompany", "Company",
+			sqlMap.getDataScope().addFilter("dsfCompany", "Company",
 					"e.company_code", "a.create_by", ctrlPermi, "office_user");
 		}
-//		// 实例：菜单级别：角色管理 -> 数据权限 -> 菜单数据权限
-//		dataScope.addFilterByPermission("dsfOffice", "sys:empUser:view", "Office",
+//		// 举例：菜单级别：角色管理 -> 数据权限 -> 菜单数据权限
+//		sqlMap.getDataScope().addFilterByPermission("dsfOffice", "sys:empUser:view", "Office",
 //				"e.office_code", "a.create_by", ctrlPermi);
-//		dataScope.addFilterByPermission("dsfOffice", "sys:empUser:view", "User",
+//		sqlMap.getDataScope().addFilterByPermission("dsfOffice", "sys:empUser:view", "User",
 //				"a.user_code", ctrlPermi);
 	}
 
