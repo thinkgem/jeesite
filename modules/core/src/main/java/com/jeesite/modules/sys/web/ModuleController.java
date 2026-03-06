@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.web;
 
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -115,12 +117,26 @@ public class ModuleController extends BaseController {
 		}
 		GenConfig config = GenUtils.getConfig();
 		model.addAttribute("config", config);
-		List<String> genBaseDirList = GenModuleUtils.getGenBaseDirList();
+		// 生成后端文件路径
+		Set<String> genBaseDirList = SetUtils.newLinkedHashSet();
+		List<String> defaultBaseDirList = GenModuleUtils.getGenBaseDirList();
+		genBaseDirList.addAll(moduleService.findGenBaseDirList(new Module()));
+		genBaseDirList.addAll(defaultBaseDirList);
 		model.addAttribute("genBaseDirList", genBaseDirList);
 		if (StringUtils.isNotBlank(module.getGenBaseDir())) {
 			model.addAttribute("genBaseDir", module.getGenBaseDir());
 		} else {
-			model.addAttribute("genBaseDir", genBaseDirList.get(0));
+			model.addAttribute("genBaseDir", defaultBaseDirList.get(0));
+		}
+		// 生成前端文件路径
+		Set<String> genFrontDirList = SetUtils.newLinkedHashSet();
+		genFrontDirList.addAll(moduleService.findGenFrontDirList(new Module()));
+		genFrontDirList.addAll(defaultBaseDirList);
+		model.addAttribute("genFrontDirList", genFrontDirList);
+		if (StringUtils.isNotBlank(module.getGenFrontDir())) {
+			model.addAttribute("genFrontDir", module.getGenFrontDir());
+		} else {
+			model.addAttribute("genFrontDir", defaultBaseDirList.get(0));
 		}
 		model.addAttribute("module", module);
 		return "modules/sys/moduleForm";

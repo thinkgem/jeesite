@@ -498,10 +498,10 @@ CREATE TABLE [${_prefix}sys_menu_data_scope]
 	[id] varchar(64) NOT NULL,
 	[role_code] varchar(64) NOT NULL,
 	[menu_code] varchar(64) NOT NULL,
-	[rule_name] varchar(100),
-	[rule_type] char(1),
-	[rule_config] text,
-	[status] char(1),
+	[rule_name] varchar(100) NOT NULL,
+	[rule_type] char(1) NOT NULL,
+	[rule_config] text NOT NULL,
+	[status] char(1) NOT NULL,
 	[remarks] nvarchar(500),
 	PRIMARY KEY ([id])
 );
@@ -519,6 +519,7 @@ CREATE TABLE [${_prefix}sys_module]
 	[current_version] varchar(50),
 	[upgrade_info] varchar(300),
 	[gen_base_dir] nvarchar(1000),
+	[gen_front_dir] nvarchar(1000),
 	[tpl_category] varchar(200),
 	[status] char(1) DEFAULT '0' NOT NULL,
 	[create_by] varchar(64) NOT NULL,
@@ -781,11 +782,31 @@ CREATE TABLE [${_prefix}sys_role]
 CREATE TABLE [${_prefix}sys_role_data_scope]
 (
 	[role_code] varchar(64) NOT NULL,
+	[menu_code] varchar(64) DEFAULT '0' NOT NULL,
 	[ctrl_type] varchar(20) NOT NULL,
 	[ctrl_data] varchar(64) NOT NULL,
 	[ctrl_permi] varchar(64) NOT NULL,
-	[menu_code] varchar(64) DEFAULT '0' NOT NULL,
-	PRIMARY KEY ([role_code], [ctrl_type], [ctrl_data], [ctrl_permi], [menu_code])
+	PRIMARY KEY ([role_code], [menu_code], [ctrl_type], [ctrl_data], [ctrl_permi])
+);
+
+
+-- 角色字段权限
+CREATE TABLE [${_prefix}sys_role_field_scope]
+(
+	[id] varchar(64) NOT NULL,
+	[role_code] varchar(64) NOT NULL,
+	[menu_code] varchar(64) NOT NULL,
+	[entity_name] varchar(50) NOT NULL,
+	[entity_label] varchar(100) NOT NULL,
+	[entity_class] varchar(100) NOT NULL,
+	[field_config] text NOT NULL,
+	[status] char(1) DEFAULT '0' NOT NULL,
+	[create_by] varchar(64) NOT NULL,
+	[create_date] datetime NOT NULL,
+	[update_by] varchar(64) NOT NULL,
+	[update_date] datetime NOT NULL,
+	[remarks] nvarchar(500),
+	PRIMARY KEY ([id])
 );
 
 
@@ -888,6 +909,13 @@ CREATE TABLE [${_prefix}sys_user_role]
 
 /* Create Indexes */
 
+CREATE INDEX [idx_biz_category_vc] ON [${_prefix}biz_category] ([view_code]);
+CREATE INDEX [idx_biz_category_pc] ON [${_prefix}biz_category] ([parent_code]);
+CREATE INDEX [idx_biz_category_pcc] ON [${_prefix}biz_category] ([parent_codes]);
+CREATE INDEX [idx_biz_category_ts] ON [${_prefix}biz_category] ([tree_sort]);
+CREATE INDEX [idx_biz_category_tss] ON [${_prefix}biz_category] ([tree_sorts]);
+CREATE INDEX [idx_biz_category_st] ON [${_prefix}biz_category] ([status]);
+CREATE INDEX [idx_biz_category_cc] ON [${_prefix}biz_category] ([corp_code]);
 CREATE INDEX [idx_gen_table_ptn] ON [${_prefix}gen_table] ([parent_table_name]);
 CREATE INDEX [idx_gen_table_column_tn] ON [${_prefix}gen_table_column] ([table_name]);
 CREATE INDEX [idx_sys_area_pc] ON [${_prefix}sys_area] ([parent_code]);
@@ -954,6 +982,7 @@ CREATE INDEX [idx_sys_menu_mcs] ON [${_prefix}sys_menu] ([module_codes]);
 CREATE INDEX [idx_sys_menu_wt] ON [${_prefix}sys_menu] ([weight]);
 CREATE INDEX [idx_sys_menu_ds_mc] ON [${_prefix}sys_menu_data_scope] ([menu_code]);
 CREATE INDEX [idx_sys_menu_ds_rc] ON [${_prefix}sys_menu_data_scope] ([role_code]);
+CREATE INDEX [idx_sys_menu_ds_st] ON [${_prefix}sys_menu_data_scope] ([status]);
 CREATE INDEX [idx_sys_module_status] ON [${_prefix}sys_module] ([status]);
 CREATE INDEX [idx_sys_msg_inner_cb] ON [${_prefix}sys_msg_inner] ([create_by]);
 CREATE INDEX [idx_sys_msg_inner_status] ON [${_prefix}sys_msg_inner] ([status]);
@@ -1002,6 +1031,10 @@ CREATE INDEX [idx_sys_role_cc] ON [${_prefix}sys_role] ([corp_code]);
 CREATE INDEX [idx_sys_role_is] ON [${_prefix}sys_role] ([is_sys]);
 CREATE INDEX [idx_sys_role_status] ON [${_prefix}sys_role] ([status]);
 CREATE INDEX [idx_sys_role_rs] ON [${_prefix}sys_role] ([role_sort]);
+CREATE INDEX [idx_sys_role_fs_fc] ON [${_prefix}sys_role_field_scope] ([role_code]);
+CREATE INDEX [idx_sys_role_fs_mc] ON [${_prefix}sys_role_field_scope] ([menu_code]);
+CREATE INDEX [idx_sys_role_fs_st] ON [${_prefix}sys_role_field_scope] ([status]);
+CREATE INDEX [idx_sys_role_fs_ec] ON [${_prefix}sys_role_field_scope] ([entity_class]);
 CREATE INDEX [idx_sys_user_lc] ON [${_prefix}sys_user] ([login_code]);
 CREATE INDEX [idx_sys_user_email] ON [${_prefix}sys_user] ([email]);
 CREATE INDEX [idx_sys_user_mobile] ON [${_prefix}sys_user] ([mobile]);
