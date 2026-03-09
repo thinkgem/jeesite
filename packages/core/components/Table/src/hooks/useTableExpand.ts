@@ -105,13 +105,20 @@ export function useTableExpand(
     const treeLeaf = record.treeLeaf && record.treeLeaf === '1';
     if ((!treeLeaf && isEmpty(record[unref(getChildrenColumnName)])) || forceLoad) {
       record.isLoading = true;
-      const { api, pagination } = unref(propsRef);
+      const { api, pagination, beforeFetch, afterFetch } = unref(propsRef);
       if (!api || !isFunction(api)) return;
       const rowKey = unref(getRowKey) as string;
-      let list = await api({
+      let params = {
         parentCode: record[rowKey] as string,
         status: forceLoad ? '' : getFormData()?.status,
-      });
+      };
+      if (beforeFetch && isFunction(beforeFetch)) {
+        params = (await beforeFetch(params)) || params;
+      }
+      let list = await api(params);
+      if (afterFetch && isFunction(afterFetch)) {
+        list = (await afterFetch(list)) || record;
+      }
       if (pagination && list.list) {
         list = list.list;
       }
