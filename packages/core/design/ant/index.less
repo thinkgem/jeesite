@@ -57,9 +57,13 @@
   color: @primary-color !important;
 }
 
-.modal-posfull-content {
-  max-height: 300px;
-  overflow-y: auto;
+.ant-modal.ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-content {
+  flex: 1;
+
+  .modal-posfull-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
 }
 
 // =================================
