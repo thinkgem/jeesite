@@ -199,7 +199,7 @@
       await getForm().setFieldsValue({
         categoryCode: props.treeCode,
       });
-      reload();
+      await reload();
     },
   );
 

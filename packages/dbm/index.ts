@@ -4,4 +4,7 @@ export {
   ViewsDbmModifyLogList,
   ViewsDbmTableList,
   ViewsDbmTableIndex,
+  ViewsDbmEntityList,
+  ViewsDbmEntityIndex,
+  ViewsDbmExcelList,
 } from './node_modules/@jeesite/dbm-lib/dist';

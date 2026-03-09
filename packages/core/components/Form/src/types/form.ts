@@ -128,6 +128,8 @@ export interface FormProps<T = Recordable> {
   submitFunc?: () => Promise<void>;
   transformDateFunc?: (date: any) => string;
   colon?: boolean;
+
+  formKey?: string;
 }
 
 export interface FormSchema<T = Recordable> {
