@@ -145,7 +145,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 				|| rawType == LocalDate.class
 				|| rawType == LocalDateTime.class
 				|| rawType == ZonedDateTime.class
-				|| rawType == LocalTime.class;
+				|| rawType == LocalTime.class
+				|| rawType == java.sql.Date.class;
 	}
 
 	/**
