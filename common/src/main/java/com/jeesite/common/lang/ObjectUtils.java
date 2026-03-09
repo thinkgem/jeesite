@@ -43,7 +43,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			return null;
 		}
 		try {
-			return new BigDecimal(val.toString().trim());
+			String str = val.toString();
+			return new BigDecimal(StringUtils.trim(str));
 		} catch (NumberFormatException e) {
 			return null;
 		}
@@ -73,7 +74,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				}
 				return number == null ? 0D : number;
 			}
-			return Double.parseDouble(StringUtils.trim(str));
+			BigDecimal bd = new BigDecimal(StringUtils.trim(str));
+			return bd.doubleValue();
 		} catch (Exception e) {
 			return 0D;
 		}
@@ -110,7 +112,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				}
 				return number == null ? 0L : number;
 			}
-			return Long.parseLong(StringUtils.trim(str));
+			BigDecimal bd = new BigDecimal(StringUtils.trim(str));
+			return bd.toBigInteger().longValue();
 		} catch (Exception e) {
 			return 0L;
 		}
