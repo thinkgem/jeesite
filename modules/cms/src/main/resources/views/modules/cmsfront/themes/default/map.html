@@ -16,11 +16,11 @@
 		<div class="map">
 			<#html:foreach items="${categoryList(site.siteCode, '0', -1, '')}" var="category">
 			<a class="dt" href="${category.url}" target="_blank">${category.categoryName}</a>
-	    	<#html:set value="${categoryList(site.siteCode, category.categoryCode, -1, '')}" export="categoryList" />
-		    	<#html:if test="${isNotEmpty(categoryList)}">
+			<#html:set value="${categoryList(site.siteCode, category.categoryCode, -1, '')}" export="categoryList" />
+				<#html:if test="${isNotEmpty(categoryList)}">
 					<div class="dd">
 						<#html:foreach items="${categoryList}" var="category">
-				    		<a href="${category.url}" target="_blank">${category.categoryName}</a>
+							<a href="${category.url}" target="_blank">${category.categoryName}</a>
 						</#html:foreach>
 					</div>
 				</#html:if>
