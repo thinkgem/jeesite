@@ -60,7 +60,16 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	public MsgInner get(MsgInner msgInner) {
 		return super.get(msgInner);
 	}
-	
+
+	/**
+	 * 查询列表数据
+	 * @param msgInner 查询条件； page 分页对象
+	 */
+	@Override
+	public List<MsgInner> findList(MsgInner entity) {
+		return super.findList(entity);
+	}
+
 	/**
 	 * 查询分页数据
 	 * @param msgInner 查询条件； page 分页对象

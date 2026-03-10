@@ -96,6 +96,15 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		entity.sqlMap().getDataScope().addFilter("dsfCategory",
 				"Category", "a.category_code", "a.create_by", ctrlPermi);
 	}
+
+	/**
+	 * 查询文章数据
+	 * @param article 查询条件
+	 */
+	@Override
+	public List<Article> findList(Article entity) {
+		return super.findList(entity);
+	}
 	
 	/**
 	 * 查询分页数据

@@ -81,6 +81,15 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 		return super.get(${className});
 		<% } %>
 	}
+
+	/**
+	 * 查询列表数据
+	 * @param ${className} 查询条件
+	 */
+	@Override
+	public List<${ClassName}> findList(${ClassName} ${className}) {
+		return super.findList(${className});
+	}
 	
 	/**
 	 * 查询分页数据
@@ -90,15 +99,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	@Override
 	public Page<${ClassName}> findPage(${ClassName} ${className}) {
 		return super.findPage(${className});
-	}
-	
-	/**
-	 * 查询列表数据
-	 * @param ${className} 查询条件
-	 */
-	@Override
-	public List<${ClassName}> findList(${ClassName} ${className}) {
-		return super.findList(${className});
 	}
 	<% for (child in table.childList){ %>
 	

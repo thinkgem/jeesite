@@ -20,6 +20,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 站点 Service
  * @author ThinkGem
@@ -47,6 +49,15 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Override
 	public Site get(Site site) {
 		return super.get(site);
+	}
+
+	/**
+	 * 查询站点数据
+	 * @param site 查询条件
+	 */
+	@Override
+	public List<Site> findList(Site entity) {
+		return super.findList(entity);
 	}
 
 	/**
