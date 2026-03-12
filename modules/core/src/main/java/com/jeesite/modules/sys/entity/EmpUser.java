@@ -104,7 +104,7 @@ public class EmpUser extends User {
 		@ExcelField(title = "员工姓名", attrName = "employee.empName", align = Align.CENTER, sort = 95),
 		@ExcelField(title = "拥有角色编号", attrName = "userRoleString", align = Align.LEFT, sort = 800, type = ExcelField.Type.IMPORT),
 		@ExcelField(title = "建档日期", attrName = "createDate", align = Align.CENTER, words = 15, sort = 900, type = ExcelField.Type.EXPORT, dataFormat = "yyyy-MM-dd"),
-		@ExcelField(title = "最后登录", attrName = "lastLoginDate", align = Align.CENTER, words = 20, sort = 900, type = ExcelField.Type.EXPORT),
+		@ExcelField(title = "最后登录", attrName = "lastLoginDate", align = Align.CENTER, words = 20, sort = 900, type = ExcelField.Type.EXPORT, dataFormat = "yyyy-MM-dd HH:mm"),
 	})
 	public EmpUser() {
 		this(null);
