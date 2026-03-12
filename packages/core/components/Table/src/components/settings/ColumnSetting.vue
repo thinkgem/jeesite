@@ -168,11 +168,11 @@
 
       watchEffect(() => {
         setTimeout(() => {
-          const columns = table.getColumns();
-          if (columns.length && !state.isInit) {
+          // const columns = table.getColumns(); // 去掉长度判断，如果初始化状态没有列，就不会显示设置列
+          if (/*columns.length && */ !state.isInit) {
             init();
           }
-        }, 0);
+        }, 500);
       });
 
       watch([() => unref(table?.getBindValues).showIndexColumn, () => unref(table?.getBindValues).rowSelection], () => {
