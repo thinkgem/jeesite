@@ -206,9 +206,10 @@ export function useTableScroll(
 
     const tableWidth = tableWidthRef.value;
     const { canResize, scroll } = unref(propsRef);
-    const canScrollX = tableWidth <= 0 || width <= 0 || tableWidth > width;
+    // const canScrollX = tableWidth <= 0 || width <= 0 || tableWidth > width;
     return {
-      x: canScrollX ? (canResize ? tableWidth : undefined) : tableWidth,
+      // x: canScrollX ? (canResize ? tableWidth : undefined) : tableWidth,
+      x: tableWidth, // 编辑表格会有多余的水平滚动条，但不会出现拖拽浏览器窗口大小最大和最小时，单元格的编辑组件数据丢失
       y: canResize ? unref(tableHeightRef) : undefined,
       scrollToFirstRowOnChange: true,
       ...scroll,
