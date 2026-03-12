@@ -143,6 +143,10 @@
       params['__entityId'] = record.value.__entityId;
       return params;
     },
+    beforeChildFetch: (params) => {
+      params['__entityId'] = record.value.__entityId;
+      return params;
+    },
     actionColumn: actionColumn,
     formConfig: searchForm,
     showTableSetting: true,

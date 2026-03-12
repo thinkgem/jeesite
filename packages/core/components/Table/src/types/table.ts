@@ -186,6 +186,10 @@ export interface BasicTableProps<T = any> {
   beforeFetch?: Fn;
   // 自定义处理接口返回参数
   afterFetch?: Fn;
+  // 请求子节点之前处理参数
+  beforeChildFetch?: Fn;
+  // 自定义处理子节点接口返回参数
+  afterChildFetch?: Fn;
   // 查询条件请求之前处理
   handleSearchInfoFn?: Fn;
   // 请求接口配置
