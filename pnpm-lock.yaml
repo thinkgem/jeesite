@@ -201,8 +201,8 @@ importers:
   packages/cms:
     dependencies:
       '@jeesite/cms-lib':
-        specifier: 5.15.1-rc.1
-        version: 5.15.1-rc.1(vue@3.5.25(typescript@5.9.3))
+        specifier: 5.16.0-rc.1
+        version: 5.16.0-rc.1(vue@3.5.25(typescript@5.9.3))
       qs:
         specifier: 6.14.0
         version: 6.14.0
@@ -320,8 +320,8 @@ importers:
   packages/dbm:
     dependencies:
       '@jeesite/dbm-lib':
-        specifier: 5.15.1-rc.1
-        version: 5.15.1-rc.1(vue@3.5.25(typescript@5.9.3))
+        specifier: 5.16.0-rc.1
+        version: 5.16.0-rc.1(vue@3.5.25(typescript@5.9.3))
       qs:
         specifier: 6.14.0
         version: 6.14.0
@@ -333,8 +333,8 @@ importers:
   packages/dfm:
     dependencies:
       '@jeesite/dfm-lib':
-        specifier: 5.15.1-rc.1
-        version: 5.15.1-rc.1(vue@3.5.25(typescript@5.9.3))
+        specifier: 5.16.0-rc.1
+        version: 5.16.0-rc.1(@types/sortablejs@1.15.9)(vue@3.5.25(typescript@5.9.3))
       '@vueuse/core':
         specifier: 14.1.0
         version: 14.1.0(vue@3.5.25(typescript@5.9.3))
@@ -1796,14 +1796,14 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@jeesite/cms-lib@5.15.1-rc.1':
-    resolution: {integrity: sha512-7cz/u74DfsiGcqE+uwRWh7RzOpz36nMK3Hrp0Rm08KuwCQ4NtVEiH6zCQOMYy8gCSGlOwm3E+aZG0DV+EIosLw==}
+  '@jeesite/cms-lib@5.16.0-rc.1':
+    resolution: {integrity: sha512-Pn2fk7WG/tJCq6ncuKXXfXbvU63mh8XVQD2Op9OfYjmDNBz1S4/eYOaPXujvilnnOga5Ke4A5D0aafz0hpXWZw==}
 
-  '@jeesite/dbm-lib@5.15.1-rc.1':
-    resolution: {integrity: sha512-21Qp5Kb9/B2xtudb72WpqqS3YLSqnE1FmWzwSL8AQpv9WJH6x0mm2XjVz39x7n3bpjvMjAMqr7dyaUwQuDBGUQ==}
+  '@jeesite/dbm-lib@5.16.0-rc.1':
+    resolution: {integrity: sha512-GLM2eStfglrN30lRrhTCwDrWqn3O2cla98ASVhuUe6MQvJRnLIru6RAU9pMx1062RuVaLnv+GGg5CMpNhLo4GA==}
 
-  '@jeesite/dfm-lib@5.15.1-rc.1':
-    resolution: {integrity: sha512-DzAUl2YMm3+N8m2mIIHlT35GiW1vkpZ6NkIrHGVGgTCml5KiyvyclennBDUC/cEjieNKKDdHJYwB3jFv0p4UnQ==}
+  '@jeesite/dfm-lib@5.16.0-rc.1':
+    resolution: {integrity: sha512-peYEdObfGcEaGnxuRK8885/NP/0DuCJJqQY/bQSziMn0xw+eZ/H05oisxIBTrj6a2M3V4XNqPNpPdYu8VxsEMg==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -5995,6 +5995,15 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-draggable-plus@0.6.1:
+    resolution: {integrity: sha512-FbtQ/fuoixiOfTZzG3yoPl4JAo9HJXRHmBQZFB9x2NYCh6pq0TomHf7g5MUmpaDYv+LU2n6BPq2YN9sBO+FbIg==}
+    peerDependencies:
+      '@types/sortablejs': ^1.15.0
+      '@vue/composition-api': '*'
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-eslint-parser@10.2.0:
     resolution: {integrity: sha512-CydUvFOQKD928UzZhTp4pr2vWz1L+H99t7Pkln2QSPdvmURT0MoC4wUccfCnuEaihNsu9aYYyk+bep8rlfkUXw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -7373,7 +7382,7 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@jeesite/cms-lib@5.15.1-rc.1(vue@3.5.25(typescript@5.9.3))':
+  '@jeesite/cms-lib@5.16.0-rc.1(vue@3.5.25(typescript@5.9.3))':
     dependencies:
       '@traptitech/markdown-it-katex': 3.6.0
       highlight.js: 11.11.1
@@ -7385,7 +7394,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/dbm-lib@5.15.1-rc.1(vue@3.5.25(typescript@5.9.3))':
+  '@jeesite/dbm-lib@5.16.0-rc.1(vue@3.5.25(typescript@5.9.3))':
     dependencies:
       qs: 6.14.0
       vue-i18n: 11.2.2(vue@3.5.25(typescript@5.9.3))
@@ -7393,17 +7402,20 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/dfm-lib@5.15.1-rc.1(vue@3.5.25(typescript@5.9.3))':
+  '@jeesite/dfm-lib@5.16.0-rc.1(@types/sortablejs@1.15.9)(vue@3.5.25(typescript@5.9.3))':
     dependencies:
       '@vueuse/core': 14.1.0(vue@3.5.25(typescript@5.9.3))
       dayjs: 1.11.19
       less: 4.4.2
       lodash-es: 4.17.21
       monaco-editor: 0.55.1
+      vue-draggable-plus: 0.6.1(@types/sortablejs@1.15.9)
       vue-i18n: 11.2.2(vue@3.5.25(typescript@5.9.3))
       vue-types: 6.0.0(vue@3.5.25(typescript@5.9.3))
       vuedraggable: 4.1.0(vue@3.5.25(typescript@5.9.3))
     transitivePeerDependencies:
+      - '@types/sortablejs'
+      - '@vue/composition-api'
       - vue
 
   '@jridgewell/gen-mapping@0.3.13':
@@ -12101,6 +12113,10 @@ snapshots:
   vue-demi@0.14.10(vue@3.5.25(typescript@5.9.3)):
     dependencies:
       vue: 3.5.25(typescript@5.9.3)
+
+  vue-draggable-plus@0.6.1(@types/sortablejs@1.15.9):
+    dependencies:
+      '@types/sortablejs': 1.15.9
 
   vue-eslint-parser@10.2.0(eslint@9.39.1(jiti@2.6.1)):
     dependencies:
