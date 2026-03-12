@@ -1,6 +1,6 @@
 <template>
   <PageWrapper :contentFullHeight="true">
-    <DDesigner :hiddenHeader="false" />
+    <DDesigner :hiddenHeader="false" :formMode="true" />
   </PageWrapper>
 </template>
 <script setup>
@@ -10,11 +10,11 @@
   // import { onMounted } from 'vue';
   //
   // onMounted(() => {
-  //   console.log(pluginManager.getComponents());
-  //   console.log(pluginManager.getComponentConfigs());
-  //   console.log(pluginManager.getComponent('Input'));
-  //   console.log(pluginManager.getComponentConfig('Input'));
-  //   pluginManager.registerComponent(componentConfig);
-  //   pluginManager.removeComponent('Input');
+  //   console.log(pluginManager.component.getComponents());
+  //   console.log(pluginManager.component.getComponentConfigs());
+  //   console.log(pluginManager.component.getComponent('input'));
+  //   console.log(pluginManager.component.getComponentConfigByType('input'));
+  //   pluginManager.component.registerComponent(componentConfig);
+  //   pluginManager.component.removeComponent('input');
   // });
 </script>
