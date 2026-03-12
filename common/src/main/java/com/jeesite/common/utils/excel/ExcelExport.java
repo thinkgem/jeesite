@@ -7,6 +7,7 @@ package com.jeesite.common.utils.excel;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.reflect.ReflectUtils;
@@ -506,8 +507,8 @@ public class ExcelExport implements Closeable{
 					defaultDataFormat = "0.00";
 				}else if(val instanceof BigDecimal) {
 					cell.setCellValue(((BigDecimal)val).doubleValue());
-				}else if(val instanceof Date) {
-					cell.setCellValue((Date) val);
+				}else if(DateUtils.isDateType(val.getClass())) {
+					cell.setCellValue(ObjectUtils.toDate(val));
 					defaultDataFormat = "yyyy-MM-dd HH:mm";
 				}else {
 					// 如果没有指定 fieldType，切自行根据类型查找相应的转换类（com.jeesite.common.utils.excel.fieldtype.值的类名+Type）
