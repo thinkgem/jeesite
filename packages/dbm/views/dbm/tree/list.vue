@@ -42,7 +42,7 @@
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { useQuery } from '@jeesite/core/hooks/web/usePage';
-  import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
+  import { BasicTable, BasicColumn, BasicTableProps, useTable } from '@jeesite/core/components/Table';
   import { FormProps } from '@jeesite/core/components/Form';
   import {
     dbmFixTreeData,
@@ -160,7 +160,9 @@
     rowKey.value = res.tableProps?.rowKey || 'id';
     treeViewName.value = res.treeViewName || 'id';
     await getForm().setProps(res.formProps || {});
-    setProps(res.tableProps || {});
+    const tableProps = (res.tableProps || {}) as BasicTableProps;
+    tableProps.tableSettingStoreKey = record.value.__entityId;
+    setProps(tableProps);
     await reload();
   });
 
