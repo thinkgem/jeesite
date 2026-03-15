@@ -350,6 +350,9 @@ importers:
       monaco-editor:
         specifier: 0.55.1
         version: 0.55.1
+      vue-draggable-plus:
+        specifier: ^0.6.0
+        version: 0.6.1(@types/sortablejs@1.15.9)
       vue-i18n:
         specifier: 11.2.2
         version: 11.2.2(vue@3.5.25(typescript@5.9.3))
