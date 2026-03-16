@@ -111,7 +111,7 @@
 * 经典版：Beetl 3.20（HTML）、jQuery 3.7、Bootstrap 3.4、AdminLTE 2.4
 * 分离版：支持所有现代浏览器，如：谷歌 Chrome 87+、微软 Edge、火狐、国产浏览器 等
 * 经典版：支持 IE10 和以上版本，以及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
-* 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
+* 工作流引擎：Flowable 7、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）已支持数据库：<https://jeesite.com/docs/technology/>
 * JeeSite Vue 前后分离版：<https://gitee.com/thinkgem/jeesite-vue>
 * Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3>
