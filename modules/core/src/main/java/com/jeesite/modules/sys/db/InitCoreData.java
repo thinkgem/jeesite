@@ -322,7 +322,7 @@ public class InitCoreData extends BaseInitDataTests {
 				entity.setIsNewRecord(true);
 				empUserService.save(entity);
 				// 设置当前为管理员，否则无法保存用户角色关系
-				entity.currentUser(new User(User.SUPER_ADMIN_CODE));
+				entity.currentUser(new User(User.SUPER_ADMIN_CODES[0]));
 				userService.saveAuth(entity);
 				return null;
 			}
