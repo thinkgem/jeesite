@@ -107,7 +107,7 @@ public class SecAdminController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(User user) {
-		if (User.isSuperAdmin(user.getUserCode())) {
+		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (!User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
