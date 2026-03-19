@@ -164,7 +164,7 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "disable")
 	public String disable(User user) {
-		if (User.isSuperAdmin(user.getUserCode())) {
+		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (user.currentUser().getUserCode().equals(user.getUserCode())) {
@@ -182,7 +182,7 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "enable")
 	public String enable(User user) {
-		if (User.isSuperAdmin(user.getUserCode())) {
+		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		user.setStatus(User.STATUS_NORMAL);
@@ -197,7 +197,7 @@ public class CorpAdminController extends BaseController {
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
 	public String resetpwd(User user, String newPassword) {
-		if (User.isSuperAdmin(user.getUserCode())) {
+		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		// 登录密码解密（解决密码明文传输安全问题）
@@ -216,7 +216,7 @@ public class CorpAdminController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(User user) {
-		if (User.isSuperAdmin(user.getUserCode())) {
+		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (user.currentUser().getUserCode().equals(user.getUserCode())) {

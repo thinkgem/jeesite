@@ -13,8 +13,6 @@ import com.jeesite.modules.sys.entity.UserDataScope;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import io.swagger.annotations.Api;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
@@ -25,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -107,7 +107,7 @@ public class SecAdminController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(User user) {
-		if (User.isSuperAdmin(user.getUserCode())) {
+		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (!User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){

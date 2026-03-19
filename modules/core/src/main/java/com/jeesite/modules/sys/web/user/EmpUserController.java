@@ -289,7 +289,7 @@ public class EmpUserController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "disable")
 	public String disable(EmpUser empUser, boolean freeze) {
-		if (User.isSuperAdmin(empUser.getUserCode())) {
+		if (User.isSuperAdmin(empUser.getUserCode(), empUser.getLoginCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
@@ -311,7 +311,7 @@ public class EmpUserController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "enable")
 	public String enable(EmpUser empUser, boolean freeze) {
-		if (User.isSuperAdmin(empUser.getUserCode())) {
+		if (User.isSuperAdmin(empUser.getUserCode(), empUser.getLoginCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
@@ -331,7 +331,7 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
 	public String resetpwd(EmpUser empUser, String newPassword) {
-		if (User.isSuperAdmin(empUser.getUserCode())) {
+		if (User.isSuperAdmin(empUser.getUserCode(), empUser.getLoginCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
@@ -354,7 +354,7 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(EmpUser empUser) {
-		if (User.isSuperAdmin(empUser.getUserCode())) {
+		if (User.isSuperAdmin(empUser.getUserCode(), empUser.getLoginCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
