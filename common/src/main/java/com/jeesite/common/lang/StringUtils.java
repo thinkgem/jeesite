@@ -227,23 +227,51 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 替换一个匹配的字符串
 	 */
-    public static String replaceOnce(final String text, final String searchString, final String replacement) {
-        return Strings.CS.replaceOnce(text, searchString, replacement);
-    }
+	public static String replaceOnce(final String text, final String searchString, final String replacement) {
+		return Strings.CS.replaceOnce(text, searchString, replacement);
+	}
 
 	/**
 	 * 替换一个匹配的字符串（忽略大小写）
 	 */
 	public static String replaceOnceIgnoreCase(final String text, final String searchString, final String replacement) {
-        return Strings.CI.replaceOnce(text, searchString, replacement);
-    }
+		return Strings.CI.replaceOnce(text, searchString, replacement);
+	}
+
+	/**
+	 * 获取最后一个成功匹配的索引位置
+	 */
+	public static int lastIndexOf(final CharSequence seq, final CharSequence searchSeq) {
+		return Strings.CS.lastIndexOf(seq, searchSeq);
+	}
+
+	/**
+	 * 获取最后一个成功匹配的索引位置（从什么位置开始查找）
+	 */
+	public static int lastIndexOf(final CharSequence seq, final CharSequence searchSeq, final int startPos) {
+		return Strings.CS.lastIndexOf(seq, searchSeq, startPos);
+	}
+
+	/**
+	 * 获取最后一个成功匹配的索引位置（忽略大小写）
+	 */
+	public static int lastIndexOfIgnoreCase(final CharSequence str, final CharSequence searchStr) {
+		return Strings.CI.lastIndexOf(str, searchStr);
+	}
+
+	/**
+	 * 获取最后一个成功匹配的索引位置（从什么位置开始查找，且忽略大小写）
+	 */
+	public static int lastIndexOfIgnoreCase(final CharSequence str, final CharSequence searchStr, final int startPos) {
+		return Strings.CI.lastIndexOf(str, searchStr, startPos);
+	}
 
 	/**
 	 * 为空时，返回默认字符串
 	 */
-    public static String defaultString(final String str, final String nullDefault) {
-        return Objects.toString(str, nullDefault);
-    }
+	public static String defaultString(final String str, final String nullDefault) {
+		return Objects.toString(str, nullDefault);
+	}
 
 	/**
 	 * 去除左右空格（包含中文空格）
