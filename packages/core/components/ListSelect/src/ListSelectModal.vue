@@ -134,7 +134,12 @@
     onChange: (_selectedRowKeys: Key[], selectedRows: Recordable[]) => {
       if (!initialize.value) return; // 首次加载不更新状态，会将初始值清空
       selectedRowKeys.value = _selectedRowKeys;
-      selectList.value = selectedRows;
+      const rowKey = (tableProps.rowKey || 'id') as string;
+      const lastSelKeys = selectList.value.map((item) => item[rowKey]);
+      const currSelRows = selectedRows.filter((item) => !lastSelKeys.includes(item[rowKey]));
+      selectList.value = [...selectList.value, ...currSelRows].filter((item) =>
+        selectedRowKeys.value.includes(item[rowKey]),
+      );
     },
   };
 
