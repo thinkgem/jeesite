@@ -33,10 +33,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 public class PostRole extends DataEntity<PostRole> {
 
 	private static final long serialVersionUID = 1L;
-	private String postCode;	// 岗位编码
-	private String roleCode;	// 角色编码
+	protected String postCode;	// 岗位编码
+	protected String roleCode;	// 角色编码
 
-	private Role role; // sqlMap().loadJoinTableAlias("r") 的时候返回数据
+	protected Role role; // sqlMap().loadJoinTableAlias("r") 的时候返回数据
 
 	public PostRole() {
 		this(null, null);

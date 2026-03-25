@@ -68,33 +68,33 @@ public class Article extends DataEntity<Article> implements BpmEntityApi<Article
 	public static final String DEFAULT_TEMPLATE = "viewArticle"; // 默认文章内容模板
 	private static final long serialVersionUID = 1L;
 	
-	private Category category; 	// 栏目编码
-	private String moduleType; 	// 模块类型
-	private String title; 		// 内容标题
-	private String href; 		// 外部链接
-	private String color; 		// 标题颜色
-	private String image; 		// 内容图片
-	private String keywords; 	// 关键字
-	private String description; // 描述
-	private Integer weight; 	// 权重，越大越靠前
-	private Date weightDate; 	// 权重期限
-	private String source; 		// 来源（转载/原创）
-	private String copyfrom; 	// 文章来源出处
-	private Long hits; 			// 点击数
+	protected Category category; 	// 栏目编码
+	protected String moduleType; 	// 模块类型
+	protected String title; 		// 内容标题
+	protected String href; 		// 外部链接
+	protected String color; 		// 标题颜色
+	protected String image; 		// 内容图片
+	protected String keywords; 	// 关键字
+	protected String description; // 描述
+	protected Integer weight; 	// 权重，越大越靠前
+	protected Date weightDate; 	// 权重期限
+	protected String source; 		// 来源（转载/原创）
+	protected String copyfrom; 	// 文章来源出处
+	protected Long hits; 			// 点击数
 	
-	private Integer hitsPlus; 			// 支持数
-	private Integer hitsMinus; 			// 反对数
-	private Integer wordCount; 			// 字数（不包含html）
-	private String customContentView; 	// 自定义内容视图
-	private String viewConfig; 			// 视图配置
+	protected Integer hitsPlus; 			// 支持数
+	protected Integer hitsMinus; 			// 反对数
+	protected Integer wordCount; 			// 字数（不包含html）
+	protected String customContentView; 	// 自定义内容视图
+	protected String viewConfig; 			// 视图配置
 
-	private ArticleData articleData; 	//文章副表
-	private Boolean isQueryArticleData; // 是否查询文章内容
+	protected ArticleData articleData; 	//文章副表
+	protected Boolean isQueryArticleData; // 是否查询文章内容
 
-	private Date beginDate; 			// 开始时间
-	private Date endDate; 				// 结束时间
+	protected Date beginDate; 			// 开始时间
+	protected Date endDate; 				// 结束时间
 
-	private BpmParamsApi bpm;		// 流程相关参数
+	protected BpmParamsApi bpm;		// 流程相关参数
 
 	public Article() {
 		super();

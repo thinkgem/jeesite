@@ -4,12 +4,12 @@
  */
 package com.jeesite.modules.cms.entity;
 
+import javax.validation.constraints.Size;
+
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
-
-import javax.validation.constraints.Size;
 
 
 /**
@@ -28,10 +28,10 @@ import javax.validation.constraints.Size;
 public class ArticleData extends DataEntity<ArticleData> {
 
 	private static final long serialVersionUID = 1L;
-	private String content; 		// 文章内容
-	private String relation; 		// 相关文章
-	private String isCanComment; 	// 是否允许评论
-	private Extend extend; 			// 扩展字段
+	protected String content; 		// 文章内容
+	protected String relation; 		// 相关文章
+	protected String isCanComment; 	// 是否允许评论
+	protected Extend extend; 			// 扩展字段
 
 	public ArticleData() {
 		this(null);

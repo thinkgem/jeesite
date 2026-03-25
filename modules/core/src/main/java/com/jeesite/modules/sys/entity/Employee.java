@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 		@Column(includeEntity = DataEntity.class),
 		@Column(name = "emp_code", attrName = "empCode", label = "员工编码", isPK = true),
 		@Column(name = "emp_no", attrName = "empNo", label = "员工工号"),
-		@Column(name = "emp_name", attrName = "empName", label = "员工姓名", queryType = QueryType.LIKE),
+		@Column(name = "emp_name", 	attrName = "empName", label = "员工姓名", queryType = QueryType.LIKE),
 		@Column(name = "emp_name_en", attrName = "empNameEn", label = "英文名", queryType = QueryType.LIKE),
 		@Column(name = "office_code", attrName = "office.officeCode", label = "机构编码", isQuery = false),
 		@Column(name = "office_name", attrName = "office.officeName", label = "机构名称", isQuery = false),
@@ -52,17 +52,17 @@ import java.util.stream.Collectors;
 public class Employee extends DataEntity<Employee> {
 	
 	private static final long serialVersionUID = 1L;
-	private String empCode;		// 员工编码
-	private String empNo;		// 员工工号
-	private String empName;		// 员工姓名
-	private String empNameEn;	// 员工英文名
-	private Office office;		// 机构对象
-	private Company company;	// 公司对象
+	protected String empCode;		// 员工编码
+	protected String empNo;		// 员工工号
+	protected String empName;		// 员工姓名
+	protected String empNameEn;	// 员工英文名
+	protected Office office;		// 机构对象
+	protected Company company;	// 公司对象
 	
-	private String postCode;	// 根据职位查询
+	protected String postCode;	// 根据职位查询
 
-	private List<EmployeePost> employeePostList = ListUtils.newArrayList(); // 关联岗位信息
-	private List<EmployeeOffice> employeeOfficeList = ListUtils.newArrayList(); // 关联附属机构信息
+	protected List<EmployeePost> employeePostList = ListUtils.newArrayList(); // 关联岗位信息
+	protected List<EmployeeOffice> employeeOfficeList = ListUtils.newArrayList(); // 关联附属机构信息
 	
 	public Employee() {
 		this(null);

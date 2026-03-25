@@ -23,8 +23,8 @@ import com.jeesite.common.mybatis.annotation.Table;
 public class CompanyOffice extends DataEntity<CompanyOffice> {
 	
 	private static final long serialVersionUID = 1L;
-	private String companyCode;		// 公司编码
-	private String officeCode;		// 机构编码
+	protected String companyCode;		// 公司编码
+	protected String officeCode;		// 机构编码
 	
 	public CompanyOffice() {
 		this(null);

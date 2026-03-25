@@ -15,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+
 @Table(name = "${_prefix}sys_post", alias = "a", label = "岗位信息", columns = {
 		@Column(includeEntity = BaseEntity.class),
 		@Column(includeEntity = DataEntity.class),
@@ -28,17 +29,17 @@ import javax.validation.constraints.Size;
 public class Post extends DataEntity<Post> {
 	
 	private static final long serialVersionUID = 1L;
-	private String postCode;		// 岗位编码
-	private String viewCode;		// 岗位代码（作为显示用，多租户内唯一）
-	private String postName;		// 岗位名称
-	private String postType;		// 岗位分类（高管、中层、基层）
-	private Integer postSort;		// 岗位排序（升序）
+	protected String postCode;		// 岗位编码
+	protected String viewCode;		// 岗位代码（作为显示用，多租户内唯一）
+	protected String postName;		// 岗位名称
+	protected String postType;		// 岗位分类（高管、中层、基层）
+	protected Integer postSort;		// 岗位排序（升序）
 	
-	private String empCode; 		// 根据用户查询岗位
-	private String userCode;		// 根据用户编码查询
+	protected String empCode; 		// 根据用户查询岗位
+	protected String userCode;		// 根据用户编码查询
 
-	private String roleCodes;		// 关联的角色编号
-	private String roleNames;		// 关联的角色名称
+	protected String roleCodes;		// 关联的角色编号
+	protected String roleNames;		// 关联的角色名称
 
 	public Post() {
 		this(null);

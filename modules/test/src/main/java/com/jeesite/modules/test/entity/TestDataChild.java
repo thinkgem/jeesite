@@ -13,8 +13,8 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
-
 import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 /**
@@ -54,20 +54,20 @@ import java.util.Date;
 public class TestDataChild extends DataEntity<TestDataChild> {
 	
 	private static final long serialVersionUID = 1L;
-	private Long testSort;		// 排序号
-	private TestData testData;		// 父表主键 父类
-	private String testInput;		// 单行文本
-	private String testTextarea;		// 多行文本
-	private String testSelect;		// 下拉框
-	private String testSelectMultiple;		// 下拉多选
-	private String testRadio;		// 单选框
-	private String testCheckbox;		// 复选框
-	private Date testDate;		// 日期选择
-	private Date testDatetime;		// 日期时间
-	private User testUser;		// 用户选择
-	private Office testOffice;		// 机构选择
-	private String testAreaCode;		// 区域选择
-	private String testAreaName;		// 区域名称
+	protected Long testSort;		// 排序号
+	protected TestData testData;		// 父表主键 父类
+	protected String testInput;		// 单行文本
+	protected String testTextarea;		// 多行文本
+	protected String testSelect;		// 下拉框
+	protected String testSelectMultiple;		// 下拉多选
+	protected String testRadio;		// 单选框
+	protected String testCheckbox;		// 复选框
+	protected Date testDate;		// 日期选择
+	protected Date testDatetime;		// 日期时间
+	protected User testUser;		// 用户选择
+	protected Office testOffice;		// 机构选择
+	protected String testAreaCode;		// 区域选择
+	protected String testAreaName;		// 区域名称
 	
 	public TestDataChild() {
 		this(null);

@@ -37,14 +37,14 @@ import java.util.Date;
 public class AppComment extends DataEntity<AppComment> {
 	
 	private static final long serialVersionUID = 1L;
-	private String category;		// 问题分类
-	private String content;		// 问题和意见
-	private String contact;		// 联系方式
-	private String deviceInfo;		// 设备信息
-	private Date replyDate;		// 回复时间
-	private String replyContent;		// 回复意见
-	private String replyUserCode;		// 回复人员
-	private String replyUserName;		// 回复人员姓名
+	protected String category;		// 问题分类
+	protected String content;		// 问题和意见
+	protected String contact;		// 联系方式
+	protected String deviceInfo;		// 设备信息
+	protected Date replyDate;		// 回复时间
+	protected String replyContent;		// 回复意见
+	protected String replyUserCode;		// 回复人员
+	protected String replyUserName;		// 回复人员姓名
 	
 	public AppComment() {
 		this(null);

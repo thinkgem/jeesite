@@ -45,17 +45,17 @@ import javax.validation.constraints.Size;
 public class EmployeeOffice extends DataEntity<EmployeeOffice> {
 	
 	private static final long serialVersionUID = 1L;
-	private String empCode;		// 员工编码
-	private String officeCode;	// 机构编码
-	private String postCode;	// 岗位编码
+	protected String empCode;		// 员工编码
+	protected String officeCode;	// 机构编码
+	protected String postCode;	// 岗位编码
 
-	private String parentCodes;	// 机构所有上级编码（数据权限用）
-	private String viewCode;	// 机构代码（联合查询项）
-	private String officeName;	// 机构名称（联合查询项）
-	private String fullName;	// 机构全称（联合查询项）
-	private String treeNames;	// 机构全称（联合查询项）
+	protected String parentCodes;	// 机构所有上级编码（数据权限用）
+	protected String viewCode;	// 机构代码（联合查询项）
+	protected String officeName;	// 机构名称（联合查询项）
+	protected String fullName;	// 机构全称（联合查询项）
+	protected String treeNames;	// 机构全称（联合查询项）
 
-	private String postName;	// 岗位名称（联合查询项）
+	protected String postName;	// 岗位名称（联合查询项）
 	
 	public EmployeeOffice() {
 		this(null, null);

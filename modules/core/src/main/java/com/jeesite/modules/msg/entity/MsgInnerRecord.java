@@ -4,17 +4,15 @@
  */
 package com.jeesite.modules.msg.entity;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import java.util.Date;
 
 /**
  * 内部消息发送记录表 Entity
@@ -38,12 +36,12 @@ public class MsgInnerRecord extends DataEntity<MsgInnerRecord> {
 	public static final String READ_STATUS_UNREAD = "2";
 	
 	private static final long serialVersionUID = 1L;
-	private String msgInnerId;			// 所属消息
-	private String receiveUserCode;		// 接受者用户编码
-	private String receiveUserName;		// 接受者用户姓名
-	private String readStatus;			// 读取状态（0未送达 1已读 2未读）
-	private Date readDate;				// 阅读时间
-	private String isStar;				// 是否标星
+	protected String msgInnerId;			// 所属消息
+	protected String receiveUserCode;		// 接受者用户编码
+	protected String receiveUserName;		// 接受者用户姓名
+	protected String readStatus;			// 读取状态（0未送达 1已读 2未读）
+	protected Date readDate;				// 阅读时间
+	protected String isStar;				// 是否标星
 	
 	public MsgInnerRecord() {
 		this(null);
