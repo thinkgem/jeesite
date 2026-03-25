@@ -108,13 +108,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- Data/Dynamic Base Manage -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-dbm</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- Core Static -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
