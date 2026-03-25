@@ -104,6 +104,10 @@
 					<groupId>com.fasterxml.woodstox</groupId>
 					<artifactId>woodstox-core</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.apache.groovy</groupId>
+					<artifactId>groovy-jsr223</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
