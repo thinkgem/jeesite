@@ -4,19 +4,17 @@
  */
 package com.jeesite.modules.msg.entity;
 
-import java.io.Serial;
-import java.util.Date;
-
-import jakarta.validation.constraints.NotBlank;
-
-import jakarta.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
+import java.util.Date;
 
 /**
  * 内部消息 Entity
@@ -56,20 +54,20 @@ public class MsgInner extends DataEntity<MsgInner> {
 	
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String msgTitle;		// 消息标题
-	private String contentLevel;	// 内容等级（1普通 2一般 3紧急）
-	private String contentType;		// 内容类型（1公告 2新闻 3会议 4其它）
-	private String msgContent;		// 消息内容
-	private String receiveType;		// 接受者类型（1用户 2部门 3角色 4岗位）
-	private String receiveCodes;	// 接受者字符串
-	private String receiveNames;	// 接受者名称字符串
-	private String sendUserCode;	// 发送者用户编码
-	private String sendUserName;	// 发送者用户姓名
-	private Date sendDate;			// 发送时间
-	private String isAttac;			// 是否有附件
-	private String notifyTypes;		// 通知类型（PC APP 短信 邮件 微信）多选
+	protected String msgTitle;		// 消息标题
+	protected String contentLevel;	// 内容等级（1普通 2一般 3紧急）
+	protected String contentType;		// 内容类型（1公告 2新闻 3会议 4其它）
+	protected String msgContent;		// 消息内容
+	protected String receiveType;		// 接受者类型（1用户 2部门 3角色 4岗位）
+	protected String receiveCodes;	// 接受者字符串
+	protected String receiveNames;	// 接受者名称字符串
+	protected String sendUserCode;	// 发送者用户编码
+	protected String sendUserName;	// 发送者用户姓名
+	protected Date sendDate;			// 发送时间
+	protected String isAttac;			// 是否有附件
+	protected String notifyTypes;		// 通知类型（PC APP 短信 邮件 微信）多选
 	
-	private MsgInnerRecord record;	// 消息记录状态
+	protected MsgInnerRecord record;	// 消息记录状态
 	
 	public MsgInner() {
 		this(null);

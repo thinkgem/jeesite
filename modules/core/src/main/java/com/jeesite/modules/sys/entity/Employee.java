@@ -54,17 +54,17 @@ public class Employee extends DataEntity<Employee> {
 	
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String empCode;		// 员工编码
-	private String empNo;		// 员工工号
-	private String empName;		// 员工姓名
-	private String empNameEn;	// 员工英文名
-	private Office office;		// 机构对象
-	private Company company;	// 公司对象
+	protected String empCode;		// 员工编码
+	protected String empNo;		// 员工工号
+	protected String empName;		// 员工姓名
+	protected String empNameEn;	// 员工英文名
+	protected Office office;		// 机构对象
+	protected Company company;	// 公司对象
 	
-	private String postCode;	// 根据职位查询
+	protected String postCode;	// 根据职位查询
 
-	private List<EmployeePost> employeePostList = ListUtils.newArrayList(); // 关联岗位信息
-	private List<EmployeeOffice> employeeOfficeList = ListUtils.newArrayList(); // 关联附属机构信息
+	protected List<EmployeePost> employeePostList = ListUtils.newArrayList(); // 关联岗位信息
+	protected List<EmployeeOffice> employeeOfficeList = ListUtils.newArrayList(); // 关联附属机构信息
 	
 	public Employee() {
 		this(null);

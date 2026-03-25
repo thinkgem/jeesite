@@ -56,20 +56,20 @@ public class Site extends DataEntity<Site> {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String siteCode; 	// 站点编码
-	private String siteName; 	// 站点名称
-	private Integer siteSort; 	// 站点排序号
-	private String title; 		// 站点标题
-	private String logo; 		// 站点Logo
-	private String domain; 		// 站点域名
-	private String keywords; 	// 关键字
-	private String description; // 描述
-	private String theme; 		// 主题
-	private String copyright; 	// 版权信息
-	private String customIndexView; // 自定义站点首页视图
+	protected String siteCode; 	// 站点编码
+	protected String siteName; 	// 站点名称
+	protected Integer siteSort; 	// 站点排序号
+	protected String title; 		// 站点标题
+	protected String logo; 		// 站点Logo
+	protected String domain; 		// 站点域名
+	protected String keywords; 	// 关键字
+	protected String description; // 描述
+	protected String theme; 		// 主题
+	protected String copyright; 	// 版权信息
+	protected String customIndexView; // 自定义站点首页视图
 	
-	private List<String> categoryCodes;		//某角色下某站点下授权的栏目id集合
-	private List<Category> categoryList;	//某站点下所有栏目集合
+	protected List<String> categoryCodes;		//某角色下某站点下授权的栏目id集合
+	protected List<Category> categoryList;	//某站点下所有栏目集合
 	
 	public Site() {
 		this(null);

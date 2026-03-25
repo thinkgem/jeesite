@@ -63,24 +63,24 @@ public class Log extends DataEntity<Log> {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	
-	private String logType;			// 日志类型
-	private String logTitle;		// 日志标题
-	private String requestUri;		// 请求URI
-	private String requestMethod;	// 操作方式
-	private String requestParams;	// 操作提交的数据
-	private String diffModifyData;	// 差异修改数据
-	private String bizKey;			// 业务主键
-	private String bizType;			// 业务类型
-	private String remoteAddr;		// 操作IP地址
-	private String serverAddr;		// 请求服务器地址
-	private String isException;		// 是否有异常
-	private String exceptionInfo;	// 异常信息
-	private String userAgent;		// 用户代理
-	private String deviceName;		// 设备名称/操作系统
-	private String browserName;		// 浏览器名称
-	private Long executeTime;		// 执行时间
+	protected String logType;			// 日志类型
+	protected String logTitle;		// 日志标题
+	protected String requestUri;		// 请求URI
+	protected String requestMethod;	// 操作方式
+	protected String requestParams;	// 操作提交的数据
+	protected String diffModifyData;	// 差异修改数据
+	protected String bizKey;			// 业务主键
+	protected String bizType;			// 业务类型
+	protected String remoteAddr;		// 操作IP地址
+	protected String serverAddr;		// 请求服务器地址
+	protected String isException;		// 是否有异常
+	protected String exceptionInfo;	// 异常信息
+	protected String userAgent;		// 用户代理
+	protected String deviceName;		// 设备名称/操作系统
+	protected String browserName;		// 浏览器名称
+	protected Long executeTime;		// 执行时间
 	
-	private Map<String, String[]> paramsMap; 		// 操作提交的数据，临时存储用
+	protected Map<String, String[]> paramsMap; 		// 操作提交的数据，临时存储用
 	
 	public Log() {
 		this(null);

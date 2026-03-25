@@ -4,16 +4,15 @@
  */
 package com.jeesite.modules.app.entity;
 
-import java.io.Serial;
-import java.util.Date;
-
-import jakarta.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import jakarta.validation.constraints.Size;
+
+import java.io.Serial;
+import java.util.Date;
 
 /**
  * APP版本管理 Entity
@@ -37,14 +36,14 @@ public class AppUpgrade extends DataEntity<AppUpgrade> {
 	
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String appCode;		// 应用编号
-	private String upTitle;		// 升级标题
-	private String upContent;		// 升级内容
-	private Integer upVersion;		// 升级版本
-	private String upType;		// 升级类型
-	private Date upDate;		// 发布时间
-	private String apkUrl;		// APK下载地址
-	private String resUrl;		// 资源下载地址
+	protected String appCode;		// 应用编号
+	protected String upTitle;		// 升级标题
+	protected String upContent;		// 升级内容
+	protected Integer upVersion;		// 升级版本
+	protected String upType;		// 升级类型
+	protected Date upDate;		// 发布时间
+	protected String apkUrl;		// APK下载地址
+	protected String resUrl;		// 资源下载地址
 	
 	public AppUpgrade() {
 		this(null);

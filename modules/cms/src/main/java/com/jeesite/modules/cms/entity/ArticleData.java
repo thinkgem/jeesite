@@ -30,10 +30,10 @@ public class ArticleData extends DataEntity<ArticleData> {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String content; 		// 文章内容
-	private String relation; 		// 相关文章
-	private String isCanComment; 	// 是否允许评论
-	private Extend extend; 			// 扩展字段
+	protected String content; 		// 文章内容
+	protected String relation; 		// 相关文章
+	protected String isCanComment; 	// 是否允许评论
+	protected Extend extend; 			// 扩展字段
 
 	public ArticleData() {
 		this(null);

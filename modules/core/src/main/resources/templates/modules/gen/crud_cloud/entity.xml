@@ -209,7 +209,7 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 			if(!isExtend){
 				isExtend = true;
 	%>
-	private Extend extend;		// 扩展字段
+	protected Extend extend;		// 扩展字段
 	<%
 			}
 		}
@@ -218,12 +218,12 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 			// 父类对象
 			if(table.parentExists && table.parentTableFkName == c.columnName){
 	%>
-	private ${@StringUtils.cap(table.parent.className)} ${c.simpleAttrName};		<% if (isNotBlank(c.comments)){ %>// ${c.comments} 父类<% } %>
+	protected ${@StringUtils.cap(table.parent.className)} ${c.simpleAttrName};		<% if (isNotBlank(c.comments)){ %>// ${c.comments} 父类<% } %>
 	<%
 			// 其它字段
 			}else{
 	%>
-	private ${c.simpleAttrType} ${c.simpleAttrName};		<%if(isNotBlank(c.comments)){%>// ${c.comments}<%}%>
+	protected ${c.simpleAttrType} ${c.simpleAttrName};		<%if(isNotBlank(c.comments)){%>// ${c.comments}<%}%>
 	<%
 			}
 		}
@@ -232,7 +232,7 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	// 生成子表列表字段
 	for(child in table.childList){
 	%>
-	private List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.classNameSimple)}List = ListUtils.newArrayList();		// 子表列表
+	protected List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.classNameSimple)}List = ListUtils.newArrayList();		// 子表列表
 	<%
 	}
 	

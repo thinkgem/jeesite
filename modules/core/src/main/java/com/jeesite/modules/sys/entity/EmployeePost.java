@@ -38,12 +38,12 @@ public class EmployeePost extends DataEntity<EmployeePost> {
 	
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String empCode;		// 员工编码
-	private String postCode;	// 岗位编码
+	protected String empCode;		// 员工编码
+	protected String postCode;	// 岗位编码
 
-	private Post post; // sqlMap().loadJoinTableAlias("p") 的时候返回数据
+	protected Post post; // sqlMap().loadJoinTableAlias("p") 的时候返回数据
 
-	private String userCode; // 根据用户编码查询 sqlMap().loadJoinTableAlias("p,u") 的时候有效
+	protected String userCode; // 根据用户编码查询 sqlMap().loadJoinTableAlias("p,u") 的时候有效
 
 	public EmployeePost() {
 		this(null, null);
