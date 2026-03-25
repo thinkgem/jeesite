@@ -26,8 +26,8 @@
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { ${ParentClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${parentClassName}';
-  import { ${ClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${className}';
+  import { ${ParentClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${funName}';
+  import { ${ClassName} } from '@jeesite/${moduleMinus}/api${modulePath}${subModulePath}/${@StringUtils.uncap(table.classNameSimple)}';
   <%
   var userselectExists = false;
   var officeselectExists = false;
