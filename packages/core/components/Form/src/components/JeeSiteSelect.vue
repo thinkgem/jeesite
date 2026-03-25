@@ -23,7 +23,7 @@
   </div>
 </template>
 <script lang="ts" setup name="JeeSiteSelect">
-  import { ref, unref, computed, watch, onMounted } from 'vue';
+  import { ref, unref, computed, watch, onMounted, PropType } from 'vue';
   import { Select } from 'ant-design-vue';
   import { isEmpty, isFunction } from '@jeesite/core/utils/is';
   import { propTypes } from '@jeesite/core/utils/propTypes';
@@ -60,6 +60,9 @@
     immediate: propTypes.bool.def(false),
     each: propTypes.bool.def(false),
     dictType: propTypes.string,
+    dictFilter: {
+      type: Function as PropType<Fn>,
+    },
     mode: propTypes.string,
   });
 
@@ -90,7 +93,7 @@
     () => {
       if (!isEmpty(props.dictType)) {
         const { initSelectOptions } = useDict();
-        initSelectOptions(optionsRef, props.dictType);
+        initSelectOptions(optionsRef, props.dictType, props.dictFilter);
       }
     },
     { immediate: true },

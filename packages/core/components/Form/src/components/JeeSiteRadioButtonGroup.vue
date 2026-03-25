@@ -23,7 +23,7 @@
   import { useDict } from '@jeesite/core/components/Dict';
 
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
-  type RadioItem = string | OptionsItem;
+  type RadioItem = string | Recordable | OptionsItem;
 
   const RadioGroup = Radio.Group;
   const RadioButton = Radio.Button;
@@ -33,10 +33,13 @@
       type: [String, Number, Boolean, Object] as PropType<string | number | boolean | object>,
     },
     options: {
-      type: Array as PropType<RadioItem[]>,
+      type: Object as PropType<RadioItem[]>,
       default: () => [],
     },
     dictType: propTypes.string,
+    dictFilter: {
+      type: Function as PropType<Fn>,
+    },
   });
 
   const emit = defineEmits(['change', 'update:value']);
@@ -50,7 +53,7 @@
     () => {
       if (!isEmpty(props.dictType)) {
         const { initSelectOptions } = useDict();
-        initSelectOptions(optionsRef, props.dictType);
+        initSelectOptions(optionsRef, props.dictType, props.dictFilter);
       }
     },
     { immediate: true },

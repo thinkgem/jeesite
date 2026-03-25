@@ -46,12 +46,12 @@ export function useDict() {
     return dictListMap[dictType] || [];
   }
 
-  async function initSelectOptions(optionsRef: Ref, dictType?: string) {
+  async function initSelectOptions(optionsRef: Ref, dictType?: string, filter?: Fn) {
     if (isEmpty(dictType)) return;
     await initDict([dictType]);
     const jeesiteDictList = getDictList(dictType);
     optionsRef.value = jeesiteDictList
-      .filter((item) => item.pId == '0')
+      .filter((item) => item.pId == '0' && (filter ? filter(item) : true))
       .map((item) => ({
         label: item.name,
         value: item.value,
