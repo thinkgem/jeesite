@@ -46,6 +46,9 @@
     // 配置文件，是 selectType 更自由的设置，不限定路径
     configFile: propTypes.any, // 例如：import('./select'),
 
+    // 配置文件，是 selectType 更自由的设置，不限定路径
+    config: propTypes.any, // 例如：import Select form './select';
+
     // 请求参数（列表查询默认值）
     queryParams: propTypes.object.def({}),
 
@@ -125,7 +128,9 @@
   }
 
   onMounted(async () => {
-    if (props.configFile) {
+    if (props.config) {
+      configRef.value = props.config;
+    } else if (props.configFile) {
       configRef.value = (await props.configFile).default as any;
     } else {
       configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
