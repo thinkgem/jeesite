@@ -402,6 +402,13 @@
       height: auto;
     }
 
+    &.ant-form-small .ant-form-item {
+      .ant-form-item-label > label {
+        min-height: 23px;
+        height: auto;
+      }
+    }
+
     .ant-input-number,
     .ant-input-number-group-wrapper,
     .ant-picker-default {
