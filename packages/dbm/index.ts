@@ -1,4 +1,4 @@
-import './node_modules/@jeesite/dbm-lib/dist/style.css';
+import '@jeesite/dbm-lib/dist/style.css';
 export {
   ViewsDbmDatasourceList,
   ViewsDbmModifyLogList,
@@ -7,4 +7,4 @@ export {
   ViewsDbmEntityList,
   ViewsDbmEntityIndex,
   ViewsDbmExcelList,
-} from './node_modules/@jeesite/dbm-lib/dist';
+} from '@jeesite/dbm-lib/dist';
