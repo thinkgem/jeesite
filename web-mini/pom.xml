@@ -100,6 +100,10 @@
 					<groupId>org.bouncycastle</groupId>
 					<artifactId>bcprov-jdk18on</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.groovy</groupId>
+					<artifactId>groovy-jsr223</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
