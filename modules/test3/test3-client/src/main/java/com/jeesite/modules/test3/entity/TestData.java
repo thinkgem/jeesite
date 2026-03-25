@@ -55,19 +55,19 @@ import java.util.List;
 public class TestData extends DataEntity<TestData> {
 	
 	private static final long serialVersionUID = 1L;
-	private String testInput;		// 单行文本
-	private String testTextarea;		// 多行文本
-	private String testSelect;		// 下拉框
-	private String testSelectMultiple;		// 下拉多选
-	private String testRadio;		// 单选框
-	private String testCheckbox;		// 复选框
-	private Date testDate;		// 日期选择
-	private Date testDatetime;		// 日期时间
-	private User testUser;		// 用户选择
-	private Office testOffice;		// 机构选择
-	private String testAreaCode;		// 区域选择
-	private String testAreaName;		// 区域名称
-	private List<TestDataChild> testDataChildList = ListUtils.newArrayList();		// 子表列表
+	protected String testInput;		// 单行文本
+	protected String testTextarea;		// 多行文本
+	protected String testSelect;		// 下拉框
+	protected String testSelectMultiple;		// 下拉多选
+	protected String testRadio;		// 单选框
+	protected String testCheckbox;		// 复选框
+	protected Date testDate;		// 日期选择
+	protected Date testDatetime;		// 日期时间
+	protected User testUser;		// 用户选择
+	protected Office testOffice;		// 机构选择
+	protected String testAreaCode;		// 区域选择
+	protected String testAreaName;		// 区域名称
+	protected List<TestDataChild> testDataChildList = ListUtils.newArrayList();		// 子表列表
 	
 	public TestData() {
 		this(null);
