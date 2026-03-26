@@ -22,6 +22,7 @@
 		<module>web-api</module>
 		<module>web-fast</module>
 		<module>web-mini</module>
+		<module>web-vue</module>
 	</modules>
 	
 	<developers>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-parent</artifactId>
+		<version>5.16.1.springboot3-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>jeesite-web-vue</artifactId>
+	<packaging>war</packaging>
+	
+	<description>使用 Vue 分离端的界面</description>
+	
+	<name>JeeSite Web Vue</name>
+	<url>https://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+	
+	<properties>
+		
+		<finalName>web</finalName><!-- war 或 jar 包的名称 -->
+		<start-class>com.jeesite.modules.ApiApplication</start-class>
+
+		<!-- Docker setting -->
+		<docker.run.port>8980:8980</docker.run.port>
+		
+	</properties>
+
+	<dependencies>
+		
+		<!-- 核心模块 --><!--suppress VulnerableLibrariesLocal -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 动态数据 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-dbm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 测试模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-test</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 在线文档接口 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 内容管理模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 移动端模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-app</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- 文件管理共享（标准版）
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filemanager</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
+		<!-- 文件在线预览（标准版）
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filepreview</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
+		<!-- 热部署工具
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency> -->
+
+		<!-- Vue发布包 https://gitee.com/thinkgem/jeesite-vue -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-vue-dist</artifactId>
+			<version>5.16.1-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+	
+	<build>
+		<finalName>${finalName}</finalName>
+		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>-->
+		<plugins>
+			
+			<!-- Spring Boot 插件 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
+			</plugin>
+
+			<!-- War 插件，自定义 war 包名称 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${finalName}</warName>
+				</configuration>
+			</plugin>
+			
+			<!-- Eclipse 插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<wtpContextName>${finalName}</wtpContextName>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+	<developers>
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>JeeSite</name>
+		<url>https://jeesite.com</url>
+	</organization>
+	
+	<repositories>
+		<repository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>https://maven.jeesite.net/repository/maven-public</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>jeesite-repos</id>
+			<url>https://maven.jeesite.net/repository/maven-public</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+</project>

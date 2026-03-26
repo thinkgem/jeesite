@@ -1,6 +1,6 @@
 ## 介绍
 
-jeesite-web 是 JeeSite 的 Web 启动入口项目工程，
+jeesite-web 是 JeeSite 的 Web 启动入口项目工程，采用 HTML5 + jQuery 界面。
 
 可直接运行 Application.java 文件，启动一个 Web 服务。
 

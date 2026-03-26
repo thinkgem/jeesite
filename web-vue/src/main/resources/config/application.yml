@@ -1,0 +1,1036 @@
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
+
+# 产品或项目名称、软件开发公司名称
+productName: JeeSite Demo
+companyName: ThinkGem
+
+# 产品版本、版权年份
+productVersion: V5.16
+copyrightYear: 2026
+
+# 是否演示模式
+demoMode: false
+
+# 专为分离端提供接口服务
+apiMode: true
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8980
+  servlet:
+    context-path: /js
+    register-default-servlet: false
+#    encoding.enabled: true
+  tomcat:
+    uri-encoding: UTF-8
+    # 表单请求数据的最大大小
+    max-http-form-post-size: 20MB
+#    # 客户端发送请求参数个数限制
+#    max-parameter-count: 10000
+#    # 文件上传的表单请求参数个数限制
+#    max-part-count: 50
+#    # 进程的最大连接数
+#    max-connections: 8192
+#    # 连接数满后的排队个数
+#    accept-count: 100
+#    # 线程数最大和最小个数
+#    threads:
+#      max: 200
+#      min-spare: 10 
+    
+  # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
+  schemeHttps: false
+  
+#======================================#
+#========= Database settings ==========#
+#======================================#
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+  username: root
+  password: 123456
+  testSql: SELECT 1
+
+#  # Oracle 数据库配置
+#  type: oracle
+#  driver: oracle.jdbc.OracleDriver
+#  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1 FROM DUAL
+
+#  # Sql Server 数据库配置（2008 版本，请打开 /modules/core/pom.xml 文件，替换为 SqlServer 2008 驱动并编译打包 core 模块）
+#  type: mssql
+#  driver: net.sourceforge.jtds.jdbc.Driver
+#  url: jdbc:jtds:sqlserver://127.0.0.1:1433/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#  # Sql Server 数据库配置（2012 及以上版本，请打开 /modules/core/pom.xml 文件，替换为 SqlServer 2021 驱动并编译打包 core 模块）
+#  type: mssql2012
+#  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite;encrypt=true;trustServerCertificate=true
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#  # PostgreSql 数据库配置
+#  type: postgresql
+#  driver: org.postgresql.Driver
+#  url: jdbc:postgresql://127.0.0.1:5432/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#  # 达梦数据库配置，请勿使用 sysdba 用户
+#  type: dameng
+#  driver: dm.jdbc.driver.DmDriver
+#  url: jdbc:dm://127.0.0.1:5236/jeesite5?schema=jeesite5
+#  username: jeesite
+#  password: jeesite123
+#  testSql: SELECT 1 FROM DUAL
+
+#  # 人大金仓数据库配置
+#  type: kingbase
+#  driver: com.kingbase8.Driver
+#  url: jdbc:kingbase8://127.0.0.1:54321/jeesite?currentSchema=jeesite&UseServerPrepare=false
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1 FROM DUAL
+
+#  # H2 数据库配置（请打开 /modules/core/pom.xml 文件，打开 H2 DB 驱动并编译打包 core 模块）
+#  type: h2
+#  driver: org.h2.Driver
+#  url: jdbc:h2:~/jeesite-db/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+  
+  # 更多数据库的支持列表：
+  # https://jeesite.com/docs/technology/#%E4%B8%83%E3%80%81%E5%B7%B2%E6%94%AF%E6%8C%81%E6%95%B0%E6%8D%AE%E5%BA%93
+
+  # 连接信息加密
+  encrypt:
+  
+    # 加密连接用户名
+    username: false
+    # 加密连接密码
+    password: true
+
+  # 数据库连接池配置
+  pool:
+  
+    # 初始化连接数
+    init: 1
+    # 最小空闲连接数
+    minIdle: 3
+    # 最大激活连接数
+    maxActive: 20
+
+#    # 连接超时参数，单位毫秒 （v5.5.2+）
+#    connectTimeout: ~
+#    socketTimeout: ~
+#
+#    # 查询超时时间，事务超时时间 （v5.7.1+）
+#    queryTimeout: ~
+#    transactionQueryTimeout: ~
+#
+#    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
+#    maxWait: 60000
+#
+#    # 连接失败后中断，默认为 false 时，会一直尝试连接，为 true 时，自动中断尝试（v5.9.0+）
+#    breakAfterAcquireFailure: false
+#    
+#    # 从池中取出和归还连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
+#    testOnBorrow: false
+#    testOnReturn: false
+#    
+#    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（1分钟）（4.0.6+）
+#    timeBetweenEvictionRunsMillis: 60000
+#    
+#    # 一个连接在池中最小空闲的时间，单位毫秒（20分钟）（4.0.6+）
+#    minEvictableIdleTimeMillis: 1200000
+#    # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
+#    maxEvictableIdleTimeMillis: 1800000
+#    
+#    # 连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作（4.1.8+）
+#    keepAlive: false
+#    
+#    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
+#    removeAbandoned: false
+#    removeAbandonedTimeout: 2100
+#
+#    # 是否缓存 PreparedStatement 对象的最大数量（4.1.5+）
+#    maxPoolPreparedStatementPerConnectionSize: ~
+#    
+#    # 设置连接属性，可获取到表的 remark (备注)
+#    remarksReporting: false
+
+#  # 读写分离配置（专业版）v4.3.0
+#  readwriteSplitting:
+#    # 读库的数据源名称列表（默认数据源）
+#    readDataSourceNames: ds_read_01, ds_read_02
+#    # 负载均衡算法（ROUND_ROBIN轮询、RANDOM随机、自定义类名）
+#    loadBalancerAlgorithm: RANDOM
+#
+#  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
+#  # v5.11.1+ 支持 dataSourceNames 免配置，自动读取 jdbc.数据源名.type 的属性
+#  dataSourceNames: ds_read_01, ds_read_02
+#  
+#  # 默认数据源的从库01
+#  ds_read_01:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
+#  
+#  # 默认数据源的从库02
+#  ds_read_02:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test2?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
+
+#  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
+#  # v5.11.1+ 支持 dataSourceNames 免配置，自动读取 jdbc.数据源名.type 的属性
+#  dataSourceNames: ds2
+#
+#  # 多数据源配置：ds2
+#  ds2:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    # 其它数据源支持密码加密
+#    encrypt:
+#      username: false
+#      password: true
+#    # 其它数据源支持连接池设置
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
+#    # 其它数据源支持读写分离
+#    readwriteSplitting:
+#      readDataSourceNames: ~
+#      loadBalancerAlgorithm: RANDOM
+
+#  # 数据源映射（Dao类名 = 数据源名称），优先于 @MyBatisDao(dataSourceName="ds2") 设置 v4.3.0
+#  # Dao类名，不仅支持某个具体 Dao类名，还支持 Dao 里的某个方法指定数据源名称，还支持包路径指定数据源等
+#  # 数据源名指定 {dynamic} 时支持动态，相当于 @MyBatisDao(dataSourceName=DataSourceHolder.DYNAMIC)
+#  # 数据源支持指定变量 {corpCode}、 {userCode}、{userCache中的Key名}、{yml或sys_config中的Key名}
+#  # 从上到下，先匹配先受用规则，默认数据源名为 default 扩展数据源为 dataSourceNames 列表里自定义的名字
+#  mybatisDaoAndDataSourceMappings: |
+#    TestDataChildDao = ds2
+#    EmpUserDao.findList = ds2
+#    com.jeesite.modules.sys. = default
+#    com.jeesite.modules.filemanager. = ds2
+
+#  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
+#  tableAndColumn: 
+#    prefixSuffix: "`|`"
+#    forceUpperCase: true
+#
+#  # 表名前缀
+#  tablePrefix: js_
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+  
+  # 应用程序名称
+  application:
+    name: jeesite-web-api
+    
+  # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+    
+  # 打印横幅
+  main:
+    banner-mode: "off"
+    lazy-initialization: true
+
+#  # MVC 映射匹配策略
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ANT_PATH_MATCHER
+
+  # JTA XA 事务（spring boot 3）
+  jta:
+    enabled: false
+
+  #  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
+  #  grant select on sys.dba_pending_transactions to jeesite;
+  #  grant select on sys.pending_trans$ to jeesite;
+  #  grant select on sys.dba_2pc_pending to jeesite;
+  #  grant execute on sys.dbms_system to jeesite;
+
+  # 事务超时时间，单位秒（30分钟）（spring boot 3）
+  transaction:
+    default-timeout: 30m
+
+#  # Redis 连接参数 （RedisProperties）
+#  data:
+#    redis:
+#      host: 127.0.0.1
+#      port: 6379
+#      ssl:
+#        enabled: false
+#      database: 0
+#      password: 1234
+#      timeout: 20000
+#      lettuce:
+#        pool:
+#          # 最大空闲连接数
+#          maxIdle: 3
+#          # 最大活动连接数
+#          maxActive: 20
+
+#  # 缓存配置
+#  cache:
+#    # 缓存及会话共享（专业版）
+#    isClusterMode: true
+#    # 清理全部缓存按钮所清理的缓存列表
+#    clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
+#    # 用户缓存
+#    userCache:
+#      clearTaskPool:
+#        corePoolSize: 5
+#        maxPoolSize: 20
+#        keepAliveSeconds: 60
+
+# 日志配置（fatal、error、warn、info、debug）
+logging:
+  config: classpath:config/logback-spring.xml
+#  level:
+#    root: warn
+#    com.jeesite.modules: debug
+
+# MyBatis 相关
+mybatis:
+
+  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules.**.dao
+
+  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
+  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
+
+#  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
+#  scanTypeHandlersPackage: ~
+#
+#  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
+#  jdbcTransaction: false
+#
+#  # 批量插入和更新的分批默认大小（防止库一次性接受不了太大的sql语句）
+#  defaultBatchSize: 500
+#
+#  # 执行逻辑删除的时候，同时修改主键字段值，方便再次使用这个主键值（调用 entity.sqlMap().markIdDelete() 时生效） v5.4.0+
+#  # 案例分析（角色管理场景）：
+#  #  1.如果是逻辑删除数据，并非物理删除，所以删除了角色 abc 再次新增时，会提示 abc 编号已存在
+#  #  2.使用方法为：在 super.delete(entity); 前调用：entity.sqlMap().markIdDelete();
+#  #  3.一般在手动填写主键业务中使用，启用后将会在删除后，修改 ID 值数据，例如：abc__del_随机串
+#  markIdDeleteFlag: __del_
+#
+#  # 允许 @Table orderBy 排序 设置为空，否则默认使用 主键 排序 v4.5.0 v5.1.0
+#  allowOrderEmpty: true
+#
+#  # 排序字段 SQL 过滤，该参数仅对 sqlMap.getOrder().setOrderBy 内部调用方法有效 page.setOrderBy 和 entity.setOrderBy 必须经过过滤 v5.12.0
+#  orderBySqlFilter: false
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
+#      delaySeconds: 10
+#      sleepSeconds: 3
+#      mappingPath: mappings
+  
+#======================================#
+#========== System settings ===========#
+#======================================#
+
+# 管理基础路径
+#adminPath: /a
+
+# 前端基础路径
+#frontPath: /f
+
+# Vue 资源文件访问路径，映射到 src/main/resources/{vuePath} 文件夹
+# 如果设置的是 /vue，则映射目录为：src/main/resources/vue 文件夹
+# 该资源映射功能，会自动处理 Vue 的 history 路由模式
+vuePath: /vue
+
+# 加密设置
+#encrypt:
+#  # 默认秘钥，可通过 AesUtils.genKeyString() 生成新秘钥 Hex 编码
+#  defaultKey: 9f58a20946b47e190003ec716c1c457d
+#  # 是否使用国密 SM 算法（SHA-1 替换为 SM3、AES 替换为 SM4）
+#  smAlgorithm: false
+#  # 对称或非对称加密是否使用 Base64 存储，默认 Hex 存储
+#  storeBase64: false
+
+# 分页相关
+#page:
+#  
+#  # 默认每页显示的数据条数
+#  pageSize: 20
+#  
+#  # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
+#  maxPageSize: 999
+
+# 用户相关
+user:
+  
+#  # 指定超级管理员编号（研发团队使用的账号）
+#  superAdminCode: system
+#
+#  # 超级管理员获取菜单的最小权重（默认20；>=40二级管理员；>=60系统管理员；>=80超级管理员）
+#  superAdminGetMenuMinWeight: 40
+#
+#  # 系统管理员角色编号（客户方管理员使用的角色）
+#  corpAdminRoleCode: corpAdmin
+#  
+#  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
+#  adminCtrlPermi: 2
+#
+#  # 是否启用岗位角色，开启后将 用户->岗位->关联角色，纳入菜单和权限管理 v5.9.2
+#  postRolePermi: false
+#
+#  # 是否启用切换部门功能，再开启启用岗位角色后可支持 用户->附属部门->岗位->关联角色，纳入菜单和权限管理 v5.10.1
+#  switchOffice: false
+#
+#  # 登录后激活当前用户所在的主部门，默认为不激活即混合权限
+#  loginAfterActiveMainOffice: false
+  
+  # 多租户模式（SAAS模式）（专业版）
+  useCorpModel: false
+  
+#  # 登录账号是否租户内唯一，否则全局唯一
+#  loginCodeCorpUnique: false
+#
+#  # 是否启用验证码登录（手机、邮箱）
+#  loginByValidCode: true
+#
+#  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...），JSON 格式说明如下：
+#  # {"用户类型":{"beanName":"Service或Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
+#  userTypeMap: >
+#    {
+#      employee: {beanName: "employeeService", loginView: "", indexView: "modules/sys/sysIndex"},
+#      member: {beanName: "memberService", loginView: "", indexView: "modules/sys/sysIndexMember"},
+#      btype: {beanName: "btypeInfoService", loginView: "", indexView: "modules/sys/sysIndexBtype"},
+#      expert: {beanName: "expertService", loginView: "", indexView: "modules/sys/sysIndexExpert"}
+#    }
+#
+#  # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型, 0全部  1拥有权限  2管理权限
+#  dataScopes: >
+#    [{
+#      moduleCode: "core",
+#      ctrlPermi: "0",
+#      ctrlName: "机构权限",
+#      ctrlName_en: "Office",
+#      ctrlType: "Office",
+#      ctrlDataUrl: "/sys/office/treeData",
+#      chkboxType: {"Y":"ps","N":"ps"},
+#      expandLevel: 1,
+#      remarks: ""
+#    },{
+#      moduleCode: "core",
+#      ctrlName: "公司权限",
+#      ctrlName_en: "Company",
+#      ctrlType: "Company",
+#      ctrlPermi: "0",
+#      ctrlDataUrl: "/sys/company/treeData",
+#      chkboxType: {"Y":"ps","N":"ps"},
+#      expandLevel: 1,
+#      remarks: ""
+#    },{
+#      moduleCode: "core",
+#      ctrlName: "角色权限",
+#      ctrlName_en: "Role",
+#      ctrlType: "Role",
+#      ctrlPermi: "2",
+#      ctrlDataUrl: "/sys/role/treeData",
+#      chkboxType: {"Y":"ps","N":"ps"},
+#      expandLevel: 1,
+#      remarks: ""
+#    }]
+#
+#  # 数据权限调试模式（会输出一些日志）
+#  dataScopeDebug: false
+#
+#  # 数据权限使用 API 方式实现（适应 Cloud 环境，基础用户表与业务数据表跨库的情况）
+#  # 开启后设置 ctrlDataAttrName 加 AndChildren 后缀，ctrlDataParentCodesAttrName 清空
+#  # 以方便读取树结构数据权限的表时包含子节点，举例如下：
+#  # ctrlDataAttrName: "officeCodesAndChildren", ctrlDataParentCodesAttrName: ""
+#  dataScopeApiMode: false
+#
+#  # v5.10.1 开始默认关闭 JOIN 模式的数据权限，如有需要可打开此参数
+#  dataScopeJoinMode: false
+#  
+#  # 菜单数据权限，是否启用自定义 SQL 执行权限 v5.10.1
+#  dataScopeRuleSql: false
+  
+# 角色管理 
+#role: 
+#  # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
+#  extendDataScopes: >
+#    {
+#      3: {
+#        Office: {
+#          #控制类型的类名 : "用来获取控制表名和主键字段名，如果为 NONE，则代表是不控制该类型权限",
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
+#          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前机构编码、当前公司编码、当前行业编码等",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          #控制数据的类名下的属性名 : "可看做 ctrlDataClass 下的 get 方法，如：EmpUtils.getOfficeCodes()，支持返回字符串或字符串数组类型",
+#          ctrlDataAttrName: "officeCodes",
+#          #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
+#          ctrlDataParentCodesAttrName: "officeParentCodess"
+#        },
+#        Company: {
+#          ctrlTypeClass: "NONE"
+#        }
+#      },
+#      4: {
+#        Office: {
+#          ctrlTypeClass: "NONE"
+#        },
+#        Company: {
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          ctrlDataAttrName: "companyCodes",
+#          ctrlDataParentCodesAttrName: "companyParentCodess"
+#        }
+#      },
+#      5: {
+#        Office: {
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          ctrlDataAttrName: "officeCodes",
+#          ctrlDataParentCodesAttrName: "officeParentCodess"
+#        },
+#        Company: {
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          ctrlDataAttrName: "companyCodes",
+#          ctrlDataParentCodesAttrName: "companyParentCodess"
+#        }
+#      }
+#    }
+
+# 菜单管理
+#menu:
+#  # 根据模块状态去更新相连的菜单状态
+#  updateStatusByModuleStatus: false
+
+# 国际化管理（专业版）
+lang:
+  enabled: false
+  
+#  # 默认语言（4.1.3+）
+#  defaultLocale: zh_CN
+#  # 默认时区（4.1.3+）
+#  defaultTimeZone: GMT+08:00
+  
+# 任务调度（标准版）
+job:
+  enabled: false
+  
+#  # 是否自动启动任务调度（可关闭）
+#  autoStartup: true
+#
+#  # 任务调度启动延迟设置（单位：秒）（建议设置项目启动完成后的时间）
+#  startupDelay: 60
+#  
+#  # 任务调度线程池
+#  threadPool:
+#    threadCount: 10
+#    threadPriority: 5
+#
+#  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+#  # 在微服务模式情况下，请将instanceName名称设置为当前微服务的名称
+#  # 每一个instanceId必须不同，设置AUTO则自动生成
+#  scheduler:
+#    instanceName: JeeSiteScheduler
+#    #instanceName: ${spring.application.name}
+#    instanceId: AUTO
+#
+#  # 任务调度集群设置
+#  jobStore:
+#    isClustered: true
+#    dataSourceName: job
+#    clusterCheckinInterval: 1000
+#    driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+
+#  # 调度日志
+#  log:
+#    # 计划调度日志
+#    scheduler:
+#      enabled: true
+#      # 是否只保存错误日志
+#      errorLevel: true
+#    # 任务执行日志
+#    jobDetail:
+#      enabled: true
+#      # 是否只保存错误日志
+#      errorLevel: true
+#    # 计划触发日志
+#    trigger:
+#      enabled: false
+
+# 代码生成
+gen:
+  enabled: true
+  
+#  # 表名字段名是否强制小写
+#  forceLowerCase: true
+
+# 系统监控
+state:
+  enabled: true
+
+#======================================#
+#========= Framework settings =========#
+#======================================#
+
+# Shiro 相关
+shiro:
+  
+  # 主页路径
+  #defaultPath: ${shiro.loginUrl}
+  defaultPath: ${vuePath}/login
+
+  # 登录相关设置
+  loginUrl: ${adminPath}/login
+  logoutUrl: ${shiro.loginUrl}
+  successUrl: ${adminPath}/index
+
+#  # Apereo CAS 相关配置（标准版）
+#  casServerUrl: http://127.0.0.1:8981/cas
+#  casClientUrl: http://127.0.0.1:8980/js
+#  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
+#  logoutUrl: ${shiro.casServerUrl}/logout?service=${shiro.loginUrl}
+#  successUrl: ${shiro.casClientUrl}${adminPath}/index
+
+#  # LDAP 相关设置（标准版）
+#  ldapUrl: ldap://127.0.0.1:389
+#  ldapUserDn: uid={0},ou=users,dc=mycompany,dc=com
+
+  # 简单 SSO 登录相关配置
+  sso:
+    # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
+    secretKey: ~
+    # 是否加密单点登录安全Key
+    encryptKey: true
+    # token 时效性，如：1天：yyyyMMdd、1小时：yyyyMMddHH、1分钟：yyyyMMddHHmm
+    encryptKeyDateFormat: yyyyMMdd
+
+  # 登录提交信息加密（如果不需要加密，设置为空即可）
+  loginSubmit:
+    # 加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）加密方式：DES（4.1.9及之前版本默认设置）
+    # v4.2.0+ 开始支持 Base64 加密方式，方便移动端及第三方系统处理认证，可直接设置 Key 为 Base64（4.2.0+默认设置）
+    #secretKey: thinkgem,jeesite,com
+    secretKey: Base64
+    #secretKey: ~
+  
+  # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
+  # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
+  rememberMe:
+    secretKey: ~
+  
+#  # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
+#  remoteAddrHeaderName: X-Forwarded-For
+#  
+#  # 允许的请求方法设定，解决安全审计问题（BPM设计器用到了PUT或DELETE方法）
+#  allowRequestMethods: GET, POST, OPTIONS, PUT, DELETE
+#  
+#  # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
+#  isAllowMultiAddrLogin: true
+#  
+#  # 是否允许多账号多设备登录，如果设置为false，其它地点登录的相同账号全部登录设备将被踢下线
+#  isAllowMultiDeviceLogin: true
+#  
+#  # 是否允许刷新主框架页，如果设置为false，刷新主页将导致重新登录。如安全性比较高的，如银行个人首页不允许刷新。
+#  isAllowRefreshIndex: true
+#  
+#  # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
+#  isAllowExternalSiteIframe: true
+#  
+#  # 设定允许获取的资源列表（v4.2.3）
+#  #contentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval' data:"
+
+#  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
+#  accessControlAllowOrigin: '*'
+#  
+#  # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
+#  accessControlAllowMethods: GET, POST, OPTIONS
+#  accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
+#  accessControlExposeHeaders: x-token, x-remember
+
+#  # 是否允许接收跨域的Cookie凭证数据 CORS
+#  accessControlAllowCredentials: false
+#  
+#  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
+#  allowReferers: http://127.0.0.1,http://localhost
+#
+#  # 允许重定向的地址，不设置为全部允许，设置this只允许本项目内部跳转，多个用逗号隔开，例如：this,http://*.jeesite.com
+#  allowRedirects: this
+#
+#  # 是否在登录后生成新的Session（默认false）
+#  isGenerateNewSessionAfterLogin: false
+#
+#  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开，完整的IP使用“]”符号结尾
+#  innerFilterAllowRemoteAddrs: 127.0.0.1]
+
+  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
+  # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
+  filterChainDefinitions: |
+    ${adminPath}/** = user
+
+#  # URI 权限过滤器定义（以下参考，必须登录user可访问的地址和不需要登录anon可访问地址）
+#  filterChainDefinitions: |
+#    /ReportServer/** = user
+#    ${adminPath}/file/** = anon
+#    ${adminPath}/cms/* = anon
+#    ${adminPath}/cms/site/select = anon
+#    ${adminPath}/cms/site/* = anon
+#    ${adminPath}/cms/category/treeData = anon
+#    ${adminPath}/cms/category/* = anon
+#    ${adminPath}/cms/article/* = anon
+#    ${adminPath}/cms/link/* = anon
+#    ${adminPath}/sys/corpAdmin/treeData = anon
+#    ${adminPath}/${spring.application.name}/swagger/** = anon
+#    ${adminPath}/** = user
+    
+# Session 相关
+session:
+  
+  # 会话超时时间，单位：毫秒，10m=600000, 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
+  
+  # 游客会话超时时间：只访问了系统，但未登录系统的用户为游客，游客默认超时时间为3分钟，如：未登录系统时的图片验证码有效时间。
+  sessionTimeout: 180000
+  
+  # 登录系统后的用户超时时间（不明确 param_deviceType 参数的，默认设备为 pc 登录）
+  pcSessionTimeout: 1800000
+  
+#  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效，一般情况无需设置
+#  mobileAppSessionTimeout: 1800000
+#  
+#  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话（设置为 0 关闭，微服务下只开启 core 即可）
+#  sessionTimeoutClean: 1200000
+#  
+#  # 会话唯一标识SessionId在Cookie中的名称。
+#  sessionIdCookieName: jeesite.session.id
+#  #sessionIdCookiePath: ${server.servlet.context-path}
+#  
+#  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
+#  shareSessionIdCookieName: ${session.sessionIdCookieName}
+#  
+#  # 其它 SimpleCookie 参数（v4.2.3）
+#  sessionIdCookieSecure: false
+#  sessionIdCookieHttpOnly: true
+#  sessionIdCookieSameSite: LAX
+#  
+#  # 设置接收 SessionId 请求参数和请求头的名称
+#  sessionIdParamName: __sid
+#  sessionIdHeaderName: x-token
+#  
+#  # 当直接通过 __sid 参数浏览器访问页面时，可将直接将 __sid 写入 Cookie 应用于后面的访问
+#  # 访问地址举例：http://host/js/a/index?__sid=123456&__cookie=true
+#  writeCookieParamName: __cookie
+#  
+#  # 记住我的请求参数和请求头的名称（v4.2.3）
+#  rememberMeHeaderName: x-remember
+
+# 缓存配置
+#j2cache:
+#
+#  # 一级缓存
+#  caffeine:
+#    region:
+#      #[cacheName]: size, xxxx[s|m|h|d]
+#      default: 10000, 1h
+#      sysCache: 100000, 365d
+#      sessionCache: 100000, 12h
+#    
+#  # 二级缓存
+#  redis:
+#    # 存储模式 （generic|hash）
+#    storage: hash
+#    # 缓存命名空间名
+#    namespace: jeesite
+#    # 通知订阅的通道名
+#    channel: ${j2cache.redis.namespace}
+#    # 消息监听器
+#    listener:
+#      taskPool:
+#        corePoolSize: 8
+#        maxPoolSize: 20
+#        keepAliveSeconds: 60
+#        queueCapacity: 1000
+#  
+#  # 通知订阅
+#  broadcast:
+#    # 缓存清理模式
+#    # passive -> 被动清除，一级缓存过期进行通知各节点清除一二级缓存
+#    # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
+#    # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
+#    cache_clean_mode: passive
+
+# 锁管理器（支持本地锁和分布式锁，当isClusterMode开启时，自动使用分布式锁）
+#lockManager:
+#  # 分布式锁
+#  redis:
+#    # 锁名称前缀（多系统共用Redis时修改）
+#    keyPrefix: ${j2cache.redis.namespace}:lockKey
+#    # 检查锁的等待毫秒数
+#    sleepMillis: 100
+
+# Web 相关
+web:
+
+#  # AJAX 接受参数名和请求头名（v4.3.0）
+#  ajaxParamName: __ajax
+#  ajaxHeaderName: x-ajax
+#
+#  # 是否默认对结果进行统一包装为：{ code: 200, msg: "", data: {} | [] }（v5.8.1）
+#  # 注意：如果设置为 true 会对前端页面访问产生影响，暂时只为系统纯接口提供开启使用。
+#  isDefaultResult: false
+#
+#  # 开启对接口结果数据进行包装的请求参数名和请求头名（v5.8.1）
+#  resultParamName: __data
+#  resultHeaderName: x-header
+#  
+#  # MVC 视图相关
+#  view:
+#    
+#    # 系统主题名称，主题视图优先级最高，如果主题下无这个视图文件则访问默认视图
+#    # 引入页面头部：'/themes/'+themeName+'/include/header.html'
+#    # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
+#    themeName: default
+#    
+#    # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
+#    smartMethodArgumentResolver: true
+#    
+#    # 使用 .json、.xml 后缀匹配返回视图数据（Spring官方已不推荐使用）
+#    favorPathExtension: false
+#    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
+#    favorParameter: true
+#    # 修改 Spring MVC 默认 format 参数名，避免 406 错误 v5.15.1
+#    favorParameterName: __format
+#    # 使用 x-ajax=json、x-ajax=xml 请求头匹配返回视图数据
+#    favorHeader: true
+
+  # MVC 拦截器
+  interceptor:
+    
+    # 后台管理日志记录拦截器
+    log:
+      enabled: true
+      addPathPatterns: >
+        ${adminPath}/**
+      excludePathPatterns: >
+        ${adminPath}/index,
+        ${adminPath}/login,
+        ${adminPath}/desktop,
+        ${adminPath}/authInfo,
+        ${adminPath}/menuRoute,
+        ${adminPath}/switchSkin/*,
+        ${adminPath}/index/menuTree,
+        ${adminPath}/sys/online/count,
+        ${adminPath}/**/server/rtInfo,
+        ${adminPath}/**/treeData,
+        ${adminPath}/file/**,
+        ${adminPath}/tags/*,
+        ${adminPath}/msg/**
+    
+    # 前台自动切换到手机视图拦截器
+    mobile:
+      enabled: false
+      addPathPatterns: >
+        ${frontPath}/**
+      excludePathPatterns: ~
+      
+#  # 静态文件后缀，过滤静态文件，以提高访问性能。
+#  staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.webp,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
+#  
+#  # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
+#  staticFileExcludeUri: /druid/
+#  
+#  # 静态资源路径前缀，可做 CDN 加速优化，默认前面增加 ctxPath 前缀，如果前面写 “//” 两个斜杠 或 包含 “://” 不加 ctxPath。
+#  staticPrefix: /static
+#  
+#  # 严格模式（更严格的数据安全验证）
+#  strictMode: false
+#
+#  # 所有请求信息将进行xss过滤，这里列出不被xss过滤的地址
+#  xssFilterExcludeUri: /ureport/,/visual/
+#  
+#  # 自定义正则表达式验证（主键、登录名）
+#  validator:
+#    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
+#    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
+#  
+#  # 默认不启用（为兼用旧版保留，建议使用 CORS）
+#  jsonp:
+#    enabled: false
+#    callback: __callback
+
+  # 核心模块的Web功能开启（其它微服务时设为false）
+  core: 
+    enabled: true
+  
+# 在线API文档
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+# 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
+error:
+  page:
+    printErrorInfo: true
+
+#======================================#
+#======== FileUpload settings =========#
+#======================================#
+
+# 文件上传
+file:
+  enabled: true
+  
+#  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+#  #baseDir: D:/jeesite
+#  
+#  # 上传文件的相对路径（支持：yyyy、MM、dd、HH、mm、ss、E、bizType、corpCode、userCode、userType、userCache中的key）
+#  uploadPath: '{yyyy}{MM}/'
+#  
+#  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等，此设置会覆盖 spring.http.multipart.maxFileSize 设置
+#  maxFileSize: '500*1024*1024'
+#  
+#  # 设置允许上传的文件后缀（全局设置）
+#  imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,.webp,
+#  mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
+#  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.wps,.et,.dps,.pdf,.ofd,.vsd,.txt,.md,.xml,.rar,.zip,.7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.dmg,.ipa,.apk,
+#  
+#  # 允许上传的文件内容类型（图片、word、excel、ppt）防止修改后缀恶意上传文件（默认不启用验证）
+#  #allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
+#  #  application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+#  #  application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+#  #  application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
+#  
+#  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
+#  imageMaxWidth: 1024
+#  imageMaxHeight: 768
+#
+#  # 缩略图设定，生成的尺寸（宽x高,宽x高）、格式（jpg,png）  v5.5.0
+#  #imageThumbConfig: 150x150,300x300
+#  #imageThumbFormat: jpg
+#  
+#  # 是否启用秒传
+#  checkmd5: true
+#  # 是否开启分片上传
+#  chunked: true
+#  # 分片大小，单位字节（10M）
+#  chunkSize: '10*1024*1024'
+#  # 最大上传线程数
+#  threads: 3
+#  
+#  # 是否启用检查点（支持断点续传，上传）
+#  checkpoint: true
+#
+#  # 是否用文件流方式下载（支持断点续传，下载）
+#  isFileStreamDown: true
+  
+# 视频转码
+#video:
+#  
+#  # 视频格式转换  ffmpeg.exe 所放的路径
+#  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
+#  #ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
+#  
+#  # 视频格式转换  mencoder.exe 所放的路径
+#  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
+#  
+#  # 将mp4视频的元数据信息转到视频第一帧
+#  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
+
+# 文件管理是否启用租户模式
+#filemanager:
+#  useCorpModel: false
+
+#======================================#
+#========== Message settings ==========#
+#======================================#
+
+# 消息提醒中心（专业版）
+msg:
+  enabled: false
+  
+#  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
+#  realtime:
+#    # 是否开启
+#    enabled: true
+#    # 消息实时推送任务Bean名称
+#    beanName: msgLocalPushTask
+#    # 消息推送线程池
+#    pushTaskPool:
+#      corePoolSize: 5
+#      maxPoolSize: 20
+#      keepAliveSeconds: 60
+#  
+#  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
+#  pushFailNumber: 3
+#  
+#  # 邮件发送参数
+#  email:
+#    beanName: emailSendService
+#    fromAddress: test@163.com
+#    fromPassword: 123456
+#    fromHostName: smtp.163.com
+#    sslOnConnect: false
+#    sslSmtpPort: 994
+#  
+#  # 短信网关
+#  sms:
+#    beanName: smsSendService
+#    url: http://localhost:80/msg/sms/send
+#    data: username=jeesite&password=jeesite.com
+#    prefix: 【JeeSite】
+#    suffix: ~
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
