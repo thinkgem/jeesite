@@ -4,12 +4,11 @@ import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { dateUtil } from '@jeesite/core/utils/dateUtil';
 import { isNumber } from '@jeesite/core/utils/is';
 
-const { t } = useI18n();
-
 /**
  * @description: 生成placeholder
  */
 export function createPlaceholderMessage(component: ComponentType) {
+  const { t } = useI18n();
   if (component.includes('Input') || component.includes('Complete')) {
     return t('common.inputText');
   }

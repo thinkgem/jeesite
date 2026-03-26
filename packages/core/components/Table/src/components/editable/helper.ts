@@ -1,12 +1,11 @@
 import { ComponentType } from '../../types/componentType';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
-const { t } = useI18n();
-
 /**
  * @description: 生成placeholder
  */
 export function createPlaceholderMessage(component: ComponentType) {
+  const { t } = useI18n();
   if (component.includes('Input') || component.includes('AutoComplete')) {
     return t('common.inputText');
   }

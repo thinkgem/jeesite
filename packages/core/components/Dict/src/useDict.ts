@@ -10,10 +10,9 @@ import { dictDataTreeData } from '@jeesite/core/api/sys/dictData';
 import { useUserStore } from '@jeesite/core/store/modules/user';
 import { listToTree } from '@jeesite/core/utils/helper/treeHelper';
 
-const { t } = useI18n();
-const userStore = useUserStore();
-
 export function useDict() {
+  const { t } = useI18n();
+  const userStore = useUserStore();
   const dictListMap = userStore.getPageCacheByKey('dictListMap', {});
 
   async function initDict(dictTypes: string[] | Set<string> = []) {
