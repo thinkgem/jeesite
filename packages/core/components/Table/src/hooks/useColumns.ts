@@ -74,6 +74,47 @@ function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean, 
   });
 }
 
+function handleDragColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
+  const { canRowDrag, isTreeTable } = unref(propsRef);
+
+  if (unref(isTreeTable)) {
+    return;
+  }
+
+  let pushDragColumns = canRowDrag;
+
+  columns.forEach(() => {
+    const dragIndex = columns.findIndex((column) => column.flag === DRAG_COLUMN_FLAG);
+    if (canRowDrag) {
+      pushDragColumns = dragIndex === -1;
+    } else if (!canRowDrag && dragIndex !== -1) {
+      columns.splice(dragIndex, 1);
+    }
+  });
+
+  if (!pushDragColumns) return;
+
+  columns.unshift({
+    flag: DRAG_COLUMN_FLAG,
+    title: '',
+    width: 40,
+    align: 'center',
+    fixed: 'left',
+    customRender: () => {
+      return h(Icon, {
+        icon: 'i-ant-design:drag-outlined',
+        class: 'cursor-move',
+        onMouseenter: (event: any) => {
+          event.target.closest('tr').draggable = true;
+        },
+        onMouseleave: (event: any) => {
+          event.target.closest('tr').draggable = false;
+        },
+      });
+    },
+  });
+}
+
 function handleIndexColumn(
   propsRef: ComputedRef<BasicTableProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
@@ -81,7 +122,7 @@ function handleIndexColumn(
 ) {
   const { t } = useI18n();
 
-  const { showIndexColumn, indexColumnProps, isTreeTable, canRowDrag } = unref(propsRef);
+  const { showIndexColumn, indexColumnProps, isTreeTable } = unref(propsRef);
 
   if (unref(isTreeTable)) {
     return;
@@ -101,29 +142,6 @@ function handleIndexColumn(
   if (!pushIndexColumns) return;
 
   // const isFixedLeft = columns.some((item) => item.fixed === 'left');
-
-  if (canRowDrag) {
-    columns.unshift({
-      flag: DRAG_COLUMN_FLAG,
-      title: '',
-      width: 40,
-      align: 'center',
-      fixed: 'left',
-      customRender: () => {
-        return h(Icon, {
-          icon: 'i-ant-design:drag-outlined',
-          class: 'cursor-move',
-          onMouseenter: (event: any) => {
-            event.target.closest('tr').draggable = true;
-          },
-          onMouseleave: (event: any) => {
-            event.target.closest('tr').draggable = false;
-          },
-        });
-      },
-      ...indexColumnProps,
-    });
-  }
 
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,
@@ -205,6 +223,7 @@ export function useColumns(
     // const columns = unref(columnsRef);
     const columns = currentColumns;
 
+    handleDragColumn(propsRef, columns);
     handleIndexColumn(propsRef, getPaginationRef, columns);
     handleActionColumn(propsRef, columns);
 
