@@ -27,6 +27,19 @@ public class MapUtils {
 		return new HashMap<K, V>(map);
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <K, V> HashMap<K, V> newHashMap(K k1, V v1, Object... others) {
+		int capacity = 1 + (others == null ? 0 : others.length / 2);
+		HashMap<K, V> map = new HashMap<>(capacity);
+		map.put(k1, v1);
+		if (others != null) {
+			for (int i = 0; i < others.length; i += 2) {
+				map.put((K) others[i], (V) others[i + 1]);
+			}
+		}
+		return map;
+	}
+
 	public static <K, V> LinkedHashMap<K, V> newLinkedHashMap() {
 		return new LinkedHashMap<K, V>();
 	}
