@@ -13,12 +13,12 @@
               </template>
               <div>
                 <Icon :icon="item.icon" v-if="item.icon" />
-                <span class="ml-1">{{ item.text }}</span>
+                <span v-if="item.text" class="ml-1">{{ item.text }}</span>
               </div>
             </a-popconfirm>
             <template v-else>
               <Icon :icon="item.icon" v-if="item.icon" />
-              <span class="ml-1 mr-1">{{ item.text }}</span>
+              <span v-if="item.text" class="ml-1 mr-1">{{ item.text }}</span>
             </template>
           </a-menu-item>
           <a-menu-divider v-if="item.divider" :key="`d-${item.event}`" />
