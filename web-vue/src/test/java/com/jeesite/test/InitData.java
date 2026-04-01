@@ -4,19 +4,18 @@
  */
 package com.jeesite.test;
 
+import com.jeesite.common.tests.BaseInitDataTests;
+import com.jeesite.modules.VueApplication;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import com.jeesite.common.tests.BaseInitDataTests;
-import com.jeesite.modules.ApiApplication;
 
 /**
  * 初始化数据表
  * @author ThinkGem
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes = ApiApplication.class)
+@SpringBootTest(classes = VueApplication.class)
 public class InitData extends BaseInitDataTests {
 	
 	@Test

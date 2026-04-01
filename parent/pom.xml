@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.11</version>
+		<version>3.5.13</version>
 		<relativePath />
 	</parent>
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>5.16.1.springboot3-SNAPSHOT</version>
+	<version>5.17.0.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Parent</name>
@@ -29,7 +29,7 @@
 
 		<metadata-extractor.version>2.19.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.21</thumbnailator.version>
-		<twelvemonkeys.version>3.12.0</twelvemonkeys.version>
+		<twelvemonkeys.version>3.13.1</twelvemonkeys.version>
 		<blade-patchca.version>1.1.2</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.5.4</zxing.version>
@@ -38,8 +38,8 @@
 		<fury.version>0.10.3</fury.version>
 		<bcprov.version>1.80</bcprov.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
-		<snakeyaml.version>2.4</snakeyaml.version>
-		<fastjson.version>2.0.57</fastjson.version>
+		<snakeyaml.version>2.6</snakeyaml.version>
+		<fastjson.version>2.0.61</fastjson.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<joda-time.version>2.12.7</joda-time.version>
 
@@ -48,13 +48,13 @@
 		<mybatis-spring.version>3.0.5</mybatis-spring.version>
 		<jsqlparser.version>4.9</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
-		<druid.version>1.2.27</druid.version>
-		<shiro.version>2.0.6</shiro.version>
+		<druid.version>1.2.28</druid.version>
+		<shiro.version>2.1.0</shiro.version>
 		<quartz.version>2.5.2</quartz.version>
 		<swagger3.version>2.2.36</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
 		<logstash-logback.version>8.1</logstash-logback.version>
-		<logback.version>1.5.19</logback.version>
+		<logback.version>1.5.32</logback.version>
 
 		<!-- JDBC driver for your db version -->
 		<!--<mysql.version>9.3.0</mysql.version>-->
