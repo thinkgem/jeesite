@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@jeesite/dfm/*": ["./*"]
     }
@@ -15,18 +14,5 @@
     "node_modules",
     "vite.config.ts",
     "dist"
-  ],
-  "homepage": "https://jeesite.com",
-  "repository": {
-    "type": "git",
-    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
-  },
-  "bugs": {
-    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
-  },
-  "author": {
-    "name": "ThinkGem",
-    "email": "thinkgem@163.com",
-    "url": "https://gitee.com/thinkgem"
-  }
+  ]
 }

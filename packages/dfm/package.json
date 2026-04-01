@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/dfm",
-  "version": "5.16.1-dev",
+  "version": "5.17.0-dev",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,20 +10,20 @@
   },
   "dependencies": {
     "@jeesite/dfm-lib": "5.16.0-rc.1",
-    "@vueuse/core": "14.1.0",
-    "dayjs": "1.11.19",
-    "less": "4.4.2",
-    "lodash-es": "4.17.21",
+    "@vueuse/core": "14.2.1",
+    "dayjs": "1.11.20",
+    "less": "4.6.4",
+    "lodash-es": "4.17.23",
     "monaco-editor": "0.55.1",
-    "vue-draggable-plus": "^0.6.0",
+    "vue-draggable-plus": "^0.6.1",
     "vuedraggable": "4.1.0",
-    "vue-i18n": "11.2.2",
+    "vue-i18n": "11.3.0",
     "vue-types": "6.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "6.0.2",
-    "vite-plugin-dts": "4.5.4",
-    "vitest": "4.0.15"
+    "@vitejs/plugin-vue": "6.0.5",
+    "unplugin-dts": "1.0.0-beta.0",
+    "vitest": "4.1.2"
   },
   "homepage": "https://jeesite.com",
   "repository": {

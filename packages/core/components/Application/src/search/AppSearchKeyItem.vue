@@ -1,5 +1,5 @@
 <template>
-  <span :class="$attrs.class">
+  <span :class="$attrs.class as string">
     <Icon :icon="icon" />
   </span>
 </template>

@@ -147,11 +147,11 @@
       display: none;
     }
 
-    ::v-deep(.ant-pagination-disabled) {
+    .ant-pagination-disabled {
       display: inline-block !important;
     }
 
-    ::v-deep(.ant-list-pagination) {
+    .ant-list-pagination {
       margin: 12px 18px !important;
     }
 

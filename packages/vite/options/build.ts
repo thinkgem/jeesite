@@ -16,26 +16,17 @@ export function createBuildOptions(viteEnv: ViteEnv): BuildOptions {
     target: viteTarget,
     cssTarget: viteTarget,
     outDir: viteEnv.VITE_OUTPUT_DIR ?? 'dist',
-    // 启用 terser 缩小器，当设置 terserOptions 时才会有效
-    // minify: 'terser',
-    // terserOptions: {
-    //   compress: {
-    //     keep_infinity: true,
-    //     drop_console: viteEnv.VITE_DROP_CONSOLE,
-    //   },
-    // },
     // 禁用报告压缩块大小，可以稍微提高构建速度
     reportCompressedSize: false,
     chunkSizeWarningLimit: 9000,
-    rollupOptions: {
-      maxParallelFileOps: 50,
+    rolldownOptions: {
       output: {
         entryFileNames: `assets/[name]-[hash]-${timestamp}.js`,
-        experimentalMinChunkSize: 12288,
-        // manualChunks: {
-        //   vue: ['vue', 'vue-router'],
-        //   antd: ['ant-design-vue', '@ant-design/icons-vue'],
-        // },
+        chunkFileNames: `assets/[name]-[hash]-${timestamp}.js`,
+        comments: false,
+        minify: {
+          compress: { dropConsole: true, dropDebugger: true },
+        },
       },
     },
   };

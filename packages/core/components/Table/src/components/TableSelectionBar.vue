@@ -41,7 +41,7 @@
     flex-grow: 1;
     padding: 2px 8px;
 
-    :deep(.ant-btn-link) {
+    .ant-btn-link {
       height: 20px;
       line-height: 20px;
     }
