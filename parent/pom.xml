@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.13</version>
+		<version>4.0.5</version>
 		<relativePath />
 	</parent>
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>5.17.0.springboot3-SNAPSHOT</version>
+	<version>5.17.0.springboot4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Parent</name>

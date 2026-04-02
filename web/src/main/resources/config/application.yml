@@ -837,8 +837,6 @@ web:
 #    # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
 #    smartMethodArgumentResolver: true
 #
-#    # 使用 .json、.xml 后缀匹配返回视图数据（Spring官方已不推荐使用）
-#    favorPathExtension: false
 #    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
 #    favorParameter: true
 #    # 修改 Spring MVC 默认 format 参数名，避免 406 错误 v5.15.1
@@ -895,15 +893,6 @@ web:
 #  validator:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
 #    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
-#
-#  # 默认的日期格式（JsonMapper）
-#  json:
-#    defaultDateFormat: yyyy-MM-dd HH:mm:ss
-#
-#  # 默认不启用（为兼用旧版保留，建议使用 CORS）
-#  jsonp:
-#    enabled: false
-#    callback: __callback
 
   # 核心模块的Web功能开启（其它微服务时设为false）
   core:

@@ -4,7 +4,6 @@
  */
 package com.jeesite.common.web.http;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.io.PropertiesUtils;
@@ -51,14 +50,9 @@ public class ServletUtils {
 	public static final String AJAX_HEADER_NAME = PROPS.getProperty("web.ajaxHeaderName", "x-ajax");
 	
 	// MVC 偏好设置，根据后缀、参数、Header 返回特定格式数据
-	public static final Boolean FAVOR_PATH_EXTENSION = PROPS.getPropertyToBoolean("web.view.favorPathExtension", "false");
 	public static final Boolean FAVOR_PARAMETER = PROPS.getPropertyToBoolean("web.view.favorParameter", "true");
 	public static final String FAVOR_PARAMETER_NAME = PROPS.getProperty("web.view.favorParameterName", "__format");
 	public static final Boolean FAVOR_HEADER = PROPS.getPropertyToBoolean("web.view.favorHeader", "true");
-	
-	// JSONP 支持（为兼用旧版保留，建议使用 CORS）
-	public static final Boolean JSONP_ENABLED = PROPS.getPropertyToBoolean("web.jsonp.enabled", "false");
-	public static final String  JSONP_CALLBACK = PROPS.getProperty("web.jsonp.callback", "__callback");
 	
 	// 是否打印错误信息参数到视图页面（生产环境关闭）
 	private static final Boolean PRINT_ERROR_INFO = PROPS.getPropertyToBoolean("error.page.printErrorInfo", "true");
@@ -154,14 +148,6 @@ public class ServletUtils {
 			return true;
 		}
 		
-		if (FAVOR_PATH_EXTENSION) {
-			String uri = request.getRequestURI();
-			if (StringUtils.endsWithIgnoreCase(uri, ".json")
-					|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
-				return true;
-			}
-		}
-		
 		if (FAVOR_PARAMETER) {
 			String ajaxParameter = request.getParameter(AJAX_PARAM_NAME);
 			if (StringUtils.inStringIgnoreCase(ajaxParameter, "json", "xml")){
@@ -180,7 +166,7 @@ public class ServletUtils {
 	}
 
 	/**
-	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 返回结果JSON字符串
 	 * @param result Global.TRUE or Globle.False
 	 * @param message 执行消息
 	 * @return JSON字符串：{result:'true',message:''}
@@ -190,7 +176,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 返回结果JSON字符串
 	 * @param result Global.TRUE or Globle.False
 	 * @param message 执行消息
 	 * @param data 消息数据
@@ -201,7 +187,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 返回结果JSON字符串
 	 * @param result Global.TRUE or Globle.False
 	 * @param message 执行消息
 	 * @param data 消息数据
@@ -228,37 +214,26 @@ public class ServletUtils {
 				resultMap.put("data", data);
 			}
 		}
-		Object object = null;
-		HttpServletResponse response = getResponse();
+		Object object = resultMap;
 		HttpServletRequest request = getRequest();
-		if (request != null){
-			String uri = request.getRequestURI();
-			if ((FAVOR_PATH_EXTENSION && StringUtils.endsWithIgnoreCase(uri, ".xml"))
-					|| (FAVOR_PARAMETER && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml"))){
-				if (response != null){
-					response.setContentType(MediaType.APPLICATION_XML_VALUE);
-				}
-				if (jsonView != null) {
-					return XmlMapper.toXml(resultMap, jsonView);
-				}else {
-					return XmlMapper.toXml(resultMap);
-				}
+		HttpServletResponse response = getResponse();
+		if (request != null && response != null) {
+			object = ResultUtils.result(resultMap, request, response);
+		}
+		if (FAVOR_PARAMETER && request != null && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml")) {
+			if (response != null){
+				response.setContentType(MediaType.APPLICATION_XML_VALUE);
 			}
-			if (JSONP_ENABLED) {
-				String functionName = request.getParameter(JSONP_CALLBACK);
-				if (StringUtils.isNotBlank(functionName)){
-					object = new JSONPObject(functionName, resultMap);
-				}
+			if (jsonView != null) {
+				return XmlMapper.toXml(object, jsonView);
+			}else {
+				return XmlMapper.toXml(object);
 			}
 		}
 		if (response != null){
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(EncodeUtils.UTF_8);
 		}
-		if (object == null) {
-			object = resultMap;
-		}
-		object = ResultUtils.result(object, request, response);
 		if (jsonView != null) {
 			return JsonMapper.toJson(object, jsonView);
 		}else {
@@ -267,7 +242,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 直接将结果JSON字符串渲染到客户端
 	 * @param response 渲染对象：{result:'true',message:'',data:{}}
 	 * @param result Global.TRUE or Globle.False
 	 * @param message 执行消息
@@ -278,7 +253,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 直接将结果JSON字符串渲染到客户端
 	 * @param response 渲染对象：{result:'true',message:'',data:{}}
 	 * @param result 结果标识：Global.TRUE or Globle.False
 	 * @param message 执行消息
@@ -290,7 +265,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 直接将结果JSON字符串渲染到客户端
 	 * @param response 渲染对象：{result:'true',message:'',data:{}}
 	 * @param result 结果标识：Global.TRUE or Globle.False
 	 * @param message 执行消息
@@ -303,7 +278,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
+	 * 将对象转换为JSON、XML字符串渲染到客户端（输出XML：__ajax=xml）
 	 * @param response 渲染对象
 	 * @param object 待转换JSON并渲染的对象
 	 * @return null
@@ -313,7 +288,7 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
+	 * 将对象转换为JSON、XML字符串渲染到客户端（输出XML：__ajax=xml）
 	 * @param response 渲染对象
 	 * @param object 待转换JSON并渲染的对象
 	 * @param jsonView 根据 JsonView 过滤
@@ -321,21 +296,16 @@ public class ServletUtils {
 	 */
 	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
-		if (request == null) {
-			return null;
+		if (request != null && response != null) {
+			object = ResultUtils.result(object, request, response);
 		}
-		String uri = request.getRequestURI();
-		if ((FAVOR_PATH_EXTENSION && StringUtils.endsWithIgnoreCase(uri, ".xml"))
-				|| (FAVOR_PARAMETER && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml"))){
-			return renderString(response, XmlMapper.toXml(object));
-		}
-		if (JSONP_ENABLED) {
-			String functionName = request.getParameter(JSONP_CALLBACK);
-			if (StringUtils.isNotBlank(functionName)){
-				object = new JSONPObject(functionName, object);
+		if (FAVOR_PARAMETER && request != null && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml")) {
+			if (jsonView != null) {
+				return renderString(response, XmlMapper.toXml(object, jsonView));
+			} else {
+				return renderString(response, XmlMapper.toXml(object));
 			}
 		}
-		object = ResultUtils.result(object, request, response);
 		if (jsonView != null) {
 			return renderString(response, JsonMapper.toJson(object, jsonView));
 		}else {
