@@ -18,7 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.discovery;
 import java.util.ConcurrentModificationException;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.alibaba.csp.sentinel.dashboard.config.DashboardConfig;
 

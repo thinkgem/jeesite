@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.RequestContent;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SentinelApiClientTest {
     @Test

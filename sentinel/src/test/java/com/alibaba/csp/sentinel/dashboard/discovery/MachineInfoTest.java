@@ -17,7 +17,7 @@ package com.alibaba.csp.sentinel.dashboard.discovery;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.alibaba.csp.sentinel.dashboard.config.DashboardConfig;
 

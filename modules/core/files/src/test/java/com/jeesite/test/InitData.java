@@ -6,7 +6,7 @@ package com.jeesite.test;
 
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.FilesApplication;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 

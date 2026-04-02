@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Optional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.SentinelVersion;
 

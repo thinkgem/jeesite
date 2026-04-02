@@ -18,7 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.config;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
 
 public class DashboardConfigTest {
