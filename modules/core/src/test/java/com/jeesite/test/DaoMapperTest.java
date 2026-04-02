@@ -19,7 +19,7 @@ import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.sys.dao.*;
 import com.jeesite.modules.sys.entity.*;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

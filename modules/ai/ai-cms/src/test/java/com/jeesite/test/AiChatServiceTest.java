@@ -8,11 +8,8 @@ import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.ai.cms.service.AiCmsChatService;
 import com.jeesite.modules.sys.entity.Area;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -25,9 +22,8 @@ import java.util.Map;
  * @version 2025-06-06
  */
 @ActiveProfiles("test")
-@SpringBootApplication
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SpringBootTest(properties = {"spring.ai.model.chat=ollama","spring.ai.tools.enabled=true"})
+@SpringBootTest(classes = ApplicationTest.class, properties = {
+		"spring.ai.model.chat=ollama","spring.ai.tools.enabled=true","spring.application.name=test"})
 public class AiChatServiceTest extends BaseSpringContextTests {
 
 	private AiCmsChatService aiCmsChatService;
@@ -71,6 +67,5 @@ public class AiChatServiceTest extends BaseSpringContextTests {
 		List<Area> list = aiCmsChatService.chatArea(message);
 		System.out.println(JsonMapper.toJson(list));
 	}
-
 
 }

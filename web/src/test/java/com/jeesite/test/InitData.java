@@ -4,12 +4,11 @@
  */
 package com.jeesite.test;
 
-import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.Application;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * 初始化数据表
