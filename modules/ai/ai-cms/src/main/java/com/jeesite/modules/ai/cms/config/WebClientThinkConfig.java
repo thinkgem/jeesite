@@ -9,13 +9,12 @@ import com.jeesite.common.mapper.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.web.reactive.function.client.WebClientCustomizer;
+import org.springframework.boot.webclient.WebClientCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import reactor.core.publisher.Flux;
@@ -135,8 +134,9 @@ public class WebClientThinkConfig {
 						byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
 						return new DefaultDataBufferFactory().wrap(bytes);
 					});
-				ClientResponse modifiedResponse = ClientResponse.from(clientResponse)
-					.headers(headers -> headers.remove(HttpHeaders.CONTENT_LENGTH))
+				ClientResponse modifiedResponse = ClientResponse.create(clientResponse.statusCode())
+					.headers(headers -> headers.putAll(clientResponse.headers().asHttpHeaders()))
+					.cookies(cookies -> cookies.putAll(clientResponse.cookies()))
 					.body(modifiedBody)
 					.build();
 				return Mono.just(modifiedResponse);

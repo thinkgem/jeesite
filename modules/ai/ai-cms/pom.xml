@@ -37,6 +37,12 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- 升级 jackson 后移除 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
 		<!-- 云端模型 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>

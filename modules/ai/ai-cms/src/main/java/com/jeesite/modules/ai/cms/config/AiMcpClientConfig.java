@@ -4,23 +4,16 @@
  */
 package com.jeesite.modules.ai.cms.config;
 
-import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
-import com.jeesite.modules.ai.tools.utils.SubjectHolder;
 import io.modelcontextprotocol.client.transport.customizer.McpSyncHttpClientRequestCustomizer;
-import io.modelcontextprotocol.common.McpTransportContext;
-import org.apache.shiro.subject.Subject;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
-import org.springframework.ai.mcp.customizer.McpSyncClientCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Map;
 
 /**
  * AI MCP 配置类
@@ -47,18 +40,18 @@ public class AiMcpClientConfig {
 	}
 
 
-	@Bean
-	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)
-	public McpSyncClientCustomizer mcpSyncClientCustomizer() {
-		return (name, syncSpec) -> syncSpec.transportContextProvider(() -> {
-			Map<String, Object> data = MapUtils.newHashMap();
-			Subject subject = SubjectHolder.getSubject();
-			if (subject != null) {
-				data.put("sessionId", subject.getSession().getId());
-			}
-			return McpTransportContext.create(data);
-		});
-	}
+//	@Bean TODO 待迁移 McpSyncClientCustomizer
+//	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)
+//	public McpSyncClientCustomizer mcpSyncClientCustomizer() {
+//		return (name, syncSpec) -> syncSpec.transportContextProvider(() -> {
+//			Map<String, Object> data = MapUtils.newHashMap();
+//			Subject subject = SubjectHolder.getSubject();
+//			if (subject != null) {
+//				data.put("sessionId", subject.getSession().getId());
+//			}
+//			return McpTransportContext.create(data);
+//		});
+//	}
 
 	@Bean
 	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)

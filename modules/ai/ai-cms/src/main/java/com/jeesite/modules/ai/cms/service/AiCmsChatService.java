@@ -8,15 +8,17 @@ import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.BaseService;
+import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.tools.utils.SubjectHolder;
 import com.jeesite.modules.sys.entity.Area;
-import com.jeesite.modules.sys.utils.AreaUtils;
+import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.util.ThreadContext;
@@ -253,8 +255,9 @@ public class AiCmsChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public List<Area> chatArea(String message) {
-		List<Area> list = AreaUtils.getAreaAllList();
-		if (list.size() > 10) list = list.subList(0, 10);
+		Area where = new Area();
+		where.setPage(new Page<>(1, 5, Page.COUNT_NOT_COUNT));
+		List<Area> list = SpringUtils.getBean(AreaService.class).findList(where);
 		ChatClient.ChatClientRequestSpec spec = chatClient.prompt()
 			.messages(
 				new SystemMessage(JsonMapper.toJson(list)),
@@ -267,8 +270,11 @@ public class AiCmsChatService extends BaseService {
 					.build());
 		}
 		return spec.call()
-			.responseEntity(new BeanOutputConverter<>(new ParameterizedTypeReference<List<Area>>() {},
-					JsonMapper.getInstance()))
+			.responseEntity(
+					new BeanOutputConverter<>(
+							new ParameterizedTypeReference<List<Area>>() {}/*,
+							JsonMapper.getInstance()*/
+					))
 			.getEntity();
 	}
 
