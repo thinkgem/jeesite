@@ -5,9 +5,9 @@
 
 	<parent>
 		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-cloud-parent</artifactId>
+		<artifactId>jeesite-cloud-parent-jakarta</artifactId>
 		<version>5.17.0.springboot4-SNAPSHOT</version>
-		<relativePath>../parent/javax/pom.xml</relativePath>
+		<relativePath>../parent/jakarta/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>jeesite-cloud-nacos</artifactId>

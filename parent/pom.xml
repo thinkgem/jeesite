@@ -21,8 +21,8 @@
 	<properties>
 
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2025.0.1</spring-cloud.version>
-		<spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
+		<spring-cloud.version>2025.1.1</spring-cloud.version>
+		<spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
 		<nacos.version>3.1.1.1</nacos.version>
 		<seata.version>2.3.0</seata.version>
 
