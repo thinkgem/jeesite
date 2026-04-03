@@ -25,7 +25,6 @@
 		<spring-cloud.version>2021.0.9</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
 		<nacos.version>2.5.1.1</nacos.version>
-		<druid.version>1.2.23</druid.version>
 
 		<!-- environment setting -->
 		<java.version>17</java.version>
@@ -34,6 +33,7 @@
 		<resource.delimiter>@</resource.delimiter>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 其它版本可能会出现VM崩溃 -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
@@ -49,7 +49,7 @@
 
 	<dependencies>
 
-		<!-- javax.servlet -->
+		<!-- Servlet Api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -80,9 +80,9 @@
 				<version>${nacos.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>${druid.version}</version>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -109,6 +109,12 @@
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
 
+			<!-- Timestamp 插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+
 		</plugins>
 
 		<pluginManagement>
@@ -123,11 +129,27 @@
 					<configuration>
 						<parameters>true</parameters>
 						<showWarnings>true</showWarnings>
-						<!-- <compilerArguments>
-							<verbose /> 输出有关编译器正在执行的操作的消息
-							<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
-						</compilerArguments> -->
 					</configuration>
+				</plugin>
+
+				<!-- Timestamp 插件，生成编译时间 -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>timestamp-property</id>
+							<goals>
+								<goal>timestamp-property</goal>
+							</goals>
+							<configuration>
+								<name>build.time</name>
+								<pattern>yyyy-MM-dd HH:mm</pattern>
+								<locale>zh_CN</locale>
+								<timeZone>GMT+8</timeZone>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 
 				<!-- Jar 插件，配置 manifest 文件，加入 lib 包的 jar 依赖 -->
@@ -144,7 +166,8 @@
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
-								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<!--suppress UnresolvedMavenProperty -->
+								<Build-Time>${build.time}</Build-Time>
 							</manifestEntries>
 						</archive>
 					</configuration>
@@ -187,7 +210,8 @@
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
-								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<!--suppress UnresolvedMavenProperty -->
+								<Build-Time>${build.time}</Build-Time>
 							</manifestEntries>
 						</archive>
 					</configuration>
@@ -278,7 +302,7 @@
 				<plugin>
 					<groupId>com.jeesite.maven</groupId>
 					<artifactId>compressor-maven-plugin</artifactId>
-					<version>1.0.0-SNAPSHOT</version>
+					<version>1.1.0-SNAPSHOT</version>
 					<executions>
 						<execution>
 							<phase>prepare-package</phase>
@@ -288,11 +312,6 @@
 						</execution>
 					</executions>
 					<configuration>
-						<encoding>UTF-8</encoding>
-						<jswarn>false</jswarn>
-						<nosuffix>true</nosuffix>
-						<linebreakpos>30000</linebreakpos>
-						<force>true</force>
 						<includes>
 							<include>**/*.js</include>
 							<include>**/*.css</include>
