@@ -378,9 +378,7 @@ spring:
   cache:
     # 缓存及会话共享（专业版）
     isClusterMode: true
-    # 清理全部缓存按钮所清理的缓存列表
-    clearNames: sysCache,corpCache,userCache,cmsCache
-  
+
   # 消息队列服务
 #  rabbitmq:
 #    host: 192.168.11.103
