@@ -109,8 +109,7 @@ spring:
 #    # 缓存及会话共享（专业版）
 #    isClusterMode: true
 
-# ========= MPC Server 相关配置 =========
-
+  # MPC Server 相关配置
   # https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html
   ai:
     mcp:
