@@ -21,7 +21,7 @@ public class LocalTestAiTools extends TestAiTools {
 	/**
 	 * 获取服务器时间
 	 */
-	@Tool(name="当前服务器时间", description = "当前服务器日期时间，格式为 yyyy-MM-dd HH:mm:ss。")
+	@Tool(name="server-time", description = "当前服务器日期时间，格式为 yyyy-MM-dd HH:mm:ss。")
 	public String getCurrentDateTime() {
 		return super.getCurrentDateTime();
 	}
@@ -30,7 +30,7 @@ public class LocalTestAiTools extends TestAiTools {
 	 * 开关房间的灯
 	 */
 	@Tool(
-		name = "房间灯光开关",
+		name = "root-light-switch",
 		description = "控制指定房间的灯光开关。需要提供房间名称（如 '客厅'、'卧室'）和目标状态（true 表示开灯，false 表示关灯）。"
 	)
 	public String roomLightSwitch(

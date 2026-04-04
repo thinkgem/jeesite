@@ -26,7 +26,7 @@ public class McpUserAiTools extends UserAiTools {
 	/**
 	 * 获取当前会话的用户信息
 	 */
-	@McpTool(name="当前用户信息", description = "无条件获取当前用户信息")
+	@McpTool(name="current-user", description = "无条件获取当前用户信息")
 	public String getCurrentUser() {
 		return super.getCurrentUser();
 	}
@@ -36,7 +36,7 @@ public class McpUserAiTools extends UserAiTools {
 	 * 查询用户信息
 	 */
 	@McpTool(
-			name="查询用户信息",
+			name="find-user-info",
 			description = "根据用户名（登录账号）或员工姓名模糊查询用户信息。结果以表格形式展示，" +
 					"包含用户名userName、姓名empUser、部门officeName等基本信息。"
 	)
