@@ -36,7 +36,7 @@ public class UserAiTools {
 	public String getCurrentUser() {
 		User currentUser = UserUtils.getUser();
 		if (StringUtils.isBlank(currentUser.getUserCode())) {
-			logger.info("当前用户信息 ============== 当前用户未登录。");
+			logger.info("当前用户信息 ============== 当前用户未登录。{}", UserUtils.getSession().getId());
 			return "当前用户未登录。";
 		}
 		String result = JsonMapper.toJson(currentUser);

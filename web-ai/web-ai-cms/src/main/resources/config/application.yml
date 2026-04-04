@@ -126,6 +126,16 @@ spring:
 #  cache:
 #    # 缓存及会话共享（专业版）
 #    isClusterMode: true
+#
+#  # AI 相关配置
+#  ai:
+#    model:
+#      chat: ollama
+#    tools:
+#      enabled: false
+#    mcp:
+#      client:
+#        enabled: false
 
 # 日志配置（fatal、error、warn、info、debug）
 logging:

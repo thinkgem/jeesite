@@ -7,9 +7,12 @@ package com.jeesite.modules.ai.cms.config;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
-import io.modelcontextprotocol.client.transport.customizer.McpSyncHttpClientRequestCustomizer;
+import com.jeesite.modules.ai.tools.context.AiToolContextProvider;
+import io.modelcontextprotocol.client.McpClient;
+import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
+import org.springframework.ai.mcp.customizer.McpClientCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +26,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(AiCmsProperties.class)
 public class AiMcpClientConfig {
 
-
-	/**
+    /**
 	 * 聊天对话客户端（使用 MCP Tools）
 	 * @author ThinkGem
 	 */
@@ -39,29 +41,23 @@ public class AiMcpClientConfig {
 		return builder.build();
 	}
 
-
-//	@Bean TODO 待迁移 McpSyncClientCustomizer
-//	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)
-//	public McpSyncClientCustomizer mcpSyncClientCustomizer() {
-//		return (name, syncSpec) -> syncSpec.transportContextProvider(() -> {
-//			Map<String, Object> data = MapUtils.newHashMap();
-//			Subject subject = SubjectHolder.getSubject();
-//			if (subject != null) {
-//				data.put("sessionId", subject.getSession().getId());
-//			}
-//			return McpTransportContext.create(data);
-//		});
-//	}
+	@Bean
+	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)
+	public McpClientCustomizer<McpClient.SyncSpec> mcpSyncClientCustomizer() {
+		return (name, syncSpec) -> syncSpec
+				.transportContextProvider(AiToolContextProvider.INSTANCE);
+	}
 
 	@Bean
 	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "true", matchIfMissing = false)
-	public McpSyncHttpClientRequestCustomizer mcpSyncHttpClientRequestCustomizer() {
-		return (builder, method, endpoint, body, context) -> {
-			String sessionId = (String) context.get("sessionId");
-			if (StringUtils.isNotBlank(sessionId)) {
-				builder.header(Global.getProperty("session.sessionIdHeaderName", "x-token"), sessionId);
-			}
-		};
-	}
+    public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpSyncHttpClientRequestCustomizer() {
+        return (name, builder) ->
+			builder.httpRequestCustomizer((requestBuilder, method, endpoint, body, context) -> {
+				String sessionId = (String) context.get(AiToolContextProvider.SESSION_ID_KEY);
+				if (StringUtils.isNotBlank(sessionId)) {
+					requestBuilder.header(Global.getProperty("session.sessionIdHeaderName", "x-token"), sessionId);
+				}
+			});
+    }
 
 }

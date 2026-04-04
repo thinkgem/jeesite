@@ -16,12 +16,11 @@ import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
-import com.jeesite.modules.ai.tools.utils.SubjectHolder;
+import com.jeesite.modules.ai.tools.context.AiToolContextProvider;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.shiro.util.ThreadContext;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
@@ -154,16 +153,11 @@ public class AiCmsChatService extends BaseService {
 					.promptTemplate(new PromptTemplate(properties.getDefaultPromptTemplate()))
 					.build());
 		}
-//		if (Global.getPropertyToBoolean("spring.ai.mcp.client.enabled", "false")) {
-//			AiMcpClientConfig.subject.set(ThreadContext.getSubject());
-//		} else {
-//			spec.toolContext(Map.of("subject", ThreadContext.getSubject()));
-//		}
-		SubjectHolder.setSubject(ThreadContext.getSubject());
 		return spec.stream()
 			.chatResponse()
 			.doOnNext(response -> {
-				if (StringUtils.isNotBlank(response.getResult().getOutput().getText())) {
+				Generation generation = response.getResult();
+				if (generation != null && StringUtils.isNotBlank(generation.getOutput().getText())) {
 					AssistantMessage assistantMessage = (AssistantMessage)request.getAttribute("assistantMessage");
 					AssistantMessage currAssistantMessage = response.getResult().getOutput();
 					if (assistantMessage == null) {
@@ -174,7 +168,6 @@ public class AiCmsChatService extends BaseService {
 								.properties(currAssistantMessage.getMetadata()).build());
 					}
 				}
-				SubjectHolder.remove();
 			})
 			.doFinally((signalType) -> {
 				if (signalType != SignalType.ON_COMPLETE) {
@@ -185,25 +178,26 @@ public class AiCmsChatService extends BaseService {
 						chatMemory.add(conversationId, new AssistantMessage(text("暂无消息，你已主动停止响应。")));
 					}
 				}
-				SubjectHolder.remove();
 			})
 			.onErrorResume(error -> {
 				String errorMessage = error.getMessage();
 				if (Global.getPropertyToBoolean("error.page.printErrorInfo", "true")){
-					if (error instanceof WebClientResponseException webClientError) {
+					if (error instanceof WebClientResponseException) {
+						WebClientResponseException webClientError = (WebClientResponseException) error;
 						errorMessage = webClientError.getResponseBodyAsString();
-					} else if (error.getCause() instanceof WebClientResponseException webClientError) {
+					} else if (error.getCause() instanceof WebClientResponseException) {
+						WebClientResponseException webClientError = (WebClientResponseException) error.getCause();
 						errorMessage = webClientError.getResponseBodyAsString();
 					}
 				}
 				AssistantMessage assistantMessage = new AssistantMessage(errorMessage);
 				chatMemory.add(conversationId, assistantMessage);
 				logger.error("Error message: {}", errorMessage);
-				SubjectHolder.remove();
 				return Flux.just(ChatResponse.builder()
 						.generations(List.of(new Generation(assistantMessage)))
 						.build());
-			});
+			})
+			.contextWrite(AiToolContextProvider.contextWrite());
 	}
 
 	/**
@@ -226,9 +220,7 @@ public class AiCmsChatService extends BaseService {
 	public Map<String, Object> chatJson(String message) {
 		return chatClient.prompt()
 			.messages(
-				new SystemMessage("""
-						[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]，返回 json。
-						"""),
+				new SystemMessage("[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]，返回 json。"),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)
 			.call()
