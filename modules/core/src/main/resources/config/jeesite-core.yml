@@ -36,13 +36,13 @@ jdbc:
     # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
     maxWait: 60000
 
-    # 连接超时参数，单位毫秒 （v5.5.2+）
-    connectTimeout: ~
-    socketTimeout: ~
+    # 连接超时参数，单位毫秒（v5.5.2+）
+    #connectTimeout: ~
+    #socketTimeout: ~
 
-    # 查询超时时间，事务超时时间 （v5.7.1+）
-    queryTimeout: ~
-    transactionQueryTimeout: ~
+    # 查询超时时间，事务超时时间，单位秒（v5.7.1+）
+    #queryTimeout: ~
+    #transactionQueryTimeout: ~
     
     # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
     testOnBorrow: false
@@ -64,7 +64,7 @@ jdbc:
     removeAbandonedTimeout: 2100
 
     # 是否缓存 PreparedStatement 对象的最大数量（4.1.5+）
-    maxPoolPreparedStatementPerConnectionSize: ~
+    #maxPoolPreparedStatementPerConnectionSize: ~
     
     # 设置连接属性，可获取到表的 remark (备注)
     remarksReporting: false
