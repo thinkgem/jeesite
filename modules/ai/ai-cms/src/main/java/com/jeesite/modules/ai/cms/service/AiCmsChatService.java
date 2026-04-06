@@ -40,7 +40,7 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.converter.JacksonJsonMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
@@ -182,11 +182,9 @@ public class AiCmsChatService extends BaseService {
 			.onErrorResume(error -> {
 				String errorMessage = error.getMessage();
 				if (Global.getPropertyToBoolean("error.page.printErrorInfo", "true")){
-					if (error instanceof WebClientResponseException) {
-						WebClientResponseException webClientError = (WebClientResponseException) error;
+					if (error instanceof WebClientResponseException webClientError) {
 						errorMessage = webClientError.getResponseBodyAsString();
-					} else if (error.getCause() instanceof WebClientResponseException) {
-						WebClientResponseException webClientError = (WebClientResponseException) error.getCause();
+					} else if (error.getCause() instanceof WebClientResponseException webClientError) {
 						errorMessage = webClientError.getResponseBodyAsString();
 					}
 				}
@@ -213,6 +211,15 @@ public class AiCmsChatService extends BaseService {
 			.content();
     }
 
+	private static final String SYSTEM_MESSAGE_TO_JSON = """
+			；你是一个严格的数据提取和格式化工具。你的唯一任务是输出合法的、标准的 JSON 对象。
+			必须遵守以下规则：
+			1. 仅输出纯 JSON 字符串。
+			2. 严禁使用 Markdown 代码块标记（即绝对不要包含 ```json 或 ```）。
+			3. 严禁输出任何解释性文字、前言、后语或“好的，这是结果”之类的废话。
+			4. 严禁输出换行符，除非是在 JSON 字符串值的内部。
+			""";
+
 	/**
 	 * 聊天对话，结构化输出（Map）
 	 * @author ThinkGem
@@ -220,13 +227,13 @@ public class AiCmsChatService extends BaseService {
 	public Map<String, Object> chatJson(String message) {
 		return chatClient.prompt()
 			.messages(
-				new SystemMessage("[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]，返回 json。"),
+				new SystemMessage("[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]" + SYSTEM_MESSAGE_TO_JSON),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)
 			.call()
 			.responseEntity(
 				new AbstractMessageOutputConverter<Map<String, Object>>(
-					new MappingJackson2MessageConverter(JsonMapper.getInstance())
+					new JacksonJsonMessageConverter(JsonMapper.getInstance())
 				) {
 					final MapOutputConverter mapOutputConverter = new MapOutputConverter();
 					@Override
@@ -252,7 +259,7 @@ public class AiCmsChatService extends BaseService {
 		List<Area> list = SpringUtils.getBean(AreaService.class).findList(where);
 		ChatClient.ChatClientRequestSpec spec = chatClient.prompt()
 			.messages(
-				new SystemMessage(JsonMapper.toJson(list)),
+				new SystemMessage(JsonMapper.toJson(list) + SYSTEM_MESSAGE_TO_JSON),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			);
 		if (vectorStore != null) {
@@ -264,8 +271,8 @@ public class AiCmsChatService extends BaseService {
 		return spec.call()
 			.responseEntity(
 					new BeanOutputConverter<>(
-							new ParameterizedTypeReference<List<Area>>() {}/*,
-							JsonMapper.getInstance()*/
+							new ParameterizedTypeReference<List<Area>>() {},
+							JsonMapper.getInstance()
 					))
 			.getEntity();
 	}

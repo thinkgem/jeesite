@@ -5,17 +5,7 @@
 package com.jeesite.common.mapper;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonParser.Feature;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
-import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
@@ -25,218 +15,276 @@ import com.jeesite.common.lang.StringUtils;
 import org.apache.commons.lang3.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.json.JsonFactory;
+import tools.jackson.core.json.JsonReadFeature;
+import tools.jackson.databind.*;
+import tools.jackson.databind.cfg.MapperConfig;
+import tools.jackson.databind.introspect.Annotated;
+import tools.jackson.databind.introspect.AnnotatedClass;
+import tools.jackson.databind.introspect.AnnotatedMethod;
+import tools.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import tools.jackson.databind.module.SimpleModule;
 
-import java.io.IOException;
 import java.io.Serial;
 import java.lang.reflect.AnnotatedElement;
-import java.time.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.function.Consumer;
 
 /**
  * 封装 Jackson，实现 JSON String 与 Java Object 互转
- * @author ThinkGem
- * @version 2023-09-26
+ * @author ThinkGem、jeesite.com
+ * @version 2026-04-04
  */
-public class JsonMapper extends ObjectMapper {
+public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
+	protected static final Logger logger = LoggerFactory.getLogger(JsonMapper.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(JsonMapper.class);
+	public JsonMapper(Builder builder) {
+		super(builder);
+	}
 
 	/**
 	 * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
 	 */
 	private static final class JsonMapperHolder {
-		private static final JsonMapper INSTANCE = new JsonMapper();
-	}
-	
-	public JsonMapper() {
-		// 日志类型格式化处理
-		this.setLocaleTimeZoneDateFormat();
-		// 为Null时不序列化
-		this.setSerializationInclusion(Include.NON_NULL);
-		// 允许单引号
-		this.configure(Feature.ALLOW_SINGLE_QUOTES, true);
-		// 允许不带引号的字段名称
-		this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-		// 遇到空值处理为空串
-		this.enabledNullValueToEmpty();
-		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
-		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		// Spring ObjectMapper 初始化配置，支持 @JsonView
-		new Jackson2ObjectMapperBuilder().configure(this);
+		private static final JsonMapper INSTANCE = JsonMapper.builder().build();
 	}
 
 	/**
-	 * 日志类型格式化处理
+	 * JsonMapper 构建器扩展
 	 * @author ThinkGem
 	 */
-	public JsonMapper setLocaleTimeZoneDateFormat(){
-		PropertiesUtils props = PropertiesUtils.getInstance();
-		// 设置默认语言环境
-		props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
-			this.setLocale(LocaleUtils.toLocale(defaultLocale));
-		});
-		// 设置默认时区
-		props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
-			this.setTimeZone(TimeZone.getTimeZone(defaultTimeZone));
-		});
-		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-			@Serial
-			private static final long serialVersionUID = 1L;
-			private static final String[] pattern = new String[] {"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS"};
-			@Override
-			public Object findSerializer(Annotated a) {
-				if (a instanceof AnnotatedMethod) {
-					AnnotatedMethod am = (AnnotatedMethod) a;
-					if (DateUtils.isDateType(am.getRawReturnType())) {
-						JsonFormat jf = am.getAnnotation(JsonFormat.class);
-						if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
-							return new JeeSiteDateJsonSerializer(jf.pattern());
-						}
-						return new JeeSiteDateJsonSerializer(null);
-					}
-				} else if (a instanceof AnnotatedClass) {
-					if (DateUtils.isDateType(a.getRawType())) {
-						return new JeeSiteDateJsonSerializer(null);
-					}
-				}
-				return super.findSerializer(a);
-			}
-			@Override
-			public Object findDeserializer(Annotated a) {
-				if (a instanceof AnnotatedMethod) {
-					AnnotatedMethod am = (AnnotatedMethod) a;
-					if (am.getParameterCount() > 0 && DateUtils.isDateType(am.getParameterType(0).getRawClass())) {
-						AnnotatedElement m = am.getAnnotated();
-						JsonFormat jf = m.getAnnotation(JsonFormat.class);
-						if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
-							return new JeeSiteDateJsonDeserializer(jf.pattern());
-						}
-						return new JeeSiteDateJsonDeserializer(null);
-					}
-				} else if (a instanceof AnnotatedClass) {
-					if (DateUtils.isDateType(a.getRawType())) {
-						return new JeeSiteDateJsonDeserializer(null);
-					}
-				}
-				return super.findDeserializer(a);
-			}
-		});
-		return this;
-	}
+	public static class Builder extends tools.jackson.databind.json.JsonMapper.Builder {
 
-	public static final class JeeSiteDateJsonSerializer extends JsonSerializer<Object> {
-		private final String pattern;
-		public JeeSiteDateJsonSerializer(String pattern) {
-			this.pattern = pattern;
+		public Builder() {
+			super(new JsonFactory());
+			initialize();
 		}
-		@Override
-		public void serialize(Object dateObj, JsonGenerator gen, SerializerProvider provider) throws IOException {
-			Date value = ObjectUtils.toDate(dateObj);
-			if (value != null) {
-				if (StringUtils.isNotBlank(pattern)) {
-					gen.writeString(DateUtils.formatDate(value, pattern));
+
+		public void initialize() {
+			// 日志类型格式化处理
+			this.setDefaultLocaleTimeZone();
+			// 为Null时不序列化
+			this.changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL));
+			// 允许单引号
+			this.enable(JsonReadFeature.ALLOW_SINGLE_QUOTES);
+			// 允许不带引号的字段名称
+			this.enable(JsonReadFeature.ALLOW_UNQUOTED_PROPERTY_NAMES);
+			// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
+			this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+			// 设置注解处理器
+			this.dateFormatAnnotation();
+			// 空值转换为空字符串
+			this.enableNullValueToEmpty();
+		}
+
+		/**
+		 * 日志类型格式化处理
+		 * @author ThinkGem
+		 */
+		public Builder setDefaultLocaleTimeZone() {
+			// 设置默认语言环境
+			PropertiesUtils props = PropertiesUtils.getInstance();
+			props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
+				this.defaultLocale(LocaleUtils.toLocale(defaultLocale));
+			});
+			// 设置默认时区
+			props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
+				this.defaultTimeZone(TimeZone.getTimeZone(defaultTimeZone));
+			});
+			return this;
+		}
+
+		/**
+		 * 日期格式化注解处理
+		 * @author ThinkGem
+		 */
+		public Builder dateFormatAnnotation() {
+			this.annotationIntrospector(new JacksonAnnotationIntrospector() {
+				@Serial
+				private static final long serialVersionUID = 1L;
+				private static final String[] pattern = new String[] {"yyyy", "MM", "dd", "HH", "mm", "ss", "SSS"};
+
+				@Override
+				public Object findSerializer(MapperConfig<?> config, Annotated a) {
+					if (a instanceof AnnotatedMethod am) {
+						if (DateUtils.isDateType(am.getRawReturnType())) {
+							JsonFormat jf = am.getAnnotation(JsonFormat.class);
+							if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
+								return new JeeSiteDateJsonSerializer(jf.pattern());
+							}
+							return new JeeSiteDateJsonSerializer(null);
+						}
+					} else if (a instanceof AnnotatedClass) {
+						if (DateUtils.isDateType(a.getRawType())) {
+							return new JeeSiteDateJsonSerializer(null);
+						}
+					}
+					return super.findSerializer(config, a);
+				}
+
+				@Override
+				public Object findDeserializer(MapperConfig<?> config, Annotated a) {
+					if (a instanceof AnnotatedMethod am) {
+						if (am.getParameterCount() > 0 && DateUtils.isDateType(am.getParameterType(0).getRawClass())) {
+							AnnotatedElement m = am.getAnnotated();
+							JsonFormat jf = m.getAnnotation(JsonFormat.class);
+							if (jf != null && StringUtils.containsAnyIgnoreCase(jf.pattern(), pattern)) {
+								return new JeeSiteDateJsonDeserializer(jf.pattern());
+							}
+							return new JeeSiteDateJsonDeserializer(null);
+						}
+					} else if (a instanceof AnnotatedClass) {
+						if (DateUtils.isDateType(a.getRawType())) {
+							return new JeeSiteDateJsonDeserializer(null);
+						}
+					}
+					return super.findDeserializer(config, a);
+				}
+			});
+			return this;
+		}
+
+		/**
+		 * 日期时间序列化处理
+		 * @author ThinkGem
+		 */
+		public static final class JeeSiteDateJsonSerializer extends ValueSerializer<Object> {
+			private final String pattern;
+			public JeeSiteDateJsonSerializer(String pattern) {
+				this.pattern = pattern;
+			}
+			@Override
+			public void serialize(Object dateObj, JsonGenerator gen, SerializationContext context) {
+				Date value = ObjectUtils.toDate(dateObj);
+				if (value != null) {
+					if (StringUtils.isNotBlank(pattern)) {
+						gen.writeString(DateUtils.formatDate(value, pattern));
+					} else {
+						gen.writeString(DateUtils.formatDateTime(value));
+					}
 				} else {
-					gen.writeString(DateUtils.formatDateTime(value));
+					gen.writeString("");
 				}
-			} else {
-				gen.writeString("");
 			}
 		}
-	}
 
-	public static final class JeeSiteDateJsonDeserializer extends JsonDeserializer<Object> {
-		private final String pattern;
-		public JeeSiteDateJsonDeserializer(String pattern) {
-			this.pattern = pattern;
+		/**
+		 * 日期时间反序列化处理
+		 * @author ThinkGem
+		 */
+		public static final class JeeSiteDateJsonDeserializer extends ValueDeserializer<Object> {
+			private final String pattern;
+			public JeeSiteDateJsonDeserializer(String pattern) {
+				this.pattern = pattern;
+			}
+			@Override
+			public Date deserialize(JsonParser parser, DeserializationContext ctx) {
+				if (StringUtils.isNotBlank(pattern)) {
+					return DateUtils.parseDate(parser.getString(), pattern);
+				} else {
+					return DateUtils.parseDate(parser.getString());
+				}
+			}
 		}
+
+		/**
+		 * 空值转换为空字符串
+		 * @author ThinkGem
+		 */
+		public Builder enableNullValueToEmpty() {
+			this.serializerFactory().withNullValueSerializer(new ValueSerializer<Object>() {
+				@Override
+				public void serialize(Object value, JsonGenerator jgen, SerializationContext context) {
+					jgen.writeString(StringUtils.EMPTY);
+				}
+			});
+			return this;
+		}
+
+		/**
+		 * 开启 XSS 过滤器
+		 * @author ThinkGem
+		 */
+		public Builder enableXssFilter() {
+			this.addModule(new SimpleModule().addDeserializer(String.class, new ValueDeserializer<>() {
+				@Override
+				public String deserialize(JsonParser p, DeserializationContext ctx) {
+					String text = p.getString();
+					if (text != null) {
+						return EncodeUtils.xssFilter(text);
+					}
+					return null;
+				}
+			}));
+			return this;
+		}
+
 		@Override
-		public Date deserialize(JsonParser parser, DeserializationContext ctx) throws IOException {
-			if (StringUtils.isNotBlank(pattern)) {
-				return DateUtils.parseDate(parser.getText(), pattern);
-			} else {
-				return DateUtils.parseDate(parser.getText());
-			}
+		public JsonMapper build() {
+			return new JsonMapper(this);
 		}
 	}
 
 	/**
-	 * 开启将空值转换为空字符串
+	 * 创建 JsonMapper 构建器
 	 * @author ThinkGem
 	 */
-	public JsonMapper enabledNullValueToEmpty(){
-		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
-			@Override
-			public void serialize(Object value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
-				jgen.writeString(StringUtils.EMPTY);
-			}
-		});
-		return this;
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	/**
-	 * 开启 XSS 过滤器
+	 * 创建 JsonMapper 构建器
 	 * @author ThinkGem
 	 */
-	public JsonMapper enabledXssFilter(){
-		this.registerModule(new SimpleModule().addDeserializer(String.class, new JsonDeserializer<String>() {
-			@Override
-			public String deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
-				String text = p.getText();
-				if (text != null) {
-					return EncodeUtils.xssFilter(text);
-				}
-				return null;
-			}
-		}));
-		return this;
+	public static Builder builder(Consumer<Builder> consumer) {
+		Builder b = new Builder();
+		consumer.accept(b);
+		return b;
 	}
-	
+
 	/**
 	 * Object可以是POJO，也可以是Collection或数组。
-	 * 如果对象为Null, 返回"null".
-	 * 如果集合为空集合, 返回"[]".
 	 */
 	public String toJsonString(Object object) {
 		try {
 			return this.writeValueAsString(object);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("write to json string error: {}", object, e);
 			return null;
 		}
 	}
 	
 	/**
-	 * Object可以是POJO，也可以是Collection或数组。
-	 * 如果对象为Null, 返回"null".
-	 * 如果集合为空集合, 返回"[]".（根据 JsonView 渲染）
+	 * Object可以是POJO，也可以是Collection或数组。（根据 JsonView 渲染）
 	 */
 	public String toJsonString(Object object, Class<?> jsonView) {
 		try {
 			return this.writerWithView(jsonView).writeValueAsString(object);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("write to json string error: {}", object, e);
 			return null;
 		}
 	}
 
-	/**
-	 * 输出JSONP格式数据.
-	 */
-	public String toJsonpString(String functionName, Object object) {
-		return toJsonString(new JSONPObject(functionName, object));
-	}
+//	/**
+//	 * 输出JSONP格式数据.
+//	 */
+//	public String toJsonpString(String functionName, Object object) {
+//		return toJsonString(new JSONPObject(functionName, object));
+//	}
 	
 	/**
 	 * 反序列化POJO或简单Collection如List<String>.
-	 * 如果JSON字符串为Null或"null"字符串, 返回Null.
-	 * 如果JSON字符串为"[]", 返回空集合.
 	 * 如需反序列化复杂Collection如List<MyBean>, 请使用fromJson(String, Class)
 	 * @see #fromJson(String, Class)
 	 */
@@ -246,7 +294,7 @@ public class JsonMapper extends ObjectMapper {
 		}
 		try {
 			return this.readValue(jsonString, clazz);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("parse json string error: {}", jsonString, e);
 			return null;
 		}
@@ -263,7 +311,7 @@ public class JsonMapper extends ObjectMapper {
 		}
 		try {
 			return (T) this.readValue(jsonString, javaType);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("parse json string error: {}", jsonString, e);
 			return null;
 		}
@@ -285,38 +333,10 @@ public class JsonMapper extends ObjectMapper {
 	public <T> T update(String jsonString, T object) {
 		try {
 			return (T) this.readerForUpdating(object).readValue(jsonString);
-		} catch (Exception e) {
+		} catch (JacksonException e) {
 			logger.warn("update json string: {} to object: {} error.", jsonString, object, e);
 		}
 		return null;
-	}
-
-	/**
-	 * 设定是否使用Enum的toString函数来读写Enum,
-	 * 为False实时使用Enum的name()函数来读写Enum, 默认为False.
-	 * 注意本函数一定要在Mapper创建后, 所有的读写动作之前调用.
-	 */
-	public JsonMapper enableEnumUseToString() {
-		this.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-		this.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
-		return this;
-	}
-
-//	/**
-//	 * 支持使用Jaxb的Annotation，使得POJO上的annotation不用与Jackson耦合。
-//	 * 默认会先查找jaxb的annotation，如果找不到再找jackson的。
-//	 */
-//	public JsonMapper enableJaxbAnnotation() {
-//		JaxbAnnotationModule module = new JaxbAnnotationModule();
-//		this.registerModule(module);
-//		return this;
-//	}
-
-	/**
-	 * 取出Mapper做进一步的设置或使用其他序列化API.
-	 */
-	public ObjectMapper getMapper() {
-		return this;
 	}
 
 	/**
@@ -340,12 +360,12 @@ public class JsonMapper extends ObjectMapper {
 		return JsonMapper.getInstance().toJsonString(object, jsonView);
 	}
 	
-	/**
-	 * 对象转换为JSONP字符串
-	 */
-	public static String toJsonp(String functionName, Object object){
-		return JsonMapper.getInstance().toJsonpString(functionName, object);
-	}
+//	/**
+//	 * 对象转换为JSONP字符串
+//	 */
+//	public static String toJsonp(String functionName, Object object){
+//		return JsonMapper.getInstance().toJsonpString(functionName, object);
+//	}
 	
 	/**
 	 * JSON字符串转换为对象

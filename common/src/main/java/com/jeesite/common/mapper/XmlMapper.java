@@ -4,51 +4,118 @@
  */
 package com.jeesite.common.mapper;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.dataformat.xml.XmlFactory;
 
-import java.io.IOException;
 import java.io.Serial;
 import java.util.TimeZone;
+import java.util.function.Consumer;
 
 /**
- * 简单封装Jackson，实现XML String<->Java Object的Mapper.
- * @author ThinkGem
- * @version 2016-9-2
+ * 封装 Jackson，实现 XML String 与 Java Object 互转
+ * @author ThinkGem、jeesite.com
+ * @version 2026-04-04
  */
-public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
+public class XmlMapper extends tools.jackson.dataformat.xml.XmlMapper{
 	
 	@Serial
 	private static final long serialVersionUID = 1L;
+	protected static final Logger logger = LoggerFactory.getLogger(XmlMapper.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(XmlMapper.class);
+	public XmlMapper(Builder builder) {
+		super(builder);
+	}
 
 	/**
 	 * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
 	 */
 	private static final class XmlMapperHolder {
-		private static final XmlMapper INSTANCE = new XmlMapper();
+		private static final XmlMapper INSTANCE = XmlMapper.builder().build();
 	}
-	
+
 	/**
-	 * 构造方法
+	 * XmlMapper 构建器扩展
+	 * @author ThinkGem
 	 */
-	public XmlMapper() {
-		PropertiesUtils props = PropertiesUtils.getInstance();
-		// 设置默认语言环境
-		props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
-			this.setLocale(LocaleUtils.toLocale(defaultLocale));
-		});
-		// 设置默认时区
-		props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
-			this.setTimeZone(TimeZone.getTimeZone(defaultTimeZone));
-		});
-		// Spring ObjectMapper 初始化配置，支持 @JsonView
-		new Jackson2ObjectMapperBuilder().configure(this);
+	public static class Builder extends tools.jackson.dataformat.xml.XmlMapper.Builder {
+
+		public Builder() {
+			super(new XmlFactory());
+			initialize();
+		}
+
+		public void initialize() {
+			// 日志类型格式化处理
+			this.setDefaultLocaleTimeZone();
+		}
+
+		/**
+		 * 日志类型格式化处理
+		 * @author ThinkGem
+		 */
+		public Builder setDefaultLocaleTimeZone() {
+			// 设置默认语言环境
+			PropertiesUtils props = PropertiesUtils.getInstance();
+			props.getPropertyIfNotBlank("lang.defaultLocale", (defaultLocale) -> {
+				this.defaultLocale(LocaleUtils.toLocale(defaultLocale));
+			});
+			// 设置默认时区
+			props.getPropertyIfNotBlank("lang.defaultTimeZone", (defaultTimeZone) -> {
+				this.defaultTimeZone(TimeZone.getTimeZone(defaultTimeZone));
+			});
+			return this;
+		}
+
+		/**
+		 * 开启 XSS 过滤器
+		 * @author ThinkGem
+		 */
+		public Builder enableXssFilter() {
+			this.addModule(new SimpleModule().addDeserializer(String.class, new ValueDeserializer<>() {
+				@Override
+				public String deserialize(JsonParser p, DeserializationContext ctx) {
+					String text = p.getString();
+					if (text != null) {
+						return EncodeUtils.xssFilter(text);
+					}
+					return null;
+				}
+			}));
+			return this;
+		}
+
+		@Override
+		public XmlMapper build() {
+			return new XmlMapper(this);
+		}
+	}
+
+	/**
+	 * 创建 XmlMapper 构建器
+	 * @author ThinkGem
+	 */
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	/**
+	 * 创建 JsonMapper 构建器
+	 * @author ThinkGem
+	 */
+	public static Builder builder(Consumer<Builder> consumer) {
+		Builder b = new Builder();
+		consumer.accept(b);
+		return b;
 	}
 	
 	/**
@@ -57,7 +124,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	public String toXmlString(Object object) {
 		try {
 			return this.writeValueAsString(object);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("write to xml string error: {}", object, e);
 			return null;
 		}
@@ -69,7 +136,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	public String toXmlString(Object object, Class<?> jsonView) {
 		try {
 			return this.writerWithView(jsonView).writeValueAsString(object);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("write to xml string error: {}", object, e);
 			return null;
 		}
@@ -85,7 +152,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 		}
 		try {
 			return this.readValue(xmlString, clazz);
-		} catch (IOException e) {
+		} catch (JacksonException e) {
 			logger.warn("parse xml string error: {}", xmlString, e);
 			return null;
 		}
