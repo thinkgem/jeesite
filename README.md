@@ -9,8 +9,8 @@
   快速构建、模块化、代码复用、高效管理
 </h3>
 <p align="center">
- <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
- <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-V4.x" src="https://img.shields.io/badge/Ant Design Vue-V4.x-brightgreen.svg"></a>
+ <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vite8" src="https://img.shields.io/badge/TypeScript-Vite8-green.svg"></a>
+ <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-Vue3" src="https://img.shields.io/badge/Ant Design Vue-Vue3-brightgreen.svg"></a>
  <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-V5.x" src="https://img.shields.io/badge/JeeSite-V5.x-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
