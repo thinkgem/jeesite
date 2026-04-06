@@ -8,15 +8,17 @@ import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.BaseService;
+import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.tools.context.AiToolContextProvider;
 import com.jeesite.modules.sys.entity.Area;
-import com.jeesite.modules.sys.utils.AreaUtils;
+import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.client.ChatClient;
@@ -209,6 +211,15 @@ public class AiCmsChatService extends BaseService {
 			.content();
     }
 
+	private static final String SYSTEM_MESSAGE_TO_JSON = """
+			；你是一个严格的数据提取和格式化工具。你的唯一任务是输出合法的、标准的 JSON 对象。
+			必须遵守以下规则：
+			1. 仅输出纯 JSON 字符串。
+			2. 严禁使用 Markdown 代码块标记（即绝对不要包含 ```json 或 ```）。
+			3. 严禁输出任何解释性文字、前言、后语或“好的，这是结果”之类的废话。
+			4. 严禁输出换行符，除非是在 JSON 字符串值的内部。
+			""";
+
 	/**
 	 * 聊天对话，结构化输出（Map）
 	 * @author ThinkGem
@@ -216,9 +227,7 @@ public class AiCmsChatService extends BaseService {
 	public Map<String, Object> chatJson(String message) {
 		return chatClient.prompt()
 			.messages(
-				new SystemMessage("""
-						[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]，返回 json。
-						"""),
+				new SystemMessage("[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]" + SYSTEM_MESSAGE_TO_JSON),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)
 			.call()
@@ -245,11 +254,12 @@ public class AiCmsChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public List<Area> chatArea(String message) {
-		List<Area> list = AreaUtils.getAreaAllList();
-		if (list.size() > 10) list = list.subList(0, 10);
+		Area where = new Area();
+		where.setPage(new Page<>(1, 5, Page.COUNT_NOT_COUNT));
+		List<Area> list = SpringUtils.getBean(AreaService.class).findList(where);
 		ChatClient.ChatClientRequestSpec spec = chatClient.prompt()
 			.messages(
-				new SystemMessage(JsonMapper.toJson(list)),
+				new SystemMessage(JsonMapper.toJson(list) + SYSTEM_MESSAGE_TO_JSON),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			);
 		if (vectorStore != null) {
@@ -259,8 +269,11 @@ public class AiCmsChatService extends BaseService {
 					.build());
 		}
 		return spec.call()
-			.responseEntity(new BeanOutputConverter<>(new ParameterizedTypeReference<List<Area>>() {},
-					JsonMapper.getInstance()))
+			.responseEntity(
+					new BeanOutputConverter<>(
+							new ParameterizedTypeReference<List<Area>>() {},
+							JsonMapper.getInstance()
+					))
 			.getEntity();
 	}
 
