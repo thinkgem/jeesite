@@ -46,6 +46,7 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty-resolver-dns-native-macos</artifactId>
 			<classifier>osx-aarch_64</classifier>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- 流量防卫兵
