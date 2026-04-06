@@ -140,11 +140,11 @@ jdbc:
     # 最大激活连接数
     maxActive: 20
 
-#    # 连接超时参数，单位毫秒 （v5.5.2+）
+#    # 连接超时参数，单位毫秒（v5.5.2+）
 #    connectTimeout: ~
 #    socketTimeout: ~
 #
-#    # 查询超时时间，事务超时时间 （v5.7.1+）
+#    # 查询超时时间，事务超时时间，单位秒（v5.7.1+）
 #    queryTimeout: ~
 #    transactionQueryTimeout: ~
 #
