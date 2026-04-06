@@ -6,9 +6,9 @@ package com.jeesite.common.lang;
 
 import com.jeesite.common.io.PropertiesUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.fury.Fury;
-import org.apache.fury.ThreadSafeFury;
-import org.apache.fury.config.Language;
+import org.apache.fory.Fory;
+import org.apache.fory.ThreadSafeFory;
+import org.apache.fory.config.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -36,15 +36,15 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 */
 	private static final class Static {
 		private static final Boolean isJavaSerialize;
-		private static final ThreadSafeFury fury;
+		private static final ThreadSafeFory fory;
 		static {
 			isJavaSerialize = PropertiesUtils.getInstance()
 					.getPropertyToBoolean("isJavaSerialize", "false");
-			org.apache.fury.logging.LoggerFactory.useSlf4jLogging(true);
-			fury = Fury.builder().withLanguage(Language.JAVA)
+			org.apache.fory.logging.LoggerFactory.useSlf4jLogging(true);
+			fory = Fory.builder().withLanguage(Language.JAVA)
                 .withRefTracking(true)
                 .requireClassRegistration(false)
-                .buildThreadSafeFury();
+                .buildThreadSafeFory();
 		}
 	}
 
@@ -264,7 +264,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			if (Static.isJavaSerialize) {
 				return ObjectUtils.serializeJava(object);
 			} else {
-				return ObjectUtils.serializeFury(object);
+				return ObjectUtils.serializeFory(object);
 			}
 		} catch (Exception e) {
 			logger.error("Serialize: {} {}", object, e.getMessage());
@@ -280,7 +280,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			if (Static.isJavaSerialize) {
 				return ObjectUtils.unserializeJava(bytes);
 			} else {
-				return ObjectUtils.unserializeFury(bytes);
+				return ObjectUtils.unserializeFory(bytes);
 			}
 		} catch (Exception e) {
 			logger.error("Unserialize: {}", e.getMessage());
@@ -339,12 +339,12 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	/**
 	 * 序列化对象
 	 */
-	public static byte[] serializeFury(Object object) {
+	public static byte[] serializeFory(Object object) {
 		if (object == null){
 			return null;
 		}
 		long beginTime = System.currentTimeMillis();
-		byte[] bytes = Static.fury.serialize(object);
+		byte[] bytes = Static.fory.serialize(object);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && logger.isWarnEnabled()){
 			logger.warn("Serialize {}, time: {}", object.getClass(), TimeUtils.formatTime(totalTime));
@@ -355,12 +355,12 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	/**
 	 * 反序列化对象
 	 */
-	public static Object unserializeFury(byte[] bytes) {
+	public static Object unserializeFory(byte[] bytes) {
 		if (bytes == null){
 			return null;
 		}
 		long beginTime = System.currentTimeMillis();
-		Object object = Static.fury.deserialize(bytes);
+		Object object = Static.fory.deserialize(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && object != null && logger.isWarnEnabled()){
 			logger.warn("Unserialize {}, time: {}", object.getClass(), TimeUtils.formatTime(totalTime));

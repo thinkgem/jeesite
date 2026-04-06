@@ -46,20 +46,20 @@
 			<version>${commons-io.version}</version>
 		</dependency>
 
-		<!-- Fury serialize -->
+		<!-- Fory serialize -->
 		<dependency>
-			<groupId>org.apache.fury</groupId>
-			<artifactId>fury-core</artifactId>
-			<version>${fury.version}</version>
+			<groupId>org.apache.fory</groupId>
+			<artifactId>fory-core</artifactId>
+			<version>${fory.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.fury</groupId>
-			<artifactId>fury-extensions</artifactId>
-			<version>${fury.version}</version>
+			<groupId>org.apache.fory</groupId>
+			<artifactId>fory-extensions</artifactId>
+			<version>${fory.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>org.apache.fury</groupId>
-					<artifactId>fury-test-core</artifactId>
+					<groupId>org.apache.fory</groupId>
+					<artifactId>fory-test-core</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

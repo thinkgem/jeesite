@@ -35,7 +35,7 @@
 		<zxing.version>3.5.4</zxing.version>
 
 		<poi.version>5.4.1</poi.version>
-		<fury.version>0.10.3</fury.version>
+		<fory.version>0.16.0</fory.version>
 		<bcprov.version>1.80</bcprov.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<snakeyaml.version>2.6</snakeyaml.version>
