@@ -5,8 +5,8 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">微服务开发平台 - Spring Cloud 2021</h3>
 <p align="center">
  <a href="https://spring.io/projects/spring-cloud" target="__blank"><img alt="SpringCloud-2025 or 2021" src="https://img.shields.io/badge/SpringCloud-2025 or 2021-blue.svg"></a>
- <a href="https://spring.io/projects/spring-boot" target="__blank"><img alt="SpringBoot-V3.5 or 2.7" src="https://img.shields.io/badge/SpringBoot-V3.5 or 2.7-blue.svg"></a>
- <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
+ <a href="https://spring.io/projects/spring-boot" target="__blank"><img alt="SpringBoot-V4.0 or 3.5 or 2.7" src="https://img.shields.io/badge/SpringBoot-V4.0 or 3.5 or 2.7-blue.svg"></a>
+ <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vite3-green.svg"></a>
  <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.x" src="https://img.shields.io/badge/JeeSite-V5.x-success.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
