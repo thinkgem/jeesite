@@ -88,7 +88,11 @@ jdbc:
 #======================================#
 
 spring:
-  
+
+  # 应用程序名称
+  application:
+    name: jeesite-core
+
   # 缓存配置
   cache:
     # 缓存及会话共享（专业版）
