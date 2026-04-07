@@ -214,12 +214,9 @@ public class ServletUtils {
 				resultMap.put("data", data);
 			}
 		}
-		Object object = resultMap;
 		HttpServletRequest request = getRequest();
 		HttpServletResponse response = getResponse();
-		if (request != null && response != null) {
-			object = ResultUtils.result(resultMap, request, response);
-		}
+		Object object = ResultUtils.result(resultMap, request, response);
 		if (FAVOR_PARAMETER && request != null && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml")) {
 			if (response != null){
 				response.setContentType(MediaType.APPLICATION_XML_VALUE);
@@ -296,9 +293,7 @@ public class ServletUtils {
 	 */
 	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
-		if (request != null && response != null) {
-			object = ResultUtils.result(object, request, response);
-		}
+		object = ResultUtils.result(object, request, response);
 		if (FAVOR_PARAMETER && request != null && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml")) {
 			if (jsonView != null) {
 				return renderString(response, XmlMapper.toXml(object, jsonView));
