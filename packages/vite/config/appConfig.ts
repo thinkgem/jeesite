@@ -4,7 +4,7 @@
  * @author ThinkGem
  */
 import { type PluginOption } from 'vite';
-import { PackageJson } from 'pkg-types';
+// import { PackageJson } from 'pkg-types';
 import { getEnvConfig } from './index';
 import { getEnvConfigName } from './getEnvConfigName';
 import { version } from '../package.json';

@@ -4,10 +4,10 @@
  * @author ThinkGem
  */
 import { generate } from '@ant-design/colors';
-// import { APP_PRESET_COLOR_LIST } from '../../../src/settings/designSetting';
+// import { APP_PRESET_COLOR_LIST } from '@jeesite/core/settings/designSetting';
 
 export const primaryColor = '#2a50ec'; // APP_PRESET_COLOR_LIST[0];
-export const darkPrimaryColor = '#2a50ec';
+export const darkPrimaryColor = '#1677ff';
 
 export const darkMode = 'light';
 

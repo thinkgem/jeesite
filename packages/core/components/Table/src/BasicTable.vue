@@ -777,10 +777,10 @@
 
   html[data-theme='dark'] {
     .@{prefix-cls} {
-      a,
-      .ant-btn-link {
-        color: #42a4e0;
-      }
+      //a,
+      //.ant-btn-link {
+      //  color: #42a4e0;
+      //}
 
       .ant-table {
         &-tbody > tr > td.ant-table-column-sort {

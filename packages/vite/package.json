@@ -34,18 +34,30 @@
       "import": "./theme/themeConfig.ts",
       "types": "./theme/themeConfig.ts"
     },
+    "./theme/client/client": {
+      "import": "./theme/client/client.ts",
+      "types": "./theme/client/client.ts"
+    },
+    "./theme/client/colorUtils": {
+      "import": "./theme/client/colorUtils.ts",
+      "types": "./theme/client/colorUtils.ts"
+    },
     "./dist/*": "./dist/*"
   },
   "dependencies": {
-    "picocolors": "1.1.1"
+    "picocolors": "1.1.1",
+    "tinycolor2": "1.6.0",
+    "clean-css": "5.3.3"
   },
   "devDependencies": {
     "@types/fs-extra": "11.0.4",
+    "@types/less": "3.0.8",
+    "@types/tinycolor2": "1.4.6",
     "@vitejs/plugin-legacy": "8.0.1",
     "@vitejs/plugin-vue": "6.0.5",
     "@vitejs/plugin-vue-jsx": "5.1.5",
     "dotenv": "17.3.1",
-    "esbuild": "^0.27.4",
+    "esbuild": "0.27.7",
     "fs-extra": "11.3.4",
     "pkg-types": "2.3.0",
     "rollup-plugin-visualizer": "7.0.1",
@@ -54,7 +66,6 @@
     "vite-plugin-compression": "0.5.1",
     "vite-plugin-html": "3.2.2",
     "vite-plugin-mkcert": "1.17.10",
-    "vite-plugin-theme-vite3": "2.0.1",
     "vite-plugin-vue-setup-extend": "0.4.0"
   },
   "homepage": "https://jeesite.com",

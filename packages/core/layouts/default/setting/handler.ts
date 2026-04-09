@@ -38,10 +38,10 @@ export function baseHandler(event: HandlerEnum, value: any) {
       baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[0]);
     } else if (value.type === MenuTypeEnum.SIDEBAR) {
       baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[1]);
-      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[3]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[7]);
     } else if (value.type === MenuTypeEnum.MIX_SIDEBAR) {
       baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[0]);
-      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[3]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[7]);
     }
     baseHandler(HandlerEnum.CHANGE_THEME_COLOR, APP_PRESET_COLOR_LIST[0]);
   }
@@ -77,7 +77,7 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
       if (getThemeColor.value === value) {
         return {};
       }
-      changeTheme(value);
+      changeTheme(value).then();
 
       return { themeColor: value };
 
@@ -85,7 +85,7 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
       if (getDarkMode.value === value) {
         return {};
       }
-      updateDarkTheme(value);
+      updateDarkTheme(value).then();
 
       return {};
 

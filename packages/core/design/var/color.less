@@ -1,4 +1,4 @@
-html {
+:root {
   // header
   --header-bg-color: #394664;
   --header-bg-hover-color: #273352;
@@ -7,6 +7,8 @@ html {
   --sider-dark-bg-color: #273352;
   --sider-dark-darken-bg-color: #273352;
   --sider-dark-lighten-bg-color: #273352;
+  // common
+  --primary-color: @primary-color;
 }
 
 @white: #fff;
@@ -118,7 +120,7 @@ html {
 @button-default-hover-bg-color: #f1f1f1;
 @button-default-hover-border-color: #bfbfbf;
 
-@button-primary-color: fade(@primary-color, 95%);
+@button-primary-color: @primary-color;
 @button-primary-hover-color: fade(@primary-color, 90%);
 @button-primary-active-color: fade(@primary-color, 90%);
 

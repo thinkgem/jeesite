@@ -1,7 +1,8 @@
 import { getThemeColors, generateColors } from '@jeesite/vite/theme/themeConfig';
 
-import { replaceStyleVariables } from 'vite-plugin-theme-vite3/es/client';
-import { mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme-vite3/es/colorUtils';
+import { replaceStyleVariables } from '@jeesite/vite/theme/client/client';
+import { mixLighten, mixDarken, tinycolor } from '@jeesite/vite/theme/client/colorUtils';
+import { setCssVar } from '@jeesite/core/logics/theme/util';
 
 export async function changeTheme(color: string) {
   const colors = generateColors({
@@ -10,6 +11,8 @@ export async function changeTheme(color: string) {
     tinycolor,
     color,
   });
+
+  setCssVar('--primary-color', color);
 
   return await replaceStyleVariables({
     colorVariables: [...getThemeColors(color), ...colors],

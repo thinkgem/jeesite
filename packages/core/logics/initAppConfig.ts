@@ -39,7 +39,7 @@ export function initAppConfigStore() {
   } = projCfg;
   try {
     if (themeColor && themeColor !== primaryColor) {
-      changeTheme(themeColor);
+      changeTheme(themeColor).then();
     }
 
     grayMode && updateGrayMode(grayMode);

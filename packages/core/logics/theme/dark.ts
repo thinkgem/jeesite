@@ -1,4 +1,4 @@
-import { darkCssIsReady, loadDarkThemeCss } from 'vite-plugin-theme-vite3/es/client';
+import { darkCssIsReady, loadDarkThemeCss } from '@jeesite/vite/theme/client/client';
 import { addClass, hasClass, removeClass } from '@jeesite/core/utils/domUtils';
 import { isProdMode } from '@jeesite/core/utils/env';
 

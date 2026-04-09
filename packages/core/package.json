@@ -43,8 +43,7 @@
     "@types/sortablejs": "1.15.9",
     "@vitejs/plugin-vue": "6.0.5",
     "rollup-plugin-visualizer": "7.0.1",
-    "unplugin-dts": "1.0.0-beta.0",
-    "vite-plugin-theme-vite3": "2.0.1"
+    "unplugin-dts": "1.0.0-beta.0"
   },
   "homepage": "https://jeesite.com",
   "repository": {
