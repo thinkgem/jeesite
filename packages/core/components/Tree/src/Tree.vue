@@ -26,7 +26,7 @@
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { addResizeListener, removeResizeListener } from '@jeesite/core/utils/event';
 
-  import { omit, get, difference, intersection, cloneDeep } from 'lodash-es';
+  import { omit, get, difference, intersection, cloneDeep, isEqual } from 'lodash-es';
   import { isArray, isBoolean, isEmpty, isFunction } from '@jeesite/core/utils/is';
   import { extendSlots, getSlot } from '@jeesite/core/utils/helper/tsxHelper';
   import { eachTree, filter, listToTree, treeToList } from '@jeesite/core/utils/helper/treeHelper';
@@ -252,11 +252,18 @@
 
       const isFirstLoaded = ref<boolean>(false);
       const loading = ref(false);
+      let lastParams: any = null;
 
       watch(
         () => props.params,
-        () => {
-          isFirstLoaded.value && loadTreeData();
+        (newVal) => {
+          if (isFirstLoaded.value) {
+            // 只有当参数真正变化时才重新加载数据
+            if (!lastParams || !isEqual(newVal, lastParams)) {
+              loadTreeData();
+              lastParams = newVal;
+            }
+          }
         },
         { deep: true },
       );
