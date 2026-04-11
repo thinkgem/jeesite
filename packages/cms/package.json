@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/cms",
-  "version": "5.17.0-dev",
+  "version": "5.17.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "update": "ncu -u"
   },
   "dependencies": {
-    "@jeesite/cms-lib": "5.16.0-rc.1",
+    "@jeesite/cms-lib": "5.17.0-rc.1",
     "qs": "6.15.0"
   },
   "devDependencies": {
