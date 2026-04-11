@@ -75,7 +75,7 @@
       }
 
       &--active {
-        border: 1px solid lighten(@primary-color, 10%);
+        border: 1px solid fade(@primary-color, 90);
 
         .anticon {
           vertical-align: 1px;
