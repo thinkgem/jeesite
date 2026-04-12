@@ -67,9 +67,9 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
   [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
   [GitHub](https://github.com/thinkgem/jeesite-vue)
 * 源码合集仓库地址：
-  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3.cloud)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot2.cloud)、
-  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3.cloud)
+  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot4.cloud)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot4.cloud)、
+  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot4.cloud)
 
 ## 我们的优势
 
@@ -103,18 +103,19 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * Spring Boot Admin 系统监控管理
 * ELK 日志采集、日志分析和可视化
 * Spring Boot 4.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot4.cloud>
-* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot3.cloud>
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot4.cloud>
 * Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot2.cloud>
 
 ## 获取源代码
 
 ```bash
+# 注意：不要在带有中文或空格的目录下执行。
 git clone https://gitee.com/thinkgem/jeesite-cloud.git
 cd jeesite-cloud
-# 注意：不要放到中文或带空格的目录下。
-```
 
-```bash
+# 切换分支到 Spring Boot 4 分支
+git switch v5.springboot4.cloud
+
 # 加载 git 子模块
 git submodule update --init
 ```
