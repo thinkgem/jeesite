@@ -49,9 +49,9 @@
   [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
   [GitHub](https://github.com/thinkgem/jeesite-vue)
 * 源码合集仓库地址：
-  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot3)、
-  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3)
+  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot4)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/tree/v5.springboot4)、
+  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot4)
 
 ## 平台介绍
 
@@ -114,7 +114,7 @@
 * 技术选型（详细）已支持数据库：<https://jeesite.com/docs/technology/>
 * JeeSite Vue 前后分离版：<https://gitee.com/thinkgem/jeesite-vue>
 * Spring Boot 4.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot4>
-* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3>
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot4>
 * Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2>
 
 ## 更多介绍
@@ -140,9 +140,12 @@
 ## 获取源代码
 
 ```bash
+# 注意：不要在带有中文或空格的目录下执行。
 git clone https://gitee.com/thinkgem/jeesite5.git jeesite
 cd jeesite
-# 注意：不要放到中文或带空格的目录下。
+
+# 切换分支到 Spring Boot 4 分支
+git switch v5.springboot4
 ```
 
 **各个 web 文件夹的用途介绍**
@@ -191,7 +194,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 
 1. 免安装数据库，使用内嵌 H2 DB、包含 Vue 和 全栈双版本
 2. 环境准备：`JDK 17 或更高版本`、`Maven 3.8+`、无需准备数据库
-3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
+3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot4.zip> 并解压
 4. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
 5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
 6. 全栈版本地址：<http://127.0.0.1:8980/a/login>
@@ -201,7 +204,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 **2）使用 MySQL 或其它数据库：**
 
 1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 8.0+` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot4.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接（建立一个新库）
 4. 执行脚本：`/web/bin/init-data.bat(sh)` 初始化数据库（自动往新库里创建表和初始数据）
 5. 执行脚本：`/web/bin/run-tomcat.bat(sh)` 启动服务即可

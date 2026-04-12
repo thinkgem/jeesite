@@ -26,12 +26,12 @@
 
 ## 源码下载
 
-* 后端：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/modules/ai>
+* 后端：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot4/modules/ai>
 * 前端：<https://gitee.com/thinkgem/jeesite-vue/tree/main/packages/cms>
 
 ## AI 模型配置
 
-支持的 AI 模型列表：<https://docs.spring.io/spring-ai/reference/1.0/api/index.html>
+支持的 AI 模型列表：<https://docs.spring.io/spring-ai/reference/2.0/api/index.html>
 
 * 云端模型：理论上支持所有 [OpenAPI](https://help.aliyun.com/zh/model-studio/developer-reference/use-qwen-by-calling-api) 标准接口的 AI 提供商。
 
@@ -44,11 +44,11 @@
 spring.ai.model.chat: openai
 ```
 
-具体配置项详见 [jeesite-ai-cms.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/ai/ai-cms/src/main/resources/config/jeesite-ai-cms.yml) 文件，有注释。
+具体配置项详见 [jeesite-ai-cms.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot4/modules/ai/ai-cms/src/main/resources/config/jeesite-ai-cms.yml) 文件，有注释。
 
 ## 向量数据库配置
 
-支持的向量库列表：<https://docs.spring.io/spring-ai/reference/1.0/api/vectordbs.html>
+支持的向量库列表：<https://docs.spring.io/spring-ai/reference/2.0/api/vectordbs.html>
 
 * Chroma
 * PGVector
@@ -61,7 +61,7 @@ spring.ai.model.chat: openai
 spring.ai.vectorstore.type: none
 ```
 
-具体配置项详见 [jeesite-ai-cms.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/ai/ai-cms/src/main/resources/config/jeesite-ai-cms.yml) 文件，有注释。
+具体配置项详见 [jeesite-ai-cms.yml](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot4/modules/ai/ai-cms/src/main/resources/config/jeesite-ai-cms.yml) 文件，有注释。
 
 ### 安装 Chroma
 
@@ -137,13 +137,13 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 
 工具调用 Tool Calling（也称 Function Calling）是人工智能应用程序中的常见模式，允许模型与一组 API 或工具交互，从而增强其功能。
 
-实例代码，详见 [TestAiTools.java、UserAiTools.java](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/ai/ai-tools/src/main/java/com/jeesite/modules/ai/tools/) 让 AI 调用你的 java 实现你的业务联动。并能保持当前用户会话，进行数据权限控制。
+实例代码，详见 [TestAiTools.java、UserAiTools.java](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot4/modules/ai/ai-tools/src/main/java/com/jeesite/modules/ai/tools/) 让 AI 调用你的 java 实现你的业务联动。并能保持当前用户会话，进行数据权限控制。
 
 ## MCP 模型上下文协议
 
 实现 MCP（Model Context Protocol）服务端，基于 SSE（Server-Sent Events）的标准接入。
 
-* 服务端：[web-mcp](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/web-ai/web-mcp/)
+* 服务端：[web-mcp](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot4/web-ai/web-mcp/)
 
 ```yml
 spring:
@@ -156,7 +156,7 @@ spring:
 ```
 MCP SSE 接口地址：http://127.0.0.1:8992/api/v1/sse
 
-* 客户端：[web-cms](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/web-ai/web-cms/)
+* 客户端：[web-cms](https://gitee.com/thinkgem/jeesite5/blob/v5.springboot4/web-ai/web-cms/)
 
 ```yml
 spring:
