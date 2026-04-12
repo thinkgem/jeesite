@@ -137,6 +137,27 @@
 * 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
 * 统一认证平台：<https://jeesite.com/docs/oauth2-server>
 
+## 获取源代码
+
+```bash
+# 注意：不要在带有中文或空格的目录下执行。
+git clone https://gitee.com/thinkgem/jeesite5.git jeesite
+cd jeesite
+
+# 切换分支到 Spring Boot 2 分支
+git switch v5.springboot2
+```
+
+**各个 web 文件夹的用途介绍**
+
+| 文件夹        | 介绍                                           |
+|------------|----------------------------------------------|
+| web        | 使用 HTML5 + jQuery 全栈版本前端                     |
+| web-vue    | 使用 Vue 分离前端界面，将 Vue 打包的 dist 在 tomcat 中运行    |
+| web-api    | 专为 Vue 分离端提供接口服务，无登录界面                       |
+| web-fast   | 快速体验项目，默认采用 H2 数据库，包含 Vue 界面和 HTML5 界面，可直接运行 |
+| web-mini   | 极小的内核服务，1秒启动项目，一般用于内部数据处理服务，节省资源             |
+
 ## 快速体验
 
 ### 在线演示
