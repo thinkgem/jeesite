@@ -202,10 +202,10 @@ pnpm config set registry https://registry.npmmirror.com
 - 获取源代码
 
 ```bash
+# 注意：不要在带有中文或空格的目录下执行。
 git clone https://gitee.com/thinkgem/jeesite-vue.git
 cd jeesite-vue
 ```
-注意：不要放到中文或带空格的目录下。
 
 - 安装依赖
 
