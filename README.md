@@ -106,6 +106,20 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot3.cloud>
 * Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot2.cloud>
 
+## 获取源代码
+
+```bash
+# 注意：不要在带有中文或空格的目录下执行。
+git clone https://gitee.com/thinkgem/jeesite-cloud.git
+cd jeesite-cloud
+
+# 切换分支到 Spring Boot 2 分支
+git switch v5.springboot2.cloud
+
+# 加载 git 子模块
+git submodule update --init
+```
+
 ## 子项目介绍
 
 * 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
