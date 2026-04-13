@@ -1,0 +1,88 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "vue"
+  ],
+  "categories": {
+    "correctness": "off"
+  },
+  "env": {
+    "builtin": true,
+    "es2026": true,
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "defineOptions": "readonly"
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": false,
+    "maxWarnings": 0
+  },
+  "ignorePatterns": [
+    "**/node_modules/",
+    "**/dist/",
+    "**/public/",
+    "**/build/",
+    "**/.git/",
+    "**/.vscode/",
+    "**/.idea/",
+    "**/.husky/",
+    "**/.local/",
+    "**/.turbo/",
+    "**/Dockerfile",
+    "**/*.sh",
+    "**/*.md",
+    "**/*.woff",
+    "**/*.ttf",
+    "**/*.d.ts",
+    "**/__snapshots__/",
+    "**/.js"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.vue"
+      ],
+      "rules": {
+        "no-array-constructor": "error",
+        "no-unused-expressions": "off",
+        "no-unused-vars": "off",
+        "no-empty-function": "off",
+        "no-use-before-define": "off",
+        "typescript/ban-ts-comment": "off",
+        "typescript/no-duplicate-enum-values": "error",
+        "typescript/no-empty-object-type": "error",
+        "typescript/no-explicit-any": "off",
+        "typescript/no-extra-non-null-assertion": "error",
+        "typescript/no-misused-new": "error",
+        "typescript/no-namespace": "error",
+        "typescript/no-non-null-asserted-optional-chain": "error",
+        "typescript/no-require-imports": "error",
+        "typescript/no-this-alias": "error",
+        "typescript/no-unnecessary-type-constraint": "error",
+        "typescript/no-unsafe-declaration-merging": "error",
+        "typescript/no-unsafe-function-type": "off",
+        "typescript/no-wrapper-object-types": "error",
+        "typescript/prefer-as-const": "error",
+        "typescript/prefer-namespace-keyword": "error",
+        "typescript/triple-slash-reference": "error",
+        "typescript/ban-types": "off",
+        "typescript/explicit-module-boundary-types": "off",
+        "typescript/no-non-null-assertion": "off",
+        "typescript/no-var-requires": "off",
+        "typescript/no-unused-vars": "off"
+      },
+      "plugins": [
+        "typescript",
+        "vue"
+      ]
+    }
+  ]
+}

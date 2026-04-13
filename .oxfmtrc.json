@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "vueIndentScriptAndStyle": true,
+  "singleQuote": true,
+  "quoteProps": "as-needed",
+  "bracketSpacing": true,
+  "trailingComma": "all",
+  "jsxSingleQuote": false,
+  "arrowParens": "always",
+  "insertPragma": false,
+  "requirePragma": false,
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "strict",
+  "sortPackageJson": {},
+  "ignorePatterns": [
+    "dist",
+    "public",
+    "node_modules",
+    ".local",
+    ".npmrc",
+    "*.js",
+    "*.sh",
+    "*.md",
+    "*.svg",
+    "*.html",
+    "*.json",
+    "*-lock.yaml"
+  ]
+}

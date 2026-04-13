@@ -45,7 +45,7 @@
   import { isEmpty } from '@jeesite/core/utils/is';
 
   const props = defineProps({
-    treeCodes: Array as PropType<String[]>,
+    treeCodes: Array as PropType<string[]>,
   });
 
   const emit = defineEmits(['update:treeCodes']);

@@ -62,7 +62,7 @@
   import { LOCALE } from '@jeesite/core/settings/localeSetting';
 
   const props = defineProps({
-    treeCodes: Array as PropType<String[]>,
+    treeCodes: Array as PropType<string[]>,
     treeName: String,
   });
 
