@@ -155,7 +155,7 @@ if(table.isTreeEntity){
   <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
 
   const props = defineProps({
-    treeCodes: Array as PropType<String[]>,
+    treeCodes: Array as PropType<string[]>,
   });
 
   const emit = defineEmits(['update:treeCodes']);
