@@ -24,7 +24,7 @@ if (p.loadType == '1'){
 				p.parentCode = '0,' + p.parentCode + ',';
 			}
 		}
-		p.menuList = @UserUtils.getMenuTreeByParentCode(p.parentCode);
+		p.menuList = @MenuUtils.getMenuTreeByParentCode(p.parentCode);
 	}
 }
 for (var menu in p.menuList![]){
