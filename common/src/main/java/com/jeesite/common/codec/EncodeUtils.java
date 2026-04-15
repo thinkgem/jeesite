@@ -8,6 +8,7 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.http.ServletUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -15,7 +16,6 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -190,8 +190,8 @@ public class EncodeUtils {
 
 	// 预编译XSS过滤正则表达式
 	private static final List<Pattern> xssPatterns = ListUtils.newArrayList(
-			Pattern.compile("(<\\s*(script|link|style|iframe)([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(script|link|style|iframe)\\s*>)", Pattern.CASE_INSENSITIVE),
-			Pattern.compile("\\s*(href|src)\\s*=\\s*(\"\\s*(javascript|vbscript|data):[^\"]+\"|'\\s*(javascript|vbscript|data):[^']+'|(javascript|vbscript|data):[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("(<\\s*(script|link|style|iframe|embed|object)([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(script|link|style|iframe|embed|object)\\s*>)", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("\\s*(href|src|data)\\s*=\\s*(\"\\s*(javascript|vbscript|data):[^\"]+\"|'\\s*(javascript|vbscript|data):[^']+'|(javascript|vbscript|data):[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("\\s*/?\\s*on[a-zA-Z]+\\s*=\\s*(['\"]?)(.*?)\\1(?=\\s|>|/>)", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("(eval\\((.*?)\\)|expression\\((.*?)\\))", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("^(javascript:|vbscript:)", Pattern.CASE_INSENSITIVE)
