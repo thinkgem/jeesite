@@ -1,7 +1,7 @@
 <template>
-  <AMenu
-    :selectedKeys="selectedKeys"
-    :defaultSelectedKeys="defaultSelectedKeys"
+  <Menu
+    :selectedKeys="menuState.selectedKeys"
+    :defaultSelectedKeys="menuState.defaultSelectedKeys"
     :mode="mode"
     :openKeys="getOpenKeys"
     :inlineIndent="inlineIndent"
@@ -17,11 +17,11 @@
       <BasicSubMenuItem :item="item" :theme="theme" :isHorizontal="isHorizontal" />
     </template>
     <slot name="menuAfter"></slot>
-  </AMenu>
+  </Menu>
 </template>
-<script lang="ts">
+<script lang="ts" setup name="BasicMenu">
   import type { MenuState } from './types';
-  import { computed, defineComponent, reactive, ref, toRefs, unref, watch } from 'vue';
+  import { computed, reactive, ref, toRefs, unref, watch } from 'vue';
   import { Menu } from 'ant-design-vue';
   import BasicSubMenuItem from './components/BasicSubMenuItem.vue';
   import { MenuModeEnum, MenuTypeEnum } from '@jeesite/core/enums/menuEnum';
@@ -37,137 +37,120 @@
   import { getAllParentPath } from '@jeesite/core/router/helper/menuHelper';
   import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 
-  export default defineComponent({
-    name: 'BasicMenu',
-    components: {
-      AMenu: Menu,
-      BasicSubMenuItem,
-    },
-    props: basicProps,
-    emits: ['menuClick'],
-    setup(props, { emit }) {
-      const isClickGo = ref(false);
-      // const currentActiveMenu = ref('');
+  const props = defineProps(basicProps);
+  const emit = defineEmits(['menuClick']);
 
-      const menuState = reactive<MenuState>({
-        defaultSelectedKeys: [],
-        openKeys: [],
-        selectedKeys: [],
-        collapsedOpenKeys: [],
-      });
+  const isClickGo = ref(false);
+  // const currentActiveMenu = ref('');
 
-      const { prefixCls } = useDesign('basic-menu');
-      const { items, mode, accordion } = toRefs(props);
-
-      const { getCollapsed, getTopMenuAlign, getSplit } = useMenuSetting();
-
-      const { currentRoute } = useRouter();
-
-      const { handleOpenChange, setOpenKeys, getOpenKeys } = useOpenKeys(menuState, items, mode as any, accordion);
-
-      const getIsTopMenu = computed(() => {
-        const { type, mode } = props;
-
-        return (
-          (type === MenuTypeEnum.TOP_MENU && mode === MenuModeEnum.HORIZONTAL) ||
-          (props.isHorizontal && unref(getSplit))
-        );
-      });
-
-      const getMenuClass = computed(() => {
-        const align = props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
-        return [
-          prefixCls,
-          `justify-${align}`,
-          {
-            [`${prefixCls}__second`]: !props.isHorizontal && unref(getSplit),
-            [`${prefixCls}__sidebar-hor`]: unref(getIsTopMenu),
-          },
-        ];
-      });
-
-      const getInlineCollapseOptions = computed(() => {
-        const isInline = props.mode === MenuModeEnum.INLINE;
-
-        const inlineCollapseOptions: { inlineCollapsed?: boolean } = {};
-        if (isInline) {
-          inlineCollapseOptions.inlineCollapsed = props.mixSider ? false : unref(getCollapsed);
-        }
-        return inlineCollapseOptions;
-      });
-
-      !props.mixSider &&
-        watch(
-          () => props.items,
-          () => {
-            handleMenuChange();
-          },
-        );
-
-      listenerRouteChange((route) => {
-        if (route.name === REDIRECT_NAME) return;
-        // currentActiveMenu.value = route.meta?.currentActiveMenu as string;
-        // if (unref(currentActiveMenu)) {
-        //   menuState.selectedKeys = [unref(currentActiveMenu)];
-        //   setOpenKeys(unref(currentActiveMenu));
-        // }
-        handleMenuChange(route);
-      });
-
-      async function handleMenuChange(route?: RouteLocationNormalizedLoaded) {
-        if (unref(isClickGo)) {
-          isClickGo.value = false;
-          return;
-        }
-        // const path = (route || unref(currentRoute)).path;
-        const currRoute = route || unref(currentRoute);
-        const path = (currRoute.meta?.currentActiveMenu as string) || currRoute.path;
-
-        await setOpenKeys(path);
-
-        if (menuState.openKeys.length > 0) {
-          menuState.selectedKeys = menuState.openKeys;
-        } else {
-          if (props.isHorizontal && unref(getSplit)) {
-            const parentPath = await getCurrentParentPath(path);
-            menuState.selectedKeys = [parentPath];
-          } else {
-            menuState.selectedKeys = getAllParentPath(props.items, path);
-          }
-        }
-      }
-
-      async function handleMenuClick({ item, key }: MenuInfo) {
-        // { item: any; key: string; keyPath: string[] }) {
-        const { beforeClickFn } = props;
-        if (beforeClickFn && isFunction(beforeClickFn)) {
-          const flag = await beforeClickFn(key as string);
-          if (!flag) return;
-        }
-        emit('menuClick', key, item);
-
-        isClickGo.value = true;
-
-        await setOpenKeys(key as string);
-
-        if (menuState.openKeys.length > 0) {
-          menuState.selectedKeys = menuState.openKeys;
-        } else {
-          menuState.selectedKeys = [key as string];
-        }
-        // console.log('TopMenuClick', menuState.selectedKeys, menuState.openKeys);
-      }
-
-      return {
-        getInlineCollapseOptions,
-        getMenuClass,
-        handleOpenChange,
-        getOpenKeys,
-        handleMenuClick,
-        ...toRefs(menuState),
-      };
-    },
+  const menuState = reactive<MenuState>({
+    defaultSelectedKeys: [],
+    openKeys: [],
+    selectedKeys: [],
+    collapsedOpenKeys: [],
   });
+
+  const { prefixCls } = useDesign('basic-menu');
+  const { items, mode, accordion } = toRefs(props);
+
+  const { getCollapsed, getTopMenuAlign, getSplit } = useMenuSetting();
+
+  const { currentRoute } = useRouter();
+
+  const { handleOpenChange, setOpenKeys, getOpenKeys } = useOpenKeys(menuState, items, mode as any, accordion);
+
+  const getIsTopMenu = computed(() => {
+    const { type, mode } = props;
+
+    return (
+      (type === MenuTypeEnum.TOP_MENU && mode === MenuModeEnum.HORIZONTAL) ||
+      (props.isHorizontal && unref(getSplit))
+    );
+  });
+
+  const getMenuClass = computed(() => {
+    const align = props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
+    return [
+      prefixCls,
+      `justify-${align}`,
+      {
+        [`${prefixCls}__second`]: !props.isHorizontal && unref(getSplit),
+        [`${prefixCls}__sidebar-hor`]: unref(getIsTopMenu),
+      },
+    ];
+  });
+
+  const getInlineCollapseOptions = computed(() => {
+    const isInline = props.mode === MenuModeEnum.INLINE;
+
+    const inlineCollapseOptions: { inlineCollapsed?: boolean } = {};
+    if (isInline) {
+      inlineCollapseOptions.inlineCollapsed = props.mixSider ? false : unref(getCollapsed);
+    }
+    return inlineCollapseOptions;
+  });
+
+  !props.mixSider &&
+    watch(
+      () => props.items,
+      () => {
+        handleMenuChange();
+      },
+    );
+
+  listenerRouteChange((route) => {
+    if (route.name === REDIRECT_NAME) return;
+    // currentActiveMenu.value = route.meta?.currentActiveMenu as string;
+    // if (unref(currentActiveMenu)) {
+    //   menuState.selectedKeys = [unref(currentActiveMenu)];
+    //   setOpenKeys(unref(currentActiveMenu));
+    // }
+    handleMenuChange(route);
+  });
+
+  async function handleMenuChange(route?: RouteLocationNormalizedLoaded) {
+    if (unref(isClickGo)) {
+      isClickGo.value = false;
+      return;
+    }
+    // const path = (route || unref(currentRoute)).path;
+    const currRoute = route || unref(currentRoute);
+    const path = (currRoute.meta?.currentActiveMenu as string) || currRoute.path;
+
+    await setOpenKeys(path);
+
+    if (menuState.openKeys.length > 0) {
+      menuState.selectedKeys = menuState.openKeys;
+    } else {
+      if (props.isHorizontal && unref(getSplit)) {
+        const parentPath = await getCurrentParentPath(path);
+        menuState.selectedKeys = [parentPath];
+      } else {
+        menuState.selectedKeys = getAllParentPath(props.items, path);
+      }
+    }
+  }
+
+  async function handleMenuClick(e: MenuInfo) {
+    const { key, item } = e;
+    const { beforeClickFn } = props;
+    if (beforeClickFn && isFunction(beforeClickFn)) {
+      const flag = await beforeClickFn(key as string);
+      if (!flag) return;
+    }
+    emit('menuClick', key, item);
+
+    isClickGo.value = true;
+
+    await setOpenKeys(key as string);
+
+    if (menuState.openKeys.length > 0) {
+      menuState.selectedKeys = menuState.openKeys;
+    } else {
+      menuState.selectedKeys = [key as string];
+    }
+    // console.log('TopMenuClick', menuState.selectedKeys, menuState.openKeys);
+  }
 </script>
 <style lang="less">
   @import './index.less';
