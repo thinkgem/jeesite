@@ -13,10 +13,6 @@ import { EditRecordRow } from '../components/editable';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
-export interface TableCurrentDataSource<T = Recordable> {
-  currentDataSource: T[];
-}
-
 export interface TableRowSelection<T = any> extends ITableRowSelection {
   /**
    * Callback executed when selected rows change
