@@ -8,7 +8,10 @@
               <Icon v-if="item.avatar" class="avatar" :icon="item.avatar" :color="item.color" />
             </template>
             <template #title>
-              {{ item.title }}
+              <span v-if="item.extra" class="cursor-pointer" @click="handleSetting(item.key, item.title)">
+                {{ item.title }}
+              </span>
+              <span v-else>{{ item.title }}</span>
               <a-button
                 type="link"
                 size="small"
