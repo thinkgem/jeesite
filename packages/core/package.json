@@ -13,7 +13,6 @@
     "@vueuse/shared": "14.2.1",
     "@wangeditor/editor": "5.1.23",
     "@wangeditor/editor-for-vue": "5.1.12",
-    "@wangeditor/plugin-upload-attachment": "1.1.0",
     "@zxcvbn-ts/core": "3.0.4",
     "codemirror": "5.65.16",
     "cropperjs": "1.6.2",
@@ -32,6 +31,12 @@
     "vue-json-pretty": "2.6.0",
     "vue-types": "6.0.0",
     "xlsx": "0.18.5"
+  },
+  "peerDependencies": {
+    "@uppy/core": "^2.1.5",
+    "@wangeditor/editor": ">=5.1.16",
+    "snabbdom": "^3.3.1",
+    "dom7": "^4.0.4"
   },
   "devDependencies": {
     "@types/codemirror": "5.60.17",
