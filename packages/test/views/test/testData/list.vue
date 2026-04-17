@@ -233,7 +233,7 @@
       //   console.log('onFilter', value, record);
       //   return record.userName === value;
       // },
-      // 方式一：简单配置过滤窗口
+      // 方式二：插槽配置过滤窗口
       customFilterDropdown: true,
     },
     {

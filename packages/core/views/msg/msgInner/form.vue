@@ -197,7 +197,7 @@
       component: 'Input',
       colProps: { md: 24, lg: 24 },
       slot: 'receiveCodes',
-      show: ({ values }) => values.receiveType != '0',
+      show: ({ values }) => values.receiveType && values.receiveType != '0',
     },
     {
       label: t('通知'),
@@ -248,7 +248,7 @@
     record.value = (res.msgInner || {}) as MsgInner;
     record.value.__t = new Date().getTime();
     onReceiversChange(record.value.receiveType, record.value.receiveCodes, record.value.receiveNames);
-    setFieldsValue(record.value);
+    await setFieldsValue(record.value);
     setDrawerProps({ loading: false });
   });
 
