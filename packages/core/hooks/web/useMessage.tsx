@@ -31,7 +31,7 @@ export interface NotifyApi {
 export declare type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 export declare type IconType = 'success' | 'info' | 'error' | 'warning';
 export interface ModalOptionsEx extends Omit<ModalFuncProps, 'iconType'> {
-  iconType: 'warning' | 'success' | 'error' | 'info';
+  iconType?: 'warning' | 'success' | 'error' | 'info';
   icon?: any;
   title?: any;
   content?: any;
@@ -66,29 +66,29 @@ function renderContent({ content }: Pick<ModalOptionsEx, 'content'>) {
   }
 }
 
-/**
- * @description: Create confirmation box
- */
-function createConfirm(options: ModalOptionsEx) {
-  const iconType = options.iconType || 'info';
-  Reflect.deleteProperty(options, 'iconType');
-  const opt: ModalFuncProps = {
-    maskClosable: true,
-    centered: true,
-    icon: getIcon(iconType),
-    ...options,
-    content: renderContent(options),
-  };
-  return Modal.confirm(opt);
-}
-
 const getBaseOptions = () => {
   const { t } = useI18n();
   return {
     okText: t('common.okText'),
+    cancelText: t('common.cancelText'),
     centered: true,
   };
 };
+
+function createConfirm(options: ModalOptionsEx) {
+  const iconType = options.iconType || 'info';
+  Reflect.deleteProperty(options, 'iconType');
+  const opt: ModalFuncProps = {
+    closable: true,
+    maskClosable: true,
+    autoFocusButton: 'cancel',
+    ...getBaseOptions(),
+    ...options,
+    icon: getIcon(iconType),
+    content: renderContent(options),
+  };
+  return Modal.confirm(opt);
+}
 
 function createModalOptions(options: ModalOptionsPartial, icon: string): ModalOptionsPartial | any {
   return {
