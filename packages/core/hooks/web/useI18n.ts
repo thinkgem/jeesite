@@ -24,18 +24,15 @@ function getKey(namespace: string | undefined, key: string) {
 export function useI18n(namespace?: string): {
   t: I18nGlobalTranslation;
 } {
-  const normalFn = {
-    t: (key: string) => {
-      return getKey(namespace, key);
-    },
-  };
-
   if (!i18n) {
-    return normalFn;
+    return {
+      t: (key: string) => {
+        return getKey(namespace, key);
+      },
+    };
   }
 
   const { t, ...methods } = i18n.global;
-
   const tt = t as (arg0: string, ...arg: I18nTranslationRestParameters) => string;
 
   const tFn: I18nGlobalTranslation = (key: string, ...arg: any[]) => {
@@ -43,6 +40,7 @@ export function useI18n(namespace?: string): {
     if (!key.includes('.') && !namespace) return key;
     return tt(getKey(namespace, key), ...(arg as I18nTranslationRestParameters));
   };
+
   return {
     ...methods,
     t: tFn,
