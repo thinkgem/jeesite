@@ -1,4 +1,4 @@
-import type { BasicColumn, ActionItem } from '@jeesite/core/components/Table';
+import type { ActionItem, BasicColumn } from '@jeesite/core/components/Table';
 import { FileItem, UploadResultStatus } from './typing';
 import { formatSize, isImgTypeByName } from './helper';
 import { Avatar, Progress, Tag } from 'ant-design-vue';
@@ -9,11 +9,11 @@ import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { FileUpload } from '@jeesite/core/api/sys/upload';
 import { useGlobSetting } from '@jeesite/core/hooks/setting';
 
-const { t } = useI18n();
 const { ctxPath } = useGlobSetting();
 
 // 文件上传列表
 export function createTableColumns(props: any): BasicColumn[] {
+  const { t } = useI18n();
   const isImage = props.uploadType === 'image';
   return [
     {
@@ -85,6 +85,7 @@ export function createTableColumns(props: any): BasicColumn[] {
   ];
 }
 export function createActionColumn(handleRemove: Function): BasicColumn {
+  const { t } = useI18n();
   return {
     width: 120,
     title: t('component.upload.operating'),
@@ -108,6 +109,7 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
 }
 // 文件预览列表
 export function createPreviewColumns(props: any): BasicColumn[] {
+  const { t } = useI18n();
   const isImage = props.uploadType === 'image';
   return [
     {
@@ -172,6 +174,7 @@ export function createPreviewActionColumn(
   },
   readonly = false,
 ): BasicColumn {
+  const { t } = useI18n();
   return {
     width: 160,
     title: t('component.upload.operating'),
