@@ -36,15 +36,21 @@
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { corpAdminDelete, corpAdminListData, corpAdminList } from '@jeesite/core/api/sys/corpAdmin';
-  import { corpAdminResetpwd, corpAdminDisable, corpAdminEnable } from '@jeesite/core/api/sys/corpAdmin';
+  import { BasicColumn, BasicTable, useTable } from '@jeesite/core/components/Table';
+  import {
+    corpAdminDelete,
+    corpAdminDisable,
+    corpAdminEnable,
+    corpAdminList,
+    corpAdminListData,
+    corpAdminResetpwd,
+  } from '@jeesite/core/api/sys/corpAdmin';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
   import InputForm from './form.vue';
 
   const { t } = useI18n('sys.empUser');
-  const { showMessage, showMessageModal } = useMessage();
+  const { showMessage, createConfirm } = useMessage();
   const { meta } = unref(router.currentRoute);
   const getTitle = {
     icon: meta.icon || 'simple-line-icons:badge',
@@ -261,7 +267,7 @@
 
   async function handleResetpwd(record: Recordable) {
     let newPassword = '';
-    showMessageModal({
+    createConfirm({
       title: t('重置密码'),
       content: [
         h('div', '新密码：'),
@@ -273,11 +279,6 @@
         }),
         h('div', { style: 'opacity:0.6;' }, '提示：若不填写，则使用系统默认密码。'),
       ],
-      closable: true,
-      okText: t('确认'),
-      cancelText: t('取消'),
-      autoFocusButton: 'cancel',
-      maskClosable: true,
       onOk: async () => {
         record.newPassword = newPassword;
         const res = await corpAdminResetpwd(record);

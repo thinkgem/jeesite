@@ -69,7 +69,7 @@
   const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.empUser');
-  const { showMessage, showMessageModal } = useMessage();
+  const { showMessage, createConfirm } = useMessage();
   const { meta } = unref(router.currentRoute);
   const getTitle = {
     icon: meta.icon || 'simple-line-icons:user',
@@ -440,7 +440,7 @@
 
   async function handleResetpwd(record: Recordable) {
     let newPassword = '';
-    showMessageModal({
+    createConfirm({
       title: t('重置密码'),
       content: [
         h('div', '新密码：'),
@@ -452,11 +452,6 @@
         }),
         h('div', { style: 'opacity:0.6;' }, '提示：若不填写，则使用系统默认密码。'),
       ],
-      closable: true,
-      okText: t('确认'),
-      cancelText: t('取消'),
-      autoFocusButton: 'cancel',
-      maskClosable: true,
       onOk: async () => {
         record.ctrlPermi = ctrlPermi.value;
         record.newPassword = newPassword;
