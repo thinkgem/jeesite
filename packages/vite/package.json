@@ -20,10 +20,6 @@
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
-    "./tools/lib": {
-      "import": "./dist/tools/lib.mjs",
-      "types": "./dist/tools/lib.d.ts"
-    },
     "./config/getEnvConfigName": {
       "import": "./config/getEnvConfigName.ts",
       "types": "./config/getEnvConfigName.ts"
