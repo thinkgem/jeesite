@@ -54,9 +54,9 @@ import java.util.Set;
 @Service
 public class ArticleVectorStoreImpl implements ArticleVectorStore {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-	private final VectorStore vectorStore;
-	private ArticleService articleService;
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final VectorStore vectorStore;
+	protected ArticleService articleService;
 
 	public ArticleVectorStoreImpl(ObjectProvider<VectorStore> vectorStore) {
 		this.vectorStore = vectorStore.getIfAvailable();
@@ -67,6 +67,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 * @author ThinkGem
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public void save(Article article) {
 		if (vectorStore == null) return;
 		Map<String, Object> metadata = MapUtils.newHashMap();
@@ -91,7 +92,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 					.convert(article.getArticleData().getContent())
 				+ ", attachment: " + attachmentList;
 		List<Document> documents = List.of(new Document(article.getId(), content, metadata));
-		List<Document> splitDocuments = new TokenTextSplitter().apply(documents);
+		List<Document> splitDocuments = TokenTextSplitter.builder().build().apply(documents);
 		this.delete(article); // 删除原数据
 		ListUtils.pageList(splitDocuments, 10, params -> {
 			vectorStore.add((List<Document>)params[0]); // 增加新数据
@@ -122,7 +123,11 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 			public HtmlLinkResolver apply(HtmlNodeConverterContext htmlNodeConverterContext) {
 				return (node, context, resolvedLink) -> {
 					if ("a".equalsIgnoreCase(node.nodeName())) {
-						String href = node.attributes().get("href"); String url = href;
+						String href = node.attributes().get("href");
+						if (StringUtils.contains(href, "..")) {
+							return new ResolvedLink(LinkType.LINK, href);
+						}
+						String url = href;
 						if (StringUtils.contains(url, "://")) {
 							// 只提取系统允许跳转的附件内容，外部网站内容不进行提取，shiro.allowRedirects 参数设置范围
 							if (ServletUtils.isAllowRedirects(request, url)) {
