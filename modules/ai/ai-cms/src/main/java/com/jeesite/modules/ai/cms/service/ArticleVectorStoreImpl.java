@@ -123,7 +123,11 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 			public HtmlLinkResolver apply(HtmlNodeConverterContext htmlNodeConverterContext) {
 				return (node, context, resolvedLink) -> {
 					if ("a".equalsIgnoreCase(node.nodeName())) {
-						String href = node.attributes().get("href"); String url = href;
+						String href = node.attributes().get("href");
+						if (StringUtils.contains(href, "..")) {
+							return new ResolvedLink(LinkType.LINK, href);
+						}
+						String url = href;
 						if (StringUtils.contains(url, "://")) {
 							// 只提取系统允许跳转的附件内容，外部网站内容不进行提取，shiro.allowRedirects 参数设置范围
 							if (ServletUtils.isAllowRedirects(request, url)) {
