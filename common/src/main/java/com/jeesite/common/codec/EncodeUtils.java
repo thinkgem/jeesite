@@ -187,6 +187,22 @@ public class EncodeUtils {
 	public static String decodeUrl2(String part) {
 		return decodeUrl(decodeUrl(part));
 	}
+	
+	/**
+	 * URL 解码（针对多次编码的，可设置最大解密次数）, Encode默认为UTF-8.
+	 */
+	public static String decodeUrlEach(String part, int maxDecodeIterations) {
+		String current = part;
+		String previous;
+		for (int i = 0; i < maxDecodeIterations; i++) {
+			previous = current;
+			current = EncodeUtils.decodeUrl(previous);
+			if (StringUtils.equals(current, previous)) {
+				break;
+			}
+		}
+		return current;
+	}
 
 	// 预编译XSS过滤正则表达式
 	private static final List<Pattern> xssPatterns = ListUtils.newArrayList(
@@ -214,51 +230,51 @@ public class EncodeUtils {
 		if (request != null && StringUtils.containsAny(request.getRequestURI(), ServletUtils.XSS_FILE_EXCLUDE_URI)) {
 			return text;
 		}
-		if (text != null){
-			String oriValue = StringUtils.trim(text);
-			String value = oriValue;
-			for (Pattern pattern : xssPatterns) {
-				Matcher matcher = pattern.matcher(value);
-				if (matcher.find()) {
-					value = matcher.replaceAll(StringUtils.EMPTY);
-				}
-			}
-			// 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
-			if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->")    // HTML
-					&& !StringUtils.startsWithIgnoreCase(value, "<?xml ")  // XML
-					&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
-					&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
-			){
-				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < value.length(); i++) {
-					char c = value.charAt(i);
-					switch (c) {
-						case '>':
-							sb.append("＞");
-							break;
-						case '<':
-							sb.append("＜");
-							break;
-						case '\'':
-							sb.append("＇");
-							break;
-						case '\"':
-							sb.append("＂");
-							break;
-						default:
-							sb.append(c);
-							break;
-					}
-				}
-				value = sb.toString();
-			}
-			if (logger.isInfoEnabled() && !value.equals(oriValue)){
-				logger.info("xssFilter: {}   <=<=<=   {}   source: {}", value, text,
-						request != null ? request.getRequestURL() : "common");
-			}
-			return value;
+		if (StringUtils.isBlank(text)){
+			return text;
 		}
-		return null;
+		String oriValue = StringUtils.trim(text);
+		String value = oriValue;
+		for (Pattern pattern : xssPatterns) {
+			Matcher matcher = pattern.matcher(value);
+			if (matcher.find()) {
+				value = matcher.replaceAll(StringUtils.EMPTY);
+			}
+		}
+		// 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
+		if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->")    // HTML
+				&& !StringUtils.startsWithIgnoreCase(value, "<?xml ")  // XML
+				&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
+				&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
+		){
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < value.length(); i++) {
+				char c = value.charAt(i);
+				switch (c) {
+					case '>':
+						sb.append("＞");
+						break;
+					case '<':
+						sb.append("＜");
+						break;
+					case '\'':
+						sb.append("＇");
+						break;
+					case '\"':
+						sb.append("＂");
+						break;
+					default:
+						sb.append(c);
+						break;
+				}
+			}
+			value = sb.toString();
+		}
+		if (logger.isInfoEnabled() && !value.equals(oriValue)){
+			logger.info("xssFilter: {}   <=<=<=   {}   source: {}", value, text,
+					request != null ? request.getRequestURL() : "common");
+		}
+		return value;
 	}
 
 	// 预编译SQL过滤正则表达式
@@ -282,40 +298,80 @@ public class EncodeUtils {
 	 * @author ThinkGem
 	 */
 	public static String sqlFilter(String text, String source){
-		if (text != null){
-			String value = text;
-			// 如果仅为 AND 或 OR 则不认为是注入
-			if (StringUtils.equalsAnyIgnoreCase(StringUtils.trim(value), "AND", "OR")) {
-				return value;
-			}
-			// 简单数据 或 排序 类型的正则表达式验证
-			else if (StringUtils.inString(source, "simple", "orderBy")) {
-				Matcher matcher = simplePattern.matcher(value);
-				if (!matcher.matches()) {
-					value = StringUtils.EMPTY;
-				}
-			}
-			// 数据表字段列 类型的正则表达式验证
-			else if (StringUtils.inString(source, "columnName")) {
-				Matcher matcher = columnNamePattern.matcher(value);
-				if (!matcher.matches()) {
-					value = StringUtils.EMPTY;
-				}
-			}
-			// 其它 类型的正则表达式验证
-			else {
-				Matcher matcher = sqlPattern.matcher(value);
-				if (matcher.find()) {
-					value = matcher.replaceAll(StringUtils.EMPTY);
-				}
-			}
-			if (logger.isWarnEnabled() && !value.equals(text)){
-				logger.info("sqlFilter: {}   <=<=<=   {}   source: {}", value, text, source);
-				return StringUtils.EMPTY;
-			}
+		if (StringUtils.isBlank(text)){
+			return text;
+		}
+		String value = text;
+		// 如果仅为 AND 或 OR 则不认为是注入
+		if (StringUtils.equalsAnyIgnoreCase(StringUtils.trim(value), "AND", "OR")) {
 			return value;
 		}
-		return null;
+		// 简单数据 或 排序 类型的正则表达式验证
+		else if (StringUtils.inString(source, "simple", "orderBy")) {
+			Matcher matcher = simplePattern.matcher(value);
+			if (!matcher.matches()) {
+				value = StringUtils.EMPTY;
+			}
+		}
+		// 数据表字段列 类型的正则表达式验证
+		else if (StringUtils.inString(source, "columnName")) {
+			Matcher matcher = columnNamePattern.matcher(value);
+			if (!matcher.matches()) {
+				value = StringUtils.EMPTY;
+			}
+		}
+		// 其它 类型的正则表达式验证
+		else {
+			Matcher matcher = sqlPattern.matcher(value);
+			if (matcher.find()) {
+				value = matcher.replaceAll(StringUtils.EMPTY);
+			}
+		}
+		if (logger.isWarnEnabled() && !value.equals(text)){
+			logger.info("sqlFilter: {}   <=<=<=   {}   source: {}", value, text, source);
+			return StringUtils.EMPTY;
+		}
+		return value;
+	}
+
+    /**
+	 * 定义 JDBC 连接字符串参数正则列表
+	 */
+	private static final List<Pattern> jdbcUrlPattern = ListUtils.newArrayList(
+			// 1. MySQL / MariaDB
+			Pattern.compile("\\b(allowLoadLocalInfile\\s*=\\s*true|autoDeserialize\\s*=\\s*true|queryInterceptors\\s*=|statementInterceptors\\s*=|allowUrlInLocalInfile\\s*=)", Pattern.CASE_INSENSITIVE),
+			// 2. PostgreSQL / Redshift
+			Pattern.compile("\\b(socketFactory\\s*=|socketFactoryArg\\s*=|sslfactory\\s*=|sslfactoryarg\\s*=|authenticationPluginClassName\\s*=)", Pattern.CASE_INSENSITIVE),
+			// 3. SQL Server
+			Pattern.compile("\\b(integratedSecurity\\s*=|keyPath\\s*=)", Pattern.CASE_INSENSITIVE),
+			// 4. SQLite
+			Pattern.compile("\\b(enable_load_extension\\s*=)", Pattern.CASE_INSENSITIVE),
+			// 5. Oracle (新增)
+			Pattern.compile("\\b(tns_admin\\s*=|wallet_location\\s*=|oracle\\.net\\.encryption_client\\s*=)", Pattern.CASE_INSENSITIVE),
+			// 6. 通用验证规则
+			Pattern.compile("(;\\s*--|EXEC\\s*\\(|CALL\\s+EXEC)", Pattern.CASE_INSENSITIVE)
+	);
+	
+	/**
+	 * 校验 JDBC URL 是否安全
+	 */
+	public static void validJdbcUrl(String jdbcUrl) {
+		if (StringUtils.isBlank(jdbcUrl)){
+			return;
+		}
+		String decodedUrl = decodeUrlEach(jdbcUrl, 50);
+		if (StringUtils.startsWithIgnoreCase(decodedUrl,"jdbc:h2:")) {
+			decodedUrl = decodedUrl.replaceAll("/\\*.*?\\*/", "");
+			decodedUrl = decodedUrl.replaceAll("\\\\([A-Za-z])", "$1");
+			if (StringUtils.containsIgnoreCase(decodedUrl, "INIT")) {
+				throw new IllegalArgumentException("msg: H2 数据库禁止使用 INIT 参数。");
+			}
+		}
+		for (Pattern pattern : jdbcUrlPattern) {
+			if (pattern.matcher(decodedUrl).find()) {
+				throw new IllegalArgumentException("msg: 不安全的 JDBC 连接参数，请检查输入。");
+			}
+		}
 	}
 
 	// 对邮箱和手机号进行安全处理
