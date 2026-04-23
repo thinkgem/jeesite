@@ -49,6 +49,9 @@ public class EncodeUtilsTest {
 		sqlFilter(i++, "a.audit_result asc,case when 1 like case when length(database())=6 then 1 else exp(111) end then 1 else 1/0 end", "orderBy");
 		sqlFilter(i++, "if(1=2,1,SLEEP(10)), if(mid(database(),{},1)=\\\"{}\\\",a.id,a.login_name)", "orderBy");
 		sqlFilter(i++, "a.audit_result asc, b.audit_result2 desc, b.AuditResult3 desc", "orderBy");
+		validJdbcUrl(i++, "jdbc:h2:mem:jeesite_db;TRACE_LEVEL_SYSTEM_OUT=3;INIT=CREATE ALIAS IF NOT...");
+		validJdbcUrl(i++, "jdbc:h2:mem:jeesite_db;TRACE_LEVEL_SYSTEM_OUT=3;I\\NIT=CREATE ALIAS IF NOT...");
+		validJdbcUrl(i++, "jdbc:h2:mem:jeesite_db;TRACE_LEVEL_SYSTEM_OUT=3;I/**/NIT=CREATE ALIAS IF NOT...");
 	}
 
 	private static void xssFilter(int num, String text) {
@@ -59,6 +62,15 @@ public class EncodeUtilsTest {
 	private static void sqlFilter(int num, String text, String source) {
 		String text2 = EncodeUtils.sqlFilter(text, source);
 		System.out.println(num + ". " + text + "\t ==> \t" + text2 + "\t ==> \t" + text.equals(text2));
+	}
+
+	private static void validJdbcUrl(int num, String text) {
+		try {
+			EncodeUtils.validJdbcUrl(text);
+			System.out.println(num + ". " + text + "\t ==> \t" + true);
+		} catch (Exception e) {
+			System.out.println(num + ". " + text + "\t ==> \t" + e.getMessage());
+		}
 	}
 
 }
