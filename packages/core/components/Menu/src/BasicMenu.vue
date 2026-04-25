@@ -63,8 +63,7 @@
     const { type, mode } = props;
 
     return (
-      (type === MenuTypeEnum.TOP_MENU && mode === MenuModeEnum.HORIZONTAL) ||
-      (props.isHorizontal && unref(getSplit))
+      (type === MenuTypeEnum.TOP_MENU && mode === MenuModeEnum.HORIZONTAL) || (props.isHorizontal && unref(getSplit))
     );
   });
 
