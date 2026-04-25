@@ -28,7 +28,6 @@
     "serve": "pnpm dev"
   },
   "dependencies": {
-    "@ant-design/colors": "8.0.1",
     "@ant-design/icons-vue": "7.0.1",
     "@jeesite/assets": "workspace:*",
     "@jeesite/cms": "workspace:*",

@@ -39,6 +39,7 @@
     "./dist/*": "./dist/*"
   },
   "dependencies": {
+    "@ant-design/colors": "8.0.1",
     "picocolors": "1.1.1",
     "tinycolor2": "1.6.0",
     "clean-css": "5.3.3"
