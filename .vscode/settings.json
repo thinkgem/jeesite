@@ -3,21 +3,10 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "volar.tsPlugin": true,
   "volar.tsPluginStatus": false,
-  //===========================================
-  //============= Editor ======================
-  //===========================================
   "explorer.openEditors.visible": 0,
-  "editor.tabSize": 2,
-  "editor.defaultFormatter": "oxc.oxc-vscode",
   "diffEditor.ignoreTrimWhitespace": false,
-  //===========================================
-  //============= Other =======================
-  //===========================================
   "breadcrumbs.enabled": true,
   "open-in-browser.default": "chrome",
-  //===========================================
-  //============= files =======================
-  //===========================================
   "files.eol": "\n",
   "search.exclude": {
     "**/node_modules": true,
@@ -32,7 +21,7 @@
     "**/.DS_Store": true,
     "**/.idea": true,
     "**/.vscode": false,
-    "**/yarn.lock": true,
+    "**/pnpm-lock.yaml": true,
     "**/tmp": true,
     "out": true,
     "dist": true,
@@ -40,9 +29,7 @@
     "CHANGELOG.md": true,
     "examples": true,
     "res": true,
-    "screenshots": true,
-    "yarn-error.log": true,
-    "**/.yarn": true
+    "screenshots": true
   },
   "files.exclude": {
     "**/.cache": true,
@@ -64,21 +51,18 @@
     "**/node_modules/**": true,
     "**/tmp/**": true,
     "**/bower_components/**": true,
-    "**/dist/**": true,
-    "**/yarn.lock": true
+    "**/dist/**": true
   },
   "stylelint.enable": true,
   "stylelint.packageManager": "yarn",
   "liveServer.settings.donotShowInfoMsg": true,
-  "telemetry.enableCrashReporter": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
-  "path-intellisense.mappings": {
-    "@/": "${workspaceRoot}/src"
-  },
   "prettier.requireConfig": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.sideBar.location": "left",
-  "[javascriptreact]": {
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[javascript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescript]": {
@@ -108,7 +92,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.oxc": "always"
   },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
@@ -162,7 +146,6 @@
     "Vite",
     "vitejs",
     "vueuse",
-    "yarn",
     "zxcvbn"
   ]
 }
