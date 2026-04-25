@@ -15,6 +15,7 @@
   "requirePragma": false,
   "proseWrap": "preserve",
   "htmlWhitespaceSensitivity": "strict",
+  "embeddedLanguageFormatting": "auto",
   "sortPackageJson": {},
   "ignorePatterns": [
     "dist",
