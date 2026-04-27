@@ -33,7 +33,7 @@
         type: Object as PropType<FormProps<FormRecordable>>,
         default: () => ({}),
       },
-      allDefaultValues: {
+      defaultValues: {
         type: Object as PropType<Recordable>,
         default: () => ({}),
       },
@@ -42,7 +42,7 @@
         default: () => ({}),
       },
       setFormModel: {
-        type: Function as PropType<(key: FormField, value: any, labelKey?: FormField, labelValue?: any) => void>,
+        type: Function as PropType<(key: FormField, value: any) => void>,
         default: null,
       },
       tableAction: {
@@ -67,14 +67,14 @@
       const itemLabelWidthProp = useItemLabelWidth(schema, formProps);
 
       const getValues = computed(() => {
-        const { allDefaultValues, formModel, schema } = props;
+        const { defaultValues, formModel, schema } = props;
         const { mergeDynamicData } = props.formProps;
         return {
           field: schema.field,
           model: formModel,
           values: {
             ...mergeDynamicData,
-            ...allDefaultValues,
+            ...defaultValues,
             ...formModel,
           } as Recordable,
           schema: schema,
@@ -143,7 +143,7 @@
         return { isShow, isIfShow };
       }
 
-      function handleRules(): Rule[] {
+      const getRules = computed((): Rule[] => {
         const { rules: defRules = [], component, rulesMessageJoinLabel, label, dynamicRules, required } = props.schema;
 
         if (isFunction(dynamicRules)) {
@@ -226,9 +226,9 @@
             rules[characterInx].message || t('component.form.maxTip', [rules[characterInx].max] as Recordable);
         }
         return rules;
-      }
+      });
 
-      function renderComponent() {
+      const getComponent = computed(() => {
         const {
           renderComponentContent,
           component,
@@ -240,6 +240,7 @@
           defaultValue,
           defaultLabel,
         } = props.schema;
+        // console.log('getComponent', field);
 
         const isCheck = component && ['Switch', 'Checkbox'].includes(component);
 
@@ -251,12 +252,10 @@
             const [e, labelValue] = args;
             const target = typeof e === 'boolean' ? { checked: e } : e ? e.target : null;
             const value = target ? (isCheck ? target.checked : target.value) : e;
-            props.setFormModel(
-              field,
-              value || (typeof value == 'number' ? value : defaultValue || ''),
-              fieldLabel,
-              labelValue || defaultLabel || '',
-            );
+            props.setFormModel(field, value || (typeof value == 'number' ? value : defaultValue || ''));
+            if (fieldLabel) {
+              props.setFormModel(fieldLabel, labelValue || defaultLabel || '');
+            }
             if (propsData[eventKey]) {
               propsData[eventKey](...args);
             }
@@ -278,14 +277,12 @@
           propsData.placeholder = unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
         }
         propsData.codeField = field;
-        propsData.formValues = unref(getValues);
 
         if (defaultValue && !props.formModel[field]) {
-          if (defaultLabel && fieldLabel && !props.formModel[fieldLabel]) {
-            props.setFormModel(field, defaultValue, defaultLabel);
-          } else {
-            props.setFormModel(field, defaultValue);
-          }
+          props.setFormModel(field, defaultValue || '');
+        }
+        if (defaultLabel && fieldLabel && !props.formModel[fieldLabel]) {
+          props.setFormModel(fieldLabel, defaultLabel || '');
         }
 
         let value = props.formModel[field];
@@ -324,7 +321,7 @@
               default: () => renderComponentContent,
             };
         return <Comp {...compAttr}>{compSlot}</Comp>;
-      }
+      });
 
       function renderLabelHelpMessage(colon = false) {
         const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
@@ -349,9 +346,10 @@
         );
       }
 
-      function renderItem() {
+      const getFormItem = computed(() => {
         const { itemProps, slot, render, label, field, fieldLabel, suffix, component } = props.schema;
         const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
+        // console.log('getFormItem', props.schema.field);
 
         if (component === 'None') {
           return ''; // 占位符，什么也不输出
@@ -368,27 +366,24 @@
               ? getSlot(slots, slot, unref(getValues))
               : render
                 ? render(unref(getValues))
-                : renderComponent();
+                : unref(getComponent);
           };
-
-          const showSuffix = !!suffix;
-          const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix;
 
           return (
             <Form.Item
               name={field}
               colon={false}
-              class={{ 'suffix-item': showSuffix, 'no-label': isEmpty(label) }}
+              class={{ 'suffix-item': !!suffix, 'no-label': isEmpty(label) }}
               label={renderLabelHelpMessage(true)}
-              rules={handleRules()}
+              rules={unref(getRules)}
               labelCol={labelCol}
               wrapperCol={wrapperCol}
               {...(itemProps as Recordable)}
             >
-              {showSuffix ? (
+              {!!suffix ? (
                 <div style="display: flex">
                   <div style="flex: 1">{getContent()}</div>
-                  <span class="suffix">{getSuffix}</span>
+                  <span class="suffix">{isFunction(suffix) ? suffix(unref(getValues)) : suffix}</span>
                 </div>
               ) : (
                 getContent()
@@ -397,13 +392,14 @@
             </Form.Item>
           );
         }
-      }
+      });
 
-      return () => {
+      const getColItem = computed(() => {
         const { colProps = {}, colSlot, renderColContent, component } = props.schema;
         if (!componentMap.has(component)) {
           return null;
         }
+        // console.log('getColItem', props.schema.field);
 
         const { baseColProps = {} } = props.formProps;
         const realColProps = props.colLayout ? { ...baseColProps, ...colProps } : {};
@@ -413,11 +409,15 @@
         if (!realColProps.sm) {
           realColProps.sm = realColProps.md || realColProps.xs || 24;
         }
+
         const { isIfShow, isShow } = getShow();
-        const values = unref(getValues);
 
         const getContent = () => {
-          return colSlot ? getSlot(slots, colSlot, values) : renderColContent ? renderColContent(values) : renderItem();
+          return colSlot
+            ? getSlot(slots, colSlot, unref(getValues))
+            : renderColContent
+              ? renderColContent(unref(getValues))
+              : unref(getFormItem);
         };
 
         return (
@@ -427,7 +427,9 @@
             </Col>
           )
         );
-      };
+      });
+
+      return () => unref(getColItem);
     },
   });
 </script>

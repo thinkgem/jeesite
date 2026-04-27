@@ -16,13 +16,13 @@
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
         <FormItem
-          :tableAction="props.tableAction"
-          :formActionType="formActionType"
           :schema="schema"
           :formProps="getProps"
-          :allDefaultValues="defaultValueRef"
           :formModel="formModel"
           :setFormModel="setFormModel"
+          :defaultValues="defaultValueRef"
+          :formActionType="formActionType"
+          :tableAction="props.tableAction"
         >
           <template #[item]="data" v-for="item in Object.keys($slots)">
             <slot :name="item" v-bind="data || {}"></slot>
@@ -234,11 +234,8 @@
     propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
   }
 
-  function setFormModel(key: FormField, value: any, labelKey?: FormField, labelValue?: any) {
+  function setFormModel(key: FormField, value: any) {
     formModel[key] = value;
-    if (labelKey) {
-      formModel[labelKey] = labelValue;
-    }
     // const { validateTrigger } = unref(getBindValue);
     // if (!validateTrigger || validateTrigger === 'change') {
     //   setTimeout(() => {
