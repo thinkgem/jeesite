@@ -75,7 +75,7 @@ function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean, 
 }
 
 function handleDragColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
-  const { canRowDrag, isTreeTable } = unref(propsRef);
+  const { canRowDrag, dragColumnProps, isTreeTable } = unref(propsRef);
 
   if (unref(isTreeTable)) {
     return;
@@ -112,6 +112,7 @@ function handleDragColumn(propsRef: ComputedRef<BasicTableProps>, columns: Basic
         },
       });
     },
+    ...dragColumnProps,
   });
 }
 

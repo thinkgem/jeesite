@@ -210,6 +210,9 @@ export interface BasicTableProps<T = any> {
   showIndexColumn?: boolean;
   // 序号列配置
   indexColumnProps?: BasicColumn<T>;
+  // 拖拽列列配置
+  dragColumnProps?: BasicColumn<T>;
+  // 操作列配置
   actionColumn?: BasicColumn<T>;
   // 文本超过宽度是否显示。。。
   ellipsis?: boolean;
