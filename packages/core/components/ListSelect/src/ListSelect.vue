@@ -71,7 +71,7 @@
     },
   });
 
-  const emit = defineEmits(['change', 'select', 'click']);
+  const emit = defineEmits(['change', 'update:value', 'update:labelValue', 'select', 'click']);
 
   const attrs = useAttrs();
   const valueRef = ref<string>(props.value);
@@ -214,12 +214,16 @@
     labelValueRef.value = Array.from(values)
       .map((item) => item[configRef.value.itemName])
       .join(',');
+    emit('update:value', valueRef.value);
+    emit('update:labelValue', labelValueRef.value);
     emit('change', valueRef.value, labelValueRef.value);
     emit('select', values);
   }
 
   function handleInput() {
     valueRef.value = labelValueRef.value;
+    emit('update:value', valueRef.value);
+    emit('update:labelValue', labelValueRef.value);
     emit('change', valueRef.value, labelValueRef.value);
   }
 
