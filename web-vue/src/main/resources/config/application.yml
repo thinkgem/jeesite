@@ -364,7 +364,8 @@ mybatis:
 #  # 允许 @Table orderBy 排序 设置为空，否则默认使用 主键 排序 v4.5.0 v5.1.0
 #  allowOrderEmpty: true
 #
-#  # 排序字段 SQL 过滤，该参数仅对 sqlMap.getOrder().setOrderBy 内部调用方法有效 page.setOrderBy 和 entity.setOrderBy 必须经过过滤 v5.12.0
+#  # 内部调用时的排序字段是否需要 SQL 过滤，该参数仅对 sqlMap.getOrder().setOrderBy 内部 java 调用方法有效
+#  # 然而 page.setOrderBy 和 entity.setOrderBy 从浏览器或用户接受的参数，默认均会通过安全过滤，请放心 v5.12.0
 #  orderBySqlFilter: false
 
   # Mapper文件刷新线程
@@ -757,10 +758,10 @@ session:
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  shareSessionIdCookieName: ${session.sessionIdCookieName}
 #  
-#  # 其它 SimpleCookie 参数（v4.2.3）
-#  sessionIdCookieSecure: false
+#  # 其它 SimpleCookie 参数（v4.2.3）SameSite 可选值：Null、None、Lax、Strict
+#  sessionIdCookieSecure: true
 #  sessionIdCookieHttpOnly: true
-#  sessionIdCookieSameSite: LAX
+#  sessionIdCookieSameSite: Strict
 #  
 #  # 设置接收 SessionId 请求参数和请求头的名称
 #  sessionIdParamName: __sid
@@ -807,6 +808,13 @@ session:
 #    # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
 #    # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
 #    cache_clean_mode: passive
+
+# 请求客户端
+#httpClient:
+#  # 连接超时时间（单位：秒）
+#  connectTimeout: 60
+#  # 是否允许未验证的协议
+#  useUnsafeX509: false
 
 # 锁管理器（支持本地锁和分布式锁，当isClusterMode开启时，自动使用分布式锁）
 #lockManager:
