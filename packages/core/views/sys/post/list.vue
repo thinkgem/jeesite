@@ -25,13 +25,13 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysPostList">
-  import { unref } from 'vue';
+  import { onMounted, unref, ref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { postDelete, postListData } from '@jeesite/core/api/sys/post';
+  import { Post, postDelete, postList, postListData } from '@jeesite/core/api/sys/post';
   import { postDisable, postEnable } from '@jeesite/core/api/sys/post';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
@@ -44,6 +44,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: meta.title || t('岗位管理'),
   };
+  const record = ref<Post>({} as Post);
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 6 },
@@ -160,7 +161,7 @@
           title: t('是否确认停用岗位'),
           confirm: handleDisable.bind(this, { postCode: record.postCode }),
         },
-        auth: 'sys:role:edit',
+        auth: 'sys:post:edit',
         ifShow: () => record.status === '0',
       },
       {
@@ -171,7 +172,7 @@
           title: t('是否确认启用岗位'),
           confirm: handleEnable.bind(this, { postCode: record.postCode }),
         },
-        auth: 'sys:role:edit',
+        auth: 'sys:post:edit',
         ifShow: () => record.status === '2',
       },
       {
@@ -188,7 +189,7 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, getForm }] = useTable({
     api: postListData,
     beforeFetch: (params) => {
       return params;
@@ -199,6 +200,12 @@
     showTableSetting: true,
     useSearchForm: true,
     canResize: true,
+  });
+
+  onMounted(async () => {
+    const res = await postList();
+    record.value = (res.post || {}) as Post;
+    await getForm().setFieldsValue(record.value);
   });
 
   function handleForm(record: Recordable) {
