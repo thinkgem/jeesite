@@ -56,7 +56,7 @@
   </Basic${modalOrDrawer}>
 </template>
 <script lang="ts" setup name="${compNamePrefix}Form">
-  import { ref, unref, computed } from 'vue';
+  import { computed, ref<% if (table.childList.~size > 0){ %>, shallowRef<% } %>, unref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -106,7 +106,7 @@
   const { meta } = unref(router.currentRoute);
   const record = ref<${ClassName}>({} as ${ClassName});
   <% for (child in table.childList){ %>
-  const form${@StringUtils.cap(child.classNameSimple)}ListRef = ref<InstanceType<typeof Form${@StringUtils.cap(child.classNameSimple)}List>>();
+  const form${@StringUtils.cap(child.classNameSimple)}ListRef = shallowRef<InstanceType<typeof Form${@StringUtils.cap(child.classNameSimple)}List>>();
   <% } %>
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
   const loadingRef = ref(false);
