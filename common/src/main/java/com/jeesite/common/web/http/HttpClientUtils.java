@@ -5,6 +5,7 @@
 package com.jeesite.common.web.http;
 
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,8 @@ import java.util.Map;
 public class HttpClientUtils {
 
 	private final static Logger logger = LoggerFactory.getLogger(HttpClientUtils.class);
-	private static final HttpClient client = createHttpClient(60);
+	private static final HttpClient client = createHttpClient(PropertiesUtils.getInstance()
+			.getPropertyToInteger("httpClient.connectTimeout", "60"));
 
 	/**
 	 * HTTP 的 GET 请求
@@ -228,9 +230,12 @@ public class HttpClientUtils {
 	public static HttpClient.Builder newBuilder() {
 		HttpClient.Builder builder;
 		try {
-			SSLContext sslContext = SSLContext.getInstance("TLS");
-			sslContext.init(null, new TrustManager[]{new UnsafeX509ExtendedTrustManager()}, new SecureRandom());
-			builder = HttpClient.newBuilder().sslContext(sslContext);
+			builder = HttpClient.newBuilder();
+			if (PropertiesUtils.getInstance().getPropertyToBoolean("httpClient.useUnsafeX509", "false")) {
+				SSLContext sslContext = SSLContext.getInstance("TLS");
+				sslContext.init(null, new TrustManager[]{new UnsafeX509ExtendedTrustManager()}, new SecureRandom());
+				builder.sslContext(sslContext);
+			}
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			builder = HttpClient.newBuilder();
