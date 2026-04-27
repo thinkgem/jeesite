@@ -23,7 +23,7 @@
       <template #userRoleString>
         <div v-if="postRolePermi" class="mb-3">
           <Alert
-            :message="`启用岗位角色权限权限后，角色不会保存，请在用户关联岗位中关联角色。`"
+            :message="`启用岗位角色权限后，角色不会保存，请在用户关联岗位中关联角色。`"
             type="info"
             banner
             closable
