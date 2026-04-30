@@ -148,6 +148,9 @@ mybatis:
 
   # 自定义 Mapper 文件扫描路径，如果多个，用“,”分隔 v4.2.3
   scanMapperLocations: classpath*:/mappings/**/*.xml
+  
+  # 是否注册 Object 类型的 TypeHandler（用于 Map 类型的结果集数据转换）v5.17.0
+  registerObjectTypeHandlers: true
 
   # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
   jdbcTransaction: false
