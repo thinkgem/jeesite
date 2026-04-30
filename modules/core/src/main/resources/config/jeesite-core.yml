@@ -95,7 +95,11 @@ jdbc:
 #======================================#
 
 spring:
-  
+
+  # 应用程序名称
+  application:
+    name: jeesite-core
+
   # 缓存配置
   cache:
     # 缓存及会话共享（专业版）
@@ -142,6 +146,9 @@ mybatis:
 
   # 自定义 Mapper 文件扫描路径，如果多个，用“,”分隔 v4.2.3
   scanMapperLocations: classpath*:/mappings/**/*.xml
+  
+  # 是否注册 Object 类型的 TypeHandler（用于 Map 类型的结果集数据转换）v5.17.0
+  registerObjectTypeHandlers: true
 
   # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
   jdbcTransaction: false
@@ -159,7 +166,8 @@ mybatis:
   # 允许 @Table orderBy 排序 设置为空，否则默认使用 主键 排序 v4.5.0 v5.1.0
   allowOrderEmpty: true
 
-  # 排序字段 SQL 过滤，该参数仅对 sqlMap.getOrder().setOrderBy 内部调用方法有效 page.setOrderBy 和 entity.setOrderBy 必须经过过滤 v5.12.0
+  # 内部调用时的排序字段是否需要 SQL 过滤，该参数仅对 sqlMap.getOrder().setOrderBy 内部 java 调用方法有效
+  # 然而 page.setOrderBy 和 entity.setOrderBy 从浏览器或用户接受的参数，默认均会通过安全过滤，请放心 v5.12.0
   orderBySqlFilter: false
 
   # Mapper文件刷新线程
@@ -608,10 +616,10 @@ session:
   # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
 
-  # 其它 SimpleCookie 参数（v4.2.3）
-  #sessionIdCookieSecure: false
-  #sessionIdCookieHttpOnly: true
-  #sessionIdCookieSameSite: LAX
+  # 其它 SimpleCookie 参数（v4.2.3）SameSite 可选值：Null、None、Lax、Strict
+  sessionIdCookieSecure: true
+  sessionIdCookieHttpOnly: true
+  sessionIdCookieSameSite: Strict
   
   # 设置接收 SessionId 请求参数和请求头的名称
   sessionIdParamName: __sid
