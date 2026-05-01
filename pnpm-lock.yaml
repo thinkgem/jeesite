@@ -207,8 +207,8 @@ importers:
   packages/cms:
     dependencies:
       '@jeesite/cms-lib':
-        specifier: 5.17.0-rc.1
-        version: 5.17.0-rc.1(vue@3.5.31(typescript@6.0.2))
+        specifier: 5.17.0-rc.2
+        version: 5.17.0-rc.2(vue@3.5.31(typescript@6.0.2))
       qs:
         specifier: 6.15.0
         version: 6.15.0
@@ -1464,8 +1464,8 @@ packages:
     resolution: {integrity: sha512-LC6P/uay7rXL5zZ5+5iRJfLs/iUN8apu9tm8YqQVmW3Uq3X4A0dOFUIDuAmB7gAC29wTHOS3EiN/IosNSz0eNQ==}
     engines: {node: '>= 16'}
 
-  '@jeesite/cms-lib@5.17.0-rc.1':
-    resolution: {integrity: sha512-e0YW3Olfc/gNo1YDHeIwBeipXuroJqH9nNSuI8hkSLZMU9nlhUjjBrmOMdrilpDceM3yBd1EWSF0PNARCSkpEg==}
+  '@jeesite/cms-lib@5.17.0-rc.2':
+    resolution: {integrity: sha512-IdEMIblOqfNl0zGn9Ae7RxUEQCwQ6uOA9ePNuDyDoiXUxjDt8aSvwScTbKstWDaGS6BmSG9aR20JbGEcx+W+mg==}
 
   '@jeesite/dbm-lib@5.17.0-rc.1':
     resolution: {integrity: sha512-vfeOXQe+kK0B6tt1bmZ5GbmCtqWqmmcnDXRAeQsp/mcA+6zdqrgACf5U+8axVN7Ft21uM9Z6vagVSaUEf6X6Uw==}
@@ -6706,7 +6706,7 @@ snapshots:
 
   '@intlify/shared@11.3.0': {}
 
-  '@jeesite/cms-lib@5.17.0-rc.1(vue@3.5.31(typescript@6.0.2))':
+  '@jeesite/cms-lib@5.17.0-rc.2(vue@3.5.31(typescript@6.0.2))':
     dependencies:
       '@traptitech/markdown-it-katex': 3.6.0
       highlight.js: 11.11.1

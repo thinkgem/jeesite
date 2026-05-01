@@ -75,24 +75,19 @@
         v-model:loading="loading"
       />
       <div class="pl-14 pr-16 w-full flex justify-end mt-3">
-        <div class="flex-1 rounded-2 p-3 pb-1 bg-white text-[15px] leading-7">
+        <div class="flex items-end flex-1 rounded-2 p-2 bg-white text-[15px] leading-7">
           <textarea
             ref="inputMessageRef"
-            class="outline-none no-scrollbar resize-none w-full h-full border-none bg-transparent"
+            class="flex-auto ml-1 outline-none no-scrollbar resize-none w-full h-full border-none bg-transparent"
             rows="1"
             :placeholder="t('你有什么想知道的，快来问问我，Shift+Enter 换行，Enter 发送。')"
             @input="handleInput"
             @keypress="handleEnter"
           ></textarea>
+          <a-button class="ml-2 shrink-0" type="primary" shape="circle" :loading="loading" @click="handleSend">
+            <Icon v-if="!loading" icon="i-ant-design:arrow-up-outlined" />
+          </a-button>
         </div>
-        <a-button
-          style="width: 110px; height: 100%; margin-left: 10px"
-          type="primary"
-          :loading="loading"
-          @click="handleSend"
-        >
-          <Icon icon="i-fa:send" /> {{ t('发送') }}
-        </a-button>
       </div>
       <div class="pt-2 pr-8 c-gray-4 text-xs text-center">
         {{ t('服务生成的所有内容均由人工智能模型生成，准确和完整性无法保证，不代表我们的态度或观点。') }}
@@ -101,27 +96,33 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsCmsChatIndex">
-  import { nextTick, onMounted, ref } from 'vue';
-  import { Menu, Popconfirm } from 'ant-design-vue';
-  import { Icon } from '@jeesite/core/components/Icon';
-  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
-  import { useUserStore } from '@jeesite/core/store/modules/user';
-  import { PageWrapper } from '@jeesite/core/components/Page';
-  import { ScrollContainer } from '@jeesite/core/components/Container';
-  import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
-  import { ChatMessage } from '@jeesite/cms';
+import {nextTick, onMounted, ref, shallowRef} from 'vue';
+import {Menu, Popconfirm} from 'ant-design-vue';
+import {Icon} from '@jeesite/core/components/Icon';
+import {useI18n} from '@jeesite/core/hooks/web/useI18n';
+import {useMessage} from '@jeesite/core/hooks/web/useMessage';
+import {useUserStore} from '@jeesite/core/store/modules/user';
+import {PageWrapper} from '@jeesite/core/components/Page';
+import {ScrollContainer} from '@jeesite/core/components/Container';
+import {
+  cmsChatDelete,
+  cmsChatList,
+  cmsChatMessage,
+  cmsChatSave,
+  cmsChatStream
+} from '@jeesite/cms/api/cms/chat';
+import {ChatMessage} from '@jeesite/cms';
 
-  const { t } = useI18n('cms.chat');
+const { t } = useI18n('cms.chat');
   const { showMessage } = useMessage();
   const conversationIds = ref<string[]>([]);
   const conversationTitle = ref<string>('');
   const userStore = useUserStore();
 
   const loading = ref(false);
-  const chatListRef = ref<ComponentRef>();
+  const chatListRef = shallowRef<InstanceType<typeof ScrollContainer>>();
   const chatList = ref<Recordable[]>([]);
-  const messageRef = ref<InstanceType<typeof ChatMessage>>();
+  const messageRef = shallowRef<InstanceType<typeof ChatMessage>>();
   const inputMessageRef = ref<HTMLTextAreaElement>();
   const messages = ref<Recordable[]>([]);
   const editInputRefs = ref<Recordable>({});
