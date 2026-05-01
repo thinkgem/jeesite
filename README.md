@@ -253,6 +253,21 @@ VITE_GLOB_API_URL =
 VITE_GLOB_API_URL_PREFIX = /js
 ```
 
+## 常见问题
+
+* Vue 版本的浏览器支持情况：支持所有现代浏览器，Vue3 已不再支持 IE 浏览器。
+* 为什么使用抽屉作为表单组件，因为抽屉空间更大，可以展示更多内容，且操作更友好。
+* 如何将表单抽屉改为弹窗，替换 list 和 form 页面的 Drawer 为 Modal 即可，V5.6增加了路由表单和弹窗表单的代码生成。
+* 打不开代码生成工具怎么办？提示 404，请检查 .env.development 中的代理配置 VITE_PROXY 最后一个参数（是否保持Host头），本地服务 127.0.0.1 应设置为 false，远程服务设置为 true。
+* 更多文档详见：<https://jeesite.com/docs/vue-faq/#常见问题>
+
+**如果需要低版本浏览器支持（如：Chrome 87）**
+
+请打开 .env.production 文件，设置参数后编译：
+```
+VITE_LEGACY = true
+```
+
 ## 如果您使用的 VSCode 的话，推荐安装以下插件：
 
 * [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) - UnoCSS 提示插件
@@ -263,14 +278,6 @@ VITE_GLOB_API_URL_PREFIX = /js
 * [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - 代码格式化
 * [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) - CSS 格式化
 * [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) - .env 文件高亮
-
-## 常见问题
-
-* Vue 版本的浏览器支持情况：支持所有现代浏览器，Vue3 已不再支持 IE 浏览器。
-* 为什么使用抽屉作为表单组件，因为抽屉空间更大，可以展示更多内容，且操作更友好。
-* 如何将表单抽屉改为弹窗，替换 list 和 form 页面的 Drawer 为 Modal 即可，V5.6增加了路由表单和弹窗表单的代码生成。
-* 打不开代码生成工具怎么办？提示 404，请检查 .env.development 中的代理配置 VITE_PROXY 最后一个参数（是否保持Host头），本地服务 127.0.0.1 应设置为 false，远程服务设置为 true。
-* 更多文档详见：<https://jeesite.com/docs/vue-faq/#常见问题>
 
 ## 软件截图
 
