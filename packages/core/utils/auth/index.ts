@@ -15,9 +15,9 @@ export function getAuthCache<T>(key: BasicKeys) {
   return fn(key) as T;
 }
 
-export function setAuthCache(key: BasicKeys, value) {
+export function setAuthCache(key: BasicKeys, value: any, immediate = true) {
   const fn = isLocal ? Persistent.setLocal : Persistent.setSession;
-  return fn(key, value, true);
+  return fn(key, value, immediate);
 }
 
 export function clearAuthCache(immediate = true) {
