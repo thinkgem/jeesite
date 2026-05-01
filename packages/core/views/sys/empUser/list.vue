@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserList">
-  import { onMounted, watch, ref, unref, h } from 'vue';
+  import { h, onMounted, ref, unref, watch } from 'vue';
   import { Input, Popconfirm } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
@@ -46,9 +46,16 @@
   import { downloadByUrl } from '@jeesite/core/utils/file/download';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { EmpUser, empUserDelete, empUserListData, empUserList } from '@jeesite/core/api/sys/empUser';
-  import { resetpwd, empUserDisable, empUserEnable } from '@jeesite/core/api/sys/empUser';
+  import { BasicColumn, BasicTable, useTable } from '@jeesite/core/components/Table';
+  import {
+    EmpUser,
+    empUserDelete,
+    empUserDisable,
+    empUserEnable,
+    empUserList,
+    empUserListData,
+    resetpwd,
+  } from '@jeesite/core/api/sys/empUser';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { companyTreeData } from '@jeesite/core/api/sys/company';
   import { useDrawer } from '@jeesite/core/components/Drawer';
@@ -176,6 +183,7 @@
       title: t('登录账号'),
       dataIndex: 'loginCode',
       key: 'a.login_code',
+      fixed: 'left',
       sorter: true,
       width: 100,
       slot: 'firstColumn',
