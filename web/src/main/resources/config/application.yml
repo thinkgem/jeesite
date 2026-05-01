@@ -727,7 +727,7 @@ session:
 #  shareSessionIdCookieName: ${session.sessionIdCookieName}
 #
 #  # 其它 SimpleCookie 参数（v4.2.3）SameSite 可选值：Null、None、Lax、Strict
-#  sessionIdCookieSecure: true
+#  sessionIdCookieSecure: false
 #  sessionIdCookieHttpOnly: true
 #  sessionIdCookieSameSite: Strict
 #
