@@ -213,6 +213,13 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 9. 分离端常见问题：<https://jeesite.com/docs/vue-faq/>
 
+**Vue 版，如果需要低版本浏览器支持（如：Chrome 87）**
+
+请打开 .env.production 文件，设置参数后编译：
+```
+VITE_LEGACY = true
+```
+
 ### 开发环境部署
 
 1. 部署运行文档：<https://jeesite.com/docs/install-deploy/>
