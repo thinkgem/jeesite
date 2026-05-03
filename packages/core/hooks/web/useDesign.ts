@@ -1,5 +1,5 @@
 import { useAppProviderContext } from '@jeesite/core/components/Application';
-import { theme } from 'ant-design-vue';
+import { theme } from 'antdv-next';
 // import { computed } from 'vue';
 // import { lowerFirst } from 'lodash-es';
 
