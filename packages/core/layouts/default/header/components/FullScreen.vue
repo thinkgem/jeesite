@@ -8,11 +8,11 @@
 </template>
 <script lang="ts">
   import { defineComponent, computed, unref } from 'vue';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useFullscreen } from '@vueuse/core';
 
-  import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
+  import { FullscreenExitOutlined, FullscreenOutlined } from '@antdv-next/icons';
   export default defineComponent({
     name: 'FullScreen',
     components: { FullscreenExitOutlined, FullscreenOutlined, Tooltip },

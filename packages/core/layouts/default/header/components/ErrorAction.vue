@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, computed } from 'vue';
-  import { Tooltip, Badge } from 'ant-design-vue';
+  import { Tooltip, Badge } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
 
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
