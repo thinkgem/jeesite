@@ -44,51 +44,44 @@
     <div v-if="showSelectionBar" class="m-3 mt-0">
       <TableSelectionBar :clearSelectedRowKeys="getHeaderProps.clearSelectedRowKeys!" :count="getHeaderProps.count" />
     </div>
-    <FormItemRest>
-      <ATable
-        ref="tableRef"
-        v-bind="getBindValues"
-        :rowClassName="getRowClassName"
-        v-show="getEmptyDataIsShowTable"
-        @change="handleTableChange"
-      >
-        <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
-          <slot :name="item" v-bind="data || {}"></slot>
+    <Table ref="tableRef" v-bind="getBindValues" v-show="getEmptyDataIsShowTable" @change="handleTableChange">
+      <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
+        <slot :name="item" v-bind="data || {}"></slot>
+      </template>
+      <template #headerCell="{ column }">
+        <HeaderCell :column="column as any" />
+      </template>
+      <template #bodyCell="data: any">
+        <template v-if="!data.column.customRender">
+          <TableAction
+            v-if="data.column.slot === 'tableActions'"
+            :actions="tableActions.actions ? tableActions.actions(data.record) : undefined"
+            :dropDownActions="tableActions.dropDownActions ? tableActions.dropDownActions(data.record) : undefined"
+          />
+          <DictLabel
+            v-else-if="data.column.slot === 'dictLabelColumn'"
+            :dictType="data.column.dictType"
+            :dictValue="getColumnValue(data)"
+            :defaultValue="data.column.defaultValue"
+          />
+          <slot v-else-if="data.column.slot" :name="data.column.slot" v-bind="getSlotData(data)"></slot>
         </template>
-        <template #headerCell="{ column }">
-          <HeaderCell :column="column as any" />
-        </template>
-        <template #bodyCell="data: any">
-          <template v-if="!data.column.customRender">
-            <TableAction
-              v-if="data.column.slot === 'tableActions'"
-              :actions="tableActions.actions && tableActions.actions(data.record)"
-              :dropDownActions="tableActions.dropDownActions && tableActions.dropDownActions(data.record)"
-            />
-            <DictLabel
-              v-else-if="data.column.slot === 'dictLabelColumn'"
-              :dictType="data.column.dictType"
-              :dictValue="getColumnValue(data)"
-              :defaultValue="data.column.defaultValue"
-            />
-            <slot v-else-if="data.column.slot" :name="data.column.slot" v-bind="getSlotData(data)"></slot>
-          </template>
-          <slot v-else name="bodyCell" v-bind="getSlotData(data)"></slot>
-        </template>
-      </ATable>
-    </FormItemRest>
+        <slot v-else name="bodyCell" v-bind="getSlotData(data)"></slot>
+      </template>
+    </Table>
   </div>
 </template>
 <script lang="ts" setup name="BasicTable">
   import type { BasicTableProps, TableActionType, SizeType, ColumnChangeParam } from './types/table';
   import type { TableRecordable } from '@jeesite/types/record';
 
-  import { ref, computed, unref, toRaw, inject, watch, watchEffect, useSlots } from 'vue';
-  import { Table, Form } from 'ant-design-vue';
+  import { ref, computed, unref, toRaw, inject, watch, watchEffect, useSlots, shallowRef } from 'vue';
+  import { Table, Form } from 'antdv-next';
   import { BasicForm, useForm } from '@jeesite/core/components/Form';
   import { PageWrapperFixedHeightKey } from '@jeesite/core/components/Page';
   import expandIcon from './components/ExpandIcon';
   import HeaderCell from './components/HeaderCell.vue';
+  import ResizableTitle from './components/ResizableTitle.vue';
   import TableAction from './components/TableAction.vue';
   import TableHeader from './components/TableHeader.vue';
   import { InnerHandlers } from './types/table';
@@ -120,8 +113,7 @@
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useDebounceFn } from '@vueuse/core';
 
-  const ATable = Table;
-  const FormItemRest = Form.ItemRest;
+  // defineOptions({ inheritAttrs: false });
 
   const props = defineProps(basicProps);
   const emit = defineEmits([
@@ -150,11 +142,11 @@
   const slots = useSlots();
 
   const { t } = useI18n();
-  const tableRef = ref<ComponentRef>(null);
+  const tableRef = shallowRef<ComponentRef>(null);
   const tableData = ref<TableRecordable[]>([]);
 
-  const wrapRef = ref<ComponentRef>(null);
-  const formRef = ref<ComponentRef>(null);
+  const wrapRef = shallowRef<ComponentRef>(null);
+  const formRef = shallowRef<InstanceType<typeof BasicForm>>();
   const innerPropsRef = ref<Partial<BasicTableProps>>();
 
   const { prefixCls } = useDesign('basic-table');
@@ -316,22 +308,17 @@
   );
 
   const getBindValues = computed(() => {
-    const { isTreeTable } = unref(getProps);
     let propsData: Recordable = {
       size: 'middle',
       showSorterTooltip: false,
-      // ...(dataSource.length === 0 ? { getPopupContainer: () => document.body } : {}),
+      tableLayout: 'fixed',
+      bordered: true,
       ...attrs,
-      customRow,
-      expandIcon:
-        (!isTreeTable && slots.expandedRowRender) || slots.expandIcon
-          ? undefined
-          : expandIcon(expandCollapse, handleTableExpand, !!slots.expandedRowRender),
       ...unref(getProps),
-      // ...unref(getHeaderProps),
+      onRow: customRow,
       scroll: unref(getScrollRef),
       loading: unref(getLoading),
-      tableLayout: 'fixed',
+      rowClassName: unref(getRowClassName),
       rowSelection: unref(getRowSelectionRef),
       rowKey: unref(getRowKey),
       columns: toRaw(unref(getViewColumns)),
@@ -340,17 +327,14 @@
       footer: unref(getFooterProps),
       ...unref(getExpandOption),
       onExpand: handleTableExpand,
-      onResizeColumn: (w, col) => {
-        col.width = w;
-        return false;
+      components: {
+        header: { cell: ResizableTitle },
       },
     };
-    // if (slots.expandedRowRender) { // 带展开的表格不显示水平滚动条问题
-    //   propsData = omit(propsData, 'scroll');
-    // }
-
-    propsData = omit(propsData, ['class', 'onChange', 'title']);
-    return propsData;
+    if (propsData.isTreeTable || slots.expandIcon) {
+      propsData.expandIcon = expandIcon(expandCollapse, handleTableExpand, !!slots.expandedRowRender);
+    }
+    return omit(propsData, ['class', 'onChange', 'title']);
   });
 
   const tableActions = computed(() => {
@@ -362,7 +346,7 @@
   });
 
   const getWrapperClass = computed(() => {
-    const values = unref(getBindValues);
+    const values = unref(getProps);
     return [
       prefixCls,
       attrs.class,
@@ -428,7 +412,7 @@
   }
 
   function getSize() {
-    return unref(getBindValues).size as SizeType;
+    return unref(getProps).size as SizeType;
   }
 
   function getTableRef() {
@@ -481,7 +465,7 @@
     expandCollapse,
   };
 
-  createTableContext({ ...(tableAction as TableActionType), wrapRef, getBindValues });
+  createTableContext({ ...(tableAction as TableActionType), wrapRef, getProps, getBindValues });
   emit('register', tableAction, formActions);
 
   defineExpose(tableAction);
@@ -628,9 +612,9 @@
         }
       }
 
-      .ant-table-row-expand-icon {
-        margin-left: 7px;
-      }
+      //.ant-table-row-expand-icon {
+      //  margin-left: 7px;
+      //}
 
       tr.dragover {
         &-top td {
