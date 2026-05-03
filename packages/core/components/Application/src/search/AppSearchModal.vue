@@ -5,10 +5,10 @@
         <div :class="`${prefixCls}-content`" v-click-outside="handleClose">
           <div :class="`${prefixCls}-input__wrapper`">
             <a-input
+              ref="inputRef"
               :class="`${prefixCls}-input`"
               :placeholder="t('common.searchText')"
-              ref="inputRef"
-              allow-clear
+              :allow-clear="true"
               @change="handleSearch"
             >
               <template #prefix>
@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, unref, ref, watch, nextTick } from 'vue';
+  import { computed, unref, ref, watch, nextTick, shallowRef } from 'vue';
   import AppSearchFooter from './AppSearchFooter.vue';
   import { Icon } from '@jeesite/core/components/Icon';
   // @ts-ignore
@@ -76,7 +76,7 @@
   const emit = defineEmits(['close']);
 
   const scrollWrap = ref(null);
-  const inputRef = ref<Nullable<HTMLElement>>(null);
+  const inputRef = shallowRef<Nullable<HTMLElement>>();
 
   const { t } = useI18n();
   const { prefixCls } = useDesign('app-search-modal');
