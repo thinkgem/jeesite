@@ -1,11 +1,10 @@
-import { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
-import { TooltipProps } from 'ant-design-vue/es/tooltip/Tooltip';
+import type { ButtonProps, TooltipProps } from 'antdv-next';
 import { RoleEnum } from '@jeesite/core/enums/roleEnum';
 
-export interface ActionItem extends ButtonProps {
+export interface ActionItem extends Omit<ButtonProps, 'color'> {
   onClick?: Fn;
   label?: string;
-  color?: 'success' | 'error' | 'warning';
+  color?: 'success' | 'error' | 'warning' | 'primary' | 'danger';
   icon?: string;
   iconSize?: number;
   popConfirm?: PopConfirm;
