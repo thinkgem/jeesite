@@ -4,9 +4,9 @@ export * from './src/types/form';
 export * from './src/types/formItem';
 
 export { useComponentRegister } from './src/hooks/useComponentRegister';
-export { useForm } from './src/hooks/useForm';
+export { useForm, useBasicForm } from './src/hooks/useForm';
 
-export { Checkbox } from 'ant-design-vue';
+export { Checkbox } from 'antdv-next';
 export { default as Select } from './src/components/JeeSiteSelect.vue';
 export { default as TreeSelect } from './src/components/JeeSiteTreeSelect.vue';
 export { default as RadioGroup } from './src/components/JeeSiteRadioGroup.vue';

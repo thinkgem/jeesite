@@ -1,16 +1,18 @@
-import type { FormProps, FormActionType, UseFormReturnType, FormSchema } from '../types/form';
-import type { NamePath } from 'ant-design-vue/lib/form/interface';
+import { FormProps, FormActionType, FormSchema } from '../types/form';
+import type { NamePath } from 'antdv-next/dist/form/types';
 import type { DynamicProps } from '@jeesite/types/utils';
-import { ref, onUnmounted, unref, nextTick, watch } from 'vue';
+import type { DefineComponent } from 'vue';
+import { ref, onUnmounted, unref, nextTick, watch, defineComponent, h } from 'vue';
 import { isProdMode } from '@jeesite/core/utils/env';
 import { error } from '@jeesite/core/utils/log';
 import { getDynamicProps } from '@jeesite/core/utils';
-
-export declare type ValidateFields = (nameList?: NamePath[]) => Promise<Recordable>;
+import BasicForm from '../BasicForm.vue';
 
 type Props<T> = Partial<DynamicProps<FormProps<T>>>;
 
-export function useForm<T = Recordable>(props?: Props<T>): UseFormReturnType {
+export function useForm<T = Recordable>(
+  formProps?: Props<T>,
+): [(formInstance: FormActionType, uuid: string) => void, FormActionType] {
   const formRef = ref<Nullable<FormActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
 
@@ -35,11 +37,12 @@ export function useForm<T = Recordable>(props?: Props<T>): UseFormReturnType {
 
     formRef.value = instance;
     loadedRef.value = true;
+    // console.log('register', formRef.value);
 
     watch(
-      () => props,
+      () => formProps,
       () => {
-        props && instance.setProps(getDynamicProps(props));
+        formProps && instance.setProps(getDynamicProps(formProps));
       },
       {
         immediate: true,
@@ -65,7 +68,14 @@ export function useForm<T = Recordable>(props?: Props<T>): UseFormReturnType {
     },
 
     getFieldsValue: <T = Recordable>() => {
-      return unref(formRef)?.getFieldsValue() as T;
+      const form = unref(formRef);
+      if (!form) {
+        error(
+          'The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation!',
+        );
+        return {} as T;
+      }
+      return form.getFieldsValue() as T;
     },
 
     setFieldsValue: async <T extends Recordable>(values: T) => {
@@ -79,7 +89,8 @@ export function useForm<T = Recordable>(props?: Props<T>): UseFormReturnType {
     },
 
     removeSchemaByFiled: async (field: string | string[]) => {
-      unref(formRef)?.removeSchemaByFiled(field);
+      const form = await getForm();
+      await form.removeSchemaByFiled(field);
     },
 
     resetFields: async () => {
@@ -114,4 +125,22 @@ export function useForm<T = Recordable>(props?: Props<T>): UseFormReturnType {
   };
 
   return [register, methods];
+}
+
+export function useBasicForm<T = Recordable>(formProps?: Props<T>): [DefineComponent, FormActionType] {
+  const [register, methods] = useForm(formProps);
+  const Form = defineComponent({
+    render() {
+      return h(
+        BasicForm as any,
+        {
+          onRegister: register,
+          ...formProps,
+          ...this.$attrs,
+        },
+        { ...this.$slots },
+      );
+    },
+  }) as DefineComponent;
+  return [Form, methods];
 }
