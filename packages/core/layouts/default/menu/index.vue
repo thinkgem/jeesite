@@ -112,8 +112,10 @@
        * click menu
        * @param menu
        */
-      function handleMenuClick(path: string, item: any) {
-        if (item.target === '_blank') {
+      function handleMenuClick(path: string) {
+        const menus = unref(menusRef);
+        const item = findMenuItem(menus, path);
+        if (item && item.target === '_blank') {
           window.open(path);
         } else {
           // const url = String(item.url);
@@ -125,6 +127,21 @@
           go(path);
           // }
         }
+      }
+
+      function findMenuItem(items: any[], key: string): any | null {
+        for (const item of items) {
+          if (item.path === key) {
+            return item;
+          }
+          if (item.children && item.children.length > 0) {
+            const found = findMenuItem(item.children, key);
+            if (found) {
+              return found;
+            }
+          }
+        }
+        return null;
       }
 
       /**
