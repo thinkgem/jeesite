@@ -1,13 +1,13 @@
 <template>
-  <a-dropdown :trigger="trigger" v-bind="$attrs">
+  <Dropdown :trigger="trigger" v-bind="$attrs">
     <span>
       <slot></slot>
     </span>
-    <template #overlay>
-      <a-menu :selectedKeys="selectedKeys">
-        <template v-for="item in dropMenuList" :key="`${item.event}`">
-          <a-menu-item v-bind="getAttr(item.event)" @click="handleClickMenu(item)" :disabled="item.disabled">
-            <a-popconfirm v-if="popconfirm && item.popConfirm" v-bind="getPopConfirmAttrs(item.popConfirm)">
+    <template #popupRender>
+      <Menu :selectedKeys="selectedKeys">
+        <template v-for="(item, index) in dropMenuList" :key="`${item.event}`">
+          <MenuItem v-bind="getAttr(`item-${index}`)" @click="handleClickMenu(item, $event)" :disabled="item.disabled">
+            <Popconfirm v-if="popconfirm && item.popConfirm" v-bind="getPopConfirmAttrs(item.popConfirm)">
               <template #icon v-if="item.popConfirm.icon">
                 <Icon :icon="item.popConfirm.icon" />
               </template>
@@ -15,32 +15,26 @@
                 <Icon :icon="item.icon" v-if="item.icon" />
                 <span v-if="item.text" class="ml-1">{{ item.text }}</span>
               </div>
-            </a-popconfirm>
+            </Popconfirm>
             <template v-else>
               <Icon :icon="item.icon" v-if="item.icon" />
               <span v-if="item.text" class="ml-1 mr-1">{{ item.text }}</span>
             </template>
-          </a-menu-item>
-          <a-menu-divider v-if="item.divider" :key="`d-${item.event}`" />
+          </MenuItem>
+          <MenuDivider v-if="item.divider" :key="`d-${item.event}`" />
         </template>
-      </a-menu>
+      </Menu>
     </template>
-  </a-dropdown>
+  </Dropdown>
 </template>
 
 <script lang="ts" setup>
   import { computed, PropType } from 'vue';
   import type { DropMenu } from './typing';
-  import { Dropdown, Menu, Popconfirm } from 'ant-design-vue';
+  import { Dropdown, Menu, MenuItem, MenuDivider, Popconfirm } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { omit } from 'lodash-es';
   import { isFunction } from '@jeesite/core/utils/is';
-
-  const ADropdown = Dropdown;
-  const AMenu = Menu;
-  const AMenuItem = Menu.Item;
-  const AMenuDivider = Menu.Divider;
-  const APopconfirm = Popconfirm;
 
   const props = defineProps({
     popconfirm: Boolean,
@@ -69,7 +63,13 @@
 
   const getAttr = (key: string | number) => ({ key });
 
-  function handleClickMenu(item: DropMenu) {
+  function handleClickMenu(item: DropMenu, _info?: any) {
+    // 如果 _info 是原生事件（PointerEvent/MouseEvent），说明是第一次调用，跳过
+    // 只有当 _info 是 MenuInfo 对象时才处理
+    if (_info && !_info.key && !_info.keyPath) {
+      return;
+    }
+
     const { event } = item;
     const menu = props.dropMenuList.find((item) => `${item.event}` === `${event}`);
     emit('menuEvent', menu);
