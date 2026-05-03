@@ -10,7 +10,7 @@
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { Article } from '@jeesite/cms/api/cms/article';
-  import type { NamePath } from 'ant-design-vue/lib/form/interface';
+  import type { NamePath } from 'antdv-next/dist/form/types';
   import { ref } from 'vue';
 
   const { t } = useI18n('cms.article');
