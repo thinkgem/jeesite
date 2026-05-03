@@ -17,10 +17,10 @@
     </span>
     <template #content>
       <Menu :selectedKeys="selectedKeys" :mode="menuMode" :disabledOverflow="true">
-        <template v-for="item in dropMenuList" :key="`${item.event}`">
+        <template v-for="(item, index) in dropMenuList" :key="`${index}`">
           <MenuItem
-            v-bind="getAttr(item.event)"
-            @click="handleClickMenu(item)"
+            v-bind="getAttr(`item-${index}`)"
+            @click="handleClickMenu(item, $event)"
             :disabled="item.disabled"
             :title="item.iconTitle"
           >
@@ -49,7 +49,7 @@
   import type { DropMenu } from './typing';
 
   import { defineComponent } from 'vue';
-  import { Popover, Popconfirm, Menu } from 'ant-design-vue';
+  import { Popover, Popconfirm, Menu } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { omit } from 'lodash-es';
   import { isFunction } from '@jeesite/core/utils/is';
@@ -72,9 +72,9 @@
        * @type string[]
        */
       trigger: {
-        type: [Array] as PropType<('contextmenu' | 'click' | 'hover')[]>,
+        type: [Array] as PropType<('contextMenu' | 'click' | 'hover')[]>,
         default: () => {
-          return ['contextmenu'];
+          return ['contextMenu'];
         },
       },
       dropMenuList: {
@@ -111,7 +111,14 @@
     setup(props, { emit }) {
       const open = ref(false);
 
-      function handleClickMenu(item: DropMenu) {
+      function handleClickMenu(item: DropMenu, _info?: any) {
+        // 如果 _info 是原生事件（PointerEvent/MouseE/vent），说明是第一次调用，跳过
+        // 只有当 _info 是 MenuInfo 对象时才处理
+        if (_info && !_info.key && !_info.keyPath) {
+          // console.log('Skipping native event');
+          return;
+        }
+
         if (!item['popConfirm']) {
           open.value = false;
         }
