@@ -17,9 +17,9 @@
       <div v-else class="jeesite-collapse-form-content">
         <template v-for="item in configList" :key="item.value">
           <Collapse :class="item.value" :default-active-key="item.open ? [item.value] : []">
-            <Collapse.Panel :key="item.value" :header="item.label" :forceRender="true">
+            <CollapsePanel :key="item.value" :header="item.label" :forceRender="true">
               <slot :name="item.value"></slot>
-            </Collapse.Panel>
+            </CollapsePanel>
           </Collapse>
         </template>
       </div>
@@ -38,8 +38,8 @@
   </div>
 </template>
 <script lang="ts" setup name="CollapseForm">
-  import { nextTick, ref, watch } from 'vue';
-  import { Collapse } from 'ant-design-vue';
+  import { nextTick, ref, shallowRef, watch } from 'vue';
+  import { Collapse, CollapsePanel } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { propTypes } from '@jeesite/core/utils/propTypes';
@@ -61,7 +61,7 @@
   const { t } = useI18n();
   const configList = ref<any[]>(props.config);
   const checkedList = ref<any[]>(props.config);
-  const contentRef = ref<ComponentRef>();
+  const contentRef = shallowRef<InstanceType<typeof ScrollContainer>>();
   const contentHeight = ref<number>(200);
   const { headerHeightRef } = useLayoutHeight();
 
@@ -187,7 +187,7 @@
           }
         }
 
-        &-content {
+        &-panel {
           border: 0 !important;
           border-radius: 0 !important;
           //border-bottom: 1px solid @header-light-bottom-border-color !important;
