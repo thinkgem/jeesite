@@ -26,7 +26,7 @@
   import type { PropType } from 'vue';
   import { ref, watch } from 'vue';
   // component
-  import { Skeleton } from 'ant-design-vue';
+  import { Skeleton } from 'antdv-next';
   import { CollapseTransition } from '@jeesite/core/components/Transition';
   import CollapseHeader from './CollapseHeader.vue';
   import { triggerResize } from '@jeesite/core/utils/event';

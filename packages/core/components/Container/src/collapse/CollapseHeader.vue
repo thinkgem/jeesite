@@ -1,5 +1,8 @@
 <template>
-  <div :class="[`${prefixCls}__header px-2 py-5`, $attrs.class]">
+  <div
+    :class="[`${prefixCls}__header px-2 py-5`, $attrs.class, { 'cursor-pointer': canExpan }]"
+    @click="$emit('expand')"
+  >
     <BasicTitle :helpMessage="helpMessage" normal>
       <template v-if="title">
         {{ title }}
@@ -10,7 +13,7 @@
     </BasicTitle>
     <div :class="`${prefixCls}__action`">
       <slot name="action"></slot>
-      <BasicArrow v-if="canExpan" up :expand="show" @click="$emit('expand')" />
+      <BasicArrow v-if="canExpan" up :expand="show" />
     </div>
   </div>
 </template>
