@@ -15,7 +15,7 @@
 </template>
 <script lang="ts" setup name="JeeSiteCheckboxGroup">
   import { PropType, computed, ref, unref, watch } from 'vue';
-  import { Checkbox } from 'ant-design-vue';
+  import { Checkbox, CheckboxGroup } from 'antdv-next';
   import { isEmpty, isString } from '@jeesite/core/utils/is';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
@@ -24,8 +24,6 @@
 
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
   type CheckboxItem = string | OptionsItem;
-
-  const CheckboxGroup = Checkbox.Group;
 
   const props = defineProps({
     value: {
