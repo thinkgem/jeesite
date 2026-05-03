@@ -6,6 +6,16 @@ export const drawLogo = ({ canvas, logo }: RenderQrCodeParams) => {
       resolve((canvas as HTMLCanvasElement).toDataURL());
     });
   }
+
+  // 在绘制 logo 之前保存原始 canvas 的状态
+  let originalDataUrl: string;
+  try {
+    originalDataUrl = (canvas as HTMLCanvasElement).toDataURL();
+  } catch (error) {
+    console.error('Failed to get original canvas data:', error);
+    return Promise.reject(error);
+  }
+
   const canvasWidth = (canvas as HTMLCanvasElement).width;
   const {
     logoSize = 0.15,
@@ -63,8 +73,22 @@ export const drawLogo = ({ canvas, logo }: RenderQrCodeParams) => {
   // 将 logo绘制到 canvas上
   return new Promise((resolve) => {
     image.onload = () => {
-      logoRadius ? drawLogoWithCanvas(image) : drawLogoWithImage(image);
-      resolve((canvas as HTMLCanvasElement).toDataURL());
+      try {
+        logoRadius ? drawLogoWithCanvas(image) : drawLogoWithImage(image);
+        resolve((canvas as HTMLCanvasElement).toDataURL());
+      } catch (error) {
+        // 如果 canvas 被污染（跨域问题），返回原始不带 logo 的二维码
+        console.warn(
+          'Failed to export canvas due to cross-origin restrictions. Returning QR code without logo.',
+          error,
+        );
+        resolve(originalDataUrl);
+      }
+    };
+    image.onerror = (error) => {
+      console.error('Failed to load logo image:', logoSrc, error);
+      // 如果 logo 加载失败，返回原始不带 logo 的二维码
+      resolve(originalDataUrl);
     };
   });
 };

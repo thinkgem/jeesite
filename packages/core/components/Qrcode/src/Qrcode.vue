@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, watch, PropType, ref, unref, onMounted } from 'vue';
+  import { defineComponent, watch, PropType, ref, unref, onMounted, shallowRef } from 'vue';
   import { toCanvas, QRCodeRenderersOptions, LogoType } from './qrcodePlus';
   import { toDataURL } from 'qrcode';
   import { downloadByUrl } from '@jeesite/core/utils/file/download';
@@ -41,7 +41,7 @@
     },
     emits: { done: (data: QrcodeDoneEventParams) => !!data, error: (error: any) => !!error },
     setup(props, { emit }) {
-      const wrapRef = ref<HTMLCanvasElement | HTMLImageElement | null>(null);
+      const wrapRef = shallowRef<HTMLCanvasElement | HTMLImageElement | null>(null);
       async function createQrcode() {
         try {
           const { tag, value, options = {}, width, logo } = props;
