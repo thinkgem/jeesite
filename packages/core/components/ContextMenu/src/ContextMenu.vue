@@ -3,7 +3,7 @@
   import type { FunctionalComponent, CSSProperties } from 'vue';
   import { defineComponent, nextTick, onMounted, computed, ref, unref, onUnmounted } from 'vue';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { Menu, Divider } from 'ant-design-vue';
+  import { Menu, Divider } from 'antdv-next';
 
   const prefixCls = 'context-menu';
 
