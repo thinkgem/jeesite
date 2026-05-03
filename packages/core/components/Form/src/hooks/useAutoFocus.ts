@@ -6,12 +6,12 @@ import { unref, nextTick, watchEffect } from 'vue';
 interface UseAutoFocusContext {
   getSchema: ComputedRef<FormSchema[]>;
   getProps: ComputedRef<FormProps>;
-  isInitedDefault: Ref<boolean>;
+  isInitDefault: Ref<boolean>;
   formElRef: Ref<FormActionType>;
 }
-export async function useAutoFocus({ getSchema, getProps, formElRef, isInitedDefault }: UseAutoFocusContext) {
+export async function useAutoFocus({ getSchema, getProps, formElRef, isInitDefault }: UseAutoFocusContext) {
   watchEffect(async () => {
-    if (unref(isInitedDefault) || !unref(getProps).autoFocusFirstItem) {
+    if (unref(isInitDefault) || !unref(getProps).autoFocusFirstItem) {
       return;
     }
     await nextTick();
