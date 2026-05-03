@@ -26,7 +26,7 @@
     </template>
 
     <div class="upload-modal-toolbar">
-      <Alert :message="getHelpText" type="info" banner class="upload-modal-toolbar__text" />
+      <Alert :title="getHelpText" type="info" banner class="upload-modal-toolbar__text" />
       <Upload
         :accept="getStringAccept"
         :multiple="multiple"
@@ -57,7 +57,7 @@
    * @author ThinkGem
    */
   import { ref, unref, computed } from 'vue';
-  import { Upload, Alert } from 'ant-design-vue';
+  import { Upload, Alert } from 'antdv-next';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   // import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import FileList from './FileList.vue';

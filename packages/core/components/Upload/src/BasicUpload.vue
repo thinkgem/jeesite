@@ -51,7 +51,7 @@
   import UploadModal from './UploadModal.vue';
   import UploadPreviewModal from './UploadPreviewModal.vue';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { Tooltip, Space } from 'ant-design-vue';
+  import { Tooltip, Space } from 'antdv-next';
   import { useModal } from '@jeesite/core/components/Modal';
   import { uploadContainerProps } from './props';
   import { omit } from 'lodash-es';
