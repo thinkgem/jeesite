@@ -9,11 +9,11 @@
       <Tooltip v-if="action.tooltip" v-bind="getTooltip(action.tooltip)">
         <PopConfirmButton v-bind="action">
           <Icon
+            v-if="action.icon"
             :icon="action.icon"
             :size="action.iconSize"
             :class="{ 'mr-1': !!action.label }"
             :title="action.iconTitle"
-            v-if="action.icon"
           />
           <template v-if="action.label">
             <span :title="action.iconTitle">{{ action.label }}</span>
@@ -38,6 +38,8 @@
       v-if="props.dropDownActions && getDropdownList.length > 0"
       :trigger="['hover']"
       :dropMenuList="getDropdownList"
+      :classes="{ container: `${prefixCls}__popover-content` }"
+      :key="1"
       popconfirm
     >
       <slot name="more"></slot>
@@ -49,8 +51,8 @@
 </template>
 <script lang="ts">
   import { defineComponent, PropType, computed, toRaw, unref } from 'vue';
-  import { MoreOutlined } from '@ant-design/icons-vue';
-  import { Divider, Tooltip, TooltipProps } from 'ant-design-vue';
+  import { MoreOutlined } from '@antdv-next/icons';
+  import { Divider, Tooltip, TooltipProps } from 'antdv-next';
   import Icon from '@jeesite/core/components/Icon';
   import { ActionItem, TableActionType } from '@jeesite/core/components/Table';
   import { PopConfirmButton } from '@jeesite/core/components/Button';
@@ -177,6 +179,19 @@
   .@{prefix-cls} {
     display: flex;
     align-items: center;
+
+    &__popover-content.ant-popover-container {
+      padding: 5px;
+
+      .ant-popover-content {
+        box-shadow: none;
+
+        .ant-menu.ant-menu-horizontal {
+          line-height: 34px;
+          border: 0;
+        }
+      }
+    }
 
     .action-divider {
       display: table;
