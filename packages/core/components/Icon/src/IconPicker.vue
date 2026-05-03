@@ -4,60 +4,61 @@
  * @author ThinkGem
 -->
 <template>
-  <a-input
-    disabled
-    :style="{ width }"
-    :placeholder="t('component.icon.placeholder')"
-    :class="prefixCls"
-    v-model:value="currentSelect"
-  >
-    <template #addonAfter>
-      <a-popover placement="bottom" trigger="click" v-model="open" :overlayClassName="`${prefixCls}-popover`">
-        <template #title>
-          <div class="flex justify-between">
-            <a-input :placeholder="t('component.icon.search')" @change="debounceHandleSearchChange" allowClear />
-          </div>
-        </template>
-        <template #content>
-          <div v-if="getPaginationList.length">
-            <ul class="content flex flex-wrap flex-content-start">
-              <li
-                v-for="icon in getPaginationList"
-                :key="icon"
-                :class="currentSelect === icon ? 'active' : ''"
-                class="flex cursor-pointer items-center justify-center"
-                @click="handleClick(icon)"
-                :title="icon"
-              >
-                <Icon :icon="icon" />
-              </li>
-            </ul>
-            <div class="flex items-center justify-center py-2" v-if="getTotal >= pageSize">
-              <a-pagination
-                size="small"
-                :pageSize="pageSize"
-                :total="getTotal"
-                :showLessItems="true"
-                :showSizeChanger="false"
-                @change="handlePageChange"
-              />
+  <div :class="prefixCls">
+    <SpaceCompact block>
+      <a-input
+        :placeholder="t('component.icon.placeholder')"
+        :class="`${prefixCls}-input`"
+        v-model:value="currentSelect"
+      />
+      <SpaceAddon>
+        <Popover placement="bottom" trigger="click" v-model="open" :classes="{ container: `${prefixCls}-popover` }">
+          <template #title>
+            <div class="flex justify-between">
+              <a-input :placeholder="t('component.icon.search')" @change="debounceHandleSearchChange" allowClear />
             </div>
-          </div>
-          <template v-else
-            ><div class="p-5"><a-empty /></div>
           </template>
-        </template>
-        <span class="flex cursor-pointer items-center px-2 py-1">
-          <Icon :icon="currentSelect || 'ion:apps-outline'" />
-        </span>
-      </a-popover>
-    </template>
-  </a-input>
+          <template #content>
+            <div v-if="getPaginationList.length">
+              <ul class="content flex flex-wrap flex-content-start">
+                <li
+                  v-for="icon in getPaginationList"
+                  :key="icon"
+                  :class="currentSelect === icon ? 'active' : ''"
+                  class="flex cursor-pointer items-center justify-center"
+                  @click="handleClick(icon)"
+                  :title="icon"
+                >
+                  <Icon :icon="icon" />
+                </li>
+              </ul>
+              <div class="flex items-center justify-center py-2" v-if="getTotal >= pageSize">
+                <Pagination
+                  size="small"
+                  :pageSize="pageSize"
+                  :total="getTotal"
+                  :showLessItems="true"
+                  :showSizeChanger="false"
+                  @change="handlePageChange"
+                />
+              </div>
+            </div>
+            <template v-else>
+              <div class="p-5"><Empty /></div>
+            </template>
+          </template>
+          <span class="flex cursor-pointer items-center px-1 py-1">
+            <Icon :icon="currentSelect || 'ion:apps-outline'" />
+          </span>
+        </Popover>
+      </SpaceAddon>
+    </SpaceCompact>
+  </div>
 </template>
 <script lang="ts" setup>
   import { ref, watchEffect, watch, unref } from 'vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { Popover, Pagination, Empty } from 'ant-design-vue';
+  import { Popover, Pagination, Empty, SpaceCompact, SpaceAddon } from 'antdv-next';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { usePagination } from '@jeesite/core/hooks/web/usePagination';
   import { useDebounceFn } from '@vueuse/core';
@@ -67,9 +68,7 @@
   import IconData from './IconData';
   import Icon from './Icon.vue';
 
-  const APopover = Popover;
-  const APagination = Pagination;
-  const AEmpty = Empty;
+  // 直接使用导入的组件，Vue 3 script setup 会自动注册
 
   function getIcons() {
     const data = IconData as any;
@@ -150,6 +149,12 @@
   @prefix-cls: ~'jeesite-icon-picker';
 
   .@{prefix-cls} {
+    width: 100%;
+
+    &-input {
+      padding-right: 3px;
+    }
+
     .ant-input-group-addon {
       padding: 0;
 
