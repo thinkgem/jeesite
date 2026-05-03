@@ -6,11 +6,13 @@ const key = Symbol('basic-table');
 
 type Instance = TableActionType & {
   wrapRef: Ref<Nullable<HTMLElement>>;
+  getProps: ComputedRef<Recordable>;
   getBindValues: ComputedRef<Recordable>;
 };
 
-export type TableInstance = Omit<Instance, 'getBindValues'> & {
-  getBindValues: ComputedRef<BasicTableProps>;
+export type TableInstance = Omit<Instance, 'getProps' | 'getBindValues'> & {
+  getProps: ComputedRef<BasicTableProps>;
+  getBindValues: ComputedRef<Recordable>;
 };
 
 export function createTableContext(instance: Instance) {
