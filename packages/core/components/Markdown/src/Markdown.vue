@@ -3,7 +3,7 @@
 </template>
 <script lang="ts" setup>
   import './adapter.js';
-  import type { Ref } from 'vue';
+  import { Ref, shallowRef } from 'vue';
   import { ref, unref, nextTick, computed, watch, onBeforeUnmount, onDeactivated, useAttrs } from 'vue';
   import Vditor from 'vditor';
   import 'vditor/dist/index.css';
@@ -37,7 +37,7 @@
 
   const attrs = useAttrs();
 
-  const wrapRef = ref(null);
+  const wrapRef = shallowRef(null);
   const vditorRef = ref(null) as Ref<Vditor | null>;
   const initedRef = ref(false);
 
