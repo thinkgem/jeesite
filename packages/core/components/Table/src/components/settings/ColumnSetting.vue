@@ -12,7 +12,7 @@
       placement="bottomLeft"
       trigger="click"
       @open-change="handleOpenChange"
-      :overlayClassName="`${prefixCls}__cloumn-list`"
+      :classes="{ container: `${prefixCls}__cloumn-list` }"
       :getPopupContainer="getPopupContainer"
     >
       <template #title>
@@ -94,10 +94,20 @@
   </Tooltip>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, reactive, toRefs, watchEffect, nextTick, unref, computed, watch } from 'vue';
-  import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue';
-  import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface';
-  import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue';
+  import {
+    defineComponent,
+    ref,
+    reactive,
+    toRefs,
+    watchEffect,
+    nextTick,
+    unref,
+    computed,
+    watch,
+    shallowRef,
+  } from 'vue';
+  import { Tooltip, Popover, Checkbox, CheckboxGroup, Divider } from 'antdv-next';
+  import { SettingOutlined, DragOutlined } from '@antdv-next/icons';
   import { Icon } from '@jeesite/core/components/Icon';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -118,12 +128,13 @@
     checkSelect: boolean;
     checkOptions: Options[];
     checkedList: string[];
+    fixedList: any[];
   }
 
   interface Options {
     label: string;
     value: string;
-    fixed?: boolean | 'left' | 'right';
+    fixed?: boolean | 'left' | 'right' | 'start' | 'end';
   }
 
   export default defineComponent({
@@ -133,7 +144,7 @@
       Popover,
       Tooltip,
       Checkbox,
-      CheckboxGroup: Checkbox.Group,
+      CheckboxGroup,
       DragOutlined,
       ScrollContainer,
       Divider,
@@ -151,7 +162,7 @@
         table.getDefaultRowSelection && table.getDefaultRowSelection(),
         'selectedRowKeys',
       );
-      const columnListRef = ref<ComponentRef>(null);
+      const columnListRef = shallowRef<InstanceType<typeof CheckboxGroup>>();
       const cacheCheckIndex = ref<boolean>(true);
       const cacheCheckSelect = ref<boolean>(false);
       const cacheCheckList = ref<string[]>([]);
@@ -164,6 +175,7 @@
         checkSelect: false,
         checkOptions: [],
         checkedList: [],
+        fixedList: [],
       });
 
       watchEffect(() => {
@@ -175,13 +187,13 @@
         }, 500);
       });
 
-      watch([() => unref(table?.getBindValues).showIndexColumn, () => unref(table?.getBindValues).rowSelection], () => {
-        const values = unref(table?.getBindValues) || {};
-        state.checkIndex = !!values.showIndexColumn;
-        state.checkSelect = !!values.rowSelection;
+      watch([() => unref(table?.getProps)?.showIndexColumn, () => unref(table?.getProps)?.rowSelection], () => {
+        const values = unref(table?.getProps) || {};
+        state.checkIndex = !!values?.showIndexColumn;
+        state.checkSelect = !!values?.rowSelection;
       });
 
-      const isTreeTable = computed(() => unref(table?.getBindValues).isTreeTable);
+      const isTreeTable = computed(() => unref(table?.getProps)?.isTreeTable);
 
       function getColumns() {
         const ret: Options[] = [];
@@ -196,7 +208,7 @@
       }
 
       function init() {
-        const values = unref(table?.getBindValues) || {};
+        const values = unref(table?.getProps) || {};
         cacheCheckIndex.value = !!values.showIndexColumn;
         cacheCheckSelect.value = !!values.rowSelection;
 
@@ -228,11 +240,12 @@
           });
         }
         state.checkedList = checkList;
+        state.fixedList = [];
         state.isInit = true;
       }
 
       // checkAll change
-      function onCheckAllChange(e: CheckboxChangeEvent) {
+      function onCheckAllChange(e: any) {
         const checkList = state.checkOptions.map((item) => item.value);
         if (e.target.checked) {
           state.checkedList = checkList;
@@ -255,9 +268,11 @@
         const len = state.checkOptions.length;
         state.checkAll = checkedList.length === len && len > 0;
         const sortList = state.checkOptions.map((item) => item.value);
-        checkedList.sort((prev, next) => {
-          return sortList.indexOf(prev) - sortList.indexOf(next);
-        });
+        if (Array.isArray(checkedList)) {
+          checkedList.sort((prev, next) => {
+            return sortList.indexOf(prev) - sortList.indexOf(next);
+          });
+        }
         setColumns(checkedList);
       }
 
@@ -270,7 +285,8 @@
         });
         state.checkOptions = cloneDeep(unref(cacheCheckOptions));
         state.checkedList = cloneDeep(unref(cacheCheckList));
-        setColumns(table.getCacheColumns());
+        state.fixedList = [];
+        setColumns(table.getCacheColumns(), true);
         // sortable.sort(sortableOrder);
       }
 
@@ -321,14 +337,14 @@
       }
 
       // Control whether the serial number column is displayed
-      function handleIndexCheckChange(e: CheckboxChangeEvent) {
+      function handleIndexCheckChange(e: any) {
         table.setProps({
           showIndexColumn: e.target.checked,
         });
       }
 
       // Control whether the check box is displayed
-      function handleSelectCheckChange(e: CheckboxChangeEvent) {
+      function handleSelectCheckChange(e: any) {
         table.setProps({
           rowSelection: e.target.checked ? defaultRowSelection : undefined,
         });
@@ -348,11 +364,19 @@
         if (isFixed && !item.width) {
           item.width = 100;
         }
+
+        const fixedIndex = state.fixedList.findIndex((col) => col.dataIndex_ === item.dataIndex_);
+        if (fixedIndex !== -1) {
+          state.fixedList[fixedIndex] = item;
+        } else {
+          state.fixedList.push(item);
+        }
+
         // table.setCacheColumnsByField?.(item.dataIndex_ as string, { fixed: isFixed });
         setColumns(columns);
       }
 
-      function setColumns(columns: BasicColumn[] | string[]) {
+      function setColumns(columns: BasicColumn[] | string[], reset = false) {
         table.setColumns(columns);
 
         const data: ColumnChangeParam[] = state.checkOptions.map((col) => {
@@ -446,11 +470,12 @@
         height: 1em !important;
       }
 
-      .ant-popover-inner-content {
+      .ant-popover-content {
         // max-height: 360px;
         padding-right: 0;
         padding-left: 0;
         // overflow: auto;
+        box-shadow: none;
       }
 
       .ant-checkbox-group {

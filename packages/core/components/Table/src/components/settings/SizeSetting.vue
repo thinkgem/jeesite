@@ -6,7 +6,7 @@
 
     <Dropdown placement="bottom" :trigger="['click']" :getPopupContainer="getPopupContainer">
       <ColumnHeightOutlined />
-      <template #overlay>
+      <template #popupRender>
         <Menu @click="handleTitleClick" selectable v-model:selectedKeys="selectedKeysRef">
           <!-- <MenuItem key="default">
             <span>{{ t('component.table.settingDensDefault') }}</span>
@@ -25,8 +25,8 @@
 <script lang="ts">
   import type { SizeType } from '../../types/table';
   import { defineComponent, ref } from 'vue';
-  import { Tooltip, Dropdown, Menu } from 'ant-design-vue';
-  import { ColumnHeightOutlined } from '@ant-design/icons-vue';
+  import { Tooltip, Dropdown, Menu } from 'antdv-next';
+  import { ColumnHeightOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useTableContext } from '../../hooks/useTableContext';
   import { getPopupContainer } from '@jeesite/core/utils';
