@@ -7,7 +7,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref } from 'vue';
+  import { defineComponent, ref, shallowRef, unref } from 'vue';
   import { WorkBook, WorkSheet, utils, read } from 'xlsx';
 
   import type { ExcelData } from './typing';
@@ -15,7 +15,7 @@
     name: 'ImportExcel',
     emits: ['success', 'error'],
     setup(_, { emit }) {
-      const inputRef = ref<HTMLInputElement | null>(null);
+      const inputRef = shallowRef<HTMLInputElement | null>(null);
       const loadingRef = ref<boolean>(false);
 
       /**
