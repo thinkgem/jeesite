@@ -102,6 +102,7 @@ export const basicProps = {
     default: null,
   },
   ellipsis: propTypes.bool.def(true),
+  columnResizable: propTypes.bool.def(true),
   isCanResizeParent: propTypes.bool.def(false),
   canResize: propTypes.bool.def(false),
   resizeHeightOffset: propTypes.number.def(0),
