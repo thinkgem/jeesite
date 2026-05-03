@@ -1,42 +1,21 @@
-<template>
-  <BasicMenuItem v-if="!menuHasChildren(item) && getShowMenu" v-bind="$props" />
-  <SubMenu
-    v-if="menuHasChildren(item) && getShowMenu"
-    :class="[theme]"
-    :key="`submenu-${item.path}`"
-    popupClassName="app-top-menu-popup"
-  >
-    <template #title>
-      <MenuItemContent v-bind="$props" :item="item" />
-    </template>
-
-    <template v-for="childrenItem in item.children || []" :key="childrenItem.path">
-      <BasicSubMenuItem v-bind="$props" :item="childrenItem" />
-    </template>
-  </SubMenu>
-</template>
-<script lang="ts">
+<script lang="tsx">
   import type { Menu as MenuType } from '@jeesite/core/router/types';
   import { defineComponent, computed } from 'vue';
-  import { Menu } from 'ant-design-vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
+  import { SubMenu, MenuItem } from 'antdv-next';
   import { itemProps } from '../props';
-  import BasicMenuItem from './BasicMenuItem.vue';
+  import { omit } from 'lodash-es';
   import MenuItemContent from './MenuItemContent.vue';
 
   export default defineComponent({
     name: 'BasicSubMenuItem',
-    isSubMenu: true,
-    components: {
-      BasicMenuItem,
-      SubMenu: Menu.SubMenu,
-      MenuItemContent,
-    },
     props: itemProps,
     setup(props) {
-      const { prefixCls } = useDesign('basic-menu-item');
-
       const getShowMenu = computed(() => !props.item.meta?.hideMenu);
+
+      const getMenuItem = computed(() => {
+        return omit(props.item, 'children', 'icon', 'title', 'color', 'extend');
+      });
+
       function menuHasChildren(menuTreeItem: MenuType): boolean {
         return (
           !menuTreeItem.meta?.hideChildrenInMenu &&
@@ -45,11 +24,29 @@
           menuTreeItem.children.length > 0
         );
       }
-      return {
-        prefixCls,
-        menuHasChildren,
-        getShowMenu,
-      };
+
+      function renderMenuItem(item: MenuType, level: number) {
+        if (!getShowMenu.value) return null;
+
+        if (menuHasChildren(item)) {
+          return (
+            <SubMenu key={item.path} name={item.path} popupClassName="app-top-menu-popup" class={[props.theme]}>
+              {{
+                title: () => <MenuItemContent item={item} level={level} isHorizontal={props.isHorizontal} />,
+                default: () => (item.children || []).map((childrenItem) => renderMenuItem(childrenItem, level + 1)),
+              }}
+            </SubMenu>
+          );
+        }
+
+        return (
+          <MenuItem key={item.path} {...getMenuItem.value}>
+            <MenuItemContent item={item} level={level} isHorizontal={props.isHorizontal} />
+          </MenuItem>
+        );
+      }
+
+      return () => renderMenuItem(props.item, props.level || 0);
     },
   });
 </script>
