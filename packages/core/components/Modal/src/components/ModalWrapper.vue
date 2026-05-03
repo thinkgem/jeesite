@@ -6,7 +6,7 @@
   </ScrollContainer>
 </template>
 <script lang="ts">
-  import type { CSSProperties } from 'vue';
+  import { CSSProperties, shallowRef } from 'vue';
   import { defineComponent, computed, ref, watchEffect, unref, watch, onMounted, nextTick, onUnmounted } from 'vue';
   import { useWindowSizeFn } from '@jeesite/core/hooks/event/useWindowSizeFn';
   import { ScrollContainer } from '@jeesite/core/components/Container';
@@ -33,8 +33,8 @@
     props,
     emits: ['height-change', 'ext-height'],
     setup(props, { emit }) {
-      const wrapperRef = ref<ComponentRef>(null);
-      const spinRef = ref<ElRef>(null);
+      const wrapperRef = shallowRef<InstanceType<typeof ScrollContainer>>();
+      const spinRef = shallowRef<ElRef>(null);
       const realHeightRef = ref(0);
       const minRealHeightRef = ref(0);
 
@@ -92,10 +92,8 @@
       });
 
       async function scrollTop() {
-        nextTick(() => {
-          const wrapperRefDom = unref(wrapperRef);
-          if (!wrapperRefDom) return;
-          (wrapperRefDom as any)?.scrollTo?.(0);
+        await nextTick(() => {
+          wrapperRef.value?.scrollTo?.(0);
         });
       }
 

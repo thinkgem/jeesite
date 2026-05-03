@@ -17,7 +17,7 @@
   import { defineComponent, computed } from 'vue';
   import { Icon } from '@jeesite/core/components/Icon';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
   export default defineComponent({

@@ -3,7 +3,7 @@ import { useTimeoutFn } from '@jeesite/core/hooks/core/useTimeout';
 
 export interface UseModalDragMoveContext {
   draggable: Ref<boolean>;
-  destroyOnClose: Ref<boolean | undefined> | undefined;
+  destroyOnHidden: Ref<boolean | undefined> | undefined;
   open: Ref<boolean>;
 }
 
@@ -89,7 +89,7 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
       const draggable = wrap.getAttribute('data-drag');
       if (display !== 'none') {
         // 拖拽位置
-        if (draggable === null || unref(context.destroyOnClose)) {
+        if (draggable === null || unref(context.destroyOnHidden)) {
           drag(wrap);
         }
       }
