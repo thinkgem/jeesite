@@ -52,7 +52,7 @@
   </CollapseForm>
 </template>
 <script lang="ts" setup name="ViewsCmsArticleForm">
-  import { ref, unref, computed, onMounted } from 'vue';
+  import { ref, shallowRef, unref, computed, onMounted } from 'vue';
   import { useEmitter } from '@jeesite/core/store/modules/user';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
@@ -116,11 +116,11 @@
     },
   ]);
 
-  const formBasicRef = ref<InstanceType<typeof FormBasic>>();
-  const formDetailRef = ref<InstanceType<typeof FormDetail>>();
-  const formOtherRef = ref<InstanceType<typeof FormOther>>();
-  const formViewRef = ref<InstanceType<typeof FormView>>();
-  const formExtendRef = ref<InstanceType<typeof FormExtend>>();
+  const formBasicRef = shallowRef<InstanceType<typeof FormBasic>>();
+  const formDetailRef = shallowRef<InstanceType<typeof FormDetail>>();
+  const formOtherRef = shallowRef<InstanceType<typeof FormOther>>();
+  const formViewRef = shallowRef<InstanceType<typeof FormView>>();
+  const formExtendRef = shallowRef<InstanceType<typeof FormExtend>>();
 
   async function resetFields() {
     await formBasicRef.value?.resetFields();
