@@ -1,12 +1,12 @@
 <template>
   <section class="full-loading" :class="{ absolute }" v-show="loading">
-    <Spin v-bind="$attrs" :tip="tip" :size="size" :spinning="loading" />
+    <Spin v-bind="$attrs" :description="tip" :size="size" :spinning="loading" />
   </section>
 </template>
 <script lang="ts">
   import { PropType } from 'vue';
   import { defineComponent } from 'vue';
-  import { Spin } from 'ant-design-vue';
+  import { Spin } from 'antdv-next';
   import { SizeEnum } from '@jeesite/core/enums/sizeEnum';
 
   export default defineComponent({
