@@ -8,7 +8,7 @@
   </MenuItem>
 </template>
 <script lang="ts">
-  import { Menu } from 'ant-design-vue';
+  import { Menu } from 'antdv-next';
 
   import { computed, defineComponent, getCurrentInstance } from 'vue';
 
