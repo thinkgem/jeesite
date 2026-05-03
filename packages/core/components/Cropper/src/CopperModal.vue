@@ -113,7 +113,7 @@
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
   import CropperImage from './Cropper.vue';
-  import { Space, Upload, Avatar, Tooltip } from 'ant-design-vue';
+  import { Space, Upload, Avatar, Tooltip } from 'antdv-next';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   // import { dataURLtoBlob } from '@jeesite/core/utils/file/base64Conver';
