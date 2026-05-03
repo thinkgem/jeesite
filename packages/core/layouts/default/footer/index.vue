@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, unref, ref } from 'vue';
-  import { Layout } from 'ant-design-vue';
+  import { computed, defineComponent, unref, ref, shallowRef } from 'vue';
+  import { LayoutFooter } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
 
   import { DOC_URL, GITHUB_URL, SITE_URL } from '@jeesite/core/settings/siteSetting';
@@ -27,14 +27,14 @@
 
   export default defineComponent({
     name: 'LayoutFooter',
-    components: { Footer: Layout.Footer, Icon },
+    components: { Footer: LayoutFooter, Icon },
     setup() {
       const { t } = useI18n();
       const { getShowFooter } = useRootSetting();
       const { currentRoute } = useRouter();
       const { prefixCls } = useDesign('layout-footer');
 
-      const footerRef = ref<ComponentRef>(null);
+      const footerRef = shallowRef<InstanceType<typeof LayoutFooter>>();
       const { setFooterHeight } = useLayoutHeight();
 
       const getShowLayoutFooter = computed(() => {
