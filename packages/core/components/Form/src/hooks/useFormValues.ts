@@ -43,8 +43,8 @@ export function useFormValues({ defaultValueRef, getSchema, formModel, getProps 
       if (isString(value)) {
         value = value.trim();
       }
-      // 表单编码类型
-      if (enctype === 'json') {
+      // 表单编码类型 - 对于嵌套字段名（包含点号），始终使用 set 函数
+      if (enctype === 'json' || key.includes('.')) {
         set(res, key, value);
       } else if (enctype === 'form-data') {
         res[key] = value;
