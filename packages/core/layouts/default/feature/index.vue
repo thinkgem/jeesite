@@ -1,6 +1,6 @@
 <script lang="ts">
   import { defineComponent, computed, unref } from 'vue';
-  import { FloatButton } from 'ant-design-vue';
+  import { BackTop } from 'antdv-next';
 
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useHeaderSetting } from '@jeesite/core/hooks/setting/useHeaderSetting';
@@ -12,10 +12,11 @@
 
   import SessionTimeoutLogin from '@jeesite/core/layouts/views/login/SessionTimeoutLogin.vue';
   import { useFullContent } from '@jeesite/core/hooks/web/useFullContent';
+
   export default defineComponent({
     name: 'LayoutFeatures',
     components: {
-      ABackTop: FloatButton.BackTop,
+      ABackTop: BackTop,
       LayoutLockPage: createAsyncComponent(() => import('@jeesite/core/layouts/views/lock/index.vue')),
       SettingDrawer: createAsyncComponent(() => import('@jeesite/core/layouts/default/setting/index.vue')),
       SessionTimeoutLogin,
