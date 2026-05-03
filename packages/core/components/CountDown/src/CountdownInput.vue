@@ -1,6 +1,6 @@
 <template>
   <a-input v-bind="$attrs" :class="prefixCls" :size="size" v-model:value="state" autocomplete="off">
-    <template #addonAfter>
+    <template #suffix>
       <CountButton
         type="link"
         :size="size === 'large' ? 'middle' : 'small'"
@@ -9,7 +9,7 @@
         :beforeStartFunc="sendCodeApi"
       />
     </template>
-    <template #[item]="data" v-for="item in Object.keys($slots).filter((k) => k !== 'addonAfter')">
+    <template #[item]="data" v-for="item in Object.keys($slots).filter((k) => k !== 'suffix')">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
   </a-input>
