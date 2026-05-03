@@ -14,7 +14,7 @@
       <ScrollContainer ref="chatListRef" class="jeesite-cms-ai p-2 bg-white rounded-2 h-full">
         <Menu class="jeesite-cms-ai-menu" v-model:selectedKeys="conversationIds" :disabled="loading">
           <template v-for="(item, index) in chatList" :key="item.id">
-            <Menu.Item @click="handleSelect(item)">
+            <MenuItem @click="handleSelect(item)">
               <div class="flex justify-end">
                 <span v-if="item.edit" class="flex-1 mr-2">
                   <a-input
@@ -37,7 +37,7 @@
                   </Popconfirm>
                 </span>
               </div>
-            </Menu.Item>
+            </MenuItem>
           </template>
         </Menu>
         <div class="h-10"></div>
@@ -96,24 +96,18 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsCmsChatIndex">
-import {nextTick, onMounted, ref, shallowRef} from 'vue';
-import {Menu, Popconfirm} from 'ant-design-vue';
-import {Icon} from '@jeesite/core/components/Icon';
-import {useI18n} from '@jeesite/core/hooks/web/useI18n';
-import {useMessage} from '@jeesite/core/hooks/web/useMessage';
-import {useUserStore} from '@jeesite/core/store/modules/user';
-import {PageWrapper} from '@jeesite/core/components/Page';
-import {ScrollContainer} from '@jeesite/core/components/Container';
-import {
-  cmsChatDelete,
-  cmsChatList,
-  cmsChatMessage,
-  cmsChatSave,
-  cmsChatStream
-} from '@jeesite/cms/api/cms/chat';
-import {ChatMessage} from '@jeesite/cms';
+  import { nextTick, onMounted, ref, shallowRef } from 'vue';
+  import { Menu, MenuItem, Popconfirm } from 'antdv-next';
+  import { Icon } from '@jeesite/core/components/Icon';
+  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
+  import { useUserStore } from '@jeesite/core/store/modules/user';
+  import { PageWrapper } from '@jeesite/core/components/Page';
+  import { ScrollContainer } from '@jeesite/core/components/Container';
+  import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
+  import { ChatMessage } from '@jeesite/cms';
 
-const { t } = useI18n('cms.chat');
+  const { t } = useI18n('cms.chat');
   const { showMessage } = useMessage();
   const conversationIds = ref<string[]>([]);
   const conversationTitle = ref<string>('');
