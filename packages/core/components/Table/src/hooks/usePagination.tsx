@@ -1,7 +1,7 @@
 import type { PaginationProps } from '../types/pagination';
 import type { BasicTableProps } from '../types/table';
 import { computed, unref, ref, ComputedRef, watch } from 'vue';
-// import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue';
+// import { LeftOutlined, RightOutlined } from '@antdv-next/icons';
 import { isBoolean } from '@jeesite/core/utils/is';
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../const';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
