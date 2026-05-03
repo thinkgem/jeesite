@@ -21,7 +21,7 @@
 
 <script lang="ts">
   import { defineComponent, computed, ref, watch, unref, watchEffect } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { zxcvbn } from '@zxcvbn-ts/core';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
