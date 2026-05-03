@@ -15,13 +15,9 @@ import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, DRAG_COLUMN_FLAG,
 import { Icon } from '@jeesite/core/components/Icon';
 import { useDebounceFn } from '@vueuse/core';
 
-function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
+function handleItem(item: BasicColumn, ellipsis: boolean, columnResizable: boolean, dictTypes: Set<string>) {
   const { key, dataIndex, children } = item;
   item.align = item.align || DEFAULT_ALIGN;
-  // 未设置宽度的列，不进行拖拽调整列宽
-  if (item.width) {
-    item.resizable = item.resizable || true;
-  }
   if (ellipsis) {
     if (!key) {
       item.key = dataIndex as any;
@@ -32,6 +28,9 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
       });
     }
   }
+  if (columnResizable && item.resizable == undefined) {
+    item.resizable = true;
+  }
   if (dataIndex && isString(dataIndex) && dataIndex.indexOf('.') != -1) {
     item.dataIndex = dataIndex.split('.');
     item.dataIndex_ = dataIndex;
@@ -41,7 +40,7 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
     item.dataIndex_ = dataIndex?.toString() || '';
   }
   if (children && children.length) {
-    handleChildren(children, !!ellipsis, dictTypes);
+    handleChildren(children, ellipsis, columnResizable, dictTypes);
   }
   if (item.filterDictType) {
     const { getDictList } = useDict();
@@ -65,12 +64,17 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
   }
 }
 
-function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean, dictTypes: Set<string>) {
+function handleChildren(
+  children: BasicColumn[] | undefined,
+  ellipsis: boolean,
+  columnResizable: boolean,
+  dictTypes: Set<string>,
+) {
   if (!children) return;
   children.forEach((item) => {
     const { children } = item;
-    handleItem(item, ellipsis, dictTypes);
-    handleChildren(children, ellipsis, dictTypes);
+    handleItem(item, ellipsis, columnResizable, dictTypes);
+    handleChildren(children, ellipsis, columnResizable, dictTypes);
   });
 }
 
@@ -234,7 +238,7 @@ export function useColumns(
       return;
     }
 
-    const { ellipsis } = unref(propsRef);
+    const { ellipsis, columnResizable } = unref(propsRef);
 
     dictTypesRef.value = new Set<string>();
     columns.forEach((item) => {
@@ -243,6 +247,7 @@ export function useColumns(
         item,
         // Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
         Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && item.dataIndex !== 'actions', // 自定义渲染列应和非自定义的省略条件一样
+        !!columnResizable,
         dictTypesRef.value,
       );
     });
@@ -259,7 +264,7 @@ export function useColumns(
         .filter((column) => {
           return hasPermission(column.auth) && isIfShow(column);
         })
-        .map((column) => {
+        .map((column, index) => {
           if (column.children) {
             buildColumns(column.children);
           }
@@ -282,7 +287,27 @@ export function useColumns(
           if ((edit || editRow) && !isDefaultAction) {
             column.customRender = renderEditCell(column);
           }
-          return reactive(column);
+
+          // 兼容 customRender 调用
+          if (column.customRender) {
+            column.render = (value: any, record: Recordable, index: number): VueNode => {
+              return column.customRender?.({ value, text: value, record, index, renderIndex: index, column });
+            };
+          }
+
+          column.onHeaderCell = (data: any) =>
+            ({
+              column: data,
+              onResize: (_event: MouseEvent, { size }: any) => {
+                // column.width = size.width;
+                // data.width = size.width;
+                getViewColumns.value = getViewColumns.value.map((col, colIndex) =>
+                  colIndex === index ? { ...col, width: size.width } : col,
+                );
+              },
+            }) as any;
+
+          return column;
         });
     }
     getViewColumns.value = buildColumns(columns) as unknown as BasicColumn[];
