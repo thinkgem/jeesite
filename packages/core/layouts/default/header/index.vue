@@ -45,7 +45,7 @@
 <script lang="ts">
   import { defineComponent, ref, unref, computed } from 'vue';
   import { propTypes } from '@jeesite/core/utils/propTypes';
-  import { Layout } from 'ant-design-vue';
+  import { LayoutHeader } from 'antdv-next';
   import { AppLogo } from '@jeesite/core/components/Application';
   import { AppSearch } from '@jeesite/core/components/Application';
   import { MenuModeEnum, MenuSplitTyeEnum } from '@jeesite/core/enums/menuEnum';
@@ -74,7 +74,7 @@
   export default defineComponent({
     name: 'LayoutHeader',
     components: {
-      ALayoutHeader: Layout.Header,
+      ALayoutHeader: LayoutHeader,
       AppLogo,
       LayoutTrigger,
       LayoutBreadcrumb,
