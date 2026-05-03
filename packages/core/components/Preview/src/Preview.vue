@@ -18,7 +18,7 @@
   import type { PropType } from 'vue';
   import { defineComponent, computed } from 'vue';
 
-  import { Image } from 'ant-design-vue';
+  import { Image } from 'antdv-next';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { isString } from '@jeesite/core/utils/is';
