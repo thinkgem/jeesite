@@ -8,7 +8,6 @@
     :placeholder="t('sys.login.validCode')"
     autocomplete="off"
   >
-    <!-- addonAfter suffix -->
     <template #suffix>
       <img :src="getValidCodeImg" @click="refreshValidCodeImg" class="cursor-pointer" width="100" />
     </template>
