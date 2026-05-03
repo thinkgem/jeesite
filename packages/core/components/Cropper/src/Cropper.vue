@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts">
-  import type { CSSProperties } from 'vue';
+  import { CSSProperties, shallowRef } from 'vue';
   import { defineComponent, onMounted, ref, unref, computed, onUnmounted } from 'vue';
   import Cropper from 'cropperjs';
   import 'cropperjs/dist/cropper.css';
@@ -57,7 +57,7 @@
     props,
     emits: ['cropend', 'ready', 'cropendError'],
     setup(props, { attrs, emit }) {
-      const imgElRef = ref<ElRef<HTMLImageElement>>();
+      const imgElRef = shallowRef<ElRef<HTMLImageElement>>();
       const cropper = ref<Nullable<Cropper>>();
       const isReady = ref(false);
 
