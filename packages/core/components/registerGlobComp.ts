@@ -1,7 +1,8 @@
 import type { App } from 'vue';
+import { withInstall } from '../utils';
 import { Button } from './Button';
-import { Input } from 'ant-design-vue';
+import { Input } from 'antdv-next';
 
 export function registerGlobComp(app: App) {
-  app.use(Input).use(Button);
+  app.use(Input).use(withInstall(Button));
 }
