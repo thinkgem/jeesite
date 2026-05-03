@@ -33,11 +33,11 @@
 <script lang="ts" setup name="BasicDrawer">
   import type { DrawerInstance, DrawerProps } from './typing';
   import { ref, computed, watch, unref, toRaw, getCurrentInstance, CSSProperties, watchEffect } from 'vue';
-  import { Drawer } from 'ant-design-vue';
+  import { Drawer } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { isFunction, isNumber } from '@jeesite/core/utils/is';
   import { deepMerge } from '@jeesite/core/utils';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import DrawerFooter from './components/DrawerFooter.vue';
   import DrawerHeader from './components/DrawerHeader.vue';
@@ -120,6 +120,18 @@
       let width = Number(values.width);
       if (!isNaN(width)) values.width = width;
     }
+    // 将 width 属性转换为 size 属性以避免警告
+    if (values.width !== undefined) {
+      values.size = values.width;
+      delete values.width;
+    }
+    // 将 maskStyle 属性转换为 styles.mask 以避免警告
+    if (values.maskStyle !== undefined) {
+      values.styles = values.styles || {};
+      values.styles.mask = values.maskStyle;
+      delete values.maskStyle;
+    }
+    delete values['loading'];
     delete values['wrapClassName'];
     return values;
   });
@@ -242,7 +254,7 @@
   @prefix-cls: ~'jeesite-basic-drawer';
   @prefix-cls-detail: ~'jeesite-basic-drawer__detail';
 
-  .ant-drawer .@{prefix-cls} {
+  .jeesite.ant-drawer .@{prefix-cls} {
     overflow: hidden;
 
     .ew-resize {

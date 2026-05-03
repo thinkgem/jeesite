@@ -38,7 +38,7 @@ export const basicProps = {
     type: [Function, Object] as PropType<any>,
     default: null,
   },
-  destroyOnClose: { type: Boolean },
+  destroyOnHidden: { type: Boolean },
   wrapClassName: { type: String },
   // 是否允许拖拽调整抽屉宽度
   widthResize: { type: Boolean, default: true },
