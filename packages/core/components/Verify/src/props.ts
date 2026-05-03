@@ -2,6 +2,7 @@ import type { PropType } from 'vue';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
 const { t } = useI18n();
+
 export const basicProps = {
   value: {
     type: Boolean as PropType<boolean>,

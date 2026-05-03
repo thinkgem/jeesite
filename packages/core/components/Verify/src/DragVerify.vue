@@ -5,7 +5,7 @@
   import { useEventListener } from '@jeesite/core/hooks/event/useEventListener';
   import { basicProps } from './props';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
-  import { CheckOutlined, DoubleRightOutlined } from '@ant-design/icons-vue';
+  import { CheckOutlined, DoubleRightOutlined } from '@antdv-next/icons';
 
   export default defineComponent({
     name: 'BaseDargVerify',
