@@ -1,6 +1,6 @@
 <script lang="tsx">
   import { defineComponent, ref, unref } from 'vue';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import AppSearchModal from './AppSearchModal.vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
