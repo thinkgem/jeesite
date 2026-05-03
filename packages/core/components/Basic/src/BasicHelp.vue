@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { CSSProperties, PropType } from 'vue';
   import { defineComponent, computed, unref } from 'vue';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { getPopupContainer } from '@jeesite/core/utils';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
@@ -75,10 +75,10 @@
       return () => {
         return (
           <Tooltip
-            overlayClassName={`${prefixCls}__wrap`}
+            classes={{ container: `${prefixCls}__wrap` }}
             title={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
             autoAdjustOverflow={true}
-            overlayStyle={unref(getOverlayStyle)}
+            styles={{ container: unref(getOverlayStyle) }}
             placement={props.placement as 'right'}
             getPopupContainer={() => getPopupContainer()}
           >
@@ -110,7 +110,7 @@
     }
   }
 
-  .ant-form-item-label .@{prefix-cls} {
+  .jeesite.ant-form-item-label .@{prefix-cls} {
     vertical-align: baseline;
     margin-left: -4px;
     margin-right: -5px;
