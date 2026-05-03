@@ -28,7 +28,7 @@
   import type { TableSetting, ColumnChangeParam, TableActionType } from '../types/table';
   import type { PropType } from 'vue';
   import { defineComponent } from 'vue';
-  // import { Divider } from 'ant-design-vue';
+  // import { Divider } from 'antdv-next';
   import TableSettingComponent from './settings/index.vue';
   import TableTitle from './TableTitle.vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';

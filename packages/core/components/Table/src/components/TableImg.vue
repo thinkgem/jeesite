@@ -26,7 +26,7 @@
   import type { CSSProperties } from 'vue';
   import { defineComponent, computed } from 'vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { Image, Badge } from 'ant-design-vue';
+  import { Image, Badge } from 'antdv-next';
   import { propTypes } from '@jeesite/core/utils/propTypes';
 
   const props = {

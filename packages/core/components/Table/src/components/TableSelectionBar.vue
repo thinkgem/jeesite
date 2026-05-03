@@ -16,7 +16,7 @@
 
 <script lang="ts" setup name="TableSelectBar">
   import type { TableActionType } from '../types/table';
-  import { Alert as AAlert } from 'ant-design-vue';
+  import { Alert as AAlert } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
