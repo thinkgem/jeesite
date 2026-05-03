@@ -62,7 +62,12 @@
           v-if="selectList && selectList.length > 0"
           :style="`height:${treeHeight}px`"
         >
-          <Tag v-for="(item, index) in selectList" :key="item[props.config.itemCode]" color="processing">
+          <Tag
+            v-for="(item, index) in selectList"
+            :key="item[props.config.itemCode]"
+            color="processing"
+            variant="outlined"
+          >
             <span
               :title="
                 item[props.config.itemName] +
@@ -81,7 +86,7 @@
 </template>
 <script lang="ts" setup>
   import { defineComponent, ref, CSSProperties, computed, shallowRef } from 'vue';
-  import { Row, Col, Tag } from 'ant-design-vue';
+  import { Row, Col, Tag } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { BasicTree } from '@jeesite/core/components/Tree';
   import { Icon } from '@jeesite/core/components/Icon';

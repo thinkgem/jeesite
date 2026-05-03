@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup name="JeeSiteListSelect">
   import { ref, unref, computed, watch, onMounted, shallowRef, type PropType } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
 
