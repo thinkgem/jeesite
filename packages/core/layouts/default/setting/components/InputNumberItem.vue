@@ -7,7 +7,7 @@
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
 
-  import { InputNumber } from 'ant-design-vue';
+  import { InputNumber } from 'antdv-next';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { baseHandler } from '../handler';
   import { HandlerEnum } from '../enum';

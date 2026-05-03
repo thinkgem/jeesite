@@ -21,7 +21,7 @@
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
 
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import { menuTypeList } from '../enum';

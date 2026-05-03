@@ -14,7 +14,7 @@
 <script lang="ts">
   import { defineComponent, PropType, computed } from 'vue';
 
-  import { Select } from 'ant-design-vue';
+  import { Select } from 'antdv-next';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { baseHandler } from '../handler';
   import { HandlerEnum } from '../enum';

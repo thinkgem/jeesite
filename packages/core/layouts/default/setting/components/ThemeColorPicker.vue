@@ -18,7 +18,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
-  import { CheckOutlined } from '@ant-design/icons-vue';
+  import { CheckOutlined } from '@antdv-next/icons';
 
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
@@ -75,7 +75,7 @@
       }
 
       &--active {
-        border: 1px solid fade(@primary-color, 90);
+        border: 1px solid lighten(@primary-color, 10%);
 
         .anticon {
           vertical-align: 1px;

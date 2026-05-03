@@ -16,7 +16,7 @@
 <script lang="ts">
   import { defineComponent, PropType, computed } from 'vue';
 
-  import { Switch } from 'ant-design-vue';
+  import { Switch } from 'antdv-next';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { BasicHelp } from '@jeesite/core/components/Basic';

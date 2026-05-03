@@ -19,7 +19,7 @@
 <script lang="ts">
   import { defineComponent, unref } from 'vue';
 
-  import { CopyOutlined, RedoOutlined } from '@ant-design/icons-vue';
+  import { CopyOutlined, RedoOutlined } from '@antdv-next/icons';
 
   import { useAppStore } from '@jeesite/core/store/modules/app';
   // import { usePermissionStore } from '@jeesite/core/store/modules/permission';
