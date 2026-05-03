@@ -4,9 +4,8 @@
  * @description 树结构数据操作工具
  * @author Vben、ThinkGem
  */
-import type { InsertNodeParams, Keys, FieldNames } from './typing';
+import type { InsertNodeParams, Keys, FieldNames, TreeDataItem } from './typing';
 import type { Ref, ComputedRef } from 'vue';
-import type { TreeDataItem } from 'ant-design-vue/es/tree';
 
 import { cloneDeep } from 'lodash-es';
 import { unref } from 'vue';
@@ -18,7 +17,7 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const keys: string[] = [];
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return keys;
+    if (!childrenField || !keyField || !treeData) return keys;
 
     for (let index = 0; index < treeData.length; index++) {
       const node = treeData[index];
@@ -36,7 +35,7 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const keys: string[] = [];
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return keys;
+    if (!childrenField || !keyField || !treeData) return keys;
     for (let index = 0; index < treeData.length; index++) {
       const node = treeData[index];
       const children = node[childrenField];
@@ -61,7 +60,7 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const keys: Keys = [];
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return keys;
+    if (!childrenField || !keyField || !treeData) return keys;
     for (let index = 0; index < treeData.length; index++) {
       const node = treeData[index];
       const children = node[childrenField];
@@ -85,7 +84,7 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
 
-    if (!childrenField || !keyField) return;
+    if (!childrenField || !keyField || !treeData) return;
 
     for (let index = 0; index < treeData.length; index++) {
       const element: any = treeData[index];
@@ -179,7 +178,7 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
     if (!key) return;
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);
-    if (!childrenField || !keyField) return;
+    if (!childrenField || !keyField || !treeData) return;
 
     for (let index = 0; index < treeData.length; index++) {
       const element: any = treeData[index];

@@ -1,5 +1,7 @@
-import type { TreeDataItem } from 'ant-design-vue/es/tree';
+import type { TreeSelectProps } from 'antdv-next';
 import { ContextMenuItem } from '@jeesite/core/hooks/web/useContextMenu';
+
+export type TreeDataItem = NonNullable<TreeSelectProps['treeData']>[number];
 
 export interface TreeActionItem {
   render: (record: Recordable) => any;

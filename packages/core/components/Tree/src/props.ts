@@ -1,7 +1,6 @@
 import type { PropType } from 'vue';
-import type { FieldNames, TreeActionItem, Keys, CheckKeys, ContextMenuOptions, TreeItem } from './typing';
+import type { FieldNames, TreeActionItem, Keys, CheckKeys, ContextMenuOptions, TreeItem, TreeDataItem } from './typing';
 import type { ContextMenuItem } from '@jeesite/core/hooks/web/useContextMenu';
-import type { TreeDataItem } from 'ant-design-vue/es/tree';
 import { propTypes } from '@jeesite/core/utils/propTypes';
 
 export const basicProps = {
