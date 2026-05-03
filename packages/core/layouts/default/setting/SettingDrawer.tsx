@@ -1,6 +1,6 @@
 import { defineComponent, computed, unref } from 'vue';
 import { BasicDrawer } from '@jeesite/core/components/Drawer';
-import { Divider } from 'ant-design-vue';
+import { Divider } from 'antdv-next';
 import { TypePicker, ThemeColorPicker, SettingFooter, SwitchItem, SelectItem, InputNumberItem } from './components';
 
 import { AppDarkModeToggle } from '@jeesite/core/components/Application';
@@ -211,7 +211,7 @@ export default defineComponent({
             min={0}
             max={99999}
             event={HandlerEnum.LOCK_TIME}
-            defaultValue={unref(getLockTime)}
+            value={unref(getLockTime)}
             formatter={(value: string) => {
               return parseInt(value) === 0
                 ? `0(${t('layout.setting.notAutoScreenLock')})`
@@ -232,7 +232,7 @@ export default defineComponent({
             step={10}
             event={HandlerEnum.MENU_WIDTH}
             disabled={!unref(getShowMenuRef)}
-            defaultValue={unref(getMenuWidth)}
+            value={unref(getMenuWidth)}
             formatter={(value: string) => `${parseInt(value)}px`}
           />
 
@@ -249,7 +249,6 @@ export default defineComponent({
             def={unref(getShowQuick)}
             disabled={!unref(getShowMultipleTab)}
           />
-
           <SwitchItem
             title={t('layout.setting.tabsFoldBtn')}
             event={HandlerEnum.TABS_SHOW_FOLD}

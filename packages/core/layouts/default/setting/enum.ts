@@ -35,7 +35,6 @@ export enum HandlerEnum {
   HEADER_SHOW,
   HEADER_THEME,
   HEADER_FIXED,
-
   HEADER_SEARCH,
 
   TABS_SHOW,
