@@ -4,7 +4,7 @@
  * @author ThinkGem
  */
 import 'virtual:uno.css';
-import 'ant-design-vue/dist/reset.css';
+import 'antdv-next/dist/reset.css';
 import '@jeesite/core/design/index.less';
 
 import App from './App.vue';
