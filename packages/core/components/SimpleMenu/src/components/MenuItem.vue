@@ -24,7 +24,7 @@
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useMenuItem } from './useMenu';
-  import { Badge, Tooltip } from 'ant-design-vue';
+  import { Badge, Tooltip } from 'antdv-next';
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
   import { useUserStore } from '@jeesite/core/store/modules/user';
 

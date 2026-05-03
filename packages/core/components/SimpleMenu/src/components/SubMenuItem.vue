@@ -14,7 +14,7 @@
 
     <Popover
       placement="right"
-      :overlayClassName="`${prefixCls}-menu-popover`"
+      :classes="{ container: `${prefixCls}-menu-popover` }"
       v-else
       :open="getIsOpend"
       @open-change="handleOpenChange"
@@ -71,7 +71,7 @@
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
   import { CollapseTransition } from '@jeesite/core/components/Transition';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { Popover } from 'ant-design-vue';
+  import { Popover } from 'antdv-next';
   import { isBoolean, isObject } from '@jeesite/core/utils/is';
   import { mitt } from '@jeesite/core/utils/mitt';
 

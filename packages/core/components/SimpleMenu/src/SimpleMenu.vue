@@ -132,7 +132,7 @@
         }
       }
 
-      async function handleSelect(key: string, item: any) {
+      async function handleSelect(key: string) {
         if (isUrl(key)) {
           openWindow(key);
           return;
@@ -142,7 +142,7 @@
           const flag = await beforeClickFn(key);
           if (!flag) return;
         }
-        emit('menuClick', key, item);
+        emit('menuClick', key);
 
         isClickGo.value = true;
 
