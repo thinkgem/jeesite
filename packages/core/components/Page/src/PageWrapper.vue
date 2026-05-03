@@ -5,26 +5,28 @@
 -->
 <template>
   <div :class="getClass" ref="wrapperRef">
-    <PageHeader ref="headerRef" v-if="getShowHeader" v-bind="omit($attrs, 'class')" :ghost="ghost" :title="title">
-      <template #title v-if="$slots.headerTitle">
-        <slot name="headerTitle"></slot>
-      </template>
-      <template #subTitle v-if="$slots.headerSubTitle">
-        <slot name="headerSubTitle"></slot>
-      </template>
-      <template #default>
+    <div ref="headerRef" v-if="getShowHeader" :class="['page-header', { 'page-header-ghost': ghost }]">
+      <div class="page-header-heading">
+        <div v-if="$slots.headerTitle" class="page-header-heading-title">
+          <slot name="headerTitle"></slot>
+        </div>
+        <div v-else-if="title" class="page-header-heading-title">
+          {{ title }}
+        </div>
+        <div v-if="$slots.headerSubTitle" class="page-header-heading-sub-title">
+          <slot name="headerSubTitle"></slot>
+        </div>
+      </div>
+      <div v-if="content || $slots.headerContent" class="page-header-content">
         <template v-if="content">
           {{ content }}
         </template>
-        <slot name="headerContent" v-else></slot>
-      </template>
-      <template #[item]="data" v-for="item in getHeaderSlots">
-        <slot :name="item" v-bind="data || {}"></slot>
-      </template>
-    </PageHeader>
+        <slot v-else name="headerContent"></slot>
+      </div>
+    </div>
     <div :class="getContentClass" :style="getContentStyle" ref="contentRef">
       <Layout v-if="sidebar || sidebarRight" :style="getSidebarContentStyle">
-        <Layout.Sider
+        <LayoutSider
           v-if="sidebar"
           class="sidebar"
           v-model:collapsed="collapsed"
@@ -46,23 +48,23 @@
               <Icon icon="i-fa:angle-left" style="transform: rotate(180deg)" />
             </div>
           </template>
-        </Layout.Sider>
+        </LayoutSider>
         <template v-if="sidebar && sidebarResizer">
           <Resizer position="left" v-model:collapsed="collapsed" @move="onSidebarMove" />
         </template>
         <template v-if="sidebar && !sidebarResizer">
           <div v-if="!collapsed" style="margin-right: 12px"></div>
         </template>
-        <Layout.Content>
+        <LayoutContent>
           <slot></slot>
-        </Layout.Content>
+        </LayoutContent>
         <template v-if="sidebarRight && sidebarResizerRight">
           <Resizer position="right" v-model:collapsed="collapsedRight" @move="onSidebarMoveRight" />
         </template>
         <template v-if="sidebarRight && !sidebarResizerRight">
           <div v-if="!collapsedRight" style="margin-left: 12px"></div>
         </template>
-        <Layout.Sider
+        <LayoutSider
           v-if="sidebarRight"
           :reverseArrow="true"
           class="sidebar right"
@@ -85,7 +87,7 @@
           <div class="sidebar-content" :style="getSidebarContentStyle">
             <slot name="sidebarRight"></slot>
           </div>
-        </Layout.Sider>
+        </LayoutSider>
       </Layout>
       <slot v-else></slot>
     </div>
@@ -112,6 +114,7 @@
     watch,
     ref,
     unref,
+    shallowRef,
   } from 'vue';
   import { useDebounceFn } from '@vueuse/core';
   import PageFooter from './PageFooter.vue';
@@ -120,7 +123,7 @@
   import { useEmitter } from '@jeesite/core/store/modules/user';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { omit } from 'lodash-es';
-  import { Layout, PageHeader } from 'ant-design-vue';
+  import { Layout, LayoutSider, LayoutContent } from 'antdv-next';
   import { useContentHeight } from '@jeesite/core/hooks/web/useContentHeight';
   import { PageWrapperFixedHeightKey } from '..';
   import { Icon } from '@jeesite/core/components/Icon';
@@ -158,10 +161,10 @@
   const slots = useSlots();
   const attrs = useAttrs();
   const emitter = useEmitter();
-  const wrapperRef = ref(null);
-  const headerRef = ref(null);
-  const contentRef = ref(null);
-  const footerRef = ref(null);
+  const wrapperRef = shallowRef(null);
+  const headerRef = shallowRef(null);
+  const contentRef = shallowRef(null);
+  const footerRef = shallowRef(null);
   const { prefixCls } = useDesign('page-wrapper');
 
   const collapsed = ref<boolean>(false);
@@ -201,14 +204,16 @@
     ];
   });
 
-  const getHeaderSlots = computed(() => {
-    return Object.keys(omit(slots, 'default', 'leftFooter', 'rightFooter', 'headerContent'));
-  });
+  // const getHeaderSlots = computed(() => {
+  //   return Object.keys(omit(slots, 'default', 'leftFooter', 'rightFooter', 'headerContent'));
+  // });
 
-  const getShowHeader = computed(
-    () =>
-      props.title !== 'false' && (props.content || slots.headerContent || props.title || getHeaderSlots.value.length),
-  );
+  const getShowHeader = computed(() => {
+    return (
+      props.title !== 'false' &&
+      (props.title || slots.headerTitle || props.content || slots.headerContent) /*|| getHeaderSlots.value.length*/
+    );
+  });
 
   const getShowFooter = computed(() => slots?.leftFooter || slots?.rightFooter);
 
@@ -380,29 +385,33 @@
       overflow-y: auto;
     }
 
-    .ant-page-header {
-      // margin: 16px;
+    .page-header {
       margin-bottom: 12px;
       padding: 4px 16px;
       border-radius: 10px;
+      background-color: @component-background;
 
-      .ant-page-header-heading-title {
+      .page-header-heading-title {
         font-size: 16px;
         font-weight: normal;
+        margin-right: 12px;
+        line-height: 32px;
       }
 
-      .ant-page-header-content {
+      .page-header-heading-sub-title {
+        font-size: 14px;
+        color: @text-color-secondary;
+        margin-top: 4px;
+      }
+
+      .page-header-content {
         font-size: 14px;
         color: #666;
         padding: 0 0 8px;
       }
 
-      .anticon {
-        color: @primary-color;
-      }
-
-      &:empty {
-        padding: 0;
+      &.page-header-ghost {
+        background-color: transparent;
       }
     }
 
@@ -417,14 +426,14 @@
         border-radius: 0;
       }
 
-      .ant-page-header {
+      .page-header {
         margin: 0;
         padding: 0;
         border-radius: 0;
       }
     }
 
-    .ant-layout {
+    .jeesite.ant-layout {
       background-color: @content-bg;
 
       .sidebar {
@@ -506,11 +515,11 @@
 
   html[data-theme='dark'] {
     .@{prefix-cls} {
-      .ant-layout {
+      .jeesite.ant-layout {
         background: transparent;
       }
 
-      .ant-page-header .ant-page-header-content {
+      .page-header .page-header-content {
         color: #bbb;
       }
 
