@@ -11,7 +11,7 @@
 </template>
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import { Spin } from 'ant-design-vue';
+  import { Spin } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
@@ -89,6 +89,13 @@
     transform: rotate(0deg);
     transition: all 0.3s ease 0.1s;
     transform-origin: center center;
+    vertical-align: middle;
+
+    .jeesite.ant-spin {
+      position: relative;
+      vertical-align: middle;
+      top: 4px;
+    }
 
     &--active {
       transform: rotate(90deg);
