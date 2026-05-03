@@ -1,4 +1,1 @@
-import { withInstall } from '@jeesite/core/utils';
-import strengthMeter from './src/StrengthMeter.vue';
-
-export const StrengthMeter = withInstall(strengthMeter);
+export { default as StrengthMeter } from './src/StrengthMeter.vue';

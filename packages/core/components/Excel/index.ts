@@ -1,8 +1,4 @@
-import { withInstall } from '@jeesite/core/utils';
-import impExcel from './src/ImportExcel.vue';
-import expExcelModal from './src/ExportExcelModal.vue';
-
-export const ImpExcel = withInstall(impExcel);
-export const ExpExcelModal = withInstall(expExcelModal);
 export * from './src/typing';
+export { default as ImpExcel } from './src/ImportExcel.vue';
+export { default as ExpExcelModal } from './src/ExportExcelModal.vue';
 export { jsonToSheetXlsx, aoaToSheetXlsx } from './src/Export2Excel';

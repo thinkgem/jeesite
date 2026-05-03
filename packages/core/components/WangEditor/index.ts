@@ -1,4 +1,1 @@
-import { withInstall } from '@jeesite/core/utils';
-import wangEditor from './src/WangEditor.vue';
-
-export const WangEditor = withInstall(wangEditor);
+export { default as WangEditor } from './src/WangEditor.vue';

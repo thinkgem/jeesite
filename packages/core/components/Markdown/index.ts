@@ -1,7 +1,3 @@
-import { withInstall } from '@jeesite/core/utils';
-import markdown from './src/Markdown.vue';
-import markdownViewer from './src/MarkdownViewer.vue';
-
-export const Markdown = withInstall(markdown);
-export const MarkdownViewer = withInstall(markdownViewer);
 export * from './src/typing';
+export { default as Markdown } from './src/Markdown.vue';
+export { default as MarkdownViewer } from './src/MarkdownViewer.vue';

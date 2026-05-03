@@ -1,10 +1,4 @@
-import { withInstall } from '@jeesite/core/utils';
-import collapseContainer from './src/collapse/CollapseContainer.vue';
-import scrollContainer from './src/ScrollContainer.vue';
-import lazyContainer from './src/LazyContainer.vue';
-
-export const CollapseContainer = withInstall(collapseContainer);
-export const ScrollContainer = withInstall(scrollContainer);
-export const LazyContainer = withInstall(lazyContainer);
-
 export * from './src/typing';
+export { default as CollapseContainer } from './src/collapse/CollapseContainer.vue';
+export { default as ScrollContainer } from './src/ScrollContainer.vue';
+export { default as LazyContainer } from './src/LazyContainer.vue';

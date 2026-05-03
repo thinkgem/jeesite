@@ -1,7 +1,3 @@
-import { withInstall } from '@jeesite/core/utils';
-import cropperImage from './src/Cropper.vue';
-import avatarCropper from './src/CropperAvatar.vue';
-
 export * from './src/typing';
-export const CropperImage = withInstall(cropperImage);
-export const CropperAvatar = withInstall(avatarCropper);
+export { default as CropperImage } from './src/Cropper.vue';
+export { default as CropperAvatar } from './src/CropperAvatar.vue';
