@@ -6,6 +6,8 @@ node_modules
 .npmrc
 .output.js
 
+*.js
+*.mjs
 *.sh
 *.md
 *.svg
