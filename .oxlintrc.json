@@ -40,8 +40,9 @@
     "**/*.woff",
     "**/*.ttf",
     "**/*.d.ts",
-    "**/__snapshots__/",
-    "**/.js"
+    "**/*.js",
+    "**/*.mjs",
+    "**/__snapshots__/"
   ],
   "overrides": [
     {
