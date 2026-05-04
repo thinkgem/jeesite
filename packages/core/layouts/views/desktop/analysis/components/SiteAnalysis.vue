@@ -16,7 +16,7 @@
 </template>
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { Card } from 'ant-design-vue';
+  import { Card } from 'antdv-next';
   import VisitAnalysis from './VisitAnalysis.vue';
   import VisitAnalysisBar from './VisitAnalysisBar.vue';
 

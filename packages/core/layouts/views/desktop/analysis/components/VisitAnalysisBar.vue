@@ -5,7 +5,7 @@
 </template>
 <script lang="ts" setup>
   import { onMounted, ref, Ref, shallowRef } from 'vue';
-  import { Skeleton } from 'ant-design-vue';
+  import { Skeleton } from 'antdv-next';
   import { useECharts } from '@jeesite/core/hooks/web/useECharts';
   import type { EChartsOption } from 'echarts';
 

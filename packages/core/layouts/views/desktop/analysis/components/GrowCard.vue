@@ -31,7 +31,7 @@
   import { ref, onMounted } from 'vue';
   import { CountTo } from '@jeesite/core/components/CountTo';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { Tag, Card } from 'ant-design-vue';
+  import { Tag, Card } from 'antdv-next';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
 
   const loading = ref(true);

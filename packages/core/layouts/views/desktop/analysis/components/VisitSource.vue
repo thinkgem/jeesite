@@ -4,13 +4,13 @@
   </Card>
 </template>
 <script lang="ts" setup>
-  import { onMounted, Ref, ref } from 'vue';
-  import { Card } from 'ant-design-vue';
+  import { onMounted, Ref, ref, shallowRef } from 'vue';
+  import { Card } from 'antdv-next';
   import { useECharts } from '@jeesite/core/hooks/web/useECharts';
   import type { EChartsOption } from 'echarts';
 
   const loading = ref(true);
-  const chartRef = ref<HTMLDivElement | null>(null);
+  const chartRef = shallowRef<HTMLDivElement | null>(null);
   const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
 
   onMounted(() => {
