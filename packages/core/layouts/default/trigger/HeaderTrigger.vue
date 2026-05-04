@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
+  import { MenuUnfoldOutlined, MenuFoldOutlined } from '@antdv-next/icons';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
