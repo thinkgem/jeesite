@@ -65,13 +65,13 @@
 </template>
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { useLockStore } from '@jeesite/core/store/modules/lock';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useNow } from './useNow';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { LockOutlined } from '@ant-design/icons-vue';
+  import { LockOutlined } from '@antdv-next/icons';
   import headerImg from '@jeesite/assets/images/header.jpg';
 
   const InputPassword = Input.Password;
