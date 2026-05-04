@@ -7,7 +7,6 @@ import { i18n } from './setupI18n';
 import { useLocaleStoreWithOut } from '@jeesite/core/store/modules/locale';
 import { unref, computed } from 'vue';
 import { loadLocalePool, setHtmlPageLang } from './helper';
-import { Locale } from 'ant-design-vue/es/locale';
 
 interface LangModule {
   message: Recordable;
@@ -33,7 +32,7 @@ export function useLocale() {
   const getShowLocalePicker = computed(() => localeStore.getShowPicker);
 
   const getAntdLocale = computed((): any => {
-    const localeMessage = i18n.global.getLocaleMessage<{ antdLocale: Locale }>(unref(getLocale));
+    const localeMessage = i18n.global.getLocaleMessage<{ antdLocale: any }>(unref(getLocale));
     return localeMessage?.antdLocale ?? {};
   });
 

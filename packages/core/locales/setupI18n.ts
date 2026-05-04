@@ -1,5 +1,6 @@
 import type { App } from 'vue';
 import type { I18nOptions } from 'vue-i18n';
+
 import { createI18n } from 'vue-i18n';
 import { setHtmlPageLang, setLoadLocalePool } from './helper';
 import { localeSetting } from '@jeesite/core/settings/localeSetting';
