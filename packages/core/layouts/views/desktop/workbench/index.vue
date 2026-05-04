@@ -20,7 +20,7 @@
 </template>
 <script lang="ts" setup name="Workbench">
   import { ref } from 'vue';
-  import { Card } from 'ant-design-vue';
+  import { Card } from 'antdv-next';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import WorkbenchHeader from './components/WorkbenchHeader.vue';
   import ProjectCard from './components/ProjectCard.vue';
