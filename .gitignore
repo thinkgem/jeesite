@@ -2,6 +2,7 @@ node_modules
 Thumbs.db
 .DS_Store
 .vercel
+.pnpm-store
 .turbo
 .cache
 .trae
@@ -35,3 +36,4 @@ vite.config.ts.timestamp*
 *.sln
 *.sw?
 *.iml
+.claude
