@@ -23,7 +23,7 @@
 </template>
 <script lang="ts" setup name="AboutPage">
   import { h } from 'vue';
-  import { Tag } from 'ant-design-vue';
+  import { Tag } from 'antdv-next';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { Description, DescItem, useDescription } from '@jeesite/core/components/Description';
 
