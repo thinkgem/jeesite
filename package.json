@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/root",
-  "version": "5.17.0",
+  "version": "5.17.1",
   "type": "module",
   "private": true,
   "scripts": {
@@ -9,8 +9,6 @@
     "build": "turbo build --concurrency 20",
     "build:tomcat": "cd web && pnpm build:tomcat",
     "build:preview": "pnpm run preview",
-    "build:deploy": "turbo build:deploy",
-    "build:lib": "turbo build:lib",
     "report": "cd web && pnpm report",
     "preview": "cd web && pnpm preview",
     "preview:dist": "cd web && pnpm preview:dist",
@@ -28,7 +26,8 @@
     "serve": "pnpm dev"
   },
   "dependencies": {
-    "@ant-design/icons-vue": "7.0.1",
+    "@antdv-next/cssinjs": "1.0.6",
+    "@antdv-next/icons": "1.0.6",
     "@jeesite/assets": "workspace:*",
     "@jeesite/cms": "workspace:*",
     "@jeesite/core": "workspace:*",
@@ -38,7 +37,7 @@
     "@jeesite/types": "workspace:*",
     "@jeesite/vite": "workspace:*",
     "@jeesite/web": "workspace:*",
-    "ant-design-vue": "4.2.6",
+    "antdv-next": "1.2.2",
     "axios": "1.15.0",
     "dayjs": "1.11.20",
     "lodash-es": "4.17.23",
@@ -49,6 +48,7 @@
     "vue-types": "6.0.0"
   },
   "devDependencies": {
+    "@antdv-next/unocss": "1.0.3",
     "@babel/eslint-parser": "7.28.6",
     "@iconify/json": "2.2.458",
     "@iconify/utils": "3.1.0",
@@ -92,7 +92,7 @@
     "turbo": "2.9.3",
     "typescript": "6.0.2",
     "unocss": "66.6.7",
-    "vite": "8.0.5"
+    "vite": "8.0.10"
   },
   "keywords": [
     "typescript",

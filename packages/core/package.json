@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/core",
-  "version": "5.17.0",
+  "version": "5.17.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,6 +9,7 @@
     "update": "ncu -u -x codemirror,pinia,cropperjs"
   },
   "dependencies": {
+    "@uppy/core": "2.1.5",
     "@vueuse/core": "14.2.1",
     "@vueuse/shared": "14.2.1",
     "@wangeditor/editor": "5.1.23",
@@ -17,6 +18,7 @@
     "codemirror": "5.65.16",
     "cropperjs": "1.6.2",
     "crypto-js": "4.2.0",
+    "dom7": "4.0.4",
     "echarts": "6.0.0",
     "path-to-regexp": "8.4.1",
     "pinia": "2.3.1",
@@ -24,6 +26,7 @@
     "qrcode": "1.5.4",
     "qs": "6.15.0",
     "resize-observer-polyfill": "1.5.1",
+    "snabbdom": "3.3.1",
     "sortablejs": "1.15.7",
     "spark-md5": "3.0.2",
     "vditor": "3.11.2",
@@ -33,10 +36,10 @@
     "xlsx": "0.18.5"
   },
   "peerDependencies": {
-    "@uppy/core": "^2.1.5",
+    "@uppy/core": "2.1.5",
     "@wangeditor/editor": ">=5.1.16",
-    "snabbdom": "^3.3.1",
-    "dom7": "^4.0.4"
+    "dom7": "4.0.4",
+    "snabbdom": "3.3.1"
   },
   "devDependencies": {
     "@types/codemirror": "5.60.17",

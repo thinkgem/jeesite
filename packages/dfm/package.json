@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/dfm",
-  "version": "5.17.0",
+  "version": "5.17.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "update": "ncu -u"
   },
   "dependencies": {
-    "@jeesite/dfm-lib": "5.17.0-rc.1",
+    "@jeesite/dfm-lib": "5.17.1-next-dev.2",
     "@vueuse/core": "14.2.1",
     "dayjs": "1.11.20",
     "less": "4.6.4",
