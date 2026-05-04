@@ -70,7 +70,7 @@
 </template>
 <script lang="ts">
   import type { Menu } from '@jeesite/core/router/types';
-  import type { CSSProperties } from 'vue';
+  import { CSSProperties, shallowRef } from 'vue';
   import { computed, defineComponent, onMounted, ref, unref } from 'vue';
   import type { RouteLocationNormalized } from 'vue-router';
   import { ScrollContainer } from '@jeesite/core/components/Container';
@@ -108,8 +108,8 @@
       const activePath = ref('');
       const childrenMenus = ref<Menu[]>([]);
       const openMenu = ref(false);
-      const dragBarRef = ref<ElRef>(null);
-      const sideRef = ref<ElRef>(null);
+      const dragBarRef = shallowRef<ElRef>(null);
+      const sideRef = shallowRef<ElRef>(null);
       const currentRoute = ref<Nullable<RouteLocationNormalized>>(null);
 
       const { prefixCls } = useDesign('layout-mix-sider');

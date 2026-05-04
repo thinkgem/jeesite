@@ -22,9 +22,9 @@
   </Sider>
 </template>
 <script lang="ts">
-  import { computed, defineComponent, ref, unref, CSSProperties, h } from 'vue';
+  import { computed, defineComponent, ref, unref, CSSProperties, h, shallowRef } from 'vue';
 
-  import { Layout } from 'ant-design-vue';
+  import { Layout, LayoutSider } from 'antdv-next';
   import LayoutMenu from '../menu/index.vue';
   import LayoutTrigger from '@jeesite/core/layouts/default/trigger/index.vue';
 
@@ -36,12 +36,13 @@
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import DragBar from './DragBar.vue';
+
   export default defineComponent({
     name: 'LayoutSideBar',
-    components: { Sider: Layout.Sider, LayoutMenu, DragBar, LayoutTrigger },
+    components: { Sider: LayoutSider, LayoutMenu, DragBar, LayoutTrigger },
     setup() {
-      const dragBarRef = ref<ElRef>(null);
-      const sideRef = ref<ElRef>(null);
+      const dragBarRef = shallowRef<ElRef>(null);
+      const sideRef = shallowRef<ElRef>(null);
 
       const {
         getCollapsed,

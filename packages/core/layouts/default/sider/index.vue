@@ -18,7 +18,7 @@
 
   import Sider from './LayoutSider.vue';
   import MixSider from './MixSider.vue';
-  import { Drawer } from 'ant-design-vue';
+  import { Drawer } from 'antdv-next';
 
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
