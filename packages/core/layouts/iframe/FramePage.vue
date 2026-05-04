@@ -16,10 +16,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import type { CSSProperties } from 'vue';
+  import { CSSProperties, shallowRef } from 'vue';
   import type { AppRouteRecordRaw } from '@jeesite/core/router/types';
   import { ref, unref, computed, watch } from 'vue';
-  import { Spin } from 'ant-design-vue';
+  import { Spin } from 'antdv-next';
   import { useWindowSizeFn } from '@jeesite/core/hooks/event/useWindowSizeFn';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useLayoutHeight } from '@jeesite/core/layouts/default/content/useContentViewHeight';
@@ -34,7 +34,7 @@
   const loading = ref(true);
   const topRef = ref(50);
   const heightRef = ref(window.innerHeight);
-  const frameRef = ref<HTMLFrameElement>();
+  const frameRef = shallowRef<HTMLFrameElement>();
   const { headerHeightRef } = useLayoutHeight();
 
   const { prefixCls } = useDesign('iframe-page');
