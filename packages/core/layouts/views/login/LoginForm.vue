@@ -30,7 +30,7 @@
           visibilityToggle
           v-model:value="formData.password"
           :placeholder="t('sys.login.password')"
-          autocomplete="off"
+          autoComplete="off"
         />
       </FormItem>
       <FormItem v-if="validCodeRefreshTime" name="validCode" class="enter-x valid-code">
@@ -83,11 +83,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
+  import { reactive, ref, toRaw, unref, computed, onMounted, shallowRef } from 'vue';
 
-  import { Checkbox, Form, Input, Row, Col, Button, Divider, message } from 'ant-design-vue';
+  import { Checkbox, Form, FormItem, Input, Row, Col, Button, Divider, message } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
-  import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
@@ -95,30 +94,26 @@
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { userInfoApi } from '@jeesite/core/api/sys/login';
-  // import { onKeyStroke } from '@vueuse/core';
   import { ValidCode } from '@jeesite/core/components/ValidCode';
 
   const ACol = Col;
   const ARow = Row;
-  const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
   const { showMessage, notification } = useMessage();
   const { prefixCls } = useDesign('login');
-  const { ctxPath } = useGlobSetting();
   const userStore = useUserStore();
 
   const { setLoginState, getLoginState } = useLoginState();
 
-  const formRef = ref();
+  const formRef = shallowRef<InstanceType<typeof Form>>();
   const loading = ref(false);
   const rememberMe = ref(false);
   const validCodeRefreshTime = ref(0);
   const demoMode = ref(false);
 
-  const emit = defineEmits(['demoMode']);
+  const emit = defineEmits(['demoMode', 'useCorpModel', 'loginCodeCorpUnique', 'corpOptions']);
 
   const formData = reactive({
     account: 'system',
@@ -179,7 +174,7 @@
       }
       if (res.result === 'true') {
         notification.success({
-          message: t('sys.login.loginSuccessTitle'),
+          title: t('sys.login.loginSuccessTitle'),
           description: `${t('sys.login.loginSuccessDesc')}: ${res.user.userName}`,
           duration: 1,
         });

@@ -62,7 +62,7 @@
         <StrengthMeter size="large" v-model:value="formData.password" :placeholder="t('sys.account.newPassword')" />
       </FormItem>
       <FormItem name="confirmPassword" class="enter-x">
-        <Input.Password
+        <InputPassword
           size="large"
           v-model:value="formData.confirmPassword"
           :placeholder="t('sys.account.confirmNewPassword')"
@@ -81,9 +81,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, computed, unref } from 'vue';
+  import { reactive, ref, computed, unref, shallowRef } from 'vue';
   import LoginFormTitle from './LoginFormTitle.vue';
-  import { Form, Input, Button } from 'ant-design-vue';
+  import { Form, FormItem, Input, InputPassword, Button } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useLoginState, useFormRules, LoginStateEnum, useFormValid } from './useLogin';
   import {
@@ -98,12 +98,15 @@
   import { ValidCode } from '@jeesite/core/components/ValidCode';
   import { Select } from '@jeesite/core/components/Form';
 
-  const FormItem = Form.Item;
+  const props = defineProps({
+    demoMode: { type: Boolean, default: false },
+  });
+
   const { t } = useI18n();
   const { handleBackLogin, getLoginState } = useLoginState();
   const { showMessage, showMessageModal } = useMessage();
 
-  const formRef = ref();
+  const formRef = shallowRef<InstanceType<typeof Form>>();
   const loading = ref(false);
   const validCodeRefreshTime = ref(0);
 

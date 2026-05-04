@@ -1,6 +1,6 @@
 <template>
   <div :class="prefixCls" class="relative h-full w-full bg-light-400 px-4">
-    <AppDarkModeToggle class="enter-x absolute right-8 top-5" v-if="!sessionTimeout" />
+    <AppDarkModeToggle class="enter-x absolute right-12 top-5" v-if="!sessionTimeout" />
 
     <span class="-enter-x lg:hidden">
       <AppLogo :alwaysShowTitle="true" />
@@ -8,7 +8,7 @@
 
     <div class="relative mx-auto h-full py-2 container">
       <div class="h-full flex">
-        <div class="mr-4 min-h-full pl-4 md:hidden lg:w-13/24 lg:flex lg:flex-col">
+        <div class="mr-4 min-h-full pl-4 md:hidden lg:w-[54.17%] lg:flex lg:flex-col">
           <div class="my-auto">
             <AppLogo class="-enter-x logo" />
             <img :alt="title" src="@jeesite/assets/svg/login-box-bg.svg" class="-enter-x w-1/2" />
@@ -23,21 +23,21 @@
             </div>
           </div>
         </div>
-        <div class="h-full w-full flex overflow-auto py-5 lg:my-0 lg:h-auto lg:w-11/24 lg:py-0">
+        <div class="h-full w-full flex overflow-y-auto overflow-x-hidden py-5 lg:my-0 lg:h-auto lg:w-[45.83%] lg:py-0">
           <div
             :class="`${prefixCls}-form`"
-            class="enter-x relative mx-auto my-auto w-full px-5 py-8 shadow-md lg:ml-16 lg:w-2/4 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
+            class="enter-x relative mx-auto my-auto w-full px-5 py-8 shadow-md lg:ml-16 lg:w-1/2 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
           >
-            <Tabs v-if="getShow" :activeKey="getLoginState" @change="handleChange">
-              <Tabs.TabPane :key="LoginStateEnum.LOGIN" :tab="t('sys.login.signInFormTitle')">
+            <Tabs v-if="getShow" :activeKey="getLoginState as unknown as string" @change="handleChange">
+              <TabPane :key="LoginStateEnum.LOGIN" :tab="t('sys.login.signInFormTitle')">
                 <LoginForm @demo-mode="demoMode = $event" />
-              </Tabs.TabPane>
-              <Tabs.TabPane :key="LoginStateEnum.MOBILE" :tab="t('sys.login.mobileSignInFormTitle')">
+              </TabPane>
+              <TabPane :key="LoginStateEnum.MOBILE" :tab="t('sys.login.mobileSignInFormTitle')">
                 <MobileForm :demoMode="demoMode" />
-              </Tabs.TabPane>
-              <Tabs.TabPane :key="LoginStateEnum.QR_CODE" :tab="t('sys.login.qrSignInFormTitle')">
+              </TabPane>
+              <TabPane :key="LoginStateEnum.QR_CODE" :tab="t('sys.login.qrSignInFormTitle')">
                 <QrCodeForm :demoMode="demoMode" />
-              </Tabs.TabPane>
+              </TabPane>
             </Tabs>
             <ForgetPasswordForm :demoMode="demoMode" />
             <RegisterForm :demoMode="demoMode" />
@@ -53,7 +53,7 @@
   import { AppDarkModeToggle } from '@jeesite/core/components/Application';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { Tabs } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
   import LoginForm from './LoginForm.vue';
@@ -123,7 +123,7 @@
     //background-color: #f2fafd;
 
     &-form {
-      top: -20px;
+      transform: translateY(-20px);
       margin: auto;
       background-color: #fff;
       box-shadow: 0 0 8px #ddd;
@@ -261,6 +261,10 @@
     .ant-divider-inner-text {
       font-size: 14px;
       color: @text-color-secondary;
+    }
+
+    .ant-btn {
+      border-radius: 8px;
     }
   }
 

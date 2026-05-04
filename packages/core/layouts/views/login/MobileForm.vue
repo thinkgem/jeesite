@@ -45,10 +45,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, computed, unref, toRaw, onMounted } from 'vue';
-  import { Form, Input, Button } from 'ant-design-vue';
+  import { reactive, ref, computed, unref, shallowRef } from 'vue';
+  import { Form, FormItem, Input, Button } from 'antdv-next';
   import { CountdownInput } from '@jeesite/core/components/CountDown';
-  import LoginFormTitle from './LoginFormTitle.vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
   import { ValidCode } from '@jeesite/core/components/ValidCode';
@@ -61,13 +60,12 @@
     demoMode: { type: Boolean, default: false },
   });
 
-  const FormItem = Form.Item;
   const { t } = useI18n();
   const { handleBackLogin, getLoginState } = useLoginState();
   const { showMessage, notification } = useMessage();
   const userStore = useUserStore();
 
-  const formRef = ref();
+  const formRef = shallowRef<InstanceType<typeof Form>>();
   const loading = ref(false);
   const validCodeRefreshTime = ref(0);
   const userOptions = ref<Recordable[]>([]);
@@ -116,7 +114,7 @@
         // 如果已经登录，根据业务需要，是否自动跳转到系统首页
         await userStore.afterLoginAction(res, true);
         notification.success({
-          message: t('sys.login.loginSuccessTitle'),
+          title: t('sys.login.loginSuccessTitle'),
           description: `${t('sys.login.loginSuccessDesc')}: ${res.user.userName}`,
           duration: 1,
         });

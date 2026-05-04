@@ -11,8 +11,7 @@
 </template>
 <script lang="ts" setup>
   import { computed, unref } from 'vue';
-  import LoginFormTitle from './LoginFormTitle.vue';
-  import { Button, Divider } from 'ant-design-vue';
+  import { Button, Divider } from 'antdv-next';
   import { QrCode } from '@jeesite/core/components/Qrcode';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useLoginState, LoginStateEnum } from './useLogin';

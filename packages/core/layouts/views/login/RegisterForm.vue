@@ -83,9 +83,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, unref, computed } from 'vue';
+  import { reactive, ref, unref, computed, shallowRef } from 'vue';
   import LoginFormTitle from './LoginFormTitle.vue';
-  import { Form, Input, Button, Checkbox } from 'ant-design-vue';
+  import { Form, FormItem, Input, InputPassword, Button, Checkbox } from 'antdv-next';
   import { StrengthMeter } from '@jeesite/core/components/StrengthMeter';
   import { CountdownInput } from '@jeesite/core/components/CountDown';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -99,13 +99,11 @@
     demoMode: { type: Boolean, default: false },
   });
 
-  const FormItem = Form.Item;
-  const InputPassword = Input.Password;
   const { t } = useI18n();
   const { showMessage, showMessageModal } = useMessage();
   const { handleBackLogin, getLoginState } = useLoginState();
 
-  const formRef = ref();
+  const formRef = shallowRef<InstanceType<typeof Form>>();
   const loading = ref(false);
   const validCodeRefreshTime = ref(0);
 
