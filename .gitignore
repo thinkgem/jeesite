@@ -2,13 +2,11 @@ node_modules
 Thumbs.db
 .DS_Store
 .vercel
-.pnpm-store
 .turbo
 .cache
-.trae
 dist
-
 upgrade
+skills-lock.json
 
 # Test files
 tests/server/static
@@ -36,4 +34,11 @@ vite.config.ts.timestamp*
 *.sln
 *.sw?
 *.iml
+.pnpm-store
+.agents
 .claude
+.copilot
+.cursor
+.trae
+.vscode
+.windsurf
