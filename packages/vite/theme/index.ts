@@ -74,8 +74,8 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
     vite_theme_plugin,
     antdDarkThemePlugin({
       // preloadFiles: [
-      //   // path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.less'),
-      //   // path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.dark.less'),
+      //   // path.resolve(process.cwd(), 'node_modules/antdv-next/dist/antd.less'),
+      //   // path.resolve(process.cwd(), 'node_modules/antdv-next/dist/antd.dark.less'),
       //   path.resolve(process.cwd(), 'src/design/index.less'),
       // ],
       // filter: (id) => (isBuild ? !id.endsWith('antd.less') : true),
