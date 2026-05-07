@@ -7,12 +7,14 @@
 </template>
 <script lang="ts" setup>
   import { onBeforeUnmount, onMounted, ref } from 'vue';
-  import Login from './Login.vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { usePermissionStore } from '@jeesite/core/store/modules/permission';
   import { useAppStore } from '@jeesite/core/store/modules/app';
   import { PermissionModeEnum } from '@jeesite/core/enums/appEnum';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
+  const Login = createAsyncComponent(() => import('./Login.vue'));
 
   const { prefixCls } = useDesign('st-login');
   const userStore = useUserStore();

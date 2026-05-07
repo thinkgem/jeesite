@@ -84,7 +84,6 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed, shallowRef } from 'vue';
-  import LoginFormTitle from './LoginFormTitle.vue';
   import { Form, FormItem, Input, InputPassword, Button, Checkbox } from 'antdv-next';
   import { StrengthMeter } from '@jeesite/core/components/StrengthMeter';
   import { CountdownInput } from '@jeesite/core/components/CountDown';
@@ -94,6 +93,9 @@
   import { Select } from '@jeesite/core/components/Form';
   import { ValidCode } from '@jeesite/core/components/ValidCode';
   import { getRegValidCode, saveRegByValidCode } from '@jeesite/core/api/sys/account';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
+  const LoginFormTitle = createAsyncComponent(() => import('./LoginFormTitle.vue'));
 
   const props = defineProps({
     demoMode: { type: Boolean, default: false },

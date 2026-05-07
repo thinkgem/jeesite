@@ -82,7 +82,7 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref, computed, unref, shallowRef } from 'vue';
-  import LoginFormTitle from './LoginFormTitle.vue';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
   import { Form, FormItem, Input, InputPassword, Button } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useLoginState, useFormRules, LoginStateEnum, useFormValid } from './useLogin';
@@ -97,6 +97,8 @@
   import { StrengthMeter } from '@jeesite/core/components/StrengthMeter';
   import { ValidCode } from '@jeesite/core/components/ValidCode';
   import { Select } from '@jeesite/core/components/Form';
+
+  const LoginFormTitle = createAsyncComponent(() => import('./LoginFormTitle.vue'));
 
   const props = defineProps({
     demoMode: { type: Boolean, default: false },

@@ -51,17 +51,18 @@
   import { computed, ref, unref } from 'vue';
   import { AppLogo } from '@jeesite/core/components/Application';
   import { AppDarkModeToggle } from '@jeesite/core/components/Application';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-
-  import LoginForm from './LoginForm.vue';
-  import MobileForm from './MobileForm.vue';
-  import QrCodeForm from './QrCodeForm.vue';
-  import ForgetPasswordForm from './ForgetPasswordForm.vue';
-  import RegisterForm from './RegisterForm.vue';
   import { LoginStateEnum, useLoginState } from './useLogin';
+
+  const LoginForm = createAsyncComponent(() => import('./LoginForm.vue'));
+  const MobileForm = createAsyncComponent(() => import('./MobileForm.vue'));
+  const QrCodeForm = createAsyncComponent(() => import('./QrCodeForm.vue'));
+  const ForgetPasswordForm = createAsyncComponent(() => import('./ForgetPasswordForm.vue'));
+  const RegisterForm = createAsyncComponent(() => import('./RegisterForm.vue'));
 
   const { t } = useI18n();
 
