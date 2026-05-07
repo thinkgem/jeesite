@@ -3,7 +3,7 @@ import { useAppStoreWithOut } from '@jeesite/core/store/modules/app';
 import { useUserStoreWithOut } from '@jeesite/core/store/modules/user';
 import { useTransitionSetting } from '@jeesite/core/hooks/setting/useTransitionSetting';
 import { AxiosCanceler } from '@jeesite/core/utils/http/axios/axiosCancel';
-import { Modal, notification } from 'ant-design-vue';
+import { Modal, notification } from 'antdv-next';
 import { warn } from '@jeesite/core/utils/log';
 import { unref } from 'vue';
 import { setRouteChange } from '@jeesite/core/logics/mitt/routeChange';
