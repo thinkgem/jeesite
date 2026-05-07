@@ -147,7 +147,7 @@
 - [TypeScript](https://www.typescriptlang.org/) - 熟悉 TS 基本语法
 - [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
-- [Vue-Vben-Admin](https://jeesite.com/front/vben-admin/) - 熟悉 UI 及表单列表及常用组件使用
+- [Vue-Vben-Admin](https://jeesite.com/front/vben-admin/) - 熟悉用户界面表单列表及常用组件
 - [Antdv-Next](https://www.antdv-next.cn/components/overview-cn) - 熟悉 UI 基本使用
 
 ## 快速体验
