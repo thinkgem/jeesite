@@ -1,7 +1,7 @@
 *.class
 **/target
+**/classes
 **/webapp/userfiles
-**/WEB-INF/classes
 **/transaction-logs
 **/logs/*.log*
 *.epoch
