@@ -5,7 +5,7 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <div v-if="getPwdQuestionMsg" class="pl-8 pr-8 pt-3">
-      <Alert :message="getPwdQuestionMsg" type="info" show-icon />
+      <Alert :title="getPwdQuestionMsg" type="info" show-icon />
     </div>
     <div class="flex flex-col items-center justify-center bg-white py-8 pr-20">
       <BasicForm @register="register" class="w-10/12" />
@@ -28,7 +28,7 @@
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { infoSavePqa, userInfo } from '@jeesite/core/api/sys/user';
-  import { Alert } from 'ant-design-vue';
+  import { Alert } from 'antdv-next';
 
   const { t } = useI18n();
   const { showMessage, showMessageModal } = useMessage();

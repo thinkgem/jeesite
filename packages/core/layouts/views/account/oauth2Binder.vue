@@ -1,13 +1,13 @@
 <template>
   <CollapseContainer :title="t('sys.account.bindingTab')" :canExpan="false">
-    <List>
-      <template v-for="item in accountBindList" :key="item.key">
-        <List.Item>
-          <List.Item.Meta>
-            <template #avatar>
-              <Icon v-if="item.avatar" class="avatar" :icon="item.avatar" :color="item.color" />
-            </template>
-            <template #title>
+    <div class="list-container">
+      <div v-for="item in accountBindList" :key="item.key" class="list-item">
+        <div class="list-item-meta">
+          <div v-if="item.avatar" class="avatar-wrapper">
+            <Icon class="avatar" :icon="item.avatar" :color="item.color" />
+          </div>
+          <div class="meta-content">
+            <div class="meta-title">
               <span v-if="item.extra" class="cursor-pointer" @click="handleBind(item.title)">
                 {{ item.title }}
               </span>
@@ -15,18 +15,17 @@
               <a-button type="link" size="small" v-if="item.extra" class="extra" @click="handleBind(item.title)">
                 {{ item.extra }}
               </a-button>
-            </template>
-            <template #description>
-              <div>{{ item.description }}</div>
-            </template>
-          </List.Item.Meta>
-        </List.Item>
-      </template>
-    </List>
+            </div>
+            <div class="meta-description">
+              {{ item.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </CollapseContainer>
 </template>
 <script lang="ts" setup>
-  import { List } from 'ant-design-vue';
   import { CollapseContainer } from '@jeesite/core/components/Container';
   import Icon from '@jeesite/core/components/Icon';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -74,19 +73,6 @@
   ];
 
   function handleBind(title: string) {
-    // showMessage(title + '，' + t('common.notYetRealized'));
-    go('/oauth2/list');
+    showMessage(title + '，专业版中实现。');
   }
 </script>
-<style lang="less">
-  .avatar {
-    font-size: 40px !important;
-  }
-
-  .extra {
-    float: right;
-    margin-top: 10px;
-    margin-right: 30px;
-    cursor: pointer;
-  }
-</style>
