@@ -19,6 +19,12 @@ export async function createDefineOptions(): Promise<Record<string, any>> {
             ...buildPkg.dependencies,
             ...corePkg.dependencies,
           }).filter(([key]) => !key.endsWith('-lib')),
+          // .map((item) => {
+          //   if (item[1] == 'workspace:*' && rootPkg.version) {
+          //     item[1] = rootPkg.version;
+          //   }
+          //   return item;
+          // }),
         ),
         devDependencies: Object.fromEntries(
           Object.entries({

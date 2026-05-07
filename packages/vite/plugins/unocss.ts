@@ -5,8 +5,8 @@
  */
 import { type PluginOption } from 'vite';
 import UnoCSS from 'unocss/vite';
-import UnoCSSConfig from '../../../uno.config';
+import unoConfig from '../../../uno.config';
 
 export function configUnoCSSPlugin(): PluginOption {
-  return UnoCSS(UnoCSSConfig);
+  return UnoCSS(unoConfig);
 }
