@@ -3,16 +3,10 @@
  */
 import type { LocaleType } from '@jeesite/types/config';
 
-import { i18n } from './setupI18n';
+import { i18n, getLocaleMessages } from './setupI18n';
 import { useLocaleStoreWithOut } from '@jeesite/core/store/modules/locale';
 import { unref, computed } from 'vue';
 import { loadLocalePool, setHtmlPageLang } from './helper';
-
-interface LangModule {
-  message: Recordable;
-  dateLocale: Recordable;
-  dateLocaleName: string;
-}
 
 function setI18nLanguage(locale: LocaleType) {
   const localeStore = useLocaleStoreWithOut();
@@ -49,10 +43,8 @@ export function useLocale() {
       setI18nLanguage(locale);
       return locale;
     }
-    const langModule = ((await import(`./lang/${locale}.ts`)) as any).default as LangModule;
-    if (!langModule) return;
-
-    const { message } = langModule;
+    const message = getLocaleMessages(locale);
+    if (!message || Object.keys(message).length === 0) return;
 
     globalI18n.setLocaleMessage(locale, message);
     loadLocalePool.push(locale);

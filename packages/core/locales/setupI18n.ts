@@ -28,7 +28,7 @@ function getCurrentLocale(): string {
 }
 
 // 从预加载的模块中获取语言消息
-function getLocaleMessages(locale: string): Record<string, any> {
+export function getLocaleMessages(locale: string): Record<string, any> {
   const modulePath = `./lang/${locale}.ts`;
   const defaultLocal = (localeModules[modulePath] as any)?.default;
   return defaultLocal?.message ?? {};
