@@ -193,6 +193,11 @@ export const useUserStore = defineStore('app-user', {
       this.setPageCache('company', res.company);
       this.setPageCache('version', res.version);
       this.setPageCache('year', res.year);
+
+      this.setPageCache('postRolePermi', res.postRolePermi);
+      this.setPageCache('switchOffice', res.switchOffice);
+      this.setPageCache('officeCode', res.officeCode);
+      this.setPageCache('officeName', res.officeName);
     },
     /**
      * @description: logout
