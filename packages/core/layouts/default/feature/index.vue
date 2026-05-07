@@ -10,7 +10,6 @@
   import { SettingButtonPositionEnum } from '@jeesite/core/enums/appEnum';
   import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-  import SessionTimeoutLogin from '@jeesite/core/layouts/views/login/SessionTimeoutLogin.vue';
   import { useFullContent } from '@jeesite/core/hooks/web/useFullContent';
 
   export default defineComponent({
@@ -19,7 +18,9 @@
       ABackTop: BackTop,
       LayoutLockPage: createAsyncComponent(() => import('@jeesite/core/layouts/views/lock/index.vue')),
       SettingDrawer: createAsyncComponent(() => import('@jeesite/core/layouts/default/setting/index.vue')),
-      SessionTimeoutLogin,
+      SessionTimeoutLogin: createAsyncComponent(
+        () => import('@jeesite/core/layouts/views/login/SessionTimeoutLogin.vue'),
+      ),
     },
     setup() {
       const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } = useRootSetting();

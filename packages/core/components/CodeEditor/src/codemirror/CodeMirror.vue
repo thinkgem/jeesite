@@ -14,7 +14,7 @@
 
   import CodeMirror from 'codemirror';
   import type { EditorConfiguration } from 'codemirror';
-  import { MODE, parserDynamicImport } from './../typing';
+  import { MODE, parserDynamicImport } from './typing';
 
   // css
   import 'codemirror/lib/codemirror.css';

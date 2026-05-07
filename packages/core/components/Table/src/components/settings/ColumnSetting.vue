@@ -111,15 +111,13 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useTableContext } from '../../hooks/useTableContext';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  // import { useSortable } from '@jeesite/core/hooks/web/useSortable';
   import type { BasicColumn, ColumnChangeParam } from '../../types/table';
   import { isFunction, isNullAndUnDef } from '@jeesite/core/utils/is';
   import { getPopupContainer as getParentContainer } from '@jeesite/core/utils';
   import { cloneDeep, omit } from 'lodash-es';
-  import Sortablejs from 'sortablejs';
-  // import type Sortable from 'sortablejs';
 
   interface State {
     isInit?: boolean;
@@ -296,12 +294,12 @@
       // Drag and drop sort
       function handleOpenChange() {
         if (isInitSortable) return;
-        nextTick(() => {
+        nextTick(async () => {
           const columnListEl = unref(columnListRef);
           if (!columnListEl) return;
           const el = columnListEl.$el as any;
           if (!el) return;
-          // sortable = Sortablejs.create(unref(el), {
+          const Sortablejs = (await import('sortablejs')).default;
           Sortablejs.create(unref(el), {
             animation: 500,
             delay: 400,

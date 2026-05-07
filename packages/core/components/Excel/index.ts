@@ -1,4 +1,5 @@
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
 export * from './src/typing';
-export { default as ImpExcel } from './src/ImportExcel.vue';
-export { default as ExpExcelModal } from './src/ExportExcelModal.vue';
-export { jsonToSheetXlsx, aoaToSheetXlsx } from './src/Export2Excel';
+export const ImpExcel = createAsyncComponent(() => import('./src/ImportExcel.vue'));
+export const ExpExcelModal = createAsyncComponent(() => import('./src/ExportExcelModal.vue'));

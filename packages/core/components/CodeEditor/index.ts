@@ -1,4 +1,6 @@
-export * from './src/typing';
-export { default as CodeEditor } from './src/CodeEditor.vue';
-export { default as JsonPreview } from './src/json-preview/JsonPreview.vue';
-export { default as MonacoEditor } from './src/MonacoEditor/index.vue';
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
+export * from './src/codemirror/typing';
+export const CodeEditor = createAsyncComponent(() => import('./src/codemirror/CodeEditor.vue'));
+export const JsonPreview = createAsyncComponent(() => import('./src/json-preview/JsonPreview.vue'));
+export const MonacoEditor = createAsyncComponent(() => import('./src/MonacoEditor/index.vue'));

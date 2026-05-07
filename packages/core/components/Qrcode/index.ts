@@ -1,2 +1,4 @@
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
 export * from './src/typing';
-export { default as QrCode } from './src/Qrcode.vue';
+export const QrCode = createAsyncComponent(() => import('./src/Qrcode.vue'));
