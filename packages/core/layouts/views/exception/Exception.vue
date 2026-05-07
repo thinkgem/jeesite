@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { PropType } from 'vue';
-  import { Result, Button } from 'ant-design-vue';
+  import { Result, Button } from 'antdv-next';
   import { defineComponent, ref, computed, unref } from 'vue';
   import { ExceptionEnum } from '@jeesite/core/enums/exceptionEnum';
   import notDataSvg from '@jeesite/assets/svg/no-data.svg';

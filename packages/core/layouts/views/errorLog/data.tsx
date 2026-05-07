@@ -1,4 +1,4 @@
-import { Tag } from 'ant-design-vue';
+import { Tag } from 'antdv-next';
 import { BasicColumn } from '@jeesite/core/components/Table';
 import { ErrorTypeEnum } from '@jeesite/core/enums/exceptionEnum';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
