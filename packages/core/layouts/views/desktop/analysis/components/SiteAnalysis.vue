@@ -17,8 +17,10 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { Card } from 'antdv-next';
-  import VisitAnalysis from './VisitAnalysis.vue';
-  import VisitAnalysisBar from './VisitAnalysisBar.vue';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
+  const VisitAnalysis = createAsyncComponent(() => import('./VisitAnalysis.vue'));
+  const VisitAnalysisBar = createAsyncComponent(() => import('./VisitAnalysisBar.vue'));
 
   const loading = ref(true);
   const activeKey = ref('tab1');

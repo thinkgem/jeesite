@@ -12,7 +12,7 @@
 </template>
 <script lang="ts" setup>
   import { Card } from 'antdv-next';
-  import { navItems } from './Data';
+  import { navItems } from './data';
   import { Icon } from '@jeesite/core/components/Icon';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
 

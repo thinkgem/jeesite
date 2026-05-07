@@ -22,7 +22,7 @@
 <script lang="ts" setup>
   import { Card } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { groupItems } from './Data';
+  import { groupItems } from './data';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
 
   const go = useGo();

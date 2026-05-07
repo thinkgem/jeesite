@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
   import { Card } from 'antdv-next';
-  import { dynamicInfoItems } from './Data';
+  import { dynamicInfoItems } from './data';
   import { Icon } from '@jeesite/core/components/Icon';
 </script>
 <style lang="less">

@@ -10,11 +10,13 @@
   </div>
 </template>
 <script lang="ts" setup name="Analysis">
-  import GrowCard from './components/GrowCard.vue';
-  import SiteAnalysis from './components/SiteAnalysis.vue';
-  import VisitSource from './components/VisitSource.vue';
-  import VisitRadar from './components/VisitRadar.vue';
-  import SalesProductPie from './components/SalesProductPie.vue';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+
+  const GrowCard = createAsyncComponent(() => import('./components/GrowCard.vue'));
+  const SiteAnalysis = createAsyncComponent(() => import('./components/SiteAnalysis.vue'));
+  const VisitSource = createAsyncComponent(() => import('./components/VisitSource.vue'));
+  const VisitRadar = createAsyncComponent(() => import('./components/VisitRadar.vue'));
+  const SalesProductPie = createAsyncComponent(() => import('./components/SalesProductPie.vue'));
 </script>
 <style class="less">
   .jeesite-analysis .ant-card {
