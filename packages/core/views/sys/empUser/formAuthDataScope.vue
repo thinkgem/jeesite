@@ -24,7 +24,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserAuthDataScope">
-  import { ref, unref, nextTick } from 'vue';
+  import { ref, unref, nextTick, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useLocaleStore } from '@jeesite/core/store/modules/locale';
@@ -46,7 +46,7 @@
     value: t('数据权限'),
   };
   const ctrlPermi = ref('');
-  const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
+  const customDataScopeRef = shallowRef<InstanceType<typeof CustomDataScope>>();
 
   const inputFormSchemas: FormSchema[] = [
     {
