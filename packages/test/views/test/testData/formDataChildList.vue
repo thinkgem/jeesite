@@ -99,7 +99,7 @@
     {
       title: t('日期时间'),
       dataIndex: 'testDatetime',
-      width: 215,
+      width: 160,
       align: 'center',
       editRow: true,
       editComponent: 'DatePicker',
