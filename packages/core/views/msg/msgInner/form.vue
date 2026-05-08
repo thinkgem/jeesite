@@ -34,59 +34,57 @@
         <WangEditor v-model:value="model[field]" :bizKey="record.id" :bizType="'msgInner_' + field" :height="300" />
       </template>
       <template #receiveCodes="{ model }">
-        <Form.ItemRest>
-          <TreeSelect
-            v-show="model.receiveType === '1'"
-            :value="receivers['c' + model.receiveType]"
-            :labelValue="receivers['n' + model.receiveType]"
-            :labelInValue="true"
-            :api="officeTreeData"
-            :params="userApiParams"
-            :canSelectParent="true"
-            :treeCheckable="true"
-            @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
-          />
-          <TreeSelect
-            v-show="model.receiveType === '2'"
-            :value="receivers['c' + model.receiveType]"
-            :labelValue="receivers['n' + model.receiveType]"
-            :labelInValue="true"
-            :api="officeTreeData"
-            :params="officeApiParams"
-            :canSelectParent="true"
-            :treeCheckable="true"
-            @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
-          />
-          <TreeSelect
-            v-show="model.receiveType === '3'"
-            :value="receivers['c' + model.receiveType]"
-            :labelValue="receivers['n' + model.receiveType]"
-            :labelInValue="true"
-            :api="roleTreeData"
-            :params="officeApiParams"
-            :canSelectParent="true"
-            :treeCheckable="true"
-            @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
-          />
-          <TreeSelect
-            v-show="model.receiveType === '4'"
-            :value="receivers['c' + model.receiveType]"
-            :labelValue="receivers['n' + model.receiveType]"
-            :labelInValue="true"
-            :api="postTreeData"
-            :params="officeApiParams"
-            :canSelectParent="true"
-            :treeCheckable="true"
-            @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
-          />
-        </Form.ItemRest>
+        <TreeSelect
+          v-show="model.receiveType === '1'"
+          :value="receivers['c' + model.receiveType]"
+          :labelValue="receivers['n' + model.receiveType]"
+          :labelInValue="true"
+          :api="officeTreeData"
+          :params="userApiParams"
+          :canSelectParent="true"
+          :treeCheckable="true"
+          @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
+        />
+        <TreeSelect
+          v-show="model.receiveType === '2'"
+          :value="receivers['c' + model.receiveType]"
+          :labelValue="receivers['n' + model.receiveType]"
+          :labelInValue="true"
+          :api="officeTreeData"
+          :params="officeApiParams"
+          :canSelectParent="true"
+          :treeCheckable="true"
+          @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
+        />
+        <TreeSelect
+          v-show="model.receiveType === '3'"
+          :value="receivers['c' + model.receiveType]"
+          :labelValue="receivers['n' + model.receiveType]"
+          :labelInValue="true"
+          :api="roleTreeData"
+          :params="officeApiParams"
+          :canSelectParent="true"
+          :treeCheckable="true"
+          @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
+        />
+        <TreeSelect
+          v-show="model.receiveType === '4'"
+          :value="receivers['c' + model.receiveType]"
+          :labelValue="receivers['n' + model.receiveType]"
+          :labelInValue="true"
+          :api="postTreeData"
+          :params="officeApiParams"
+          :canSelectParent="true"
+          :treeCheckable="true"
+          @change="(a, b) => onReceiversChange(model.receiveType, a, b)"
+        />
       </template>
     </BasicForm>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsMsgMsgInnerForm">
   import { ref, unref, computed } from 'vue';
-  import { Form } from 'ant-design-vue';
+  import { Form } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
