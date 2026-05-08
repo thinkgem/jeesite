@@ -23,10 +23,10 @@
       <template #expandedRowRender="{ record }">
         <div>编号: {{ record.id }}（这里生成内容自定义，也可以加载子表）</div>
       </template>
-      <template #customFilterIcon="filter">
+      <template #filterIcon="filter">
         <Icon icon="i-ant-design:search-outlined" :style="{ color: filter.filtered ? '#108ee9' : undefined }" />
       </template>
-      <template #customFilterDropdown="filter">
+      <template #filterDropdown="filter">
         <div class="p-2" v-if="filter.column.dataIndex == 'testInput'">
           <a-input
             ref="searchInput"
@@ -229,12 +229,12 @@
       //   { text: 'Female', value: '2' },
       // ],
       // filterMultiple: true,
-      // onFilter: (value: any, record: TestData) => {
+      // filterSearch: (value: any, record: Recordable) => {
       //   console.log('onFilter', value, record);
       //   return record.userName === value;
       // },
       // 方式二：插槽配置过滤窗口
-      customFilterDropdown: true,
+      filterDropdown: true,
     },
     {
       title: t('多行文本'),
@@ -244,11 +244,9 @@
       width: 130,
       align: 'left',
       // 根据数据状态改变单元格的颜色（例子）
-      customCell: (record: Recordable) => {
-        const color = record.status === '2' ? '#f8d8d8' : '';
+      onCell: (record: Recordable) => {
         return {
-          // innerHTML: record.testTextarea, // 原样输出，不进行html编码（例子）
-          style: `background-color: ${color} !important`,
+          class: record.status === '2' ? 'table-td-red' : '',
         };
       },
     },
@@ -501,5 +499,9 @@
     td {
       background-color: #fde7e7 !important;
     }
+  }
+
+  .ant-table-row .table-td-red {
+    background-color: #fbd8d8 !important;
   }
 </style>
