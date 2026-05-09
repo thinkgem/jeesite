@@ -41,7 +41,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleForm">
-  import { ref, unref, computed } from 'vue';
+  import { ref, unref, computed, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -65,7 +65,7 @@
   const op = ref<string>('');
   const sysCodeRef = ref<Array<Recordable>>([]);
   const sysCodesRef = ref<Array<string>>([]);
-  const formExtendRef = ref<InstanceType<typeof FormExtend>>();
+  const formExtendRef = shallowRef<InstanceType<typeof FormExtend>>();
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -86,7 +86,7 @@
         { pattern: /^[\u0391-\uFFE5\w]+$/, message: t('不能输入特殊字符') },
         {
           validator(_rule, value) {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
               if (!value || value === '') return resolve();
               checkRoleName(record.value.roleName || '', value)
                 .then((res) => (res ? resolve() : reject(t('角色名称已存在'))))
@@ -231,9 +231,18 @@
     },
   ];
 
+  const menuMapRef = ref({});
+  const checkedKeysRef = ref({});
+
   const treeRefs: Recordable<TreeActionType> = {};
   const setTreeRefs = (key: string) => (el: any) => {
-    if (el) treeRefs[key] = el;
+    if (el) {
+      treeRefs[key] = el;
+      const treeData = menuMapRef.value[key];
+      if (treeData) treeRefs[key]?.setTreeData(treeData);
+      const checkedKeys = checkedKeysRef.value[key];
+      if (checkedKeys) treeRefs[key]?.setCheckedKeys(checkedKeys);
+    }
   };
 
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
@@ -286,10 +295,12 @@
       }
       checkedKeys[item.sysCode].push(item.id);
     });
-    for (const key in res.menuMap) {
-      treeRefs[key].setTreeData(res.menuMap[key]);
-      treeRefs[key].setCheckedKeys(checkedKeys[key]);
-    }
+    menuMapRef.value = res.menuMap;
+    checkedKeysRef.value = checkedKeys;
+    // for (const key in res.menuMap) {
+    //   treeRefs[key]?.setTreeData(res.menuMap[key]);
+    //   treeRefs[key]?.setCheckedKeys(checkedKeys[key]);
+    // }
   }
 
   function getRoleMenuListJson() {

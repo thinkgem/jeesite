@@ -12,8 +12,8 @@
     </BasicForm>
   </div>
 </template>
-<script lang="ts" setup name="ViewsSysRoleAuthDataScope">
-  import { ref } from 'vue';
+<script lang="ts" setup name="SysRoleDataScope">
+  import { ref, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   // import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
@@ -30,7 +30,7 @@
   const record = ref<Recordable>({});
   const customDataScope = ref<Recordable>({});
 
-  const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
+  const customDataScopeRef = shallowRef<InstanceType<typeof CustomDataScope>>();
 
   const inputFormSchemas: FormSchema[] = [
     {

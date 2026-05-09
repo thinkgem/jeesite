@@ -23,26 +23,26 @@
       </a-button>
     </template>
     <Tabs class="jeesite-role-auth-field-scope-tabs" v-model:activeKey="activeKey">
-      <Tabs.TabPane key="1" :forceRender="true">
+      <TabPane key="1" :forceRender="true">
         <template #tab>
           <Icon icon="i-ant-design:deployment-unit-outlined" />
           <span class="pr-1"> {{ t('角色字段权限') }} </span>
         </template>
         <RoleFieldScopeList ref="roleFieldScopeListRef" />
-      </Tabs.TabPane>
-      <Tabs.TabPane key="2" :forceRender="true">
+      </TabPane>
+      <TabPane key="2" :forceRender="true">
         <template #tab>
           <Icon icon="i-ant-design:unordered-list-outlined" />
           <span class="pr-1"> {{ t('菜单字段权限') }} </span>
         </template>
         <MenuFieldScope ref="menuFieldScopeRef" />
-      </Tabs.TabPane>
+      </TabPane>
     </Tabs>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleAuthFieldScope">
-  import { computed, ref, unref } from 'vue';
-  import { Tabs } from 'ant-design-vue';
+  import { computed, ref, shallowRef, unref } from 'vue';
+  import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -70,8 +70,8 @@
   });
 
   const activeKey = ref<string>('1');
-  const roleFieldScopeListRef = ref<InstanceType<typeof RoleFieldScopeList>>();
-  const menuFieldScopeRef = ref<InstanceType<typeof MenuFieldScope>>();
+  const roleFieldScopeListRef = shallowRef<InstanceType<typeof RoleFieldScopeList>>();
+  const menuFieldScopeRef = shallowRef<InstanceType<typeof MenuFieldScope>>();
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });

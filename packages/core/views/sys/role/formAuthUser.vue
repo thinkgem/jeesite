@@ -37,8 +37,8 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleAuthDataScope">
-  import { ref, unref, computed } from 'vue';
-  import { Popconfirm } from 'ant-design-vue';
+  import { ref, unref, computed, shallowRef } from 'vue';
+  import { Popconfirm } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -73,7 +73,7 @@
         ')',
     };
   });
-  const listSelectRef = ref<any>(null);
+  const listSelectRef = shallowRef<InstanceType<typeof ListSelect>>();
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 6 },
@@ -223,7 +223,7 @@
   });
 
   function handleForm() {
-    listSelectRef.value.openSelectModal();
+    listSelectRef.value?.openSelectModal();
   }
 
   async function handleUserSelect(values: Recordable[]) {
@@ -238,7 +238,7 @@
     const res = await saveAuthUser(params);
     showMessage(res.message);
     handleSuccess();
-    listSelectRef.value.setSelectList([]);
+    listSelectRef.value?.setSelectList([]);
   }
 
   async function handleDelete(event: any) {

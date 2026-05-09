@@ -27,10 +27,10 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup name="ViewsSysRoleAuthDataScope">
+<script lang="ts" setup name="SysRuleDataScope">
   import { ref } from 'vue';
   import { pick } from 'lodash-es';
-  import { Alert } from 'ant-design-vue';
+  import { Alert } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   // import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { Icon } from '@jeesite/core/components/Icon';

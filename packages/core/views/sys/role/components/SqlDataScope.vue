@@ -7,14 +7,14 @@
   <div class="pt-2">
     <BasicForm @register="registerForm" />
     <div class="ml-5 mt-2">
-      <Alert message="提示：在后端配置文件开启 user.dataScopeRuleSql 参数后，方可使用该功能。" type="info" />
+      <Alert title="提示：在后端配置文件开启 user.dataScopeRuleSql 参数后，方可使用该功能。" type="info" />
     </div>
   </div>
 </template>
-<script lang="ts" setup name="ViewsSysRoleAuthDataScope">
+<script lang="ts" setup name="SysRoleSqlDataScope">
   import { ref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { Alert } from 'ant-design-vue';
+  import { Alert } from 'antdv-next';
   // import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { trim } from 'lodash-es';

@@ -26,7 +26,7 @@
     </template>
   </div>
 </template>
-<script lang="ts" setup name="ViewsSysRoleAuthDataScope">
+<script lang="ts" setup name="SysRoleCustomDataScope">
   import { ref, nextTick, type PropType } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useLocaleStore } from '@jeesite/core/store/modules/locale';
@@ -53,7 +53,9 @@
 
   const treeRefs: Recordable<TreeActionType> = {};
   const setTreeRefs = (key: string) => (el: any) => {
-    if (el) treeRefs[key] = el;
+    if (el) {
+      treeRefs[key] = el;
+    }
   };
 
   let loadTreeDataNum: number;
@@ -65,14 +67,14 @@
     menuCode.value = data.menuCode || '0';
     loadTreeDataNum = 0;
     await nextTick(() => {
-      if (immediate.value) {
-        for (const key of Object.keys(treeRefs)) {
-          treeRefs[key].setCheckedKeys([]);
-          treeRefs[key].reload();
-        }
-      } else {
-        immediate.value = true;
+      // if (immediate.value) {
+      for (const key of Object.keys(treeRefs)) {
+        treeRefs[key].setCheckedKeys([]);
+        treeRefs[key].reload();
       }
+      // } else {
+      //   immediate.value = true;
+      // }
     });
     isLoadUser.value = dataScopes.value
       .filter((item) => String(item.ctrlDataUrl).includes('isLoadUser=true'))
@@ -81,6 +83,7 @@
 
   function handleTreeDataChange() {
     const keys = Object.keys(treeRefs);
+    if (!keys) return;
     loadTreeDataNum = loadTreeDataNum + 1;
     if (loadTreeDataNum == keys.length) {
       let checkedKeys = {};
