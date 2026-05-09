@@ -152,7 +152,7 @@ export function useTableScroll(
     if (tableData.length === 0) {
       const emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed') as HTMLElement;
       if (emptyDataEl && emptyDataEl.style) {
-        emptyDataEl.style.height = `${height - 9}px`;
+        emptyDataEl.style.height = `${height - 12}px`;
       }
     }
   }
