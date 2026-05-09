@@ -23,29 +23,31 @@
     </template>
     <BasicForm @register="registerForm">
       <template #genBaseDir>
-        <Input v-model:value="genBaseDir">
-          <template #addonAfter>
-            <Dropdown class="cursor-pointer" :trigger="['click']" :dropMenuList="genBaseDirList">
-              {{ t('生成路径快速选择') }} <Icon icon="i-ant-design:down-outlined" />
+        <SpaceCompact class="w-full">
+          <Input v-model:value="genBaseDir" />
+          <SpaceAddon>
+            <Dropdown :trigger="['click']" :dropMenuList="genBaseDirList">
+              <span class="cursor-pointer">{{ t('生成路径快速选择') }} <Icon icon="i-ant-design:down-outlined" /></span>
             </Dropdown>
-          </template>
-        </Input>
+          </SpaceAddon>
+        </SpaceCompact>
       </template>
       <template #genFrontDir>
-        <Input v-model:value="genFrontDir">
-          <template #addonAfter>
-            <Dropdown class="cursor-pointer" :trigger="['click']" :dropMenuList="genFrontDirList">
-              {{ t('生成路径快速选择') }} <Icon icon="i-ant-design:down-outlined" />
+        <SpaceCompact class="w-full">
+          <Input v-model:value="genFrontDir" />
+          <SpaceAddon>
+            <Dropdown :trigger="['click']" :dropMenuList="genFrontDirList">
+              <span class="cursor-pointer">{{ t('生成路径快速选择') }} <Icon icon="i-ant-design:down-outlined" /></span>
             </Dropdown>
-          </template>
-        </Input>
+          </SpaceAddon>
+        </SpaceCompact>
       </template>
     </BasicForm>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysModuleForm">
   import { ref, unref, computed } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input, SpaceCompact, SpaceAddon } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
