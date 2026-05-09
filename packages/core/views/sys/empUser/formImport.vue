@@ -19,12 +19,9 @@
     </Upload>
     <div class="mt-4">
       <Checkbox v-model:checked="updateSupport">
-        <Tooltip placement="bottom" :mouse-enter-delay="1" :overlay-style="{ width: '100px' }">
-          <template #title>
-            {{ t('如果用户编码已经存在，更新这条数据。') }}
-          </template>
+        <span :title="t('如果用户编码已经存在，更新这条数据。')">
           {{ t('是否更新已经存在的用户数据') }}
-        </Tooltip>
+        </span>
       </Checkbox>
       <a-button @click="handleDownloadTemplate()" type="text">
         <Icon icon="i-fa:file-excel-o" />
@@ -38,15 +35,15 @@
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserForm">
   import { ref } from 'vue';
-  import { Upload, Checkbox, Tooltip } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { downloadByUrl } from '@jeesite/core/utils/file/download';
   import { Icon } from '@jeesite/core/components/Icon';
+  import { Upload } from '@jeesite/core/components/Upload';
+  import { Checkbox } from '@jeesite/core/components/Form';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   import { empUserImportData } from '@jeesite/core/api/sys/empUser';
-  import { FileType } from 'ant-design-vue/es/upload/interface';
   import { AxiosProgressEvent } from 'axios';
 
   const emit = defineEmits(['success', 'register']);
@@ -54,11 +51,11 @@
   const { t } = useI18n('sys.empUser');
   const { showMessage, showMessageModal } = useMessage();
 
-  const fileList = ref<FileType[]>([]);
+  const fileList = ref<any[]>([]);
   const updateSupport = ref(false);
   const uploadInfo = ref('');
 
-  const beforeUpload = (file: FileType) => {
+  const beforeUpload = (file: any) => {
     fileList.value = [file];
     return false;
   };
