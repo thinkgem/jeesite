@@ -40,28 +40,29 @@ export function useTableScroll(
     if (!tableEl) return;
 
     const bodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement;
-    if (!bodyEl) return;
 
-    tableScrollRef.value = bodyEl;
-    bodyEl.scrollTop = tableScrollRefY.value;
+    if (bodyEl) {
+      tableScrollRef.value = bodyEl;
+      bodyEl.scrollTop = tableScrollRefY.value;
 
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight;
-    const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth;
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight;
+      const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth;
 
-    if (hasScrollBarY) {
-      tableEl.classList.contains('hide-scrollbar-y') && tableEl.classList.remove('hide-scrollbar-y');
-    } else {
-      !tableEl.classList.contains('hide-scrollbar-y') && tableEl.classList.add('hide-scrollbar-y');
+      if (hasScrollBarY) {
+        tableEl.classList.contains('hide-scrollbar-y') && tableEl.classList.remove('hide-scrollbar-y');
+      } else {
+        !tableEl.classList.contains('hide-scrollbar-y') && tableEl.classList.add('hide-scrollbar-y');
+      }
+
+      if (hasScrollBarX) {
+        tableEl.classList.contains('hide-scrollbar-x') && tableEl.classList.remove('hide-scrollbar-x');
+      } else {
+        !tableEl.classList.contains('hide-scrollbar-x') && tableEl.classList.add('hide-scrollbar-x');
+      }
+
+      bodyEl.style.height = 'unset';
     }
-
-    if (hasScrollBarX) {
-      tableEl.classList.contains('hide-scrollbar-x') && tableEl.classList.remove('hide-scrollbar-x');
-    } else {
-      !tableEl.classList.contains('hide-scrollbar-x') && tableEl.classList.add('hide-scrollbar-x');
-    }
-
-    bodyEl!.style.height = 'unset';
 
     // if (!unref(getCanResize) || !unref(tableData) || tableData.length === 0) return;
     if (!unref(getCanResize) || !unref(tableData)) return;
@@ -143,7 +144,9 @@ export function useTableScroll(
     modalFn?.redoModalHeight?.();
 
     // Set body height
-    bodyEl!.style.height = `${height}px`;
+    if (bodyEl) {
+      bodyEl.style.height = `${height}px`;
+    }
 
     // Set empty data height
     if (tableData.length === 0) {
@@ -157,7 +160,7 @@ export function useTableScroll(
   function redoHeight() {
     nextTick(() => {
       calcTableHeight();
-    });
+    }).then();
   }
 
   watch(
@@ -207,9 +210,10 @@ export function useTableScroll(
     const tableWidth = tableWidthRef.value;
     const { canResize, scroll } = unref(propsRef);
     const canScrollX = tableWidth <= 0 || width <= 0 || tableWidth > width;
+    const tableData = unref(getDataSourceRef);
     return {
       x: canScrollX ? (canResize ? tableWidth : undefined) : tableWidth,
-      y: canResize ? unref(tableHeightRef) : undefined,
+      y: canResize && tableData.length > 0 ? unref(tableHeightRef) : undefined,
       scrollToFirstRowOnChange: true,
       ...scroll,
     };
