@@ -206,8 +206,10 @@
     api: logListData,
     beforeFetch: (params) => {
       // 查询前增加默认条件（例子）
-      // params.dateRange = ['2022-05-30', '2022-05-31'];
-      // getForm().setFieldsValue(params);
+      // if (!params.createDate_gte && !params.createDate_lte) {
+      //   params.dateRange = ['2022-05-30', '2022-05-31'];
+      //   getForm().setFieldsValue(params);
+      // }
       return params;
     },
     columns: tableColumns,
