@@ -28,7 +28,7 @@
         <Icon
           :icon="record.menuIcon || 'i-ant-design:file-outlined'"
           @click="expandCollapse(record)"
-          class="mr-2 w-5 text-base"
+          class="mr-2 w-5"
         />
         <a @click="handleForm({ menuCode: record.menuCode })" :title="record.menuNameRaw">
           {{ record.menuNameRaw }}
@@ -48,7 +48,7 @@
 </template>
 <script lang="ts" setup name="ViewsSysMenuList">
   import { ref, unref, watch, nextTick } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
