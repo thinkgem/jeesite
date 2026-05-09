@@ -27,7 +27,7 @@
           v-if="record.dictIcon"
           :icon="record.dictIcon"
           @click="expandCollapse(record)"
-          class="mr-2 w-5 text-base"
+          class="mr-2 w-5 text-base2"
         />
         <a @click="handleForm({ dictCode: record.dictCode })" :title="record.dictCode">
           {{ record.dictLabelRaw }}
@@ -161,7 +161,7 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 150,
+    width: 170,
     actions: (record: Recordable) => [
       {
         icon: 'i-clarity:note-edit-line',
