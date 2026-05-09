@@ -24,7 +24,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserAuthDataScope">
-  import { ref, unref } from 'vue';
+  import { ref, shallowRef, unref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -45,7 +45,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: t('二级管理员'),
   };
-  const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
+  const customDataScopeRef = shallowRef<InstanceType<typeof CustomDataScope>>();
 
   const inputFormSchemas: FormSchema[] = [
     {

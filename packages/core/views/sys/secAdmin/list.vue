@@ -25,7 +25,7 @@
           <Alert
             v-if="showAlert"
             :afterClose="handleAlertClose"
-            :message="`二级管理员是系统管理员的下级管理员，其控制权限类型包括：
+            :title="`二级管理员是系统管理员的下级管理员，其控制权限类型包括：
                     （1）拥有的权限：您的上级给您分配什么权限，您就能看什么数据，包括您所属机构及下级数据或其它树形结构数据的本级及下级数据；
                     （2）管理的权限：您能将某些数据的权限分配给他人，但自己没有该数据的读取权限，一般用于管理者身份的权限控制。
                     当前控制权限类型为：${ctrlPermi == '1' ? '拥有' : '管理'}的权限，可在后端配置文件修改 user.adminCtrlPermi 参数更改类型。`"
@@ -41,7 +41,7 @@
 </template>
 <script lang="ts" setup name="ViewsSysSecAdminList">
   import { onMounted, watch, ref, unref } from 'vue';
-  import { Alert } from 'ant-design-vue';
+  import { Alert } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
