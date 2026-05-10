@@ -154,7 +154,7 @@
 
 ### 在线演示
 
-1. 地址：<http://vue.jeesite.com/>
+1. 地址：<https://vue.jeesite.com>
 
 ### 快速运行
 
