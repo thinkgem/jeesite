@@ -486,7 +486,7 @@
     .ant-table-wrapper {
       padding: 0 6px 6px;
       background-color: @component-background;
-      border-radius: 5px;
+      border-radius: 10px;
 
       .ant-table {
         .ant-table-container {
