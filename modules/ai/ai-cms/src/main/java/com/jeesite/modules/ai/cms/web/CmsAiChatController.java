@@ -41,7 +41,7 @@ public class CmsAiChatController extends BaseController {
 	 * 获取聊天对话消息
 	 * @author ThinkGem
 	 */
-	@RequestMapping("/message")
+	@RequestMapping("message")
 	public List<Message> message(String id) {
 		return aiCmsChatService.getChatMessage(id);
 	}
@@ -50,7 +50,7 @@ public class CmsAiChatController extends BaseController {
 	 * 聊天对话列表
 	 * @author ThinkGem
 	 */
-	@RequestMapping("/list")
+	@RequestMapping("list")
 	public Collection<Map<String, Object>> list() {
 		return aiCmsChatService.getChatCacheMap().values().stream()
 			.sorted(Comparator.comparing(map -> (String) map.get("id"),
@@ -61,7 +61,7 @@ public class CmsAiChatController extends BaseController {
 	 * 新建或更新聊天对话
 	 * @author ThinkGem
 	 */
-	@RequestMapping("/save")
+	@RequestMapping("save")
 	public String save(String id, String title) {
 		Map<String, Object> map = aiCmsChatService.saveChatConversation(id, title);
 		return renderResult(Global.TRUE, "保存成功", map);
@@ -71,7 +71,7 @@ public class CmsAiChatController extends BaseController {
 	 * 删除聊天对话
 	 * @author ThinkGem
 	 */
-	@RequestMapping("/delete")
+	@RequestMapping("delete")
 	public String delete(@RequestParam String id) {
 		aiCmsChatService.deleteChatConversation(id);
 		return renderResult(Global.TRUE, "删除成功", id);
@@ -82,7 +82,7 @@ public class CmsAiChatController extends BaseController {
 	 * @author ThinkGem
 	 * http://127.0.0.1:8980/js/a/cms/chat/stream?id=1&message=你好
 	 */
-	@RequestMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	@RequestMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<ChatResponse> stream(@RequestParam String id, @RequestParam String message, HttpServletRequest request) {
 		return aiCmsChatService.chatStream(id, message, request);
 	}
@@ -92,7 +92,7 @@ public class CmsAiChatController extends BaseController {
 	 * @author ThinkGem
 	 * http://127.0.0.1:8980/js/a/cms/chat/text?message=你好
 	 */
-	@RequestMapping(value = "/text")
+	@RequestMapping(value = "text")
 	public String text(@RequestParam String message) {
 		return aiCmsChatService.chatText(message);
 	}
@@ -103,7 +103,7 @@ public class CmsAiChatController extends BaseController {
 	 * http://127.0.0.1:8980/js/a/cms/chat/json?message=张三
 	 * http://127.0.0.1:8980/js/a/cms/chat/json?message=打开客厅的灯
 	 */
-	@RequestMapping(value = "/json")
+	@RequestMapping(value = "json")
 	public Map<String, Object> json(@RequestParam String message) {
 		return aiCmsChatService.chatJson(message);
 	}
@@ -113,7 +113,7 @@ public class CmsAiChatController extends BaseController {
 	 * @author ThinkGem
 	 * http://127.0.0.1:8980/js/a/cms/chat/entity?message=北京
 	 */
-	@RequestMapping(value = "/entity")
+	@RequestMapping(value = "entity")
 	public List<Area> entity(@RequestParam String message) {
 		return aiCmsChatService.chatArea(message);
 	}
