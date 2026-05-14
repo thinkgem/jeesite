@@ -102,8 +102,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article 查询条件
 	 */
 	@Override
-	public List<Article> findList(Article entity) {
-		return super.findList(entity);
+	public List<Article> findList(Article article) {
+		return super.findList(article);
 	}
 	
 	/**
