@@ -299,10 +299,12 @@
         () => props.params,
         (newVal) => {
           if (isFirstLoaded.value) {
+            // 深拷贝当前参数用于下次比较
+            const currentParams = cloneDeep(newVal);
             // 只有当参数真正变化时才重新加载数据
-            if (!lastParams || !isEqual(newVal, lastParams)) {
+            if (!lastParams || !isEqual(currentParams, lastParams)) {
               loadTreeData();
-              lastParams = newVal;
+              lastParams = currentParams;
             }
           }
         },
@@ -315,6 +317,8 @@
           if (v && !isFirstLoaded.value) {
             loadTreeData();
             isFirstLoaded.value = true;
+            // 首次加载后保存参数快照
+            lastParams = cloneDeep(props.params);
           }
         },
       );
@@ -323,6 +327,8 @@
         if (props.immediate) {
           loadTreeData();
           isFirstLoaded.value = true;
+          // 首次加载后保存参数快照
+          lastParams = cloneDeep(props.params);
         }
       });
 
