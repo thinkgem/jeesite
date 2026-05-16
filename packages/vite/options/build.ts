@@ -21,9 +21,20 @@ export function createBuildOptions(viteEnv: ViteEnv): BuildOptions {
     chunkSizeWarningLimit: 9000,
     rolldownOptions: {
       output: {
+        strictExecutionOrder: true,
         entryFileNames: `assets/[name]-[hash]-${timestamp}.js`,
         chunkFileNames: `assets/[name]-[hash]-${timestamp}.js`,
         comments: false,
+        codeSplitting: {
+          minSize: 50_000,
+          groups: [
+            {
+              name: 'vue',
+              test: /node_modules[\\/](vue|vue-router|@vue|vue-demi|pinia)[\\/]/,
+              priority: 900,
+            },
+          ],
+        },
         minify: {
           compress: { dropConsole: true, dropDebugger: true },
         },
