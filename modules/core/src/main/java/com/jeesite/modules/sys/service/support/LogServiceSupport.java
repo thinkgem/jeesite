@@ -4,10 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.Date;
-
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
@@ -15,6 +11,9 @@ import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.LogDao;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.service.LogService;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * 日志 Service
@@ -76,7 +75,7 @@ public class LogServiceSupport extends CrudService<LogDao, Log>
 		Log log = new Log();
 		log.setCreateDate(date);
 		dao.deleteLogBefore(log);
+		logger.info("日志已清理完成。参数：year: {}, months: {}, days: {}", year, months, days);
 	}
-	
 	
 }
