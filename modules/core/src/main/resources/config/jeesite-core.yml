@@ -606,7 +606,7 @@ session:
   pcSessionTimeout: 1800000
   
   # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效，一般无需单独设置
-  #mobileAppSessionTimeout: 1800000
+  mobileAppSessionTimeout: 1800000
   
   # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话（设置为 0 关闭，微服务下只开启 core 即可）
   sessionTimeoutClean: 1200000
