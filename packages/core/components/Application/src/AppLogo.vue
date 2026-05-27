@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
-    <img src="@jeesite/assets/images/logo.png" v-show="!!!showTitle" />
+    <img :src="publicPath + '/resource/img/logo.png'" v-show="!!!showTitle" />
     <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
       {{ getTitle }}
     </div>
@@ -18,6 +18,7 @@
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { PageEnum } from '@jeesite/core/enums/pageEnum';
   import { useUserStore } from '@jeesite/core/store/modules/user';
+  import { publicPath } from '@jeesite/core/utils/env';
 
   const props = defineProps({
     /**
