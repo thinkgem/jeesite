@@ -36,20 +36,26 @@
 	<dependencies>
 
 		<dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-console</artifactId>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-console</artifactId>
 			<version>${nacos.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-server</artifactId>
 			<version>${nacos.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-mcp-registry-adaptor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-mcp-registry-adaptor</artifactId>
 			<version>${nacos.version}</version>
-        </dependency>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-mssql-datasource-plugin-ext</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>-->
 
 	</dependencies>
 
