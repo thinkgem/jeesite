@@ -27,6 +27,7 @@
   import { Input } from 'ant-design-vue';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
+  import { retranslateConfig } from '@jeesite/core/hooks/web/useI18n';
 
   import { useModal } from '@jeesite/core/components/Modal';
   import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
@@ -128,13 +129,16 @@
   }
 
   onMounted(async () => {
+    let configModule: any;
     if (props.config) {
-      configRef.value = props.config;
+      configModule = props.config;
     } else if (props.configFile) {
-      configRef.value = (await props.configFile).default as any;
+      configModule = (await props.configFile).default as any;
     } else {
-      configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
+      configModule = (await import(`./selectType/${props.selectType}.ts`)).default as any;
     }
+    const resolved = typeof configModule === 'function' ? configModule() : configModule;
+    configRef.value = retranslateConfig(resolved);
     modalComponent.value = createAsyncComponent(() => import('./ListSelectModal.vue'));
     if (!itemCode.value) {
       itemCode.value = configRef.value.itemCode;
