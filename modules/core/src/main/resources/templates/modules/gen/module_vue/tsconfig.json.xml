@@ -9,7 +9,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@jeesite/${moduleCode}/*": ["./*"]
     }
