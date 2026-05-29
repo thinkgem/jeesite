@@ -94,6 +94,11 @@ spring:
     banner-mode: "off"
     lazy-initialization: true
     
+  # 虚拟线程 JDK21+
+  threads:
+    virtual:
+      enabled: true
+    
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml

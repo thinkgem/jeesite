@@ -4,7 +4,6 @@
  */
 package com.jeesite.modules.config;
 
-import org.springframework.cloud.gateway.filter.NettyWriteResponseFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,12 +21,11 @@ import reactor.core.publisher.Mono;
  * @author ThinkGem
  */
 @Component
-public class GatewayCorsFilter implements WebFilter, Ordered {
-
+public class WebfluxCorsFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return NettyWriteResponseFilter.WRITE_RESPONSE_FILTER_ORDER + 1;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 
     @Override

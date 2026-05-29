@@ -8,7 +8,7 @@
 spring:
   cloud:
 
-    # 网关路由配置
+    # 网关路由配置（切换到 MVC，替换：webflux 为 webmvc；删除：/js）
     gateway.server.webflux:
       defaultFilters:
         - PreserveHostHeader
