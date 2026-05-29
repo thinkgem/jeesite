@@ -1,5 +1,4 @@
 import type { App } from 'vue';
-import type { I18nOptions } from 'vue-i18n';
 
 import { createI18n } from 'vue-i18n';
 import { setHtmlPageLang, setLoadLocalePool } from './helper';
@@ -10,8 +9,14 @@ const { fallback, availableLocales } = localeSetting;
 
 export let i18n: ReturnType<typeof createI18n>;
 
-// 使用 eager 模式同步加载所有语言包
-const localeModules = import.meta.glob('./lang/*.ts', { eager: true });
+// 静态导入默认语言包，确保同步模块（如依赖中直接 import 的文件）可正常使用 i18n
+import fallbackLocale from './lang/zh_CN';
+
+// 懒加载其他语言包，每个语言文件会成为独立 chunk（zh_CN 已静态导入，getLocaleMessages 中跳过）
+const localeLoaders = import.meta.glob<{ default: { message: Record<string, any> } }>('./lang/*.ts');
+
+// 已加载的语言包缓存
+const loadedLocaleMessages: Record<string, Record<string, any>> = {};
 
 // 获取当前语言（优先从 store 获取，失败则使用默认语言）
 function getCurrentLocale(): string {
@@ -24,76 +29,75 @@ function getCurrentLocale(): string {
   } catch (e) {
     // store 可能还未初始化
   }
-  return 'zh_CN';
+  return fallback;
 }
 
-// 从预加载的模块中获取语言消息
-export function getLocaleMessages(locale: string): Record<string, any> {
+// 异步加载指定语言的消息
+export async function getLocaleMessages(locale: string): Promise<Record<string, any>> {
+  if (loadedLocaleMessages[locale]) {
+    return loadedLocaleMessages[locale];
+  }
+
+  // 默认语言包已静态加载，直接返回
+  if (locale === fallback) {
+    const messages = fallbackLocale.message;
+    loadedLocaleMessages[locale] = messages;
+    return messages;
+  }
+
   const modulePath = `./lang/${locale}.ts`;
-  const defaultLocal = (localeModules[modulePath] as any)?.default;
-  return defaultLocal?.message ?? {};
+  const loader = localeLoaders[modulePath];
+  if (!loader) {
+    console.warn(`[i18n] 语言包 "${locale}" 不存在: ${modulePath}`);
+    return {};
+  }
+  const module = await loader();
+  const messages = module?.default?.message ?? {};
+  loadedLocaleMessages[locale] = messages;
+  return messages;
 }
 
-// 创建 i18n 配置对象
-function createI18nConfig(locale: string, messages: Record<string, any>): I18nOptions {
-  return {
-    legacy: false,
-    locale,
-    fallbackLocale: fallback,
-    messages: {
-      [locale]: messages,
-    },
-    availableLocales: availableLocales,
-    sync: true,
-    silentTranslationWarn: true,
-    missingWarn: false,
-    silentFallbackWarn: true,
-    fallbackWarn: false,
-  };
-}
+// 创建 i18n 实例，默认语言包已同步可用
+i18n = createI18n({
+  legacy: false,
+  locale: getCurrentLocale(),
+  fallbackLocale: fallback,
+  messages: {
+    [fallback]: fallbackLocale.message,
+  },
+  availableLocales: availableLocales,
+  sync: true,
+  silentTranslationWarn: true,
+  missingWarn: false,
+  silentFallbackWarn: true,
+  fallbackWarn: false,
+});
 
-// 立即创建一个基础的 i18n 实例（同步）
-function initBaseI18n() {
-  const locale = getCurrentLocale();
-  const messages = getLocaleMessages(locale);
-  i18n = createI18n(createI18nConfig(locale, messages));
-}
-
-// 在模块加载时立即创建基础实例
-initBaseI18n();
-
-// 异步加载语言包并更新 i18n 配置
-async function updateI18nConfig() {
+// 安装 i18n 实例，异步加载当前语言包（如果与默认语言不同）
+export async function setupI18n(app: App) {
   const locale = getCurrentLocale();
 
+  // 当前语言不是默认语言时，需要异步加载
+  if (locale !== fallback) {
+    const messages = await getLocaleMessages(locale);
+    if (messages && Object.keys(messages).length > 0) {
+      i18n.global.setLocaleMessage(locale, messages);
+    }
+  } else {
+    // 默认语言已静态加载，标记为已缓存
+    loadedLocaleMessages[fallback] = fallbackLocale.message;
+  }
+
+  (i18n.global.locale as any).value = locale;
   setHtmlPageLang(locale as any);
   setLoadLocalePool((loadLocalePool) => {
-    loadLocalePool.push(locale as any);
+    if (!loadLocalePool.includes(locale as any)) {
+      loadLocalePool.push(locale as any);
+    }
+    if (!loadLocalePool.includes(fallback as any)) {
+      loadLocalePool.push(fallback as any);
+    }
   });
-
-  return {
-    locale,
-    messages: {
-      [locale]: getLocaleMessages(locale),
-    },
-  };
-}
-
-// 安装 i18n 实例
-export async function setupI18n(app: App) {
-  // 如果还没有基础实例，先创建一个
-  if (!i18n) {
-    initBaseI18n();
-  }
-
-  // 更新语言配置（设置 HTML lang 等）
-  const config = await updateI18nConfig();
-
-  // 如果用户切换了语言，更新 i18n 实例
-  if (config.locale !== i18n.global.locale) {
-    i18n.global.setLocaleMessage(config.locale, config.messages[config.locale] || {});
-    (i18n.global.locale as any).value = config.locale;
-  }
 
   app.use(i18n);
 }

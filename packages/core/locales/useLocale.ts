@@ -30,8 +30,7 @@ export function useLocale() {
     return localeMessage?.antdLocale ?? {};
   });
 
-  // Switching the language will change the locale of useI18n
-  // And submit to configuration modification
+  // 切换语言时异步加载对应语言包
   async function changeLocale(locale: LocaleType) {
     const globalI18n = i18n.global;
     const currentLocale = unref(globalI18n.locale);
@@ -43,7 +42,9 @@ export function useLocale() {
       setI18nLanguage(locale);
       return locale;
     }
-    const message = getLocaleMessages(locale);
+
+    // 异步加载语言包
+    const message = await getLocaleMessages(locale);
     if (!message || Object.keys(message).length === 0) return;
 
     globalI18n.setLocaleMessage(locale, message);

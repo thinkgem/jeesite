@@ -9,8 +9,6 @@ import {
 
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
-const { t } = useI18n();
-
 export enum HandlerEnum {
   CHANGE_LAYOUT,
   CHANGE_THEME_COLOR,
@@ -58,33 +56,40 @@ export enum HandlerEnum {
   OPEN_ROUTE_TRANSITION,
 }
 
-export const contentModeOptions = [
-  {
-    value: ContentEnum.FULL,
-    label: t('layout.setting.contentModeFull'),
-  },
-  {
-    value: ContentEnum.FIXED,
-    label: t('layout.setting.contentModeFixed'),
-  },
-];
+export const contentModeOptions = () => {
+  const { t } = useI18n();
+  return [
+    {
+      value: ContentEnum.FULL,
+      label: t('layout.setting.contentModeFull'),
+    },
+    {
+      value: ContentEnum.FIXED,
+      label: t('layout.setting.contentModeFixed'),
+    },
+  ];
+};
 
-export const topMenuAlignOptions = [
-  {
-    value: TopMenuAlignEnum.CENTER,
-    label: t('layout.setting.topMenuAlignRight'),
-  },
-  {
-    value: TopMenuAlignEnum.START,
-    label: t('layout.setting.topMenuAlignLeft'),
-  },
-  {
-    value: TopMenuAlignEnum.END,
-    label: t('layout.setting.topMenuAlignCenter'),
-  },
-];
+export const topMenuAlignOptions = () => {
+  const { t } = useI18n();
+  return [
+    {
+      value: TopMenuAlignEnum.CENTER,
+      label: t('layout.setting.topMenuAlignRight'),
+    },
+    {
+      value: TopMenuAlignEnum.START,
+      label: t('layout.setting.topMenuAlignLeft'),
+    },
+    {
+      value: TopMenuAlignEnum.END,
+      label: t('layout.setting.topMenuAlignCenter'),
+    },
+  ];
+};
 
 export const getMenuTriggerOptions = (hideTop: boolean) => {
+  const { t } = useI18n();
   return [
     {
       value: TriggerEnum.NONE,
@@ -119,36 +124,42 @@ export const routerTransitionOptions = [
   };
 });
 
-export const menuTypeList = [
-  {
-    title: t('layout.setting.menuTypeMix'),
-    mode: MenuModeEnum.INLINE,
-    type: MenuTypeEnum.MIX,
-  },
-  {
-    title: t('layout.setting.menuTypeTopMenu'),
-    mode: MenuModeEnum.HORIZONTAL,
-    type: MenuTypeEnum.TOP_MENU,
-  },
-  {
-    title: t('layout.setting.menuTypeSidebar'),
-    mode: MenuModeEnum.INLINE,
-    type: MenuTypeEnum.SIDEBAR,
-  },
-  {
-    title: t('layout.setting.menuTypeMixSidebar'),
-    mode: MenuModeEnum.INLINE,
-    type: MenuTypeEnum.MIX_SIDEBAR,
-  },
-];
+export const menuTypeList = () => {
+  const { t } = useI18n();
+  return [
+    {
+      title: t('layout.setting.menuTypeMix'),
+      mode: MenuModeEnum.INLINE,
+      type: MenuTypeEnum.MIX,
+    },
+    {
+      title: t('layout.setting.menuTypeTopMenu'),
+      mode: MenuModeEnum.HORIZONTAL,
+      type: MenuTypeEnum.TOP_MENU,
+    },
+    {
+      title: t('layout.setting.menuTypeSidebar'),
+      mode: MenuModeEnum.INLINE,
+      type: MenuTypeEnum.SIDEBAR,
+    },
+    {
+      title: t('layout.setting.menuTypeMixSidebar'),
+      mode: MenuModeEnum.INLINE,
+      type: MenuTypeEnum.MIX_SIDEBAR,
+    },
+  ];
+};
 
-export const mixSidebarTriggerOptions = [
-  {
-    value: MixSidebarTriggerEnum.HOVER,
-    label: t('layout.setting.triggerHover'),
-  },
-  {
-    value: MixSidebarTriggerEnum.CLICK,
-    label: t('layout.setting.triggerClick'),
-  },
-];
+export const mixSidebarTriggerOptions = () => {
+  const { t } = useI18n();
+  return [
+    {
+      value: MixSidebarTriggerEnum.HOVER,
+      label: t('layout.setting.triggerHover'),
+    },
+    {
+      value: MixSidebarTriggerEnum.CLICK,
+      label: t('layout.setting.triggerClick'),
+    },
+  ];
+};
