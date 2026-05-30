@@ -181,7 +181,6 @@
 			<template>app/appApi.xml</template>
 			<template>app/appList.xml</template>
 			<template>app/appForm.xml</template>
-			<template>app/appPages.xml</template>
 		</category>
 	</tplCategory>
 	<!-- 属性类型 -->

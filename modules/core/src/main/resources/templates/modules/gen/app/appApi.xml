@@ -2,33 +2,78 @@
 <!-- Copyright (c) 2013-Now https://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>http.api.js</name>
-	<filePath>${frontDir}/common</filePath>
-	<fileName>http.api.${className}.js</fileName>
-	<content><![CDATA[
-const install = (Vue, vm) => {
-	vm.$u.api = {
+  <name>api.ts</name>
+  <filePath>${frontDir}/src/api${modulePath}${subModulePath}</filePath>
+  <fileName>${funName}.ts</fileName>
+  <content><![CDATA[
+/**
+ * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
+import { useConfig } from '@/hooks/useConfig'
+import { http } from '@/http/http'
 
-		// 请将以下 ${functionName} 代码，复制到 http.api.js 文件中
+/**
+ * ${functionName} API
+ */
 
-		// ${functionName} 开始
-		${className}: {
-			form: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/form', params),
-			list: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/listData', params),
-			save: (params = {}) => vm.$u.postJson(config.adminPath+'/${urlPrefix}/save', params),
-		<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
-			disable: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/disable', params),
-			enable: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/enable', params),
-		<% } %>
-			delete: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/delete', params),
-		},
-		// ${functionName} 结束
-
-	};
+/**
+ * 获取${functionName}表单
+ * @param params - 查询参数
+ */
+export function ${className}Form(params?: Record<string, any>) {
+  const config = useConfig()
+  return http.post<any>(`\${config.adminPath}/${urlPrefix}/form`, params)
 }
-export default {
-	install
+
+/**
+ * 获取${functionName}列表
+ * @param params - 查询参数
+ */
+export function ${className}ListData(params?: Record<string, any>) {
+  const config = useConfig()
+  return http.post<any>(`\${config.adminPath}/${urlPrefix}/listData`, params)
 }
+
+/**
+ * 保存${functionName}（JSON格式）
+ * @param params - 表单数据
+ */
+export function ${className}Save(params: Record<string, any>, data: Record<string, any>) {
+  const config = useConfig()
+  return http.postJson<any>(`\${config.adminPath}/${urlPrefix}/save`, params, data)
+}
+<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+
+/**
+ * 禁用${functionName}
+ * @param params - 表单数据
+ */
+export function ${className}Disable(params: Record<string, any>) {
+  const config = useConfig()
+  return http.post<any>(`\${config.adminPath}/${urlPrefix}/disable`, params)
+}
+
+/**
+ * 启用${functionName}
+ * @param params - 表单数据
+ */
+export function ${className}Enable(params: Record<string, any>) {
+  const config = useConfig()
+  return http.post<any>(`\${config.adminPath}/${urlPrefix}/enable`, params)
+}
+<% } %>
+
+/**
+ * 删除${functionName}
+ * @param params - 表单数据
+ */
+export function ${className}Delete(params: Record<string, any>) {
+  const config = useConfig()
+  return http.post<any>(`\${config.adminPath}/${urlPrefix}/delete`, params)
+}
+<% %>
 ]]>
-	</content>
+  </content>
 </template>
