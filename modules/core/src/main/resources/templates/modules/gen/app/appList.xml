@@ -2,162 +2,223 @@
 <!-- Copyright (c) 2013-Now https://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>list.vue</name>
-	<filePath>${frontDir}/pages/${urlPrefix}</filePath>
-	<fileName>list.vue</fileName>
-	<content><![CDATA[
-<template>
-	<view class="wrap">
-		<view class="search">
-			<u-search v-model="keywords" @custom="search" @search="search"></u-search>
-		</view>
-		<scroll-view class="scroll-list" scroll-y="true" @scrolltolower="loadMore">
-			<u-cell-group class="list" :border="false">
-				<u-swipe-action :options="options" v-for="(item, index) in list" :key="item.id" :index="index" @click="optionsClick">
-					<%
-						var idParam = '', idParam2 = '', queryField = '';
-						for(pk in table.pkList){
-						  idParam = idParam + (pk.attrName + '=\'+item.' + pk.attrName);
-						  idParam2 = idParam2 + ('item.' + pk.attrName);
-						  if (pkLP.index != table.pkList.~size) {
-							idParam = idParam + '&';
-							idParam2 = idParam2 + ' || ';
-						  }
-						}
-						for(c in table.columnList){
-							if(c.isList == "1"){
-							  // 如果是树结构的字段，则自动忽略
-							  if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
-								'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
-								  && c.attrName != table.treeViewCodeAttrName
-								  && c.attrName != table.treeViewNameAttrName){
-								continue;
-							  }
-					%>
-					<u-cell-item :arrow="true" @click="navTo('form?${idParam})">
-						<text slot="title">{{item.${c.attrName} || ${idParam2}}}</text>
-						<text slot="label">创建者：{{item.createBy}} &nbsp;|&nbsp; 时间：{{item.createDate}}</text>
-					</u-cell-item>
-					<%
-							  queryField = c.attrName;
-							  break;
-							}
-						}
-					%>
-				</u-swipe-action>
-			</u-cell-group>
-			<view class="loadmore" @click="loadMore">
-				<u-loadmore :status="loadStatus"></u-loadmore>
-			</view>
-		</scroll-view>
-		<view class="btn-plus" @click="navTo('form')">
-			<u-icon name="plus-circle-fill" size="90" color="#3d87ff"></u-icon>
-		</view>
-	</view>
-</template>
-<script>
-/**
+  <name>list.vue</name>
+  <filePath>${frontDir}/src/pages/${urlPrefix}</filePath>
+  <fileName>list.vue</fileName>
+  <content><![CDATA[
+<!--
  * Copyright (c) 2013-Now https://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+-->
+<script setup lang="ts">
+import { onShow } from '@dcloudio/uni-app'
+import { computed, ref } from 'vue'
+import { ${className}Delete, ${className}ListData } from '@/api${modulePath}${subModulePath}/${funName}'
+import { t } from '@/locale'
+
+defineOptions({
+  name: '${ClassName}List',
+})
+
+definePage({
+  style: {
+    navigationBarTitleText: '${functionName}',
+  },
+  excludeLoginPath: true,
+})
+
+// 搜索关键词
+const keywords = ref('')
+
+// 查询参数
+const query = ref({
+  pageNo: 1,
+  pageSize: 20,
+  <%
+    var queryField = '';
+    for(c in table.columnList){
+      if(c.isList == "1"){
+        // 如果是树结构的字段，则自动忽略
+        if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+          'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+          && c.attrName != table.treeViewCodeAttrName
+          && c.attrName != table.treeViewNameAttrName){
+          continue;
+        }
+  %>
+  ${c.attrName}: '',
+  <%
+        queryField = c.attrName;
+        break;
+      }
+    }
+  %>
+})
+
+// 列表数据
+const list = ref<any[]>([])
+
+// 总数
+const count = ref(0)
+
+// z-paging 引用
+const pagingRef = ref()
+
+// 加载文本
+const noMoreText = computed(() => {
+  if (count.value > 0) {
+    return `\${t('common.noMore')}，\${t('common.totalCount', { count: count.value })}`
+  }
+  return t('common.noMore')
+})
+
+/**
+ * 查询列表数据
  */
-export default {
-	data() {
-		return {
-			keywords: '',
-			query: {
-				pageNo: 1,
-				pageSize: 20
-			},
-			list: [],
-			count: 0,
-			loadStatus: 'loadmore',
-			options: [
-				{text: '上传', style: { background: '#414ee0'}},
-				{text: '删除', style: { background: '#dd524d'}}
-			]
-		};
-	},
-	onLoad() {
-		this.loadList();
-	},
-	onShow() {
-		if (uni.getStorageSync('refreshList') === true){
-			uni.removeStorageSync('refreshList');
-			this.search('');
-		}
-	},
-	methods: {
-		loadMore() {
-			this.loadStatus = "loading";
-			setTimeout(() => {
-				this.query.pageNo += 1;
-				this.loadList();
-			}, 100);
-		},
-		loadList() {
-			this.$u.api.${className}.list(this.query).then(res => {
-				if (!res.list || res.list.length == 0){
-					this.loadStatus = "nomore";
-					return;
-				}
-				this.list = this.list.concat(res.list);
-				this.count = res.count;
-				this.query.pageNo = res.pageNo;
-				this.query.pageSize = res.pageSize;
-				this.loadStatus = "loadmore";
-			});
-		},
-		optionsClick(rowIndex, btnIndex) {
-			let self = this, row = self.list[rowIndex];
-			if(btnIndex == 0) {
-				this.navTo('formUpload?id='+row.id);
-			} else if(btnIndex == 1) {
-				uni.showModal({
-					title: '提示',
-					content: '确认要删除该数据吗？',
-					showCancel: true,
-					success: function (res2) {
-						if (res2.confirm) {
-							self.$u.api.${className}.delete({id: row.id}).then(res => {
-								self.$u.toast(res.message);
-								if (res.result == 'true'){
-									self.list.splice(rowIndex, 1);
-								}
-							});
-						}
-					}
-				});
-			}
-		},
-		search(value) {
-			this.list = [];
-			this.query.pageNo = 0;
-			this.query.${queryField} = value;
-			this.loadList();
-		},
-		navTo(url) {
-			uni.navigateTo({
-				url: url
-			});
-		}
-	}
-};
+async function queryList(pageNo: number, pageSize: number) {
+  try {
+    const res = await ${className}ListData({
+      pageNo,
+      pageSize,
+  <% if(queryField != ''){ %>
+      ${queryField}: query.value.${queryField},
+  <% } %>
+    })
+    if (!res.list || res.list.length === 0) {
+      pagingRef.value.complete([])
+      return
+    }
+    count.value = res.count
+    query.value.pageNo = res.pageNo
+    query.value.pageSize = res.pageSize
+    pagingRef.value.complete(res.list)
+  }
+  catch (error) {
+    console.error('加载列表失败:', error)
+    uni.showToast({ title: t('common.loadFailed'), icon: 'none' })
+    pagingRef.value.complete([])
+  }
+}
+
+/**
+ * 搜索
+ */
+function handleSearch() {
+  <% if(queryField != ''){ %>
+  query.value.${queryField} = keywords.value
+  <% } %>
+  // 刷新 z-paging
+  pagingRef.value?.reload()
+}
+
+onShow(() => {
+  if (uni.getStorageSync('refreshList') === true) {
+    uni.removeStorageSync('refreshList')
+    keywords.value = ''
+    handleSearch()
+  }
+})
+
+/**
+ * 导航跳转
+ */
+function navTo(url: string) {
+  uni.navigateTo({ url })
+}
+
+/**
+ * 滑动删除
+ */
+async function handleDelete(item, index) {
+  uni.showModal({
+    title: t('common.tip'),
+    content: t('common.deleteConfirm'),
+    showCancel: true,
+    success: async (res2) => {
+      if (res2.confirm) {
+        try {
+          const res: any = await ${className}Delete({ id: item.id })
+          uni.showToast({ title: res.message, icon: 'none' })
+          if (res.result === 'true') {
+            list.value.splice(index, 1)
+          }
+        }
+        catch (error) {
+          console.error('删除失败:', error)
+        }
+      }
+    },
+  })
+}
 </script>
-<style lang="scss">
-page {
-	background-color: #f8f8f8;
-}
-.btn-plus {
-	position: absolute;
-	bottom: 50rpx;
-	right: 50rpx;
-	z-index: 1;
-	opacity: 0.6;
-}
-.btn-plus:hover {
-	opacity: 1;
-}
+
+<template>
+  <view class="list-page">
+    <z-paging
+      ref="pagingRef"
+      v-model="list"
+      :loading-more-no-more-text="noMoreText"
+      @query="queryList"
+    >
+      <template #top>
+        <wd-search v-model="keywords" :placeholder="$t('common.searchPlaceholder')" :hide-cancel="true" @search="handleSearch" @clear="handleSearch" />
+      </template>
+      <view v-for="(item, index) in list" :key="item.id">
+        <wd-swipe-action>
+          <template #right>
+            <view class="action">
+              <view class="button" style="background: #dd524d;" @click="handleDelete(item, index)">
+                {{ $t('common.delete') }}
+              </view>
+            </view>
+          </template>
+    <%
+      var idParam = '', idParam2 = '', listField = '';
+      for(pk in table.pkList){
+        idParam = idParam + (pk.attrName + '=\'+item.' + pk.attrName);
+        idParam2 = idParam2 + ('item.' + pk.attrName);
+        if (pkLP.index != table.pkList.~size) {
+        idParam = idParam + '&';
+        idParam2 = idParam2 + ' || ';
+        }
+      }
+      for(c in table.columnList){
+        if(c.isList == "1"){
+          // 如果是树结构的字段，则自动忽略
+          if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+          'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+            && c.attrName != table.treeViewCodeAttrName
+            && c.attrName != table.treeViewNameAttrName){
+            continue;
+          }
+          listField = c.attrName;
+    %>
+          <wd-cell
+            :title="item.${listField} || ${idParam2}"
+            :label="`\${$t('common.creator')}：\${item.createBy} | \${item.createDate}`"
+            :is-link="true"
+            :border="true"
+            :center="true"
+            title-width="90%"
+            @click="navTo(`form?id=\${item.id}`)"
+          />
+    <%
+          break;
+        }
+      }
+    %>
+        </wd-swipe-action>
+      </view>
+    </z-paging>
+    <js-add-button @click="navTo('form')" />
+  </view>
+</template>
+
+<style lang="scss" scoped>
+
 </style>
 <% %>
 ]]>
-	</content>
+  </content>
 </template>
