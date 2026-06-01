@@ -54,7 +54,7 @@ services:
   jeesite-cloud-redis:
     <<: *service-base
     container_name: jeesite-cloud-redis
-    image: docker.1ms.run/redis:7.2
+    image: docker.1ms.run/valkey/valkey:9.1.0
     ports:
       - "26379:6379"
     environment:
