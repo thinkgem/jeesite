@@ -41,6 +41,7 @@ services:
       - ./nacos/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/01-init.sql
       - ./nacos/db/mysql/nacos.sql:/docker-entrypoint-initdb.d/02-nacos.sql
       - ./modules/core/core/db/mysql/create_user.sql:/docker-entrypoint-initdb.d/03-core.sql
+      #- ../jeesite-cloud-/modules/seata/seata/script/server/db/mysql.sql:/docker-entrypoint-initdb.d/04-seata.sql
     command: >
       sh -c "ln -snf /usr/share/zoneinfo/$${TZ} /etc/localtime && 
       echo $${TZ} > /etc/timezone && docker-entrypoint.sh mysqld"
