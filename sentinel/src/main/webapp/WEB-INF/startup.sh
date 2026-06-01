@@ -12,7 +12,6 @@ echo ""
 if [ -n "$JAVA_HOME17" ] && [ -d "$JAVA_HOME17" ]; then
   export JAVA_HOME="$JAVA_HOME17" PATH="$JAVA_HOME17/bin:$PATH"
 fi
-mvn -v
 echo ""
 
 cd "$(cd "$(dirname "$0")"; pwd)"
@@ -38,4 +37,4 @@ else
   RUN_JAVA="$JAVA_HOME"/bin/java
 fi
 
-exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.launch.WarLauncher $@
+exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.WarLauncher $@
