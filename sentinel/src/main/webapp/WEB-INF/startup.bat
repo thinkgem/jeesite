@@ -18,7 +18,6 @@ cd %~dp0
 if defined JAVA_HOME17 (
   set "JAVA_HOME=%JAVA_HOME17%" & set "PATH=%JAVA_HOME17%\bin;%PATH%"
 )
-call mvn -v
 echo.
 
 title %cd%
@@ -51,7 +50,7 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.launch.WarLauncher %*
+call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.WarLauncher %*
 goto end
 
 :end
