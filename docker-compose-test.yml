@@ -36,7 +36,7 @@ services:
     <<: *service-base
     container_name: jeesite-cloud-test1
     volumes:
-      - ./.docker/modules:/data
+      - ./.docker/modules/test1:/data
       - ./modules/test1/test1/target:/app
 
   # ==================== Test2 ====================
@@ -44,7 +44,7 @@ services:
     <<: *service-base
     container_name: jeesite-cloud-test2
     volumes:
-      - ./.docker/modules:/data
+      - ./.docker/modules/test2:/data
       - ./modules/test2/test2/target:/app
 
   # ==================== Test3 ====================
@@ -52,7 +52,7 @@ services:
     <<: *service-base
     container_name: jeesite-cloud-test3
     volumes:
-      - ./.docker/modules:/data
+      - ./.docker/modules/test3:/data
       - ./modules/test3/test3/target:/app
 
 # ==================== Networks ====================

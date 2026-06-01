@@ -290,7 +290,7 @@ seata:
       username: nacos
       password: nacos
       namespace: ~
-      group : SEATA_GROUP
+      group: SEATA_GROUP
 
 # Sentinel
 resttemplate:

@@ -41,7 +41,7 @@ services:
         -Dspring.profiles.active=prod -DcustomLogPath=/data
         -Dserver.port=8981 -Djeesite.initdata=true
     volumes:
-      - ./.docker/modules:/data
+      - ./.docker/modules/core:/data
       - ./modules/core/core/target:/app
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8981/js"]
@@ -59,7 +59,7 @@ services:
         -Dspring.profiles.active=prod -DcustomLogPath=/data
         -Dserver.port=8988
     volumes:
-      - ./.docker/modules:/data
+      - ./.docker/modules/files:/data
       - ./modules/core/files/target:/app
     depends_on:
       jeesite-cloud-core:
@@ -80,7 +80,7 @@ services:
       <<: *common-env
       JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data
     volumes:
-      - ./.docker/modules:/data
+      - ./.docker/gateway:/data
       - ./gateway/target:/app
     depends_on:
       jeesite-cloud-core:

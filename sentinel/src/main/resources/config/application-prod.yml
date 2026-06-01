@@ -1,0 +1,53 @@
+
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod
+
+#======================================#
+#========== Cloud settings ============#
+#======================================#
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例主机名称
+    hostname: ${LOCAL_HOST:127.0.0.1}
+    # 实例是否允许使用IP
+    preferIpAddress: false
+
+  # 客户端设置
+  client:
+    # 注册中心地址（集群时指定另外一个注册中心地址）
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:127.0.0.1}:${EUREKA_PORT:8970}/eureka/
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+  
+  # 分布式配置中心
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: jeesite-cloud-config
+        
+    # Consul 服务发现
+    consul:
+      host: ${CONSUL_HOST:127.0.0.1}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        hostname: ${LOCAL_HOST:127.0.0.1}
+        preferIpAddress: false
+        
+    # 服务注册和配置
+    nacos:
+      server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+
+    # 服务发现与注册优选IP前缀
+    #inetutils:
+    #  preferred-networks: 192.168.56.
