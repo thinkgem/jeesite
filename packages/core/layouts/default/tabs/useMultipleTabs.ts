@@ -1,6 +1,5 @@
 import { toRaw, ref, nextTick } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
-import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 import { useSortable } from '@jeesite/core/hooks/web/useSortable';
 import { useMultipleTabStore } from '@jeesite/core/store/modules/multipleTab';
 import { isNullAndUnDef } from '@jeesite/core/utils/is';
@@ -53,10 +52,9 @@ export function initAffixTabs(): string[] {
 export function useTabsDrag(affixTextList: string[]) {
   const tabStore = useMultipleTabStore();
   const { multiTabsSetting } = projectSetting;
-  const { prefixCls } = useDesign('multiple-tabs');
   nextTick(() => {
     if (!multiTabsSetting.canDrag) return;
-    const el = document.querySelectorAll(`.${prefixCls} .ant-tabs-nav-list`)?.[0] as HTMLElement;
+    const el = document.querySelectorAll('.jeesite-multiple-tabs .ant-tabs-nav-list')?.[0] as HTMLElement;
     const { initSortable } = useSortable(el, {
       filter: (e: Event) => {
         const text = (e as ChangeEvent)?.target?.innerText;

@@ -2,7 +2,7 @@
   <Drawer
     v-if="getIsMobile"
     placement="left"
-    :class="prefixCls"
+    class="jeesite-layout-sider-wrapper"
     :width="getMenuWidth"
     :getContainer="false"
     :open="!getCollapsed"
@@ -22,13 +22,11 @@
 
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   export default defineComponent({
     name: 'SiderWrapper',
     components: { Sider, Drawer, MixSider },
     setup() {
-      const { prefixCls } = useDesign('layout-sider-wrapper');
       const { getIsMobile } = useAppInject();
       const { setMenuSetting, getCollapsed, getMenuWidth, getIsMixSidebar } = useMenuSetting();
 
@@ -38,14 +36,12 @@
         });
       }
 
-      return { prefixCls, getIsMobile, getCollapsed, handleClose, getMenuWidth, getIsMixSidebar };
+      return { getIsMobile, getCollapsed, handleClose, getMenuWidth, getIsMixSidebar };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-sider-wrapper';
-
-  .@{prefix-cls} {
+  .jeesite-layout-sider-wrapper {
     .ant-drawer-body {
       height: 100vh;
       padding: 0;

@@ -1,12 +1,12 @@
 <template>
   <li :class="getClass">
     <template v-if="!getCollapse">
-      <div :class="`${prefixCls}-submenu-title`" @click.stop="handleClick" :style="getItemStyle">
+      <div class="jeesite-menu-submenu-title" @click.stop="handleClick" :style="getItemStyle">
         <slot name="title"></slot>
-        <Icon icon="i-eva:arrow-ios-downward-outline" :size="14" :class="`${prefixCls}-submenu-title-icon`" />
+        <Icon icon="i-eva:arrow-ios-downward-outline" :size="14" class="jeesite-menu-submenu-title-icon" />
       </div>
       <CollapseTransition>
-        <ul :class="prefixCls" v-show="opened">
+        <ul class="jeesite-menu" v-show="opened">
           <slot></slot>
         </ul>
       </CollapseTransition>
@@ -14,7 +14,7 @@
 
     <Popover
       placement="right"
-      :classes="{ container: `${prefixCls}-menu-popover` }"
+      :classes="{ container: 'jeesite-menu-popover' }"
       v-else
       :open="getIsOpend"
       @open-change="handleOpenChange"
@@ -25,8 +25,8 @@
         <div
           :class="[
             {
-              [`${prefixCls}-submenu-popup`]: !getParentSubMenu,
-              [`${prefixCls}-submenu-collapsed-show-tit`]: collapsedShowTitle,
+              ['jeesite-menu-submenu-popup']: !getParentSubMenu,
+              ['jeesite-menu-submenu-collapsed-show-tit']: collapsedShowTitle,
             },
           ]"
         >
@@ -36,13 +36,13 @@
           v-if="getParentSubMenu"
           icon="i-eva:arrow-ios-downward-outline"
           :size="14"
-          :class="`${prefixCls}-submenu-title-icon`"
+          class="jeesite-menu-submenu-title-icon"
         />
       </div>
       <!-- eslint-disable-next-line -->
       <template #content v-show="opened">
         <div v-bind="getEvents(true)">
-          <ul :class="[prefixCls, `${prefixCls}-${getTheme}`, `${prefixCls}-popup`]">
+          <ul :class="['jeesite-menu', `jeesite-menu-${getTheme}`, 'jeesite-menu-popup']">
             <slot></slot>
           </ul>
         </div>
@@ -65,7 +65,6 @@
     onBeforeMount,
     inject,
   } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useMenuItem } from './useMenu';
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
@@ -110,8 +109,6 @@
 
       const { getParentSubMenu, getItemStyle, getParentMenu, getParentList } = useMenuItem(instance);
 
-      const { prefixCls } = useDesign('menu');
-
       const subMenuEmitter = mitt();
 
       const { rootMenuEmitter } = useSimpleRootMenuContext();
@@ -130,13 +127,13 @@
 
       const getClass = computed(() => {
         return [
-          `${prefixCls}-submenu`,
+          'jeesite-menu-submenu',
           {
-            [`${prefixCls}-item-active`]: state.active,
-            [`${prefixCls}-opened`]: state.opened,
-            [`${prefixCls}-submenu-disabled`]: props.disabled,
-            [`${prefixCls}-submenu-has-parent-submenu`]: unref(getParentSubMenu),
-            [`${prefixCls}-child-item-active`]: state.active,
+            ['jeesite-menu-item-active']: state.active,
+            ['jeesite-menu-opened']: state.opened,
+            ['jeesite-menu-submenu-disabled']: props.disabled,
+            ['jeesite-menu-submenu-has-parent-submenu']: unref(getParentSubMenu),
+            ['jeesite-menu-child-item-active']: state.active,
           },
         ];
       });
@@ -162,11 +159,11 @@
       const getSubClass = computed(() => {
         const isActive = rootProps.activeSubMenuNames.includes(props.name as string);
         return [
-          `${prefixCls}-submenu-title`,
+          'jeesite-menu-submenu-title',
           {
-            [`${prefixCls}-submenu-active`]: isActive,
-            [`${prefixCls}-submenu-active-border`]: isActive && level === 0,
-            [`${prefixCls}-submenu-collapse`]: unref(getCollapse) && level === 0,
+            ['jeesite-menu-submenu-active']: isActive,
+            ['jeesite-menu-submenu-active-border']: isActive && level === 0,
+            ['jeesite-menu-submenu-collapse']: unref(getCollapse) && level === 0,
           },
         ];
       });
@@ -310,7 +307,6 @@
 
       return {
         getClass,
-        prefixCls,
         getCollapse,
         getItemStyle,
         handleClick,

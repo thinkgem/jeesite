@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-image-preview">
     <PreviewGroup>
       <slot v-if="!imageList || $slots.default"></slot>
       <template v-else>
@@ -19,7 +19,6 @@
   import { defineComponent, computed } from 'vue';
 
   import { Image } from 'antdv-next';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { isString } from '@jeesite/core/utils/is';
 
@@ -56,8 +55,6 @@
     },
     props,
     setup(props) {
-      const { prefixCls } = useDesign('image-preview');
-
       const getImageList = computed((): any[] => {
         const { imageList } = props;
         if (!imageList) {
@@ -75,16 +72,13 @@
       });
 
       return {
-        prefixCls,
         getImageList,
       };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-image-preview';
-
-  .@{prefix-cls} {
+  .jeesite-image-preview {
     .ant-image {
       margin-right: 10px;
     }

@@ -43,7 +43,6 @@
   import DrawerHeader from './components/DrawerHeader.vue';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { basicProps } from './props';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useBreakpoint } from '@jeesite/core/hooks/event/useBreakpoint';
 
@@ -58,7 +57,6 @@
   const propsRef = ref<Partial<Nullable<DrawerProps>>>(null);
 
   const { t } = useI18n();
-  const { prefixVar, prefixCls } = useDesign('basic-drawer');
   const { realWidthRef, screenEnum } = useBreakpoint();
 
   const drawerInstance: DrawerInstance = {
@@ -77,7 +75,7 @@
   });
 
   const getWrapClassName = computed(() => {
-    return `${prefixCls} ${props.wrapClassName || ''}`;
+    return `jeesite-basic-drawer ${props.wrapClassName || ''}`;
   });
 
   const getProps = computed((): DrawerProps => {
@@ -93,12 +91,11 @@
       if (!width) {
         opt.width = '100%';
       }
-      const detailCls = `${prefixCls}__detail`;
+      const detailCls = 'jeesite-basic-drawer__detail';
       opt.class = wrapClassName ? `${wrapClassName} ${detailCls}` : detailCls;
 
       if (!getContainer) {
-        // TODO type error?
-        opt.getContainer = `.${prefixVar}-layout-content` as any;
+        opt.getContainer = `.jeesite-layout-content` as any;
       }
     } else {
       opt.class = unref(getWrapClassName);
@@ -251,10 +248,9 @@
 <style lang="less">
   @header-height: 60px;
   @detail-header-height: 40px;
-  @prefix-cls: ~'jeesite-basic-drawer';
   @prefix-cls-detail: ~'jeesite-basic-drawer__detail';
 
-  .jeesite.ant-drawer .@{prefix-cls} {
+  .jeesite.ant-drawer .jeesite-basic-drawer {
     overflow: hidden;
 
     .ew-resize {

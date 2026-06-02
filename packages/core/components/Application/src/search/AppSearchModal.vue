@@ -2,11 +2,11 @@
   <Teleport to="body">
     <transition name="zoom-fade" mode="out-in">
       <div :class="getClass" @click.stop v-if="open">
-        <div :class="`${prefixCls}-content`" v-click-outside="handleClose">
-          <div :class="`${prefixCls}-input__wrapper`">
+        <div class="jeesite-app-search-modal-content" v-click-outside="handleClose">
+          <div class="jeesite-app-search-modal-input__wrapper">
             <a-input
               ref="inputRef"
-              :class="`${prefixCls}-input`"
+              class="jeesite-app-search-modal-input"
               :placeholder="t('common.searchText')"
               :allow-clear="true"
               @change="handleSearch"
@@ -15,16 +15,16 @@
                 <Icon icon="i-ant-design:search-outlined" class="text-gray-500" />
               </template>
             </a-input>
-            <span :class="`${prefixCls}-cancel`" @click="handleClose">
+            <span class="jeesite-app-search-modal-cancel" @click="handleClose">
               {{ t('common.cancelText') }}
             </span>
           </div>
 
-          <div :class="`${prefixCls}-not-data`" v-show="getIsNotData">
+          <div class="jeesite-app-search-modal-not-data" v-show="getIsNotData">
             {{ t('component.app.searchNotData') }}
           </div>
 
-          <ul :class="`${prefixCls}-list`" v-show="!getIsNotData" ref="scrollWrap">
+          <ul class="jeesite-app-search-modal-list" v-show="!getIsNotData" ref="scrollWrap">
             <li
               :ref="setRefs(index)"
               v-for="(item, index) in searchResult"
@@ -33,19 +33,19 @@
               @mouseenter="handleMouseenter"
               @click="handleEnter"
               :class="[
-                `${prefixCls}-list__item`,
+                'jeesite-app-search-modal-list__item',
                 {
-                  [`${prefixCls}-list__item--active`]: activeIndex === index,
+                  ['jeesite-app-search-modal-list__item--active']: activeIndex === index,
                 },
               ]"
             >
-              <div :class="`${prefixCls}-list__item-icon`">
+              <div class="jeesite-app-search-modal-list__item-icon">
                 <Icon :icon="item.icon || 'mdi:form-select'" :size="20" />
               </div>
-              <div :class="`${prefixCls}-list__item-text`">
+              <div class="jeesite-app-search-modal-list__item-text">
                 {{ item.name }}
               </div>
-              <div :class="`${prefixCls}-list__item-enter`">
+              <div class="jeesite-app-search-modal-list__item-enter">
                 <Icon icon="i-ant-design:enter-outlined" :size="20" />
               </div>
             </li>
@@ -63,7 +63,6 @@
   import { Icon } from '@jeesite/core/components/Icon';
   // @ts-ignore
   import vClickOutside from '@jeesite/core/directives/clickOutside';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRefs } from '@jeesite/core/hooks/core/useRefs';
   import { useMenuSearch } from './useMenuSearch';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -79,7 +78,6 @@
   const inputRef = shallowRef<Nullable<HTMLElement>>();
 
   const { t } = useI18n();
-  const { prefixCls } = useDesign('app-search-modal');
   const { refs, setRefs } = useRefs();
   const { getIsMobile } = useAppInject();
 
@@ -93,9 +91,9 @@
 
   const getClass = computed(() => {
     return [
-      prefixCls,
+      'jeesite-app-search-modal',
       {
-        [`${prefixCls}--mobile`]: unref(getIsMobile),
+        ['jeesite-app-search-modal--mobile']: unref(getIsMobile),
       },
     ];
   });
@@ -116,9 +114,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-app-search-modal';
-  @footer-prefix-cls: ~'jeesite-app-search-footer';
-  .@{prefix-cls} {
+  .jeesite-app-search-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -137,25 +133,25 @@
         width: 100%;
       }
 
-      .@{prefix-cls}-input {
+      .jeesite-app-search-modal-input {
         width: calc(100% - 38px);
       }
 
-      .@{prefix-cls}-cancel {
+      .jeesite-app-search-modal-cancel {
         display: inline-block;
       }
 
-      .@{prefix-cls}-content {
+      .jeesite-app-search-modal-content {
         width: 100%;
         height: 100%;
         border-radius: 0;
       }
 
-      .@{footer-prefix-cls} {
+      .jeesite-app-search-footer {
         display: none;
       }
 
-      .@{prefix-cls}-list {
+      .jeesite-app-search-modal-list {
         height: calc(100% - 80px);
         max-height: unset;
 
@@ -246,7 +242,7 @@
           color: #fff;
           background-color: @primary-color;
 
-          .@{prefix-cls}-list__item-enter {
+          .jeesite-app-search-modal-list__item-enter {
             opacity: 1;
           }
         }

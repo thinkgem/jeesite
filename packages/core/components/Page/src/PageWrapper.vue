@@ -119,7 +119,6 @@
   import { useDebounceFn } from '@vueuse/core';
   import PageFooter from './PageFooter.vue';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useEmitter } from '@jeesite/core/store/modules/user';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { omit } from 'lodash-es';
@@ -165,7 +164,6 @@
   const headerRef = shallowRef(null);
   const contentRef = shallowRef(null);
   const footerRef = shallowRef(null);
-  const { prefixCls } = useDesign('page-wrapper');
 
   const collapsed = ref<boolean>(false);
   const sidebar = !!slots.sidebar;
@@ -196,9 +194,9 @@
 
   const getClass = computed(() => {
     return [
-      prefixCls,
+      'jeesite-page-wrapper',
       {
-        [`${prefixCls}--dense`]: props.dense || sidebar,
+        ['jeesite-page-wrapper--dense']: props.dense || sidebar,
       },
       attrs.class ?? {},
     ];
@@ -288,10 +286,10 @@
   const getContentClass = computed(() => {
     const { contentBackground, contentClass } = props;
     return [
-      `${prefixCls}-content`,
+      'jeesite-page-wrapper-content',
       contentClass,
       {
-        [`${prefixCls}-content-bg`]: contentBackground && !sidebar,
+        ['jeesite-page-wrapper-content-bg']: contentBackground && !sidebar,
       },
     ];
   });
@@ -359,9 +357,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-page-wrapper';
-
-  .@{prefix-cls} {
+  .jeesite-page-wrapper {
     position: relative;
     animation-duration: 0.1s;
     animation-name: fade-in;
@@ -376,7 +372,7 @@
       }
     }
 
-    .@{prefix-cls}-content {
+    .jeesite-page-wrapper-content {
       // margin: 16px;
       padding: 12px;
       margin-bottom: 13px;
@@ -420,7 +416,7 @@
     }
 
     &--dense {
-      .@{prefix-cls}-content {
+      .jeesite-page-wrapper-content {
         margin: 0;
         padding: 0;
         border-radius: 0;
@@ -514,7 +510,7 @@
   }
 
   html[data-theme='dark'] {
-    .@{prefix-cls} {
+    .jeesite-page-wrapper {
       .jeesite.ant-layout {
         background: transparent;
       }

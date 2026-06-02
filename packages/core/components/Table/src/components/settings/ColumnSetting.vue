@@ -12,11 +12,11 @@
       placement="bottomLeft"
       trigger="click"
       @open-change="handleOpenChange"
-      :classes="{ container: `${prefixCls}__cloumn-list` }"
+      :classes="{ container: 'jeesite-basic-column-setting__cloumn-list' }"
       :getPopupContainer="getPopupContainer"
     >
       <template #title>
-        <div :class="`${prefixCls}__popover-title`">
+        <div class="jeesite-basic-column-setting__popover-title">
           <Checkbox :indeterminate="indeterminate" v-model:checked="checkAll" @change="onCheckAllChange">
             {{ t('component.table.settingColumnShow') }}
           </Checkbox>
@@ -38,7 +38,7 @@
         <ScrollContainer>
           <CheckboxGroup v-model:value="checkedList" @change="onChange" ref="columnListRef">
             <template v-for="item in checkOptions" :key="item.value">
-              <div :class="`${prefixCls}__check-item`" v-if="!('ifShow' in item && !item.ifShow)">
+              <div class="jeesite-basic-column-setting__check-item" v-if="!('ifShow' in item && !item.ifShow)">
                 <DragOutlined class="table-column-drag-icon" />
                 <Checkbox :value="item.value">
                   <template v-if="Array.isArray(item.label)">
@@ -58,7 +58,7 @@
                   <Icon
                     icon="i-line-md:arrow-align-left"
                     :class="[
-                      `${prefixCls}__fixed-left`,
+                      'jeesite-basic-column-setting__fixed-left',
                       {
                         active: item.fixed === 'left',
                         disabled: !checkedList.includes(item.value),
@@ -75,7 +75,7 @@
                   <Icon
                     icon="i-line-md:arrow-align-right"
                     :class="[
-                      `${prefixCls}__fixed-right`,
+                      'jeesite-basic-column-setting__fixed-right',
                       {
                         active: item.fixed === 'right',
                         disabled: !checkedList.includes(item.value),
@@ -113,7 +113,6 @@
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useTableContext } from '../../hooks/useTableContext';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import type { BasicColumn, ColumnChangeParam } from '../../types/table';
   import { isFunction, isNullAndUnDef } from '@jeesite/core/utils/is';
   import { getPopupContainer as getParentContainer } from '@jeesite/core/utils';
@@ -152,7 +151,6 @@
 
     setup(_, { emit, attrs }) {
       const { t } = useI18n();
-      const { prefixCls } = useDesign('basic-column-setting');
 
       const table = useTableContext();
 
@@ -399,7 +397,6 @@
         onCheckAllChange,
         onChange,
         reset,
-        prefixCls,
         columnListRef,
         handleOpenChange,
         handleIndexCheckChange,
@@ -412,14 +409,12 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-column-setting';
-
   .table-column-drag-icon {
     margin: 0 5px;
     cursor: move;
   }
 
-  .@{prefix-cls} {
+  .jeesite-basic-column-setting {
     &__popover-title {
       position: relative;
       display: flex;

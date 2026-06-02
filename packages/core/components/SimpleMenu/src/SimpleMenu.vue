@@ -3,7 +3,7 @@
     v-bind="getBindValues"
     :activeName="activeName"
     :openNames="getOpenKeys"
-    :class="prefixCls"
+    class="jeesite-simple-menu"
     :activeSubMenuNames="activeSubMenuNames"
     @select="handleSelect"
   >
@@ -19,7 +19,6 @@
   import type { Menu as MenuType } from '@jeesite/core/router/types';
   import type { RouteLocationNormalizedLoaded } from 'vue-router';
   import { defineComponent, computed, ref, Ref, unref, reactive, toRefs, watch } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import Menu from './components/Menu.vue';
   import SimpleSubMenu from './SimpleSubMenu.vue';
   import { listenerRouteChange } from '@jeesite/core/logics/mitt/routeChange';
@@ -67,7 +66,6 @@
       });
 
       const { currentRoute } = useRouter();
-      const { prefixCls } = useDesign('simple-menu');
       const { items, accordion, mixSider, collapse } = toRefs(props) as {
         items: Ref<MenuType[]>;
         accordion: Ref<boolean>;
@@ -157,7 +155,6 @@
       }
 
       return {
-        prefixCls,
         getBindValues,
         handleSelect,
         getOpenKeys,

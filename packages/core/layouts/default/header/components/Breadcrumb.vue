@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefixCls, `${prefixCls}--${theme}`]">
+  <div :class="['jeesite-layout-breadcrumb', `jeesite-layout-breadcrumb--${theme}`]">
     <Breadcrumb :items="itemsRef">
       <template #itemRender="{ route }">
         <Icon class="mr-1" :icon="getIcon(route)" v-if="getShowBreadCrumbIcon && getIcon(route)" />
@@ -18,7 +18,6 @@
   import { Breadcrumb } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -35,7 +34,6 @@
 
   const itemsRef = ref<any[]>([]);
   const { currentRoute } = useRouter();
-  const { prefixCls } = useDesign('layout-breadcrumb');
   const { getShowBreadCrumbIcon } = useRootSetting();
   const { t } = useI18n();
   const go = useGo();
@@ -121,9 +119,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-breadcrumb';
-
-  .@{prefix-cls} {
+  .jeesite-layout-breadcrumb {
     display: flex;
     padding: 0 8px;
     align-items: center;

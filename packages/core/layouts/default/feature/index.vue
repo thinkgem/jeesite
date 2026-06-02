@@ -4,7 +4,6 @@
 
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useHeaderSetting } from '@jeesite/core/hooks/setting/useHeaderSetting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useUserStoreWithOut } from '@jeesite/core/store/modules/user';
 
   import { SettingButtonPositionEnum } from '@jeesite/core/enums/appEnum';
@@ -25,7 +24,6 @@
     setup() {
       const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } = useRootSetting();
       const userStore = useUserStoreWithOut();
-      const { prefixCls } = useDesign('setting-drawer-fearure');
       const { getShowHeader } = useHeaderSetting();
       const { getFullContent } = useFullContent();
 
@@ -47,7 +45,6 @@
         getTarget: () => document.body,
         getUseOpenBackTop,
         getIsFixedSettingDrawer,
-        prefixCls,
         getIsSessionTimeout,
       };
     },
@@ -57,14 +54,12 @@
 <template>
   <LayoutLockPage />
   <ABackTop v-if="getUseOpenBackTop" :target="getTarget" />
-  <SettingDrawer v-if="getIsFixedSettingDrawer" :class="prefixCls" />
+  <SettingDrawer v-if="getIsFixedSettingDrawer" class="jeesite-setting-drawer-fearure" />
   <SessionTimeoutLogin v-if="getIsSessionTimeout" />
 </template>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-drawer-fearure';
-
-  .@{prefix-cls} {
+  .jeesite-setting-drawer-fearure {
     position: absolute;
     top: 45%;
     right: 0;

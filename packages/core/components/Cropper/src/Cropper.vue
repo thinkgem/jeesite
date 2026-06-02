@@ -8,7 +8,6 @@
   import { defineComponent, onMounted, ref, unref, computed, onUnmounted } from 'vue';
   import Cropper from 'cropperjs';
   import 'cropperjs/dist/cropper.css';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useDebounceFn } from '@vueuse/shared';
 
   type Options = Cropper.Options;
@@ -61,7 +60,6 @@
       const cropper = ref<Nullable<Cropper>>();
       const isReady = ref(false);
 
-      const { prefixCls } = useDesign('cropper-image');
       const debounceRealTimeCroppered = useDebounceFn(realTimeCroppered, 80);
 
       const getImageStyle = computed((): CSSProperties => {
@@ -74,10 +72,10 @@
 
       const getClass = computed(() => {
         return [
-          prefixCls,
+          'jeesite-cropper-image',
           attrs.class,
           {
-            [`${prefixCls}--circled`]: props.circled,
+            ['jeesite-cropper-image--circled']: props.circled,
           },
         ];
       });
@@ -171,9 +169,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-cropper-image';
-
-  .@{prefix-cls} {
+  .jeesite-cropper-image {
     &--circled {
       .cropper-view-box,
       .cropper-face {

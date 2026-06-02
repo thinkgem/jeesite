@@ -1,7 +1,7 @@
 <template>
   <div :class="getClass">
-    <div :class="`${prefixCls}-image-wrapper`" :style="getImageWrapperStyle" @click="openModal">
-      <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
+    <div class="jeesite-cropper-avatar-image-wrapper" :style="getImageWrapperStyle" @click="openModal">
+      <div class="jeesite-cropper-avatar-image-mask" :style="getImageWrapperStyle">
         <Icon
           icon="i-ant-design:cloud-upload-outlined"
           :size="getIconWidth"
@@ -11,7 +11,7 @@
       </div>
       <img :src="sourceValue" v-if="sourceValue" alt="avatar" />
     </div>
-    <a-button :class="`${prefixCls}-upload-btn`" @click="openModal" v-if="showBtn" v-bind="btnProps">
+    <a-button class="jeesite-cropper-avatar-upload-btn" @click="openModal" v-if="showBtn" v-bind="btnProps">
       {{ btnText ? btnText : t('component.cropper.selectImage') }}
     </a-button>
     <CopperModal
@@ -25,7 +25,6 @@
 <script lang="ts">
   import { defineComponent, computed, CSSProperties, unref, ref, watchEffect, watch, PropType } from 'vue';
   import CopperModal from './CopperModal.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useModal } from '@jeesite/core/components/Modal';
   // import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -48,12 +47,11 @@
     emits: ['update:value', 'change'],
     setup(props, { emit, expose }) {
       const sourceValue = ref(props.value || '');
-      const { prefixCls } = useDesign('cropper-avatar');
       const [register, { openModal, closeModal }] = useModal();
       // const { createMessage } = useMessage();
       const { t } = useI18n();
 
-      const getClass = computed(() => [prefixCls]);
+      const getClass = computed(() => ['jeesite-cropper-avatar']);
 
       const getWidth = computed(() => `${props.width}`.replace(/px/, '') + 'px');
 
@@ -82,7 +80,6 @@
 
       return {
         t,
-        prefixCls,
         register,
         openModal: openModal as any,
         getIconWidth,
@@ -96,9 +93,7 @@
 </script>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-cropper-avatar';
-
-  .@{prefix-cls} {
+  .jeesite-cropper-avatar {
     display: inline-block;
     text-align: center;
 

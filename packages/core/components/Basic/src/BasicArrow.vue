@@ -13,7 +13,6 @@
   import { computed } from 'vue';
   import { Spin } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   const props = defineProps({
     /**
@@ -51,8 +50,6 @@
 
   const emit = defineEmits(['click', 'dblclick']);
 
-  const { prefixCls } = useDesign('basic-arrow');
-
   const getIcon = computed(() => {
     const { leaf, double } = props;
     return leaf ? 'i-radix-icons:dot' : double ? 'i-ant-design:double-right-outlined' : 'i-ion:chevron-forward';
@@ -62,9 +59,9 @@
   const getClass = computed(() => {
     const { expand, up, down, inset } = props;
     return [
-      prefixCls,
+      'jeesite-basic-arrow',
       {
-        [`${prefixCls}--active`]: expand,
+        ['jeesite-basic-arrow--active']: expand,
         up,
         inset,
         down,
@@ -81,9 +78,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-arrow';
-
-  .@{prefix-cls} {
+  .jeesite-basic-arrow {
     display: inline-block;
     cursor: pointer;
     transform: rotate(0deg);
@@ -113,11 +108,11 @@
       transform: rotate(90deg);
     }
 
-    &.up.@{prefix-cls}--active {
+    &.up.jeesite-basic-arrow--active {
       transform: rotate(90deg);
     }
 
-    &.down.@{prefix-cls}--active {
+    &.down.jeesite-basic-arrow--active {
       transform: rotate(-90deg);
     }
   }

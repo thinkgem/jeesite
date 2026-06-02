@@ -1,10 +1,10 @@
 <template>
-  <Layout :class="prefixCls" v-bind="lockEvents">
+  <Layout class="jeesite-default-layout" v-bind="lockEvents">
     <LayoutFeatures />
     <LayoutHeader fixed v-if="getShowFullHeaderRef" />
     <Layout :class="[layoutClass]">
       <LayoutSideBar v-if="getShowSidebar || getIsMobile" />
-      <Layout :class="`${prefixCls}-main`">
+      <Layout class="jeesite-default-layout-main">
         <LayoutMultipleHeader />
         <LayoutContent />
         <LayoutFooter />
@@ -25,7 +25,6 @@
 
   import { useHeaderSetting } from '@jeesite/core/hooks/setting/useHeaderSetting';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useLockPage } from '@jeesite/core/hooks/web/useLockPage';
 
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
@@ -43,7 +42,6 @@
       Layout,
     },
     setup() {
-      const { prefixCls } = useDesign('default-layout');
       const { getIsMobile } = useAppInject();
       const { getShowFullHeaderRef } = useHeaderSetting();
       const { getShowSidebar, getIsMixSidebar, getShowMenu } = useMenuSetting();
@@ -64,7 +62,6 @@
       return {
         getShowFullHeaderRef,
         getShowSidebar,
-        prefixCls,
         getIsMobile,
         getIsMixSidebar,
         layoutClass,
@@ -74,9 +71,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-default-layout';
-
-  .ant-layout.@{prefix-cls} {
+  .ant-layout.jeesite-default-layout {
     display: flex;
     width: 100%;
     min-height: 100%;

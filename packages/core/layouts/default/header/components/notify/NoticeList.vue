@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-header-notify-list">
     <div v-for="item in getData" :key="item.id" class="list-item">
       <div class="list-item-meta" @click="handleTitleClick(item)">
         <div class="avatar">
@@ -42,7 +42,6 @@
 <script lang="ts">
   import { computed, defineComponent, PropType, ref, watch, unref } from 'vue';
   import { ListItem } from './data';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Avatar, Tag, Pagination } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { isNumber } from '@jeesite/core/utils/is';
@@ -81,7 +80,6 @@
     },
     emits: ['update:currentPage'],
     setup(props, { emit }) {
-      const { prefixCls } = useDesign('header-notify-list');
       const current = ref(props.currentPage || 1);
       const getData = computed<ListItem[]>(() => {
         const { pageSize, list } = props;
@@ -118,14 +116,12 @@
         props.onTitleClick && props.onTitleClick(item);
       }
 
-      return { prefixCls, getPagination, getData, handleTitleClick, isTitleClickable };
+      return { getPagination, getData, handleTitleClick, isTitleClickable };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-header-notify-list';
-
-  .@{prefix-cls} {
+  .jeesite-header-notify-list {
     &::-webkit-scrollbar {
       display: none;
     }

@@ -33,7 +33,6 @@
 
   import { useTree } from './useTree';
   import { useContextMenu } from '@jeesite/core/hooks/web/useContextMenu';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useDict } from '@jeesite/core/components/Dict';
 
   import { basicProps } from './props';
@@ -84,7 +83,6 @@
       }
 
       const [createContextMenu] = useContextMenu();
-      const { prefixCls } = useDesign('basic-tree');
 
       const getFieldNames = computed((): Required<FieldNames> => {
         const { fieldNames } = props;
@@ -179,7 +177,7 @@
         const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
 
         const titleDom = isHighlight ? (
-          <span class={unref(getBindValues)?.blockNode ? `${prefixCls}__content` : ''}>
+          <span class={unref(getBindValues)?.blockNode ? 'jeesite-basic-tree__content' : ''}>
             <span>{title.substr(0, searchIdx)}</span>
             <span style={highlightStyle}>{searchText}</span>
             <span>{title.substr(searchIdx + (searchText as string).length)}</span>
@@ -190,7 +188,7 @@
 
         return (
           <span
-            class={`${prefixCls}-titles pl-2`}
+            class={'jeesite-basic-tree-titles pl-2'}
             onClick={handleClickNode.bind(null, nodeData[keyField], nodeData[childrenField])}
           >
             {slots?.title ? (
@@ -199,7 +197,7 @@
               <>
                 {icon && <TreeIcon icon={icon} />}
                 {titleDom}
-                <span class={`${prefixCls}__actions`}>{renderAction(nodeData)}</span>
+                <span class={'jeesite-basic-tree__actions'}>{renderAction(nodeData)}</span>
               </>
             )}
           </span>
@@ -585,7 +583,7 @@
           if (!nodeShow) return null;
 
           return (
-            <span key={index} class={`${prefixCls}__action`}>
+            <span key={index} class={'jeesite-basic-tree__action'}>
               {item.render(node)}
             </span>
           );
@@ -636,7 +634,7 @@
         };
         const TreeComp = showIcon ? Tree.DirectoryTree : Tree;
         return (
-          <div ref={treeRef} class={[prefixCls, 'h-full', attrs.class]}>
+          <div ref={treeRef} class={['jeesite-basic-tree', 'h-full', attrs.class]}>
             {showTitle && (
               <TreeHeader
                 checkable={checkable}
@@ -670,9 +668,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-tree';
-
-  .@{prefix-cls} {
+  .jeesite-basic-tree {
     background-color: @component-background;
     border-radius: 5px;
 
@@ -734,7 +730,7 @@
               left: auto;
             }
 
-            .@{prefix-cls}-title {
+            .jeesite-basic-tree-title {
               padding-left: 3px;
             }
 
@@ -787,7 +783,7 @@
       padding: 0 5px;
 
       &:hover {
-        .@{prefix-cls}__action {
+        .jeesite-basic-tree__action {
           visibility: visible;
         }
       }
@@ -811,18 +807,19 @@
   }
 
   html[data-theme='light'] {
-    .@{prefix-cls}.bg-gray {
+    .jeesite-basic-tree.bg-gray {
       background-color: #f9f9f9;
       border: 1px solid #ddd;
     }
   }
 
   html[data-theme='dark'] {
-    .@{prefix-cls}.bg-gray {
+    .jeesite-basic-tree.bg-gray {
       background-color: #1d1d1d;
       border: 1px solid #383838;
     }
-    .@{prefix-cls} {
+
+    .jeesite-basic-tree {
       .ant-tree {
         &.ant-tree-directory {
           > li.ant-tree-treenode-selected > span,

@@ -7,7 +7,6 @@
   import { get } from 'lodash-es';
   import { Descriptions, DescriptionsItem } from 'antdv-next';
   import { CollapseContainer } from '@jeesite/core/components/Container';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isFunction } from '@jeesite/core/utils/is';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
@@ -45,7 +44,6 @@
     setup(props, { slots, emit }) {
       const propsRef = ref<Partial<DescriptionProps> | null>(null);
 
-      const { prefixCls } = useDesign('description');
       const attrs = useAttrs();
 
       // Custom title component: get title
@@ -145,7 +143,7 @@
 
       const renderDesc = () => {
         return (
-          <Descriptions class={`${prefixCls}`} {...(unref(getDescriptionsProps) as any)}>
+          <Descriptions class={'jeesite-description'} {...(unref(getDescriptionsProps) as any)}>
             {renderItem()}
           </Descriptions>
         );

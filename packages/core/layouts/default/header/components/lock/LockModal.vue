@@ -3,20 +3,20 @@
     :footer="null"
     :title="t('layout.header.lockScreen')"
     v-bind="$attrs"
-    :class="prefixCls"
+    class="jeesite-header-lock-modal"
     @register="register"
   >
-    <div :class="`${prefixCls}__entry`">
-      <div :class="`${prefixCls}__header`">
-        <img :src="avatar" :class="`${prefixCls}__header-img`" />
-        <p :class="`${prefixCls}__header-name`">
+    <div class="jeesite-header-lock-modal__entry">
+      <div class="jeesite-header-lock-modal__header">
+        <img :src="avatar" class="jeesite-header-lock-modal__header-img" />
+        <p class="jeesite-header-lock-modal__header-name">
           {{ getRealName }}
         </p>
       </div>
 
       <BasicForm @register="registerForm" />
 
-      <div :class="`${prefixCls}__footer`">
+      <div class="jeesite-header-lock-modal__footer">
         <a-button type="primary" block class="mt-2" @click="handleLock">
           {{ t('layout.header.lockScreenBtn') }}
         </a-button>
@@ -27,7 +27,6 @@
 <script lang="ts">
   import { defineComponent, computed } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   import { BasicForm, useForm } from '@jeesite/core/components/Form';
 
@@ -40,7 +39,6 @@
 
     setup() {
       const { t } = useI18n();
-      const { prefixCls } = useDesign('header-lock-modal');
       const userStore = useUserStore();
       const lockStore = useLockStore();
 
@@ -80,7 +78,6 @@
 
       return {
         t,
-        prefixCls,
         getRealName,
         register,
         registerForm,
@@ -91,9 +88,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-header-lock-modal';
-
-  .@{prefix-cls} {
+  .jeesite-header-lock-modal {
     &__entry {
       position: relative;
       //height: 240px;

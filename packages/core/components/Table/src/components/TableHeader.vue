@@ -9,11 +9,11 @@
       <slot name="headerTop"></slot>
     </div>
     <div class="flex items-center">
-      <div :class="`${prefixCls}__title`">
+      <div class="jeesite-basic-table-header__title">
         <slot name="tableTitle" v-if="$slots.tableTitle"></slot>
         <TableTitle :helpMessage="titleHelpMessage" :title="title" v-if="!$slots.tableTitle && title" />
       </div>
-      <div :class="`${prefixCls}__toolbar`">
+      <div class="jeesite-basic-table-header__toolbar">
         <slot name="toolbar"></slot>
         <!-- <Divider type="vertical" v-if="$slots.toolbar && showTableSetting" /> -->
         <TableSetting :setting="tableSetting" v-if="showTableSetting" @columns-change="handleColumnChange" />
@@ -31,7 +31,6 @@
   // import { Divider } from 'antdv-next';
   import TableSettingComponent from './settings/index.vue';
   import TableTitle from './TableTitle.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import TableSelectionBar from '../components/TableSelectionBar.vue';
 
   export default defineComponent({
@@ -70,18 +69,15 @@
     },
     emits: ['columns-change'],
     setup(props, { emit }) {
-      const { prefixCls } = useDesign('basic-table-header');
       function handleColumnChange(data: ColumnChangeParam[]) {
         emit('columns-change', data);
       }
-      return { props, prefixCls, handleColumnChange };
+      return { props, handleColumnChange };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table-header';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table-header {
     &__title {
       font-size: 16px;
 

@@ -1,6 +1,6 @@
 <template>
-  <div :class="prefixCls">
-    <Popover title="" trigger="click" :classes="{ root: `${prefixCls}__overlay` }">
+  <div class="jeesite-header-notify">
+    <Popover title="" trigger="click" :classes="{ root: 'jeesite-header-notify__overlay' }">
       <Badge :count="count" dot :numberStyle="numberStyle">
         <BellOutlined />
       </Badge>
@@ -28,13 +28,11 @@
   import { BellOutlined } from '@antdv-next/icons';
   import { tabListData, ListItem } from './data';
   import NoticeList from './NoticeList.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
 
   export default defineComponent({
     components: { Popover, BellOutlined, Tabs, TabPane, Badge, NoticeList },
     setup() {
-      const { prefixCls } = useDesign('header-notify');
       const { createMessage } = useMessage();
       const listData = ref(tabListData);
 
@@ -53,7 +51,6 @@
       }
 
       return {
-        prefixCls,
         listData,
         count,
         onNoticeClick,
@@ -63,9 +60,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-header-notify';
-
-  .@{prefix-cls} {
+  .jeesite-header-notify {
     padding-top: 2px;
 
     &__overlay {

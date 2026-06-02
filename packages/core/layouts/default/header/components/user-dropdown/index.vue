@@ -1,12 +1,12 @@
 <template>
-  <div v-if="props.sidebar" :class="`${prefixCls}-sidebar md:hidden lg:block think gem`">
-    <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
-      <span :class="`${prefixCls}__info`">
-        <span :class="`${prefixCls}__name`" class="truncate">
+  <div v-if="props.sidebar" class="jeesite-header-user-dropdown-sidebar md:hidden lg:block think gem">
+    <span :class="['jeesite-header-user-dropdown', `jeesite-header-user-dropdown--${props.theme}`]" class="flex">
+      <img class="jeesite-header-user-dropdown__header" :src="getUserInfo.avatarUrl" />
+      <span class="jeesite-header-user-dropdown__info">
+        <span class="jeesite-header-user-dropdown__name truncate">
           {{ getUserInfo.userName }}
         </span>
-        <span :class="`${prefixCls}__btns`" class="block">
+        <span class="jeesite-header-user-dropdown__btns block">
           <a class="online"><Icon icon="i-fa:circle" /> {{ t('layout.header.sidebarOnline') }}</a>
           <a class="logout" @click="handleLoginOut">
             <Icon icon="i-fa:sign-out" /> {{ t('layout.header.sidebarLogout') }}
@@ -15,11 +15,11 @@
       </span>
     </span>
   </div>
-  <Dropdown v-else placement="bottom" :overlayClassName="`${prefixCls}-dropdown-overlay`">
-    <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
-      <span :class="`${prefixCls}__info md:hidden lg:block`">
-        <span :class="`${prefixCls}__name`" class="truncate">
+  <Dropdown v-else placement="bottom" :overlayClassName="'jeesite-header-user-dropdown-dropdown-overlay'">
+    <span :class="['jeesite-header-user-dropdown', `jeesite-header-user-dropdown--${props.theme}`]" class="flex">
+      <img class="jeesite-header-user-dropdown__header" :src="getUserInfo.avatarUrl" />
+      <span class="jeesite-header-user-dropdown__info md:hidden lg:block">
+        <span class="jeesite-header-user-dropdown__name truncate">
           {{ getUserInfo.userName }}
         </span>
       </span>
@@ -47,7 +47,7 @@
         <MenuItem
           v-if="sysListRef.length > 0"
           key="sysTitle"
-          :class="`${prefixCls}-menu-subtitle`"
+          class="jeesite-header-user-dropdown-menu-subtitle"
           :text="t('系统切换：')"
         />
         <MenuItem
@@ -58,7 +58,7 @@
         />
         <template v-if="postRolePermiRef && getUserInfo.postList.length > 0">
           <MenuDivider />
-          <MenuItem :class="`${prefixCls}-menu-subtitle`" key="postTitle" :text="t('选择岗位：')">
+          <MenuItem class="jeesite-header-user-dropdown-menu-subtitle" key="postTitle" :text="t('选择岗位：')">
             <template #menuItemAfter>
               <Icon
                 v-if="postCodeRef"
@@ -78,7 +78,7 @@
         </template>
         <template v-else-if="getUserInfo.roleList.length > 0">
           <MenuDivider />
-          <MenuItem :class="`${prefixCls}-menu-subtitle`" key="roleTitle" :text="t('选择身份：')">
+          <MenuItem class="jeesite-header-user-dropdown-menu-subtitle" key="roleTitle" :text="t('选择身份：')">
             <template #menuItemAfter>
               <Icon
                 v-if="roleCodeRef"
@@ -108,7 +108,6 @@
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { useHeaderSetting } from '@jeesite/core/hooks/setting/useHeaderSetting';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useModal } from '@jeesite/core/components/Modal';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { propTypes } from '@jeesite/core/utils/propTypes';
@@ -128,7 +127,6 @@
     sidebar: propTypes.bool.def(false),
   });
 
-  const { prefixCls } = useDesign('header-user-dropdown');
   const { t } = useI18n();
   const { getShowDoc, getUseLockPage } = useHeaderSetting();
   const userStore = useUserStore();
@@ -238,10 +236,9 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-header-user-dropdown';
   @menu-dark-subsidiary-color: rgba(255, 255, 255, 0.7);
 
-  .@{prefix-cls} {
+  .jeesite-header-user-dropdown {
     height: @header-height;
     padding: 0 10px !important;
     overflow: hidden;
@@ -269,11 +266,11 @@
         background-color: @header-dark-bg-hover-color;
       }
 
-      .@{prefix-cls}__info {
+      .jeesite-header-user-dropdown__info {
         color: @menu-dark-subsidiary-color;
       }
 
-      .@{prefix-cls}__desc {
+      .jeesite-header-user-dropdown__desc {
         color: @menu-dark-subsidiary-color;
       }
     }
@@ -283,11 +280,11 @@
         background-color: @header-light-bg-hover-color;
       }
 
-      .@{prefix-cls}__info {
+      .jeesite-header-user-dropdown__info {
         color: @text-color-base;
       }
 
-      .@{prefix-cls}__desc {
+      .jeesite-header-user-dropdown__desc {
         color: @header-light-desc-color;
       }
     }
@@ -312,7 +309,7 @@
     }
 
     &-sidebar {
-      .@{prefix-cls} {
+      .jeesite-header-user-dropdown {
         height: auto;
         cursor: default;
         padding: 8px 10px 10px !important;
@@ -379,7 +376,7 @@
   }
 
   .ant-layout-sider-collapsed {
-    .@{prefix-cls} {
+    .jeesite-header-user-dropdown {
       padding: 10px 0;
       justify-content: center;
 

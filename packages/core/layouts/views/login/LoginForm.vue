@@ -69,7 +69,7 @@
 
       <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
-      <div class="enter-x flex justify-evenly" :class="`${prefixCls}-sign-in-way`">
+      <div class="enter-x flex justify-evenly jeesite-login-sign-in-way">
         <Icon icon="i-simple-icons:gitee" color="#d81e06" size="28" @click="handleOauth2" />
         <Icon icon="i-ant-design:qq-circle-filled" color="#2178e3" size="32" @click="handleOauth2" />
         <Icon icon="i-ant-design:wechat-filled" color="#2eb60d" size="32" @click="handleOauth2" />
@@ -93,7 +93,6 @@
 
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { userInfoApi } from '@jeesite/core/api/sys/login';
   import { ValidCode } from '@jeesite/core/components/ValidCode';
 
@@ -102,7 +101,6 @@
   const InputPassword = Input.Password;
   const { t } = useI18n();
   const { showMessage, notification } = useMessage();
-  const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
 
   const { setLoginState, getLoginState } = useLoginState();

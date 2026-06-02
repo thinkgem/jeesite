@@ -1,5 +1,5 @@
 <template>
-  <a-input v-bind="$attrs" :class="prefixCls" :size="size" v-model:value="state" autocomplete="off">
+  <a-input v-bind="$attrs" class="jeesite-countdown-input" :size="size" v-model:value="state" autocomplete="off">
     <template #suffix>
       <CountButton
         type="link"
@@ -16,7 +16,6 @@
 </template>
 <script lang="ts" setup name="CountDownInput">
   import { PropType } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
   import CountButton from './CountButton.vue';
 
@@ -32,13 +31,10 @@
 
   const emit = defineEmits(['change', 'update:value']);
 
-  const { prefixCls } = useDesign('countdown-input');
   const [state] = useRuleFormItem(props);
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-countdown-input';
-
-  .@{prefix-cls} {
+  .jeesite-countdown-input {
     .ant-input-group-addon {
       padding-right: 0;
       background-color: transparent;

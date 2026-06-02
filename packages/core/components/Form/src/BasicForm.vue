@@ -66,7 +66,6 @@
   import { useModalContext } from '@jeesite/core/components/Modal';
 
   import { basicProps } from './props';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
 
@@ -91,8 +90,6 @@
   const formElRef = shallowRef<Nullable<FormActionType>>(null);
   const validateTriggerRef = ref<string | string[] | false>(false);
 
-  const { prefixCls } = useDesign('basic-form');
-
   // Get the basic configuration of the form
   const getProps = computed((): FormProps => {
     return { ...props, ...(unref(propsRef) as unknown as FormProps) } as FormProps;
@@ -100,9 +97,9 @@
 
   const getFormClass = computed(() => {
     return [
-      prefixCls,
+      'jeesite-basic-form',
       {
-        [`${prefixCls}--compact`]: unref(getProps).compact,
+        ['jeesite-basic-form--compact']: unref(getProps).compact,
       },
     ];
   });
@@ -305,9 +302,7 @@
   defineExpose(formActionType);
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-form';
-
-  .jeesite.ant-form.@{prefix-cls} {
+  .jeesite.ant-form.jeesite-basic-form {
     .ant-form-item {
       margin-bottom: 20px;
 

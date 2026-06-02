@@ -8,9 +8,9 @@
     @ok="handleOk"
     :okText="t('component.cropper.okText')"
   >
-    <div :class="prefixCls">
-      <div :class="`${prefixCls}-left`">
-        <div :class="`${prefixCls}-cropper`">
+    <div class="jeesite-cropper-am">
+      <div class="jeesite-cropper-am-left">
+        <div class="jeesite-cropper-am-cropper">
           <CropperImage
             v-if="src"
             :src="src"
@@ -21,7 +21,7 @@
           />
         </div>
 
-        <div :class="`${prefixCls}-toolbar`">
+        <div class="jeesite-cropper-am-toolbar">
           <Upload :fileList="[]" accept="image/*" :beforeUpload="handleBeforeUpload">
             <Tooltip :title="t('component.cropper.selectImage')" placement="bottom">
               <a-button size="small" preIcon="i-ant-design:upload-outlined" type="primary" />
@@ -94,12 +94,12 @@
           </Space>
         </div>
       </div>
-      <div :class="`${prefixCls}-right`">
-        <div :class="`${prefixCls}-preview`">
+      <div class="jeesite-cropper-am-right">
+        <div class="jeesite-cropper-am-preview">
           <img :src="previewSource" v-if="previewSource" :alt="t('component.cropper.preview')" />
         </div>
         <template v-if="previewSource">
-          <div :class="`${prefixCls}-group`">
+          <div class="jeesite-cropper-am-group">
             <Avatar :src="previewSource" size="large" />
             <Avatar :src="previewSource" :size="48" />
             <Avatar :src="previewSource" :size="64" />
@@ -114,7 +114,6 @@
   import { defineComponent, ref } from 'vue';
   import CropperImage from './Cropper.vue';
   import { Space, Upload, Avatar, Tooltip } from 'antdv-next';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '@jeesite/core/components/Modal';
   // import { dataURLtoBlob } from '@jeesite/core/utils/file/base64Conver';
   // import { isFunction } from '@jeesite/core/utils/is';
@@ -142,7 +141,6 @@
       let scaleY = 1;
       let filename = '';
 
-      const { prefixCls } = useDesign('cropper-am');
       const [register, { closeModal, setModalProps }] = useModalInner();
       const { t } = useI18n();
 
@@ -195,7 +193,6 @@
 
       return {
         t,
-        prefixCls,
         src,
         register,
         previewSource,
@@ -210,9 +207,7 @@
 </script>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-cropper-am';
-
-  .@{prefix-cls} {
+  .jeesite-cropper-am {
     display: flex;
 
     &-left,

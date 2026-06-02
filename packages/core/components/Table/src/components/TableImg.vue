@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" class="mx-auto flex items-center" v-if="imgList && imgList.length" :style="getWrapStyle">
+  <div class="jeesite-basic-table-img mx-auto flex items-center" v-if="imgList && imgList.length" :style="getWrapStyle">
     <Badge :count="!showBadge || imgList.length == 1 ? 0 : imgList.length" v-if="simpleShow">
       <div class="img-div">
         <PreviewGroup>
@@ -25,7 +25,6 @@
 <script lang="ts">
   import type { CSSProperties } from 'vue';
   import { defineComponent, computed } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Image, Badge } from 'antdv-next';
   import { propTypes } from '@jeesite/core/utils/propTypes';
 
@@ -53,15 +52,12 @@
         return { height: s, width: s };
       });
 
-      const { prefixCls } = useDesign('basic-table-img');
-      return { prefixCls, getWrapStyle };
+      return { getWrapStyle };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table-img';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table-img {
     .ant-image {
       margin-right: 4px;
       cursor: zoom-in;

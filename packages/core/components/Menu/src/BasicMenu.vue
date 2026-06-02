@@ -31,7 +31,6 @@
   import { basicProps } from './props';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { REDIRECT_NAME } from '@jeesite/core/router/constant';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { getCurrentParentPath } from '@jeesite/core/router/menus';
   import { listenerRouteChange } from '@jeesite/core/logics/mitt/routeChange';
   import { getAllParentPath } from '@jeesite/core/router/helper/menuHelper';
@@ -49,7 +48,6 @@
     collapsedOpenKeys: [],
   });
 
-  const { prefixCls } = useDesign('basic-menu');
   const { items, mode, accordion } = toRefs(props);
 
   const { getCollapsed, getTopMenuAlign, getSplit } = useMenuSetting();
@@ -69,11 +67,11 @@
   const getMenuClass = computed(() => {
     const align = props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
     return [
-      prefixCls,
+      'jeesite-basic-menu',
       `justify-${align}`,
       {
-        [`${prefixCls}__second`]: !props.isHorizontal && unref(getSplit),
-        [`${prefixCls}__sidebar-hor`]: unref(getIsTopMenu),
+        ['jeesite-basic-menu__second']: !props.isHorizontal && unref(getSplit),
+        ['jeesite-basic-menu__sidebar-hor']: unref(getIsTopMenu),
       },
     ];
   });

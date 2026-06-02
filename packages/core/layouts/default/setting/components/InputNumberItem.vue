@@ -1,14 +1,18 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-setting-input-number-item">
     <span> {{ title }}</span>
-    <InputNumber v-bind="$attrs" size="small" :class="`${prefixCls}-input-number`" @change="handleChange" />
+    <InputNumber
+      v-bind="$attrs"
+      size="small"
+      class="jeesite-setting-input-number-item-input-number"
+      @change="handleChange"
+    />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
 
   import { InputNumber } from 'antdv-next';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { baseHandler } from '../handler';
   import { HandlerEnum } from '../enum';
 
@@ -24,22 +28,17 @@
       },
     },
     setup(props) {
-      const { prefixCls } = useDesign('setting-input-number-item');
-
       function handleChange(e) {
         props.event && baseHandler(props.event, e);
       }
       return {
-        prefixCls,
         handleChange,
       };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-input-number-item';
-
-  .@{prefix-cls} {
+  .jeesite-setting-input-number-item {
     display: flex;
     justify-content: space-between;
     margin: 16px 0;

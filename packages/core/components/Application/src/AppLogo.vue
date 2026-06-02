@@ -15,7 +15,6 @@
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { PageEnum } from '@jeesite/core/enums/pageEnum';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { publicPath } from '@jeesite/core/utils/env';
@@ -35,7 +34,6 @@
     alwaysShowTitle: { type: Boolean },
   });
 
-  const { prefixCls } = useDesign('app-logo');
   const { getCollapsedShowTitle } = useMenuSetting();
   const userStore = useUserStore();
   const go = useGo();
@@ -46,13 +44,13 @@
   });
 
   const getAppLogoClass = computed(() => [
-    prefixCls,
+    'jeesite-app-logo',
     props.theme,
     { 'collapsed-show-title': unref(getCollapsedShowTitle) },
   ]);
 
   const getTitleClass = computed(() => [
-    `${prefixCls}__title`,
+    'jeesite-app-logo__title',
     {
       'xs:opacity-0': !props.alwaysShowTitle,
     },
@@ -63,9 +61,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-app-logo';
-
-  .@{prefix-cls} {
+  .jeesite-app-logo {
     display: flex;
     align-items: center;
     padding-left: 7px;

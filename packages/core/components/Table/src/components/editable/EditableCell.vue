@@ -4,10 +4,10 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-editable-cell">
     <div
       v-show="!isEdit && !getForceEditable"
-      :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }"
+      :class="{ ['jeesite-editable-cell__normal']: true, 'ellipsis-cell': column.ellipsis }"
       @click="handleEdit"
     >
       <DictLabel
@@ -20,10 +20,10 @@
         <EditRender v-if="column.editRender" v-bind="getComponentProps" :edit="false" />
         <template v-else>{{ getValues }}</template>
       </div>
-      <FormOutlined v-if="!column.editRow" :class="`${prefixCls}__normal-icon`" />
+      <FormOutlined v-if="!column.editRow" class="jeesite-editable-cell__normal-icon" />
     </div>
     <Spin v-if="isEdit || getForceEditable" :spinning="spinning">
-      <div :class="`${prefixCls}__wrapper`" v-click-outside="onClickOutside">
+      <div class="jeesite-editable-cell__wrapper" v-click-outside="onClickOutside">
         <EditRender
           v-if="column.editRender"
           v-bind="getComponentProps"
@@ -43,9 +43,9 @@
           @change="handleChange"
           @press-enter="handleEnter"
         />
-        <div v-if="!getRowEditable && !getForceEditable" :class="`${prefixCls}__action`">
-          <CheckOutlined :class="[`${prefixCls}__icon`, 'mx-2']" @click="handleSubmitClick" />
-          <CloseOutlined :class="`${prefixCls}__icon `" @click="handleCancel" />
+        <div v-if="!getRowEditable && !getForceEditable" class="jeesite-editable-cell__action">
+          <CheckOutlined :class="['jeesite-editable-cell__icon', 'mx-2']" @click="handleSubmitClick" />
+          <CloseOutlined class="jeesite-editable-cell__icon" @click="handleCancel" />
         </div>
       </div>
     </Spin>
@@ -58,7 +58,6 @@
   import type { EditRecordRow } from './index';
   import { CheckOutlined, CloseOutlined, FormOutlined } from '@antdv-next/icons';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { formatCell } from '../../hooks/useColumns';
 
   import vClickOutside from '@jeesite/core/directives/clickOutsideSimple';
@@ -107,8 +106,6 @@
   const defaultLabelValueRef = ref<any>(props.labelValue);
 
   const spinning = ref<boolean>(false);
-
-  const { prefixCls } = useDesign('editable-cell');
 
   const getComponent = computed(() => props.column?.editComponent || 'Input');
 
@@ -476,8 +473,6 @@
   };
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-editable-cell';
-
   .edit-cell-align-left {
     text-align: left;
 
@@ -517,7 +512,7 @@
   }
 
   .jeesite-table-tree-name {
-    .@{prefix-cls} {
+    .jeesite-editable-cell {
       display: inline-block;
 
       .ellipsis-cell {
@@ -528,7 +523,7 @@
     }
   }
 
-  .@{prefix-cls} {
+  .jeesite-editable-cell {
     position: relative;
     margin: -5px;
 
@@ -658,7 +653,7 @@
     }
 
     &:hover {
-      .@{prefix-cls}__normal-icon {
+      .jeesite-editable-cell__normal-icon {
         display: inline-block;
       }
     }

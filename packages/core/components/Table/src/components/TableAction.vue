@@ -4,7 +4,7 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <div :class="[prefixCls, getAlign]" @click="onCellClick">
+  <div :class="['jeesite-basic-table-action', getAlign]" @click="onCellClick">
     <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
       <Tooltip v-if="action.tooltip" v-bind="getTooltip(action.tooltip)">
         <PopConfirmButton v-bind="action">
@@ -38,7 +38,7 @@
       v-if="props.dropDownActions && getDropdownList.length > 0"
       :trigger="['hover']"
       :dropMenuList="getDropdownList"
-      :classes="{ container: `${prefixCls}__popover-content` }"
+      :classes="{ container: 'jeesite-basic-table-action__popover-content' }"
       :key="1"
       popconfirm
     >
@@ -57,7 +57,6 @@
   import { ActionItem, TableActionType } from '@jeesite/core/components/Table';
   import { PopConfirmButton } from '@jeesite/core/components/Button';
   import { Popover } from '@jeesite/core/components/Popover';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useTableContext } from '../hooks/useTableContext';
   import { usePermission } from '@jeesite/core/hooks/web/usePermission';
   import { isBoolean, isFunction, isString } from '@jeesite/core/utils/is';
@@ -84,7 +83,6 @@
     components: { Icon, PopConfirmButton, Divider, Popover, MoreOutlined, Tooltip },
     props,
     setup(props: any) {
-      const { prefixCls } = useDesign('basic-table-action');
       let table: Partial<TableActionType> = {};
       if (!props.outside) {
         table = useTableContext();
@@ -169,14 +167,12 @@
         isInButton && e.stopPropagation();
       }
 
-      return { props, prefixCls, getActions, getDropdownList, getAlign, onCellClick, getTooltip };
+      return { props, getActions, getDropdownList, getAlign, onCellClick, getTooltip };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table-action';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table-action {
     display: flex;
     align-items: center;
 

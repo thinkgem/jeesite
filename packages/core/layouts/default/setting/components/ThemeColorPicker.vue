@@ -1,12 +1,12 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-setting-theme-picker">
     <template v-for="color in colorList || []" :key="color">
       <span
         @click="handleClick(color)"
         :class="[
-          `${prefixCls}__item`,
+          'jeesite-setting-theme-picker__item',
           {
-            [`${prefixCls}__item--active`]: def === color,
+            ['jeesite-setting-theme-picker__item--active']: def === color,
           },
         ]"
         :style="{ background: color }"
@@ -19,8 +19,6 @@
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
   import { CheckOutlined } from '@antdv-next/icons';
-
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import { baseHandler } from '../handler';
   import { HandlerEnum } from '../enum';
@@ -41,22 +39,17 @@
       },
     },
     setup(props) {
-      const { prefixCls } = useDesign('setting-theme-picker');
-
       function handleClick(color: string) {
         props.event && baseHandler(props.event, color);
       }
       return {
-        prefixCls,
         handleClick,
       };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-theme-picker';
-
-  .@{prefix-cls} {
+  .jeesite-setting-theme-picker {
     display: flex;
     flex-wrap: wrap;
     margin: 16px 0;

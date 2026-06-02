@@ -4,15 +4,20 @@
  * @author ThinkGem
 -->
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-icon-picker">
     <SpaceCompact block>
       <a-input
         :placeholder="t('component.icon.placeholder')"
-        :class="`${prefixCls}-input`"
+        class="jeesite-icon-picker-input"
         v-model:value="currentSelect"
       />
       <SpaceAddon>
-        <Popover placement="bottom" trigger="click" v-model="open" :classes="{ container: `${prefixCls}-popover` }">
+        <Popover
+          placement="bottom"
+          trigger="click"
+          v-model="open"
+          :classes="{ container: 'jeesite-icon-picker-popover' }"
+        >
           <template #title>
             <div class="flex justify-between">
               <a-input :placeholder="t('component.icon.search')" @change="debounceHandleSearchChange" allowClear />
@@ -57,7 +62,6 @@
 </template>
 <script lang="ts" setup>
   import { ref, watchEffect, watch, unref } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Popover, Pagination, Empty, SpaceCompact, SpaceAddon } from 'antdv-next';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { usePagination } from '@jeesite/core/hooks/web/usePagination';
@@ -98,7 +102,6 @@
   const currentList = ref(icons);
 
   const { t } = useI18n();
-  const { prefixCls } = useDesign('icon-picker');
 
   const debounceHandleSearchChange = useDebounceFn(handleSearchChange, 100) as any;
   const { clipboardRef, isSuccessRef } = useCopyToClipboard(props.value);
@@ -146,9 +149,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-icon-picker';
-
-  .@{prefix-cls} {
+  .jeesite-icon-picker {
     width: 100%;
 
     &-input {

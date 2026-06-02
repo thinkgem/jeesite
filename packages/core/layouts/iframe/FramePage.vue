@@ -4,11 +4,11 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <div :class="prefixCls" :style="getWrapStyle">
+  <div class="jeesite-iframe-page" :style="getWrapStyle">
     <Spin :spinning="loading" size="large" :style="getWrapStyle">
       <iframe
         :src="frameSrc"
-        :class="`${prefixCls}__main ${props.frame?.name}`"
+        :class="`jeesite-iframe-page__main ${props.frame?.name}`"
         ref="frameRef"
         @load="hideLoading"
       ></iframe>
@@ -21,7 +21,6 @@
   import { ref, unref, computed, watch } from 'vue';
   import { Spin } from 'antdv-next';
   import { useWindowSizeFn } from '@jeesite/core/hooks/event/useWindowSizeFn';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useLayoutHeight } from '@jeesite/core/layouts/default/content/useContentViewHeight';
   import { router } from '@jeesite/core/router';
 
@@ -37,7 +36,6 @@
   const frameRef = shallowRef<HTMLFrameElement>();
   const { headerHeightRef } = useLayoutHeight();
 
-  const { prefixCls } = useDesign('iframe-page');
   useWindowSizeFn(calcHeight, 150, { immediate: true });
 
   // const frameSrc = ref(props.frame?.meta?.frameSrc);
@@ -104,9 +102,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-iframe-page';
-
-  .@{prefix-cls} {
+  .jeesite-iframe-page {
     .ant-spin-nested-loading {
       position: relative;
       height: 100%;

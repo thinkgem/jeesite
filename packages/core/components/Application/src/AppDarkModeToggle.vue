@@ -1,6 +1,6 @@
 <template>
   <div v-if="getShowDarkModeToggle" :class="getClass" @click="toggleDarkMode">
-    <div :class="`${prefixCls}-inner`"></div>
+    <div class="jeesite-dark-switch-inner"></div>
     <Icon icon="i-svg:sun" size="14" />
     <Icon icon="i-svg:moon" size="14" />
   </div>
@@ -8,21 +8,19 @@
 <script lang="ts" setup>
   import { computed, unref } from 'vue';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { updateHeaderBgColor, updateSidebarBgColor } from '@jeesite/core/logics/theme/updateBackground';
   import { updateDarkTheme } from '@jeesite/core/logics/theme/dark';
   import { ThemeEnum } from '@jeesite/core/enums/appEnum';
 
-  const { prefixCls } = useDesign('dark-switch');
   const { getDarkMode, setDarkMode, getShowDarkModeToggle } = useRootSetting();
 
   const isDark = computed(() => getDarkMode.value === ThemeEnum.DARK);
 
   const getClass = computed(() => [
-    prefixCls,
+    'jeesite-dark-switch',
     {
-      [`${prefixCls}--dark`]: unref(isDark),
+      'jeesite-dark-switch--dark': unref(isDark),
     },
   ]);
 
@@ -35,15 +33,13 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-dark-switch';
-
   html[data-theme='dark'] {
-    .@{prefix-cls} {
+    .jeesite-dark-switch {
       border: 1px solid rgb(196 188 188);
     }
   }
 
-  .@{prefix-cls} {
+  .jeesite-dark-switch {
     z-index: 10 !important;
     position: relative !important;
     display: flex;
@@ -71,7 +67,7 @@
     }
 
     &--dark {
-      .@{prefix-cls}-inner {
+      .jeesite-dark-switch-inner {
         transform: translateX(calc(100% + 2px));
       }
     }

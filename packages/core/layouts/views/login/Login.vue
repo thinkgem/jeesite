@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" class="relative h-full w-full bg-light-400 px-4">
+  <div class="jeesite-login relative h-full w-full bg-light-400 px-4">
     <AppDarkModeToggle class="enter-x absolute right-12 top-5" v-if="!sessionTimeout" />
 
     <span class="-enter-x lg:hidden">
@@ -25,8 +25,7 @@
         </div>
         <div class="h-full w-full flex overflow-y-auto overflow-x-hidden py-5 lg:my-0 lg:h-auto lg:w-[45.83%] lg:py-0">
           <div
-            :class="`${prefixCls}-form`"
-            class="enter-x relative mx-auto my-auto w-full px-5 py-8 shadow-md lg:ml-16 lg:w-1/2 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
+            class="jeesite-login-form enter-x relative mx-auto my-auto w-full px-5 py-8 shadow-md lg:ml-16 lg:w-1/2 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
           >
             <Tabs v-if="getShow" :activeKey="getLoginState as unknown as string" @change="handleChange">
               <TabPane :key="LoginStateEnum.LOGIN" :tab="t('sys.login.signInFormTitle')">
@@ -53,7 +52,6 @@
   import { AppDarkModeToggle } from '@jeesite/core/components/Application';
   import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { LoginStateEnum, useLoginState } from './useLogin';
@@ -108,17 +106,15 @@
   });
 
   const globSetting = useGlobSetting();
-  const { prefixCls } = useDesign('login');
   const title = computed(() => globSetting?.title ?? '');
   const demoMode = ref(false);
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-login';
   @logo-prefix-cls: ~'jeesite-app-logo';
   @countdown-prefix-cls: ~'jeesite-countdown-input';
   @dark-bg: #293146;
 
-  .@{prefix-cls} {
+  .jeesite-login {
     min-height: 100%;
     overflow: hidden;
     //background-color: #f2fafd;
@@ -270,7 +266,7 @@
   }
 
   html[data-theme='dark'] {
-    .@{prefix-cls} {
+    .jeesite-login {
       background-color: @dark-bg;
 
       &::before {

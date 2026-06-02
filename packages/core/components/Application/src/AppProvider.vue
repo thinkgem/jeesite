@@ -47,8 +47,7 @@
   });
 
   // Inject variables into the global
-  const prefixCls = ref<string>('jeesite');
-  createAppProviderContext({ prefixCls, isMobile });
+  createAppProviderContext({ isMobile });
 
   // Listening to page changes and dynamically changing site titles
   useTitle();

@@ -1,26 +1,22 @@
 <template>
-  <div :class="`${prefixCls}`">
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-ant-design:enter-outlined" />
+  <div class="jeesite-app-search-footer">
+    <AppSearchKeyItem class="jeesite-app-search-footer-item" icon="i-ant-design:enter-outlined" />
     <span>{{ t('component.app.toSearch') }}</span>
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-ion:arrow-up-outline" />
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-ion:arrow-down-outline" />
+    <AppSearchKeyItem class="jeesite-app-search-footer-item" icon="i-ion:arrow-up-outline" />
+    <AppSearchKeyItem class="jeesite-app-search-footer-item" icon="i-ion:arrow-down-outline" />
     <span>{{ t('component.app.toNavigate') }}</span>
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-mdi:keyboard-esc" />
+    <AppSearchKeyItem class="jeesite-app-search-footer-item" icon="i-mdi:keyboard-esc" />
     <span>{{ t('common.closeText') }}</span>
   </div>
 </template>
 
 <script lang="ts" setup>
   import AppSearchKeyItem from './AppSearchKeyItem.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  const { prefixCls } = useDesign('app-search-footer');
   const { t } = useI18n();
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-app-search-footer';
-
-  .@{prefix-cls} {
+  .jeesite-app-search-footer {
     position: relative;
     display: flex;
     height: 44px;

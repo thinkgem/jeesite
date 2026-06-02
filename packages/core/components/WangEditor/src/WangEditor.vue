@@ -4,7 +4,7 @@
  * @author ThinkGem
 -->
 <template>
-  <div :class="prefixCls" :style="{ width: containerWidth }">
+  <div class="jeesite-editor-container" :style="{ width: containerWidth }">
     <Toolbar class="toolbar" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
     <Editor
       class="editor"
@@ -30,7 +30,6 @@
   import { computed, watch, onBeforeUnmount, shallowRef, nextTick, onMounted } from 'vue';
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
   import { i18nChangeLanguage, IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isNumber } from '@jeesite/core/utils/is';
   import { useLocale } from '@jeesite/core/locales/useLocale';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
@@ -94,7 +93,6 @@
 
   const emit = defineEmits(['update:value', 'change']);
 
-  const { prefixCls } = useDesign('editor-container');
   const { ctxPath, ctxAdminPath } = useGlobSetting();
 
   const containerWidth = computed(() => {
@@ -246,9 +244,7 @@
   };
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-editor-container';
-
-  .@{prefix-cls} {
+  .jeesite-editor-container {
     border: 1px solid #d9d9d9;
     border-radius: 6px;
 
@@ -289,7 +285,8 @@
     // modal - css vars
     --w-e-modal-button-bg-color: #151515;
     --w-e-modal-button-border-color: #303030;
-    .@{prefix-cls} {
+
+    .jeesite-editor-container {
       border-color: #303030;
 
       .w-e-toolbar {

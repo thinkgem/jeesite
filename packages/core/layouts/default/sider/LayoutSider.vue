@@ -33,7 +33,6 @@
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { useTrigger, useDragLine, useSiderEvent } from './useLayoutSider';
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import DragBar from './DragBar.vue';
 
@@ -55,8 +54,6 @@
         getIsMixMode,
         toggleCollapsed,
       } = useMenuSetting();
-
-      const { prefixCls } = useDesign('layout-sideBar');
 
       const { getIsMobile } = useAppInject();
 
@@ -80,10 +77,10 @@
 
       const getSiderClass = computed(() => {
         return [
-          prefixCls,
+          'jeesite-layout-sideBar',
           {
-            [`${prefixCls}--fixed`]: unref(getMenuFixed),
-            [`${prefixCls}--mix`]: unref(getIsMixMode) && !unref(getIsMobile),
+            ['jeesite-layout-sideBar--fixed']: unref(getMenuFixed),
+            ['jeesite-layout-sideBar--mix']: unref(getIsMixMode) && !unref(getIsMobile),
           },
         ];
       });
@@ -105,7 +102,6 @@
       const getTrigger = h(LayoutTrigger);
 
       return {
-        prefixCls,
         sideRef,
         dragBarRef,
         getIsMobile,
@@ -129,9 +125,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-sideBar';
-
-  .ant-layout .ant-layout-sider.@{prefix-cls} {
+  .ant-layout .ant-layout-sider.jeesite-layout-sideBar {
     z-index: @layout-sider-fixed-z-index;
 
     &--fixed {

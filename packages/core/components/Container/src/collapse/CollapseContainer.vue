@@ -1,6 +1,6 @@
 <template>
-  <div :class="prefixCls">
-    <CollapseHeader v-bind="$props" :prefixCls="prefixCls" :show="show" @expand="handleExpand">
+  <div class="jeesite-collapse-container">
+    <CollapseHeader v-bind="$props" :prefixCls="'jeesite-collapse-container'" :show="show" @expand="handleExpand">
       <template #title>
         <slot name="title"></slot>
       </template>
@@ -12,12 +12,12 @@
     <div class="p-2" v-show="show">
       <CollapseTransition :enable="canExpan">
         <Skeleton v-if="loading" :active="loading" />
-        <div :class="`${prefixCls}__body`" v-else>
+        <div class="jeesite-collapse-container__body" v-else>
           <slot></slot>
         </div>
       </CollapseTransition>
     </div>
-    <div :class="`${prefixCls}__footer`" v-if="$slots.footer">
+    <div class="jeesite-collapse-container__footer" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -32,7 +32,6 @@
   import { triggerResize } from '@jeesite/core/utils/event';
   // hook
   import { useTimeoutFn } from '@jeesite/core/hooks/core/useTimeout';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   const props = defineProps({
     title: { type: String, default: '' },
@@ -67,8 +66,6 @@
 
   const show = ref(true);
 
-  const { prefixCls } = useDesign('collapse-container');
-
   watch(
     () => props.expand,
     (newExpand) => {
@@ -92,9 +89,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-collapse-container';
-
-  .@{prefix-cls} {
+  .jeesite-collapse-container {
     background-color: @component-background;
     border-radius: 2px;
     transition: all 0.3s ease-in-out;

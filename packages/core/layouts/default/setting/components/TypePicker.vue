@@ -1,14 +1,14 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-setting-menu-type-picker">
     <template v-for="item in menuTypeList || []" :key="item.title">
       <Tooltip :title="item.title" placement="bottom">
         <div
           @click="handler(item)"
           :class="[
-            `${prefixCls}__item`,
-            `${prefixCls}__item--${item.type}`,
+            'jeesite-setting-menu-type-picker__item',
+            `jeesite-setting-menu-type-picker__item--${item.type}`,
             {
-              [`${prefixCls}__item--active`]: def === item.type,
+              ['jeesite-setting-menu-type-picker__item--active']: def === item.type,
             },
           ]"
         >
@@ -22,7 +22,6 @@
   import { defineComponent, PropType } from 'vue';
 
   import { Tooltip } from 'antdv-next';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import { menuTypeList } from '../enum';
   export default defineComponent({
@@ -43,18 +42,12 @@
       },
     },
     setup() {
-      const { prefixCls } = useDesign('setting-menu-type-picker');
-
-      return {
-        prefixCls,
-      };
+      return {};
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-menu-type-picker';
-
-  .@{prefix-cls} {
+  .jeesite-setting-menu-type-picker {
     display: flex;
     justify-content: space-evenly;
 

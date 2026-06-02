@@ -19,7 +19,6 @@
     provide,
   } from 'vue';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { createSimpleRootMenuContext } from './useSimpleMenuContext';
   import { mitt } from '@jeesite/core/utils/mitt';
@@ -53,8 +52,6 @@
       const currentActiveName = ref<string | number>('');
       const openedNames = ref<(string | number)[]>([]);
 
-      const { prefixCls } = useDesign('menu');
-
       const isRemoveAllPopup = ref(false);
 
       createSimpleRootMenuContext({
@@ -65,11 +62,11 @@
       const getClass = computed(() => {
         const { theme } = props;
         return [
-          prefixCls,
-          `${prefixCls}-${theme}`,
-          `${prefixCls}-vertical`,
+          'jeesite-menu',
+          `jeesite-menu-${theme}`,
+          'jeesite-menu-vertical',
           {
-            [`${prefixCls}-collapse`]: props.collapse,
+            ['jeesite-menu-collapse']: props.collapse,
           },
         ];
       });

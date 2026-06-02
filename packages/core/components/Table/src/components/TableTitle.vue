@@ -1,12 +1,11 @@
 <template>
-  <BasicTitle :class="prefixCls" v-if="getTitle" :helpMessage="helpMessage">
+  <BasicTitle class="jeesite-basic-table-title" v-if="getTitle" :helpMessage="helpMessage">
     {{ getTitle }}
   </BasicTitle>
 </template>
 <script lang="ts">
   import { computed, defineComponent, PropType } from 'vue';
   import { BasicTitle } from '@jeesite/core/components/Basic';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isFunction } from '@jeesite/core/utils/is';
 
   export default defineComponent({
@@ -24,8 +23,6 @@
       },
     },
     setup(props) {
-      const { prefixCls } = useDesign('basic-table-title');
-
       const getTitle = computed(() => {
         const { title, getSelectRows = () => {} } = props;
         let tit = title;
@@ -38,14 +35,12 @@
         return tit;
       });
 
-      return { getTitle, prefixCls };
+      return { getTitle };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table-title';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table-title {
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -3,7 +3,7 @@
     v-bind="$attrs"
     v-model:value="state"
     visibilityToggle
-    :class="prefixCls"
+    class="jeesite-jeesite-valid-code"
     :size="size"
     :placeholder="t('sys.login.validCode')"
     autocomplete="off"
@@ -15,7 +15,6 @@
 </template>
 <script lang="ts" setup name="JeeSiteValidCode">
   import { onMounted, ref, watch } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
@@ -33,7 +32,6 @@
   const { ctxPath } = useGlobSetting();
   const userStore = useUserStore();
 
-  const { prefixCls } = useDesign('jeesite-valid-code');
   const [state] = useRuleFormItem(props);
 
   const getValidCodeImg = ref('');
@@ -56,9 +54,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-countdown-input';
-
-  .@{prefix-cls} {
+  .jeesite-jeesite-valid-code {
     .ant-input-group-addon {
       padding-right: 0;
       background-color: transparent;

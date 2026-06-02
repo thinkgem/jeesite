@@ -1,11 +1,11 @@
 <template>
   <ALayoutHeader :class="getHeaderClass">
     <!-- left start -->
-    <div :class="`${prefixCls}-left`">
+    <div class="jeesite-layout-header-left">
       <!-- logo -->
       <AppLogo
         v-if="getShowHeaderLogo || getIsMobile"
-        :class="`${prefixCls}-logo`"
+        class="jeesite-layout-header-logo"
         :theme="getHeaderTheme"
         :style="getLogoWidth"
       />
@@ -19,13 +19,13 @@
     <!-- left end -->
 
     <!-- menu start -->
-    <div :class="`${prefixCls}-menu`" v-if="getIsInitMenu && getShowTopMenu && !getIsMobile">
+    <div class="jeesite-layout-header-menu" v-if="getIsInitMenu && getShowTopMenu && !getIsMobile">
       <LayoutMenu :isHorizontal="true" :theme="getHeaderTheme" :splitType="getSplitType" :menuMode="getMenuMode" />
     </div>
     <!-- menu-end -->
 
     <!-- action  -->
-    <div :class="`${prefixCls}-action`">
+    <div class="jeesite-layout-header-action">
       <AppSearch v-if="getShowSearch" class="switch-corp" />
 
       <OnlineCount class="online-count" />
@@ -54,7 +54,6 @@
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { usePermission } from '@jeesite/core/hooks/web/usePermission';
   import { useLocale } from '@jeesite/core/locales/useLocale';
   import { useUserStore } from '@jeesite/core/store/modules/user';
@@ -91,7 +90,6 @@
       fixed: propTypes.bool,
     },
     setup(props) {
-      const { prefixCls } = useDesign('layout-header');
       // 增加延迟，修复Safari下首次加载顶部菜单重叠问题。
       const getIsInitMenu = ref<boolean>(false);
       onMountedOrActivated(() => {
@@ -121,11 +119,11 @@
       const getHeaderClass = computed(() => {
         const theme = unref(getHeaderTheme);
         return [
-          prefixCls,
+          'jeesite-layout-header',
           {
-            [`${prefixCls}--fixed`]: props.fixed,
-            [`${prefixCls}--mobile`]: unref(getIsMobile),
-            [`${prefixCls}--${theme}`]: theme,
+            ['jeesite-layout-header--fixed']: props.fixed,
+            ['jeesite-layout-header--mobile']: unref(getIsMobile),
+            [`jeesite-layout-header--${theme}`]: theme,
           },
         ];
       });
@@ -165,7 +163,6 @@
       });
 
       return {
-        prefixCls,
         getHeaderClass,
         getShowHeaderLogo,
         getHeaderTheme,

@@ -1,18 +1,18 @@
 <template>
-  <BasicTitle v-if="!isDetail" :class="prefixCls">
+  <BasicTitle v-if="!isDetail" class="jeesite-basic-drawer-header">
     <slot name="title"></slot>
     {{ !$slots.title ? title : '' }}
   </BasicTitle>
 
-  <div :class="[prefixCls, `${prefixCls}--detail`]" v-else>
-    <span :class="`${prefixCls}__twrap`">
+  <div :class="['jeesite-basic-drawer-header', 'jeesite-basic-drawer-header--detail']" v-else>
+    <span class="jeesite-basic-drawer-header__twrap">
       <span @click="handleClose" v-if="showDetailBack">
-        <Icon icon="i-ant-design:arrow-left-outlined" :class="`${prefixCls}__back`" />
+        <Icon icon="i-ant-design:arrow-left-outlined" class="jeesite-basic-drawer-header__back" />
       </span>
       <span v-if="title">{{ title }}</span>
     </span>
 
-    <span :class="`${prefixCls}__toolbar`">
+    <span class="jeesite-basic-drawer-header__toolbar">
       <slot name="titleToolbar"></slot>
     </span>
   </div>
@@ -21,7 +21,6 @@
   import { defineComponent } from 'vue';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTitle } from '@jeesite/core/components/Basic';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
 
   export default defineComponent({
@@ -34,22 +33,19 @@
     },
     emits: ['close'],
     setup(_, { emit }) {
-      const { prefixCls } = useDesign('basic-drawer-header');
-
       function handleClose() {
         emit('close');
       }
 
-      return { prefixCls, handleClose };
+      return { handleClose };
     },
   });
 </script>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-drawer-header';
   @footer-height: 60px;
 
-  .@{prefix-cls} {
+  .jeesite-basic-drawer-header {
     display: flex;
     height: 100%;
     align-items: center;

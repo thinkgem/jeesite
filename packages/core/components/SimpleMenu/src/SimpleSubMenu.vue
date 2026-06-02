@@ -13,7 +13,7 @@
       {{ getI18nName }}
     </div>
     <template #title>
-      <span :class="['ml-2', `${prefixCls}-sub-title`]">
+      <span :class="['ml-2', 'jeesite-simple-menu-sub-title']">
         {{ getI18nName }}
       </span>
       <SimpleMenuTag :item="item" :collapseParent="getIsCollapseParent" />
@@ -34,7 +34,7 @@
         {{ getI18nName }}
       </div>
 
-      <span v-show="getShowSubTitle" :class="['ml-2', `${prefixCls}-sub-title`]">
+      <span v-show="getShowSubTitle" :class="['ml-2', 'jeesite-simple-menu-sub-title']">
         {{ getI18nName }}
       </span>
       <SimpleMenuTag :item="item" :collapseParent="!!collapse && !!parent" />
@@ -49,7 +49,6 @@
   import type { Menu } from '@jeesite/core/router/types';
 
   import { defineComponent, computed } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import Icon from '@jeesite/core/components/Icon';
 
   import MenuItem from './components/MenuItem.vue';
@@ -81,7 +80,6 @@
     props,
     setup(props) {
       const { t } = useI18n();
-      const { prefixCls } = useDesign('simple-menu');
 
       const getShowMenu = computed(() => !props.item?.meta?.hideMenu);
       const getIcon = computed(() => props.item?.icon);
@@ -92,8 +90,8 @@
       const getLevelClass = computed(() => {
         return [
           {
-            [`${prefixCls}__parent`]: props.parent,
-            [`${prefixCls}__children`]: !props.parent,
+            ['jeesite-simple-menu__parent']: props.parent,
+            ['jeesite-simple-menu__children']: !props.parent,
           },
         ];
       });
@@ -111,7 +109,6 @@
       }
 
       return {
-        prefixCls,
         menuHasChildren,
         getShowMenu,
         getIcon,

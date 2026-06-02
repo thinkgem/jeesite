@@ -103,7 +103,6 @@
   import { createTableContext } from './hooks/useTableContext';
   import { useTableFooter } from './hooks/useTableFooter';
   import { useTableForm } from './hooks/useTableForm';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import { omit } from 'lodash-es';
   import { basicProps } from './props';
@@ -149,7 +148,6 @@
   const formRef = shallowRef<InstanceType<typeof BasicForm>>();
   const innerPropsRef = ref<Partial<BasicTableProps>>();
 
-  const { prefixCls } = useDesign('basic-table');
   const [registerForm, formActions] = useForm();
 
   const getProps = computed(() => {
@@ -268,7 +266,7 @@
     emit,
   });
 
-  const { getRowClassName } = useTableStyle(getProps, prefixCls);
+  const { getRowClassName } = useTableStyle(getProps, 'jeesite-basic-table');
 
   const handlers: InnerHandlers = {
     onColumnsChange: (data: ColumnChangeParam[]) => {
@@ -291,7 +289,7 @@
       showTableSetting,
       tableSetting,
       onColumnsChange: handlers.onColumnsChange,
-      class: prefixCls + '-header-container',
+      class: 'jeesite-basic-table-header-container',
       showSelectionBar,
       clearSelectedRowKeys,
       count: getSelectRowKeys().length,
@@ -348,12 +346,12 @@
   const getWrapperClass = computed(() => {
     const values = unref(getProps);
     return [
-      prefixCls,
+      'jeesite-basic-table',
       attrs.class,
       {
-        [`${prefixCls}-header-hidden`]: getHeaderProps.value.class === 'hidden',
-        [`${prefixCls}-form-container`]: values.useSearchForm,
-        [`${prefixCls}--inset`]: values.inset,
+        ['jeesite-basic-table-header-hidden']: getHeaderProps.value.class === 'hidden',
+        ['jeesite-basic-table-form-container']: values.useSearchForm,
+        ['jeesite-basic-table--inset']: values.inset,
       },
     ];
   });
@@ -471,9 +469,7 @@
   defineExpose(tableAction);
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table {
     max-width: 100%;
     background-color: @component-background;
     border-radius: 10px;
@@ -490,7 +486,8 @@
 
       .ant-table {
         .ant-table-container {
-          border-radius: 8px !important;
+          border-bottom-left-radius: 8px !important;
+          border-bottom-right-radius: 8px !important;
           border: 1px solid @table-border-color !important;
 
           .ant-table-thead > tr > th {
@@ -504,16 +501,16 @@
           border: none !important;
         }
 
-        &.ant-table-bordered > .ant-table-container {
-          & > .ant-table-header > table,
-          & > .ant-table-content > table {
-            border-top: 0 !important;
-
-            & > thead > tr > th:last-child {
-              border-right: 0 !important;
-            }
-          }
-        }
+        //&.ant-table-bordered > .ant-table-container {
+        //  & > .ant-table-header > table,
+        //  & > .ant-table-content > table {
+        //    border-top: 0 !important;
+        //
+        //    & > thead > tr > th:last-child {
+        //      border-right: 0 !important;
+        //    }
+        //  }
+        //}
 
         .ant-table-column-sorter {
           margin: 0 -4px 0 -1px;
@@ -551,7 +548,7 @@
         }
       }
 
-      .@{prefix-cls}-row__striped {
+      .jeesite-basic-table-row__striped {
         td,
         td.ant-table-cell-fix-left,
         td.ant-table-cell-fix-right {
@@ -760,7 +757,7 @@
   }
 
   html[data-theme='dark'] {
-    .@{prefix-cls} {
+    .jeesite-basic-table {
       //a,
       //.ant-btn-link {
       //  color: #42a4e0;

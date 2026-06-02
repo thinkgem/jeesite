@@ -43,7 +43,6 @@
   import { useUserStore } from '@jeesite/core/store/modules/user';
 
   import { initAffixTabs, useTabsDrag } from './useMultipleTabs';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useMultipleTabSetting } from '@jeesite/core/hooks/setting/useMultipleTabSetting';
 
   import { REDIRECT_NAME } from '@jeesite/core/router/constant';
@@ -60,7 +59,6 @@
   const userStore = useUserStore();
   const router = useRouter();
 
-  const { prefixCls } = useDesign('multiple-tabs');
   const go = useGo();
   const { getTabsStyle, getShowQuick, getShowRedo, getShowFold } = useMultipleTabSetting();
 
@@ -72,10 +70,10 @@
 
   const getWrapClass = computed(() => {
     return [
-      prefixCls,
-      `${prefixCls}-${unref(getTabsStyle)}`,
+      'jeesite-multiple-tabs',
+      `jeesite-multiple-tabs-${unref(getTabsStyle)}`,
       {
-        [`${prefixCls}-hide-close`]: unref(unClose),
+        ['jeesite-multiple-tabs-hide-close']: unref(unClose),
       },
     ];
   });

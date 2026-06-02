@@ -16,7 +16,6 @@
 <script lang="ts">
   import { defineComponent, computed } from 'vue';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Tooltip } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
@@ -29,15 +28,14 @@
     },
     emits: ['cancel', 'fullscreen'],
     setup(props, { emit }) {
-      const { prefixCls } = useDesign('basic-modal-close');
       const { t } = useI18n();
 
       const getClass = computed(() => {
         return [
-          prefixCls,
-          `${prefixCls}--custom`,
+          'jeesite-basic-modal-close',
+          'jeesite-basic-modal-close--custom',
           {
-            [`${prefixCls}--can-full`]: props.canFullscreen,
+            ['jeesite-basic-modal-close--can-full']: props.canFullscreen,
           },
         ];
       });
@@ -55,7 +53,6 @@
       return {
         t,
         getClass,
-        prefixCls,
         handleCancel,
         handleFullScreen,
       };
@@ -63,8 +60,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-modal-close';
-  .@{prefix-cls} {
+  .jeesite-basic-modal-close {
     float: right;
     text-align: right;
     margin-right: 10px;
