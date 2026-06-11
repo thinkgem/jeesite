@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 
 		<!-- version setting -->
-		<nacos.version>3.1.1.1</nacos.version>
+		<nacos.version>3.2.2.1</nacos.version>
 		<derby.version>10.14.2.0</derby.version>
 
 		<!-- Docker setting -->
@@ -36,20 +36,31 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-console</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-server</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+        <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-console</artifactId>
+            <artifactId>nacos-ai-registry-adaptor</artifactId>
 			<version>${nacos.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-server</artifactId>
+            <artifactId>nacos-datasource-plugin-base</artifactId>
 			<version>${nacos.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-mcp-registry-adaptor</artifactId>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-mssql-datasource-plugin-ext</artifactId>
 			<version>${nacos.version}</version>
-        </dependency>
+		</dependency>-->
 
 	</dependencies>
 
