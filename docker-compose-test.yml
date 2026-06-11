@@ -17,7 +17,7 @@ x-common-env: &common-env
 
 # ==================== Service Base ====================
 x-service-base: &service-base
-  image: docker.1ms.run/eclipse-temurin:17
+  image: docker.1ms.run/eclipse-temurin:21.0.10_7-jdk
   environment:
     <<: *common-env
     JAVA_OPTS: -Dspring.profiles.active=prod -DcustomLogPath=/data

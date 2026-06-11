@@ -74,7 +74,7 @@ services:
   jeesite-cloud-nacos:
     <<: *service-base
     container_name: jeesite-cloud-nacos
-    image: docker.1ms.run/eclipse-temurin:17
+    image: docker.1ms.run/eclipse-temurin:21.0.10_7-jdk
     ports:
       - "8848:8848"
       - "9848:9848"
