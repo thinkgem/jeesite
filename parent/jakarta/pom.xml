@@ -24,7 +24,7 @@
 		<!-- version setting -->
 		<spring-cloud.version>2025.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
-		<nacos.version>3.1.1.1</nacos.version>
+		<nacos.version>3.2.2.1</nacos.version>
 
 		<!-- environment setting -->
 		<java.version>17</java.version>
