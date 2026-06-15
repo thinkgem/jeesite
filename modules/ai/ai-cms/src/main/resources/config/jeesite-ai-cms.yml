@@ -35,7 +35,7 @@ spring:
         api-key: ${SFLOW_APP_KEY}
         options:
           model: BAAI/bge-m3
-          dimensions: 512
+          #dimensions: 512
 
 #      # 硅基流动
 #      base-url: https://api.siliconflow.cn
@@ -52,7 +52,7 @@ spring:
 #      embedding:
 #        options:
 #          model: BAAI/bge-m3
-#          dimensions: 512
+#          #dimensions: 512
 
 #      # 模力方舟
 #      base-url: https://ai.gitee.com
