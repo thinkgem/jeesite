@@ -7,64 +7,77 @@
 
 spring:
   cloud:
-
-    # 网关路由配置
-    gateway.server.webflux:
-      defaultFilters:
-        - PreserveHostHeader
-      routes:
+    
+    # 网关路由配置（如果使用 MVC，请替换: webflux 为 webmvc; PreserveHostHeader 为 preserveHost; 删除: /js）
+    gateway.server.webflux.routes:
       
-        # 测试模块1
-        - id: test1
-          uri: lb://jeesite-cloud-module-test1
-          predicates:
-            - Path=/js/a/test1/**,/js/a/jeesite-cloud-module-test1/**,/js/static/modules/test1/**
-            
-        # 测试模块2
-        - id: test2
-          uri: lb://jeesite-cloud-module-test2
-          predicates:
-            - Path=/js/a/test2/**,/js/a/jeesite-cloud-module-test2/**,/js/static/modules/test2/**
-            
-        # 测试模块3
-        - id: test3
-          uri: lb://jeesite-cloud-module-test3
-          predicates:
-            - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
-            
-        # 业务流程模块（bpm）
-        - id: bpm
-          uri: lb://jeesite-cloud-module-bpm
-          predicates:
-            - Path=/js/a/bpm/**,/js/bpm/**,/js/inner/api/bpm/**,/js/static/modules/bpm/**,/js/static/htmltags/bpm/**,/js/a/jeesite-cloud-module-bpm/**,/js/a/oa/oaLeave/**
+      # 测试模块1
+      - id: test1
+        uri: lb://jeesite-cloud-module-test1
+        predicates:
+          - Path=/js/a/test1/**,/js/a/jeesite-cloud-module-test1/**,/js/static/modules/test1/**
+        filters:
+          - PreserveHostHeader
+          
+      # 测试模块2
+      - id: test2
+        uri: lb://jeesite-cloud-module-test2
+        predicates:
+          - Path=/js/a/test2/**,/js/a/jeesite-cloud-module-test2/**,/js/static/modules/test2/**
+        filters:
+          - PreserveHostHeader
+          
+      # 测试模块3
+      - id: test3
+        uri: lb://jeesite-cloud-module-test3
+        predicates:
+          - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
+        filters:
+          - PreserveHostHeader
+          
+      # 业务流程模块（bpm）
+      - id: bpm
+        uri: lb://jeesite-cloud-module-bpm
+        predicates:
+          - Path=/js/a/bpm/**,/js/bpm/**,/js/inner/api/bpm/**,/js/static/modules/bpm/**,/js/static/htmltags/bpm/**,/js/a/jeesite-cloud-module-bpm/**,/js/a/oa/oaLeave/**
+        filters:
+          - PreserveHostHeader
 
-        # 扩展模块（app、cms、filemanager、ureport、visual）
-        - id: extends
-          uri: lb://jeesite-cloud-module-extends
-          predicates:
-            - Path=/js/a/app/**,/js/a/cms/**,/js/f/**,/js/static/modules/cmsfront/**,/js/ureport/**,/js/visual/**,/js/static/modules/visual/**
+      # 扩展模块（app、cms、filemanager、ureport、visual）
+      - id: extends
+        uri: lb://jeesite-cloud-module-extends
+        predicates:
+          - Path=/js/a/app/**,/js/a/cms/**,/js/f/**,/js/static/modules/cmsfront/**,/js/ureport/**,/js/visual/**,/js/static/modules/visual/**
+        filters:
+          - PreserveHostHeader
 
-        # 文件服务（file、filepreview）
-        - id: files
-          uri: lb://jeesite-cloud-module-files
-          predicates:
-            - Path=/js/a/file/**,/js/userfiles/**,/js/static/filePreview/**,/js/a/filemanager/**
+      # 文件服务（file、filepreview）
+      - id: files
+        uri: lb://jeesite-cloud-module-files
+        predicates:
+          - Path=/js/a/file/**,/js/userfiles/**,/js/static/filePreview/**,/js/a/filemanager/**
+        filters:
+          - PreserveHostHeader
 
-        # 消息服务（msg）
-        - id: msgInner
-          uri: lb://jeesite-cloud-module-core
-          predicates:
-            - Path=/js/a/msg/msgInner/**
-        - id: msgPush
-          uri: lb://jeesite-cloud-module-msg
-          predicates:
-            - Path=/js/a/msg/**,/js/a/jeesite-cloud-module-msg/**
+      # 消息服务（msg）
+      - id: msgInner
+        uri: lb://jeesite-cloud-module-core
+        predicates:
+          - Path=/js/a/msg/msgInner/**
+      - id: msgPush
+        uri: lb://jeesite-cloud-module-msg
+        predicates:
+          - Path=/js/a/msg/**,/js/a/jeesite-cloud-module-msg/**
+        filters:
+          - PreserveHostHeader
 
-        # 核心模块（core）
-        - id: core
-          uri: lb://jeesite-cloud-module-core
-          predicates:
-            - Path=/js/**
+      # 核心模块（core）
+      - id: core
+        uri: lb://jeesite-cloud-module-core
+        predicates:
+          - Path=/js/**
+        filters:
+          - PreserveHostHeader
 
 #======================================#
 #========== Project settings ==========#

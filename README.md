@@ -522,13 +522,17 @@ service:
 ```yml
 spring:
   cloud:
-    gateway:
-      routes:
-        # 测试模块3
-        - id: test3
-          uri: lb://jeesite-cloud-module-test3
-          predicates:
-            - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
+    
+    # 网关路由配置（如果使用 MVC，请替换: webflux 为 webmvc; PreserveHostHeader 为 preserveHost; 删除: /js）
+    gateway.server.webflux.routes:
+      
+      # 测试模块3
+      - id: test3
+        uri: lb://jeesite-cloud-module-test3
+        predicates:
+          - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
+        filters:
+          - PreserveHostHeader
 ```
 注意：新增的配置请放到 core 基础权限模块之上。
 

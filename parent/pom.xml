@@ -24,7 +24,7 @@
 		<spring-cloud.version>2025.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
 		<nacos.version>3.2.2.1</nacos.version>
-		<seata.version>2.3.0</seata.version>
+		<seata.version>2.7.0</seata.version>
 
 		<!-- Docker setting -->
 		<docker.dockerHost>http://127.0.0.1:2375</docker.dockerHost>
@@ -55,6 +55,11 @@
 				<version>${seata.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.seata</groupId>
+				<artifactId>seata-spring-boot-starter</artifactId>
+				<version>${seata.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba.nacos</groupId>
