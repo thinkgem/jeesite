@@ -281,6 +281,8 @@ seata:
   client:
     undo:
       log-serialization: jackson
+  config:
+    type: file
   registry:
     type: nacos
     #preferred-networks: 192.168.*

@@ -95,7 +95,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
 * 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
-* 分布式事务框架：Seata 2.3 (可选组件)
+* 分布式事务框架：Seata 2.7 (可选组件)
 * 分布式链路追踪：Zipkin / SkyWalking (可选组件)
 * 工作流引擎框架：Flowable 8.x (可选组件)
 * 多租户 Saas 架构：表共享、独立模式、独立库方式
@@ -103,7 +103,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * Spring Boot Admin 系统监控管理
 * ELK 日志采集、日志分析和可视化
 * Spring Boot 4.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot4.cloud>
-* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot4.cloud>
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot3.cloud>
 * Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite-cloud/tree/v5.springboot2.cloud>
 
 ## 获取源代码
@@ -522,13 +522,17 @@ service:
 ```yml
 spring:
   cloud:
-    gateway:
-      routes:
-        # 测试模块3
-        - id: test3
-          uri: lb://jeesite-cloud-module-test3
-          predicates:
-            - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
+    
+    # 网关路由配置（如果使用 MVC，请替换: webflux 为 webmvc; PreserveHostHeader 为 preserveHost; 删除: /js）
+    gateway.server.webflux.routes:
+      
+      # 测试模块3
+      - id: test3
+        uri: lb://jeesite-cloud-module-test3
+        predicates:
+          - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
+        filters:
+          - PreserveHostHeader
 ```
 注意：新增的配置请放到 core 基础权限模块之上。
 
