@@ -114,7 +114,7 @@
 * 技术选型（详细）已支持数据库：<https://jeesite.com/docs/technology/>
 * JeeSite Vue 前后分离版：<https://gitee.com/thinkgem/jeesite-vue>
 * Spring Boot 4.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot4>
-* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot4>
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3>
 * Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.springboot2>
 
 ## 更多介绍
