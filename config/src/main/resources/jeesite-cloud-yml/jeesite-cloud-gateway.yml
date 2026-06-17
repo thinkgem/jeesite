@@ -43,7 +43,7 @@ spring:
         filters:
           - PreserveHostHeader
 
-      # 扩展模块（app、cms、filemanager、ureport、visual）
+      # 扩展模块（app、cms、ureport、visual）
       - id: extends
         uri: lb://jeesite-cloud-module-extends
         predicates:
@@ -51,7 +51,7 @@ spring:
         filters:
           - PreserveHostHeader
 
-      # 文件服务（file、filepreview）
+      # 文件服务（file、filepreview、filemanager）
       - id: files
         uri: lb://jeesite-cloud-module-files
         predicates:
