@@ -6,5 +6,3 @@ charset = utf-8
 [*.{groovy,java,kt,kts,xml,xsd}]
 indent_style = tab
 indent_size = 4
-continuation_indent_size = 8
-end_of_line = lf
