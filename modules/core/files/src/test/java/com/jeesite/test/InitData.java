@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
  * 初始化数据表
  * @author ThinkGem
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = FilesApplication.class)
 public class InitData extends BaseInitDataTests {
 	
