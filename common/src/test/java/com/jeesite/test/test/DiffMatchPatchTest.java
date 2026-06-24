@@ -23,7 +23,7 @@ import com.jeesite.common.text.DiffMatchPatch;
 import com.jeesite.common.text.DiffMatchPatch.Diff;
 import com.jeesite.common.text.DiffMatchPatch.LinesToCharsResult;
 import com.jeesite.common.text.DiffMatchPatch.Patch;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
 
@@ -927,27 +927,27 @@ public class DiffMatchPatchTest {
   }
   
   private static void assertNull(String message, Object object) {
-      Assert.assertNull(message, object);
+      Assertions.assertNull(object, message);
   }
   
   private static void assertEquals(String message, Object expected, Object actual) {
-      Assert.assertEquals(message, expected, actual);
+      Assertions.assertEquals(expected, actual, message);
   }
   
   private static void assertEquals(String message, String expected, String actual) {
-      Assert.assertEquals(message, expected, actual);
+      Assertions.assertEquals(expected, actual, message);
   }
   
   private static void assertTrue(String message, boolean condition) {
-      Assert.assertTrue(message, condition);
+      Assertions.assertTrue(condition, message);
   }
   
   private static void assertEquals(Object expected, Object actual) {
-      Assert.assertEquals(expected, actual);
+      Assertions.assertEquals(expected, actual);
   }
   
   private static void fail(String message) {
-      Assert.fail(message);
+      Assertions.fail(message);
   }
 
 }
