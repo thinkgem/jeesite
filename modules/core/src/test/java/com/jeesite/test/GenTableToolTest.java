@@ -21,7 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
  * @author ThinkGem
  * @version 2020-2-1
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = ApplicationTest.class)
 @Rollback(false)
 public class GenTableToolTest extends BaseSpringContextTests {

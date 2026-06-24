@@ -20,7 +20,7 @@ import java.util.List;
  * @author ThinkGem
  * @version 2019年10月28日
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = ApplicationTest.class)
 public class InsertBatchTest extends BaseSpringContextTests {
 

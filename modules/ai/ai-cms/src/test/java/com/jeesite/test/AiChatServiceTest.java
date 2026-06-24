@@ -21,7 +21,7 @@ import java.util.Map;
  * @author ThinkGem
  * @version 2025-06-06
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = ApplicationTest.class, properties = {
 		"spring.ai.model.chat=ollama","spring.ai.tools.enabled=true","spring.application.name=test"})
 public class AiChatServiceTest extends BaseSpringContextTests {

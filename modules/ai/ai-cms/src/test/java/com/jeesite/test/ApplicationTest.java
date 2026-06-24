@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
  * @author ThinkGem
  * @version 2018-1-8
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootApplication
 public class ApplicationTest {
 	

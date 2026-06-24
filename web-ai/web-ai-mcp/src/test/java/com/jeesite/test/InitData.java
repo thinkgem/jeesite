@@ -4,18 +4,17 @@
  */
 package com.jeesite.test;
 
+import com.jeesite.common.tests.BaseInitDataTests;
+import com.jeesite.modules.AiMcpApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import com.jeesite.common.tests.BaseInitDataTests;
-import com.jeesite.modules.AiMcpApplication;
 
 /**
  * 初始化数据表
  * @author ThinkGem
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = AiMcpApplication.class)
 public class InitData extends BaseInitDataTests {
 	

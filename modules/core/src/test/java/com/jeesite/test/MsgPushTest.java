@@ -36,7 +36,7 @@ import java.util.List;
  * @author ThinkGem
  * @version 2018-5-11
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = ApplicationTest.class, properties = {"msg.enabled=true"})
 @Rollback(false)
 public class MsgPushTest extends BaseSpringContextTests {
