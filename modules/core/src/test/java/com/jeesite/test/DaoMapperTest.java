@@ -32,7 +32,7 @@ import java.util.List;
  * @author ThinkGem
  * @version 2018-08-11
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = ApplicationTest.class)
 public class DaoMapperTest extends BaseSpringContextTests {
 

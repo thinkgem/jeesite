@@ -15,7 +15,7 @@ import com.jeesite.modules.AiMcpApplication;
  * 初始化数据表
  * @author ThinkGem
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = AiMcpApplication.class)
 public class InitData extends BaseInitDataTests {
 	

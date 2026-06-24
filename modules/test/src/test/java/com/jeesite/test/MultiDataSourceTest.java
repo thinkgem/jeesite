@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
  * @author ThinkGem
  * @version 2019-6-26
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = ApplicationTest.class)
 public class MultiDataSourceTest extends BaseSpringContextTests {
 	

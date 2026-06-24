@@ -24,7 +24,7 @@ import java.util.Map;
  * @author ThinkGem
  * @version 2025-06-06
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootApplication
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest(properties = {"spring.ai.model.chat=ollama","spring.ai.tools.enabled=true"})
