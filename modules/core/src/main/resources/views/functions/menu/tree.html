@@ -12,7 +12,7 @@ p.parentCode = p.parentCode!'0';
 p.paddingLeft = p.paddingLeft!14;
 p.paddingInitLeft = p.paddingInitLeft!(@Global.getConfig('sys.index.menuStyle', '1') == '2' ? 0 : p.paddingLeft);
 if (p.loadType == '1'){
-	p.menuList = @UserUtils.getMenuListByParentCode(p.parentCode);
+	p.menuList = @MenuUtils.getMenuListByParentCode(p.parentCode);
 }else if (p.loadType == '2'){
 	if (p.children!false){
 		p.menuList = p.childList![];
