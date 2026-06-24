@@ -27,7 +27,7 @@ services:
   jeesite-cloud-mysql:
     <<: *service-base
     container_name: jeesite-cloud-mysql
-    image: docker.1ms.run/mysql:8.4
+    image: docker.1ms.run/library/mysql:8.4.10
     ports:
       - "23306:3306"
     environment:
