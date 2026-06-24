@@ -91,7 +91,7 @@ spring:
   application:
     name: jeesite-web-fast
 
-  # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  # 当前环境名称，支持 JVM 参数设置，如: -Dspring.profiles.active=prod
   profiles:
     active: default
 
