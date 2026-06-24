@@ -37,7 +37,7 @@ import java.util.List;
  * @author ThinkGem
  * @version 2018-5-11
  */
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 @SpringBootTest(classes = Test1Application.class)
 @Rollback(false)
 public class MsgPushTest extends BaseSpringContextTests {
