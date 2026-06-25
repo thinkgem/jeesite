@@ -14,7 +14,7 @@
 	<packaging>war</packaging>
 
 	<name>JeeSite Cloud Nacos</name>
-	<url>http://www.jeesite.com</url>
+	<url>https://jeesite.com</url>
 	<inceptionYear>2019-Now</inceptionYear>
 
 	<properties>
@@ -111,7 +111,7 @@
 
 	<organization>
 		<name>jeesite</name>
-		<url>http://www.jeesite.com</url>
+		<url>https://jeesite.com</url>
 	</organization>
 
 	<repositories>

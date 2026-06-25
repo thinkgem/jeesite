@@ -46,7 +46,7 @@ public class NacosApplication {
 			System.setProperty("nacos.standalone", "true");
 		}
 		if (StringUtils.isBlank(System.getProperty("nacos.home"))) {
-			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos6boot3");
+			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos6boot4");
 		}
 		if (StringUtils.isBlank(System.getProperty("nacos.deployment.type"))) {
 			System.setProperty("nacos.deployment.type", "merged");
