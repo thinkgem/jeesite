@@ -8,3 +8,5 @@ allowBuilds:
   vue-demi: true
 minimumReleaseAgeExclude:
   - '@jeesite/*'
+  - '@v-c/*'
+  - 'antdv-next'

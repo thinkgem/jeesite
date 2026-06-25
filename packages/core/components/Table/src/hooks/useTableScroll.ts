@@ -150,9 +150,9 @@ export function useTableScroll(
 
     // Set empty data height
     if (tableData.length === 0) {
-      const emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed') as HTMLElement;
+      const emptyDataEl = tableEl.querySelector('.ant-empty') as HTMLElement;
       if (emptyDataEl && emptyDataEl.style) {
-        emptyDataEl.style.height = `${height - 12}px`;
+        emptyDataEl.style.height = `${height - 100}px`;
       }
     }
   }

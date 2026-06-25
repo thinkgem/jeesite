@@ -42,8 +42,8 @@ importers:
         specifier: workspace:*
         version: link:web
       antdv-next:
-        specifier: 1.3.5
-        version: 1.3.5(vue@3.5.38(typescript@6.0.3))
+        specifier: 1.3.7
+        version: 1.3.7(vue@3.5.38(typescript@6.0.3))
       axios:
         specifier: 1.17.0
         version: 1.17.0(supports-color@10.2.2)
@@ -2738,8 +2738,8 @@ packages:
   '@v-c/async-validator@1.0.1':
     resolution: {integrity: sha512-2WXdbTso13119ZLiwUv1JkmdL0K4ll69id4oE3ft3LQX+YAHOoJtfx080u26lLtypgZS32PguoohgB0BVo39rg==}
 
-  '@v-c/cascader@1.1.0':
-    resolution: {integrity: sha512-HXVYrm/Cj4JsMtuGx7EncsC6C9b8xWsh8jWANfWreqffpzWZX10GrVqO6fyi/Mk2d4+yenlEsx5B7p5SyXlm3A==}
+  '@v-c/cascader@1.1.1':
+    resolution: {integrity: sha512-KeQdt/9dV7NN+zqvTNLl5eDJNTEL+p1o0mimMbkHH4sCkgzHYY0nxKtBRpDh1uzeSjqiN8YKxx9VvuzVeDkaOg==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2801,13 +2801,13 @@ packages:
   '@v-c/mini-decimal@1.0.1':
     resolution: {integrity: sha512-76wZLdlkI017iDlaZMNOWZyDCv29YVabUJn5urQgIKtW4dnI5AkNXWtmLyhl/mu/OS7ZGisRi5ai/558QhLQxQ==}
 
-  '@v-c/mutate-observer@1.0.1':
-    resolution: {integrity: sha512-84+9KGORX8LY9u+K0DEGyRwRCJaky0sjRkXxBC7X/jahHJl8NQGQ0Gxve5IVwaxRTfZ9eftlRmHs90JD6Utfqg==}
+  '@v-c/mutate-observer@1.0.2':
+    resolution: {integrity: sha512-btnmj0NezMcQ/vOlTlP9p47NBOa8q/CIYdDMrpM3W0JrmAHrkAUD7hiWypLXyBuiEko+SQc3U07rcm8StQ5qFA==}
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/notification@2.0.0':
-    resolution: {integrity: sha512-m/DeTTZf7l0t6ROYNoP6UPUTdbo8SQDU8x6KPeo/9BgpfhOsIp2FcAnzkfb8NXxYzVJyyFTrWxX5IFM3gw6Zcg==}
+  '@v-c/notification@2.0.1':
+    resolution: {integrity: sha512-23Vj8/eodOVSAAvXjZkgwIn2Ww0zNzX3w0wpyYi/TlDo4pOfWFEyXtJEuQ1icS9HPUlmIaBfHrBgomCWe3OxNA==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2844,13 +2844,13 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/progress@1.0.0':
-    resolution: {integrity: sha512-kWDTU1uXnPDMmoezwyAECxuSH+WKn92OjSdk/GgDbQgZ0qNy9woOiRe5fOsrcy61agHdJxzf0MvsUy1b6bZVlA==}
+  '@v-c/progress@1.0.1':
+    resolution: {integrity: sha512-ZTaXBYfAASPSk9MD/tu3eZUCnB1UhK6s0G/F0AkNwvzPiVcR2kiiDZO12YpfmdZwUjcrg8U7miAg89aSUZ/aPw==}
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/qrcode@1.0.0':
-    resolution: {integrity: sha512-OSMrYDhP/NQiUcO6J0X2X8BskHPRqX/E/F9npH3oayZgjCo5Aom+63Ja3J0u6SOmKP1JgLSgjrm5karc0671jw==}
+  '@v-c/qrcode@1.0.1':
+    resolution: {integrity: sha512-kPcpjgX5lEj6/vatJOqrUtqj5PGvcAYCs5CAu1kBO0B6FGnSuHM/JXlYQrmMNIOD1sI/GzgYIa9KL6mc8FCHJw==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2864,13 +2864,18 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
+  '@v-c/resize-observer@1.1.2':
+    resolution: {integrity: sha512-yOcskQ1yG26A5l5ImPtgeuMFCwiq5QJRVnubDa9rgv3KOossTVSHUU3UkLxeqE3rdIAuyHnYcroAW43+faNdKQ==}
+    peerDependencies:
+      vue: ^3.0.0
+
   '@v-c/segmented@1.0.2':
     resolution: {integrity: sha512-g/aWgURMJkytu05AACN3Pd9QKgka4ZQM8tl/y0AcabANldy2hmPIHek0ZH5dDdn5VmK1PhAfUTqtgDS19sLh5w==}
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/select@1.1.1':
-    resolution: {integrity: sha512-NsXZH9JfjlEsGBFahOdx8Wg3lFLM4TOZtDdcJhNZOdbhlkJvJnxRWL9iLQs2ycoD32Ufa/5QEJIyKuQKWTyohQ==}
+  '@v-c/select@1.1.2':
+    resolution: {integrity: sha512-3auONNdNmDHe6eh+5HOfyXhAZ4XB8HZy6MAhHGsDrYM6Mh0HBDMDSjts10/rHO6HncnK7hcyuX+nbVqpnefaTg==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2894,13 +2899,13 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/table@1.1.4':
-    resolution: {integrity: sha512-rfJtpLR1rUfm5j4GixWZmiXIWrjSUtiZTfibl37xCvvWs7JFtfcBLeVlnFJuKbVOVp8bUSdhwOzvhwXrkEM0hg==}
+  '@v-c/table@1.1.6':
+    resolution: {integrity: sha512-BkHqjwk1VI06pyJzzzz3uKAvVaU3M7oR8gW9mR0rZLG0SJwcccp/X7kvMytNXWYb94f/awwu4rqT3Og+hFbI5Q==}
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/tabs@1.1.0':
-    resolution: {integrity: sha512-k91oQBDmYM2cPM1Wt/N1GdTwB2ky2NTfVBmzURRSaw2qjGkq4Gt3z8GNaXYqH+S/0hE+ciQhcCtWRdfM2oGIYA==}
+  '@v-c/tabs@1.1.1':
+    resolution: {integrity: sha512-BPIIAMeac5S5hJ9cvgnSeMsTiaMPNTMtPGBLjmsChQq4qeBqAyln/gGnuEnoNpCFsAvtwXv8ibDFPjn4unFQaQ==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2919,13 +2924,13 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/tree-select@1.1.0':
-    resolution: {integrity: sha512-Nulw5J0Tth3+1IIMbc7aZ9m5iKWKTlCfjKCVvbXRWRN8OSc52AMDh9gyW6qPMp92Cxn1YQJtoQDgpa/IcPafuQ==}
+  '@v-c/tree-select@1.1.1':
+    resolution: {integrity: sha512-jh0Wnj7iO8Exm5DFZHvfkdK1Jowxgs2bZ7/0C/2et9Ko9uUEEbJiDKxtEEKiiUNM8pRyUVVEYMNyndA1/HtMFw==}
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/tree@1.1.0':
-    resolution: {integrity: sha512-V7O0MHQqPL9eo3WGrM/+HmMoGsrca5jSPZs4GbhshTHKrQvFF38KjOs5xM4CxJBNaVSQzN2iGLUbrZYeiU/9Tw==}
+  '@v-c/tree@1.1.1':
+    resolution: {integrity: sha512-TIdW6DG92dC0gk02zjiqF0zKwRGccF0OQw8iOfBgLNk277HpLPLebUEN50VPGnTFB36Smc51/o4tCr1X6Bozwg==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2944,8 +2949,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  '@v-c/virtual-list@1.0.8':
-    resolution: {integrity: sha512-lsc0+AiOaIiG74EvzXSALq2bCwjmFlLDvKjyWXQPwz/9VA3NPkCbMvukA8HgCWvDALvmL0ejnvjc/907b8d8lA==}
+  '@v-c/virtual-list@1.0.9':
+    resolution: {integrity: sha512-Yjbjux9HYDWNPAAJkZuc49DSbkJ2KR5Hft2IzMR9v70FSqzYMbMZVKMVu+k1z86xdlcutT8WObpKMLlRXjdHFg==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -3249,8 +3254,8 @@ packages:
     resolution: {integrity: sha512-4Dj6M28JB+oAH8kFkTLUo+a2jwOFkuqb3yucU0CANcRRUbxS0cP0nZYCGjcc3BNXwRIsUVmDGgzawme7zvJHvg==}
     engines: {node: '>=12'}
 
-  antdv-next@1.3.5:
-    resolution: {integrity: sha512-hGaBUje7JC1Fla6SsQzR7Am71u/Kc6PU8aGBLUSePamcyPkjlC1tymeYeF6oPB6au4LgOXoUzE19Qojaie3wQg==}
+  antdv-next@1.3.7:
+    resolution: {integrity: sha512-+KCCijrJUryUoLVyVU6TYrpA1Q1xCNwpEGmxQpNgzStE/tKh0RjZoknynxDva/6J6H0SlL+jxy22rEN7C6ruzw==}
 
   argparse@1.0.10:
     resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
@@ -8218,10 +8223,10 @@ snapshots:
 
   '@v-c/async-validator@1.0.1': {}
 
-  '@v-c/cascader@1.1.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/cascader@1.1.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@v-c/select': 1.1.1(vue@3.5.38(typescript@6.0.3))
-      '@v-c/tree': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/select': 1.1.2(vue@3.5.38(typescript@6.0.3))
+      '@v-c/tree': 1.1.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
@@ -8295,13 +8300,13 @@ snapshots:
 
   '@v-c/mini-decimal@1.0.1': {}
 
-  '@v-c/mutate-observer@1.0.1(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/mutate-observer@1.0.2(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@v-c/resize-observer': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/resize-observer': 1.1.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/notification@2.0.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/notification@2.0.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
@@ -8332,12 +8337,12 @@ snapshots:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/progress@1.0.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/progress@1.0.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/qrcode@1.0.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/qrcode@1.0.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
@@ -8353,17 +8358,23 @@ snapshots:
       resize-observer-polyfill: 1.5.1
       vue: 3.5.38(typescript@6.0.3)
 
+  '@v-c/resize-observer@1.1.2(vue@3.5.38(typescript@6.0.3))':
+    dependencies:
+      '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
+      resize-observer-polyfill: 1.5.1
+      vue: 3.5.38(typescript@6.0.3)
+
   '@v-c/segmented@1.0.2(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/select@1.1.1(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/select@1.1.2(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/overflow': 1.1.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/trigger': 1.0.16(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
-      '@v-c/virtual-list': 1.0.8(vue@3.5.38(typescript@6.0.3))
+      '@v-c/virtual-list': 1.0.9(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
   '@v-c/slick@1.0.2(vue@3.5.38(typescript@6.0.3))':
@@ -8387,19 +8398,19 @@ snapshots:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/table@1.1.4(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/table@1.1.6(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@v-c/resize-observer': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/resize-observer': 1.1.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
-      '@v-c/virtual-list': 1.0.8(vue@3.5.38(typescript@6.0.3))
+      '@v-c/virtual-list': 1.0.9(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/tabs@1.1.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/tabs@1.1.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/dropdown': 1.0.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/menu': 1.2.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/overflow': 1.1.0(vue@3.5.38(typescript@6.0.3))
-      '@v-c/resize-observer': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/resize-observer': 1.1.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
@@ -8423,17 +8434,17 @@ snapshots:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/tree-select@1.1.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/tree-select@1.1.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@v-c/select': 1.1.1(vue@3.5.38(typescript@6.0.3))
-      '@v-c/tree': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/select': 1.1.2(vue@3.5.38(typescript@6.0.3))
+      '@v-c/tree': 1.1.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/tree@1.1.0(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/tree@1.1.1(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
-      '@v-c/virtual-list': 1.0.8(vue@3.5.38(typescript@6.0.3))
+      '@v-c/virtual-list': 1.0.9(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
   '@v-c/trigger@1.0.16(vue@3.5.38(typescript@6.0.3))':
@@ -8452,9 +8463,9 @@ snapshots:
     dependencies:
       vue: 3.5.38(typescript@6.0.3)
 
-  '@v-c/virtual-list@1.0.8(vue@3.5.38(typescript@6.0.3))':
+  '@v-c/virtual-list@1.0.9(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@v-c/resize-observer': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/resize-observer': 1.1.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
       vue: 3.5.38(typescript@6.0.3)
 
@@ -8855,14 +8866,14 @@ snapshots:
 
   ansi-styles@6.2.3: {}
 
-  antdv-next@1.3.5(vue@3.5.38(typescript@6.0.3)):
+  antdv-next@1.3.7(vue@3.5.38(typescript@6.0.3)):
     dependencies:
       '@ant-design/colors': 8.0.1
       '@ant-design/fast-color': 3.0.1
       '@antdv-next/cssinjs': 1.0.6(vue@3.5.38(typescript@6.0.3))
       '@antdv-next/icons': 1.0.8(vue@3.5.38(typescript@6.0.3))
       '@v-c/async-validator': 1.0.1
-      '@v-c/cascader': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/cascader': 1.1.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/checkbox': 1.0.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/collapse': 1.0.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/color-picker': 1.0.6(vue@3.5.38(typescript@6.0.3))
@@ -8874,31 +8885,31 @@ snapshots:
       '@v-c/input-number': 1.0.5(vue@3.5.38(typescript@6.0.3))
       '@v-c/mentions': 1.1.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/menu': 1.2.0(vue@3.5.38(typescript@6.0.3))
-      '@v-c/mutate-observer': 1.0.1(vue@3.5.38(typescript@6.0.3))
-      '@v-c/notification': 2.0.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/mutate-observer': 1.0.2(vue@3.5.38(typescript@6.0.3))
+      '@v-c/notification': 2.0.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/pagination': 1.0.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/picker': 1.1.3(dayjs@1.11.21)(vue@3.5.38(typescript@6.0.3))
-      '@v-c/progress': 1.0.0(vue@3.5.38(typescript@6.0.3))
-      '@v-c/qrcode': 1.0.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/progress': 1.0.1(vue@3.5.38(typescript@6.0.3))
+      '@v-c/qrcode': 1.0.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/rate': 1.0.1(vue@3.5.38(typescript@6.0.3))
-      '@v-c/resize-observer': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/resize-observer': 1.1.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/segmented': 1.0.2(vue@3.5.38(typescript@6.0.3))
-      '@v-c/select': 1.1.1(vue@3.5.38(typescript@6.0.3))
+      '@v-c/select': 1.1.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/slick': 1.0.2(vue@3.5.38(typescript@6.0.3))
       '@v-c/slider': 1.1.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/steps': 1.0.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/switch': 1.0.1(vue@3.5.38(typescript@6.0.3))
-      '@v-c/table': 1.1.4(vue@3.5.38(typescript@6.0.3))
-      '@v-c/tabs': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/table': 1.1.6(vue@3.5.38(typescript@6.0.3))
+      '@v-c/tabs': 1.1.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/textarea': 1.1.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/tooltip': 1.0.3(vue@3.5.38(typescript@6.0.3))
       '@v-c/tour': 1.1.0(vue@3.5.38(typescript@6.0.3))
-      '@v-c/tree': 1.1.0(vue@3.5.38(typescript@6.0.3))
-      '@v-c/tree-select': 1.1.0(vue@3.5.38(typescript@6.0.3))
+      '@v-c/tree': 1.1.1(vue@3.5.38(typescript@6.0.3))
+      '@v-c/tree-select': 1.1.1(vue@3.5.38(typescript@6.0.3))
       '@v-c/trigger': 1.0.16(vue@3.5.38(typescript@6.0.3))
       '@v-c/upload': 1.0.0(vue@3.5.38(typescript@6.0.3))
       '@v-c/util': 1.0.19(vue@3.5.38(typescript@6.0.3))
-      '@v-c/virtual-list': 1.0.8(vue@3.5.38(typescript@6.0.3))
+      '@v-c/virtual-list': 1.0.9(vue@3.5.38(typescript@6.0.3))
       '@vueuse/core': 14.3.0(vue@3.5.38(typescript@6.0.3))
       dayjs: 1.11.21
       es-toolkit: 1.45.1
