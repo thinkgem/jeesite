@@ -1,7 +1,7 @@
-import type { ActionItem, BasicColumn } from '@jeesite/core/components/Table';
+import type { BasicColumn, ActionItem } from '@jeesite/core/components/Table';
 import { FileItem, UploadResultStatus } from './typing';
 import { formatSize, isImgTypeByName } from './helper';
-import { Avatar, Progress, Tag } from 'ant-design-vue';
+import { Avatar, Progress, Tag } from 'antdv-next';
 import { Icon } from '@jeesite/core/components/Icon';
 import TableAction from '@jeesite/core/components/Table/src/components/TableAction.vue';
 import ThumbUrl from './ThumbUrl.vue';

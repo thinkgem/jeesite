@@ -2,17 +2,24 @@ import type { Component } from 'vue';
 import type { ComponentType } from './types/index';
 import {
   Input,
+  InputGroup,
+  InputPassword,
+  InputSearch,
+  TextArea,
   Checkbox,
   AutoComplete,
   Cascader,
   DatePicker,
+  DateMonthPicker,
+  DateRangePicker,
+  DateWeekPicker,
   InputNumber,
   Switch,
   TimePicker,
   Slider,
   Rate,
   Divider,
-} from 'ant-design-vue';
+} from 'antdv-next';
 
 import JeeSiteText from './components/JeeSiteText.vue';
 import JeeSiteSelect from './components/JeeSiteSelect.vue';
@@ -31,10 +38,10 @@ import { CountdownInput } from '@jeesite/core/components/CountDown';
 const componentMap = new Map<ComponentType, Component>();
 
 componentMap.set('Input', Input);
-componentMap.set('InputGroup', Input.Group);
-componentMap.set('InputPassword', Input.Password);
-componentMap.set('InputSearch', Input.Search);
-componentMap.set('InputTextArea', Input.TextArea);
+componentMap.set('InputGroup', InputGroup);
+componentMap.set('InputPassword', InputPassword);
+componentMap.set('InputSearch', InputSearch);
+componentMap.set('InputTextArea', TextArea);
 componentMap.set('InputNumber', InputNumber);
 componentMap.set('AutoComplete', AutoComplete);
 
@@ -51,9 +58,9 @@ componentMap.set('Slider', Slider);
 componentMap.set('Rate', Rate);
 
 componentMap.set('DatePicker', DatePicker);
-componentMap.set('MonthPicker', DatePicker.MonthPicker);
-componentMap.set('RangePicker', DatePicker.RangePicker);
-componentMap.set('WeekPicker', DatePicker.WeekPicker);
+componentMap.set('MonthPicker', DateMonthPicker);
+componentMap.set('RangePicker', DateRangePicker);
+componentMap.set('WeekPicker', DateWeekPicker);
 componentMap.set('TimePicker', TimePicker);
 componentMap.set('StrengthMeter', StrengthMeter);
 componentMap.set('IconPicker', IconPicker);

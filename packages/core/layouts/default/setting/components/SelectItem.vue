@@ -1,9 +1,9 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-setting-select-item">
     <span> {{ title }}</span>
     <Select
       v-bind="getBindValue"
-      :class="`${prefixCls}-select`"
+      class="jeesite-setting-select-item-select"
       @change="handleChange"
       :disabled="disabled"
       size="small"
@@ -14,8 +14,7 @@
 <script lang="ts">
   import { defineComponent, PropType, computed } from 'vue';
 
-  import { Select } from 'ant-design-vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
+  import { Select } from 'antdv-next';
   import { baseHandler } from '../handler';
   import { HandlerEnum } from '../enum';
 
@@ -44,7 +43,6 @@
       },
     },
     setup(props) {
-      const { prefixCls } = useDesign('setting-select-item');
       const getBindValue = computed(() => {
         return props.def ? { value: props.def, defaultValue: props.initValue || props.def } : {};
       });
@@ -53,7 +51,6 @@
         props.event && baseHandler(props.event, e);
       }
       return {
-        prefixCls,
         handleChange,
         getBindValue,
       };
@@ -61,9 +58,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-select-item';
-
-  .@{prefix-cls} {
+  .jeesite-setting-select-item {
     display: flex;
     justify-content: space-between;
     margin: 16px 0;

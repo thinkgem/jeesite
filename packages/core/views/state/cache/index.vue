@@ -76,15 +76,15 @@
         dataIndex: 'cacheName',
         key: 'a.cache_name',
         sorter: false,
-        width: 80,
+        width: 150,
         align: 'left',
       },
     ],
     indexColumnProps: {
-      width: 20,
+      width: 50,
     },
     actionColumn: {
-      width: 20,
+      width: 50,
       align: 'center',
       actions: (record: Recordable) => [
         {
@@ -127,15 +127,15 @@
         dataIndex: 'key',
         key: 'a.key',
         sorter: false,
-        width: 100,
+        width: 190,
         align: 'left',
       },
     ],
     indexColumnProps: {
-      width: 23,
+      width: 50,
     },
     actionColumn: {
-      width: 25,
+      width: 50,
       align: 'center',
       actions: (record: Recordable) => [
         {
@@ -192,7 +192,6 @@
         componentProps: () => {
           return {
             style: { height: `${textAreaHeight.value}px` },
-            maxlength: 500,
             rows: 12,
           };
         },

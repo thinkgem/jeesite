@@ -1,8 +1,7 @@
 <template>
-  <div :class="prefixCls" class="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black">
+  <div class="jeesite-lock-page fixed inset-0 h-screen w-screen flex items-center justify-center bg-black">
     <div
-      :class="`${prefixCls}__unlock`"
-      class="sm:text-md absolute left-1/2 top-0 h-16 flex flex-col translate-x-1/2 transform cursor-pointer items-center justify-center pt-5 text-white xl:text-xl"
+      class="jeesite-lock-page__unlock sm:text-md absolute left-1/2 top-0 h-16 flex flex-col translate-x-1/2 transform cursor-pointer items-center justify-center pt-5 text-white xl:text-xl"
       @click="handleShowForm(false)"
       v-show="showDate"
     >
@@ -11,30 +10,30 @@
     </div>
 
     <div class="h-screen w-screen flex items-center justify-center">
-      <div :class="`${prefixCls}__hour`" class="relative mr-5 h-2/5 w-2/5 md:mr-20 md:h-4/5">
+      <div class="jeesite-lock-page__hour relative mr-5 h-2/5 w-2/5 md:mr-20 md:h-4/5">
         <span>{{ hour }}</span>
         <span class="text-md meridiem absolute left-5 top-5 xl:text-xl" v-show="showDate">
           {{ meridiem }}
         </span>
       </div>
-      <div :class="`${prefixCls}__minute w-2/5 h-2/5 md:h-4/5 `">
+      <div class="jeesite-lock-page__minute w-2/5 h-2/5 md:h-4/5">
         <span> {{ minute }}</span>
       </div>
     </div>
     <transition name="fade-slide">
-      <div :class="`${prefixCls}-entry`" v-show="!showDate">
-        <div :class="`${prefixCls}-entry-content`">
-          <div :class="`${prefixCls}-entry__header enter-x`">
-            <img :src="userinfo.avatarUrl || headerImg" :class="`${prefixCls}-entry__header-img`" />
-            <p :class="`${prefixCls}-entry__header-name`">
+      <div class="jeesite-lock-page-entry" v-show="!showDate">
+        <div class="jeesite-lock-page-entry-content">
+          <div class="jeesite-lock-page-entry__header enter-x">
+            <img :src="userinfo.avatarUrl || headerImg" class="jeesite-lock-page-entry__header-img" />
+            <p class="jeesite-lock-page-entry__header-name">
               {{ userinfo.userName }}
             </p>
           </div>
           <InputPassword :placeholder="t('sys.lock.placeholder')" class="enter-x" v-model:value="password" />
-          <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
+          <span class="jeesite-lock-page-entry__err-msg enter-x" v-if="errMsg">
             {{ t('sys.lock.alert') }}
           </span>
-          <div :class="`${prefixCls}-entry__footer enter-x`">
+          <div class="jeesite-lock-page-entry__footer enter-x">
             <a-button
               type="link"
               size="small"
@@ -65,13 +64,12 @@
 </template>
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { useLockStore } from '@jeesite/core/store/modules/lock';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useNow } from './useNow';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { LockOutlined } from '@ant-design/icons-vue';
+  import { LockOutlined } from '@antdv-next/icons';
   import headerImg from '@jeesite/assets/images/header.jpg';
 
   const InputPassword = Input.Password;
@@ -81,7 +79,6 @@
   const errMsg = ref(false);
   const showDate = ref(true);
 
-  const { prefixCls } = useDesign('lock-page');
   const lockStore = useLockStore();
   const userStore = useUserStore();
 
@@ -120,9 +117,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-lock-page';
-
-  .@{prefix-cls} {
+  .jeesite-lock-page {
     z-index: @lock-page-z-index;
 
     &__unlock {

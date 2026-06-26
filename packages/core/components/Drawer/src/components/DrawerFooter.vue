@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" :style="getStyle" v-if="showFooter || $slots.footer">
+  <div class="jeesite-basic-drawer-footer" :style="getStyle" v-if="showFooter || $slots.footer">
     <template v-if="!$slots.footer">
       <slot name="insertFooter"></slot>
       <a-button v-bind="cancelButtonProps" @click="handleClose" class="mr-2" v-if="showCancelBtn">
@@ -29,7 +29,6 @@
 <script lang="ts">
   import type { CSSProperties } from 'vue';
   import { defineComponent, computed } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { usePermission } from '@jeesite/core/hooks/web/usePermission';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Icon } from '@jeesite/core/components/Icon';
@@ -49,7 +48,6 @@
     setup(props, { emit }) {
       const { t } = useI18n();
       const { hasPermission } = usePermission();
-      const { prefixCls } = useDesign('basic-drawer-footer');
 
       const getStyle = computed((): CSSProperties => {
         const heightStr = `${props.height}`;
@@ -70,15 +68,13 @@
       function handleClose() {
         emit('close');
       }
-      return { t, prefixCls, getStyle, getOkAuth, handleOk, handleClose };
+      return { t, getStyle, getOkAuth, handleOk, handleClose };
     },
   });
 </script>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-drawer-footer';
-
-  .@{prefix-cls} {
+  .jeesite-basic-drawer-footer {
     position: absolute;
     bottom: 0;
     width: 100%;

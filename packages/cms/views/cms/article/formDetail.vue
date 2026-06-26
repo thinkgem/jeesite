@@ -14,7 +14,7 @@
   import { ref } from 'vue';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { Article } from '@jeesite/cms/api/cms/article';
-  import type { NamePath } from 'ant-design-vue/lib/form/interface';
+  import type { NamePath } from 'antdv-next/dist/form/types';
   import { WangEditor } from '@jeesite/core/components/WangEditor';
 
   const record = ref<Article>({} as Article);

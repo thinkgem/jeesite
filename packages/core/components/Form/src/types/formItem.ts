@@ -1,6 +1,6 @@
-import type { NamePath } from 'ant-design-vue/lib/form/interface';
-import type { ColProps } from 'ant-design-vue/lib/grid/Col';
-import type { HTMLAttributes, VNodeChild } from 'vue';
+import type { NamePath } from 'antdv-next/dist/form/types';
+import type { ColProps } from 'antdv-next/dist/grid/col';
+import type { VNodeChild } from 'vue';
 
 export interface FormItem {
   /**
@@ -39,7 +39,7 @@ export interface FormItem {
    * The layout of label. You can set span offset to something like {span: 3, offset: 12} or sm: {span: 3, offset: 12} same as with <Col>
    * @type Col
    */
-  labelCol?: ColProps & HTMLAttributes;
+  labelCol?: ColProps;
 
   /**
    * The layout for input controls, same as componentCol

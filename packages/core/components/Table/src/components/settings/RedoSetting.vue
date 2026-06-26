@@ -8,8 +8,8 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { Tooltip } from 'ant-design-vue';
-  import { RedoOutlined } from '@ant-design/icons-vue';
+  import { Tooltip } from 'antdv-next';
+  import { RedoOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useTableContext } from '../../hooks/useTableContext';
 

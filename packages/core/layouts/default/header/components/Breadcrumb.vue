@@ -1,158 +1,125 @@
 <template>
-  <div :class="[prefixCls, `${prefixCls}--${theme}`]">
-    <a-breadcrumb :routes="routes">
-      <template #itemRender="{ route, routes: routesMatched, paths }">
-        <Icon :icon="getIcon(route)" v-if="getShowBreadCrumbIcon && getIcon(route)" />
-        <span v-if="!hasRedirect(routesMatched, route)">
-          {{ t(route.name || route.meta.title) }}
-        </span>
-        <router-link v-else to="" @click="handleClick(route, paths, $event)">
-          {{ t(route.name || route.meta.title) }}
-        </router-link>
+  <div :class="['jeesite-layout-breadcrumb', `jeesite-layout-breadcrumb--${theme}`]">
+    <Breadcrumb :items="itemsRef">
+      <template #itemRender="{ route }">
+        <Icon class="mr-1" :icon="getIcon(route)" v-if="getShowBreadCrumbIcon && getIcon(route)" />
+        <span class="ant-breadcrumb-overlay-link cursor-pointer">{{ t(route['name'] || route['meta']?.title) }}</span>
       </template>
-    </a-breadcrumb>
+    </Breadcrumb>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup name="LayoutBreadcrumb">
   import type { RouteLocationMatched } from 'vue-router';
   import { useRouter } from 'vue-router';
   import type { Menu } from '@jeesite/core/router/types';
 
-  import { defineComponent, ref, watchEffect } from 'vue';
+  import { ref, watchEffect } from 'vue';
 
-  import { Breadcrumb } from 'ant-design-vue';
+  import { Breadcrumb } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
   import { propTypes } from '@jeesite/core/utils/propTypes';
-  import { isString } from '@jeesite/core/utils/is';
-  import { filter } from '@jeesite/core/utils/helper/treeHelper';
   import { getMenus } from '@jeesite/core/router/menus';
 
   import { REDIRECT_NAME } from '@jeesite/core/router/constant';
   import { getAllParentPath } from '@jeesite/core/router/helper/menuHelper';
 
-  export default defineComponent({
-    name: 'LayoutBreadcrumb',
-    components: { Icon, [Breadcrumb.name as string]: Breadcrumb },
-    props: {
-      theme: propTypes.oneOf(['dark', 'light']),
-    },
-    setup() {
-      const routes = ref<RouteLocationMatched[]>([]);
-      const { currentRoute } = useRouter();
-      const { prefixCls } = useDesign('layout-breadcrumb');
-      const { getShowBreadCrumbIcon } = useRootSetting();
-      const go = useGo();
+  const props = defineProps({
+    theme: propTypes.oneOf(['dark', 'light']),
+  });
 
-      const { t } = useI18n();
-      watchEffect(async () => {
-        if (currentRoute.value.name === REDIRECT_NAME) return;
-        const menus = await getMenus();
+  const itemsRef = ref<any[]>([]);
+  const { currentRoute } = useRouter();
+  const { getShowBreadCrumbIcon } = useRootSetting();
+  const { t } = useI18n();
+  const go = useGo();
 
-        const routeMatched = currentRoute.value.matched;
-        const cur = routeMatched?.[routeMatched.length - 1];
-        let path = currentRoute.value.path;
+  watchEffect(async () => {
+    if (currentRoute.value.name === REDIRECT_NAME) return;
+    const menus = await getMenus();
 
-        if (cur && cur?.meta?.currentActiveMenu) {
-          path = cur.meta.currentActiveMenu as string;
-        }
+    const routeMatched = currentRoute.value.matched;
+    const cur = routeMatched?.[routeMatched.length - 1];
+    let path = currentRoute.value.path;
 
-        const parent = getAllParentPath(menus, path);
-        const filterMenus = menus.filter((item) => item.path === parent[0]);
-        const matched = getMatched(filterMenus, parent) as any;
+    if (cur && cur?.meta?.currentActiveMenu) {
+      path = cur.meta.currentActiveMenu as string;
+    }
 
-        if (!matched || matched.length === 0) return;
+    const parent = getAllParentPath(menus, path);
+    const filterMenus = menus.filter((item) => item.path === parent[0]);
+    const matched = getItems(filterMenus, parent) as any;
 
-        const breadcrumbList = filterItem(matched);
+    if (!matched || matched.length === 0) return;
 
-        if (currentRoute.value.meta?.currentActiveMenu) {
-          breadcrumbList.push({
-            ...currentRoute.value,
-            name: currentRoute.value.meta?.title || currentRoute.value.name,
-          } as unknown as RouteLocationMatched);
-        }
-        routes.value = breadcrumbList;
-      });
+    const breadcrumbList = matched;
 
-      function getMatched(menus: Menu[], parent: string[]) {
-        const metched: Menu[] = [];
-        menus.forEach((item) => {
-          if (parent.includes(item.path)) {
-            metched.push({
-              ...item,
-              name: item.meta?.title || item.name,
-            });
-          }
-          if (item.children?.length) {
-            metched.push(...getMatched(item.children, parent));
-          }
+    if (currentRoute.value.meta?.currentActiveMenu) {
+      breadcrumbList.push({
+        ...currentRoute.value,
+        name: currentRoute.value.meta?.title || currentRoute.value.name,
+      } as unknown as RouteLocationMatched);
+    }
+    itemsRef.value = breadcrumbList;
+  });
+
+  function getItems(menus: Menu[], parent: string[]) {
+    const items: Menu[] = [];
+    menus.forEach((item) => {
+      const { meta } = item;
+      if (!meta) {
+        return;
+      }
+      const { title, hideBreadcrumb, hideMenu } = meta;
+      if (!title || hideBreadcrumb || hideMenu) {
+        return;
+      }
+      if (!(!item.meta?.hideBreadcrumb || !item.meta?.hideMenu)) {
+        return;
+      }
+      const subItems: any[] = [];
+      const children = item.children;
+      if (children && children.length) {
+        children.forEach((subItem: any) => {
+          subItems.push({
+            title: subItem.title,
+            key: subItem.path,
+          });
         });
-        return metched;
       }
-
-      function filterItem(list: RouteLocationMatched[]) {
-        return filter(list, (item) => {
-          const { meta, name } = item;
-          if (!meta) {
-            return !!name;
-          }
-          const { title, hideBreadcrumb, hideMenu } = meta;
-          if (!title || hideBreadcrumb || hideMenu) {
-            return false;
-          }
-          return true;
-        }).filter((item) => !item.meta?.hideBreadcrumb || !item.meta?.hideMenu);
-      }
-
-      function handleClick(route: RouteLocationMatched, paths: string[], e: Event) {
-        e?.preventDefault();
-        const { children, redirect, meta } = route;
-
-        if (children?.length && !redirect) {
-          e?.stopPropagation();
-          return;
+      if (parent.includes(item.path)) {
+        const newItem: any = {
+          ...item,
+          name: item.meta?.title || item.name,
+        };
+        if (subItems.length > 0) {
+          newItem.menu = { items: subItems, onClick: handleMenuClick };
         }
-        if (meta?.carryParam) {
-          return;
-        }
-
-        if (redirect && isString(redirect)) {
-          go(redirect);
-        } else {
-          let goPath = '';
-          if (paths.length === 1) {
-            goPath = paths[0];
-          } else {
-            const ps = paths.slice(1);
-            const lastPath = ps.pop() || '';
-            goPath = `${lastPath}`;
-          }
-          goPath = /^\//.test(goPath) ? goPath : `/${goPath}`;
-          go(goPath);
-        }
+        items.push(newItem);
       }
-
-      function hasRedirect(routes: RouteLocationMatched[], route: RouteLocationMatched) {
-        return routes.indexOf(route) !== routes.length - 1;
+      if (item.children?.length) {
+        items.push(...getItems(item.children, parent));
       }
+    });
+    return items;
+  }
 
-      function getIcon(route) {
-        return route.icon || route.meta?.icon;
-      }
+  function handleMenuClick(item: any) {
+    let goPath = item.key;
+    goPath = /^\//.test(goPath) ? goPath : `/${goPath}`;
+    go(goPath);
+  }
 
-      return { routes, t, prefixCls, getIcon, getShowBreadCrumbIcon, handleClick, hasRedirect };
-    },
-  } as any);
+  function getIcon(route: any) {
+    return route.icon || route.meta?.icon;
+  }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-breadcrumb';
-
-  .@{prefix-cls} {
+  .jeesite-layout-breadcrumb {
     display: flex;
     padding: 0 8px;
     align-items: center;

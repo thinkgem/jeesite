@@ -21,7 +21,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysCompanyForm">
-  import { ref, unref, computed } from 'vue';
+  import { ref, unref, computed, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -42,7 +42,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增公司') : t('编辑公司'),
   }));
-  const formExtendRef = ref<InstanceType<typeof FormExtend>>();
+  const formExtendRef = shallowRef<InstanceType<typeof FormExtend>>();
 
   const inputFormSchemas: FormSchema[] = [
     {

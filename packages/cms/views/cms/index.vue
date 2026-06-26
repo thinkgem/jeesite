@@ -19,8 +19,8 @@
         @click="handleSelectedKeys"
       >
         <template #headerTitle>
-          <Dropdown class="cursor-pointer" :trigger="['hover']" :dropMenuList="dropMenuList">
-            {{ siteName }} <DownOutlined />
+          <Dropdown :trigger="['hover']" :dropMenuList="dropMenuList">
+            <span class="cursor-pointer">{{ siteName }} <DownOutlined /></span>
           </Dropdown>
         </template>
       </BasicTree>
@@ -41,7 +41,7 @@
   import { Site, siteSelect } from '@jeesite/cms/api/cms/site';
   import { Category, categoryIndex, categoryTreeData } from '@jeesite/cms/api/cms/category';
   import { Dropdown, DropMenu } from '@jeesite/core/components/Dropdown';
-  import { DownOutlined } from '@ant-design/icons-vue';
+  import { DownOutlined } from '@antdv-next/icons';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
 
   import ArticleList from './article/list.vue';
@@ -93,7 +93,7 @@
     // if (tree.module === 'article' && tree.showModes == '3') {
     //   go('/cms/article/form?id=' + tree.id);
     // }
-    treeData.value = tree.dataRef;
+    treeData.value = tree;
     treeCodes.value = [tree.id];
   }
 </script>

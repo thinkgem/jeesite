@@ -5,7 +5,7 @@
  */
 import type { ComputedRef, Ref } from 'vue';
 import type { FormProps, FormSchema, FormActionType } from '../types/form';
-import type { NamePath } from 'ant-design-vue/lib/form/interface';
+import type { NamePath } from 'antdv-next/dist/form/types';
 import { unref, toRaw } from 'vue';
 import { isArray, isFunction, isObject, isString } from '@jeesite/core/utils/is';
 import { deepMerge } from '@jeesite/core/utils';
@@ -23,6 +23,7 @@ interface UseFormActionContext {
   formElRef: Ref<FormActionType>;
   schemaRef: Ref<FormSchema[]>;
   handleFormValues: Fn;
+  validateTriggerRef: Ref<string | string[] | false>;
 }
 export function useFormEvents({
   emit,
@@ -33,6 +34,7 @@ export function useFormEvents({
   formElRef,
   schemaRef,
   handleFormValues,
+  validateTriggerRef,
 }: UseFormActionContext) {
   async function resetFields(): Promise<void> {
     const { resetFunc, submitOnReset } = unref(getProps);
@@ -44,6 +46,7 @@ export function useFormEvents({
     Object.keys(formModel).forEach((key) => {
       formModel[key] = defaultValueRef.value[key];
     });
+    validateTriggerRef.value = false;
     await clearValidate();
     emit('reset', toRaw(formModel));
     submitOnReset && (await handleSubmit());
@@ -242,12 +245,14 @@ export function useFormEvents({
   }
 
   async function validateFields(nameList?: NamePath[] | undefined) {
+    validateTriggerRef.value = 'blur';
     const values = await unref(formElRef)?.validateFields(nameList);
     const res = handleFormValues(toRaw(values));
     return res;
   }
 
   async function validate(nameList?: NamePath[] | undefined) {
+    validateTriggerRef.value = 'blur';
     const values = await unref(formElRef)?.validate(nameList);
     const res = handleFormValues(toRaw(values));
     return res;

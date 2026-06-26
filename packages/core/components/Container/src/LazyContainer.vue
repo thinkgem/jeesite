@@ -10,9 +10,9 @@
   </transition-group>
 </template>
 <script lang="ts">
-  import type { PropType } from 'vue';
+  import { PropType, shallowRef } from 'vue';
   import { defineComponent, reactive, onMounted, ref, toRef, toRefs } from 'vue';
-  import { Skeleton } from 'ant-design-vue';
+  import { Skeleton } from 'antdv-next';
   import { useTimeoutFn } from '@jeesite/core/hooks/core/useTimeout';
   import { useIntersectionObserver } from '@jeesite/core/hooks/event/useIntersectionObserver';
 
@@ -65,7 +65,7 @@
     props,
     emits: ['init'],
     setup(props, { emit }) {
-      const elRef = ref();
+      const elRef = shallowRef();
       const state = reactive<State>({
         isInit: false,
         loading: false,

@@ -16,14 +16,14 @@
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <BasicForm @register="registerForm">
+    <BasicForm>
       <template #employeeOfficeList>
         <FormEmployeeOfficeList ref="formEmployeeOfficeListRef" />
       </template>
       <template #userRoleString>
         <div v-if="postRolePermi" class="mb-3">
           <Alert
-            :message="`启用岗位角色权限后，角色不会保存，请在用户关联岗位中关联角色。`"
+            :title="`启用岗位角色权限后，角色不会保存，请在用户关联岗位中关联角色。`"
             type="info"
             banner
             closable
@@ -36,13 +36,13 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserForm">
-  import { ref, unref, computed, h } from 'vue';
-  import { Alert } from 'ant-design-vue';
+  import { ref, unref, computed, h, shallowRef } from 'vue';
+  import { Alert } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { BasicForm, FormExtend, FormSchema, useForm } from '@jeesite/core/components/Form';
+  import { FormExtend, FormSchema, useBasicForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
   import { EmpUser, checkEmpNo, empUserSave, empUserForm } from '@jeesite/core/api/sys/empUser';
   import { checkLoginCode } from '@jeesite/core/api/sys/user';
@@ -57,8 +57,8 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<EmpUser>({} as EmpUser);
-  const formEmployeeOfficeListRef = ref<InstanceType<typeof FormEmployeeOfficeList>>();
-  const formUserRoleListRef = ref<InstanceType<typeof FormUserRoleList>>();
+  const formEmployeeOfficeListRef = shallowRef<InstanceType<typeof FormEmployeeOfficeList>>();
+  const formUserRoleListRef = shallowRef<InstanceType<typeof FormUserRoleList>>();
 
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
@@ -67,7 +67,7 @@
   const ctrlPermi = ref<string>('');
   const postRolePermi = ref<boolean>(false);
   const op = ref<string>('');
-  const formExtendRef = ref<InstanceType<typeof FormExtend>>();
+  const formExtendRef = shallowRef<InstanceType<typeof FormExtend>>();
 
   const inputFormSchemas: FormSchema<EmpUser>[] = [
     {
@@ -109,7 +109,7 @@
         { pattern: /^[\u0391-\uFFE5\w]+$/, message: t('不能输入特殊字符') },
         {
           validator(_rule, value) {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
               if (!value || value === '') return resolve();
               checkLoginCode(record.value.loginCode || '', value)
                 .then((res) => (res ? resolve() : reject(t('登录账号已存在'))))
@@ -200,7 +200,7 @@
         { required: false },
         {
           validator(_rule, value) {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
               if (!value || value === '') return resolve();
               checkEmpNo(record.value.employee?.empNo || '', value)
                 .then((res) => (res ? resolve() : reject(t('员工工号已存在'))))
@@ -278,7 +278,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm<EmpUser>({
+  const [BasicForm, { resetFields, setFieldsValue, updateSchema, validate }] = useBasicForm<EmpUser>({
     schemas: inputFormSchemas,
     baseColProps: { md: 24, lg: 12 },
     labelWidth: 120,

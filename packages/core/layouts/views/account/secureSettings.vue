@@ -1,13 +1,13 @@
 <template>
   <CollapseContainer :title="t('sys.account.securityTab')" :canExpan="false">
-    <List>
-      <template v-for="item in secureSettingList" :key="item.key">
-        <List.Item>
-          <List.Item.Meta>
-            <template #avatar>
-              <Icon v-if="item.avatar" class="avatar" :icon="item.avatar" :color="item.color" />
-            </template>
-            <template #title>
+    <div class="list-container">
+      <div v-for="item in secureSettingList" :key="item.key" class="list-item">
+        <div class="list-item-meta">
+          <div v-if="item.avatar" class="avatar-wrapper">
+            <Icon class="avatar" :icon="item.avatar" :color="item.color" />
+          </div>
+          <div class="meta-content">
+            <div class="meta-title">
               <span v-if="item.extra" class="cursor-pointer" @click="handleSetting(item.key, item.title)">
                 {{ item.title }}
               </span>
@@ -21,18 +21,17 @@
               >
                 {{ item.extra }}
               </a-button>
-            </template>
-            <template #description>
-              <div>{{ item.description }}</div>
-            </template>
-          </List.Item.Meta>
-        </List.Item>
-      </template>
-    </List>
+            </div>
+            <div class="meta-description">
+              {{ item.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </CollapseContainer>
 </template>
 <script lang="ts" setup>
-  import { List } from 'ant-design-vue';
   import { CollapseContainer } from '@jeesite/core/components/Container';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
@@ -82,13 +81,3 @@
     }
   }
 </script>
-<style lang="less">
-  .extra {
-    float: right;
-    margin-top: 10px;
-    margin-right: 30px;
-    font-weight: normal;
-    color: #1890ff;
-    cursor: pointer;
-  }
-</style>

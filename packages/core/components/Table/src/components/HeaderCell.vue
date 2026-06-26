@@ -10,7 +10,7 @@
     <component :is="title" v-if="isComponent(title)" />
     <template v-else>{{ title }}</template>
   </template>
-  <BasicHelp v-if="getHelpMessage" :text="getHelpMessage" :class="`${prefixCls}__help`" />
+  <BasicHelp v-if="getHelpMessage" :text="getHelpMessage" class="jeesite-basic-table-header-cell__help" />
 </template>
 <script lang="ts" setup name="TableHeaderCell">
   import type { PropType } from 'vue';
@@ -18,7 +18,6 @@
   import { defineComponent, computed } from 'vue';
   import BasicHelp from '@jeesite/core/components/Basic/src/BasicHelp.vue';
   import EditTableHeaderCell from './EditTableHeaderIcon.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   const props = defineProps({
     column: {
@@ -26,7 +25,6 @@
       default: () => ({}),
     },
   });
-  const { prefixCls } = useDesign('basic-table-header-cell');
 
   const getIsEdit = computed(() => !!props.column?.edit);
   const getIsEditRule = computed(() => props.column?.editRule === true);
@@ -42,9 +40,7 @@
   }
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table-header-cell';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table-header-cell {
     &__help {
       margin-left: 8px;
       color: rgb(0 0 0 / 65%) !important;

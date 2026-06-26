@@ -10,6 +10,7 @@ import { useTabs } from '@jeesite/core/hooks/web/useTabs';
 import { useGo } from '@jeesite/core/hooks/web/usePage';
 import { initFramePage } from '@jeesite/core/layouts/iframe/useFrameKeepAlive';
 import { encryptByMd5 } from '@jeesite/core/utils/cipher';
+import { useEmitter } from '@jeesite/core/store/modules/user';
 // import qs from 'qs';
 
 // 白名单应该包含基本静态路由
@@ -119,6 +120,8 @@ function initTabPage() {
       this.showMessage(msg, title, 'info');
     },
   });
+  const emitter = useEmitter();
+  window['emitter'] = Object.assign(window['emitter'] || {}, emitter);
 }
 
 // config router

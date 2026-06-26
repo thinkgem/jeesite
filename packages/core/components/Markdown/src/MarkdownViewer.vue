@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onBeforeUnmount, onDeactivated, Ref, ref, unref, watch } from 'vue';
+  import { onBeforeUnmount, onDeactivated, Ref, ref, shallowRef, unref, watch } from 'vue';
   import { onMountedOrActivated } from '@jeesite/core/hooks/core/onMountedOrActivated';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import VditorPreview from 'vditor/dist/method.min';
@@ -13,7 +13,7 @@
     value: { type: String },
     class: { type: String },
   });
-  const viewerRef = ref(null);
+  const viewerRef = shallowRef(null);
   const vditorPreviewRef = ref(null) as Ref<VditorPreview | null>;
   const { getDarkMode } = useRootSetting();
 

@@ -20,9 +20,8 @@
       <template #viewConfigHelp>
         <div class="mx-2 mb-3">
           <Alert
-            :message="`例如视图参数设置为：{count:2,titleShow:'yes'} 则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}。
-                      设置栏目的管理地址：若设置【adminUrl:false】表示无管理地址，在内容发布栏目列表中不显示该栏目；
-                      设置【adminUrl:'/cms/guestbook'】表示有管理地址，在内容发布栏目列表中点击该栏目链接到该地址。`"
+            :title="`例如视图参数设置为：{count:2,titleShow:'yes'} 则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}。
+                      设置栏目的管理地址：若设置【adminUrl:false】表示无管理地址，在内容发布栏目列表中不显示该栏目`"
             type="info"
             banner
           />
@@ -40,7 +39,7 @@
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
   import { Category, categorySave, categoryForm, categoryTreeData } from '@jeesite/cms/api/cms/category';
-  import { Alert } from 'ant-design-vue';
+  import { Alert } from 'antdv-next';
 
   const emit = defineEmits(['success', 'register']);
 

@@ -22,7 +22,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsSysAreaIndex">
-  import { ref, unref, onMounted } from 'vue';
+  import { ref, unref, onMounted, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { BasicTree, TreeActionType, TreeItem } from '@jeesite/core/components/Tree';
@@ -34,7 +34,7 @@
   const { t } = useI18n('sys.area');
   const treeCodes = ref<string[]>([]);
 
-  const treeRef = ref<Nullable<TreeActionType>>(null);
+  const treeRef = shallowRef<Nullable<TreeActionType>>(null);
   const treeData = ref<TreeItem['treeData']>([]);
 
   onMounted(async () => {
@@ -49,9 +49,9 @@
       }
       const treeAction: TreeActionType | null = unref(treeRef);
       if (treeAction) {
-        const children = await areaTreeData({ parentCode: treeNode.eventKey });
-        treeAction.updateNodeByKey(treeNode.eventKey, { children });
-        //treeAction.setExpandedKeys(uniq([treeNode.eventKey, ...treeAction.getExpandedKeys()]));
+        const children = await areaTreeData({ parentCode: treeNode.id });
+        treeAction.updateNodeByKey(treeNode.id, { children });
+        //treeAction.setExpandedKeys(uniq([treeNode.id, ...treeAction.getExpandedKeys()]));
       }
       resolve();
       return;

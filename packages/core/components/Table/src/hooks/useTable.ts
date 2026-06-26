@@ -2,11 +2,13 @@ import type { BasicTableProps, TableActionType, FetchParams, BasicColumn } from 
 import type { PaginationProps } from '../types/pagination';
 import type { DynamicProps } from '@jeesite/types/utils';
 import type { FormActionType } from '@jeesite/core/components/Form';
-import type { WatchStopHandle } from 'vue';
+import type { DefineComponent } from 'vue';
+import { WatchStopHandle, defineComponent, h } from 'vue';
 import { getDynamicProps } from '@jeesite/core/utils';
 import { ref, onUnmounted, unref, watch, toRaw } from 'vue';
 import { isProdMode } from '@jeesite/core/utils/env';
 import { error } from '@jeesite/core/utils/log';
+import BasicTable from '../BasicTable.vue';
 
 type Props<T> = Partial<DynamicProps<BasicTableProps<T>>>;
 
@@ -16,12 +18,7 @@ export type UseTableMethod = TableActionType & {
 
 export function useTable<T = Recordable>(
   tableProps?: Props<T>,
-): [
-  (instance: TableActionType, formInstance: UseTableMethod) => void,
-  TableActionType & {
-    getForm: () => FormActionType;
-  },
-] {
+): [(instance: TableActionType, formInstance: UseTableMethod) => void, UseTableMethod] {
   const tableRef = ref<Nullable<TableActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
   const formRef = ref<Nullable<UseTableMethod>>(null);
@@ -34,7 +31,6 @@ export function useTable<T = Recordable>(
         tableRef.value = null;
         loadedRef.value = null;
       });
-
     if (unref(loadedRef) && isProdMode() && instance === unref(tableRef)) return;
 
     tableRef.value = instance;
@@ -191,4 +187,22 @@ export function useTable<T = Recordable>(
   };
 
   return [register, methods];
+}
+
+export function useBasicTable<T = Recordable>(tableProps?: Props<T>): [DefineComponent, UseTableMethod] {
+  const [register, methods] = useTable(tableProps);
+  const Table = defineComponent({
+    render() {
+      return h(
+        BasicTable as any,
+        {
+          onRegister: register,
+          ...tableProps,
+          ...this.$attrs,
+        },
+        { ...this.$slots },
+      );
+    },
+  }) as DefineComponent;
+  return [Table, methods];
 }

@@ -1,4 +1,3 @@
-import { withInstall } from '@jeesite/core/utils';
-import wangEditor from './src/WangEditor.vue';
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-export const WangEditor = withInstall(wangEditor);
+export const WangEditor = createAsyncComponent(() => import('./src/WangEditor.vue'));

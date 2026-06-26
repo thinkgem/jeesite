@@ -1,11 +1,10 @@
 <template>
-  <span :class="`${prefixCls}__extra-redo`" @click="handleRedo">
+  <span class="jeesite-multiple-tabs-content__extra-redo" @click="handleRedo">
     <Icon icon="i-ant-design:redo-outlined" :spin="loading" />
   </span>
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useTabs } from '@jeesite/core/hooks/web/useTabs';
   import { Icon } from '@jeesite/core/components/Icon';
 
@@ -16,7 +15,6 @@
     setup() {
       const loading = ref(false);
 
-      const { prefixCls } = useDesign('multiple-tabs-content');
       const { refreshPage } = useTabs();
 
       async function handleRedo() {
@@ -27,7 +25,7 @@
           // Animation execution time
         }, 1200);
       }
-      return { prefixCls, handleRedo, loading };
+      return { handleRedo, loading };
     },
   });
 </script>

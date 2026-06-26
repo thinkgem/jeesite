@@ -35,7 +35,7 @@
 </template>
 <script lang="ts" setup name="ViewsMsgMsgInnerView">
   import { ref, computed, onMounted } from 'vue';
-  import { Tag } from 'ant-design-vue';
+  import { Tag } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { Icon } from '@jeesite/core/components/Icon';

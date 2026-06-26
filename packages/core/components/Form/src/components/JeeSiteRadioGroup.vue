@@ -15,7 +15,7 @@
 </template>
 <script lang="ts" setup name="JeeSiteRadioGroup">
   import { PropType, computed, ref, unref, watch } from 'vue';
-  import { Radio } from 'ant-design-vue';
+  import { Radio, RadioGroup } from 'antdv-next';
   import { isEmpty, isString } from '@jeesite/core/utils/is';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
@@ -24,8 +24,6 @@
 
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
   type RadioItem = string | Recordable | OptionsItem;
-
-  const RadioGroup = Radio.Group;
 
   const props = defineProps({
     value: {

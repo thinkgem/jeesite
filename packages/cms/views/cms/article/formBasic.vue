@@ -12,8 +12,8 @@
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { Article } from '@jeesite/cms/api/cms/article';
   import { categoryTreeData } from '@jeesite/cms/api/cms/category';
-  import type { NamePath } from 'ant-design-vue/lib/form/interface';
-  import { Checkbox } from 'ant-design-vue';
+  import type { NamePath } from 'antdv-next/dist/form/types';
+  import { Checkbox } from 'antdv-next';
 
   const { t } = useI18n('cms.article');
   const record = ref<Article>({} as Article);
@@ -64,31 +64,30 @@
       componentProps: {
         maxlength: 255,
         class: 'text-ruler',
-      },
-      renderComponentContent: ({ model }) => {
-        return {
-          addonAfter: () =>
-            h('div', { style: 'position:relative;' }, [
-              h('input', {
-                style: 'border:0;width:28px;padding:0 2px',
-                type: 'color',
-                title: t('标题颜色'),
-                value: record.value.color || '#555555',
-                onChange: (e: any) => {
-                  record.value.color = e.target?.value || '';
-                },
-              }),
-              record.value.color &&
-                h('a', {
-                  style: 'position:absolute;cursor:pointer;top:6px;right:-8px;font-size:12px;opacity:0.5',
+        addonAfter: () =>
+          h('div', { style: 'position:relative;' }, [
+            h('input', {
+              style: 'border:0;width:28px;padding:0 2px',
+              type: 'color',
+              title: t('标题颜色'),
+              value: record.value.color || '#555555',
+              onChange: (e: any) => {
+                record.value.color = e.target?.value || '';
+              },
+            }),
+            record.value.color &&
+              h(
+                'a',
+                {
+                  style: 'position:absolute;cursor:pointer;top:3px;right:-8px;font-size:12px;opacity:0.5',
                   title: t('清除颜色'),
-                  innerHTML: '×',
                   onClick: () => {
                     record.value.color = '';
                   },
-                }),
-            ]),
-        };
+                },
+                () => '×',
+              ),
+          ]),
       },
       required: true,
       colProps: { md: 24, lg: 24 },
@@ -109,22 +108,19 @@
       field: 'weight',
       component: 'InputNumber',
       componentProps: {
-        style: 'max-width: 180px',
+        // style: 'max-width: 180px',
         maxlength: 8,
       },
-      renderComponentContent: ({ model }) => {
-        return {
-          addonAfter: () =>
-            h(
-              Checkbox,
-              {
-                onChange: (e: any) => {
-                  model.weight = e.target?.checked ? 9999 : 0;
-                },
-              },
-              () => t('置顶'),
-            ),
-        };
+      suffix: ({ model }) => {
+        return h(
+          Checkbox,
+          {
+            onChange: (e: any) => {
+              model.weight = e.target?.checked ? 9999 : 0;
+            },
+          },
+          () => t('置顶'),
+        );
       },
       rules: [{ pattern: /^\d+$/, message: t('请输入一个正整数') }],
     },

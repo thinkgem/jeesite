@@ -1,4 +1,4 @@
-import { Modal } from 'ant-design-vue';
+import { Modal } from 'antdv-next';
 import { defineComponent, toRefs, unref } from 'vue';
 import { basicProps } from '../props';
 import { useModalDragMove } from '../hooks/useModalDrag';
@@ -10,16 +10,17 @@ export default defineComponent({
   inheritAttrs: false,
   props: basicProps,
   setup(props, { slots }) {
-    const { open, draggable, destroyOnClose } = toRefs(props);
+    const { open, draggable, destroyOnHidden } = toRefs(props);
     const attrs = useAttrs();
     useModalDragMove({
       open,
-      destroyOnClose,
+      destroyOnHidden,
       draggable,
     });
 
     return () => {
-      const propsData = { class: 'jeesite-basic-modal', ...unref(attrs), ...props } as Recordable;
+      const propsData = { classes: { container: 'jeesite-basic-modal' }, ...unref(attrs), ...props } as Recordable;
+      delete propsData.onClose;
       return <Modal {...propsData}>{extendSlots(slots)}</Modal>;
     };
   },

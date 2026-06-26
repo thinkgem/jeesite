@@ -4,16 +4,16 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <div :class="[prefixCls, getAlign]" @click="onCellClick">
+  <div :class="['jeesite-basic-table-action', getAlign]" @click="onCellClick">
     <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
       <Tooltip v-if="action.tooltip" v-bind="getTooltip(action.tooltip)">
         <PopConfirmButton v-bind="action">
           <Icon
+            v-if="action.icon"
             :icon="action.icon"
             :size="action.iconSize"
             :class="{ 'mr-1': !!action.label }"
             :title="action.iconTitle"
-            v-if="action.icon"
           />
           <template v-if="action.label">
             <span :title="action.iconTitle">{{ action.label }}</span>
@@ -38,6 +38,8 @@
       v-if="props.dropDownActions && getDropdownList.length > 0"
       :trigger="['hover']"
       :dropMenuList="getDropdownList"
+      :classes="{ container: 'jeesite-basic-table-action__popover-content' }"
+      :key="1"
       popconfirm
     >
       <slot name="more"></slot>
@@ -49,13 +51,12 @@
 </template>
 <script lang="ts">
   import { defineComponent, PropType, computed, toRaw, unref } from 'vue';
-  import { MoreOutlined } from '@ant-design/icons-vue';
-  import { Divider, Tooltip, TooltipProps } from 'ant-design-vue';
+  import { MoreOutlined } from '@antdv-next/icons';
+  import { Divider, Tooltip, TooltipProps } from 'antdv-next';
   import Icon from '@jeesite/core/components/Icon';
   import { ActionItem, TableActionType } from '@jeesite/core/components/Table';
   import { PopConfirmButton } from '@jeesite/core/components/Button';
   import { Popover } from '@jeesite/core/components/Popover';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useTableContext } from '../hooks/useTableContext';
   import { usePermission } from '@jeesite/core/hooks/web/usePermission';
   import { isBoolean, isFunction, isString } from '@jeesite/core/utils/is';
@@ -82,7 +83,6 @@
     components: { Icon, PopConfirmButton, Divider, Popover, MoreOutlined, Tooltip },
     props,
     setup(props: any) {
-      const { prefixCls } = useDesign('basic-table-action');
       let table: Partial<TableActionType> = {};
       if (!props.outside) {
         table = useTableContext();
@@ -167,16 +167,27 @@
         isInButton && e.stopPropagation();
       }
 
-      return { props, prefixCls, getActions, getDropdownList, getAlign, onCellClick, getTooltip };
+      return { props, getActions, getDropdownList, getAlign, onCellClick, getTooltip };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-table-action';
-
-  .@{prefix-cls} {
+  .jeesite-basic-table-action {
     display: flex;
     align-items: center;
+
+    &__popover-content.ant-popover-container {
+      padding: 5px;
+
+      .ant-popover-content {
+        box-shadow: none;
+
+        .ant-menu.ant-menu-horizontal {
+          line-height: 34px;
+          border: 0;
+        }
+      }
+    }
 
     .action-divider {
       display: table;

@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-setting-footer">
     <a-button type="primary" block @click="handleCopy">
       <CopyOutlined class="mr-2" />
       {{ t('layout.setting.copyBtn') }}
@@ -19,14 +19,13 @@
 <script lang="ts">
   import { defineComponent, unref } from 'vue';
 
-  import { CopyOutlined, RedoOutlined } from '@ant-design/icons-vue';
+  import { CopyOutlined, RedoOutlined } from '@antdv-next/icons';
 
   import { useAppStore } from '@jeesite/core/store/modules/app';
   // import { usePermissionStore } from '@jeesite/core/store/modules/permission';
   // import { useMultipleTabStore } from '@jeesite/core/store/modules/multipleTab';
   // import { useUserStore } from '@jeesite/core/store/modules/user';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useCopyToClipboard } from '@jeesite/core/hooks/web/useCopyToClipboard';
@@ -41,7 +40,6 @@
     components: { CopyOutlined, RedoOutlined },
     setup() {
       // const permissionStore = usePermissionStore();
-      const { prefixCls } = useDesign('setting-footer');
       const { t } = useI18n();
       const { createSuccessModal, createMessage } = useMessage();
       // const tabStore = useMultipleTabStore();
@@ -79,7 +77,6 @@
         location.reload();
       }
       return {
-        prefixCls,
         t,
         handleCopy,
         handleResetSetting,
@@ -89,9 +86,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-footer';
-
-  .@{prefix-cls} {
+  .jeesite-setting-footer {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -1,8 +1,8 @@
 import { Ref, VNodeChild } from 'vue';
 import type { PaginationProps } from './pagination';
 import type { FormProps } from '@jeesite/core/components/Form';
-import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
-import type { ColumnProps } from 'ant-design-vue/lib/table';
+import type { TableRowSelection as ITableRowSelection } from 'antdv-next';
+import type { ColumnProps } from 'antdv-next/dist/table/Column';
 import type { TableDataIndex } from '@jeesite/types/record';
 
 import { ComponentType } from './componentType';
@@ -13,7 +13,7 @@ import { EditRecordRow } from '../components/editable';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
-export interface TableRowSelection<T = any> extends ITableRowSelection {
+export interface TableRowSelection<T = any> extends ITableRowSelection<T> {
   /**
    * Callback executed when selected rows change
    * @type Function
@@ -24,7 +24,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when select/deselect one row
    * @type Function
    */
-  onSelect?: (record: T, selected: boolean, selectedRows: object[], nativeEvent: Event) => any;
+  onSelect?: (record: T, selected: boolean, selectedRows: T[], nativeEvent: Event) => any;
 
   /**
    * Callback executed when select/deselect all rows
@@ -116,8 +116,8 @@ export interface TableActionType {
   insertTableDataRecord: (record: Recordable, index?: number) => Recordable | void;
   findTableDataRecord: (rowKey: string | number) => Recordable | void;
 
-  getRowSelection: () => TableRowSelection<Recordable>;
-  getDefaultRowSelection: () => TableRowSelection<Recordable>;
+  getRowSelection: () => TableRowSelection;
+  getDefaultRowSelection: () => TableRowSelection;
   getSelectRows: <T = Recordable>() => T[];
   getSelectRowKeys: () => string[] | number[];
   setSelectedRowKeys: (rowKeys: string[] | number[]) => void;
@@ -216,6 +216,8 @@ export interface BasicTableProps<T = any> {
   actionColumn?: BasicColumn<T>;
   // 文本超过宽度是否显示。。。
   ellipsis?: boolean;
+  // 允许拖拽调整列宽
+  columnResizable?: boolean;
   // 是否继承父级高度（父级高度-表单高度-padding高度）
   isCanResizeParent?: boolean;
   // 是否可以自适应高度
@@ -342,7 +344,7 @@ export interface BasicTableProps<T = any> {
    * you need to add style .ant-table td { white-space: nowrap; }.
    * @type object
    */
-  scroll?: { x?: number | true; y?: number; scrollToFirstRowOnChange?: boolean };
+  scroll?: { x?: string | number | true; y?: number; scrollToFirstRowOnChange?: boolean };
 
   /**
    * Whether to show table header
@@ -440,7 +442,7 @@ export type CellFormat<T = Recordable> =
   | ((text: string, record: T, index: number, column?: BasicColumn) => string | number)
   | Map<string | number, any>;
 
-export interface BasicColumn<T = Recordable> extends ColumnProps<T> {
+export interface BasicColumn<T = Recordable> extends Omit<ColumnProps<Recordable>, 'children' | 'customRender'> {
   dataIndex?: TableDataIndex<T>;
   dataIndex_?: string;
   children?: BasicColumn<T>[];
@@ -461,6 +463,16 @@ export interface BasicColumn<T = Recordable> extends ColumnProps<T> {
 
   // Help text for table column header
   helpMessage?: string | string[];
+
+  // 单元格自定义渲染
+  customRender?: (opt: {
+    value: any;
+    text: any;
+    record: T;
+    index: number;
+    renderIndex: number;
+    column: BasicColumn<T>;
+  }) => any;
 
   // 单元格格式化
   format?: CellFormat<T>;
@@ -510,12 +522,15 @@ export interface BasicColumn<T = Recordable> extends ColumnProps<T> {
   // 列表操作列选项
   actions?: (record: T) => ActionItem[];
   dropDownActions?: (record: T) => ActionItem[];
+
+  // 拖拽调整列宽
+  resizable?: boolean;
 }
 
 export type ColumnChangeParam = {
   dataIndex?: string;
   dataIndex_?: string;
-  fixed: boolean | 'left' | 'right' | undefined;
+  fixed?: boolean | 'left' | 'right' | 'start' | 'end';
   open: boolean;
 };
 

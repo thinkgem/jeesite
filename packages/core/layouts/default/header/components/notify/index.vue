@@ -1,6 +1,6 @@
 <template>
-  <div :class="prefixCls">
-    <Popover title="" trigger="click" :overlayClassName="`${prefixCls}__overlay`">
+  <div class="jeesite-header-notify">
+    <Popover title="" trigger="click" :classes="{ root: 'jeesite-header-notify__overlay' }">
       <Badge :count="count" dot :numberStyle="numberStyle">
         <BellOutlined />
       </Badge>
@@ -24,17 +24,15 @@
 </template>
 <script lang="ts">
   import { computed, defineComponent, ref } from 'vue';
-  import { Popover, Tabs, Badge } from 'ant-design-vue';
-  import { BellOutlined } from '@ant-design/icons-vue';
+  import { Popover, Tabs, TabPane, Badge } from 'antdv-next';
+  import { BellOutlined } from '@antdv-next/icons';
   import { tabListData, ListItem } from './data';
   import NoticeList from './NoticeList.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
 
   export default defineComponent({
-    components: { Popover, BellOutlined, Tabs, TabPane: Tabs.TabPane, Badge, NoticeList },
+    components: { Popover, BellOutlined, Tabs, TabPane, Badge, NoticeList },
     setup() {
-      const { prefixCls } = useDesign('header-notify');
       const { createMessage } = useMessage();
       const listData = ref(tabListData);
 
@@ -53,7 +51,6 @@
       }
 
       return {
-        prefixCls,
         listData,
         count,
         onNoticeClick,
@@ -63,28 +60,30 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-header-notify';
-
-  .@{prefix-cls} {
+  .jeesite-header-notify {
     padding-top: 2px;
 
     &__overlay {
       max-width: 360px;
 
       .ant-popover-content {
+        box-shadow: none;
         width: 300px;
       }
-    }
-
-    .ant-tabs-content {
-      width: 300px;
     }
 
     .ant-badge {
       font-size: 18px;
 
-      .ant-badge-multiple-words {
-        padding: 0 4px;
+      .ant-badge {
+        &-multiple-words {
+          padding: 0 4px;
+        }
+
+        &-dot {
+          top: -2px;
+          right: 4px;
+        }
       }
 
       svg {

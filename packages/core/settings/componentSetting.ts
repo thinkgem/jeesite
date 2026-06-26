@@ -22,7 +22,7 @@ export default {
     // Default display quantity on one page
     defaultPageSize: 20,
     // Default Size
-    defaultSize: 'middle',
+    defaultSize: 'middle', // 'default' | 'middle' | 'small' | 'large'
     // Custom general sort function
     defaultSortFn: (sortInfo: SorterResult) => {
       const { order, columnKey } = sortInfo;

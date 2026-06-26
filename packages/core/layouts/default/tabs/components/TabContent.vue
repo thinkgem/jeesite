@@ -1,9 +1,9 @@
 <template>
   <Dropdown :dropMenuList="getDropMenuList" :trigger="getTrigger" @menu-event="handleMenuEvent">
-    <div :class="`${prefixCls}__info`" @contextmenu="handleContext" v-if="getIsTabs">
-      <span class="ml-1"><Icon v-if="getIcon" :icon="getIcon" />{{ getTitle }}</span>
+    <div class="jeesite-multiple-tabs-content__info" @contextmenu="handleContext" v-if="getIsTabs">
+      <span class="ml-1"><Icon v-if="getIcon" :icon="getIcon" class="mr-2" />{{ getTitle }}</span>
     </div>
-    <span :class="`${prefixCls}__extra-quick`" v-else @click="handleContext">
+    <span class="jeesite-multiple-tabs-content__extra-quick" v-else @click="handleContext">
       <Icon icon="i-ant-design:down-outlined" />
     </span>
   </Dropdown>
@@ -18,7 +18,6 @@
 
   import { TabContentProps } from '../types';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useTabDropdown } from '../useTabDropdown';
 
@@ -33,7 +32,6 @@
       isExtra: Boolean,
     },
     setup(props) {
-      const { prefixCls } = useDesign('multiple-tabs-content');
       const { t } = useI18n();
 
       const getIcon = computed(() => {
@@ -62,7 +60,6 @@
       }
 
       return {
-        prefixCls,
         getDropMenuList,
         handleMenuEvent,
         handleContext,

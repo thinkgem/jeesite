@@ -3,48 +3,20 @@
  * No deletion without permission, or be held responsible to law.
  * @author Vben、ThinkGem
  */
-import type { ModalFunc, ModalFuncProps } from 'ant-design-vue/lib/modal/Modal';
+import { Modal, message, notification } from 'antdv-next';
+import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@antdv-next/icons';
 
-import { Modal, message as Message, notification } from 'ant-design-vue';
-import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons-vue';
-
-import { NotificationArgsProps, ConfigProps } from 'ant-design-vue/lib/notification';
 import { useI18n } from './useI18n';
 import { isString } from '@jeesite/core/utils/is';
 import { Icon } from '@jeesite/core/components/Icon';
+import { ModalFuncProps } from 'antdv-next/dist/modal/interface';
 
-import type { ConfigOnClose, MessageType } from 'ant-design-vue/lib/message';
-import type { JointContent } from 'ant-design-vue/es/message/interface';
-
-export interface NotifyApi {
-  info(config: NotificationArgsProps): void;
-  success(config: NotificationArgsProps): void;
-  error(config: NotificationArgsProps): void;
-  warn(config: NotificationArgsProps): void;
-  warning(config: NotificationArgsProps): void;
-  open(args: NotificationArgsProps): void;
-  close(key: string): void;
-  config(options: ConfigProps): void;
-  destroy(): void;
-}
-
-export declare type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
-export declare type IconType = 'success' | 'info' | 'error' | 'warning';
 export interface ModalOptionsEx extends Omit<ModalFuncProps, 'iconType'> {
   iconType?: 'warning' | 'success' | 'error' | 'info';
-  icon?: any;
-  title?: any;
   content?: any;
 }
-export type ModalOptionsPartial = Partial<ModalOptionsEx> & Pick<ModalOptionsEx, 'content'>;
 
-interface ConfirmOptions {
-  info: ModalFunc;
-  success: ModalFunc;
-  error: ModalFunc;
-  warn: ModalFunc;
-  warning: ModalFunc;
-}
+export type ModalOptionsPartial = Partial<ModalOptionsEx> & Pick<ModalOptionsEx, 'content'>;
 
 function getIcon(iconType: string) {
   if (iconType === 'warning') {
@@ -78,7 +50,7 @@ const getBaseOptions = () => {
 function createConfirm(options: ModalOptionsEx) {
   const iconType = options.iconType || 'info';
   Reflect.deleteProperty(options, 'iconType');
-  const opt: ModalFuncProps = {
+  const opt: any = {
     closable: true,
     maskClosable: true,
     autoFocusButton: 'cancel',
@@ -151,7 +123,7 @@ function showMessageModal(options: ModalOptionsPartial | string, type?: string) 
   }
 }
 
-function showMessage(content: JointContent, type?: string, duration?: number, onClose?: ConfigOnClose) {
+function showMessage(content: any, type?: string, duration?: number, onClose?: any) {
   const { t } = useI18n();
   let messageRemove = () => {};
   if (typeof content === 'string' && content.startsWith('posfull:')) {
@@ -168,13 +140,13 @@ function showMessage(content: JointContent, type?: string, duration?: number, on
     };
   }
   if (type === 'error' || contains(content, t('sys.message.error'))) {
-    messageRemove = Message.error(content, duration, onClose);
+    messageRemove = message.error(content, duration, onClose);
   } else if (type === 'warning' || contains(content, t('sys.message.warning'))) {
-    messageRemove = Message.warning(content, duration, onClose);
+    messageRemove = message.warning(content, duration, onClose);
   } else if (type === 'success' || contains(content, t('sys.message.success'))) {
-    messageRemove = Message.success(content, duration, onClose);
+    messageRemove = message.success(content, duration, onClose);
   } else {
-    messageRemove = Message.info(content, duration, onClose);
+    messageRemove = message.info(content, duration, onClose);
   }
   return messageRemove;
 }
@@ -189,9 +161,9 @@ notification.config({
  */
 export function useMessage() {
   return {
-    createMessage: Message,
-    notification: notification as NotifyApi,
-    createConfirm: createConfirm,
+    notification,
+    createMessage: message,
+    createConfirm,
     createSuccessModal,
     createErrorModal,
     createInfoModal,

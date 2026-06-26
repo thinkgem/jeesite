@@ -1,10 +1,10 @@
 <template>
-  <div :class="`${prefixCls}-dom`" :style="getDomStyle"></div>
+  <div class="jeesite-layout-mix-sider-dom" :style="getDomStyle"></div>
   <div
     v-click-outside="handleClickOutside"
     :style="getWrapStyle"
     :class="[
-      prefixCls,
+      'jeesite-layout-mix-sider',
       getMenuTheme,
       {
         open: openMenu,
@@ -13,17 +13,17 @@
     ]"
     v-bind="getMenuEvents"
   >
-    <AppLogo :showTitle="false" :class="`${prefixCls}-logo`" />
+    <AppLogo :showTitle="false" class="jeesite-layout-mix-sider-logo" />
 
-    <LayoutTrigger :class="`${prefixCls}-trigger`" />
+    <LayoutTrigger class="jeesite-layout-mix-sider-trigger" />
 
     <ScrollContainer>
-      <ul :class="`${prefixCls}-module`">
+      <ul class="jeesite-layout-mix-sider-module">
         <li
           :class="[
-            `${prefixCls}-module__item `,
+            'jeesite-layout-mix-sider-module__item ',
             {
-              [`${prefixCls}-module__item--active`]: item.path === activePath,
+              ['jeesite-layout-mix-sider-module__item--active']: item.path === activePath,
             },
           ]"
           v-bind="getItemEvents(item)"
@@ -32,22 +32,22 @@
         >
           <SimpleMenuTag :item="item" dot collapseparent />
           <Icon
-            :class="`${prefixCls}-module__icon`"
+            class="jeesite-layout-mix-sider-module__icon"
             :size="getCollapsed ? 16 : 20"
             :icon="item.icon || (item.meta && item.meta.icon)"
           />
-          <p :class="`${prefixCls}-module__name`">
+          <p class="jeesite-layout-mix-sider-module__name">
             {{ t(item.name) }}
           </p>
         </li>
       </ul>
     </ScrollContainer>
 
-    <div :class="`${prefixCls}-menu-list`" ref="sideRef" :style="getMenuStyle">
+    <div class="jeesite-layout-mix-sider-menu-list" ref="sideRef" :style="getMenuStyle">
       <div
         v-show="openMenu"
         :class="[
-          `${prefixCls}-menu-list__title`,
+          'jeesite-layout-mix-sider-menu-list__title',
           {
             show: openMenu,
           },
@@ -61,16 +61,16 @@
           @click="handleFixedMenu"
         />
       </div>
-      <ScrollContainer :class="`${prefixCls}-menu-list__content`">
+      <ScrollContainer class="jeesite-layout-mix-sider-menu-list__content">
         <SimpleMenu :items="childrenMenus" :theme="getMenuTheme" mixSider @menu-click="handleMenuClick" />
       </ScrollContainer>
-      <div v-show="getShowDragBar && openMenu" :class="`${prefixCls}-drag-bar`" ref="dragBarRef"></div>
+      <div v-show="getShowDragBar && openMenu" class="jeesite-layout-mix-sider-drag-bar" ref="dragBarRef"></div>
     </div>
   </div>
 </template>
 <script lang="ts">
   import type { Menu } from '@jeesite/core/router/types';
-  import type { CSSProperties } from 'vue';
+  import { CSSProperties, shallowRef } from 'vue';
   import { computed, defineComponent, onMounted, ref, unref } from 'vue';
   import type { RouteLocationNormalized } from 'vue-router';
   import { ScrollContainer } from '@jeesite/core/components/Container';
@@ -80,7 +80,6 @@
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { useDragLine } from './useLayoutSider';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '@jeesite/core/enums/appEnum';
@@ -108,11 +107,10 @@
       const activePath = ref('');
       const childrenMenus = ref<Menu[]>([]);
       const openMenu = ref(false);
-      const dragBarRef = ref<ElRef>(null);
-      const sideRef = ref<ElRef>(null);
+      const dragBarRef = shallowRef<ElRef>(null);
+      const sideRef = shallowRef<ElRef>(null);
       const currentRoute = ref<Nullable<RouteLocationNormalized>>(null);
 
-      const { prefixCls } = useDesign('layout-mix-sider');
       const go = useGo();
       const { t } = useI18n();
       const {
@@ -301,7 +299,6 @@
 
       return {
         t,
-        prefixCls,
         menuModules,
         handleModuleClick: handleModuleClick,
         activePath,
@@ -327,9 +324,9 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-mix-sider';
   @width: 80px;
-  .@{prefix-cls} {
+
+  .jeesite-layout-mix-sider {
     position: fixed;
     top: 0;
     left: 0;
@@ -359,7 +356,7 @@
       }
     }
 
-    &.light .@{prefix-cls}-logo {
+    &.light .jeesite-layout-mix-sider-logo {
       border-bottom: 1px solid rgb(238 238 238);
     }
 

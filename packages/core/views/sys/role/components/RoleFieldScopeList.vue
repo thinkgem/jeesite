@@ -19,7 +19,7 @@
     <RoleFieldScopeForm @register="registerFormDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts" setup name="ViewsSysRoleAuthFieldScope">
+<script lang="ts" setup name="SysRoleFieldScopeList">
   import { ref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';

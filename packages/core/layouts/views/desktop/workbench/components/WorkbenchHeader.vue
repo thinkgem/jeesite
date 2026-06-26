@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import { Avatar } from 'ant-design-vue';
+  import { Avatar } from 'antdv-next';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import headerImg from '@jeesite/assets/images/header.jpg';
 

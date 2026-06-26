@@ -63,9 +63,9 @@ export interface LocaleSetting {
   showPicker: boolean;
   // Current language
   locale: LocaleType;
-  // default language
+  // Default language
   fallback: LocaleType;
-  // available Locales
+  // Available Locales
   availableLocales: LocaleType[];
 }
 

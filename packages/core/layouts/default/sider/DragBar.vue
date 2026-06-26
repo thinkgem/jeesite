@@ -4,7 +4,6 @@
 <script lang="ts">
   import { defineComponent, computed, unref } from 'vue';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
 
   export default defineComponent({
@@ -15,7 +14,6 @@
     setup(props) {
       const { getMiniWidthNumber, getCollapsed, getCanDrag } = useMenuSetting();
 
-      const { prefixCls } = useDesign('darg-bar');
       const getDragBarStyle = computed(() => {
         if (unref(getCollapsed)) {
           return { left: `${unref(getMiniWidthNumber)}px` };
@@ -25,15 +23,14 @@
 
       const getClass = computed(() => {
         return [
-          prefixCls,
+          'jeesite-darg-bar',
           {
-            [`${prefixCls}--hide`]: !unref(getCanDrag) || props.mobile,
+            ['jeesite-darg-bar--hide']: !unref(getCanDrag) || props.mobile,
           },
         ];
       });
 
       return {
-        prefixCls,
         getDragBarStyle,
         getClass,
       };
@@ -41,9 +38,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-darg-bar';
-
-  .@{prefix-cls} {
+  .jeesite-darg-bar {
     position: absolute;
     top: 0;
     right: -2px;

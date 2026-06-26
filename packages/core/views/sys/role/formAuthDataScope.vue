@@ -18,26 +18,26 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <Tabs class="jeesite-role-auth-data-scope-tabs" v-model:activeKey="activeKey">
-      <Tabs.TabPane key="1" :forceRender="true">
+      <TabPane key="1" :forceRender="true">
         <template #tab>
           <Icon icon="i-ant-design:deployment-unit-outlined" />
           <span class="pr-1"> {{ t('角色数据权限') }} </span>
         </template>
         <RoleDataScope ref="roleDataScopeRef" />
-      </Tabs.TabPane>
-      <Tabs.TabPane key="2" :forceRender="true">
+      </TabPane>
+      <TabPane key="2" :forceRender="true">
         <template #tab>
           <Icon icon="i-ant-design:unordered-list-outlined" />
           <span class="pr-1"> {{ t('菜单数据权限') }} </span>
         </template>
         <MenuDataScope ref="menuDataScopeRef" />
-      </Tabs.TabPane>
+      </TabPane>
     </Tabs>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleAuthDataScope">
-  import { computed, ref, unref } from 'vue';
-  import { Tabs } from 'ant-design-vue';
+  import { computed, ref, shallowRef, unref } from 'vue';
+  import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -66,8 +66,8 @@
   });
 
   const activeKey = ref<string>('1');
-  const roleDataScopeRef = ref<InstanceType<typeof RoleDataScope>>();
-  const menuDataScopeRef = ref<InstanceType<typeof MenuDataScope>>();
+  const roleDataScopeRef = shallowRef<InstanceType<typeof RoleDataScope>>();
+  const menuDataScopeRef = shallowRef<InstanceType<typeof MenuDataScope>>();
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });

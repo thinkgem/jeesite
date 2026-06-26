@@ -43,9 +43,9 @@
 </template>
 <script lang="ts" setup name="JeeSiteFormAction">
   import type { ColEx } from '../types/index';
-  //import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
-  import { defineComponent, computed, PropType } from 'vue';
-  import { Form, Col } from 'ant-design-vue';
+  //import type { ButtonProps } from 'antdv-next/es/button/buttonTypes';
+  import { computed, PropType } from 'vue';
+  import { FormItem, Col } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { Button, ButtonProps } from '@jeesite/core/components/Button';
   import { BasicArrow } from '@jeesite/core/components/Basic';
@@ -54,8 +54,6 @@
   import { propTypes } from '@jeesite/core/utils/propTypes';
 
   type ButtonOptions = Partial<ButtonProps> & { text: string };
-
-  const FormItem = Form.Item;
 
   const props = defineProps({
     showActionButtonGroup: propTypes.bool.def(true),

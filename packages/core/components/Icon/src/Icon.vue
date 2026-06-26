@@ -14,7 +14,7 @@
   <span v-else ref="elRef" :style="getWrapStyle" :class="getClass"></span>
 </template>
 <script lang="ts" setup name="BasicIcon">
-  import { PropType, useAttrs } from 'vue';
+  import { PropType, shallowRef, useAttrs } from 'vue';
   import { ref, watch, onMounted, nextTick, unref, computed, CSSProperties } from 'vue';
   import { isString } from '@jeesite/core/utils/is';
   import { propTypes } from '@jeesite/core/utils/propTypes';
@@ -30,15 +30,14 @@
   });
 
   const attrs = useAttrs();
-  const elRef = ref<ElRef>(null);
+  const elRef = shallowRef<ElRef>(null);
   const getClass = computed(() => {
-    const prefixCls = 'jeesite-icon';
     return [
       attrs.class,
-      `${prefixCls} anticon`,
+      `jeesite-icon anticon`,
       {
-        [`${prefixCls}-spin`]: props.spin,
-        [`${prefixCls}-fa`]: unref(getIconRef).startsWith('i-fa:'),
+        [`jeesite-icon-spin`]: props.spin,
+        [`jeesite-icon-fa`]: unref(getIconRef).startsWith('i-fa:'),
       },
     ];
   });
@@ -108,6 +107,10 @@
 
     &-fa {
       opacity: 0.9;
+    }
+
+    span {
+      vertical-align: baseline;
     }
 
     //span {

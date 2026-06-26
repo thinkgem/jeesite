@@ -31,6 +31,8 @@ export default [
       '**/*.woff',
       '**/*.ttf',
       '**/*.d.ts',
+      '**/*.js',
+      '**/*.mjs',
       '**/__snapshots__/',
     ],
   },

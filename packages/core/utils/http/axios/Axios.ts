@@ -159,7 +159,7 @@ export class VAxios {
       if (config.url && config.params) {
         let url = config.url;
         url += url.indexOf('?') == -1 ? '?' : '&';
-        url += qs.stringify(config.params, { encode: true });
+        url += qs.stringify(config.params, { encode: true, allowDots: true });
         config.url = url;
         config.params = {};
       }
@@ -168,7 +168,7 @@ export class VAxios {
 
     return {
       ...config,
-      data: qs.stringify(config.data, { arrayFormat: 'indices' }),
+      data: qs.stringify(config.data, { arrayFormat: 'indices', allowDots: true }),
     };
   }
 

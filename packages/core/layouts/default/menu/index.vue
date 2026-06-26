@@ -18,7 +18,6 @@
   import { isUrl } from '@jeesite/core/utils/is';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import { UserDropDown } from '../header/components';
 
@@ -55,8 +54,6 @@
       } = useMenuSetting();
       const { getShowLogo } = useRootSetting();
 
-      const { prefixCls } = useDesign('layout-menu');
-
       const { menusRef } = useSplitMenu(toRef(props, 'splitType'));
 
       const { getIsMobile } = useAppInject();
@@ -86,10 +83,10 @@
 
       const getLogoClass = computed(() => {
         return [
-          `${prefixCls}-logo`,
+          'jeesite-layout-menu-logo',
           unref(getComputedMenuTheme),
           {
-            [`${prefixCls}--mobile`]: unref(getIsMobile),
+            ['jeesite-layout-menu--mobile']: unref(getIsMobile),
           },
         ];
       });
@@ -112,8 +109,10 @@
        * click menu
        * @param menu
        */
-      function handleMenuClick(path: string, item: any) {
-        if (item.target === '_blank') {
+      function handleMenuClick(path: string) {
+        const menus = unref(menusRef);
+        const item = findMenuItem(menus, path);
+        if (item && item.target === '_blank') {
           window.open(path);
         } else {
           // const url = String(item.url);
@@ -125,6 +124,21 @@
           go(path);
           // }
         }
+      }
+
+      function findMenuItem(items: any[], key: string): any | null {
+        for (const item of items) {
+          if (item.path === key) {
+            return item;
+          }
+          if (item.children && item.children.length > 0) {
+            const found = findMenuItem(item.children, key);
+            if (found) {
+              return found;
+            }
+          }
+        }
+        return null;
       }
 
       /**
@@ -193,10 +207,9 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-menu';
   @logo-prefix-cls: ~'jeesite-app-logo';
 
-  .@{prefix-cls} {
+  .jeesite-layout-menu {
     &-logo {
       height: @header-height;
       padding: 10px 4px 10px 10px;

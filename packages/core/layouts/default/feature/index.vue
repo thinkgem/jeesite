@@ -1,29 +1,29 @@
 <script lang="ts">
   import { defineComponent, computed, unref } from 'vue';
-  import { FloatButton } from 'ant-design-vue';
+  import { BackTop } from 'antdv-next';
 
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useHeaderSetting } from '@jeesite/core/hooks/setting/useHeaderSetting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useUserStoreWithOut } from '@jeesite/core/store/modules/user';
 
   import { SettingButtonPositionEnum } from '@jeesite/core/enums/appEnum';
   import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-  import SessionTimeoutLogin from '@jeesite/core/layouts/views/login/SessionTimeoutLogin.vue';
   import { useFullContent } from '@jeesite/core/hooks/web/useFullContent';
+
   export default defineComponent({
     name: 'LayoutFeatures',
     components: {
-      ABackTop: FloatButton.BackTop,
+      ABackTop: BackTop,
       LayoutLockPage: createAsyncComponent(() => import('@jeesite/core/layouts/views/lock/index.vue')),
       SettingDrawer: createAsyncComponent(() => import('@jeesite/core/layouts/default/setting/index.vue')),
-      SessionTimeoutLogin,
+      SessionTimeoutLogin: createAsyncComponent(
+        () => import('@jeesite/core/layouts/views/login/SessionTimeoutLogin.vue'),
+      ),
     },
     setup() {
       const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } = useRootSetting();
       const userStore = useUserStoreWithOut();
-      const { prefixCls } = useDesign('setting-drawer-fearure');
       const { getShowHeader } = useHeaderSetting();
       const { getFullContent } = useFullContent();
 
@@ -45,7 +45,6 @@
         getTarget: () => document.body,
         getUseOpenBackTop,
         getIsFixedSettingDrawer,
-        prefixCls,
         getIsSessionTimeout,
       };
     },
@@ -55,14 +54,12 @@
 <template>
   <LayoutLockPage />
   <ABackTop v-if="getUseOpenBackTop" :target="getTarget" />
-  <SettingDrawer v-if="getIsFixedSettingDrawer" :class="prefixCls" />
+  <SettingDrawer v-if="getIsFixedSettingDrawer" class="jeesite-setting-drawer-fearure" />
   <SessionTimeoutLogin v-if="getIsSessionTimeout" />
 </template>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-drawer-fearure';
-
-  .@{prefix-cls} {
+  .jeesite-setting-drawer-fearure {
     position: absolute;
     top: 45%;
     right: 0;

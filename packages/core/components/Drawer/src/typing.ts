@@ -1,4 +1,4 @@
-import type { ButtonProps } from 'ant-design-vue/lib/button/buttonTypes';
+import type { ButtonProps } from 'antdv-next';
 import type { CSSProperties, VNodeChild, ComputedRef } from 'vue';
 import type { ScrollContainerOptions } from '@jeesite/core/components/Container';
 
@@ -96,7 +96,7 @@ export interface DrawerProps extends DrawerFooterProps {
    * @default false
    * @type boolean
    */
-  destroyOnClose?: boolean;
+  destroyOnHidden?: boolean;
 
   /**
    * Return the mounted node for Drawer.

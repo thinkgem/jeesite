@@ -20,7 +20,7 @@
     onBeforeUnmount,
     CSSProperties,
   } from 'vue';
-  import { Tree, Empty, Spin } from 'ant-design-vue';
+  import { Tree, Empty, Spin } from 'antdv-next';
   import { TreeIcon } from './TreeIcon';
   import TreeHeader from './TreeHeader.vue';
   import { ScrollContainer } from '@jeesite/core/components/Container';
@@ -33,7 +33,6 @@
 
   import { useTree } from './useTree';
   import { useContextMenu } from '@jeesite/core/hooks/web/useContextMenu';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useDict } from '@jeesite/core/components/Dict';
 
   import { basicProps } from './props';
@@ -84,7 +83,6 @@
       }
 
       const [createContextMenu] = useContextMenu();
-      const { prefixCls } = useDesign('basic-tree');
 
       const getFieldNames = computed((): Required<FieldNames> => {
         const { fieldNames } = props;
@@ -107,6 +105,7 @@
           checkedKeys: state.checkedKeys,
           checkStrictly: state.checkStrictly,
           fieldNames: unref(getFieldNames),
+          titleRender: (nodeData: TreeItem) => renderTitleContent(nodeData),
           'onUpdate:expandedKeys': (v: Keys) => {
             state.expandedKeys = v;
             emit('update:expandedKeys', v);
@@ -119,9 +118,9 @@
             let currentValue = toRaw(state.checkedKeys) as Keys;
             if (isArray(currentValue) && searchState.startSearch) {
               const { key } = unref(getFieldNames);
-              currentValue = difference(currentValue, getChildrenKeys(e.node.dataRef[key]));
+              currentValue = difference(currentValue, getChildrenKeys(e.node[key]));
               if (e.checked) {
-                currentValue.push(e.node.dataRef[key]);
+                currentValue.push(e.node[key]);
               }
               state.checkedKeys = currentValue;
             } else {
@@ -163,6 +162,46 @@
           }
         }
         return icon;
+      }
+
+      function renderTitleContent(nodeData: TreeItem) {
+        const { highlight } = unref(props);
+        const { title: titleField, key: keyField, children: childrenField } = unref(getFieldNames);
+
+        const searchText = searchState.searchText;
+        const title = get(nodeData, titleField);
+        const icon = getIcon(nodeData, nodeData.icon);
+
+        const searchIdx = searchText ? title.indexOf(searchText) : -1;
+        const isHighlight = searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
+        const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
+
+        const titleDom = isHighlight ? (
+          <span class={unref(getBindValues)?.blockNode ? 'jeesite-basic-tree__content' : ''}>
+            <span>{title.substr(0, searchIdx)}</span>
+            <span style={highlightStyle}>{searchText}</span>
+            <span>{title.substr(searchIdx + (searchText as string).length)}</span>
+          </span>
+        ) : (
+          <span innerHTML={title}></span>
+        );
+
+        return (
+          <span
+            class={'jeesite-basic-tree-titles pl-2'}
+            onClick={handleClickNode.bind(null, nodeData[keyField], nodeData[childrenField])}
+          >
+            {slots?.title ? (
+              getSlot(slots, 'title', nodeData)
+            ) : (
+              <>
+                {icon && <TreeIcon icon={icon} />}
+                {titleDom}
+                <span class={'jeesite-basic-tree__actions'}>{renderAction(nodeData)}</span>
+              </>
+            )}
+          </span>
+        );
       }
 
       async function handleRightClick({ event, node }: Recordable) {
@@ -295,7 +334,6 @@
         const { api } = props;
         if (!api || !isFunction(api)) return;
         loading.value = true;
-        treeDataRef.value = [];
         let result;
         try {
           result = await api(props.params);
@@ -327,8 +365,10 @@
 
       watch(
         () => props.treeData,
-        () => {
-          setTreeData(props.treeData);
+        (newVal, oldVal) => {
+          if (newVal !== oldVal) {
+            setTreeData(props.treeData);
+          }
         },
       );
 
@@ -338,7 +378,8 @@
           return;
         }
         if (props.treeDataSimpleMode) {
-          treeDataRef.value = listToTree(treeData);
+          // 深拷贝避免 listToTree 修改原始数据
+          treeDataRef.value = listToTree(cloneDeep(treeData));
         } else {
           treeDataRef.value = treeData as TreeItem[];
         }
@@ -368,8 +409,10 @@
       }
 
       function handleSearch(searchValue: string) {
-        if (searchValue !== searchState.searchText) searchState.searchText = searchValue;
-        emit('update:searchValue', searchValue);
+        if (searchValue !== searchState.searchText) {
+          searchState.searchText = searchValue;
+          emit('update:searchValue', searchValue);
+        }
         if (!searchValue) {
           searchState.startSearch = false;
           return;
@@ -439,17 +482,35 @@
       //   }
       // });
 
-      watchEffect(() => {
-        state.expandedKeys = props.expandedKeys;
-      });
+      watch(
+        () => props.expandedKeys,
+        (newVal) => {
+          if (newVal && !isEqual(newVal, state.expandedKeys)) {
+            state.expandedKeys = newVal;
+          }
+        },
+        { deep: true },
+      );
 
-      watchEffect(() => {
-        state.selectedKeys = props.selectedKeys;
-      });
+      watch(
+        () => props.selectedKeys,
+        (newVal) => {
+          if (newVal && !isEqual(newVal, state.selectedKeys)) {
+            state.selectedKeys = newVal;
+          }
+        },
+        { deep: true },
+      );
 
-      watchEffect(() => {
-        state.checkedKeys = props.checkedKeys;
-      });
+      watch(
+        () => props.checkedKeys,
+        (newVal) => {
+          if (newVal && !isEqual(newVal, state.checkedKeys)) {
+            state.checkedKeys = newVal;
+          }
+        },
+        { deep: true },
+      );
 
       watch(
         () => props.value,
@@ -522,7 +583,7 @@
           if (!nodeShow) return null;
 
           return (
-            <span key={index} class={`${prefixCls}__action`}>
+            <span key={index} class={'jeesite-basic-tree__action'}>
               {item.render(node)}
             </span>
           );
@@ -530,31 +591,16 @@
       }
 
       const treeData = computed((): TreeItem[] | undefined => {
-        const data = cloneDeep(getTreeData.value);
+        const data = getTreeData.value;
         if (!data) return undefined;
-        eachTree(data, (item, _parent) => {
-          const searchText = searchState.searchText;
-          const { highlight } = unref(props);
-          const { title: titleField, key: keyField, children: childrenField } = unref(getFieldNames);
+
+        const clonedData = data; // cloneDeep(data);
+        eachTree(clonedData, (item, _parent) => {
+          const { title: titleField, key: keyField } = unref(getFieldNames);
 
           const icon = getIcon(item, item.icon);
           const title = get(item, titleField);
 
-          const searchIdx = searchText ? title.indexOf(searchText) : -1;
-          const isHighlight = searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
-          const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
-
-          const titleDom = isHighlight ? (
-            <span class={unref(getBindValues)?.blockNode ? `${prefixCls}__content` : ''}>
-              <span>{title.substr(0, searchIdx)}</span>
-              <span style={highlightStyle}>{searchText}</span>
-              <span>{title.substr(searchIdx + (searchText as string).length)}</span>
-            </span>
-          ) : (
-            <span innerHTML={title} />
-          );
-
-          // item.isLeaf = !(item.children && item.children.length > 0);
           item.isLeaf = attrs.loadData
             ? item.isParent != undefined
               ? !item.isParent
@@ -562,27 +608,8 @@
                 ? item.isLeaf
                 : false
             : !(item.children && item.children.length > 0);
-
-          item[titleField] = (
-            <span
-              class={`${prefixCls}-title pl-2`}
-              onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}
-            >
-              {slots?.title ? (
-                getSlot(slots, 'title', item)
-              ) : (
-                <>
-                  {icon && <TreeIcon icon={icon} />}
-                  {titleDom}
-                  {/*{get(item, titleField)}*/}
-                  <span class={`${prefixCls}__actions`}>{renderAction(item)}</span>
-                </>
-              )}
-            </span>
-          );
-          return item;
         });
-        return data;
+        return clonedData;
       });
 
       const treeHeight = ref<number>();
@@ -607,7 +634,7 @@
         };
         const TreeComp = showIcon ? Tree.DirectoryTree : Tree;
         return (
-          <div ref={treeRef} class={[prefixCls, 'h-full', attrs.class]}>
+          <div ref={treeRef} class={['jeesite-basic-tree', 'h-full', attrs.class]}>
             {showTitle && (
               <TreeHeader
                 checkable={checkable}
@@ -641,29 +668,27 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-tree';
-
-  .@{prefix-cls} {
+  .jeesite-basic-tree {
     background-color: @component-background;
     border-radius: 5px;
 
-    .ant-tree {
+    .jeesite.ant-tree {
       margin: 10px 6px 10px 10px;
       background-color: transparent;
 
-      .ant-tree-checkbox {
-        margin-top: -2px;
-      }
+      // .ant-tree-checkbox {
+      //   margin-top: -2px;
+      // }
 
-      .ant-tree-switcher {
-        margin-top: -1px;
-      }
+      // .ant-tree-switcher {
+      //   margin-top: -1px;
+      // }
 
       .ant-tree-node-content-wrapper {
         position: relative;
         display: flex;
         padding: 0 !important;
-        margin-bottom: 2px;
+        // margin-bottom: 2px;
 
         //.ant-tree-title {
         //  position: absolute;
@@ -688,6 +713,10 @@
           .ant-tree-switcher {
             color: fade(@text-color-base, 70);
             width: 18px;
+
+            &::before {
+              width: 18px;
+            }
           }
 
           .ant-tree-switcher-icon svg {
@@ -700,7 +729,8 @@
             .ant-tree-title {
               left: auto;
             }
-            .@{prefix-cls}-title {
+
+            .jeesite-basic-tree-title {
               padding-left: 3px;
             }
 
@@ -719,20 +749,27 @@
               background-color: fade(@primary-color, 15);
               border-radius: 4px;
             }
+
+            &:hover::before {
+              background: transparent !important;
+            }
           }
         }
 
         .ant-tree-treenode-selected {
           color: @text-color-base;
+          background: transparent !important;
 
           .ant-tree-switcher,
           .ant-tree-iconEle {
             color: fade(@text-color-base, 70);
           }
 
-          &:hover::before,
-          &::before {
-            background-color: transparent !important;
+          .ant-tree-node-content-wrapper {
+            &:hover::before,
+            &::before {
+              background: transparent !important;
+            }
           }
         }
       }
@@ -746,7 +783,7 @@
       padding: 0 5px;
 
       &:hover {
-        .@{prefix-cls}__action {
+        .jeesite-basic-tree__action {
           visibility: visible;
         }
       }
@@ -770,18 +807,19 @@
   }
 
   html[data-theme='light'] {
-    .@{prefix-cls}.bg-gray {
+    .jeesite-basic-tree.bg-gray {
       background-color: #f9f9f9;
       border: 1px solid #ddd;
     }
   }
 
   html[data-theme='dark'] {
-    .@{prefix-cls}.bg-gray {
+    .jeesite-basic-tree.bg-gray {
       background-color: #1d1d1d;
       border: 1px solid #383838;
     }
-    .@{prefix-cls} {
+
+    .jeesite-basic-tree {
       .ant-tree {
         &.ant-tree-directory {
           > li.ant-tree-treenode-selected > span,

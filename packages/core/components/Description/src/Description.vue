@@ -1,13 +1,12 @@
 <script lang="tsx">
   import type { DescriptionProps, DescInstance, DescItem } from './typing';
-  import type { DescriptionsProps } from 'ant-design-vue/es/descriptions';
   import type { CSSProperties } from 'vue';
   import type { CollapseContainerOptions } from '@jeesite/core/components/Container';
+  import type { DescriptionsProps } from 'antdv-next';
   import { defineComponent, computed, ref, unref } from 'vue';
   import { get } from 'lodash-es';
-  import { Descriptions } from 'ant-design-vue';
+  import { Descriptions, DescriptionsItem } from 'antdv-next';
   import { CollapseContainer } from '@jeesite/core/components/Container';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isFunction } from '@jeesite/core/utils/is';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
@@ -45,7 +44,6 @@
     setup(props, { slots, emit }) {
       const propsRef = ref<Partial<DescriptionProps> | null>(null);
 
-      const { prefixCls } = useDesign('description');
       const attrs = useAttrs();
 
       // Custom title component: get title
@@ -127,7 +125,7 @@
 
             const width = contentMinWidth;
             return (
-              <Descriptions.Item label={renderLabel(item)} key={field} span={span}>
+              <DescriptionsItem label={renderLabel(item)} key={field} span={span}>
                 {() => {
                   if (!contentMinWidth) {
                     return getContent();
@@ -137,7 +135,7 @@
                   };
                   return <div style={style}>{getContent()}</div>;
                 }}
-              </Descriptions.Item>
+              </DescriptionsItem>
             );
           })
           .filter((item) => !!item);
@@ -145,7 +143,7 @@
 
       const renderDesc = () => {
         return (
-          <Descriptions class={`${prefixCls}`} {...(unref(getDescriptionsProps) as any)}>
+          <Descriptions class={'jeesite-description'} {...(unref(getDescriptionsProps) as any)}>
             {renderItem()}
           </Descriptions>
         );
@@ -162,7 +160,7 @@
         const { title } = unref(getMergeProps);
 
         return (
-          <CollapseContainer title={title} canExpan={canExpand} expand={expand} helpMessage={helpMessage}>
+          <CollapseContainer title={title as string} canExpan={canExpand} expand={expand} helpMessage={helpMessage}>
             {{
               default: () => content,
               action: () => getSlot(slots, 'action'),

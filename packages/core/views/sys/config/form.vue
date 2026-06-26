@@ -67,7 +67,7 @@
         { required: true },
         {
           validator(_rule, value) {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
               if (!value || value === '') return resolve();
               checkConfigKey(record.value.configKey || '', value)
                 .then((res) => (res ? resolve() : reject(t('参数键名已存在'))))

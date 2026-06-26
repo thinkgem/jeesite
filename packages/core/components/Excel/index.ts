@@ -1,8 +1,5 @@
-import { withInstall } from '@jeesite/core/utils';
-import impExcel from './src/ImportExcel.vue';
-import expExcelModal from './src/ExportExcelModal.vue';
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-export const ImpExcel = withInstall(impExcel);
-export const ExpExcelModal = withInstall(expExcelModal);
 export * from './src/typing';
-export { jsonToSheetXlsx, aoaToSheetXlsx } from './src/Export2Excel';
+export const ImpExcel = createAsyncComponent(() => import('./src/ImportExcel.vue'));
+export const ExpExcelModal = createAsyncComponent(() => import('./src/ExportExcelModal.vue'));

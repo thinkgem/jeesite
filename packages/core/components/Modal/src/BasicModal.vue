@@ -26,10 +26,10 @@
     </template>
 
     <ModalWrapper
+      ref="modalWrapperRef"
       :useWrapper="getProps.useWrapper"
       :footerOffset="wrapperFooterOffset"
       :fullScreen="fullScreenRef"
-      ref="modalWrapperRef"
       :loading="getProps.loading"
       :loading-tip="getProps.loadingTip"
       :minHeight="getProps.minHeight"
@@ -50,7 +50,18 @@
 </template>
 <script lang="ts" setup name="BasicModal">
   import type { ModalProps, ModalMethods } from './typing';
-  import { computed, ref, watch, unref, watchEffect, toRef, getCurrentInstance, nextTick, useAttrs } from 'vue';
+  import {
+    computed,
+    ref,
+    watch,
+    unref,
+    watchEffect,
+    toRef,
+    getCurrentInstance,
+    nextTick,
+    useAttrs,
+    shallowRef,
+  } from 'vue';
   import Modal from './components/Modal';
   import ModalWrapper from './components/ModalWrapper.vue';
   import ModalClose from './components/ModalClose.vue';
@@ -71,7 +82,7 @@
   const attrs = useAttrs();
   const openRef = ref(false);
   const propsRef = ref<Partial<ModalProps> | null>(null);
-  const modalWrapperRef = ref<any>(null);
+  const modalWrapperRef = shallowRef<InstanceType<typeof ModalWrapper>>();
 
   // modal   Bottom and top height
   const extHeightRef = ref(0);
@@ -81,9 +92,7 @@
     emitOpen: undefined,
     redoModalHeight: () => {
       nextTick(() => {
-        if (unref(modalWrapperRef)) {
-          (unref(modalWrapperRef) as any).setModalHeight();
-        }
+        modalWrapperRef.value?.setModalHeight();
       });
     },
   };
@@ -109,16 +118,12 @@
 
   // modal component does not need title and origin buttons
   const getProps = computed((): Recordable => {
-    const opt = {
+    return {
       ...unref(getMergeProps),
       // open: unref(openRef),
       okButtonProps: undefined,
       cancelButtonProps: undefined,
       title: undefined,
-    };
-    return {
-      ...opt,
-      wrapClassName: unref(getWrapClassName),
     };
   });
 
@@ -135,6 +140,7 @@
       let width = Number(values.width);
       if (!isNaN(width)) values.width = width;
     }
+    delete values['loading'];
     if (unref(fullScreenRef)) {
       return omit(values, ['height', 'title']);
     }
@@ -246,7 +252,9 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-modal';
 
-  .ant-modal.@{prefix-cls} {
+  .@{prefix-cls} {
+    padding: 0 !important;
+
     .ant-modal {
       &-body {
         padding: 0;

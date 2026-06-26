@@ -24,13 +24,13 @@
 </template>
 <script lang="ts" setup name="JeeSiteSelect">
   import { ref, unref, computed, watch, onMounted, PropType } from 'vue';
-  import { Select } from 'ant-design-vue';
+  import { Select } from 'antdv-next';
   import { isEmpty, isFunction } from '@jeesite/core/utils/is';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
-  import { get } from 'lodash-es';
-  import { LoadingOutlined } from '@ant-design/icons-vue';
+  import { get, omit } from 'lodash-es';
+  import { LoadingOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDict } from '@jeesite/core/components/Dict';
 
@@ -76,7 +76,7 @@
   const loading = ref<boolean>(false);
 
   const getAttrs = computed(() => {
-    return {
+    let propsData = {
       showSearch: true,
       optionFilterProp: 'label',
       fieldNames: {
@@ -84,8 +84,9 @@
         label: 'label',
       },
       ...unref(attrs),
-      ...(props as Recordable),
+      ...props,
     };
+    return omit(propsData, 'options', 'params');
   });
 
   watch(
@@ -198,7 +199,7 @@
       width: 100%;
     }
   }
-  // 嵌入在 input 内部 addonAfter 插槽时的样式设置
+  // 嵌入在 input 内部 suffix 插槽时的样式设置
   .ant-input-group .ant-input-group-addon .@{prefix-cls} {
     margin: -5px -11px;
   }

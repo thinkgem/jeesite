@@ -32,7 +32,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { computed, ref, unref } from 'vue';
   import { useRouter } from 'vue-router';
   import { PageWrapper } from '@jeesite/core/components/Page';

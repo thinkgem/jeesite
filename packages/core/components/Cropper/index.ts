@@ -1,7 +1,5 @@
-import { withInstall } from '@jeesite/core/utils';
-import cropperImage from './src/Cropper.vue';
-import avatarCropper from './src/CropperAvatar.vue';
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
 export * from './src/typing';
-export const CropperImage = withInstall(cropperImage);
-export const CropperAvatar = withInstall(avatarCropper);
+export const CropperImage = createAsyncComponent(() => import('./src/Cropper.vue'));
+export const CropperAvatar = createAsyncComponent(() => import('./src/CropperAvatar.vue'));

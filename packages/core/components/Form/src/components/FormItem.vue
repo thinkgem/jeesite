@@ -7,17 +7,17 @@
   import type { PropType, Ref } from 'vue';
   import type { FormActionType, FormProps } from '../types/form';
   import type { FormSchema } from '../types/form';
-  import type { Rule } from 'ant-design-vue/lib/form';
+  import type { Rule, RuleObject } from 'antdv-next/dist/form/types';
   import type { TableActionType } from '@jeesite/core/components/Table';
   import type { FormField, FormRecordable } from '@jeesite/types/record';
   import { defineComponent, computed, unref, toRefs } from 'vue';
-  import { Form, Col } from 'ant-design-vue';
+  import { FormItem, Col, SpaceCompact, SpaceAddon } from 'antdv-next';
   import { componentMap } from '../componentMap';
   import { BasicHelp } from '@jeesite/core/components/Basic';
   import { isBoolean, isFunction, isNull, isEmpty, isString } from '@jeesite/core/utils/is';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
   import { createPlaceholderMessage, setComponentRuleType } from '../helper';
-  import { upperFirst, cloneDeep } from 'lodash-es';
+  import { cloneDeep } from 'lodash-es';
   import { useItemLabelWidth } from '../hooks/useLabelWidth';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
@@ -33,10 +33,6 @@
         type: Object as PropType<FormProps<FormRecordable>>,
         default: () => ({}),
       },
-      defaultValues: {
-        type: Object as PropType<Recordable>,
-        default: () => ({}),
-      },
       formModel: {
         type: Object as PropType<FormRecordable>,
         default: () => ({}),
@@ -45,11 +41,15 @@
         type: Function as PropType<(key: FormField, value: any) => void>,
         default: null,
       },
-      tableAction: {
-        type: Object as PropType<Partial<TableActionType>>,
+      defaultValues: {
+        type: Object as PropType<Recordable>,
+        default: () => ({}),
       },
       formActionType: {
         type: Object as PropType<Partial<FormActionType>>,
+      },
+      tableAction: {
+        type: Object as PropType<Partial<TableActionType>>,
       },
       colLayout: {
         type: Boolean,
@@ -82,7 +82,7 @@
       });
 
       const getComponentsProps = computed(() => {
-        const { schema, formModel, tableAction, formActionType } = props;
+        const { schema, formModel, formActionType, tableAction } = props;
         let { componentProps = {} } = schema;
         if (isFunction(componentProps)) {
           componentProps = componentProps({ schema, formModel, tableAction, formActionType }) ?? {};
@@ -145,6 +145,7 @@
 
       const getRules = computed((): Rule[] => {
         const { rules: defRules = [], component, rulesMessageJoinLabel, label, dynamicRules, required } = props.schema;
+        // console.log('getRules', props.schema.field);
 
         if (isFunction(dynamicRules)) {
           return dynamicRules(unref(getValues)) as Rule[];
@@ -190,12 +191,14 @@
           rules = [{ required: getRequired, validator }];
         }
 
-        const requiredRuleIndex: number = rules.findIndex(
-          (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'),
-        );
+        const requiredRuleIndex: number = rules.findIndex((rule) => {
+          // 确保 rule 是 RuleObject 类型而不是 RuleRender 函数
+          if (typeof rule === 'function') return false;
+          return Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator');
+        });
 
         if (requiredRuleIndex !== -1) {
-          const rule = rules[requiredRuleIndex];
+          const rule = rules[requiredRuleIndex] as RuleObject;
           const { isShow } = unref(getShow);
           if (!isShow) {
             rule.required = false;
@@ -220,10 +223,16 @@
         }
 
         // Maximum input length rule check
-        const characterInx = rules.findIndex((val) => val.max);
-        if (characterInx !== -1 && !rules[characterInx].validator) {
-          rules[characterInx].message =
-            rules[characterInx].message || t('component.form.maxTip', [rules[characterInx].max] as Recordable);
+        const characterInx = rules.findIndex((val) => {
+          // 确保 val 是 RuleObject 类型而不是 RuleRender 函数
+          if (typeof val === 'function') return false;
+          return val.max;
+        });
+        if (characterInx !== -1) {
+          const rule = rules[characterInx] as RuleObject;
+          if (!rule.validator) {
+            rule.message = rule.message || t('component.form.maxTip', [rule.max] as Recordable);
+          }
         }
         return rules;
       });
@@ -234,33 +243,12 @@
           component,
           field,
           fieldLabel,
-          changeEvent = 'change',
           valueField,
           labelField,
           defaultValue,
           defaultLabel,
         } = props.schema;
         // console.log('getComponent', field);
-
-        const isCheck = component && ['Switch', 'Checkbox'].includes(component);
-
-        const eventKey = `on${upperFirst(changeEvent)}`;
-
-        const on = {
-          [eventKey]: (...args: Nullable<Recordable>[]) => {
-            // console.log('event', eventKey, ...args);
-            const [e, labelValue] = args;
-            const target = typeof e === 'boolean' ? { checked: e } : e ? e.target : null;
-            const value = target ? (isCheck ? target.checked : target.value) : e;
-            props.setFormModel(field, value || (typeof value == 'number' ? value : defaultValue || ''));
-            if (fieldLabel) {
-              props.setFormModel(fieldLabel, labelValue || defaultLabel || '');
-            }
-            if (propsData[eventKey]) {
-              propsData[eventKey](...args);
-            }
-          },
-        };
 
         const { autoSetPlaceHolder, size } = props.formProps;
         const propsData: Recordable = {
@@ -285,42 +273,66 @@
           props.setFormModel(fieldLabel, defaultLabel || '');
         }
 
-        let value = props.formModel[field];
-        if (isString(value) && component === 'RangePicker') {
-          const vs = value.split(',');
-          if (vs.length > 1) value = [vs[0], vs[1]];
-          else value = [vs[0], ''];
-        } else if (isString(value) && value === '') {
-          value = undefined;
+        const isCheck = component && ['Switch', 'Checkbox'].includes(component);
+        const bindValue: Recordable = {};
+
+        if (field) {
+          let value = props.formModel[field];
+          if (isString(value) && component === 'RangePicker') {
+            const vs = value.split(',');
+            if (vs.length > 1) value = [vs[0], vs[1]];
+            else value = [vs[0], ''];
+          } else if (isString(value) && value === '') {
+            value = undefined;
+          }
+          const fieldName = valueField || (isCheck ? 'checked' : 'value');
+          bindValue[fieldName] = value ?? defaultValue;
+          bindValue['onUpdate:' + fieldName] = (value: any): void => {
+            props.setFormModel(field, value || defaultValue || '');
+          };
         }
-
-        const bindValue: Recordable = {
-          [valueField || (isCheck ? 'checked' : 'value')]: value ?? defaultValue,
-        };
-
         if (fieldLabel) {
-          bindValue[labelField || 'labelValue'] = props.formModel[fieldLabel] ?? defaultLabel;
-          // console.log('bindValue', bindValue, props.formModel);
+          const labelFieldName = labelField || 'labelValue';
+          bindValue[labelFieldName] = props.formModel[fieldLabel] ?? defaultLabel;
+          bindValue['onUpdate:' + labelFieldName] = (value: any): void => {
+            props.setFormModel(fieldLabel, value || defaultLabel || '');
+          };
           bindValue.labelInValue = true;
-          // bindValue.treeCheckable = true;
         }
 
         const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
         const compAttr: Recordable = {
           ...propsData,
-          ...on,
           ...bindValue,
         };
 
-        if (!renderComponentContent) {
-          return <Comp {...compAttr} />;
+        const renderComp = () => {
+          if (!renderComponentContent) {
+            return <Comp {...compAttr} />;
+          }
+          const compSlot = isFunction(renderComponentContent)
+            ? { ...renderComponentContent(unref(getValues)) }
+            : {
+                default: () => renderComponentContent,
+              };
+          return <Comp {...compAttr}>{compSlot}</Comp>;
+        };
+
+        // 兼容 addonBefore 和 addonAfter 属性渲染
+        if (compAttr.addonBefore || compAttr.addonAfter) {
+          const addonBefore = compAttr.addonBefore;
+          const addonAfter = compAttr.addonAfter;
+          delete compAttr.addonBefore;
+          delete compAttr.addonAfter;
+          return (
+            <SpaceCompact block>
+              {addonBefore && <SpaceAddon>{addonBefore}</SpaceAddon>}
+              {renderComp()}
+              {addonAfter && <SpaceAddon>{addonAfter}</SpaceAddon>}
+            </SpaceCompact>
+          );
         }
-        const compSlot = isFunction(renderComponentContent)
-          ? { ...renderComponentContent(unref(getValues)) }
-          : {
-              default: () => renderComponentContent,
-            };
-        return <Comp {...compAttr}>{compSlot}</Comp>;
+        return renderComp();
       });
 
       function renderLabelHelpMessage(colon = false) {
@@ -349,7 +361,7 @@
       const getFormItem = computed(() => {
         const { itemProps, slot, render, label, field, fieldLabel, suffix, component } = props.schema;
         const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
-        // console.log('getFormItem', props.schema.field);
+        // console.log('getFormItem', field);
 
         if (component === 'None') {
           return ''; // 占位符，什么也不输出
@@ -370,7 +382,7 @@
           };
 
           return (
-            <Form.Item
+            <FormItem
               name={field}
               colon={false}
               class={{ 'suffix-item': !!suffix, 'no-label': isEmpty(label) }}
@@ -388,8 +400,8 @@
               ) : (
                 getContent()
               )}
-              {fieldLabel ? <Form.Item name={fieldLabel} v-show={false} /> : null}
-            </Form.Item>
+              {fieldLabel ? <FormItem name={fieldLabel} v-show={false} /> : null}
+            </FormItem>
           );
         }
       });

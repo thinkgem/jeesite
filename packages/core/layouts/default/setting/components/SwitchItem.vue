@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-setting-switch-item">
     <span>
       {{ title }}
       <BasicHelp v-if="helpMessage" placement="top" :text="helpMessage" />
@@ -16,8 +16,7 @@
 <script lang="ts">
   import { defineComponent, PropType, computed } from 'vue';
 
-  import { Switch } from 'ant-design-vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
+  import { Switch } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { BasicHelp } from '@jeesite/core/components/Basic';
   import { baseHandler } from '../handler';
@@ -44,7 +43,6 @@
       },
     },
     setup(props) {
-      const { prefixCls } = useDesign('setting-switch-item');
       const { t } = useI18n();
 
       const getBindValue = computed(() => {
@@ -54,7 +52,6 @@
         props.event && baseHandler(props.event, e);
       }
       return {
-        prefixCls,
         t,
         handleChange,
         getBindValue,
@@ -63,9 +60,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-setting-switch-item';
-
-  .@{prefix-cls} {
+  .jeesite-setting-switch-item {
     display: flex;
     justify-content: space-between;
     margin: 16px 0;

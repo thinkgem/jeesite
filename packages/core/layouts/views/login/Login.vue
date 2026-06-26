@@ -1,6 +1,6 @@
 <template>
-  <div :class="prefixCls" class="relative h-full w-full bg-light-400 px-4">
-    <AppDarkModeToggle class="enter-x absolute right-8 top-5" v-if="!sessionTimeout" />
+  <div class="jeesite-login relative h-full w-full bg-light-400 px-4">
+    <AppDarkModeToggle class="enter-x absolute right-12 top-5" v-if="!sessionTimeout" />
 
     <span class="-enter-x lg:hidden">
       <AppLogo :alwaysShowTitle="true" />
@@ -8,7 +8,7 @@
 
     <div class="relative mx-auto h-full py-2 container">
       <div class="h-full flex">
-        <div class="mr-4 min-h-full pl-4 md:hidden lg:w-13/24 lg:flex lg:flex-col">
+        <div class="mr-4 min-h-full pl-4 md:hidden lg:w-[54.17%] lg:flex lg:flex-col">
           <div class="my-auto">
             <AppLogo class="-enter-x logo" />
             <img :alt="title" src="@jeesite/assets/svg/login-box-bg.svg" class="-enter-x w-1/2" />
@@ -17,27 +17,26 @@
             </div>
             <div class="-enter-x text-md mt-5 text-white font-normal dark:text-gray-500">
               JeeSite 是一个专业的平台，是一个让你使用放心的平台。<br />
-              前端基于 Vue3、Vite、TypeScript、Ant-Design-Vue、Vben Admin，<br />
+              前端基于 Vue3、Vite、TypeScript、Antdv-Next、Vben Admin，<br />
               后台基于 Spring Boot、Apache MyBatis 等，最先进、最经典的技术栈。<br />
               精致的 UI、规范的代码书写、匠心著作、封装细节、专注业务、快速开发。<br />
             </div>
           </div>
         </div>
-        <div class="h-full w-full flex overflow-auto py-5 lg:my-0 lg:h-auto lg:w-11/24 lg:py-0">
+        <div class="h-full w-full flex overflow-y-auto overflow-x-hidden py-5 lg:my-0 lg:h-auto lg:w-[45.83%] lg:py-0">
           <div
-            :class="`${prefixCls}-form`"
-            class="enter-x relative mx-auto my-auto w-full px-5 py-8 shadow-md lg:ml-16 lg:w-2/4 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
+            class="jeesite-login-form enter-x relative mx-auto my-auto w-full px-5 py-8 shadow-md lg:ml-16 lg:w-1/2 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
           >
-            <Tabs v-if="getShow" :activeKey="getLoginState" @change="handleChange">
-              <Tabs.TabPane :key="LoginStateEnum.LOGIN" :tab="t('sys.login.signInFormTitle')">
+            <Tabs v-if="getShow" :activeKey="getLoginState as unknown as string" @change="handleChange">
+              <TabPane :key="LoginStateEnum.LOGIN" :tab="t('sys.login.signInFormTitle')">
                 <LoginForm @demo-mode="demoMode = $event" />
-              </Tabs.TabPane>
-              <Tabs.TabPane :key="LoginStateEnum.MOBILE" :tab="t('sys.login.mobileSignInFormTitle')">
+              </TabPane>
+              <TabPane :key="LoginStateEnum.MOBILE" :tab="t('sys.login.mobileSignInFormTitle')">
                 <MobileForm :demoMode="demoMode" />
-              </Tabs.TabPane>
-              <Tabs.TabPane :key="LoginStateEnum.QR_CODE" :tab="t('sys.login.qrSignInFormTitle')">
+              </TabPane>
+              <TabPane :key="LoginStateEnum.QR_CODE" :tab="t('sys.login.qrSignInFormTitle')">
                 <QrCodeForm :demoMode="demoMode" />
-              </Tabs.TabPane>
+              </TabPane>
             </Tabs>
             <ForgetPasswordForm :demoMode="demoMode" />
             <RegisterForm :demoMode="demoMode" />
@@ -51,17 +50,17 @@
   import { computed, ref, unref } from 'vue';
   import { AppLogo } from '@jeesite/core/components/Application';
   import { AppDarkModeToggle } from '@jeesite/core/components/Application';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { Tabs } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-
-  import LoginForm from './LoginForm.vue';
-  import MobileForm from './MobileForm.vue';
-  import QrCodeForm from './QrCodeForm.vue';
-  import ForgetPasswordForm from './ForgetPasswordForm.vue';
-  import RegisterForm from './RegisterForm.vue';
   import { LoginStateEnum, useLoginState } from './useLogin';
+
+  const LoginForm = createAsyncComponent(() => import('./LoginForm.vue'));
+  const MobileForm = createAsyncComponent(() => import('./MobileForm.vue'));
+  const QrCodeForm = createAsyncComponent(() => import('./QrCodeForm.vue'));
+  const ForgetPasswordForm = createAsyncComponent(() => import('./ForgetPasswordForm.vue'));
+  const RegisterForm = createAsyncComponent(() => import('./RegisterForm.vue'));
 
   const { t } = useI18n();
 
@@ -107,23 +106,21 @@
   });
 
   const globSetting = useGlobSetting();
-  const { prefixCls } = useDesign('login');
   const title = computed(() => globSetting?.title ?? '');
   const demoMode = ref(false);
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-login';
   @logo-prefix-cls: ~'jeesite-app-logo';
   @countdown-prefix-cls: ~'jeesite-countdown-input';
   @dark-bg: #293146;
 
-  .@{prefix-cls} {
+  .jeesite-login {
     min-height: 100%;
     overflow: hidden;
     //background-color: #f2fafd;
 
     &-form {
-      top: -20px;
+      transform: translateY(-20px);
       margin: auto;
       background-color: #fff;
       box-shadow: 0 0 8px #ddd;
@@ -262,10 +259,14 @@
       font-size: 14px;
       color: @text-color-secondary;
     }
+
+    .ant-btn {
+      border-radius: 8px;
+    }
   }
 
   html[data-theme='dark'] {
-    .@{prefix-cls} {
+    .jeesite-login {
       background-color: @dark-bg;
 
       &::before {

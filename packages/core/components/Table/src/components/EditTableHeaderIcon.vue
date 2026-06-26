@@ -7,7 +7,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { FormOutlined } from '@ant-design/icons-vue';
+  import { FormOutlined } from '@antdv-next/icons';
   export default defineComponent({
     name: 'EditTableHeaderIcon',
     components: { FormOutlined },

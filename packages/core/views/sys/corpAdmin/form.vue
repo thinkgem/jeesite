@@ -25,7 +25,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysCorpAdminForm">
-  import { ref, unref, computed, h } from 'vue';
+  import { ref, unref, computed, h, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -50,7 +50,7 @@
   const useCorpModel = ref<boolean>(false);
   const corpAdminRoleCode = ref<string>('');
   const op = ref<string>('');
-  const formExtendRef = ref<InstanceType<typeof FormExtend>>();
+  const formExtendRef = shallowRef<InstanceType<typeof FormExtend>>();
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -72,7 +72,7 @@
         { pattern: /^[\u0391-\uFFE5\w]+$/, message: t('不能输入特殊字符') },
         {
           validator(_rule, value) {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
               if (!value || value === '') return resolve();
               checkLoginCode(record.value.loginCode || '', value)
                 .then((res) => (res ? resolve() : reject(t('登录账号已存在'))))

@@ -18,12 +18,12 @@
         @select="handleSelect"
       >
         <template #headerTitle>
-          <Dropdown class="cursor-pointer" :trigger="['hover']" :dropMenuList="dropMenuList">
-            {{ sysName }} <DownOutlined />
+          <Dropdown :trigger="['hover']" :dropMenuList="dropMenuList">
+            <span class="cursor-pointer">{{ sysName }} <DownOutlined /></span>
           </Dropdown>
         </template>
-        <template #icon="{ dataRef, isLeaf, expanded }">
-          <Icon v-if="dataRef.hasDataScope" icon="i-ant-design:unordered-list-outlined" color="#f00" />
+        <template #icon="{ data, isLeaf, expanded }">
+          <Icon v-if="data.hasDataScope" icon="i-ant-design:unordered-list-outlined" color="#f00" />
           <Icon v-else-if="isLeaf" icon="ant-design:file-outlined" />
           <Icon v-else-if="expanded" icon="i-ant-design:folder-open-outlined" />
           <Icon v-else icon="ant-design:folder-outlined" />
@@ -32,30 +32,30 @@
     </ACol>
     <ACol :span="16" :style="getMainStyle">
       <Tabs class="jeesite-role-auth-data-scope-tabs2" v-model:activeKey="ruleType" @change="handleTabChange">
-        <Tabs.TabPane key="1" :forceRender="true">
+        <TabPane key="1" :forceRender="true">
           <template #tab>
             <Icon v-if="ruleType == '1'" icon="i-ant-design:check-circle-outlined" />
             <Icon v-else icon="i-ant-design:minus-circle-outlined" />
             <span class="pr-1"> {{ t('通用数据权限') }} </span>
           </template>
           <RoleDataScope ref="roleDataScopeRef" :menuDataScope="true" />
-        </Tabs.TabPane>
-        <Tabs.TabPane key="2" :forceRender="true">
+        </TabPane>
+        <TabPane key="2" :forceRender="true">
           <template #tab>
             <Icon v-if="ruleType == '2'" icon="i-ant-design:check-circle-outlined" />
             <Icon v-else icon="i-ant-design:minus-circle-outlined" />
             <span class="pr-1"> {{ t('自定义条件规则') }} </span>
           </template>
           <RuleDataScope ref="ruleDataScopeRef" />
-        </Tabs.TabPane>
-        <Tabs.TabPane key="3" :forceRender="true">
+        </TabPane>
+        <TabPane key="3" :forceRender="true">
           <template #tab>
             <Icon v-if="ruleType == '3'" icon="i-ant-design:check-circle-outlined" />
             <Icon v-else icon="i-ant-design:minus-circle-outlined" />
             <span class="pr-1"> {{ t('自定义SQL片段') }} </span>
           </template>
           <SqlDataScope ref="sqlDataScopeRef" />
-        </Tabs.TabPane>
+        </TabPane>
       </Tabs>
       <div class="ml-4 mt-2">
         <Alert
@@ -67,10 +67,10 @@
     </ACol>
   </ARow>
 </template>
-<script lang="ts" setup name="ViewsSysMenuIndex">
-  import { ref, computed, CSSProperties } from 'vue';
-  import { Alert, Col, Row, Tabs } from 'ant-design-vue';
-  import { DownOutlined } from '@ant-design/icons-vue';
+<script lang="ts" setup name="SysRoleMenuDataScope">
+  import { ref, computed, CSSProperties, shallowRef } from 'vue';
+  import { Alert, Col, Row, Tabs, TabPane } from 'antdv-next';
+  import { DownOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDict } from '@jeesite/core/components/Dict';
   import { Icon } from '@jeesite/core/components/Icon';
@@ -91,7 +91,7 @@
   const record = ref<Recordable>({});
   const menuDataScopes = ref<any>({});
 
-  const treeRef = ref<Nullable<TreeActionType>>(null);
+  const treeRef = shallowRef<Nullable<TreeActionType>>(null);
   const apiParams = ref<Recordable>({ roleCode: '', sysCode: 'default' });
 
   const dropMenuList = ref<Array<DropMenu>>([]);
@@ -100,9 +100,9 @@
 
   const menuCode = ref<string>('0');
   const ruleType = ref<string>('0');
-  const roleDataScopeRef = ref<InstanceType<typeof RoleDataScope>>();
-  const ruleDataScopeRef = ref<InstanceType<typeof RuleDataScope>>();
-  const sqlDataScopeRef = ref<InstanceType<typeof SqlDataScope>>();
+  const roleDataScopeRef = shallowRef<InstanceType<typeof RoleDataScope>>();
+  const ruleDataScopeRef = shallowRef<InstanceType<typeof RuleDataScope>>();
+  const sqlDataScopeRef = shallowRef<InstanceType<typeof SqlDataScope>>();
 
   const contentHeight = ref(400);
   const getTreeStyle = computed((): CSSProperties => {
@@ -209,8 +209,8 @@
       }
     }
     // 加载当前选择的菜单数据权限
-    if (obj && obj.node && obj.node.dataRef) {
-      const { id, rawName, permission } = obj.node.dataRef;
+    if (obj && obj.node) {
+      const { id, rawName, permission } = obj.node;
       menuCode.value = id;
       menuDataScopes.value[id] = {
         ...(menuDataScopes.value[id] || record.value),

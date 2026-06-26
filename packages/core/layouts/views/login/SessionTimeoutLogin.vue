@@ -1,20 +1,20 @@
 <template>
   <transition>
-    <div v-show="true" :class="prefixCls">
+    <div v-show="true" class="jeesite-st-login">
       <Login sessionTimeout />
     </div>
   </transition>
 </template>
 <script lang="ts" setup>
   import { onBeforeUnmount, onMounted, ref } from 'vue';
-  import Login from './Login.vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { usePermissionStore } from '@jeesite/core/store/modules/permission';
   import { useAppStore } from '@jeesite/core/store/modules/app';
   import { PermissionModeEnum } from '@jeesite/core/enums/appEnum';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-  const { prefixCls } = useDesign('st-login');
+  const Login = createAsyncComponent(() => import('./Login.vue'));
+
   const userStore = useUserStore();
   const permissionStore = usePermissionStore();
   const appStore = useAppStore();
@@ -41,9 +41,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-st-login';
-
-  .@{prefix-cls} {
+  .jeesite-st-login {
     position: fixed;
     z-index: 9999999;
     width: 100%;

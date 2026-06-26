@@ -1,8 +1,3 @@
-import { withInstall } from '@jeesite/core/utils';
-import basicArrow from './src/BasicArrow.vue';
-import basicTitle from './src/BasicTitle.vue';
-import basicHelp from './src/BasicHelp.vue';
-
-export const BasicArrow = withInstall(basicArrow);
-export const BasicTitle = withInstall(basicTitle);
-export const BasicHelp = withInstall(basicHelp);
+export { default as BasicArrow } from './src/BasicArrow.vue';
+export { default as BasicTitle } from './src/BasicTitle.vue';
+export { default as BasicHelp } from './src/BasicHelp.vue';

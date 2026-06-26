@@ -22,9 +22,9 @@
   </Sider>
 </template>
 <script lang="ts">
-  import { computed, defineComponent, ref, unref, CSSProperties, h } from 'vue';
+  import { computed, defineComponent, ref, unref, CSSProperties, h, shallowRef } from 'vue';
 
-  import { Layout } from 'ant-design-vue';
+  import { Layout, LayoutSider } from 'antdv-next';
   import LayoutMenu from '../menu/index.vue';
   import LayoutTrigger from '@jeesite/core/layouts/default/trigger/index.vue';
 
@@ -33,15 +33,15 @@
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { useTrigger, useDragLine, useSiderEvent } from './useLayoutSider';
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   import DragBar from './DragBar.vue';
+
   export default defineComponent({
     name: 'LayoutSideBar',
-    components: { Sider: Layout.Sider, LayoutMenu, DragBar, LayoutTrigger },
+    components: { Sider: LayoutSider, LayoutMenu, DragBar, LayoutTrigger },
     setup() {
-      const dragBarRef = ref<ElRef>(null);
-      const sideRef = ref<ElRef>(null);
+      const dragBarRef = shallowRef<ElRef>(null);
+      const sideRef = shallowRef<ElRef>(null);
 
       const {
         getCollapsed,
@@ -54,8 +54,6 @@
         getIsMixMode,
         toggleCollapsed,
       } = useMenuSetting();
-
-      const { prefixCls } = useDesign('layout-sideBar');
 
       const { getIsMobile } = useAppInject();
 
@@ -79,10 +77,10 @@
 
       const getSiderClass = computed(() => {
         return [
-          prefixCls,
+          'jeesite-layout-sideBar',
           {
-            [`${prefixCls}--fixed`]: unref(getMenuFixed),
-            [`${prefixCls}--mix`]: unref(getIsMixMode) && !unref(getIsMobile),
+            ['jeesite-layout-sideBar--fixed']: unref(getMenuFixed),
+            ['jeesite-layout-sideBar--mix']: unref(getIsMixMode) && !unref(getIsMobile),
           },
         ];
       });
@@ -104,7 +102,6 @@
       const getTrigger = h(LayoutTrigger);
 
       return {
-        prefixCls,
         sideRef,
         dragBarRef,
         getIsMobile,
@@ -128,9 +125,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-sideBar';
-
-  .ant-layout .ant-layout-sider.@{prefix-cls} {
+  .ant-layout .ant-layout-sider.jeesite-layout-sideBar {
     z-index: @layout-sider-fixed-z-index;
 
     &--fixed {

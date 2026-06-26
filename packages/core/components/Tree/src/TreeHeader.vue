@@ -6,16 +6,14 @@
     </BasicTitle>
     <div class="flex flex-1 cursor-pointer items-center justify-self-stretch" v-if="search || toolbar">
       <div :class="getInputSearchCls" v-if="search">
-        <FormItemRest>
-          <AInput :placeholder="t('common.searchText')" size="small" allowClear v-model:value="searchValue" />
-        </FormItemRest>
+        <AInput :placeholder="t('common.searchText')" size="small" allowClear v-model:value="searchValue" />
       </div>
       <Dropdown @click.prevent v-if="toolbar">
         <Icon icon="i-ant-design:setting-outlined" class="px-1" />
-        <template #overlay>
+        <template #popupRender>
           <AMenu @click="handleMenuClick">
             <template v-for="item in toolbarList" :key="item.value">
-              <MenuItem v-bind="{ key: item.value }">
+              <MenuItem v-bind="{ key: `${item.value}` }">
                 {{ item.label }}
               </MenuItem>
               <MenuDivider v-if="item.divider" />
@@ -30,7 +28,7 @@
   import { PropType } from 'vue';
   import { defineComponent, computed, ref, watch } from 'vue';
 
-  import { Dropdown, Menu, Input, Form } from 'ant-design-vue';
+  import { Dropdown, Menu, Input, Form } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTitle } from '@jeesite/core/components/Basic';
 
@@ -38,8 +36,6 @@
 
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDebounceFn } from '@vueuse/core';
-  import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
-
   enum ToolbarEnum {
     RELOAD,
     SELECT_ALL,
@@ -48,10 +44,6 @@
     UN_EXPAND_ALL,
     CHECK_STRICTLY,
     CHECK_UN_STRICTLY,
-  }
-
-  interface ToolbarMenuInfo {
-    key: ToolbarEnum;
   }
 
   const props = {
@@ -79,7 +71,6 @@
       MenuItem: Menu.Item,
       MenuDivider: Menu.Divider,
       AInput: Input,
-      FormItemRest: Form.ItemRest,
     },
     props,
     emits: ['strictly-change', 'search'],
@@ -128,9 +119,9 @@
           : [...reload, ...defaultToolbarList];
       });
 
-      function handleMenuClick(e: ToolbarMenuInfo | MenuInfo) {
+      function handleMenuClick(e: any) {
         const { key } = e;
-        switch (key) {
+        switch (Number(key)) {
           case ToolbarEnum.RELOAD:
             props.reload?.();
             break;

@@ -6,7 +6,6 @@
 
   import { defineComponent, computed } from 'vue';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
 
   const props = {
@@ -22,8 +21,6 @@
     name: 'SimpleMenuTag',
     props,
     setup(props) {
-      const { prefixCls } = useDesign('simple-menu');
-
       const getShowTag = computed(() => {
         const { item } = props;
 
@@ -49,7 +46,7 @@
         const { item, collapseParent } = props;
         const { tag = {} } = item || {};
         const { dot, type = 'error' } = tag;
-        const tagCls = `${prefixCls}-tag`;
+        const tagCls = 'jeesite-simple-menu-tag';
         return [
           tagCls,
 

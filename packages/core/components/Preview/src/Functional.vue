@@ -1,6 +1,6 @@
 <script lang="tsx">
   import { defineComponent, ref, unref, computed, reactive, watchEffect } from 'vue';
-  import { CloseOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons-vue';
+  import { CloseOutlined, LeftOutlined, RightOutlined } from '@antdv-next/icons';
   import resumeSvg from '@jeesite/assets/svg/preview/resume.svg';
   import rotateSvg from '@jeesite/assets/svg/preview/p-rotate.svg';
   import scaleSvg from '@jeesite/assets/svg/preview/scale.svg';

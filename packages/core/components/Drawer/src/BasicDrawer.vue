@@ -33,17 +33,16 @@
 <script lang="ts" setup name="BasicDrawer">
   import type { DrawerInstance, DrawerProps } from './typing';
   import { ref, computed, watch, unref, toRaw, getCurrentInstance, CSSProperties, watchEffect } from 'vue';
-  import { Drawer } from 'ant-design-vue';
+  import { Drawer } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { isFunction, isNumber } from '@jeesite/core/utils/is';
   import { deepMerge } from '@jeesite/core/utils';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import DrawerFooter from './components/DrawerFooter.vue';
   import DrawerHeader from './components/DrawerHeader.vue';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { basicProps } from './props';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useBreakpoint } from '@jeesite/core/hooks/event/useBreakpoint';
 
@@ -58,7 +57,6 @@
   const propsRef = ref<Partial<Nullable<DrawerProps>>>(null);
 
   const { t } = useI18n();
-  const { prefixVar, prefixCls } = useDesign('basic-drawer');
   const { realWidthRef, screenEnum } = useBreakpoint();
 
   const drawerInstance: DrawerInstance = {
@@ -77,7 +75,7 @@
   });
 
   const getWrapClassName = computed(() => {
-    return `${prefixCls} ${props.wrapClassName || ''}`;
+    return `jeesite-basic-drawer ${props.wrapClassName || ''}`;
   });
 
   const getProps = computed((): DrawerProps => {
@@ -93,12 +91,11 @@
       if (!width) {
         opt.width = '100%';
       }
-      const detailCls = `${prefixCls}__detail`;
+      const detailCls = 'jeesite-basic-drawer__detail';
       opt.class = wrapClassName ? `${wrapClassName} ${detailCls}` : detailCls;
 
       if (!getContainer) {
-        // TODO type error?
-        opt.getContainer = `.${prefixVar}-layout-content` as any;
+        opt.getContainer = `.jeesite-layout-content` as any;
       }
     } else {
       opt.class = unref(getWrapClassName);
@@ -120,6 +117,18 @@
       let width = Number(values.width);
       if (!isNaN(width)) values.width = width;
     }
+    // 将 width 属性转换为 size 属性以避免警告
+    if (values.width !== undefined) {
+      values.size = values.width;
+      delete values.width;
+    }
+    // 将 maskStyle 属性转换为 styles.mask 以避免警告
+    if (values.maskStyle !== undefined) {
+      values.styles = values.styles || {};
+      values.styles.mask = values.maskStyle;
+      delete values.maskStyle;
+    }
+    delete values['loading'];
     delete values['wrapClassName'];
     return values;
   });
@@ -239,10 +248,9 @@
 <style lang="less">
   @header-height: 60px;
   @detail-header-height: 40px;
-  @prefix-cls: ~'jeesite-basic-drawer';
   @prefix-cls-detail: ~'jeesite-basic-drawer__detail';
 
-  .ant-drawer .@{prefix-cls} {
+  .jeesite.ant-drawer .jeesite-basic-drawer {
     overflow: hidden;
 
     .ew-resize {

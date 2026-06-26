@@ -27,7 +27,7 @@
           />
         </template>
         <template #testCheckbox="{ model, field }">
-          <Form.Item class="inline-block" :name="field">
+          <FormItem class="inline-block" :name="field">
             <CheckboxGroup
               :value="model[field]"
               @change="
@@ -37,17 +37,17 @@
               :options="[{ label: '无', value: '0' }]"
             />
             <div class="ml-3 inline-block"></div>
-          </Form.Item>
-          <Form.Item class="inline-block" :name="field">
+          </FormItem>
+          <FormItem class="inline-block" :name="field">
             <CheckboxGroup
               :value="model[field]"
               @change="model[field] = $event || ''"
               :dictType="'sys_menu_type'"
               :disabled="model[field] == '0' /* 选择“无”的时候禁用 */"
             />
-          </Form.Item>
+          </FormItem>
           <div class="ml-2 inline-block"></div>
-          <Form.Item
+          <FormItem
             class="inline-block"
             :name="field + 'Other'"
             :rules="[
@@ -61,7 +61,7 @@
               @change="model[field + 'Other'] = $event.target.value"
               style="width: 200px"
             />
-          </Form.Item>
+          </FormItem>
         </template>
       </BasicForm>
     </template>
@@ -107,7 +107,7 @@
   import { useQuery } from '@jeesite/core/hooks/web/usePage';
   import { useTabs } from '@jeesite/core/hooks/web/useTabs';
   import { CheckboxGroup } from '@jeesite/core/components/Form';
-  import { Input, Form } from 'ant-design-vue';
+  import { Input, FormItem } from 'antdv-next';
 
   const formConfig = ref<any[]>([
     {

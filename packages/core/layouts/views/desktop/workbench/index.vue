@@ -20,13 +20,14 @@
 </template>
 <script lang="ts" setup name="Workbench">
   import { ref } from 'vue';
-  import { Card } from 'ant-design-vue';
+  import { Card } from 'antdv-next';
   import { PageWrapper } from '@jeesite/core/components/Page';
-  import WorkbenchHeader from './components/WorkbenchHeader.vue';
-  import ProjectCard from './components/ProjectCard.vue';
-  import QuickNav from './components/QuickNav.vue';
-  import DynamicInfo from './components/DynamicInfo.vue';
-  import SaleRadar from './components/SaleRadar.vue';
+  import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
+  const WorkbenchHeader = createAsyncComponent(() => import('./components/WorkbenchHeader.vue'));
+  const ProjectCard = createAsyncComponent(() => import('./components/ProjectCard.vue'));
+  const QuickNav = createAsyncComponent(() => import('./components/QuickNav.vue'));
+  const DynamicInfo = createAsyncComponent(() => import('./components/DynamicInfo.vue'));
+  const SaleRadar = createAsyncComponent(() => import('./components/SaleRadar.vue'));
 
   const loading = ref(true);
 

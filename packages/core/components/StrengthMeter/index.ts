@@ -1,4 +1,3 @@
-import { withInstall } from '@jeesite/core/utils';
-import strengthMeter from './src/StrengthMeter.vue';
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-export const StrengthMeter = withInstall(strengthMeter);
+export const StrengthMeter = createAsyncComponent(() => import('./src/StrengthMeter.vue'));

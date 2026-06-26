@@ -19,8 +19,8 @@ import { usePermissionStore } from '@jeesite/core/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '@jeesite/core/router/routes/basic';
 import { useGlobSetting } from '@jeesite/core/hooks/setting';
-import logoImg from '@jeesite/assets/images/logo.png';
 import { mitt, Emitter } from '@jeesite/core/utils/mitt';
+import { publicPath } from '@jeesite/core/utils/env';
 
 const { showMessage, createConfirm } = useMessage();
 
@@ -90,7 +90,7 @@ export const useUserStore = defineStore('app-user', {
         const { ctxPath } = useGlobSetting();
         let url = info.avatarUrl || '/ctxPath/static/images/user1.jpg';
         url = url.replace('/ctxPath/', ctxPath + '/');
-        info.avatarUrl = url || logoImg;
+        info.avatarUrl = url || publicPath + '/resource/img/logo.png';
         info.homePath = res.desktopUrl;
         info.roleList = res.roleList;
         info.postList = res.postList;
@@ -193,6 +193,11 @@ export const useUserStore = defineStore('app-user', {
       this.setPageCache('company', res.company);
       this.setPageCache('version', res.version);
       this.setPageCache('year', res.year);
+
+      this.setPageCache('postRolePermi', res.postRolePermi);
+      this.setPageCache('switchOffice', res.switchOffice);
+      this.setPageCache('officeCode', res.officeCode);
+      this.setPageCache('officeName', res.officeName);
     },
     /**
      * @description: logout

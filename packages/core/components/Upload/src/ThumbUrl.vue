@@ -12,7 +12,7 @@
 </template>
 <script lang="ts" setup>
   import { propTypes } from '@jeesite/core/utils/propTypes';
-  import { Image } from 'ant-design-vue';
+  import { Image } from 'antdv-next';
 
   defineProps({
     fileUrl: propTypes.string.def(''),

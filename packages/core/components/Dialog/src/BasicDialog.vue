@@ -6,24 +6,28 @@
   </component>
 </template>
 <script lang="ts" setup>
-  import { computed, ref, shallowRef, useAttrs } from 'vue';
-  import { BasicModal, BasicModalInstance, ModalProps } from '@jeesite/core/components/Modal';
-  import { BasicDrawer, BasicDrawerInstance, DrawerProps } from '@jeesite/core/components/Drawer';
+  import { computed, shallowRef } from 'vue';
+  import { BasicModal, ModalProps } from '@jeesite/core/components/Modal';
+  import { BasicDrawer, DrawerProps } from '@jeesite/core/components/Drawer';
   import { propTypes } from '@jeesite/core/utils/propTypes';
+  import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
 
   type BasicDialogProps = Partial<ModalProps> & Partial<DrawerProps>;
-  type BasicDialogInstance = BasicModalInstance | BasicDrawerInstance;
+  type BasicDialogInstance = InstanceType<typeof BasicModal> | InstanceType<typeof BasicDrawer>;
 
   defineOptions({
     name: 'BasicDialog',
+    inheritAttrs: false,
   });
 
   const props = defineProps({
     dialogType: propTypes.oneOf(['modal', 'drawer']).def('drawer'),
   });
 
+  const attrs = useAttrs();
+
   const dialogComponent = shallowRef<Nullable<any>>(null);
-  const dialogComponentRef = ref<BasicDialogInstance>();
+  const dialogComponentRef = shallowRef<BasicDialogInstance>();
 
   if (props.dialogType === 'modal') {
     dialogComponent.value = BasicModal;
@@ -33,7 +37,7 @@
 
   const getAttrs = computed(() => {
     return {
-      ...useAttrs(),
+      ...attrs,
       ...props,
     };
   });

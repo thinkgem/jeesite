@@ -1,3 +1,12 @@
 packages:
   - 'packages/**'
   - 'web'
+allowBuilds:
+  core-js: true
+  es5-ext: true
+  esbuild: true
+  vue-demi: true
+minimumReleaseAgeExclude:
+  - '@jeesite/*'
+  - '@v-c/*'
+  - 'antdv-next'

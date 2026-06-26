@@ -1,61 +1,69 @@
 <template>
   <div class="bg-white">
-    <List
-      :grid="{ gutter: 5, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 6 }"
-      :data-source="data"
-      :pagination="paginationProp"
-    >
-      <template #header>
-        <div class="flex space-x-2">
-          <BasicForm @register="registerForm" :baseColProps="{ md: 12, lg: 12 }" />
+    <div class="card-list-header">
+      <div class="flex space-x-2">
+        <BasicForm @register="registerForm" :baseColProps="{ md: 12, lg: 12 }" />
+        <div class="mt-1.5">
           <slot name="header"></slot>
-          <Tooltip :overlayStyle="{ maxWidth: '500px' }">
+          <Tooltip>
             <template #title>
               <div class="w-50">每页显示数量</div>
-              <Slider id="slider" class="w-90" v-bind="sliderProp" v-model:value="grid" @change="sliderChange" />
+              <Slider id="slider" v-bind="sliderProp" v-model:value="grid" @change="sliderChange" />
             </template>
-            <a-button><TableOutlined /></a-button>
+            <a-button class="mr-2"><TableOutlined /></a-button>
           </Tooltip>
           <Tooltip @click="fetch">
             <template #title>刷新</template>
-            <a-button><RedoOutlined /></a-button>
+            <a-button class="mr-2"><RedoOutlined /></a-button>
           </Tooltip>
         </div>
-      </template>
-      <template #renderItem="{ item }">
-        <ListItem style="padding: 10px; margin: 10px 0 0">
-          <Card>
-            <template #actions>
-              <EditOutlined @click="showMessage('你点击了编辑图标')" />
-              <Dropdown
-                :trigger="['hover']"
-                :dropMenuList="[
-                  {
-                    text: '删除',
-                    event: '1',
-                    popConfirm: {
-                      title: t('是否确认删除'),
-                      confirm: handleDelete.bind(null, item.id),
-                    },
+      </div>
+    </div>
+    <Flex gap="middle" wrap="wrap" class="card-list-grid" :style="{ gridTemplateColumns: getGridColumns }">
+      <div v-for="item in data" :key="item.id" class="card-list-item">
+        <Card class="w-[160px]">
+          <template #actions>
+            <EditOutlined @click="showMessage('你点击了编辑图标')" />
+            <Dropdown
+              :trigger="['hover']"
+              :dropMenuList="[
+                {
+                  text: '删除',
+                  event: '1',
+                  popConfirm: {
+                    title: t('是否确认删除'),
+                    confirm: handleDelete.bind(null, item.id),
                   },
-                ]"
-                popconfirm
-              >
-                <EllipsisOutlined />
-              </Dropdown>
-            </template>
-            <Avatar :src="getAvatar(item)" />
-            <span class="pl-2">{{ item.userName }}</span>
-          </Card>
-        </ListItem>
-      </template>
-    </List>
+                },
+              ]"
+              popconfirm
+            >
+              <EllipsisOutlined />
+            </Dropdown>
+          </template>
+          <Avatar :src="getAvatar(item)" />
+          <span class="pl-2">{{ item.userName }}</span>
+        </Card>
+      </div>
+    </Flex>
+    <div class="card-list-pagination mt-2">
+      <Pagination
+        :show-size-changer="false"
+        :show-quick-jumper="true"
+        :page-size="pageSize"
+        :current="page"
+        :total="total"
+        :show-total="(total: number) => `总 ${total} 条`"
+        @change="pageChange"
+        @show-size-change="pageSizeChange"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
   import { computed, onMounted, ref } from 'vue';
-  import { EditOutlined, EllipsisOutlined, RedoOutlined, TableOutlined } from '@ant-design/icons-vue';
-  import { List, Card, Image, Typography, Tooltip, Slider, Avatar } from 'ant-design-vue';
+  import { EditOutlined, EllipsisOutlined, RedoOutlined, TableOutlined } from '@antdv-next/icons';
+  import { Flex, Card, Tooltip, Slider, Avatar, Pagination } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Dropdown } from '@jeesite/core/components/Dropdown';
   import { BasicForm, useForm } from '@jeesite/core/components/Form';
@@ -65,10 +73,18 @@
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
 
+  interface CardListItem {
+    id: number;
+    userName: string;
+    avatarUrl?: string;
+  }
+
   const { t } = useI18n();
   const { showMessage } = useMessage();
 
-  const ListItem = List.Item;
+  const getGridColumns = computed(() => {
+    return 'repeat(auto-fill, minmax(200px, 1fr))';
+  });
 
   // 获取slider属性
   const sliderProp = computed(() => useSlider(1));
@@ -85,7 +101,7 @@
   const emit = defineEmits(['getMethod', 'delete']);
 
   // 数据
-  const data = ref([]);
+  const data = ref<CardListItem[]>([]);
 
   // 表单
   const [registerForm, { validate }] = useForm({

@@ -5,24 +5,24 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <ScrollContainer>
-      <div ref="wrapperRef" class="account-setting">
-        <Tabs tab-position="left" :tabBarStyle="{ width: '220px' }">
-          <Tabs.TabPane key="1" :tab="t('sys.account.basicTab')">
+      <div class="account-setting">
+        <Tabs tabPlacement="start" :tabBarStyle="{ width: '220px' }">
+          <TabPane key="1" :tab="t('sys.account.basicTab')">
             <UserInfo />
-          </Tabs.TabPane>
-          <Tabs.TabPane key="2" :tab="t('sys.account.securityTab')">
+          </TabPane>
+          <TabPane key="2" :tab="t('sys.account.securityTab')">
             <SecureSettings />
-          </Tabs.TabPane>
-          <Tabs.TabPane key="3" :tab="t('sys.account.bindingTab')">
+          </TabPane>
+          <TabPane key="3" :tab="t('sys.account.bindingTab')">
             <Oauth2Binder />
-          </Tabs.TabPane>
+          </TabPane>
         </Tabs>
       </div>
     </ScrollContainer>
   </PageWrapper>
 </template>
 <script lang="ts" setup name="AccountCenter">
-  import { Tabs } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Icon } from '@jeesite/core/components/Icon';
   import { PageWrapper } from '@jeesite/core/components/Page';
@@ -46,6 +46,69 @@
 
     .ant-tabs-tab-active {
       background-color: @item-active-bg;
+    }
+
+    .list-container {
+      padding: 5px 0;
+
+      .list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        border-bottom: 1px solid #f0f0f0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .list-item-meta {
+          display: flex;
+          align-items: center;
+          flex: 1;
+
+          .avatar-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+
+            .avatar {
+              font-size: 32px;
+            }
+          }
+
+          .meta-content {
+            flex: 1;
+
+            .meta-title {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              font-size: 14px;
+              font-weight: 500;
+              color: rgb(0 0 0 / 85%);
+              margin-bottom: 4px;
+
+              .extra {
+                color: #1890ff;
+                font-size: 14px;
+                font-weight: 400;
+                cursor: pointer;
+
+                &:hover {
+                  color: #40a9ff;
+                }
+              }
+            }
+
+            .meta-description {
+              font-size: 13px;
+              color: rgb(0 0 0 / 45%);
+            }
+          }
+        }
+      }
     }
   }
 </style>

@@ -3,17 +3,10 @@
  */
 import type { LocaleType } from '@jeesite/types/config';
 
-import { i18n } from './setupI18n';
+import { i18n, getLocaleMessages } from './setupI18n';
 import { useLocaleStoreWithOut } from '@jeesite/core/store/modules/locale';
 import { unref, computed } from 'vue';
 import { loadLocalePool, setHtmlPageLang } from './helper';
-import { Locale } from 'ant-design-vue/es/locale';
-
-interface LangModule {
-  message: Recordable;
-  dateLocale: Recordable;
-  dateLocaleName: string;
-}
 
 function setI18nLanguage(locale: LocaleType) {
   const localeStore = useLocaleStoreWithOut();
@@ -33,12 +26,11 @@ export function useLocale() {
   const getShowLocalePicker = computed(() => localeStore.getShowPicker);
 
   const getAntdLocale = computed((): any => {
-    const localeMessage = i18n.global.getLocaleMessage<{ antdLocale: Locale }>(unref(getLocale));
+    const localeMessage = i18n.global.getLocaleMessage<{ antdLocale: any }>(unref(getLocale));
     return localeMessage?.antdLocale ?? {};
   });
 
-  // Switching the language will change the locale of useI18n
-  // And submit to configuration modification
+  // 切换语言时异步加载对应语言包
   async function changeLocale(locale: LocaleType) {
     const globalI18n = i18n.global;
     const currentLocale = unref(globalI18n.locale);
@@ -50,10 +42,10 @@ export function useLocale() {
       setI18nLanguage(locale);
       return locale;
     }
-    const langModule = ((await import(`./lang/${locale}.ts`)) as any).default as LangModule;
-    if (!langModule) return;
 
-    const { message } = langModule;
+    // 异步加载语言包
+    const message = await getLocaleMessages(locale);
+    if (!message || Object.keys(message).length === 0) return;
 
     globalI18n.setLocaleMessage(locale, message);
     loadLocalePool.push(locale);

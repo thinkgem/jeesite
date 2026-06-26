@@ -1,5 +1,4 @@
-import { withInstall } from '@jeesite/core/utils';
-import qrCode from './src/Qrcode.vue';
+import { createAsyncComponent } from '@jeesite/core/utils/factory/createAsyncComponent';
 
-export const QrCode = withInstall(qrCode);
 export * from './src/typing';
+export const QrCode = createAsyncComponent(() => import('./src/Qrcode.vue'));

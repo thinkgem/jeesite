@@ -93,7 +93,7 @@ export const basicProps = {
   // 图片压缩最大宽度
   imageMaxWidth: {
     type: Number as PropType<number>,
-    default: null, // 默认从后台获取
+    default: null, // 默认从后台获取 v5.14.0
   },
   // 图片压缩最大高度
   imageMaxHeight: {
@@ -110,7 +110,7 @@ export const basicProps = {
     type: Boolean as PropType<boolean>,
     default: null, // 默认从后台获取
   },
-  // 是否开启分片上传（标准版/专业版）
+  // 是否开启分片上传（标准版/专业版） v5.14.1
   chunked: {
     type: Boolean as PropType<boolean>,
     default: null, // 默认从后台获取

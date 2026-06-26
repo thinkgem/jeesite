@@ -1,4 +1,4 @@
-import type { RuleObject } from 'ant-design-vue/lib/form/interface';
+import type { RuleObject } from 'antdv-next/dist/form/types';
 import type { ComponentType } from './types/index';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 import { dateUtil } from '@jeesite/core/utils/dateUtil';

@@ -23,12 +23,13 @@
     "node_modules",
     ".local",
     ".npmrc",
-    "*.js",
     "*.sh",
     "*.md",
     "*.svg",
     "*.html",
     "*.json",
+    "*.js",
+    "*.mjs",
     "*-lock.yaml"
   ]
 }

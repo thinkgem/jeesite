@@ -4,10 +4,10 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <div :class="prefixCls">
+  <div class="jeesite-editable-cell">
     <div
       v-show="!isEdit && !getForceEditable"
-      :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }"
+      :class="{ ['jeesite-editable-cell__normal']: true, 'ellipsis-cell': column.ellipsis }"
       @click="handleEdit"
     >
       <DictLabel
@@ -20,10 +20,10 @@
         <EditRender v-if="column.editRender" v-bind="getComponentProps" :edit="false" />
         <template v-else>{{ getValues }}</template>
       </div>
-      <FormOutlined v-if="!column.editRow" :class="`${prefixCls}__normal-icon`" />
+      <FormOutlined v-if="!column.editRow" class="jeesite-editable-cell__normal-icon" />
     </div>
     <Spin v-if="isEdit || getForceEditable" :spinning="spinning">
-      <div :class="`${prefixCls}__wrapper`" v-click-outside="onClickOutside">
+      <div class="jeesite-editable-cell__wrapper" v-click-outside="onClickOutside">
         <EditRender
           v-if="column.editRender"
           v-bind="getComponentProps"
@@ -43,22 +43,21 @@
           @change="handleChange"
           @press-enter="handleEnter"
         />
-        <div v-if="!getRowEditable && !getForceEditable" :class="`${prefixCls}__action`">
-          <CheckOutlined :class="[`${prefixCls}__icon`, 'mx-2']" @click="handleSubmitClick" />
-          <CloseOutlined :class="`${prefixCls}__icon `" @click="handleCancel" />
+        <div v-if="!getRowEditable && !getForceEditable" class="jeesite-editable-cell__action">
+          <CheckOutlined :class="['jeesite-editable-cell__icon', 'mx-2']" @click="handleSubmitClick" />
+          <CloseOutlined class="jeesite-editable-cell__icon" @click="handleCancel" />
         </div>
       </div>
     </Spin>
   </div>
 </template>
 <script lang="ts" setup name="EditableCell">
-  import type { CSSProperties, PropType, Ref } from 'vue';
+  import { CSSProperties, PropType, Ref, shallowRef } from 'vue';
   import { computed, defineComponent, h, nextTick, ref, toRaw, unref, watchEffect } from 'vue';
   import type { BasicColumn } from '../../types/table';
   import type { EditRecordRow } from './index';
-  import { CheckOutlined, CloseOutlined, FormOutlined } from '@ant-design/icons-vue';
+  import { CheckOutlined, CloseOutlined, FormOutlined } from '@antdv-next/icons';
 
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { formatCell } from '../../hooks/useColumns';
 
   import vClickOutside from '@jeesite/core/directives/clickOutsideSimple';
@@ -68,7 +67,7 @@
   import { createPlaceholderMessage } from './helper';
   import { omit, pick, set } from 'lodash-es';
   // import { treeToList } from '@jeesite/core/utils/helper/treeHelper';
-  import { Popover, Spin } from 'ant-design-vue';
+  import { Popover, Spin } from 'antdv-next';
   import { DictLabel } from '@jeesite/core/components/Dict';
   import { dateUtil } from '@jeesite/core/utils/dateUtil';
   import { componentMap } from '../../componentMap';
@@ -98,7 +97,7 @@
 
   const table = props.tableInstance;
   const isEdit = ref(false);
-  const elRef = ref();
+  const elRef = shallowRef();
   const ruleOpen = ref(false);
   const ruleMessage = ref('');
   const currentValueRef = ref<any>(props.value);
@@ -107,8 +106,6 @@
   const defaultLabelValueRef = ref<any>(props.labelValue);
 
   const spinning = ref<boolean>(false);
-
-  const { prefixCls } = useDesign('editable-cell');
 
   const getComponent = computed(() => props.column?.editComponent || 'Input');
 
@@ -158,7 +155,7 @@
       // size: 'small',
       getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
       placeholder: createPlaceholderMessage(unref(getComponent)),
-      dropdownMatchSelectWidth: false,
+      popupMatchSelectWidth: false,
       ...omit(compProps, ['onChange']),
       [valueField]: value,
       labelValue: labelVal,
@@ -316,9 +313,10 @@
     const dataKey = (dataIndex || key) as string;
 
     if (!record.editable) {
-      const { getBindValues } = table;
+      const { getProps, getBindValues } = table;
 
-      const { beforeEditSubmit, columns } = unref(getBindValues);
+      const { beforeEditSubmit } = unref(getProps);
+      const { columns } = unref(getBindValues);
 
       if (beforeEditSubmit && isFunction(beforeEditSubmit)) {
         spinning.value = true;
@@ -475,8 +473,6 @@
   };
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-editable-cell';
-
   .edit-cell-align-left {
     text-align: left;
 
@@ -516,7 +512,7 @@
   }
 
   .jeesite-table-tree-name {
-    .@{prefix-cls} {
+    .jeesite-editable-cell {
       display: inline-block;
 
       .ellipsis-cell {
@@ -526,7 +522,8 @@
       }
     }
   }
-  .@{prefix-cls} {
+
+  .jeesite-editable-cell {
     position: relative;
     margin: -5px;
 
@@ -542,7 +539,7 @@
       .ant-input,
       .ant-input-number,
       .ant-picker,
-      .ant-select-selector,
+      .ant-select,
       .ant-input-affix-wrapper {
         background: transparent !important;
         border: 0 !important;
@@ -572,7 +569,7 @@
         padding-left: 0 !important;
       }
 
-      .ant-select-selector {
+      .ant-select {
         padding-top: 2px !important;
         border-radius: 0;
       }
@@ -590,29 +587,27 @@
       }
 
       .ant-input-number-focused,
-      .ant-select-focused .ant-select-selector {
+      .ant-picker-focused,
+      .ant-select-focused {
         border-bottom: 1px dotted #999 !important;
         border-radius: 0;
       }
 
-      .ant-input-search > .ant-input-group {
+      .ant-input-search {
         > .ant-input-affix-wrapper {
           > .ant-input-suffix {
             display: none;
           }
         }
 
-        > .ant-input-group-addon {
+        > .ant-btn {
           background-color: transparent;
+          border: 0;
 
-          > .ant-input-search-button {
+          &:hover,
+          &:focus {
             background-color: transparent;
             border: 0;
-
-            &:hover,
-            &:focus {
-              background-color: transparent;
-            }
           }
         }
       }
@@ -658,7 +653,7 @@
     }
 
     &:hover {
-      .@{prefix-cls}__normal-icon {
+      .jeesite-editable-cell__normal-icon {
         display: inline-block;
       }
     }

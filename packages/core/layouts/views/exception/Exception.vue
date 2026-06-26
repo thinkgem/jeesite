@@ -1,12 +1,11 @@
 <script lang="tsx">
   import type { PropType } from 'vue';
-  import { Result, Button } from 'ant-design-vue';
+  import { Result, Button } from 'antdv-next';
   import { defineComponent, ref, computed, unref } from 'vue';
   import { ExceptionEnum } from '@jeesite/core/enums/exceptionEnum';
   import notDataSvg from '@jeesite/assets/svg/no-data.svg';
   import netWorkSvg from '@jeesite/assets/svg/net-error.svg';
   import { useRoute } from 'vue-router';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useGo, useRedo } from '@jeesite/core/hooks/web/usePage';
   import { PageEnum } from '@jeesite/core/enums/pageEnum';
@@ -51,7 +50,6 @@
       const go = useGo();
       const redo = useRedo();
       const { t } = useI18n();
-      const { prefixCls } = useDesign('app-exception-page');
 
       const getStatus = computed(() => {
         const { status: routeStatus } = query;
@@ -110,7 +108,7 @@
         const { title, subTitle, btnText, icon, handler, status } = unref(getMapValue) || {};
         return (
           <Result
-            class={prefixCls}
+            class={'jeesite-app-exception-page'}
             status={status as any}
             title={props.title || title}
             sub-title={props.subTitle || subTitle}
@@ -131,9 +129,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-app-exception-page';
-
-  .@{prefix-cls} {
+  .jeesite-app-exception-page {
     display: flex;
     align-items: center;
     flex-direction: column;

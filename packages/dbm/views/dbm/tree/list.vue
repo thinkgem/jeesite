@@ -54,7 +54,7 @@
   } from '@jeesite/dbm/api/dbm/tree';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import InputForm from './form.vue';
-  import { Popconfirm } from 'ant-design-vue';
+  import { Popconfirm } from 'antdv-next';
 
   const props = defineProps({
     treeCodes: Array as PropType<string[]>,

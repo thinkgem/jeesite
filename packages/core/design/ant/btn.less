@@ -1,6 +1,20 @@
 // button reset
-.ant-btn.ant-btn {
+.ant-btn {
   border-radius: 15px;
+  display: inline-block;
+  line-height: 1.5714;
+
+  &.ant-btn-block {
+    display: inline-flex;
+  }
+
+  &.ant-btn-compact-item:not(.ant-btn-compact-first-item) {
+    &.ant-btn-compact-last-item,
+    &.ant-btn-compact-last-item.ant-btn-sm,
+    &.ant-btn-compact-last-item.ant-btn-lg {
+      border-radius: 0 8px 8px 0;
+    }
+  }
 
   [data-theme='light'] &-default {
     color: @button-default-color;

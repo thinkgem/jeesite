@@ -1,10 +1,10 @@
 <template>
-  <div :class="prefixCls" :style="{ width: getCalcContentWidth }">
-    <div :class="`${prefixCls}__left`">
+  <div class="jeesite-page-footer" :style="{ width: getCalcContentWidth }">
+    <div class="jeesite-page-footer__left">
       <slot name="left"></slot>
     </div>
     <slot></slot>
-    <div :class="`${prefixCls}__right`">
+    <div class="jeesite-page-footer__right">
       <slot name="right"></slot>
     </div>
   </div>
@@ -12,22 +12,18 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   export default defineComponent({
     name: 'PageFooter',
     inheritAttrs: false,
     setup() {
-      const { prefixCls } = useDesign('page-footer');
       const { getCalcContentWidth } = useMenuSetting();
-      return { prefixCls, getCalcContentWidth };
+      return { getCalcContentWidth };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-page-footer';
-
-  .@{prefix-cls} {
+  .jeesite-page-footer {
     position: fixed;
     right: 0;
     bottom: 0;

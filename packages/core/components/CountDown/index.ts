@@ -1,6 +1,2 @@
-import { withInstall } from '@jeesite/core/utils';
-import countButton from './src/CountButton.vue';
-import countdownInput from './src/CountdownInput.vue';
-
-export const CountdownInput = withInstall(countdownInput);
-export const CountButton = withInstall(countButton);
+export { default as CountdownInput } from './src/CountdownInput.vue';
+export { default as CountButton } from './src/CountButton.vue';

@@ -5,15 +5,15 @@ import type { RouteLocationNormalized } from 'vue-router';
 import { createLocalStorage, createSessionStorage } from '@jeesite/core/utils/cache';
 import { Memory } from './memory';
 import {
+  TOKEN_KEY,
+  SESSION_TIMEOUT_KEY,
+  USER_INFO_KEY,
+  ROLES_KEY,
+  LOCK_INFO_KEY,
+  PROJ_CFG_KEY,
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
-  LOCK_INFO_KEY,
   MULTIPLE_TABS_KEY,
-  PROJ_CFG_KEY,
-  ROLES_KEY,
-  SESSION_TIMEOUT_KEY,
-  TOKEN_KEY,
-  USER_INFO_KEY,
 } from '@jeesite/core/enums/cacheEnum';
 import { DEFAULT_CACHE_TIME } from '@jeesite/core/settings/encryptionSetting';
 import { toRaw } from 'vue';

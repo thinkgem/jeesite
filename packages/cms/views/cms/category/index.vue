@@ -18,8 +18,8 @@
         v-model:selectedKeys="treeCodes"
       >
         <template #headerTitle>
-          <Dropdown class="cursor-pointer" :trigger="['hover']" :dropMenuList="dropMenuList">
-            {{ siteName }} <DownOutlined />
+          <Dropdown :trigger="['hover']" :dropMenuList="dropMenuList">
+            <span class="cursor-pointer">{{ siteName }} <DownOutlined /></span>
           </Dropdown>
         </template>
       </BasicTree>
@@ -36,7 +36,7 @@
   import { categoryIndex, categoryTreeData } from '@jeesite/cms/api/cms/category';
   import ListView from './list.vue';
   import { Dropdown, DropMenu } from '@jeesite/core/components/Dropdown';
-  import { DownOutlined } from '@ant-design/icons-vue';
+  import { DownOutlined } from '@antdv-next/icons';
 
   const { t } = useI18n('cms.category');
   const treeCodes = ref<string[]>([]);

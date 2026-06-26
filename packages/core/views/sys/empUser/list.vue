@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable>
       <template #tableTitle>
         <Icon :icon="getTitle.icon" class="m-1 pr-1" />
         <span> {{ getTitle.value }} </span>
@@ -38,24 +38,17 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserList">
-  import { h, onMounted, ref, unref, watch } from 'vue';
-  import { Input, Popconfirm } from 'ant-design-vue';
+  import { onMounted, watch, ref, unref, h } from 'vue';
+  import { Input, Popconfirm } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { downloadByUrl } from '@jeesite/core/utils/file/download';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { BasicColumn, BasicTable, useTable } from '@jeesite/core/components/Table';
-  import {
-    EmpUser,
-    empUserDelete,
-    empUserDisable,
-    empUserEnable,
-    empUserList,
-    empUserListData,
-    resetpwd,
-  } from '@jeesite/core/api/sys/empUser';
+  import { BasicColumn, useBasicTable } from '@jeesite/core/components/Table';
+  import { EmpUser, empUserDelete, empUserListData, empUserList } from '@jeesite/core/api/sys/empUser';
+  import { resetpwd, empUserDisable, empUserEnable } from '@jeesite/core/api/sys/empUser';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { companyTreeData } from '@jeesite/core/api/sys/company';
   import { useDrawer } from '@jeesite/core/components/Drawer';
@@ -328,7 +321,7 @@
   const selectedRowKeysRef = ref<string[]>([]);
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerAuthDataSourceDrawer, { openDrawer: openAuthDataScopeDrawer }] = useDrawer();
-  const [registerTable, { reload, getForm }] = useTable<EmpUser>({
+  const [BasicTable, { reload, getForm }] = useBasicTable<EmpUser>({
     api: empUserListData,
     beforeFetch: (params) => {
       params.ctrlPermi = ctrlPermi.value;

@@ -21,7 +21,7 @@
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicTable, useTable } from '@jeesite/core/components/Table';
   import { buildUUID } from '@jeesite/core/utils/uuid';
-  import type { NamePath } from 'ant-design-vue/lib/form/interface';
+  import type { NamePath } from 'antdv-next/dist/form/types';
 
   const props = defineProps({
     title: propTypes.oneOfType([propTypes.string, propTypes.bool]).def('扩展字段'),

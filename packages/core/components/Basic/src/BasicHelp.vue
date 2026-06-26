@@ -1,11 +1,10 @@
 <script lang="tsx">
   import type { CSSProperties, PropType } from 'vue';
   import { defineComponent, computed, unref } from 'vue';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip } from 'antdv-next';
   import { getPopupContainer } from '@jeesite/core/utils';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { getSlot } from '@jeesite/core/utils/helper/tsxHelper';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { Icon } from '@jeesite/core/components/Icon';
 
   const props = {
@@ -44,8 +43,6 @@
     components: { Icon, Tooltip },
     props,
     setup(props, { slots }) {
-      const { prefixCls } = useDesign('basic-help');
-
       const getTooltipStyle = computed((): CSSProperties => ({ color: props.color, fontSize: props.fontSize }));
 
       const getOverlayStyle = computed((): CSSProperties => ({ maxWidth: props.maxWidth }));
@@ -75,14 +72,16 @@
       return () => {
         return (
           <Tooltip
-            overlayClassName={`${prefixCls}__wrap`}
+            classes={{ container: 'jeesite-basic-help__wrap' }}
             title={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
             autoAdjustOverflow={true}
-            overlayStyle={unref(getOverlayStyle)}
+            styles={{ container: unref(getOverlayStyle) }}
             placement={props.placement as 'right'}
             getPopupContainer={() => getPopupContainer()}
           >
-            <span class={prefixCls}>{getSlot(slots) || <Icon icon="i-ant-design:question-circle-outlined" />}</span>
+            <span class={'jeesite-basic-help'}>
+              {getSlot(slots) || <Icon icon="i-ant-design:question-circle-outlined" />}
+            </span>
           </Tooltip>
         );
       };
@@ -90,9 +89,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-help';
-
-  .@{prefix-cls} {
+  .jeesite-basic-help {
     display: inline-block;
     font-size: 13px;
     color: @text-color-help-dark;
@@ -110,7 +107,7 @@
     }
   }
 
-  .ant-form-item-label .@{prefix-cls} {
+  .jeesite.ant-form-item-label .jeesite-basic-help {
     vertical-align: baseline;
     margin-left: -4px;
     margin-right: -5px;

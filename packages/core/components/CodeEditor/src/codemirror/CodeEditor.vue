@@ -12,10 +12,10 @@
 </template>
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import CodeMirrorEditor from './codemirror/CodeMirror.vue';
+  import type { EditorConfiguration } from 'codemirror';
+  import CodeMirrorEditor from './CodeMirror.vue';
   import { isString } from '@jeesite/core/utils/is';
   import { MODE } from './typing';
-  import type { EditorConfiguration } from 'codemirror';
 
   const props = defineProps({
     value: { type: [Object, String] as PropType<Record<string, any> | string> },

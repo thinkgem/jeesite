@@ -46,7 +46,7 @@
 </template>
 <script lang="ts" setup>
   import { ref, watch } from 'vue';
-  import { Tag, Badge } from 'ant-design-vue';
+  import { Tag, Badge } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';

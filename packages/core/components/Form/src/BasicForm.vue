@@ -5,10 +5,10 @@
 -->
 <template>
   <Form
+    ref="formElRef"
     v-bind="getBindValue"
     :class="getFormClass"
-    ref="formElRef"
-    :model="formModel"
+    :model="getFormModel"
     @keypress.enter="handleEnterPress"
   >
     <slot name="formTop"></slot>
@@ -41,13 +41,13 @@
   </Form>
 </template>
 <script lang="ts" setup name="BasicForm">
-  import type { Ref } from 'vue';
+  import { Ref, shallowRef } from 'vue';
   import type { AdvanceState } from './types/hooks';
   import type { FormActionType, FormProps, FormSchema } from './types/form';
   import type { FormField, FormRecordable } from '@jeesite/types/record';
 
   import { reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
-  import { Form, Row } from 'ant-design-vue';
+  import { Form, Row } from 'antdv-next';
   import FormItem from './components/FormItem.vue';
   import FormAction from './components/FormAction.vue';
 
@@ -56,6 +56,7 @@
 
   // import { cloneDeep } from 'lodash-es';
   import { deepMerge } from '@jeesite/core/utils';
+  import { set, get } from 'lodash-es';
 
   import { useFormValues } from './hooks/useFormValues';
   import useAdvanced from './hooks/useAdvanced';
@@ -65,7 +66,6 @@
   import { useModalContext } from '@jeesite/core/components/Modal';
 
   import { basicProps } from './props';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { isString, isArray } from '@jeesite/core/utils/is';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
 
@@ -84,12 +84,11 @@
   });
 
   const defaultValueRef = ref<Recordable>({});
-  const isInitedDefaultRef = ref(false);
+  const isInitDefaultRef = ref(false);
   const propsRef = ref<Partial<FormProps>>({});
   const schemaRef = ref<Nullable<FormSchema[]>>(null);
-  const formElRef = ref<Nullable<FormActionType>>(null);
-
-  const { prefixCls } = useDesign('basic-form');
+  const formElRef = shallowRef<Nullable<FormActionType>>(null);
+  const validateTriggerRef = ref<string | string[] | false>(false);
 
   // Get the basic configuration of the form
   const getProps = computed((): FormProps => {
@@ -98,9 +97,9 @@
 
   const getFormClass = computed(() => {
     return [
-      prefixCls,
+      'jeesite-basic-form',
       {
-        [`${prefixCls}--compact`]: unref(getProps).compact,
+        ['jeesite-basic-form--compact']: unref(getProps).compact,
       },
     ];
   });
@@ -114,7 +113,28 @@
     };
   });
 
-  const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable);
+  const getBindValue = computed(
+    () =>
+      ({
+        ...attrs,
+        ...props,
+        ...unref(getProps),
+        validateTrigger: unref(validateTriggerRef),
+      }) as Recordable,
+  );
+
+  // 将扁平的 formModel 转换为嵌套对象，以支持 antdv-next 的嵌套字段验证
+  const getFormModel = computed(() => {
+    const nestedModel: Recordable = {};
+    for (const key in formModel) {
+      if (key.includes('.')) {
+        set(nestedModel, key, formModel[key]);
+      } else {
+        nestedModel[key] = formModel[key];
+      }
+    }
+    return nestedModel;
+  });
 
   const getSchema = computed((): FormSchema[] => {
     const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
@@ -161,7 +181,7 @@
   useAutoFocus({
     getSchema,
     getProps,
-    isInitedDefault: isInitedDefaultRef,
+    isInitDefault: isInitDefaultRef,
     formElRef: formElRef as Ref<FormActionType>,
   });
 
@@ -187,6 +207,7 @@
     formElRef: formElRef as Ref<FormActionType>,
     schemaRef: schemaRef as Ref<FormSchema[]>,
     handleFormValues,
+    validateTriggerRef: validateTriggerRef as Ref<string | string[] | false>,
   });
 
   createFormContext({
@@ -220,12 +241,12 @@
         //  Solve the problem of modal adaptive height calculation when the form is placed in the modal
         modalFn?.redoModalHeight?.();
       });
-      if (unref(isInitedDefaultRef)) {
+      if (unref(isInitDefaultRef)) {
         return;
       }
       if (schema?.length) {
         initDefault();
-        isInitedDefaultRef.value = true;
+        isInitDefaultRef.value = true;
       }
     },
   );
@@ -270,7 +291,7 @@
     validateFields,
     validate,
     submit: handleSubmit,
-    scrollToField: scrollToField,
+    scrollToField,
   };
 
   onMounted(() => {
@@ -281,12 +302,7 @@
   defineExpose(formActionType);
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-form';
-
-  .@{prefix-cls} {
-    padding-top: 8px;
-    padding-right: 20px;
-
+  .jeesite.ant-form.jeesite-basic-form {
     .ant-form-item {
       margin-bottom: 20px;
 
@@ -312,9 +328,9 @@
           display: flex;
         }
 
-        .ant-form-item-control {
-          margin-top: 4px;
-        }
+        //.ant-form-item-control {
+        //  margin-top: 4px;
+        //}
 
         .suffix {
           display: inline-flex;
@@ -408,7 +424,7 @@
 
     .ant-input-number,
     .ant-input-number-group-wrapper,
-    .ant-picker-default {
+    .ant-picker {
       width: 100%;
     }
   }

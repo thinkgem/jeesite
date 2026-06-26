@@ -12,7 +12,8 @@ import { isEmpty, isNumber, isObject } from '@jeesite/core/utils/is';
 
 export function useRuleFormItem<T extends Recordable>(
   props: T,
-  key: keyof T = 'value',
+  valueField = 'value',
+  labelField = 'labelValue',
   changeEvent = 'change',
   emitData?: Ref<any[]>,
 ) {
@@ -21,9 +22,9 @@ export function useRuleFormItem<T extends Recordable>(
   const compName = instance?.type?.name || 'unknown';
   const emitsOptions = instance?.['emitsOptions'] || {};
   const hasOwnProperty = Object.prototype.hasOwnProperty;
+  const hasUpdateValueEmit = hasOwnProperty.call(emitsOptions, 'update:' + valueField);
+  const hasUpdateLabelValueEmit = hasOwnProperty.call(emitsOptions, 'update:' + labelField);
   const hasChangeEmit = hasOwnProperty.call(emitsOptions, changeEvent);
-  const hasUpdateValueEmit = hasOwnProperty.call(emitsOptions, 'update:value');
-  const hasUpdateLabelValueEmit = hasOwnProperty.call(emitsOptions, 'update:labelValue');
 
   const isMultiple = computed(() => {
     if (['JeeSiteCheckboxGroup'].includes(compName)) {
@@ -41,7 +42,7 @@ export function useRuleFormItem<T extends Recordable>(
   const isDictType = computed(() => !isEmpty(props.dictType));
 
   const innerState = reactive({
-    value: props[key],
+    value: props[valueField],
   });
 
   const defaultState = readonly(innerState);
@@ -51,7 +52,7 @@ export function useRuleFormItem<T extends Recordable>(
   };
 
   watchEffect(() => {
-    innerState.value = props[key];
+    innerState.value = props[valueField];
   });
 
   const state: any = computed({
@@ -90,35 +91,35 @@ export function useRuleFormItem<T extends Recordable>(
     set(value: any) {
       if (isEqual(value, defaultState.value)) return;
       innerState.value = value as T[keyof T];
-      nextTick(() => {
-        const extData = toRaw(unref(emitData)) || [];
-        if (!value) {
-          hasChangeEmit && emit?.(changeEvent, undefined, undefined, ...extData);
-          hasUpdateValueEmit && emit?.('update:value', undefined);
-          hasUpdateLabelValueEmit && emit?.('update:labelValue', undefined);
-          return;
+      // nextTick(() => {
+      const extData = toRaw(unref(emitData)) || [];
+      if (!value) {
+        hasUpdateValueEmit && emit?.('update:' + valueField, undefined);
+        hasUpdateLabelValueEmit && emit?.('update:' + labelField, undefined);
+        hasChangeEmit && emit?.(changeEvent, undefined, undefined, ...extData);
+        return;
+      }
+      // console.log('values', value);
+      const values = value instanceof Array ? value : [value];
+      if (props.labelInValue) {
+        const vals: Recordable[] = [];
+        const labs: Recordable[] = [];
+        for (const item of values) {
+          vals.push(item.value);
+          labs.push(item.label);
         }
-        // console.log('values', value);
-        const values = value instanceof Array ? value : [value];
-        if (props.labelInValue) {
-          const vals: Recordable[] = [];
-          const labs: Recordable[] = [];
-          for (const item of values) {
-            vals.push(item.value);
-            labs.push(item.label);
-          }
-          const value = vals.length > 0 ? vals.join(',') : undefined;
-          const labelValue = labs.length > 0 ? labs.join(',') : undefined;
-          hasChangeEmit && emit?.(changeEvent, value, labelValue, ...extData);
-          hasUpdateValueEmit && emit?.('update:value', value);
-          hasUpdateLabelValueEmit && emit?.('update:labelValue', labelValue);
-        } else {
-          const value = values.length > 0 ? values.join(',') : undefined;
-          hasChangeEmit && emit?.(changeEvent, value, undefined, ...extData);
-          hasUpdateValueEmit && emit?.('update:value', value);
-          hasUpdateLabelValueEmit && emit?.('update:labelValue', undefined);
-        }
-      });
+        const value = vals.length > 0 ? vals.join(',') : undefined;
+        const labelValue = labs.length > 0 ? labs.join(',') : undefined;
+        hasUpdateValueEmit && emit?.('update:' + valueField, value);
+        hasUpdateLabelValueEmit && emit?.('update:' + labelField, labelValue);
+        hasChangeEmit && emit?.(changeEvent, value, labelValue, ...extData);
+      } else {
+        const value = values.length > 0 ? values.join(',') : undefined;
+        hasUpdateValueEmit && emit?.('update:' + valueField, value);
+        hasUpdateLabelValueEmit && emit?.('update:' + labelField, undefined);
+        hasChangeEmit && emit?.(changeEvent, value, undefined, ...extData);
+      }
+      // }).then();
     },
   });
 

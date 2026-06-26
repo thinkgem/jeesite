@@ -4,11 +4,11 @@
   </Scrollbar>
 </template>
 <script lang="ts" setup name="ScrollContainer">
-  import { ref, unref, nextTick } from 'vue';
+  import { ref, unref, nextTick, shallowRef } from 'vue';
   import { Scrollbar, ScrollbarType } from '@jeesite/core/components/Scrollbar';
   import { useScrollTo } from '@jeesite/core/hooks/event/useScrollTo';
 
-  const scrollbarRef = ref<Nullable<ScrollbarType>>(null);
+  const scrollbarRef = shallowRef<Nullable<ScrollbarType>>(null);
 
   /**
    * Scroll to the specified position

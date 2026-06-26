@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" class="relative">
+  <div class="jeesite-strength-meter relative">
     <InputPassword
       v-if="showInput"
       v-bind="$attrs"
@@ -13,17 +13,16 @@
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
     </InputPassword>
-    <div :class="`${prefixCls}-bar`">
-      <div :class="`${prefixCls}-bar--fill`" :data-score="getPasswordStrength"></div>
+    <div class="jeesite-strength-meter-bar">
+      <div class="jeesite-strength-meter-bar--fill" :data-score="getPasswordStrength"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
   import { defineComponent, computed, ref, watch, unref, watchEffect } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { zxcvbn } from '@zxcvbn-ts/core';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
 
   const props = {
@@ -39,7 +38,6 @@
     emits: ['score-change', 'change', 'update:value'],
     setup(props, { emit }) {
       const innerValueRef = ref('');
-      const { prefixCls } = useDesign('strength-meter');
 
       const getPasswordStrength = computed(() => {
         const { disabled } = props;
@@ -69,16 +67,13 @@
       return {
         getPasswordStrength,
         handleChange,
-        prefixCls,
         innerValueRef,
       };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-strength-meter';
-
-  .@{prefix-cls} {
+  .jeesite-strength-meter {
     &-bar {
       position: relative;
       height: 6px;

@@ -1,13 +1,13 @@
-import type { RuleObject } from 'ant-design-vue/lib/form/interface';
+import type { RuleObject, Rule, TriggerType } from 'antdv-next/dist/form/types';
 import { ref, computed, unref, Ref } from 'vue';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
 export enum LoginStateEnum {
-  LOGIN,
-  REGISTER,
-  RESET_PASSWORD,
-  MOBILE,
-  QR_CODE,
+  LOGIN = 'login',
+  REGISTER = 'register',
+  RESET_PASSWORD = 'resetPassword',
+  MOBILE = 'mobile',
+  QR_CODE = 'qrcode',
 }
 
 const currentState = ref(LoginStateEnum.LOGIN);
@@ -65,7 +65,7 @@ export function useFormRules(formData?: Recordable) {
     };
   };
 
-  const getFormRules = computed((): { [k: string]: RuleObject | RuleObject[] } => {
+  const getFormRules = computed((): Record<string, Rule[]> => {
     const accountFormRule = unref(getAccountFormRule);
     const passwordFormRule = unref(getPasswordFormRule);
     const smsFormRule = unref(getSmsFormRule);
@@ -88,7 +88,7 @@ export function useFormRules(formData?: Recordable) {
           password: passwordFormRule,
           confirmPassword: [{ validator: validateConfirmPassword(formData?.password), trigger: 'change' }],
           policy: [{ validator: validatePolicy, trigger: 'change' }],
-        } as any;
+        };
 
       // reset password form rules
       case LoginStateEnum.RESET_PASSWORD:
@@ -101,7 +101,7 @@ export function useFormRules(formData?: Recordable) {
           pwdQuestionAnswer: pwdQuestionAnswerFormRule,
           pwdQuestionAnswer2: pwdQuestionAnswerFormRule,
           pwdQuestionAnswer3: pwdQuestionAnswerFormRule,
-        } as any;
+        };
 
       // mobile form rules
       case LoginStateEnum.MOBILE:
@@ -109,7 +109,7 @@ export function useFormRules(formData?: Recordable) {
           validCode: smsFormRule,
           loginValidCode: smsFormRule,
           mobile: mobileFormRule,
-        } as any;
+        };
 
       // login form rules
       default:
@@ -117,7 +117,7 @@ export function useFormRules(formData?: Recordable) {
           account: accountFormRule,
           password: passwordFormRule,
           // corpCode: corpRule,
-        } as any;
+        };
     }
   });
   return { getFormRules };
@@ -128,7 +128,7 @@ function createRule(message: string) {
     {
       required: true,
       message,
-      trigger: 'change',
+      trigger: 'change' as TriggerType,
     },
   ];
 }

@@ -17,8 +17,8 @@
         v-model:selectedKeys="treeCodes"
       >
         <template #headerTitle>
-          <Dropdown class="cursor-pointer" :trigger="['hover']" :dropMenuList="dropMenuList">
-            {{ sysName }} <DownOutlined />
+          <Dropdown :trigger="['hover']" :dropMenuList="dropMenuList">
+            <span class="cursor-pointer">{{ sysName }} <DownOutlined /></span>
           </Dropdown>
         </template>
       </BasicTree>
@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup name="ViewsSysMenuIndex">
   import { ref, onMounted } from 'vue';
-  import { DownOutlined } from '@ant-design/icons-vue';
+  import { DownOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDict } from '@jeesite/core/components/Dict';
   import { Dropdown, DropMenu } from '@jeesite/core/components/Dropdown';

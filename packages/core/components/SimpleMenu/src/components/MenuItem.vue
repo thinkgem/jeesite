@@ -4,7 +4,7 @@
       <template #title>
         <slot name="title"></slot>
       </template>
-      <div :class="`${prefixCls}-tooltip`">
+      <div class="jeesite-menu-tooltip">
         <slot></slot>
       </div>
     </Tooltip>
@@ -21,10 +21,9 @@
 <script lang="ts" setup name="MenuItem">
   import { PropType, useSlots } from 'vue';
   import { defineComponent, ref, computed, unref, getCurrentInstance, watch } from 'vue';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { useMenuItem } from './useMenu';
-  import { Badge, Tooltip } from 'ant-design-vue';
+  import { Badge, Tooltip } from 'antdv-next';
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
   import { useUserStore } from '@jeesite/core/store/modules/user';
 
@@ -46,16 +45,15 @@
   const active = ref(false);
 
   const { getItemStyle, getParentList, getParentMenu, getParentRootMenu } = useMenuItem(instance);
-  const { prefixCls } = useDesign('menu');
   const { rootMenuEmitter, activeName } = useSimpleRootMenuContext();
 
   const getClass = computed(() => {
     return [
-      `${prefixCls}-item`,
+      'jeesite-menu-item',
       {
-        [`${prefixCls}-item-active`]: unref(active),
-        [`${prefixCls}-item-selected`]: unref(active),
-        [`${prefixCls}-item-disabled`]: !!props.disabled,
+        ['jeesite-menu-item-active']: unref(active),
+        ['jeesite-menu-item-selected']: unref(active),
+        ['jeesite-menu-item-disabled']: !!props.disabled,
       },
     ];
   });

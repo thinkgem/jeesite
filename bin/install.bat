@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-npm run install
+pnpm install
 
 cd bin
 pause

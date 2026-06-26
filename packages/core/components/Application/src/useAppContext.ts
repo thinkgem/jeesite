@@ -2,7 +2,6 @@ import { InjectionKey, Ref } from 'vue';
 import { createContext, useContext } from '@jeesite/core/hooks/core/useContext';
 
 export interface AppProviderContextProps {
-  prefixCls: Ref<string>;
   isMobile: Ref<boolean>;
 }
 

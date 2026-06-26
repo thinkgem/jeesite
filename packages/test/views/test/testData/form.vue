@@ -32,7 +32,7 @@
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsTestTestDataForm">
-  import { ref, unref, computed } from 'vue';
+  import { ref, unref, computed, shallowRef } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
@@ -52,7 +52,7 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<TestData>({} as TestData);
-  const formDataChildListRef = ref<InstanceType<typeof FormDataChildList>>();
+  const formDataChildListRef = shallowRef<InstanceType<typeof FormDataChildList>>();
 
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',

@@ -4,8 +4,8 @@
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <div v-if="getModifyPasswordMsg" class="pl-8 pr-8">
-      <Alert :message="getModifyPasswordMsg" type="info" show-icon />
+    <div v-if="getModifyPasswordMsg" class="pt-3 pl-8 pr-8">
+      <Alert :title="getModifyPasswordMsg" type="info" show-icon />
     </div>
     <div class="flex flex-col items-center justify-center bg-white py-8 pr-20">
       <BasicForm @register="register" class="w-9/12" />
@@ -22,6 +22,7 @@
 </template>
 <script lang="ts" setup name="AccountModPwd">
   import { computed } from 'vue';
+  import { Alert } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Icon } from '@jeesite/core/components/Icon';
   import { PageWrapper } from '@jeesite/core/components/Page';
@@ -30,7 +31,6 @@
   import { infoSavePwd } from '@jeesite/core/api/sys/user';
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { PageEnum } from '@jeesite/core/enums/pageEnum';
-  import { Alert } from 'ant-design-vue';
   import { publicPath } from '@jeesite/core/utils/env';
 
   const userStore = useUserStore();

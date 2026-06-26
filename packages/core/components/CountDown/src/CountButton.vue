@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, watchEffect, computed, unref } from 'vue';
-  import { Button } from 'ant-design-vue';
+  import { Button } from 'antdv-next';
   import { useCountdown } from './useCountdown';
   import { isFunction } from '@jeesite/core/utils/is';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';

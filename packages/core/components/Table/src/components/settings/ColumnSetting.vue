@@ -12,11 +12,11 @@
       placement="bottomLeft"
       trigger="click"
       @open-change="handleOpenChange"
-      :overlayClassName="`${prefixCls}__cloumn-list`"
+      :classes="{ container: 'jeesite-basic-column-setting__cloumn-list' }"
       :getPopupContainer="getPopupContainer"
     >
       <template #title>
-        <div :class="`${prefixCls}__popover-title`">
+        <div class="jeesite-basic-column-setting__popover-title">
           <Checkbox :indeterminate="indeterminate" v-model:checked="checkAll" @change="onCheckAllChange">
             {{ t('component.table.settingColumnShow') }}
           </Checkbox>
@@ -38,7 +38,7 @@
         <ScrollContainer>
           <CheckboxGroup v-model:value="checkedList" @change="onChange" ref="columnListRef">
             <template v-for="item in checkOptions" :key="item.value">
-              <div :class="`${prefixCls}__check-item`" v-if="!('ifShow' in item && !item.ifShow)">
+              <div class="jeesite-basic-column-setting__check-item" v-if="!('ifShow' in item && !item.ifShow)">
                 <DragOutlined class="table-column-drag-icon" />
                 <Checkbox :value="item.value">
                   <template v-if="Array.isArray(item.label)">
@@ -58,7 +58,7 @@
                   <Icon
                     icon="i-line-md:arrow-align-left"
                     :class="[
-                      `${prefixCls}__fixed-left`,
+                      'jeesite-basic-column-setting__fixed-left',
                       {
                         active: item.fixed === 'left',
                         disabled: !checkedList.includes(item.value),
@@ -75,7 +75,7 @@
                   <Icon
                     icon="i-line-md:arrow-align-right"
                     :class="[
-                      `${prefixCls}__fixed-right`,
+                      'jeesite-basic-column-setting__fixed-right',
                       {
                         active: item.fixed === 'right',
                         disabled: !checkedList.includes(item.value),
@@ -94,22 +94,29 @@
   </Tooltip>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, reactive, toRefs, watchEffect, nextTick, unref, computed, watch } from 'vue';
-  import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue';
-  import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface';
-  import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue';
+  import {
+    defineComponent,
+    ref,
+    reactive,
+    toRefs,
+    watchEffect,
+    nextTick,
+    unref,
+    computed,
+    watch,
+    shallowRef,
+  } from 'vue';
+  import { Tooltip, Popover, Checkbox, CheckboxGroup, Divider } from 'antdv-next';
+  import { SettingOutlined, DragOutlined } from '@antdv-next/icons';
   import { Icon } from '@jeesite/core/components/Icon';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+  import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { useTableContext } from '../../hooks/useTableContext';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  // import { useSortable } from '@jeesite/core/hooks/web/useSortable';
   import type { BasicColumn, ColumnChangeParam } from '../../types/table';
   import { isFunction, isNullAndUnDef } from '@jeesite/core/utils/is';
   import { getPopupContainer as getParentContainer } from '@jeesite/core/utils';
   import { cloneDeep, omit } from 'lodash-es';
-  import Sortablejs from 'sortablejs';
-  // import type Sortable from 'sortablejs';
 
   interface State {
     isInit?: boolean;
@@ -118,12 +125,13 @@
     checkSelect: boolean;
     checkOptions: Options[];
     checkedList: string[];
+    fixedList: any[];
   }
 
   interface Options {
     label: string;
     value: string;
-    fixed?: boolean | 'left' | 'right';
+    fixed?: boolean | 'left' | 'right' | 'start' | 'end';
   }
 
   export default defineComponent({
@@ -133,7 +141,7 @@
       Popover,
       Tooltip,
       Checkbox,
-      CheckboxGroup: Checkbox.Group,
+      CheckboxGroup,
       DragOutlined,
       ScrollContainer,
       Divider,
@@ -143,7 +151,6 @@
 
     setup(_, { emit, attrs }) {
       const { t } = useI18n();
-      const { prefixCls } = useDesign('basic-column-setting');
 
       const table = useTableContext();
 
@@ -151,7 +158,7 @@
         table.getDefaultRowSelection && table.getDefaultRowSelection(),
         'selectedRowKeys',
       );
-      const columnListRef = ref<ComponentRef>(null);
+      const columnListRef = shallowRef<InstanceType<typeof CheckboxGroup>>();
       const cacheCheckIndex = ref<boolean>(true);
       const cacheCheckSelect = ref<boolean>(false);
       const cacheCheckList = ref<string[]>([]);
@@ -164,6 +171,7 @@
         checkSelect: false,
         checkOptions: [],
         checkedList: [],
+        fixedList: [],
       });
 
       watchEffect(() => {
@@ -175,13 +183,13 @@
         }, 500);
       });
 
-      watch([() => unref(table?.getBindValues).showIndexColumn, () => unref(table?.getBindValues).rowSelection], () => {
-        const values = unref(table?.getBindValues) || {};
-        state.checkIndex = !!values.showIndexColumn;
-        state.checkSelect = !!values.rowSelection;
+      watch([() => unref(table?.getProps)?.showIndexColumn, () => unref(table?.getProps)?.rowSelection], () => {
+        const values = unref(table?.getProps) || {};
+        state.checkIndex = !!values?.showIndexColumn;
+        state.checkSelect = !!values?.rowSelection;
       });
 
-      const isTreeTable = computed(() => unref(table?.getBindValues).isTreeTable);
+      const isTreeTable = computed(() => unref(table?.getProps)?.isTreeTable);
 
       function getColumns() {
         const ret: Options[] = [];
@@ -196,7 +204,7 @@
       }
 
       function init() {
-        const values = unref(table?.getBindValues) || {};
+        const values = unref(table?.getProps) || {};
         cacheCheckIndex.value = !!values.showIndexColumn;
         cacheCheckSelect.value = !!values.rowSelection;
 
@@ -228,11 +236,12 @@
           });
         }
         state.checkedList = checkList;
+        state.fixedList = [];
         state.isInit = true;
       }
 
       // checkAll change
-      function onCheckAllChange(e: CheckboxChangeEvent) {
+      function onCheckAllChange(e: any) {
         const checkList = state.checkOptions.map((item) => item.value);
         if (e.target.checked) {
           state.checkedList = checkList;
@@ -255,9 +264,11 @@
         const len = state.checkOptions.length;
         state.checkAll = checkedList.length === len && len > 0;
         const sortList = state.checkOptions.map((item) => item.value);
-        checkedList.sort((prev, next) => {
-          return sortList.indexOf(prev) - sortList.indexOf(next);
-        });
+        if (Array.isArray(checkedList)) {
+          checkedList.sort((prev, next) => {
+            return sortList.indexOf(prev) - sortList.indexOf(next);
+          });
+        }
         setColumns(checkedList);
       }
 
@@ -270,7 +281,8 @@
         });
         state.checkOptions = cloneDeep(unref(cacheCheckOptions));
         state.checkedList = cloneDeep(unref(cacheCheckList));
-        setColumns(table.getCacheColumns());
+        state.fixedList = [];
+        setColumns(table.getCacheColumns(), true);
         // sortable.sort(sortableOrder);
       }
 
@@ -280,12 +292,12 @@
       // Drag and drop sort
       function handleOpenChange() {
         if (isInitSortable) return;
-        nextTick(() => {
+        nextTick(async () => {
           const columnListEl = unref(columnListRef);
           if (!columnListEl) return;
           const el = columnListEl.$el as any;
           if (!el) return;
-          // sortable = Sortablejs.create(unref(el), {
+          const Sortablejs = (await import('sortablejs')).default;
           Sortablejs.create(unref(el), {
             animation: 500,
             delay: 400,
@@ -321,14 +333,14 @@
       }
 
       // Control whether the serial number column is displayed
-      function handleIndexCheckChange(e: CheckboxChangeEvent) {
+      function handleIndexCheckChange(e: any) {
         table.setProps({
           showIndexColumn: e.target.checked,
         });
       }
 
       // Control whether the check box is displayed
-      function handleSelectCheckChange(e: CheckboxChangeEvent) {
+      function handleSelectCheckChange(e: any) {
         table.setProps({
           rowSelection: e.target.checked ? defaultRowSelection : undefined,
         });
@@ -348,11 +360,19 @@
         if (isFixed && !item.width) {
           item.width = 100;
         }
+
+        const fixedIndex = state.fixedList.findIndex((col) => col.dataIndex_ === item.dataIndex_);
+        if (fixedIndex !== -1) {
+          state.fixedList[fixedIndex] = item;
+        } else {
+          state.fixedList.push(item);
+        }
+
         // table.setCacheColumnsByField?.(item.dataIndex_ as string, { fixed: isFixed });
         setColumns(columns);
       }
 
-      function setColumns(columns: BasicColumn[] | string[]) {
+      function setColumns(columns: BasicColumn[] | string[], reset = false) {
         table.setColumns(columns);
 
         const data: ColumnChangeParam[] = state.checkOptions.map((col) => {
@@ -377,7 +397,6 @@
         onCheckAllChange,
         onChange,
         reset,
-        prefixCls,
         columnListRef,
         handleOpenChange,
         handleIndexCheckChange,
@@ -390,14 +409,12 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-column-setting';
-
   .table-column-drag-icon {
     margin: 0 5px;
     cursor: move;
   }
 
-  .@{prefix-cls} {
+  .jeesite-basic-column-setting {
     &__popover-title {
       position: relative;
       display: flex;
@@ -446,11 +463,12 @@
         height: 1em !important;
       }
 
-      .ant-popover-inner-content {
+      .ant-popover-content {
         // max-height: 360px;
         padding-right: 0;
         padding-left: 0;
         // overflow: auto;
+        box-shadow: none;
       }
 
       .ant-checkbox-group {

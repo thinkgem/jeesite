@@ -6,6 +6,6 @@ export { default as TableImg } from './src/components/TableImg.vue';
 export * from './src/types/table';
 export * from './src/types/pagination';
 export * from './src/types/tableAction';
-export { useTable } from './src/hooks/useTable';
+export { useTable, useBasicTable } from './src/hooks/useTable';
 export type { FormSchema, FormProps } from '@jeesite/core/components/Form/src/types/form';
 export type { EditRecordRow } from './src/components/editable';

@@ -18,12 +18,12 @@
         @select="handleSelect"
       >
         <template #headerTitle>
-          <Dropdown class="cursor-pointer" :trigger="['hover']" :dropMenuList="dropMenuList">
-            {{ sysName }} <DownOutlined />
+          <Dropdown :trigger="['hover']" :dropMenuList="dropMenuList">
+            <span class="cursor-pointer">{{ sysName }} <DownOutlined /></span>
           </Dropdown>
         </template>
-        <template #icon="{ dataRef, isLeaf, expanded }">
-          <Icon v-if="dataRef.hasFieldScope" icon="i-ant-design:unordered-list-outlined" color="#f00" />
+        <template #icon="{ data, isLeaf, expanded }">
+          <Icon v-if="data.hasFieldScope" icon="i-ant-design:unordered-list-outlined" color="#f00" />
           <Icon v-else-if="isLeaf" icon="ant-design:file-outlined" />
           <Icon v-else-if="expanded" icon="i-ant-design:folder-open-outlined" />
           <Icon v-else icon="ant-design:folder-outlined" />
@@ -40,15 +40,15 @@
         />
       </div>
       <div v-if="record.menuCode == '0'" class="ml-4 mt-2">
-        <Alert message="提示：请先选择菜单。" type="info" />
+        <Alert title="提示：请先选择菜单。" type="info" />
       </div>
     </ACol>
   </ARow>
 </template>
-<script lang="ts" setup name="ViewsSysMenuIndex">
-  import { ref, computed, CSSProperties } from 'vue';
-  import { Alert, Col, Row } from 'ant-design-vue';
-  import { DownOutlined } from '@ant-design/icons-vue';
+<script lang="ts" setup name="SysRoleFieldScope">
+  import { ref, computed, CSSProperties, shallowRef } from 'vue';
+  import { Alert, Col, Row } from 'antdv-next';
+  import { DownOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDict } from '@jeesite/core/components/Dict';
   import { Icon } from '@jeesite/core/components/Icon';
@@ -65,14 +65,14 @@
   const { t } = useI18n('sys.role');
   const record = ref<Recordable>({});
 
-  const treeRef = ref<Nullable<TreeActionType>>(null);
+  const treeRef = shallowRef<Nullable<TreeActionType>>(null);
   const apiParams = ref<Recordable>({ roleCode: '', sysCode: 'default' });
 
   const dropMenuList = ref<Array<DropMenu>>([]);
   const sysCode = ref<string>('default');
   const sysName = ref<string>(t('菜单'));
 
-  const roleFieldScopeListRef = ref<InstanceType<typeof RoleFieldScopeList>>();
+  const roleFieldScopeListRef = shallowRef<InstanceType<typeof RoleFieldScopeList>>();
 
   const contentHeight = ref(400);
   const getTreeStyle = computed((): CSSProperties => {
@@ -132,8 +132,8 @@
       });
     }
     // 加载当前选择的菜单字段权限
-    if (obj && obj.node && obj.node.dataRef) {
-      const { id, rawName, permission } = obj.node.dataRef;
+    if (obj && obj.node) {
+      const { id, rawName, permission } = obj.node;
       record.value.menuCode = id;
       record.value.menuName = rawName;
       record.value.permission = permission;

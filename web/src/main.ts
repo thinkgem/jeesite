@@ -4,7 +4,7 @@
  * @author ThinkGem
  */
 import 'virtual:uno.css';
-import 'ant-design-vue/dist/reset.css';
+import 'antdv-next/dist/reset.css';
 import '@jeesite/core/design/index.less';
 
 import App from './App.vue';
@@ -23,38 +23,35 @@ import { setupDForm } from '@jeesite/dfm';
 async function bootstrap() {
   const app = createApp(App);
 
-  // Configure store
+  // 状态管理
   setupStore(app);
 
-  // Initialize internal system configuration
+  // 系统配置初始化（主题、布局等）
   initAppConfigStore();
 
-  // Register global components
+  // 全局组件注册（仅 Input 和 Button，体积小）
   registerGlobComp(app);
 
-  // Multilingual configuration
-  // Asynchronous case: language files may be obtained from the server side
+  // 国际化配置（await 确保首屏文案正确渲染）
   await setupI18n(app);
 
-  // Configure routing
+  // 路由配置
   setupRouter(app);
 
-  // router-guard
+  // 路由守卫（权限控制等）
   setupRouterGuard(router);
 
-  // Register global directive
+  // 全局指令（权限、加载等）
   setupGlobDirectives(app);
 
-  // Configure global error handling
+  // 全局错误处理
   setupErrorHandle(app);
 
-  // https://next.router.vuejs.org/api/#isready
-  // await router.isReady();
-
-  // Dynamic Form
-  setupDForm();
-
+  // 先挂载应用，让用户尽快看到页面
   app.mount('#app');
+
+  // 动态表单设计器（延迟加载）
+  setupDForm();
 }
 
 // 仅开发模式显示

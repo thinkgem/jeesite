@@ -1,5 +1,5 @@
 <template>
-  <a-alert type="info" showIcon :class="[prefixCls]">
+  <a-alert type="info" showIcon :class="['jeesite-table-select-bar']">
     <template #message>
       <span v-if="props.count > 0">
         {{ t('component.table.selectionBarTips', { count: props.count }) }}
@@ -16,12 +16,10 @@
 
 <script lang="ts" setup name="TableSelectBar">
   import type { TableActionType } from '../types/table';
-  import { Alert as AAlert } from 'ant-design-vue';
+  import { Alert as AAlert } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
 
   const { t } = useI18n();
-  const { prefixCls } = useDesign('table-select-bar');
 
   const props = withDefaults(
     defineProps<{
@@ -35,9 +33,7 @@
 </script>
 
 <style lang="less">
-  @prefix-cls: ~'jeesite-table-select-bar';
-
-  .@{prefix-cls} {
+  .jeesite-table-select-bar {
     flex-grow: 1;
     padding: 2px 8px;
 

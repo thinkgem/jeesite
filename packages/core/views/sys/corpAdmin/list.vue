@@ -31,20 +31,14 @@
 </template>
 <script lang="ts" setup name="ViewsSysCorpAdminList">
   import { h, onMounted, ref, unref } from 'vue';
-  import { Input } from 'ant-design-vue';
+  import { Input } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { BasicColumn, BasicTable, useTable } from '@jeesite/core/components/Table';
-  import {
-    corpAdminDelete,
-    corpAdminDisable,
-    corpAdminEnable,
-    corpAdminList,
-    corpAdminListData,
-    corpAdminResetpwd,
-  } from '@jeesite/core/api/sys/corpAdmin';
+  import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
+  import { corpAdminDelete, corpAdminListData, corpAdminList } from '@jeesite/core/api/sys/corpAdmin';
+  import { corpAdminResetpwd, corpAdminDisable, corpAdminEnable } from '@jeesite/core/api/sys/corpAdmin';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
   import InputForm from './form.vue';

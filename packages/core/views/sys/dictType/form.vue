@@ -67,7 +67,7 @@
         { required: true },
         {
           validator(_rule, value) {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
               if (!value || value === '') return resolve();
               checkDictType(record.value.dictType || '', value)
                 .then((res) => (res ? resolve() : reject(t('字典类型已存在'))))

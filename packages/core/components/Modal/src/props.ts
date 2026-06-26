@@ -1,6 +1,6 @@
 import type { PropType, CSSProperties } from 'vue';
 import type { ModalWrapperProps } from './typing';
-import { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
+import type { ButtonProps } from 'antdv-next';
 
 export const modalProps = {
   open: { type: Boolean },
@@ -50,7 +50,7 @@ export const basicProps = {
 
   confirmLoading: { type: Boolean },
 
-  destroyOnClose: { type: Boolean },
+  destroyOnHidden: { type: Boolean },
 
   footer: Object as PropType<VueNode>,
 

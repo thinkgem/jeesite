@@ -9,7 +9,7 @@
 </h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vite8" src="https://img.shields.io/badge/TypeScript-Vite8-green.svg"></a>
- <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-Vue3" src="https://img.shields.io/badge/Ant Design Vue-Vue3-brightgreen.svg"></a>
+ <a href="https://www.antdv-next.com/" target="__blank"><img alt="Antdv-Next-Vue3" src="https://img.shields.io/badge/Antdv Next-Vue3-brightgreen.svg"></a>
  <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-V5.x" src="https://img.shields.io/badge/JeeSite-V5.x-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
@@ -67,7 +67,7 @@
 
 ## 平台介绍
 
-* JeeSite 快速开发平台，低代码，轻量级，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，后端基于经典组合 Spring Boot、Shiro、MyBatis，前端采用分离版 Vue3、Vite、Ant Design Vue、TypeScript、Vben Admin 最先进技术栈，或者 Beetl、Bootstrap、AdminLTE 经典开发模式。
+* JeeSite 快速开发平台，低代码，轻量级，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，后端基于经典组合 Spring Boot、Shiro、MyBatis，前端采用分离版 Vue3、Vite、TypeScript、Antdv Next、Vben Admin 最先进技术栈，或者 Beetl、Bootstrap、AdminLTE 经典开发模式。
 
 * 提供在线数据源管理、数据表建模、代码生成等功能，可自动创建业务模块代码工程和微服务模块代码工程，自动生成前端代码和后端代码；包括核心功能模块如：组织机构、用户、角色、岗位、管理员、权限审计、菜单及按钮权限、数据权限、模块管理、系统参数、字典管理、系统监控、数据监控等；扩展功能如：工作流引擎、内容管理、消息推送、单点登录、第三方登录、在线作业调度、对象存储、可视化数据大屏、报表设计器、在线文件预览、国际化、全文检索、统一认证服务等。
 
@@ -116,7 +116,7 @@
 
 ## Vue 前端简介
 
-基于 Vue3、Vite、Ant-Design-Vue、TypeScript 和 Vue Vben Admin 等前沿技术栈构建，本软件采用最先进的技术架构，
+基于 Vue3、Vite、TypeScript、Antdv Next 和 Vben Admin 等前沿技术栈构建，本软件采用最先进的技术架构，
 帮助初学者快速上手并融入团队开发。内置组织机构、角色用户、菜单授权、数据权限、系统参数等核心模块，结合强大的组件封装
 与数据驱动视图设计，为微小、中大型项目提供开箱即用的解决方案和丰富的示例，助力高效开发。
 
@@ -141,20 +141,20 @@
 ## 学习准备
 
 - [VSCode](https://code.visualstudio.com/) - 推荐 IDE 集成开发工具
-- [Node.js 20](https://nodejs.org/dist/latest-v20.x/) 和 [git](https://git-scm.com/) - 开发环境
+- [Node.js](https://nodejs.org/dist/latest-v24.x/) 和 [git](https://git-scm.com/) - 开发环境
 - [Vite](https://vitejs.dev/) - 熟悉 Vite 特性
 - [Vue-v3](https://cn.vuejs.org/) - 熟悉 Vue 基础语法
 - [TypeScript](https://www.typescriptlang.org/) - 熟悉 TS 基本语法
 - [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
-- [Vue-Vben-Admin](https://jeesite.com/front/vben-admin/) - 熟悉 UI 及表单列表及常用组件使用
-- [Ant-Design-Vue](https://antdv.com/components/overview-cn/) - 熟悉 UI 基本使用
+- [Vue-Vben-Admin](https://jeesite.com/front/vben-admin/) - 熟悉用户界面表单列表及常用组件
+- [Antdv-Next](https://www.antdv-next.cn/components/overview-cn) - 熟悉 UI 基本使用
 
 ## 快速体验
 
 ### 在线演示
 
-1. 地址：<http://vue.jeesite.com/>
+1. 地址：<https://vue.jeesite.com>
 
 ### 快速运行
 
@@ -179,7 +179,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 
 ### 本地编译运行
 
-- 如果没有安装 Node.js 20+，下载地址：<https://nodejs.org>
+- 如果没有安装 Node.js 22+，下载地址：<https://nodejs.org>
 
 ```bash
 # 验证
@@ -269,14 +269,15 @@ VITE_LEGACY = true
 
 ## 如果您使用的 VSCode 的话，推荐安装以下插件：
 
-* [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) - UnoCSS 提示插件
-* [Iconify](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Iconify 图标插件
-* [I18n-ally](https://marketplace.visualstudio.com/items?itemName=Lokalise.i18n-ally) - i18n 插件
-* [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) - Vue3 开发必备（Vetur禁用）
-* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - 脚本代码检查
-* [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - 代码格式化
-* [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) - CSS 格式化
-* [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) - .env 文件高亮
+* [Volar](https://marketplace.visualstudio.com/items?itemName=vue.volar) - Vue3 开发插件（Vetur禁用）
+* [Oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) - 质量检查、代码格式化（Oxlint、Oxfmt）
+* [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) - 即时原子样式提示插件
+* [Iconify](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - 图标库提示插件
+* [I18n-ally](https://marketplace.visualstudio.com/items?itemName=Lokalise.i18n-ally) - i18n 提示插件
+* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - 脚本代码检查（使用 Oxc 替代）
+* [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - 代码格式化（使用 Oxc 替代）
+* [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) - CSS 样式文件格式化插件
+* [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) - .env 文件高亮提示插件
 
 ## 软件截图
 
@@ -835,7 +836,7 @@ VITE_LEGACY = true
 3. 在使用本软件时，由于它集成了众多第三方开源软件，请共同遵守这些开源软件的使用许可条款规定。
 4. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者
    规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`Copyright`和`@author`信息）
-   更不要，全局替换源代码中的 jeesite 或 ThinkGem 等字样，否则你将违反本协议条款承担责任。
+   更不要全局替换源代码中的 jeesite 或 ThinkGem 等字样，否则你将违反本协议条款承担责任。
 5. 基于本软件的作品，只能使用 JeeSite5 作为后台服务，除外情况不可商用且不允许二次分发或开源。
 6. 您若套用本软件的一些代码或功能参考，请保留源文件中的版权和作者，需要在您的软件介绍明显位置
    说明出处，举例：本软件基于 JeeSite Vue 快速开发平台，并附带链接：https://jeesite.com
@@ -861,5 +862,4 @@ VITE_LEGACY = true
 8. 页签右键，在新窗口打开
 9. 消息推送、消息提醒
 10. 语言国际化、本地化
-11. 快速升级到 Monorepo 脚本
-12. 更多功能详见文档
+11. 更多功能详见文档

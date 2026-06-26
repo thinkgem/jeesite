@@ -41,6 +41,10 @@ export interface LoginResult {
   version: string;
   year: string;
   lang: string;
+  postRolePermi: boolean;
+  switchOffice: boolean;
+  officeCode: string;
+  officeName: string;
 }
 
 export interface AuthInfo {

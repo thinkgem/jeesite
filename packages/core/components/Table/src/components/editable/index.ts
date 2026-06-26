@@ -16,39 +16,44 @@ interface Params {
 export function renderEditCell(column: BasicColumn) {
   return ({ text: value, record, index }: Params) => {
     const table = useTableContext();
-    record.onValid = async () => {
-      if (isObject(record.editValidCbs)) {
-        for (const key in record.editValidCbs) {
-          if (!(await record.editValidCbs[key]())) {
-            return false;
-          }
-        }
-      }
-      return true;
-    };
 
-    record.onEdit = async (edit: boolean, submit = false, valid = true) => {
-      if (submit) {
-        if (record.editable && valid && !(await record.onValid())) {
-          return false;
-        }
-        if (isObject(record.editSubmitCbs)) {
-          for (const key in record.editSubmitCbs) {
-            await record.editSubmitCbs[key](false, false, edit);
+    if (!record.onValid) {
+      record.onValid = async () => {
+        if (isObject(record.editValidCbs)) {
+          for (const key in record.editValidCbs) {
+            if (!(await record.editValidCbs[key]())) {
+              return false;
+            }
           }
-          record.editable = edit;
-          !edit && table.emit('edit-row-end');
         }
         return true;
-      }
-      if (!edit && isObject(record.editCancelCbs)) {
-        for (const key in record.editCancelCbs) {
-          record.editCancelCbs[key]();
+      };
+    }
+
+    if (!record.onEdit) {
+      record.onEdit = async (edit: boolean, submit = false, valid = true) => {
+        if (submit) {
+          if (record.editable && valid && !(await record.onValid())) {
+            return false;
+          }
+          if (isObject(record.editSubmitCbs)) {
+            for (const key in record.editSubmitCbs) {
+              await record.editSubmitCbs[key](false, false, edit);
+            }
+            record.editable = edit;
+            !edit && table.emit('edit-row-end');
+          }
+          return true;
         }
-      }
-      record.editable = edit;
-      return true;
-    };
+        if (!edit && isObject(record.editCancelCbs)) {
+          for (const key in record.editCancelCbs) {
+            record.editCancelCbs[key]();
+          }
+        }
+        record.editable = edit;
+        return true;
+      };
+    }
 
     return h(EditableCell, {
       value,

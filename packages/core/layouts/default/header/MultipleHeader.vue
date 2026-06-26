@@ -16,7 +16,6 @@
   import { useFullContent } from '@jeesite/core/hooks/web/useFullContent';
   import { useMultipleTabSetting } from '@jeesite/core/hooks/setting/useMultipleTabSetting';
   import { useAppInject } from '@jeesite/core/hooks/web/useAppInject';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useLayoutHeight } from '../content/useContentViewHeight';
   import { useMultipleTabStore } from '@jeesite/core/store/modules/multipleTab';
 
@@ -29,7 +28,6 @@
     components: { LayoutHeader, MultipleTabs },
     setup() {
       const { setHeaderHeight } = useLayoutHeight();
-      const { prefixCls } = useDesign('layout-multiple-header');
 
       const { getCalcContentWidth, getSplit } = useMenuSetting();
       const { getIsMobile } = useAppInject();
@@ -87,12 +85,15 @@
       });
 
       const getClass = computed(() => {
-        return [prefixCls, `${prefixCls}--${unref(getHeaderTheme)}`, { [`${prefixCls}--fixed`]: unref(getIsFixed) }];
+        return [
+          'jeesite-layout-multiple-header',
+          `jeesite-layout-multiple-header--${unref(getHeaderTheme)}`,
+          { ['jeesite-layout-multiple-header--fixed']: unref(getIsFixed) },
+        ];
       });
 
       return {
         getClass,
-        prefixCls,
         getPlaceholderDomStyle,
         getIsFixed,
         getWrapStyle,
@@ -105,9 +106,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-multiple-header';
-
-  .@{prefix-cls} {
+  .jeesite-layout-multiple-header {
     transition: width 0.2s;
     flex: 0 0 auto;
 

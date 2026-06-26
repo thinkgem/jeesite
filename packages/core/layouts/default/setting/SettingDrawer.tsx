@@ -1,6 +1,6 @@
 import { defineComponent, computed, unref } from 'vue';
 import { BasicDrawer } from '@jeesite/core/components/Drawer';
-import { Divider } from 'ant-design-vue';
+import { Divider } from 'antdv-next';
 import { TypePicker, ThemeColorPicker, SettingFooter, SwitchItem, SelectItem, InputNumberItem } from './components';
 
 import { AppDarkModeToggle } from '@jeesite/core/components/Application';
@@ -29,11 +29,10 @@ import {
   APP_PRESET_COLOR_LIST,
 } from '@jeesite/core/settings/designSetting';
 
-const { t } = useI18n();
-
 export default defineComponent({
   name: 'SettingDrawer',
   setup(_, { attrs }) {
+    const { t } = useI18n();
     const {
       getShowBreadCrumb,
       getShowBreadCrumbIcon,
@@ -75,8 +74,8 @@ export default defineComponent({
       return (
         <>
           <TypePicker
-            menuTypeList={menuTypeList}
-            handler={(item: (typeof menuTypeList)[0]) => {
+            menuTypeList={menuTypeList()}
+            handler={(item: ReturnType<typeof menuTypeList>[0]) => {
               baseHandler(HandlerEnum.CHANGE_LAYOUT, {
                 mode: item.mode,
                 type: item.type,
@@ -184,14 +183,14 @@ export default defineComponent({
             title={t('layout.setting.mixSidebarTrigger')}
             event={HandlerEnum.MENU_TRIGGER_MIX_SIDEBAR}
             def={unref(getMixSideTrigger)}
-            options={mixSidebarTriggerOptions}
+            options={mixSidebarTriggerOptions()}
             disabled={!unref(getIsMixSidebar)}
           />
           <SelectItem
             title={t('layout.setting.topMenuLayout')}
             event={HandlerEnum.MENU_TOP_ALIGN}
             def={unref(getTopMenuAlign)}
-            options={topMenuAlignOptions}
+            options={topMenuAlignOptions()}
             disabled={
               !unref(getShowHeader) ||
               unref(getSplit) ||
@@ -211,7 +210,7 @@ export default defineComponent({
             min={0}
             max={99999}
             event={HandlerEnum.LOCK_TIME}
-            defaultValue={unref(getLockTime)}
+            value={unref(getLockTime)}
             formatter={(value: string) => {
               return parseInt(value) === 0
                 ? `0(${t('layout.setting.notAutoScreenLock')})`
@@ -232,7 +231,7 @@ export default defineComponent({
             step={10}
             event={HandlerEnum.MENU_WIDTH}
             disabled={!unref(getShowMenuRef)}
-            defaultValue={unref(getMenuWidth)}
+            value={unref(getMenuWidth)}
             formatter={(value: string) => `${parseInt(value)}px`}
           />
 
@@ -249,7 +248,6 @@ export default defineComponent({
             def={unref(getShowQuick)}
             disabled={!unref(getShowMultipleTab)}
           />
-
           <SwitchItem
             title={t('layout.setting.tabsFoldBtn')}
             event={HandlerEnum.TABS_SHOW_FOLD}

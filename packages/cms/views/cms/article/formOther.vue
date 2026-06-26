@@ -11,7 +11,7 @@
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { Article } from '@jeesite/cms/api/cms/article';
   import { officeTreeData } from '@jeesite/core/api/sys/office';
-  import type { NamePath } from 'ant-design-vue/lib/form/interface';
+  import type { NamePath } from 'antdv-next/dist/form/types';
   import { computed, ref } from 'vue';
 
   const { t } = useI18n('cms.article');

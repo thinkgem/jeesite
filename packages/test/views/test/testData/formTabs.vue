@@ -16,8 +16,8 @@
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <Tabs v-model:activeKey="activeKey" tabPosition="left">
-      <Tabs.TabPane key="1" :forceRender="true" tab="基本信息">
+    <Tabs v-model:activeKey="activeKey" :tabPlacement="'start'">
+      <TabPane key="1" :forceRender="true" tab="基本信息">
         <BasicForm @register="registerForm1">
           <template #remarks="{ model, field }">
             <WangEditor
@@ -28,8 +28,8 @@
             />
           </template>
         </BasicForm>
-      </Tabs.TabPane>
-      <Tabs.TabPane key="2" :forceRender="true" tab="详细信息">
+      </TabPane>
+      <TabPane key="2" :forceRender="true" tab="详细信息">
         <BasicForm @register="registerForm2">
           <template #testDataChildList>
             <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
@@ -49,13 +49,13 @@
             </a-button>
           </template>
         </BasicForm>
-      </Tabs.TabPane>
+      </TabPane>
     </Tabs>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsTestTestDataForm">
   import { ref, unref, computed, h } from 'vue';
-  import { Tabs } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';

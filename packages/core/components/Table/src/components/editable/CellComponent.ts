@@ -2,7 +2,7 @@ import type { CSSProperties, defineComponent } from 'vue';
 import type { ComponentType } from '../../types/componentType';
 import { componentMap } from '@jeesite/core/components/Table/src/componentMap';
 
-import { Popover } from 'ant-design-vue';
+import { Popover } from 'antdv-next';
 import { h } from 'vue';
 
 export interface CellComponentProps {

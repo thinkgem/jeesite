@@ -1,9 +1,9 @@
 <template>
-  <Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
-    <div :class="`${prefixCls}__links`">
+  <Footer class="jeesite-layout-footer" v-if="getShowLayoutFooter" ref="footerRef">
+    <div class="jeesite-layout-footer__links">
       <a @click="openWindow(SITE_URL)">{{ t('layout.footer.onlinePreview') }}</a>
 
-      <Icon icon="i-ant-design:github-filled" @click="openWindow(GITHUB_URL)" :class="`${prefixCls}__github`" />
+      <Icon icon="i-ant-design:github-filled" @click="openWindow(GITHUB_URL)" class="jeesite-layout-footer__github" />
 
       <a @click="openWindow(DOC_URL)">{{ t('layout.footer.onlineDocument') }}</a>
     </div>
@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, unref, ref } from 'vue';
-  import { Layout } from 'ant-design-vue';
+  import { computed, defineComponent, unref, ref, shallowRef } from 'vue';
+  import { LayoutFooter } from 'antdv-next';
   import { Icon } from '@jeesite/core/components/Icon';
 
   import { DOC_URL, GITHUB_URL, SITE_URL } from '@jeesite/core/settings/siteSetting';
@@ -22,19 +22,17 @@
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
   import { useRouter } from 'vue-router';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useLayoutHeight } from '../content/useContentViewHeight';
 
   export default defineComponent({
     name: 'LayoutFooter',
-    components: { Footer: Layout.Footer, Icon },
+    components: { Footer: LayoutFooter, Icon },
     setup() {
       const { t } = useI18n();
       const { getShowFooter } = useRootSetting();
       const { currentRoute } = useRouter();
-      const { prefixCls } = useDesign('layout-footer');
 
-      const footerRef = ref<ComponentRef>(null);
+      const footerRef = shallowRef<InstanceType<typeof LayoutFooter>>();
       const { setFooterHeight } = useLayoutHeight();
 
       const getShowLayoutFooter = computed(() => {
@@ -49,7 +47,6 @@
 
       return {
         getShowLayoutFooter,
-        prefixCls,
         t,
         DOC_URL,
         GITHUB_URL,
@@ -61,9 +58,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-layout-footer';
-
-  .@{prefix-cls} {
+  .jeesite-layout-footer {
     text-align: center;
     opacity: 0.7;
 

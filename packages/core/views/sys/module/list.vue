@@ -121,7 +121,7 @@
       dataIndex: 'moduleSort',
       key: 'a.module_sort',
       sorter: true,
-      width: 60,
+      width: 65,
       align: 'center',
     },
     {
@@ -129,7 +129,7 @@
       dataIndex: 'status',
       key: 'a.status',
       sorter: true,
-      width: 60,
+      width: 65,
       align: 'center',
       dictType: 'sys_status',
       slot: 'statusColumn',

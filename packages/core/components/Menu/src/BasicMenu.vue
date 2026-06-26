@@ -21,8 +21,8 @@
 </template>
 <script lang="ts" setup name="BasicMenu">
   import type { MenuState } from './types';
-  import { computed, reactive, ref, toRefs, unref, watch } from 'vue';
-  import { Menu } from 'ant-design-vue';
+  import { computed, defineComponent, reactive, ref, toRefs, unref, watch } from 'vue';
+  import { Menu } from 'antdv-next';
   import BasicSubMenuItem from './components/BasicSubMenuItem.vue';
   import { MenuModeEnum, MenuTypeEnum } from '@jeesite/core/enums/menuEnum';
   import { useOpenKeys } from './useOpenKeys';
@@ -31,11 +31,9 @@
   import { basicProps } from './props';
   import { useMenuSetting } from '@jeesite/core/hooks/setting/useMenuSetting';
   import { REDIRECT_NAME } from '@jeesite/core/router/constant';
-  import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { getCurrentParentPath } from '@jeesite/core/router/menus';
   import { listenerRouteChange } from '@jeesite/core/logics/mitt/routeChange';
   import { getAllParentPath } from '@jeesite/core/router/helper/menuHelper';
-  import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 
   const props = defineProps(basicProps);
   const emit = defineEmits(['menuClick']);
@@ -50,7 +48,6 @@
     collapsedOpenKeys: [],
   });
 
-  const { prefixCls } = useDesign('basic-menu');
   const { items, mode, accordion } = toRefs(props);
 
   const { getCollapsed, getTopMenuAlign, getSplit } = useMenuSetting();
@@ -70,11 +67,11 @@
   const getMenuClass = computed(() => {
     const align = props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
     return [
-      prefixCls,
+      'jeesite-basic-menu',
       `justify-${align}`,
       {
-        [`${prefixCls}__second`]: !props.isHorizontal && unref(getSplit),
-        [`${prefixCls}__sidebar-hor`]: unref(getIsTopMenu),
+        ['jeesite-basic-menu__second']: !props.isHorizontal && unref(getSplit),
+        ['jeesite-basic-menu__sidebar-hor']: unref(getIsTopMenu),
       },
     ];
   });
@@ -130,14 +127,19 @@
     }
   }
 
-  async function handleMenuClick(e: MenuInfo) {
-    const { key, item } = e;
+  async function handleMenuClick(e) {
+    // 如果 e 是原生事件，说明是第一次调用，跳过
+    // 只有当 e 是 MenuInfo 对象时才处理
+    if (e && !e.key && !e.keyPath) {
+      return;
+    }
+    const { key } = e;
     const { beforeClickFn } = props;
     if (beforeClickFn && isFunction(beforeClickFn)) {
       const flag = await beforeClickFn(key as string);
       if (!flag) return;
     }
-    emit('menuClick', key, item);
+    emit('menuClick', key);
 
     isClickGo.value = true;
 
@@ -148,7 +150,6 @@
     } else {
       menuState.selectedKeys = [key as string];
     }
-    // console.log('TopMenuClick', menuState.selectedKeys, menuState.openKeys);
   }
 </script>
 <style lang="less">

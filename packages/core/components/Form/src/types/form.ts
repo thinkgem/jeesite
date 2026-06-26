@@ -3,14 +3,14 @@
  * No deletion without permission, or be held responsible to law.
  * @author Vben、ThinkGem
  */
-import type { NamePath, RuleObject } from 'ant-design-vue/lib/form/interface';
+import type { NamePath, RuleObject } from 'antdv-next/dist/form/types';
 import type { VNode } from 'vue';
 import type { ButtonProps as AntdButtonProps } from '@jeesite/core/components/Button';
 import type { FormItem } from './formItem';
 import type { ColEx, ComponentType } from './index';
 import type { TableActionType } from '@jeesite/core/components/Table/src/types/table';
 import type { CSSProperties } from 'vue';
-import type { RowProps } from 'ant-design-vue/lib/grid/Row';
+import type { RowProps } from 'antdv-next/dist/grid/row';
 import type { FormField } from '@jeesite/types';
 
 export type FieldMapToTime = [string, [string, string], string?][];
@@ -50,10 +50,6 @@ export interface FormActionType {
   scrollToField: (name: NamePath, options?: ScrollOptions) => Promise<void>;
 }
 
-export type FormRegisterFn = (formInstance: FormActionType, uuid: string) => void;
-
-export type UseFormReturnType = [FormRegisterFn, FormActionType];
-
 export interface FormProps<T = Recordable> {
   layout?: 'vertical' | 'inline' | 'horizontal';
   // Form value
@@ -88,7 +84,7 @@ export interface FormProps<T = Recordable> {
   // Blank line span
   emptySpan?: number | Partial<ColEx>;
   // Internal component size of the form
-  size?: 'default' | 'small' | 'large';
+  size?: 'default' | 'medium' | 'small' | 'large';
   // Whether to disable
   disabled?: boolean;
   // Time interval fields are mapped into multiple
@@ -137,8 +133,6 @@ export interface FormSchema<T = Recordable> {
   field: FormField<T>;
   // 字段标签名，如返回 Select、TreeSelect 的标签名
   fieldLabel?: FormField<T>;
-  // Event name triggered by internal value change, default change
-  changeEvent?: string;
   // 绑定组件的属性名（一般无需设置）默认：value，如：v-model:value
   valueField?: string;
   // 绑定组件的标签属性名（一般无需设置）默认：labelValue，如：v-model:labelValue

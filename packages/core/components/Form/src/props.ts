@@ -3,7 +3,7 @@ import type { CSSProperties, PropType } from 'vue';
 import type { ColEx } from './types';
 import type { TableActionType } from '@jeesite/core/components/Table';
 import type { FormButtonProps as ButtonProps } from './types/form';
-import type { RowProps } from 'ant-design-vue/lib/grid/Row';
+import type { RowProps } from 'antdv-next/dist/grid/Row';
 import { propTypes } from '@jeesite/core/utils/propTypes';
 
 export const basicProps = {
@@ -44,7 +44,7 @@ export const basicProps = {
   // 在INPUT组件上单击回车时，是否自动提交
   autoSubmitOnEnter: propTypes.bool.def(true),
   submitOnReset: propTypes.bool,
-  size: propTypes.oneOf(['default', 'small', 'large']).def('default'),
+  size: propTypes.oneOf(['default', 'medium', 'small', 'large']).def('medium'),
   // 禁用表单
   disabled: propTypes.bool,
   emptySpan: {
@@ -61,8 +61,11 @@ export const basicProps = {
     },
   },
   rulesMessageJoinLabel: propTypes.bool.def(true),
-  // 表单验证触发规则（失去焦点的时候再触发）
-  validateTrigger: propTypes.string.def('blur'),
+  // 表单验证触发规则（仅在调用 validate() 时触发验证，设为 false 禁用自动验证）
+  validateTrigger: {
+    type: [String, Array, Boolean] as PropType<string | string[] | false>,
+    default: false,
+  },
   // 超过1行自动折叠
   autoAdvancedLine: propTypes.number.def(1),
   // 不受折叠影响的行数
@@ -105,5 +108,5 @@ export const basicProps = {
 
   labelAlign: propTypes.string,
 
-  rowProps: Object as PropType<RowProps>,
+  rowProps: Object as PropType<any>,
 };

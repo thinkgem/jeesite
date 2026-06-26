@@ -1,27 +1,17 @@
 <script lang="ts">
   import { computed, defineComponent, h, unref } from 'vue';
   import BasicButton from './BasicButton.vue';
-  import { Popconfirm } from 'ant-design-vue';
+  import { Popconfirm } from 'antdv-next';
   import { extendSlots } from '@jeesite/core/utils/helper/tsxHelper';
   import { omit } from 'lodash-es';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
-
-  const props = {
-    /**
-     * Whether to enable the drop-down menu
-     * @default: true
-     */
-    enable: {
-      type: Boolean,
-      default: true,
-    },
-  };
+  import { popConfirmButtonProps } from './props';
 
   export default defineComponent({
     name: 'PopButton',
     inheritAttrs: false,
-    props,
+    props: popConfirmButtonProps,
     setup(props, { slots }) {
       const { t } = useI18n();
       const attrs = useAttrs();

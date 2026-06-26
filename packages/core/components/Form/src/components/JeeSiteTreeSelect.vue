@@ -21,14 +21,14 @@
 </template>
 <script lang="ts" setup name="JeeSiteTreeSelect">
   import { ref, unref, computed, watch, onMounted } from 'vue';
-  import { TreeSelect } from 'ant-design-vue';
+  import { TreeSelect } from 'antdv-next';
   import { isEmpty, isFunction } from '@jeesite/core/utils/is';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { listToTree } from '@jeesite/core/utils/helper/treeHelper';
   import { useAttrs } from '@jeesite/core/hooks/core/useAttrs';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
   import { get, omit } from 'lodash-es';
-  import { LoadingOutlined } from '@ant-design/icons-vue';
+  import { LoadingOutlined } from '@antdv-next/icons';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useDict } from '@jeesite/core/components/Dict';
   import { TreeItem } from '@jeesite/core/components/Tree';
@@ -87,17 +87,24 @@
         value: props.dictType ? 'value' : 'id',
         label: 'name',
       },
-      treeDataSimpleMode: false,
-      dropdownStyle: { maxHeight: '300px' },
-      popupClassName: 'jeesite-tree-select-popup',
+      styles: {
+        popup: {
+          root: { maxHeight: '300px' },
+        },
+      },
+      classes: {
+        popup: {
+          root: 'jeesite-tree-select-popup',
+        },
+      },
       getPopupContainer: () => document.body,
       ...unref(attrs),
-      ...(props as Recordable),
-    } as any;
+      ...props,
+    };
     if (props.returnFullName) {
       propsData.treeNodeLabelProp = '_fullName';
     }
-    return omit(propsData, 'treeData');
+    return omit(propsData, 'treeData', 'params');
   });
 
   watch(
