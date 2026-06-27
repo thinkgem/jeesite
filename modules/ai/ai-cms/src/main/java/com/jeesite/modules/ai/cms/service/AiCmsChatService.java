@@ -22,7 +22,6 @@ import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.AssistantMessage;
@@ -144,9 +143,7 @@ public class AiCmsChatService extends BaseService {
 //		}
 		UserMessage userMessage = UserMessage.builder().text(text).media(media).build();
 		ChatClient.ChatClientRequestSpec spec = chatClient.prompt().messages(userMessage)
-				.advisors(MessageChatMemoryAdvisor.builder(chatMemory)
-						.conversationId(conversationId)
-						.build());
+				.advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId));
 		if (vectorStore != null) {
 			spec.advisors(QuestionAnswerAdvisor.builder(vectorStore)
 					.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())

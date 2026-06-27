@@ -52,7 +52,7 @@
 		<!-- 向量数据库 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-advisors-vector-store</artifactId>
+			<artifactId>spring-ai-vector-store-advisor</artifactId>
 		</dependency>
 
 		<!-- Chroma 向量数据库 -->
