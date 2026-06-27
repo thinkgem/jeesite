@@ -187,13 +187,23 @@ JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，您可以
 
 Redis 是一个缓存数据库，主要用来集中式管理共享会话和系统缓存的，如果您已安装 Redis，可以忽略这个步骤。
 
-由于 Windows 版本的 Redis 安装不太方便，所以我们提供了该版本的安装文件和安装脚本。
+**Windows：**
 
-下载地址：<https://gitee.com/thinkgem/jeesite-cloud/attach_files> 找到 `Redis-x64-4.0.2.2.zip` 下载文件。
+- 由于 Redis 官方未直接提供 Windows 版本的安装包，所以我们提供了该版本的安装文件和安装脚本。
+- 下载地址：<https://gitee.com/thinkgem/jeesite-cloud/attach_files> 找到 `Redis-x64-4.0.2.2.zip` 下载文件。
+- 解压  `Redis-x64-4.0.2.2.zip` 压缩包，运行 `service-install.bat` 安装 Windows 系统服务。
 
-解压  `Redis-x64-4.0.2.2.zip` 压缩包，运行 `service-install.bat` 安装 Windows 系统服务。
+**macOS：**
 
-默认地址：127.0.0.1；默认端口：6379；默认密码：1234，可根据自己需要修改 conf 文件。
+- 安装命令：brew install redis
+- 设置密码：打开 /opt/homebrew/etc/redis.conf 文件，设置参数：requirepass 1234
+- 重启服务：brew services restart redis
+
+**Linux：**
+
+- 官方文档：https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/install-redis-on-linux/
+
+Redis 地址：127.0.0.1；端口：6379；密码：1234
 
 ### 启动 Nacos 服务
 
@@ -202,23 +212,24 @@ Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 N
 
 如果使用 Nacos 就不用部署 `jeesite-cloud-eureka` 和 `jeesite-cloud-config` 了。
 
-JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启动，也可以下载 jar 运行：
+JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启动，也可以下载 zip 运行：
 
 **src 方式：**
 
 1. 在 IDEA 或 Eclipse 中 找到 jeesite-cloud-nacos 项目。
-2. 运行 NacosApplication 类的 main 方法，即可启动服务。
+2. 运行 NacosApplication 类的 main 方法，启动服务。
+3. Nacos 访问地址为：http://127.0.0.1:8849  第一次访问设置用户名和密码
 
 **zip 方式：**
 
 1. 下载地址：<https://github.com/alibaba/nacos/releases/download/3.2.2/nacos-server-3.2.2.zip>
-2. 解压 `nacos-server-3.2.2.zip` 压缩包，运行 `/bin/startup.cmd(sh) -m standalone` 启动服务。
-3. 默认 startup.cmd 控制台不会打印服务日志，请打开 `/logs/startup.log` 查看
-4. Nacos 默认访问地址为：http://127.0.0.1:8080  第一次访问设置用户名和密码
+2. 解压 `nacos-server-x.x.x.zip` 压缩包，启动服务：`./bin/startup.cmd(sh) -m standalone` 根据提示设置秘钥
+3. 默认 `startup.cmd(sh)` 控制台不会打印服务日志，请打开 `./logs/startup.log` 文件查看
+4. Nacos 访问地址为：http://127.0.0.1:8080  第一次访问设置用户名和密码
 
-**配置 mysql 存储：**
+**配置 mysql 存储（按需配置）：**
 
-1. 按需配置，默认情况 Nacos 采用 Derby 数据库，您也可以将数据库切换到 MySQL 下。
+1. 默认情况 Nacos 采用 Derby 数据库，您也可以将数据库切换到 MySQL 下。
 2. 找到 `/nacos/src/main/resources/META-INF/mysql-schema.sql` 文件导入数据表。
 3. 找到 Nacos 的配置文件（application.properties 或 application.yml）如下：
 
