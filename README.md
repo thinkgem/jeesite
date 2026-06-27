@@ -815,6 +815,7 @@ VITE_LEGACY = true
 * 报表设计器：<https://jeesite.com/docs/ureport/>
 * 文件管理分享：<https://jeesite.com/docs/filemanager/>
 * 文件在线预览：<https://jeesite.com/docs/filepreview/>
+* 敏感词工具：<https://jeesite.com/docs/sensitive-word/>
 
 * 集群、高可用架构：<https://jeesite.com/docs/cluster/>
 * SaaS 多租户架构：<https://jeesite.com/docs/saas-corp-use/>
