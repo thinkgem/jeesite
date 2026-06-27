@@ -11,6 +11,7 @@ import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.cms.service.CacheChatMemoryRepository;
 import com.jeesite.modules.ai.tools.annotation.AiTools;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,7 +37,7 @@ public class AiCmsChatConfig {
 	 */
 	@Bean("chatClient")
 	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "false", matchIfMissing = true)
-	public ChatClient chatClient(ChatClient.Builder builder, AiCmsProperties properties) {
+	public ChatClient chatClient(ChatClient.Builder builder, AiCmsProperties properties, ChatMemory chatMemory) {
 		if (StringUtils.isNotBlank(properties.getDefaultSystem())) {
 			builder.defaultSystem(properties.getDefaultSystem());
 		}
@@ -46,6 +47,7 @@ public class AiCmsChatConfig {
 				builder.defaultTools(tools.values().toArray());
 			}
 		}
+		builder.defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build());
 		return builder.build();
 	}
 
