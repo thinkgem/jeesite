@@ -14,7 +14,7 @@
 
 - 问题反馈：<https://gitee.com/thinkgem/jeesite-vue/issues> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 - 需求收集：<https://gitee.com/thinkgem/jeesite-vue/issues/new>
-- QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+- QQ群(已满)：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 - 微信群：添加客服微信 <http://s.jeesite.com> 邀请您进群
 - 关注微信公众号，了解最新动态：
 
