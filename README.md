@@ -51,7 +51,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
  <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
 </p>
 
-* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* QQ群(已满)：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 * 微信群：如果无法进入，可添加客服微信 jeesitex 邀请您进群
 
 <p style="padding-left:40px"><a href="https://jeesite.com/assets/images/wxg_cur.png" target="_blank">
