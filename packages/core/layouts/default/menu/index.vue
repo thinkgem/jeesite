@@ -187,6 +187,7 @@
             showLogo={unref(getIsShowLogo)}
             mode={unref(getComputedMenuMode as any)}
             items={menus}
+            theme="light"
           />
         );
       }
