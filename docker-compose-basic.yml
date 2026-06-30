@@ -17,6 +17,11 @@ x-common-env: &common-env
 
 # ==================== Service Base ====================
 x-service-base: &service-base
+  image: docker.1ms.run/eclipse-temurin:17.0.18_8-jdk
+  working_dir: /app
+  command: >
+    sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && 
+    rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
   #restart: unless-stopped
   networks:
     - jeesite-cloud-network
@@ -49,7 +54,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
       interval: 5s
       timeout: 5s
-      retries: 60
+      retries: 99
 
   # ==================== Redis ====================
   jeesite-cloud-redis:
@@ -68,13 +73,12 @@ services:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 5s
-      retries: 60
+      retries: 99
 
   # ==================== Nacos ====================
   jeesite-cloud-nacos:
     <<: *service-base
     container_name: jeesite-cloud-nacos
-    image: docker.1ms.run/eclipse-temurin:17.0.18_8-jdk
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -85,15 +89,17 @@ services:
     volumes:
       - ./.docker/nacos:/nacos
       - ./nacos/target:/app
-    working_dir: /app
-    command: >
-      sh -c "if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war && 
-      rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
+      - ./config/src/main/resources/jeesite-cloud-yml.zip:/app/jeesite-cloud-yml.zip
     depends_on:
       jeesite-cloud-mysql:
         condition: service_healthy
       jeesite-cloud-redis:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8849"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
 
 # ==================== Networks ====================
 networks:

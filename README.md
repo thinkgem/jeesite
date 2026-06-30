@@ -51,7 +51,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
  <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
 </p>
 
-* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* QQ群(已满)：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 * 微信群：如果无法进入，可添加客服微信 jeesitex 邀请您进群
 
 <p style="padding-left:40px"><a href="https://jeesite.com/assets/images/wxg_cur.png" target="_blank">
@@ -124,8 +124,8 @@ git submodule update --init
 
 * 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
-* **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8849/index.html#/login>
-* 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
+* **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8849>
+* 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js>
 * 核心模块（**统一授权认证服务、平台基础数据服务**）：
     - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
     - 客户端项目（提供其它模块调用）：jeesite-cloud-module-core-client
@@ -263,9 +263,9 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 **启动完成后：**
 
-浏览器访问：
+浏览器访问（src方式会自动导入，如已导入，请忽略这一步）：
 
-* <http://127.0.0.1:8849/index.html#/login> 
+* <http://127.0.0.1:8849> 
 
 初始化用户名和密码均为：nacos
 
@@ -315,25 +315,21 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 ## 使用 Docker 运行
 
-### 构建并运行基础服务
+### 构建并运行 基础设施 服务
 
-1、部署 MySQL、Redis、Nacos 镜像，运行脚本：`/bin/docker-compose-basic.sh`
+1、部署 MySQL、Redis、Nacos 镜像，运行脚本：`/bin/docker-compose-basic.bat(sh)`
 
-2、浏览器访问 `http://127.0.0.1:18849/#/login` 初始化用户名和密码均为 nacos
+2、浏览器访问 `http://127.0.0.1:8849` 初始化用户名和密码均为 nacos
 
-3、登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
+3、系统会自动初始化 Nacos 数据，入未初始化，可登录 Nacos，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
 
-### 构建并运行核心服务
+### 构建并运行 JeeSite 服务
 
-1、部署 Gateway、Core、Files 镜像，运行脚本：`/bin/docker-compose-core.sh`
+1、部署 Gateway、Core、Files、Test1、Test2、Test3 镜像，运行脚本：`/bin/docker-compose-service.bat(sh)`
 
 2、浏览器访问 `http://127.0.0.1:8980/js` 默认账号 system 密码 admin
 
-### 构建并运行业务服务
-
-1、部署 Test1、Test2、Test3 镜像，运行脚本：`/bin/docker-compose-test.sh`
-
-2、进入系统，首页仪表盘，点击 test1、test2 相关服务地址按钮
+3、进入系统，首页仪表盘，点击 test1、test2 相关服务地址按钮
 
 ## 快速启用延伸功能
 

@@ -1,0 +1,174 @@
+#
+# Copyright (c) 2013-Now https://jeesite.com All rights reserved.
+# No deletion without permission, or be held responsible to law.
+# @author ThinkGem
+#
+# 执行 docker-compose up 前，请先编译项目 mvn package
+#
+name: jeesite-cloud-service
+
+# ==================== Environment ====================
+x-common-env: &common-env
+  TZ: Asia/Shanghai
+  LANG: C.UTF-8
+  MYSQL_HOST: jeesite-cloud-mysql
+  REDIS_HOST: jeesite-cloud-redis
+  NACOS_HOST: jeesite-cloud-nacos
+
+# ==================== Service Base ====================
+x-service-base: &service-base
+  image: docker.1ms.run/eclipse-temurin:17.0.18_8-jdk
+  working_dir: /app
+  command: >
+    sh -c "echo '=== Checking Nacos status ===';
+    while true; do STATUS=$$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 2 http://$${NACOS_HOST}:8849/ 2>/dev/null);
+      if [ $$STATUS = 200 ] || [ $$STATUS = 302 ]; then echo Nacos ready! Status: $$STATUS; break; fi;
+      echo Waiting Nacos... Status: $$STATUS; sleep 5; done; echo '=== Starting Application ===';
+    if [ ! -d 'web' ]; then mkdir web && cp web.war web && cd web && jar -xvf web.war &&
+    rm web.war && cd ..; fi && cd web/WEB-INF && exec sh startup.sh"
+  #restart: unless-stopped
+  networks:
+    - jeesite-cloud-network
+
+services:
+
+  # ==================== Core ====================
+  jeesite-cloud-core:
+    <<: *service-base
+    container_name: jeesite-cloud-core
+    ports:
+      - "8981:8981"
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8981 -Djeesite.initdata=true
+    volumes:
+      - ./.docker/modules/core:/data
+      - ./modules/core/core/target:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8981/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
+
+  # ==================== Files ====================
+  jeesite-cloud-files:
+    <<: *service-base
+    container_name: jeesite-cloud-files
+    depends_on:
+      jeesite-cloud-core:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=7999
+    volumes:
+      - ./.docker/modules/files:/data
+      - ./modules/core/files/target:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:7999/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
+
+  # ==================== Test1 ====================
+  jeesite-cloud-test1:
+    <<: *service-base
+    container_name: jeesite-cloud-test1
+    depends_on:
+      jeesite-cloud-core:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8982
+    volumes:
+      - ./.docker/modules/test1:/data
+      - ./modules/test1/test1/target:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8982/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
+
+  # ==================== Test2 ====================
+  jeesite-cloud-test2:
+    <<: *service-base
+    container_name: jeesite-cloud-test2
+    depends_on:
+      jeesite-cloud-core:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8983
+    volumes:
+      - ./.docker/modules/test2:/data
+      - ./modules/test2/test2/target:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8983/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
+
+  # ==================== Test3 ====================
+  jeesite-cloud-test3:
+    <<: *service-base
+    container_name: jeesite-cloud-test3
+    depends_on:
+      jeesite-cloud-core:
+        condition: service_healthy
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8985
+    volumes:
+      - ./.docker/modules/test3:/data
+      - ./modules/test3/test3/target:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8985/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
+
+  # ==================== Gateway ====================
+  jeesite-cloud-gateway:
+    <<: *service-base
+    container_name: jeesite-cloud-gateway
+    ports:
+      - "8980:8980"
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8980
+    volumes:
+      - ./.docker/gateway:/data
+      - ./gateway/target:/app
+    depends_on:
+      jeesite-cloud-core:
+        condition: service_healthy
+      jeesite-cloud-files:
+        condition: service_healthy
+      jeesite-cloud-test1:
+        condition: service_healthy
+      jeesite-cloud-test2:
+        condition: service_healthy
+      jeesite-cloud-test3:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8980/js"]
+      interval: 5s
+      timeout: 5s
+      retries: 99
+
+# ==================== Networks ====================
+networks:
+  jeesite-cloud-network:
+    name:  jeesite-cloud-network
+    driver: bridge
