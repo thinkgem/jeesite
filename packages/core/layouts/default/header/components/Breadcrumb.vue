@@ -3,7 +3,9 @@
     <Breadcrumb :items="itemsRef">
       <template #itemRender="{ route }">
         <Icon class="mr-1" :icon="getIcon(route)" v-if="getShowBreadCrumbIcon && getIcon(route)" />
-        <span class="ant-breadcrumb-overlay-link cursor-pointer">{{ t(route['name'] || route['meta']?.title) }}</span>
+        <span :class="['cursor-pointer', { 'ant-breadcrumb-overlay-link': route['children']?.length == 0 }]">
+          {{ t(route['name'] || route['meta']?.title) }}
+        </span>
       </template>
     </Breadcrumb>
   </div>
