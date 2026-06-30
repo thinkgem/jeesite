@@ -30,7 +30,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
       interval: 5s
       timeout: 5s
-      retries: 60
+      retries: 99
     #restart: unless-stopped
     networks:
       - jeesite-fast-network
