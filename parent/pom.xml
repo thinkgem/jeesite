@@ -73,7 +73,6 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
-		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 其它版本可能会出现VM崩溃 -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
