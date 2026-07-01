@@ -16,9 +16,6 @@
 		<if test="(roleCode != null and roleCode != '') or (roleCodes != null and roleCodes.length gt 0)">
 			JOIN ${_prefix}sys_user_role ur2 ON ur2.user_code = a.user_code
 		</if>
-		<if test="employee.postCode != null and employee.postCode != ''">
-			JOIN ${_prefix}sys_employee_post ep ON e.emp_code = ep.emp_code
-		</if>
 		<where>
 			${sqlMap.where.toSql()}
 			<if test="roleCode != null and roleCode != ''">
@@ -30,24 +27,28 @@
 					#{roleCode}
 				</foreach>
 			</if>
+			<!-- 支持根据附属岗位查询 -->
 			<if test="employee.postCode != null and employee.postCode != ''">
 				AND (
-					ep.post_code = #{employee.postCode}
-					OR EXISTS (
+					EXISTS (
+					 	SELECT 1 FROM ${_prefix}sys_employee_post
+						WHERE emp_code = e.emp_code AND post_code = #{employee.postCode}
+					) OR EXISTS (
 						SELECT 1 FROM ${_prefix}sys_employee_office
-						WHERE emp_code = e.emp_code
-							AND post_code = #{employee.postCode}
+						WHERE emp_code = e.emp_code AND post_code = #{employee.postCode}
 					)
 				)
 			</if>
-			<!-- 附属部门查询，根据业务需要添加查询条件
+			<!-- 支持根据附属部门查询 -->
 			<if test="employee.office.officeCode != null and employee.office.officeCode != ''">
-				OR EXISTS (
-					SELECT 1 FROM ${_prefix}sys_employee_office
-					WHERE emp_code = e.emp_code
-						AND office_code = #{employee.office.officeCode}
+				AND (
+					e.office_code = #{employee.office.officeCode}
+					OR EXISTS (
+						SELECT 1 FROM ${_prefix}sys_employee_office
+						WHERE emp_code = e.emp_code AND office_code = #{employee.office.officeCode}
+					)
 				)
-			</if> -->
+			</if>
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
 	</select>

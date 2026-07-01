@@ -49,7 +49,7 @@ import java.io.Serial;
 			columns = {
 				@Column(includeEntity = DataEntity.class),
 				@Column(includeEntity = TreeEntity.class),
-				@Column(name = "office_code", label = "机构编码", isPK = true),
+				@Column(name = "office_code", label = "机构编码", isPK = true, isQuery = false),
 				@Column(name = "view_code", label = "机构代码"),
 				@Column(name = "office_name", label = "机构名称", isQuery = false),
 				@Column(name = "full_name", label = "机构全称"),
