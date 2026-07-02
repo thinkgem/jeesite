@@ -164,6 +164,9 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "disable")
 	public String disable(User user) {
+		if (!user.currentUser().isSuperAdmin()){
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
+		}
 		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
@@ -182,6 +185,9 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "enable")
 	public String enable(User user) {
+		if (!user.currentUser().isSuperAdmin()){
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
+		}
 		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
@@ -197,6 +203,9 @@ public class CorpAdminController extends BaseController {
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
 	public String resetpwd(User user, String newPassword) {
+		if (!user.currentUser().isSuperAdmin()){
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
+		}
 		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
@@ -216,6 +225,9 @@ public class CorpAdminController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(User user) {
+		if (!user.currentUser().isSuperAdmin()){
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
+		}
 		if (User.isSuperAdmin(user.getUserCode(), user.getLoginCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
