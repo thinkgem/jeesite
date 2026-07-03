@@ -7,6 +7,7 @@ package com.jeesite.modules.msg.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.msg.entity.MsgInner;
 import com.jeesite.modules.msg.entity.MsgInnerRecord;
@@ -45,7 +46,16 @@ public class MsgInnerController extends BaseController {
 	 */
 	@ModelAttribute
 	public MsgInner get(String id, boolean isNewRecord) {
-		return msgInnerService.get(id, isNewRecord);
+		MsgInner msgInner = msgInnerService.get(id, isNewRecord);
+		if (!msgInner.getIsNewRecord()) {
+			String userCode = msgInner.currentUser().getUserCode();
+			// 仅消息发送者或接收者可查看消息详情
+			if (!userCode.equals(msgInner.getSendUserCode())
+					&& !msgInnerService.isReceiveUser(msgInner.getId(), userCode)) {
+				throw new ServiceException(text("你没有权限查看该消息！"));
+			}
+		}
+		return msgInner;
 	}
 	
 	/**
@@ -92,7 +102,7 @@ public class MsgInnerController extends BaseController {
 	}
 	
 	/**
-	 * 查看编辑表单
+	 * 查看消息详情
 	 */
 	@RequiresPermissions("msg:msgInner:view")
 	@RequestMapping(value = "view")
@@ -104,6 +114,14 @@ public class MsgInnerController extends BaseController {
 		MsgInnerRecord msgInnerRecord = new MsgInnerRecord();
 		msgInnerRecord.setMsgInnerId(msgInner.getId());
 		msgInnerRecord.setReadStatus(MsgInnerRecord.READ_STATUS_READ);
+		// 非发送者（即接收者）仅能查看本人的阅读状态，防止泄露其他接收者的阅读信息
+		String userCode = msgInner.currentUser().getUserCode();
+		boolean isSender = userCode.equals(msgInner.getSendUserCode());
+		String filterUserCode = isSender ? null : userCode;
+		if (filterUserCode != null) {
+			msgInnerRecord.setReceiveUserCode(filterUserCode);
+		}
+		model.addAttribute("isSender", isSender);
 		model.addAttribute("readList", msgInnerService.findRecordList(msgInnerRecord));
 		msgInnerRecord.setReadStatus(MsgInnerRecord.READ_STATUS_UNREAD);
 		model.addAttribute("unReadList", msgInnerService.findRecordList(msgInnerRecord));

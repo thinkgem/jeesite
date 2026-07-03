@@ -88,6 +88,22 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 		}
 		return msgInnerRecordDao.findList(msgInnerRecord);
 	}
+
+	/**
+	 * 判断指定用户是否为消息的接收者
+	 * @param msgInnerId 消息ID
+	 * @param userCode 用户编码
+	 */
+	public boolean isReceiveUser(String msgInnerId, String userCode) {
+		if (StringUtils.isBlank(msgInnerId) || StringUtils.isBlank(userCode)) {
+			return false;
+		}
+		MsgInnerRecord record = new MsgInnerRecord();
+		record.setMsgInnerId(msgInnerId);
+		record.setReceiveUserCode(userCode);
+		List<MsgInnerRecord> list = msgInnerRecordDao.findList(record);
+		return ListUtils.isNotEmpty(list);
+	}
 	
 	/**
 	 * 保存数据（插入或更新）
