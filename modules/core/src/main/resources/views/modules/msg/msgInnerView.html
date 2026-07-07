@@ -31,11 +31,11 @@
 			</ul>
 			<% if (readList! != null && readList.~size > 0){ %>
 			<div class="content-info">已读用户：<% for (e in readList){ %>
-				<span class="label bg-green" title="${e.readDate,dateFormat='yyyy-MM-dd HH:mm:ss'}" data-code="${e.receiveUserName}">${e.receiveUserName}</span><% } %>
+				<span class="label bg-green inline-block mb3" title="${e.readDate,dateFormat='yyyy-MM-dd HH:mm:ss'}" data-code="${e.receiveUserName}">${e.receiveUserName}</span><% } %>
 			</div><% } %>
 			<% if (unReadList! != null && unReadList.~size > 0){ %>
 			<div class="content-info">未读用户：<% for (e in unReadList){ %>
-				<span class="label bg-yellow" data-code="${e.receiveUserName}">${e.receiveUserName}</span><% } %>
+				<span class="label bg-yellow inline-block mb3" data-code="${e.receiveUserName}">${e.receiveUserName}</span><% } %>
 			</div><% } %>
 		</div>
 		<div class="box-footer">
