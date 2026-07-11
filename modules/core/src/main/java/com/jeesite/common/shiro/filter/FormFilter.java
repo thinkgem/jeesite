@@ -56,6 +56,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; 			// 异常类属性名
 	public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
 
+	public static final Boolean OFFICE_ROLE_PERMI = Global.getConfigToBoolean("user.officeRolePermi", "false");
 	public static final Boolean POST_ROLE_PERMI = Global.getConfigToBoolean("user.postRolePermi", "false");
 	public static final Boolean SWITCH_OFFICE = Global.getConfigToBoolean("user.switchOffice", "false");
 	public static final Boolean LOGIN_AFTER_ACTIVE_MAIN_OFFICE = Global.getConfigToBoolean("user.loginAfterActiveMainOffice", "false");
@@ -493,6 +494,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			}
 		}
 		data.put("roleList", roleList);
+		if (OFFICE_ROLE_PERMI) {
+			data.put("officeRolePermi", "true");
+		}
 		if (POST_ROLE_PERMI && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
 			List<Map<String, Object>> postList = ListUtils.newArrayList();
 			data.put("postRolePermi", "true");

@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.8</zoom>
-	<x>55</x>
-	<y>1972</y>
+	<x>0</x>
+	<y>18</y>
 	<default_color>
 		<r>255</r>
 		<g>255</g>
@@ -4853,13 +4853,13 @@
 			</table_properties>
 		</table>
 		<note>
-			<id>4df3b94d66efd58e48b864d4e886665e3ac417bb</id>
+			<id>f19269b97ed21bc5dc91a1a9be77ec1d65c147ca</id>
 			<height>85</height>
 			<width>289</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
 			<x>755</x>
-			<y>72</y>
+			<y>60</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -4870,13 +4870,13 @@
 			<text>JeeSite 5.x Module Core&#x0D;&#x0A;https://jeesite.com&#x0D;&#x0A;</text>
 		</note>
 		<table>
-			<id>6466469bb80fd7f27498da2b13dede6c46bb14f5</id>
+			<id>47b3c2e406ead07acf8a398f31e7ee57390e4d51</id>
 			<height>100</height>
-			<width>75</width>
+			<width>311</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>744</x>
-			<y>492</y>
+			<x>900</x>
+			<y>480</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -4884,9 +4884,9 @@
 			</color>
 			<connections>
 				<relation>
-					<id>92742e89d3bf365285b44cb774c6aaabe3dbf01e</id>
-					<source>f851aeda48a71d78ccb1d2a4356a29994679bad9</source>
-					<target>6466469bb80fd7f27498da2b13dede6c46bb14f5</target>
+					<id>b33aa923f605ff72de7aa547f7b61c1300473056</id>
+					<source>467a56d2d540cb2f0268a09c29491091d9f3ba11</source>
+					<target>47b3c2e406ead07acf8a398f31e7ee57390e4d51</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -4906,9 +4906,9 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 				<relation>
-					<id>7361efddbcec498ba801161341c258d497171dfa</id>
+					<id>907d3ea187a474938cf59f50bccd7e574575696a</id>
 					<source>66a49ac8fa7ac17206a7c9f0c1f316988a9c61de</source>
-					<target>6466469bb80fd7f27498da2b13dede6c46bb14f5</target>
+					<target>47b3c2e406ead07acf8a398f31e7ee57390e4d51</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -4938,7 +4938,7 @@
 				<normal_column>
 					<id>2f7bbb8699e51f6ae50ccbab765f8de4a402cad2</id>
 					<referenced_column>ab8b402ea35a78cdadd5ed446d571c9a80b532ee</referenced_column>
-					<relation>92742e89d3bf365285b44cb774c6aaabe3dbf01e</relation>
+					<relation>b33aa923f605ff72de7aa547f7b61c1300473056</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -4972,7 +4972,7 @@
 				<normal_column>
 					<id>c06047702cc26617e350accac3afdbb589cf5cf4</id>
 					<referenced_column>ed19c91e49d39e19cffec01c77c369cd2ea1c989</referenced_column>
-					<relation>7361efddbcec498ba801161341c258d497171dfa</relation>
+					<relation>907d3ea187a474938cf59f50bccd7e574575696a</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5444,8 +5444,8 @@
 			</color>
 			<connections>
 				<relation>
-					<id>71480f0f51879ea4471e0c1e3d8c704a7e563fd6</id>
-					<source>6249541849a94bc54f94ac48d9caec9b9001631f</source>
+					<id>d9443e76f22b07ec8c4e98188d52b1473286c181</id>
+					<source>64debef4a30c2c5e6a7ff2d27f7a9de59357fd66</source>
 					<target>a224d5c6c5680afc732a8b41bbc277123a6176ac</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -5498,7 +5498,7 @@
 				<normal_column>
 					<id>23ffaff951e2a129327ee9c1adbd27093924b4f4</id>
 					<referenced_column>5ac7f3a7a755a58e6119c8d4922df644559e632f</referenced_column>
-					<relation>71480f0f51879ea4471e0c1e3d8c704a7e563fd6</relation>
+					<relation>d9443e76f22b07ec8c4e98188d52b1473286c181</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -6887,8 +6887,8 @@
 			</color>
 			<connections>
 				<relation>
-					<id>2e3d8d442b91e39ae6bcba329a808564682b1211</id>
-					<source>f851aeda48a71d78ccb1d2a4356a29994679bad9</source>
+					<id>aa22ada98e8855e25c95051a4d6d774c89b9b438</id>
+					<source>467a56d2d540cb2f0268a09c29491091d9f3ba11</source>
 					<target>2b25309b23b15217dae4109747f829924b74a453</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -6996,7 +6996,7 @@
 				<normal_column>
 					<id>5eed2939e1d63782c6ef3363e98724114c4a5f6a</id>
 					<referenced_column>ab8b402ea35a78cdadd5ed446d571c9a80b532ee</referenced_column>
-					<relation>2e3d8d442b91e39ae6bcba329a808564682b1211</relation>
+					<relation>aa22ada98e8855e25c95051a4d6d774c89b9b438</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -8616,13 +8616,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>f54edb1906a3041eaae2e2596becaeb62e536a4b</id>
+			<id>102d69680bbba695a21a6cf92f468093840163c7</id>
 			<height>100</height>
-			<width>59</width>
+			<width>295</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
 			<x>744</x>
-			<y>264</y>
+			<y>240</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -8630,9 +8630,9 @@
 			</color>
 			<connections>
 				<relation>
-					<id>c958b3bde7260315a70c3934496a192133d2902c</id>
+					<id>2e0b3cd19c1e0d75fb4df64e89fb912ee79f453b</id>
 					<source>66a49ac8fa7ac17206a7c9f0c1f316988a9c61de</source>
-					<target>f54edb1906a3041eaae2e2596becaeb62e536a4b</target>
+					<target>102d69680bbba695a21a6cf92f468093840163c7</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -8652,9 +8652,9 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 				<relation>
-					<id>c044efd4591e587a7d10029a873278843d380ecc</id>
+					<id>d9449ad469e4e85ea98b38a2535e83ca6e9f3869</id>
 					<source>947d03a272d7601e097ce51fba7e3f447294646b</source>
-					<target>f54edb1906a3041eaae2e2596becaeb62e536a4b</target>
+					<target>102d69680bbba695a21a6cf92f468093840163c7</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -8684,7 +8684,7 @@
 				<normal_column>
 					<id>f40fc237f65986113b3d4cf6f65d01dff88aba54</id>
 					<referenced_column>ed19c91e49d39e19cffec01c77c369cd2ea1c989</referenced_column>
-					<relation>c958b3bde7260315a70c3934496a192133d2902c</relation>
+					<relation>2e0b3cd19c1e0d75fb4df64e89fb912ee79f453b</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -8718,7 +8718,7 @@
 				<normal_column>
 					<id>2514d7a64ce6b0f5bafa582a5330a36f073efdcc</id>
 					<referenced_column>22d38cfee95536d3e3af5fdd444b027a85d95432</referenced_column>
-					<relation>c044efd4591e587a7d10029a873278843d380ecc</relation>
+					<relation>d9449ad469e4e85ea98b38a2535e83ca6e9f3869</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -9186,13 +9186,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>f851aeda48a71d78ccb1d2a4356a29994679bad9</id>
+			<id>467a56d2d540cb2f0268a09c29491091d9f3ba11</id>
 			<height>481</height>
 			<width>356</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>732</x>
-			<y>744</y>
+			<x>719</x>
+			<y>912</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -9200,9 +9200,9 @@
 			</color>
 			<connections>
 				<relation>
-					<id>ae5204125335fa463b3a54c9d1a1767ad6c40c88</id>
-					<source>6249541849a94bc54f94ac48d9caec9b9001631f</source>
-					<target>f851aeda48a71d78ccb1d2a4356a29994679bad9</target>
+					<id>8a52fcda0d385a559906b5ecfe716a911a9e5a13</id>
+					<source>64debef4a30c2c5e6a7ff2d27f7a9de59357fd66</source>
+					<target>467a56d2d540cb2f0268a09c29491091d9f3ba11</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -9222,9 +9222,9 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 				<relation>
-					<id>b0ba77eb69964caa71eb21315b67768b84ead61e</id>
+					<id>52da62cadf5cc90802024552c6aa5691c15826b7</id>
 					<source>7165d535290fa2a07d6419adbabf925ea3671043</source>
-					<target>f851aeda48a71d78ccb1d2a4356a29994679bad9</target>
+					<target>467a56d2d540cb2f0268a09c29491091d9f3ba11</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -9386,7 +9386,7 @@
 				<normal_column>
 					<id>b0ac1bfb9a465a46257d8e043e8d0370feb0ee7c</id>
 					<referenced_column>512f24dbe486a211117dfb58e689ef3e0e5009a0</referenced_column>
-					<relation>b0ba77eb69964caa71eb21315b67768b84ead61e</relation>
+					<relation>52da62cadf5cc90802024552c6aa5691c15826b7</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -9453,7 +9453,7 @@
 				<normal_column>
 					<id>76ab6ac096fb9c9be7bf61df683ce21a3da0c33d</id>
 					<referenced_column>5ac7f3a7a755a58e6119c8d4922df644559e632f</referenced_column>
-					<relation>ae5204125335fa463b3a54c9d1a1767ad6c40c88</relation>
+					<relation>8a52fcda0d385a559906b5ecfe716a911a9e5a13</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -15633,13 +15633,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>6249541849a94bc54f94ac48d9caec9b9001631f</id>
+			<id>64debef4a30c2c5e6a7ff2d27f7a9de59357fd66</id>
 			<height>1114</height>
 			<width>356</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
 			<x>722</x>
-			<y>1524</y>
+			<y>1584</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -15647,9 +15647,9 @@
 			</color>
 			<connections>
 				<relation>
-					<id>2035ff8bed1ac380dd7a5574037c91cffe2b9633</id>
+					<id>e828ac31bfcde28fe5b6f8c4a215335efff0635e</id>
 					<source>58e3876001e8fb93dd3b5ac251a04e03cefeac12</source>
-					<target>6249541849a94bc54f94ac48d9caec9b9001631f</target>
+					<target>64debef4a30c2c5e6a7ff2d27f7a9de59357fd66</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -15812,7 +15812,7 @@
 				<normal_column>
 					<id>bdc9f61f5a7bd4a53e05d939ea82f9885c78eb01</id>
 					<referenced_column>84fb98359c82f62d61719d8ce1d1f850d69d972f</referenced_column>
-					<relation>2035ff8bed1ac380dd7a5574037c91cffe2b9633</relation>
+					<relation>e828ac31bfcde28fe5b6f8c4a215335efff0635e</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -17403,8 +17403,8 @@
 			</color>
 			<connections>
 				<relation>
-					<id>c9589cff16f2a91eb9f5f7c1ba710c028ec7d0a0</id>
-					<source>f851aeda48a71d78ccb1d2a4356a29994679bad9</source>
+					<id>030ab183aa9032894b55252ca6c8209cebdf28a4</id>
+					<source>467a56d2d540cb2f0268a09c29491091d9f3ba11</source>
 					<target>71cd7f48c610699c394b7b8d73626d11a806b516</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -17864,7 +17864,7 @@
 				<normal_column>
 					<id>f22a1cfec76101d87da3a951bb05d7700418c1c1</id>
 					<referenced_column>ab8b402ea35a78cdadd5ed446d571c9a80b532ee</referenced_column>
-					<relation>c9589cff16f2a91eb9f5f7c1ba710c028ec7d0a0</relation>
+					<relation>030ab183aa9032894b55252ca6c8209cebdf28a4</relation>
 					<description>用户类型引用编号，例如如：当user_type为1员工的时候，ref_code关联的为emp_code</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>用户类型引用编号</logical_name>
@@ -19132,6 +19132,149 @@
 						</column>
 					</columns>
 				</inidex>
+			</indexes>
+			<complex_unique_key_list>
+			</complex_unique_key_list>
+			<table_properties>
+				<schema></schema>
+			</table_properties>
+		</table>
+		<table>
+			<id>cd69c28d0db5f024b3841fc4c31790fa0fbc0c72</id>
+			<height>100</height>
+			<width>302</width>
+				<font_name>Arial</font_name>
+				<font_size>14</font_size>
+			<x>588</x>
+			<y>672</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+				<relation>
+					<id>a7a5344bac8b345c0acb63aca1256c0289476bdf</id>
+					<source>7165d535290fa2a07d6419adbabf925ea3671043</source>
+					<target>cd69c28d0db5f024b3841fc4c31790fa0fbc0c72</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
+				<relation>
+					<id>56c998f604500121c59c9cfb13c46cc61d323106</id>
+					<source>947d03a272d7601e097ce51fba7e3f447294646b</source>
+					<target>cd69c28d0db5f024b3841fc4c31790fa0fbc0c72</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
+			</connections>
+			<physical_name>js_sys_office_role</physical_name>
+			<logical_name>部门与角色关联表</logical_name>
+			<description></description>
+			<constraint></constraint>
+			<primary_key_name></primary_key_name>
+			<option></option>
+			<columns>
+				<normal_column>
+					<id>bfdcbe324e2b7a38d7a2a064f9d7f7ff4c3a4c5e</id>
+					<referenced_column>512f24dbe486a211117dfb58e689ef3e0e5009a0</referenced_column>
+					<relation>a7a5344bac8b345c0acb63aca1256c0289476bdf</relation>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>varchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>true</foreign_key>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
+					<id>e6a84d22ca3679d99db0e88b23b1b8651dd81e25</id>
+					<referenced_column>22d38cfee95536d3e3af5fdd444b027a85d95432</referenced_column>
+					<relation>56c998f604500121c59c9cfb13c46cc61d323106</relation>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>varchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>true</foreign_key>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+			</columns>
+			<indexes>
 			</indexes>
 			<complex_unique_key_list>
 			</complex_unique_key_list>

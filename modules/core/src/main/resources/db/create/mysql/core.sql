@@ -702,6 +702,15 @@ CREATE TABLE ${_prefix}sys_office
 ) COMMENT = '组织机构表';
 
 
+-- 部门与角色关联表
+CREATE TABLE ${_prefix}sys_office_role
+(
+	office_code varchar(64) NOT NULL COMMENT '机构编码',
+	role_code varchar(64) NOT NULL COMMENT '角色编码',
+	PRIMARY KEY (office_code, role_code)
+) COMMENT = '部门与角色关联表';
+
+
 -- 员工岗位表
 CREATE TABLE ${_prefix}sys_post
 (

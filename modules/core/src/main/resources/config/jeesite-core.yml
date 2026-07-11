@@ -228,11 +228,14 @@ user:
   # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
   adminCtrlPermi: 2
 
+  # 是否启用部门角色，开启后将 用户->部门->关联角色，纳入菜单和权限管理 v5.18.1
+  officeRolePermi: true
+
   # 是否启用岗位角色，开启后将 用户->岗位->关联角色，纳入菜单和权限管理 v5.9.2
-  postRolePermi: false
+  postRolePermi: true
 
   # 是否启用切换部门功能，再开启启用岗位角色后可支持 用户->附属部门->岗位->关联角色，纳入菜单和权限管理 v5.10.1
-  switchOffice: false
+  switchOffice: true
 
   # 登录后激活当前用户所在的主部门，默认为不激活即混合权限
   loginAfterActiveMainOffice: false

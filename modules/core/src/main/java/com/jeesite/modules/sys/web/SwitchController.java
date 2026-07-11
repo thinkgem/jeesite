@@ -93,7 +93,7 @@ public class SwitchController extends BaseController{
 	}
 
 	/**
-	 * 切换岗位菜单（用户->岗位->角色）v4.9.2
+	 * 切换岗位菜单（用户->岗位->角色）v5.9.2
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = {"switchPost","switchPost/{postCode}"})
