@@ -419,6 +419,9 @@ user:
 #  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
 #  adminCtrlPermi: 2
 #
+#  # 是否启用部门角色，开启后将 用户->部门->关联角色，纳入菜单和权限管理 v5.18.1
+#  officeRolePermi: false
+#
 #  # 是否启用岗位角色，开启后将 用户->岗位->关联角色，纳入菜单和权限管理 v5.9.2
 #  postRolePermi: false
 #
@@ -845,8 +848,6 @@ web:
 #    # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
 #    smartMethodArgumentResolver: true
 #    
-#    # 使用 .json、.xml 后缀匹配返回视图数据（Spring官方已不推荐使用）
-#    favorPathExtension: false
 #    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
 #    favorParameter: true
 #    # 修改 Spring MVC 默认 format 参数名，避免 406 错误 v5.15.1
@@ -903,11 +904,6 @@ web:
 #  validator:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
 #    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
-#  
-#  # 默认不启用（为兼用旧版保留，建议使用 CORS）
-#  jsonp:
-#    enabled: false
-#    callback: __callback
 
   # 核心模块的Web功能开启（其它微服务时设为false）
   core: 

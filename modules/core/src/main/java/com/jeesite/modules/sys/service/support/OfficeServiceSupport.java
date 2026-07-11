@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.service.support;
 
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.ServiceException;
@@ -12,8 +13,10 @@ import com.jeesite.common.utils.PageUtils;
 import com.jeesite.common.utils.excel.ExcelImport;
 import com.jeesite.common.validator.ValidatorUtils;
 import com.jeesite.modules.sys.dao.OfficeDao;
+import com.jeesite.modules.sys.dao.OfficeRoleDao;
 import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.entity.OfficeRole;
 import com.jeesite.modules.sys.service.DataScopeService;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
@@ -36,10 +39,12 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 
 	protected final DataScopeService dataScopeService;
 	protected final EmpUserService empUserService;
+	protected final OfficeRoleDao officeRoleDao;
 
-	public OfficeServiceSupport(DataScopeService dataScopeService, EmpUserService empUserService) {
+	public OfficeServiceSupport(DataScopeService dataScopeService, EmpUserService empUserService, OfficeRoleDao officeRoleDao) {
 		this.dataScopeService = dataScopeService;
 		this.empUserService = empUserService;
+		this.officeRoleDao = officeRoleDao;
 	}
 
 	/**
@@ -70,6 +75,13 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 	}
 
 	/**
+	 * 查询部门角色关系
+	 */
+	public List<OfficeRole> findOfficeRoleList(OfficeRole officeRole) {
+		return officeRoleDao.findList(officeRole);
+	}
+
+	/**
 	 * 保存数据（插入或更新）
 	 */
 	@Override
@@ -82,6 +94,23 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 			dataScopeService.insertIfParentExists(office, "Office");
 		}
 		super.save(office);
+		// 重新绑定部门和角色之间的关系
+		if (StringUtils.isNotBlank(office.getOfficeCode()) && office.getRoleCodes() != null) {
+			OfficeRole where = new OfficeRole();
+			where.setOfficeCode(office.getOfficeCode());
+			officeRoleDao.deleteByEntity(where);
+			List<OfficeRole> list = ListUtils.newArrayList();
+			for (String code : StringUtils.splitComma(office.getRoleCodes())) {
+				OfficeRole e = new OfficeRole();
+				e.setOfficeCode(office.getOfficeCode());
+				e.setRoleCode(code);
+				e.setIsNewRecord(true);
+				list.add(e);
+			}
+			if (ListUtils.isNotEmpty(list)) {
+				officeRoleDao.insertBatch(list, null);
+			}
+		}
 		// 清理部门相关缓存
 		clearOfficeCache(office);
 	}

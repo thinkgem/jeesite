@@ -95,7 +95,7 @@ public class CorpAdminController extends BaseController {
 		// 获取当前用户所拥有的角色
 		Role role = new Role();
 		role.setUserCode(user.getUserCode());
-		List<Role> roleList = roleService.findListByUserCode(role);
+		List<Role> roleList = roleService.findList(role);
 		roleList.add(new Role(Role.CORP_ADMIN_ROLE_CODE));
 		model.addAttribute("roleList", roleList);
 		model.addAttribute("corpAdminRoleCode", Role.CORP_ADMIN_ROLE_CODE);

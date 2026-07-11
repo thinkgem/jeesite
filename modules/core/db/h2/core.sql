@@ -701,6 +701,15 @@ CREATE TABLE js_sys_office
 );
 
 
+-- 部门与角色关联表
+CREATE TABLE js_sys_office_role
+(
+	office_code varchar(64) NOT NULL,
+	role_code varchar(64) NOT NULL,
+	PRIMARY KEY (office_code, role_code)
+);
+
+
 -- 员工岗位表
 CREATE TABLE js_sys_post
 (
@@ -1589,6 +1598,9 @@ COMMENT ON COLUMN js_sys_office.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_office.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_office.extend_d4 IS '扩展 Date 4';
 COMMENT ON COLUMN js_sys_office.extend_json IS '扩展 JSON';
+COMMENT ON TABLE js_sys_office_role IS '部门与角色关联表';
+COMMENT ON COLUMN js_sys_office_role.office_code IS '机构编码';
+COMMENT ON COLUMN js_sys_office_role.role_code IS '角色编码';
 COMMENT ON TABLE js_sys_post IS '员工岗位表';
 COMMENT ON COLUMN js_sys_post.post_code IS '岗位编码';
 COMMENT ON COLUMN js_sys_post.view_code IS '岗位代码';
