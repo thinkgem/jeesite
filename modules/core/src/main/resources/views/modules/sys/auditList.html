@@ -12,17 +12,22 @@
 			<#form:form id="searchForm" model="${audit}" action="${ctx}/sys/audit/listData" method="post" class="form-inline"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">${text('类型')}：</label>
-					<div class="control-inline">
-						<div class="btn-group" id="btnAuditType">
-							<button type="button" class="btn btn-default active" data-type="0">${text('全部问题')}</button>
-							<button type="button" class="btn btn-default" data-type="1">${text('未修改初始密码')}</button>
-							<button type="button" class="btn btn-default" data-type="2" title="${text('密码等级是弱或者很弱的')}">${text('使用简单密码')}</button>
-							<button type="button" class="btn btn-default" data-type="3" title="${text('定期未修改密码的账号 {0\} 天内不被审查', @Global.getConfig('sys.user.passwordModifyCycle'))}"><i class="fa icon-question "></i> ${text('定期未修改密码')}</button>
-							<button type="button" class="btn btn-default" data-type="4" title="${text('长期未登录的账号 {0\} 天内不被审查', @Global.getConfig('sys.user.passwordModifyCycle'))}"><i class="fa icon-question "></i> ${text('长期未登录')}</button>
-							<button type="button" class="btn btn-default" data-type="5">${text('未设置密保')}</button>
-						</div>
-						<#form:hidden path="auditType" />
+					<label class="control-label">${text('类型')}：<i class="fa icon-question" title="密码审计类型：
+1、${text('未修改初始密码')}：${text('未修改初始密码的用户')}
+2、${text('使用简单密码')}：${text('密码等级是弱或者很弱的')}
+3、${text('定期未修改密码')}：${text('定期未修改密码的账号 {0\} 天内不被审查', @Global.getConfig('sys.user.passwordModifyCycle'))}
+4、${text('长期未登录')}：${text('长期未登录的账号 {0\} 天内不被审查', @Global.getConfig('sys.user.passwordModifyCycle'))}
+5、${text('未设置密保')}：${text('未设置密保问题的用户')}"></i> &nbsp; </label>
+					<div class="control-inline width-140">
+						<% var items = [
+							{label:text('全部问题'),value:'0'},
+							{label:text('未修改初始密码'),value:'1'},
+							{label:text('使用简单密码'),value:'2'},
+							{label:text('定期未修改密码'),value:'3'},
+							{label:text('长期未登录'),value:'4'},
+							{label:text('未设置密保'),value:'5'}
+						]; %>
+						<#form:select path="auditType" items="${items}" itemLabel="label" itemValue="value" class="form-control" />
 					</div>
 				</div>
 				<div class="inline-block">
@@ -82,11 +87,6 @@ $('#dataGrid').dataGrid({
 	ajaxSuccess: function(data){
 		
 	}
-});
-$('#btnAuditType button').click(function(){
-	$('#btnAuditType button').removeClass('active');
-	$('#auditType').val($(this).addClass('active').data('type'));
-	$('#searchForm').submit();
 });
 $('#btnExport').click(function(){
 	js.ajaxSubmitForm($('#searchForm'), {

@@ -440,7 +440,7 @@ public class EmpUserController extends BaseController {
 		for (int i = 0; i < list.size(); i++) {
 			EmpUser e = list.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
-			map.put("id", ObjectUtils.defaultIfNull(idPrefix, "u_") + e.getId());
+			map.put("id", ObjectUtils.getIfNull(idPrefix, "u_") + e.getId());
 			map.put("pId", StringUtils.defaultIfBlank(e.getEmployee().getOffice().getOfficeCode(), "0"));
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getLoginCode(), e.getUserName()));
 			mapList.add(map);
