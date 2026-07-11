@@ -14,22 +14,45 @@
 					<div class="box box-main">
 						<div class="box-header">
 							<div class="box-title">
-								${text('菜单权限')}
+								${text('权限列表')}
 							</div>
 							<div class="box-tools pull-right">
 								<button type="button" class="btn btn-box-tool" id="btnRefresh" title="${text('刷新')}"><i class="fa fa-refresh"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 							</div>
 						</div>
 						<div class="ui-layout-content">
+							<div class="pull-left" style="width:100%;overflow:hidden">
+								<div class="box box-solid box-trees">
+									<div class="box-header">
+										<div class="box-title">
+											<strong>${text('拥有角色')}</strong>
+										</div>
+										<div class="box-tools pull-right" style="top:11px;">
+													<i class="fa icon-question" title="当前用户拥有的角色列表，除了用户和角色直接关联外，还有可能有以下关联：
+		1、如果启用部门角色，user.officeRolePermi: 将获取 用户->部门->关联角色
+		2、如果启用岗位角色，user.postRolePermi: 将获取 用户->岗位->关联角色
+		3、如果启用切换部门功能，user.switchOffice: 将获取 用户->附属部门->岗位->关联角色
+		"></i>
+										</div>
+									</div>
+									<div class="box-body">
+										<#form:form id="roleSearchForm" model="${audit}" action="${ctx}/sys/audit/roleListData" method="post" class="form-inline hide">
+											<#form:hidden name="userCode"/>
+										</#form:form>
+										<table id="roleDataGrid"></table>
+									</div>
+								</div>
+							</div>
 							<div id="menuTrees"></div>
 							<script id="menuTpl" type="text/template">
 								<div class="pull-left" style="width:100%;overflow:hidden">
 									<div class="box box-solid box-trees">
 										<div class="box-header">
 											<div class="box-title">
-												<label>{{d.label}}</label>
+												<strong>{{d.label}}</strong>
 											</div>
-											<div class="box-tools pull-right" style="top:8px;">
+											<div class="box-tools pull-right" style="top:5px;">
 												<a class="btn btn-box-tool" id="expand_{{d.key}}"
 													value="menuTree_{{d.key}}" >${text('展开')}</a>/<a
 													class="btn btn-box-tool" id="collapse_{{d.key}}"
@@ -101,16 +124,14 @@ var setting = {view:{selectedMulti:false,nameIsHTML: true},data:{key:{title:"tit
 	callback:{onClick:function(event, treeId, treeNode){
 		var tree = $.fn.zTree.getZTreeObj(treeId);
 		tree.expandNode(treeNode);
-		$('#menuCode').val(treeNode.id);
-		page();
 	}}
 }, 
 sysCodeDict = "#{@DictUtils.getDictListJson('sys_menu_sys_code')}",
-userCode = '', menuTrees = {},
+userCode = '', roleCode = '', menuTrees = {},
 loadTree = function(){
 	$('#menuTrees').empty();
 	js.ajaxSubmit("${ctx}/sys/audit/menuTreeData?___t=" + new Date().getTime(), 
-			{userCode: userCode}, function(data){
+			{userCode: userCode, roleCode: roleCode}, function(data){
 		for (var sysCode in data.menuMap){
 		 	var menuMap = data.menuMap[sysCode];
 		 	$('#menuTrees').append(js.template('menuTpl', {key: sysCode, 
@@ -139,7 +160,28 @@ loadTree = function(){
 		}
 	}, null, null, js.text('loading.message'));
 };loadTree();
+var roleDataGrid = $("#roleDataGrid").dataGrid({
+	searchForm: $('#roleSearchForm'),
+	columnModel: [
+		{header:'${text("角色名称")}', name:'roleName', sortable:false, width:100, align:"center"},
+		{header:'${text("角色编码")}', name:'roleCode', sortable:false, width:100, align:"center"}  
+	],
+	emptyDataHint: true,
+	autoGridHeight: function(){
+		return 'auto';
+	},
+	onSelectRow: function(id, isSelect, event){
+		roleCode = id;
+		loadTree();
+	},
+	ajaxSuccess: function(){
+	}
+});
 $('#btnRefresh').click(function(){
+	if (roleCode != '') {
+		roleDataGrid.dataGrid('resetSelection', roleCode);
+	}
+	roleCode = '';
 	loadTree();
 });
 //# // 初始化DataGrid对象
@@ -164,17 +206,13 @@ $('#dataGrid').dataGrid({
 	],
 	onSelectRow: function(id, isSelect, event){
 		userCode = id;
+		roleCode = '';
 		loadTree();
+		$('#userCode').val(userCode);
+		roleDataGrid.dataGrid('refresh');
 	},
-	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
 	}
-});
-$('#btnAuditType button').click(function(){
-	$('#btnAuditType button').removeClass('active');
-	$('#auditType').val($(this).addClass('active').data('type'));
-	$('#searchForm').submit();
 });
 $('#btnExport').click(function(){
 	js.ajaxSubmitForm($('#searchForm'), {

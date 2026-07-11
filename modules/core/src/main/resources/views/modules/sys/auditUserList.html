@@ -151,11 +151,6 @@ $('#dataGrid').dataGrid({
 		
 	}
 });
-$('#btnAuditType button').click(function(){
-	$('#btnAuditType button').removeClass('active');
-	$('#auditType').val($(this).addClass('active').data('type'));
-	$('#searchForm').submit();
-});
 $('#btnExport').click(function(){
 	js.ajaxSubmitForm($('#searchForm'), {
 		url: '${ctx}/sys/audit/exportData',
