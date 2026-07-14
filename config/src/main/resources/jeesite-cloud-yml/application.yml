@@ -117,7 +117,7 @@ service:
 #======================================#
 
 # 数据库连接
-jdbc: 
+jdbc:
   
   # Mysql 数据库配置
   type: mysql
@@ -473,7 +473,7 @@ shiro:
 web:
   
   # 核心模块的Web功能开启（其它微服务时设为false）
-  core: 
+  core:
     enabled: false
 
 # Session 相关
