@@ -2,7 +2,7 @@
 # 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod
 
 # 数据库连接
-jdbc: 
+jdbc:
   
   # Mysql 数据库配置
   type: mysql
