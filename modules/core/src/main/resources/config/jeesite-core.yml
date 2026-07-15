@@ -13,7 +13,7 @@ copyrightYear: 2026
 #======================================#
 
 # 数据库连接
-jdbc: 
+jdbc:
   
   # 连接信息加密
   encrypt:
@@ -97,9 +97,13 @@ spring:
   cache:
     # 缓存及会话共享（专业版）
     isClusterMode: false
-    # 给缓存Key增加数据源名称前缀 v5.6.1
+    # 给缓存名称增加DsName数据源名称前缀 v5.18.1
+    prefixWithDsName: false
+    # 指定全局缓存名，当prefixWithDsName设置为true时有效 v5.18.1
+    globalNames: sessionCache,sysCache
+    # 给缓存Key增加DsName数据源名称前缀 v5.6.1
     keyPrefixWithDsName: false
-    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true的时有效（cacheName:key|*）v5.12.1
+    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true时有效（cacheName:key|*）v5.12.1
     globalKeyNames: sysCache:configMap,sysCache:moduleMap,sysCache:areaAllList
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
@@ -329,7 +333,7 @@ user:
   dataScopeRuleSql: false
 
 # 角色管理 
-role: 
+role:
   # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
   extendDataScopes: >
     {
@@ -775,7 +779,7 @@ web:
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
 
   # 核心模块的Web功能开启（其它微服务时设为false）
-  core: 
+  core:
     enabled: true
   
 # 在线API文档
