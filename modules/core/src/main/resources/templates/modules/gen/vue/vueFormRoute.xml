@@ -48,7 +48,6 @@
     <template #actions>
       <BpmButton
         v-model:bpmEntity="record"
-        bpmEntityKey="id"
         formKey="${table.optionMap['bpmFormKey']}"
         :completeText="t('提交')"
         :completeModal="true"
