@@ -138,6 +138,9 @@ public class ModuleController extends BaseController {
 		} else {
 			model.addAttribute("genFrontDir", defaultBaseDirList.get(0));
 		}
+		if (module.getUpdateDate() != null) {
+			module.setLastUpdateDateTime(module.getUpdateDate().getTime());
+		}
 		model.addAttribute("module", module);
 		return "modules/sys/moduleForm";
 	}
