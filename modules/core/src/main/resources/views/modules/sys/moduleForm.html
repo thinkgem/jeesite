@@ -185,8 +185,8 @@ Class.forName(“com.jeesite.modules.sys.web.LoginController”)；在微服务�
 					</div>
 				</div>
 			</div>
-			<%/* 乐观锁，前台提交时间戳作为该表单的版本号，后台更新数据前只要调用baseValidator即可验证版本。
-			<input type="hidden" name="lastUpdateDateTime" value="${module.updateDate.time!}" /> */%>
+			<%/* 乐观锁，前台提交时间戳作为该表单的版本号，后台更新数据前只要调用baseValidator即可验证版本。*/%>
+			<input type="hidden" name="lastUpdateDateTime" value="${module.updateDate.time!}" />
 		</#form:form>
 	</div>
 </div>
