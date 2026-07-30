@@ -39,7 +39,7 @@
 		<bcprov.version>1.80</bcprov.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<snakeyaml.version>2.6</snakeyaml.version>
-		<fastjson.version>2.0.61</fastjson.version>
+		<fastjson.version>2.0.63</fastjson.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<joda-time.version>2.12.7</joda-time.version>
 
