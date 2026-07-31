@@ -195,7 +195,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 **1）使用内嵌数据库：**
 
 1. 免安装数据库，使用内嵌 H2 DB、包含 Vue 和 全栈双版本
-2. 环境准备：`JDK 17 或更高版本`、`Maven 3.8+`、无需准备数据库
+2. 环境准备：`JDK 21 或 17 及以上`、`Maven 3.8+`、无需准备数据库
 3. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot4.zip> 并解压
 4. 执行脚本：`/web-fast/bin/run-tomcat.bat(sh)` 启动服务即可（无需手动建库，自动初始化数据库）
 5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
@@ -205,7 +205,7 @@ cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/th
 
 **2）使用 MySQL 或其它数据库：**
 
-1. 环境准备：`JDK 17+`、`Maven 3.8+`、使用 `MySQL 8.0+` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
+1. 环境准备：`JDK 21 或 17 及以上`、`Maven 3.8+`、使用 `MySQL 8.0+` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
 2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot4.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接（建立一个新库）
 4. 执行脚本：`/web/bin/init-data.bat(sh)` 初始化数据库（自动往新库里创建表和初始数据）
