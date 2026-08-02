@@ -78,7 +78,7 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/biz/bizCategory/enable?categoryCode='+row.categoryCode+'" class="btnList" title="${text("启用分类")}" data-confirm="${text("确认要启用该分类吗？")}"><i class="fa icon-check"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/biz/bizCategory/delete?categoryCode='+row.categoryCode+'" class="btnList" title="${text("删除分类")}" data-confirm="${text("确认要删除该分类及所有子分类吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/biz/bizCategory/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级分类")}"><i class="fa icon-plus"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/biz/bizCategory/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级分类")}" data-layer="true" data-layer-width="900" data-layer-height="350"><i class="fa icon-plus"></i></a>&nbsp;');
 			//# }
 			return actions.join('');
 		}}

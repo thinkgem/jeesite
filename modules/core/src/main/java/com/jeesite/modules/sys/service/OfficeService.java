@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jeesite.common.service.api.TreeServiceApi;
 import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.entity.OfficeRole;
 
 /**
  * 机构 Service
@@ -35,6 +36,11 @@ public interface OfficeService extends TreeServiceApi<Office> {
 	 */
 	@Override
 	List<Office> findList(Office office);
+
+	/**
+	 * 查询部门角色关系
+	 */
+	List<OfficeRole> findOfficeRoleList(OfficeRole officeRole);
 
 	/**
 	 * 保存数据（插入或更新）

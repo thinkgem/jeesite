@@ -30,7 +30,7 @@ spring:
         frequency-penalty: 0
       # 嵌入向量模型使用硅基流动
       embedding:
-        base-url: https://api.siliconflow.cn
+        base-url: https://api.siliconflow.cn/v1
         api-key: ${SFLOW_APP_KEY}
         model: BAAI/bge-m3
         #dimensions: 512

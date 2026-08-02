@@ -15,6 +15,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.entity.OfficeRole;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.web.user.EmpUserController;
@@ -135,6 +136,22 @@ public class OfficeController extends BaseController {
 			}else if (office.getParent() != null){
 				office.setViewCode(office.getParent().getViewCode() + "001");
 			}
+		}
+		// 查询部门所关联的角色信息
+		if (StringUtils.isNotBlank(office.getOfficeCode())){
+			OfficeRole whereRole = new OfficeRole();
+			whereRole.setOfficeCode(office.getOfficeCode());
+			whereRole.sqlMap().loadJoinTableAlias("r");
+			List<String> roleCodes = ListUtils.newArrayList();
+			List<String> roleNames = ListUtils.newArrayList();
+			officeService.findOfficeRoleList(whereRole).forEach(e -> {
+				if (e.getRole() != null && OfficeRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
+					roleCodes.add(e.getRoleCode());
+					roleNames.add(e.getRole().getRoleName());
+				}
+			});
+			model.addAttribute("roleCodes", StringUtils.joinComma(roleCodes));
+			model.addAttribute("roleNames", StringUtils.joinComma(roleNames));
 		}
 		model.addAttribute("office", office);
 		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));

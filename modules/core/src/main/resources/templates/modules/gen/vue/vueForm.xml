@@ -40,7 +40,6 @@
     <template #footer>
       <BpmButton
         v-model:bpmEntity="record"
-        bpmEntityKey="id"
         formKey="${table.optionMap['bpmFormKey']}"
         :completeText="t('提交')"
         :completeModal="true"
@@ -516,7 +515,7 @@ for (c in table.columnList){
   <%
   for (c in table.columnList){
     if (c.isPk == '1' || c.showType == 'hidden'){ %>
-        ${c.attrName}: record.value.${c.attrName} || data.${c.attrName},
+        ${c.attrName}: data.${c.attrName} || record.value.${c.attrName},
       <% 
     }
   }

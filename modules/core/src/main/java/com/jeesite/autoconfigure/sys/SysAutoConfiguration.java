@@ -5,10 +5,7 @@
 package com.jeesite.autoconfigure.sys;
 
 import com.jeesite.common.mybatis.MyBatisFactoryBean;
-import com.jeesite.modules.sys.dao.CompanyOfficeDao;
-import com.jeesite.modules.sys.dao.EmployeeOfficeDao;
-import com.jeesite.modules.sys.dao.EmployeePostDao;
-import com.jeesite.modules.sys.dao.PostRoleDao;
+import com.jeesite.modules.sys.dao.*;
 import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.service.support.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -59,8 +56,8 @@ public class SysAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public OfficeService officeService(DataScopeService dataScopeService, EmpUserService empUserService){
-		return new OfficeServiceSupport(dataScopeService, empUserService);
+	public OfficeService officeService(DataScopeService dataScopeService, EmpUserService empUserService, OfficeRoleDao officeRoleDao){
+		return new OfficeServiceSupport(dataScopeService, empUserService, officeRoleDao);
 	}
 	
 	@Bean

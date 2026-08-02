@@ -37,6 +37,13 @@ public interface MsgInnerService extends CrudServiceApi<MsgInner> {
 	 * 查询消息记录数据
 	 */
 	List<MsgInnerRecord> findRecordList(MsgInnerRecord msgInnerRecord);
+
+	/**
+	 * 判断指定用户是否为消息的接收者
+	 * @param msgInnerId 消息ID
+	 * @param userCode 用户编码
+	 */
+	boolean isReceiveUser(String msgInnerId, String userCode);
 	
 	/**
 	 * 保存数据（插入或更新）

@@ -701,6 +701,15 @@ CREATE TABLE [${_prefix}sys_office]
 );
 
 
+-- 部门与角色关联表
+CREATE TABLE [${_prefix}sys_office_role]
+(
+	[office_code] varchar(64) NOT NULL,
+	[role_code] varchar(64) NOT NULL,
+	PRIMARY KEY ([office_code], [role_code])
+);
+
+
 -- 员工岗位表
 CREATE TABLE [${_prefix}sys_post]
 (

@@ -43,18 +43,18 @@ server:
 #    # 线程数最大和最小个数
 #    threads:
 #      max: 200
-#      min-spare: 10
-
+#      min-spare: 10 
+    
   # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
   schemeHttps: false
-
+  
 #======================================#
 #========= Database settings ==========#
 #======================================#
 
 # 数据库连接
 jdbc:
-
+  
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.cj.jdbc.Driver
@@ -124,7 +124,7 @@ jdbc:
 
   # 连接信息加密
   encrypt:
-
+  
     # 加密连接用户名
     username: false
     # 加密连接密码
@@ -132,7 +132,7 @@ jdbc:
 
   # 数据库连接池配置
   pool:
-
+  
     # 初始化连接数
     init: 1
     # 最小空闲连接数
@@ -153,29 +153,29 @@ jdbc:
 #
 #    # 连接失败后中断，默认为 false 时，会一直尝试连接，为 true 时，自动中断尝试（v5.9.0+）
 #    breakAfterAcquireFailure: false
-#
+#    
 #    # 从池中取出和归还连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
 #    testOnBorrow: false
 #    testOnReturn: false
-#
+#    
 #    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（1分钟）（4.0.6+）
 #    timeBetweenEvictionRunsMillis: 60000
-#
+#    
 #    # 一个连接在池中最小空闲的时间，单位毫秒（20分钟）（4.0.6+）
 #    minEvictableIdleTimeMillis: 1200000
 #    # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
 #    maxEvictableIdleTimeMillis: 1800000
-#
+#    
 #    # 连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作（4.1.8+）
 #    keepAlive: false
-#
+#    
 #    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
 #    removeAbandoned: false
 #    removeAbandonedTimeout: 2100
 #
 #    # 是否缓存 PreparedStatement 对象的最大数量（4.1.5+）
 #    maxPoolPreparedStatementPerConnectionSize: ~
-#
+#    
 #    # 设置连接属性，可获取到表的 remark (备注)
 #    remarksReporting: false
 
@@ -189,7 +189,7 @@ jdbc:
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  # v5.11.1+ 支持 dataSourceNames 免配置，自动读取 jdbc.数据源名.type 的属性
 #  dataSourceNames: ds_read_01, ds_read_02
-#
+#  
 #  # 默认数据源的从库01
 #  ds_read_01:
 #    type: mysql
@@ -202,7 +202,7 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-#
+#  
 #  # 默认数据源的从库02
 #  ds_read_02:
 #    type: mysql
@@ -224,7 +224,7 @@ jdbc:
 #  ds2:
 #    type: mysql
 #    driver: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
 #    username: root
 #    password: 123456
 #    testSql: SELECT 1
@@ -254,7 +254,7 @@ jdbc:
 #    com.jeesite.modules.filemanager. = ds2
 
 #  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
-#  tableAndColumn:
+#  tableAndColumn: 
 #    prefixSuffix: "`|`"
 #    forceUpperCase: true
 #
@@ -266,15 +266,15 @@ jdbc:
 #======================================#
 
 spring:
-
+  
   # 应用程序名称
   application:
-    name: jeesite-web
-
+    name: jeesite-web-api
+    
   # 当前环境名称，支持 JVM 参数设置，如: -Dspring.profiles.active=prod
   profiles:
     active: default
-
+    
   # 打印横幅
   main:
     banner-mode: "off"
@@ -320,6 +320,14 @@ spring:
 #  cache:
 #    # 缓存及会话共享（专业版）
 #    isClusterMode: true
+#    # 给缓存名称增加DsName数据源名称前缀 v5.18.1
+#    prefixWithDsName: false
+#    # 指定全局缓存名，当prefixWithDsName设置为true时有效 v5.18.1
+#    globalNames: sessionCache,sysCache
+#    # 给缓存Key增加DsName数据源名称前缀 v5.6.1
+#    keyPrefixWithDsName: false
+#    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true时有效（cacheName:key|*）v5.12.1
+#    globalKeyNames: sysCache:configMap,sysCache:moduleMap,sysCache:areaAllList
 #    # 清理全部缓存按钮所清理的缓存列表
 #    clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
 #    # 用户缓存
@@ -347,6 +355,9 @@ mybatis:
 
 #  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
 #  scanTypeHandlersPackage: ~
+#
+#  # 自定义 Mapper 文件扫描路径，如果多个，用“,”分隔 v4.2.3
+#  scanMapperLocations: classpath*:/mappings/**/*.xml
 #
 #  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
 #  jdbcTransaction: false
@@ -397,16 +408,16 @@ mybatis:
 
 # 分页相关
 #page:
-#
+#  
 #  # 默认每页显示的数据条数
 #  pageSize: 20
-#
+#  
 #  # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
 #  maxPageSize: 999
 
 # 用户相关
 user:
-
+  
 #  # 指定超级管理员编号（研发团队使用的账号）
 #  superAdminCode: system
 #
@@ -415,9 +426,12 @@ user:
 #
 #  # 系统管理员角色编号（客户方管理员使用的角色）
 #  corpAdminRoleCode: corpAdmin
-#
+#  
 #  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
 #  adminCtrlPermi: 2
+#
+#  # 是否启用部门角色，开启后将 用户->部门->关联角色，纳入菜单和权限管理 v5.18.1
+#  officeRolePermi: false
 #
 #  # 是否启用岗位角色，开启后将 用户->岗位->关联角色，纳入菜单和权限管理 v5.9.2
 #  postRolePermi: false
@@ -427,10 +441,10 @@ user:
 #
 #  # 登录后激活当前用户所在的主部门，默认为不激活即混合权限
 #  loginAfterActiveMainOffice: false
-
+  
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
-
+  
 #  # 登录账号是否租户内唯一，否则全局唯一
 #  loginCodeCorpUnique: false
 #
@@ -495,8 +509,8 @@ user:
 #  
 #  # 菜单数据权限，是否启用自定义 SQL 执行权限 v5.10.1
 #  dataScopeRuleSql: false
-
-# 角色管理
+  
+# 角色管理 
 #role:
 #  # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
 #  extendDataScopes: >
@@ -550,23 +564,23 @@ user:
 
 # 国际化管理（专业版）
 lang:
-  enabled: false
-
+  enabled: true
+  
 #  # 默认语言（4.1.3+）
 #  defaultLocale: zh_CN
 #  # 默认时区（4.1.3+）
 #  defaultTimeZone: GMT+08:00
-
+  
 # 任务调度（标准版）
 job:
-  enabled: false
-
+  enabled: true
+  
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true
 #
 #  # 任务调度启动延迟设置（单位：秒）（建议设置项目启动完成后的时间）
 #  startupDelay: 60
-#
+#  
 #  # 任务调度线程池
 #  threadPool:
 #    threadCount: 10
@@ -587,6 +601,7 @@ job:
 #    clusterCheckinInterval: 1000
 #    driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 #    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+#    misfireThreshold: 1000
 
 #  # 调度日志
 #  log:
@@ -607,7 +622,7 @@ job:
 # 代码生成
 gen:
   enabled: true
-
+  
 #  # 表名字段名是否强制小写
 #  forceLowerCase: true
 
@@ -621,7 +636,7 @@ state:
 
 # Shiro 相关
 shiro:
-
+  
   # 主页路径
   defaultPath: ${shiro.loginUrl}
 
@@ -657,36 +672,36 @@ shiro:
     #secretKey: thinkgem,jeesite,com
     secretKey: Base64
     #secretKey: ~
-
+  
   # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
   # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
   rememberMe:
     secretKey: ~
-
+  
 #  # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
 #  remoteAddrHeaderName: X-Forwarded-For
-#
+#  
 #  # 允许的请求方法设定，解决安全审计问题（BPM设计器用到了PUT或DELETE方法）
 #  allowRequestMethods: GET, POST, OPTIONS, PUT, DELETE
-#
+#  
 #  # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
 #  isAllowMultiAddrLogin: true
-#
+#  
 #  # 是否允许多账号多设备登录，如果设置为false，其它地点登录的相同账号全部登录设备将被踢下线
 #  isAllowMultiDeviceLogin: true
-#
+#  
 #  # 是否允许刷新主框架页，如果设置为false，刷新主页将导致重新登录。如安全性比较高的，如银行个人首页不允许刷新。
 #  isAllowRefreshIndex: true
-#
+#  
 #  # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
 #  isAllowExternalSiteIframe: true
-#
+#  
 #  # 设定允许获取的资源列表（v4.2.3）
 #  #contentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval' data:"
 
 #  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
 #  accessControlAllowOrigin: '*'
-#
+#  
 #  # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
 #  accessControlAllowMethods: GET, POST, OPTIONS
 #  accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
@@ -694,7 +709,7 @@ shiro:
 
 #  # 是否允许接收跨域的Cookie凭证数据 CORS
 #  accessControlAllowCredentials: false
-#
+#  
 #  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
 #  allowReferers: http://127.0.0.1,http://localhost
 #
@@ -726,45 +741,45 @@ shiro:
 #    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/${spring.application.name}/swagger/** = anon
 #    ${adminPath}/** = user
-
+    
 # Session 相关
 session:
-
+  
   # 会话超时时间，单位：毫秒，10m=600000, 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
   # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
-
+  
   # 游客会话超时时间：只访问了系统，但未登录系统的用户为游客，游客默认超时时间为3分钟，如：未登录系统时的图片验证码有效时间。
   sessionTimeout: 180000
-
+  
   # 登录系统后的用户超时时间（不明确 param_deviceType 参数的，默认设备为 pc 登录）
   pcSessionTimeout: 1800000
-
+  
   # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
   mobileAppSessionTimeout: 1800000
-
+  
 #  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话（设置为 0 关闭，微服务下只开启 core 即可）
 #  sessionTimeoutClean: 1200000
-#
+#  
 #  # 会话唯一标识SessionId在Cookie中的名称。
 #  sessionIdCookieName: jeesite.session.id
 #  #sessionIdCookiePath: ${server.servlet.context-path}
-#
+#  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  shareSessionIdCookieName: ${session.sessionIdCookieName}
-#
+#  
 #  # 其它 SimpleCookie 参数（v4.2.3）SameSite 可选值：Null、None、Lax、Strict
 #  sessionIdCookieSecure: false
 #  sessionIdCookieHttpOnly: true
 #  sessionIdCookieSameSite: Strict
-#
+#  
 #  # 设置接收 SessionId 请求参数和请求头的名称
 #  sessionIdParamName: __sid
 #  sessionIdHeaderName: x-token
-#
+#  
 #  # 当直接通过 __sid 参数浏览器访问页面时，可将直接将 __sid 写入 Cookie 应用于后面的访问
 #  # 访问地址举例：http://host/js/a/index?__sid=123456&__cookie=true
 #  writeCookieParamName: __cookie
-#
+#  
 #  # 记住我的请求参数和请求头的名称（v4.2.3）
 #  rememberMeHeaderName: x-remember
 
@@ -778,7 +793,7 @@ session:
 #      default: 10000, 1h
 #      sysCache: 100000, 365d
 #      sessionCache: 100000, 12h
-#
+#    
 #  # 二级缓存
 #  redis:
 #    # 存储模式 （generic|hash）
@@ -794,7 +809,7 @@ session:
 #        maxPoolSize: 20
 #        keepAliveSeconds: 60
 #        queueCapacity: 1000
-#
+#  
 #  # 通知订阅
 #  broadcast:
 #    # 缓存清理模式
@@ -833,18 +848,18 @@ web:
 #  # 开启对接口结果数据进行包装的请求参数名和请求头名（v5.8.1）
 #  resultParamName: __data
 #  resultHeaderName: x-header
-#
+#  
 #  # MVC 视图相关
 #  view:
-#
+#    
 #    # 系统主题名称，主题视图优先级最高，如果主题下无这个视图文件则访问默认视图
 #    # 引入页面头部：'/themes/'+themeName+'/include/header.html'
 #    # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
 #    themeName: default
-#
+#    
 #    # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
 #    smartMethodArgumentResolver: true
-#
+#    
 #    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
 #    favorParameter: true
 #    # 修改 Spring MVC 默认 format 参数名，避免 406 错误 v5.15.1
@@ -854,7 +869,7 @@ web:
 
   # MVC 拦截器
   interceptor:
-
+    
     # 后台管理日志记录拦截器
     log:
       enabled: true
@@ -874,29 +889,29 @@ web:
         ${adminPath}/file/**,
         ${adminPath}/tags/*,
         ${adminPath}/msg/**
-
+    
     # 前台自动切换到手机视图拦截器
     mobile:
       enabled: false
       addPathPatterns: >
         ${frontPath}/**
       excludePathPatterns: ~
-
+      
 #  # 静态文件后缀，过滤静态文件，以提高访问性能。
 #  staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.webp,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
-#
+#  
 #  # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
 #  staticFileExcludeUri: /druid/
-#
+#  
 #  # 静态资源路径前缀，可做 CDN 加速优化，默认前面增加 ctxPath 前缀，如果前面写 “//” 两个斜杠 或 包含 “://” 不加 ctxPath。
 #  staticPrefix: /static
-#
+#  
 #  # 严格模式（更严格的数据安全验证）
 #  strictMode: false
 #
 #  # 所有请求信息将进行xss过滤，这里列出不被xss过滤的地址
 #  xssFilterExcludeUri: /ureport/,/visual/
-#
+#  
 #  # 自定义正则表达式验证（主键、登录名）
 #  validator:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
@@ -925,27 +940,27 @@ error:
 # 文件上传
 file:
   enabled: true
-
+  
 #  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 #  #baseDir: D:/jeesite
-#
+#  
 #  # 上传文件的相对路径（支持：yyyy、MM、dd、HH、mm、ss、E、bizType、corpCode、userCode、userType、userCache中的key）
 #  uploadPath: '{yyyy}{MM}/'
-#
+#  
 #  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等，此设置会覆盖 spring.http.multipart.maxFileSize 设置
 #  maxFileSize: '500*1024*1024'
-#
+#  
 #  # 设置允许上传的文件后缀（全局设置）
 #  imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,.webp,
 #  mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
 #  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.wps,.et,.dps,.pdf,.ofd,.vsd,.txt,.md,.xml,.rar,.zip,.7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.dmg,.ipa,.apk,
-#
+#  
 #  # 允许上传的文件内容类型（图片、word、excel、ppt）防止修改后缀恶意上传文件（默认不启用验证）
 #  #allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
 #  #  application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
 #  #  application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 #  #  application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
-#
+#  
 #  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
 #  imageMaxWidth: 1024
 #  imageMaxHeight: 768
@@ -953,7 +968,7 @@ file:
 #  # 缩略图设定，生成的尺寸（宽x高,宽x高）、格式（jpg,png）  v5.5.0
 #  #imageThumbConfig: 150x150,300x300
 #  #imageThumbFormat: jpg
-#
+#  
 #  # 是否启用秒传
 #  checkmd5: true
 #  # 是否开启分片上传
@@ -962,13 +977,16 @@ file:
 #  chunkSize: '10*1024*1024'
 #  # 最大上传线程数
 #  threads: 3
-#
+#  
 #  # 是否启用检查点（支持断点续传，上传）
 #  checkpoint: true
 #
 #  # 是否用文件流方式下载（支持断点续传，下载）
 #  isFileStreamDown: true
-
+#
+#  # 默认的预览类型（true、oss）
+#  preview: true
+  
 # 视频转码
 #video:
 #  
@@ -992,8 +1010,8 @@ file:
 
 # 消息提醒中心（专业版）
 msg:
-  enabled: false
-
+  enabled: true
+  
 #  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
 #  realtime:
 #    # 是否开启

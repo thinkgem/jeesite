@@ -64,14 +64,16 @@ public class EmpUserController extends BaseController {
 	private final PostService postService;
 	private final UserService userService;
 	private final RoleService roleService;
+	private final OfficeService officeService;
 
 	public EmpUserController(EmpUserService empUserService, EmployeeService employeeService,
-							 PostService postService, UserService userService, RoleService roleService) {
+	                         PostService postService, UserService userService, RoleService roleService, OfficeService officeService) {
 		this.empUserService = empUserService;
 		this.employeeService = employeeService;
 		this.postService = postService;
 		this.userService = userService;
 		this.roleService = roleService;
+		this.officeService = officeService;
 	}
 
 	@ModelAttribute
@@ -164,12 +166,10 @@ public class EmpUserController extends BaseController {
 		
 		// 获取当前编辑用户的角色和权限
 		if (StringUtils.inString(op, Global.OP_AUTH)) {
-			
 			// 获取当前用户所拥有的角色
 			Role role = new Role();
 			role.setUserCode(empUser.getUserCode());
-			model.addAttribute("roleList", roleService.findListByUserCode(role));
-
+			model.addAttribute("roleList", roleService.findList(role));
 		}
 		
 		// 操作类型：add: 全部； edit: 编辑； auth: 授权
@@ -178,6 +178,7 @@ public class EmpUserController extends BaseController {
 		
 		// 获取控制权限类型、岗位角色权限参数
 		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
+		model.addAttribute("officeRolePermi", Global.getConfigToBoolean("user.officeRolePermi", "false"));
 		model.addAttribute("postRolePermi", Global.getConfigToBoolean("user.postRolePermi", "false"));
 		return "modules/sys/user/empUserForm";
 	}
@@ -205,11 +206,7 @@ public class EmpUserController extends BaseController {
 			empUserService.addFieldScopeFilter(empUser);
 			empUserService.save(empUser);
 		}
-		if (Global.getConfigToBoolean("user.postRolePermi", "false")) {
-			if (StringUtils.inString(op, Global.OP_AUTH)) {
-				return renderResult(Global.FALSE, text("启用岗位角色权限后，请在用户关联岗位中关联角色", empUser.getUserName()));
-			}
-		}else if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH) && subject.isPermitted("sys:empUser:authRole")){
+		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH) && subject.isPermitted("sys:empUser:authRole")){
 			userService.saveAuth(empUser);
 		}
 		return renderResult(Global.TRUE, text("保存用户''{0}''成功", empUser.getUserName()));
@@ -443,7 +440,7 @@ public class EmpUserController extends BaseController {
 		for (int i = 0; i < list.size(); i++) {
 			EmpUser e = list.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
-			map.put("id", ObjectUtils.defaultIfNull(idPrefix, "u_") + e.getId());
+			map.put("id", ObjectUtils.getIfNull(idPrefix, "u_") + e.getId());
 			map.put("pId", StringUtils.defaultIfBlank(e.getEmployee().getOffice().getOfficeCode(), "0"));
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getLoginCode(), e.getUserName()));
 			mapList.add(map);
@@ -527,26 +524,40 @@ public class EmpUserController extends BaseController {
 		} else {
 			EmpUtils.removeCurrentOffice(session);
 		}
-		// 开启 user.postRolePermi 参数后，就可以使用岗位关联角色过滤菜单权限
-		if (Global.getConfigToBoolean("user.postRolePermi", "false")) {
-			if (!postCodes.isEmpty()) {
-				// 查询并设置岗位关联的角色
-				PostRole where = new PostRole();
-				where.setPostCode_in(postCodes.toArray(new String[0]));
-				where.sqlMap().loadJoinTableAlias("r");
-				List<String> roleCodes = ListUtils.newArrayList();
-				postService.findPostRoleList(where).forEach(e -> {
-					if (e.getRole() != null && PostRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
-						roleCodes.add(e.getRoleCode());
-					}
-				});
-				if (roleCodes.isEmpty()){
-					roleCodes.add("__none__");
+		List<String> roleCodes = ListUtils.newArrayList();
+		// 开启 user.officeRolePermi 参数后，就可以使用部门关联角色过滤菜单权限 v5.18.1
+		if (Global.getConfigToBoolean("user.officeRolePermi", "false")) {
+			OfficeRole where = new OfficeRole();
+			where.setOfficeCode(officeCode);
+			where.sqlMap().loadJoinTableAlias("r");
+			officeService.findOfficeRoleList(where).forEach(e -> {
+				if (e.getRole() != null && OfficeRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
+					roleCodes.add(e.getRoleCode());
 				}
-				session.setAttribute("roleCode", StringUtils.joinComma(roleCodes)); // 5.4.0+ 支持多个，逗号隔开
-			} else {
-				session.removeAttribute("roleCode");
+			});
+			if (roleCodes.isEmpty()){
+				roleCodes.add("__none__");
 			}
+		}
+		// 开启 user.postRolePermi 参数后，就可以使用岗位关联角色过滤菜单权限 v5.9.2
+		if (Global.getConfigToBoolean("user.postRolePermi", "false") && !postCodes.isEmpty()) {
+			// 查询并设置岗位关联的角色
+			PostRole where = new PostRole();
+			where.setPostCode_in(postCodes.toArray(new String[0]));
+			where.sqlMap().loadJoinTableAlias("r");
+			postService.findPostRoleList(where).forEach(e -> {
+				if (e.getRole() != null && PostRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
+					roleCodes.add(e.getRoleCode());
+				}
+			});
+			if (roleCodes.isEmpty()){
+				roleCodes.add("__none__");
+			}
+		}
+		if (!roleCodes.isEmpty()) {
+			session.setAttribute("roleCode", StringUtils.joinComma(roleCodes)); // 5.4.0+ 支持多个，逗号隔开
+		} else {
+			session.removeAttribute("roleCode");
 		}
 		MenuUtils.clearAuthInfo(session);
 		if (ServletUtils.isAjaxRequest(request)) {

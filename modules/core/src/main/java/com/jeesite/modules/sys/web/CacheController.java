@@ -33,6 +33,7 @@ public class CacheController extends BaseController {
 	@RequestMapping(value = "clearAll")
 	@ResponseBody
 	public String clearAll() {
+		Global.assertDemoMode();
 		Global.clearCache();
 		CacheUtils.clearCache();
 		MapperHelper.clearCache();

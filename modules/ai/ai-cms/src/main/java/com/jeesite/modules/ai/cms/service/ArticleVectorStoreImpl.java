@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -85,11 +86,16 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 		metadata.put("createDate", article.getCreateDate());
 		metadata.put("updateBy", article.getUpdateBy());
 		metadata.put("updateDate", article.getUpdateDate());
+		metadata.values().removeIf(Objects::isNull); // Spring AI Document 不允许 metadata 有 null 值
 		List<String> attachmentList = ListUtils.newArrayList();
-		String content = article.getTitle() + ", " + article.getKeywords() + ", "
-				+ article.getDescription() + ", " + FlexmarkHtmlConverter.builder()
+		String articleContent = "";
+		if (article.getArticleData() != null && article.getArticleData().getContent() != null) {
+			articleContent = FlexmarkHtmlConverter.builder()
 					.linkResolverFactory(getHtmlLinkResolverFactory(attachmentList)).build()
-					.convert(article.getArticleData().getContent())
+					.convert(article.getArticleData().getContent());
+		}
+		String content = article.getTitle() + ", " + article.getKeywords() + ", "
+				+ article.getDescription() + ", " + articleContent
 				+ ", attachment: " + attachmentList;
 		List<Document> documents = List.of(new Document(article.getId(), content, metadata));
 		List<Document> splitDocuments = TokenTextSplitter.builder().build().apply(documents);

@@ -53,7 +53,7 @@ server:
 #======================================#
 
 # 数据库连接
-jdbc: 
+jdbc:
   
   # Mysql 数据库配置
   type: mysql
@@ -320,6 +320,14 @@ spring:
 #  cache:
 #    # 缓存及会话共享（专业版）
 #    isClusterMode: true
+#    # 给缓存名称增加DsName数据源名称前缀 v5.18.1
+#    prefixWithDsName: false
+#    # 指定全局缓存名，当prefixWithDsName设置为true时有效 v5.18.1
+#    globalNames: sessionCache,sysCache
+#    # 给缓存Key增加DsName数据源名称前缀 v5.6.1
+#    keyPrefixWithDsName: false
+#    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true时有效（cacheName:key|*）v5.12.1
+#    globalKeyNames: sysCache:configMap,sysCache:moduleMap,sysCache:areaAllList
 #    # 清理全部缓存按钮所清理的缓存列表
 #    clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
 #    # 用户缓存
@@ -348,6 +356,9 @@ mybatis:
 #  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
 #  scanTypeHandlersPackage: ~
 #
+#  # 自定义 Mapper 文件扫描路径，如果多个，用“,”分隔 v4.2.3
+#  scanMapperLocations: classpath*:/mappings/**/*.xml
+#
 #  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
 #  jdbcTransaction: false
 #
@@ -375,7 +386,7 @@ mybatis:
 #      delaySeconds: 10
 #      sleepSeconds: 3
 #      mappingPath: mappings
-  
+
 #======================================#
 #========== System settings ===========#
 #======================================#
@@ -423,6 +434,9 @@ user:
 #  
 #  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
 #  adminCtrlPermi: 2
+#
+#  # 是否启用部门角色，开启后将 用户->部门->关联角色，纳入菜单和权限管理 v5.18.1
+#  officeRolePermi: false
 #
 #  # 是否启用岗位角色，开启后将 用户->岗位->关联角色，纳入菜单和权限管理 v5.9.2
 #  postRolePermi: false
@@ -502,7 +516,7 @@ user:
 #  dataScopeRuleSql: false
   
 # 角色管理 
-#role: 
+#role:
 #  # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
 #  extendDataScopes: >
 #    {
@@ -555,7 +569,7 @@ user:
 
 # 国际化管理（专业版）
 lang:
-  enabled: false
+  enabled: true
   
 #  # 默认语言（4.1.3+）
 #  defaultLocale: zh_CN
@@ -564,7 +578,7 @@ lang:
   
 # 任务调度（标准版）
 job:
-  enabled: false
+  enabled: true
   
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true
@@ -592,6 +606,7 @@ job:
 #    clusterCheckinInterval: 1000
 #    driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 #    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+#    misfireThreshold: 1000
 
 #  # 调度日志
 #  log:
@@ -909,7 +924,7 @@ web:
 #    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
 
   # 核心模块的Web功能开启（其它微服务时设为false）
-  core: 
+  core:
     enabled: true
   
 # 在线API文档
@@ -974,6 +989,9 @@ file:
 #
 #  # 是否用文件流方式下载（支持断点续传，下载）
 #  isFileStreamDown: true
+#
+#  # 默认的预览类型（true、oss）
+#  preview: true
   
 # 视频转码
 #video:
@@ -998,7 +1016,7 @@ file:
 
 # 消息提醒中心（专业版）
 msg:
-  enabled: false
+  enabled: true
   
 #  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
 #  realtime:
