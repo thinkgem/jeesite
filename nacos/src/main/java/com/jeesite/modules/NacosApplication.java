@@ -14,6 +14,7 @@ import com.alibaba.nacos.core.listener.startup.NacosStartUpManager;
 import com.alibaba.nacos.sys.env.Constants;
 import com.alibaba.nacos.sys.env.DeploymentType;
 import com.alibaba.nacos.sys.env.EnvUtil;
+import com.jeesite.modules.initializer.NacosDataInitializer;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,9 +103,10 @@ public class NacosApplication {
                 throw new IllegalArgumentException("Unsupported nacos deployment type " + type);
         }
 		Environment env = context.getEnvironment();
+		NacosDataInitializer.doInitialize(context, env);
 		logger.info(
 				"\n\n==============================================================\n"
-				+ "\n   启动完成，访问地址：http://127.0.0.1:{}/#/login\n"
+				+ "\n   启动完成，访问地址：http://127.0.0.1:{}\n"
 				+ "\n==============================================================\n",
 				env.getProperty("local.server.port"));
     }
