@@ -23,7 +23,7 @@ job:
 web:
   
   # 核心模块的Web功能开启（其它微服务时设为false）
-  core: 
+  core:
     enabled: true
 
 # Session 相关
