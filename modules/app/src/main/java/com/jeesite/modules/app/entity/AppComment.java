@@ -94,7 +94,7 @@ public class AppComment extends DataEntity<AppComment> {
 		this.deviceInfo = deviceInfo;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getReplyDate() {
 		return replyDate;
 	}

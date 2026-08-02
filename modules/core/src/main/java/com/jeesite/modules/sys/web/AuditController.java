@@ -14,6 +14,7 @@ import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Audit;
 import com.jeesite.modules.sys.entity.Menu;
+import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.service.AuditService;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
@@ -117,8 +118,8 @@ public class AuditController extends BaseController {
 	 * 根据用户查权限数据
 	 */
 	@RequiresPermissions("sys:audit:menu")
-	@ResponseBody
 	@RequestMapping(value = "menuTreeData")
+	@ResponseBody
 	public Map<String, Object> menuListData(Audit audit) {
 		Map<String, Object> model = MapUtils.newHashMap();
 		List<Menu> menuList = auditService.findMenuList(audit);
@@ -138,6 +139,17 @@ public class AuditController extends BaseController {
 		}
 		model.put("menuMap", map);
 		return model;
+	}
+	
+	/**
+	 * 根据用户查角色
+	 */
+	@RequiresPermissions("sys:audit:role")
+	@RequestMapping(value = "roleListData")
+	@ResponseBody
+	public List<Role> roleListData(Audit audit, Model model) {
+		List<Role> list = auditService.findRoleList(audit);
+		return list;
 	}
 
 }

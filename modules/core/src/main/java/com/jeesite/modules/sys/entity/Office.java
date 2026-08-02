@@ -68,6 +68,9 @@ public class Office extends TreeEntity<Office> {
 
 	private String companyCode; // 根据公司查询机构，组织机构所属公司
 
+	protected String roleCodes;		// 关联的角色编号
+	protected String roleNames;		// 关联的角色名称
+
 	@ExcelFields({
 		@ExcelField(title = "上级编码", attrName = "parentCode", align = Align.LEFT, sort = 10),
 		@ExcelField(title = "机构编码", attrName = "officeCode", align = Align.LEFT, sort = 20),
@@ -227,6 +230,24 @@ public class Office extends TreeEntity<Office> {
 
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
+	}
+
+	@Schema(description = "部门绑定角色编码")
+	public String getRoleCodes() {
+		return roleCodes;
+	}
+
+	public void setRoleCodes(String roleCodes) {
+		this.roleCodes = roleCodes;
+	}
+
+	@Schema(description = "部门绑定角色名称")
+	public String getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(String roleNames) {
+		this.roleNames = roleNames;
 	}
 
 	/**

@@ -13,7 +13,7 @@ copyrightYear: 2026
 #======================================#
 
 # 数据库连接
-jdbc: 
+jdbc:
   
   # 连接信息加密
   encrypt:
@@ -97,9 +97,13 @@ spring:
   cache:
     # 缓存及会话共享（专业版）
     isClusterMode: false
-    # 给缓存Key增加数据源名称前缀 v5.6.1
+    # 给缓存名称增加DsName数据源名称前缀 v5.18.1
+    prefixWithDsName: false
+    # 指定全局缓存名，当prefixWithDsName设置为true时有效 v5.18.1
+    globalNames: sessionCache,sysCache
+    # 给缓存Key增加DsName数据源名称前缀 v5.6.1
     keyPrefixWithDsName: false
-    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true的时有效（cacheName:key|*）v5.12.1
+    # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true时有效（cacheName:key|*）v5.12.1
     globalKeyNames: sysCache:configMap,sysCache:moduleMap,sysCache:areaAllList
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
@@ -228,6 +232,9 @@ user:
   # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
   adminCtrlPermi: 2
 
+  # 是否启用部门角色，开启后将 用户->部门->关联角色，纳入菜单和权限管理 v5.18.1
+  officeRolePermi: false
+
   # 是否启用岗位角色，开启后将 用户->岗位->关联角色，纳入菜单和权限管理 v5.9.2
   postRolePermi: false
 
@@ -326,7 +333,7 @@ user:
   dataScopeRuleSql: false
 
 # 角色管理 
-role: 
+role:
   # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
   extendDataScopes: >
     {
@@ -711,8 +718,6 @@ web:
     # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
     smartMethodArgumentResolver: true
     
-    # 使用 .json、.xml 后缀匹配返回视图数据（Spring官方已不推荐使用）
-    favorPathExtension: false
     # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
     favorParameter: true
     # 修改 Spring MVC 默认 format 参数名，避免 406 错误 v5.15.1
@@ -772,14 +777,9 @@ web:
   validator:
     id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
-  
-  # 默认不启用（为兼用旧版保留，建议使用 CORS）
-  jsonp:
-    enabled: false
-    callback: __callback
-  
+
   # 核心模块的Web功能开启（其它微服务时设为false）
-  core: 
+  core:
     enabled: true
   
 # 在线API文档
