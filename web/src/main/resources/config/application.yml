@@ -269,7 +269,7 @@ spring:
   
   # 应用程序名称
   application:
-    name: jeesite-web-api
+    name: jeesite-web
     
   # 当前环境名称，支持 JVM 参数设置，如: -Dspring.profiles.active=prod
   profiles:
