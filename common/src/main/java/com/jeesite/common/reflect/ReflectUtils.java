@@ -268,7 +268,7 @@ public class ReflectUtils {
 		}
 		Validate.notBlank(fieldName, "fieldName can't be blank");
 		Class<?> clazz = obj.getClass();
-		for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
+		for (Class<?> superClass = clazz; superClass != null && superClass != Object.class; superClass = superClass.getSuperclass()) {
 			try {
 				Field field = superClass.getDeclaredField(fieldName);
 				makeAccessible(field);
@@ -298,7 +298,7 @@ public class ReflectUtils {
 			clazz = (Class) obj;
 		}
 		Validate.notBlank(methodName, "methodName can't be blank");
-		for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
+		for (Class<?> superClass = clazz; superClass != null && superClass != Object.class; superClass = superClass.getSuperclass()) {
 			try {
 				Method method = superClass.getDeclaredMethod(methodName, parameterTypes);
 				makeAccessible(method);
@@ -335,7 +335,7 @@ public class ReflectUtils {
 		if (cacheMethod != null) {
 			return cacheMethod;
 		}
-		for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
+		for (Class<?> superClass = clazz; superClass != null && superClass != Object.class; superClass = superClass.getSuperclass()) {
 			Method[] methods = superClass.getDeclaredMethods();
 			for (Method method : methods) {
 				if (method.getName().equals(methodName) && method.getParameterTypes().length == argsNum) {
