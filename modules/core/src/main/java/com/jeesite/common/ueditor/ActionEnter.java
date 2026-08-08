@@ -58,7 +58,7 @@ public class ActionEnter {
         Map<String, Object> conf = null;
         switch (actionCode) {
             case ActionMap.CONFIG:
-                return this.configManager.getAllConfig().toString();
+                return this.configManager.getAllConfig();
             case ActionMap.UPLOAD_IMAGE:
             case ActionMap.UPLOAD_SCRAWL:
             case ActionMap.UPLOAD_VIDEO:

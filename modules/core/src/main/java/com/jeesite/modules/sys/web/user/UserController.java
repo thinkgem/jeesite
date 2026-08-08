@@ -4,12 +4,12 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.User;
@@ -206,7 +206,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "userSelect")
 	public String userSelect(User user, String selectData, Model model) {
 		String selectDataJson = EncodeUtils.decodeUrl(selectData);
-		if (selectDataJson != null && JSONValidator.from(selectDataJson).validate()){
+		if (selectDataJson != null && JsonMapper.validate(selectDataJson)){
 			model.addAttribute("selectData", selectDataJson);
 		}
 		model.addAttribute("user", user);

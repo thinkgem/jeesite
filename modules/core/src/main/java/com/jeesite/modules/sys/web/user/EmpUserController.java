@@ -4,7 +4,6 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
@@ -455,7 +454,7 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "empUserSelect")
 	public String empUserSelect(EmpUser empUser, String selectData, Model model) {
 		String selectDataJson = EncodeUtils.decodeUrl(selectData);
-		if (selectDataJson != null && JSONValidator.from(selectDataJson).validate()){
+		if (selectDataJson != null && JsonMapper.validate(selectDataJson)){
 			model.addAttribute("selectData", selectDataJson);
 		}
 		// 获取角色列表

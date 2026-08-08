@@ -78,12 +78,12 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 		
-		<!-- Fast json -->
+		<!-- Fast json
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- XPath xml -->
 		<dependency>
