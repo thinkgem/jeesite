@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonParser.Feature;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
@@ -30,7 +31,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.io.IOException;
 import java.io.Serial;
 import java.lang.reflect.AnnotatedElement;
-import java.time.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +68,8 @@ public class JsonMapper extends ObjectMapper {
 		this.enabledNullValueToEmpty();
 		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
 		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		// 启用严格校验，不允许JSON字符串后携带其它字符
+		this.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
 		// Spring ObjectMapper 初始化配置，支持 @JsonView
 		new Jackson2ObjectMapperBuilder().configure(this);
 	}
@@ -207,7 +209,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return this.writeValueAsString(object);
 		} catch (IOException e) {
-			logger.warn("write to json string error: {}", object, e);
+			logger.warn("Write to JSON string error: {}", object, e);
 			return null;
 		}
 	}
@@ -221,7 +223,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return this.writerWithView(jsonView).writeValueAsString(object);
 		} catch (IOException e) {
-			logger.warn("write to json string error: {}", object, e);
+			logger.warn("Write to JSON string error: {}", object, e);
 			return null;
 		}
 	}
@@ -247,7 +249,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return this.readValue(jsonString, clazz);
 		} catch (IOException e) {
-			logger.warn("parse json string error: {}", jsonString, e);
+			logger.warn("Parse JSON string error: {}", jsonString, e);
 			return null;
 		}
 	}
@@ -264,11 +266,24 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return (T) this.readValue(jsonString, javaType);
 		} catch (IOException e) {
-			logger.warn("parse json string error: {}", jsonString, e);
+			logger.warn("Parse JSON string error: {}", jsonString, e);
 			return null;
 		}
 	}
 
+	/**
+	 * 验证是否为合法的 JSON 字符串，
+	 * 必须 DeserializationFeature.FAIL_ON_TRAILING_TOKENS 开启时才有效
+	 */
+	public boolean validateJsonString(String jsonString) {
+		try {
+			this.readTree(jsonString);
+			return true;
+		} catch (JsonProcessingException e) {
+			return false;
+		}
+	}
+	
 	/**
 	 * 构造泛型的Collection Type如:
 	 * ArrayList<MyBean>, 则调用constructCollectionType(ArrayList.class,MyBean.class)
@@ -286,7 +301,7 @@ public class JsonMapper extends ObjectMapper {
 		try {
 			return (T) this.readerForUpdating(object).readValue(jsonString);
 		} catch (Exception e) {
-			logger.warn("update json string: {} to object: {} error.", jsonString, object, e);
+			logger.warn("Update JSON string: {} to object: {} error.", jsonString, object, e);
 		}
 		return null;
 	}
@@ -372,6 +387,14 @@ public class JsonMapper extends ObjectMapper {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 验证是否为合法的 JSON 字符串，
+	 * 必须 DeserializationFeature.FAIL_ON_TRAILING_TOKENS 开启时才有效
+	 */
+	public static boolean validate(String jsonString) {
+		return JsonMapper.getInstance().validateJsonString(jsonString);
 	}
 
 }
