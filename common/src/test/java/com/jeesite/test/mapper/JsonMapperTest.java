@@ -43,6 +43,7 @@ public class JsonMapperTest {
 		System.out.println(map3);
 		List<String> list2 = JsonMapper.fromJson("[1,2]", List.class);
 		System.out.println(list2);
+		System.out.println(JsonMapper.validate("{sort:1}test"));
 	}
 	
 }

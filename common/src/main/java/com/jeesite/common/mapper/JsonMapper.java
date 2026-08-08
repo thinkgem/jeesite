@@ -80,6 +80,8 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 			this.enable(JsonReadFeature.ALLOW_UNQUOTED_PROPERTY_NAMES);
 			// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
 			this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+			// 启用严格校验，不允许JSON字符串后携带其它字符（显式指定，默认也是开启的）
+			this.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
 			// 设置注解处理器
 			this.dateFormatAnnotation();
 			// 空值转换为空字符串
@@ -259,7 +261,7 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 		try {
 			return this.writeValueAsString(object);
 		} catch (JacksonException e) {
-			logger.warn("write to json string error: {}", object, e);
+			logger.warn("Write to JSON string error: {}", object, e);
 			return null;
 		}
 	}
@@ -271,7 +273,7 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 		try {
 			return this.writerWithView(jsonView).writeValueAsString(object);
 		} catch (JacksonException e) {
-			logger.warn("write to json string error: {}", object, e);
+			logger.warn("Write to JSON string error: {}", object, e);
 			return null;
 		}
 	}
@@ -295,7 +297,7 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 		try {
 			return this.readValue(jsonString, clazz);
 		} catch (JacksonException e) {
-			logger.warn("parse json string error: {}", jsonString, e);
+			logger.warn("Parse JSON string error: {}", jsonString, e);
 			return null;
 		}
 	}
@@ -312,8 +314,21 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 		try {
 			return (T) this.readValue(jsonString, javaType);
 		} catch (JacksonException e) {
-			logger.warn("parse json string error: {}", jsonString, e);
+			logger.warn("Parse JSON string error: {}", jsonString, e);
 			return null;
+		}
+	}
+
+	/**
+	 * 验证是否为合法的 JSON 字符串，
+	 * 必须 DeserializationFeature.FAIL_ON_TRAILING_TOKENS 开启时才有效
+	 */
+	public boolean validateJsonString(String jsonString) {
+		try {
+			this.readTree(jsonString);
+			return true;
+		} catch (JacksonException e) {
+			return false;
 		}
 	}
 
@@ -334,7 +349,7 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 		try {
 			return (T) this.readerForUpdating(object).readValue(jsonString);
 		} catch (JacksonException e) {
-			logger.warn("update json string: {} to object: {} error.", jsonString, object, e);
+			logger.warn("Update JSON string: {} to object: {} error.", jsonString, object, e);
 		}
 		return null;
 	}
@@ -392,6 +407,14 @@ public class JsonMapper extends tools.jackson.databind.json.JsonMapper {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 验证是否为合法的 JSON 字符串，
+	 * 必须 DeserializationFeature.FAIL_ON_TRAILING_TOKENS 开启时才有效
+	 */
+	public static boolean validate(String jsonString) {
+		return JsonMapper.getInstance().validateJsonString(jsonString);
 	}
 
 }
