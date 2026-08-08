@@ -28,71 +28,8 @@ server:
     uri-encoding: UTF-8
     
 #======================================#
-#========== Cloud settings ============#
+#========== Service settings ==========#
 #======================================#
-
-# 服务注册
-eureka:
-
-  # 实例设置
-  instance:
-    # 实例状态监控参数
-    homePageUrl: ${server.servlet.context-path}
-    statusPageUrlPath: ${server.servlet.context-path}/actuator
-    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
-    
-  # 从服务器注册表中获取注册信息的时间间隔（秒）
-  client:
-    registryFetchIntervalSeconds: 5
-    
-# 声明式服务
-feign:
-
-  # 开启okhttp客户端
-  okhttp:
-    enabled: true
-  httpclient:
-    enabled: false
-    
-  # 容错限流断路器（2020.0+ 替换为 sentinel）
-  hystrix:
-    enabled: false
-  sentinel:
-    enabled: true
-    
-  # 请求和响应 GZIP 压缩支持
-  compression:
-    request:
-      enabled: true
-      mime-types: text/xml,application/xml,application/json
-      min-request-size: 2048
-    response:
-      enabled: true
-
-  # 调试模式
-  debug: false
-
-# 启用负载均衡（2020.0+ 替换为 loadbalancer）
-#ribbon:
-#  eureka:
-#    enabled: true
-#  ReadTimeout: 60000
-#  ConnectTimeout: 60000
-#  OkToRetryOnAllOperations: false
-#  MaxAutoRetriesNextServer: 0
-#  MaxAutoRetries: 0
-
-# 延迟容错机制（2020.0+ 替换为 sentinel）
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          # 隔离策略（THREAD、SEMAPHORE）
-#          strategy: THREAD
-#          # 线程超时时间（毫秒）
-#          thread:
-#            timeoutInMilliseconds: 60000
 
 # 微服务列表
 service:
@@ -285,12 +222,12 @@ seata:
     type: file
   registry:
     type: nacos
-    #preferred-networks: 192.168.*
+    preferred-networks: ${PREFERRED_NETWORKS:}
     nacos:
       application: seata-server
-      server-addr: 127.0.0.1:8848
-      username: nacos
-      password: nacos
+      server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
       namespace: ~
       group: SEATA_GROUP
 
@@ -322,13 +259,9 @@ spring:
   jackson:
     time-zone: GMT+8
       
-  # Consul 服务发现
+  # 微服务组件配置
   cloud:
-    consul:
-      discovery:
-        healthCheckPath: ${server.servlet.context-path}/actuator/health
-        healthCheckInterval: 15s
-        
+    
     # 流量防卫兵
     sentinel:
       transport:
@@ -380,6 +313,31 @@ spring:
   cache:
     # 缓存及会话共享（专业版）
     isClusterMode: true
+    
+# 声明式服务
+feign:
+
+  # 调试模式
+  debug: false
+
+  # 开启okhttp客户端
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+    
+  # 请求和响应 GZIP 压缩支持
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+      
+  # 容错限流断路器
+  sentinel:
+    enabled: true
 
   # 消息队列服务
 #  rabbitmq:
