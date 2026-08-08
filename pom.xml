@@ -18,8 +18,6 @@
 		<module>parent/web</module>
 		<module>parent/jakarta</module>
 		<module>parent/javax</module>
-		<module>eureka</module>
-		<module>config</module>
 		<module>nacos</module>
 		<module>gateway</module>
 		<module>modules</module>

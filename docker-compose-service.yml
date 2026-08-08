@@ -3,7 +3,9 @@
 # No deletion without permission, or be held responsible to law.
 # @author ThinkGem
 #
-# 执行 docker-compose up 前，请先编译项目 mvn package
+# 第一步，编译项目：sh ./bin/package.sh
+# 第二步，运行基础服务：sh ./bin/docker-compose-basic.sh
+# 第三步，运行平台服务：sh ./bin/docker-compose-service.sh
 #
 name: jeesite-cloud-service
 

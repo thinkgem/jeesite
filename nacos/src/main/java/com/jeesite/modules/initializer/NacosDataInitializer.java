@@ -41,10 +41,11 @@ public class NacosDataInitializer {
 
 	private static final Logger logger = LoggerFactory.getLogger(NacosDataInitializer.class);
 
-	/** Docker 挂载路径 */
+	/** JeeSite 微服务配置文件路径，Docker 挂载路径 */
 	private static final String ZIP_DOCKER = "/app/jeesite-cloud-yml.zip";
-	/** config 模块 ZIP 文件相对 nacos 模块根目录的路径 */
-	private static final String ZIP_REL_NACOS = "../config/src/main/resources/jeesite-cloud-yml.zip";
+	/** JeeSite 微服务配置文件路径，相对于 nacos 根目录的路径 */
+	private static final String ZIP_CONFIG = "../nacos/db/config/jeesite-cloud-yml.zip";
+	
 	private static final String GROUP = "jeesite-cloud-yml";
 	private static final String USERNAME = "nacos";
 
@@ -89,7 +90,7 @@ public class NacosDataInitializer {
 				// 通过 class 文件位置找到 nacos 模块根目录，再相对定位 config 模块的 zip
 				java.io.File nacosDir = resolveNacosDir();
 				if (nacosDir != null) {
-					zipFile = new java.io.File(nacosDir, ZIP_REL_NACOS);
+					zipFile = new java.io.File(nacosDir, ZIP_CONFIG);
 					if (zipFile.exists()) {
 						zipStream = new FileInputStream(zipFile);
 					}
@@ -100,10 +101,10 @@ public class NacosDataInitializer {
 		}
 		if (zipStream == null) {
 			logger.info("[Nacos初始化] ========================================");
-			logger.warn("[Nacos初始化] 未找到 ZIP 文件: {}", ZIP_REL_NACOS);
+			logger.warn("[Nacos初始化] 未找到 ZIP 文件: {}", ZIP_CONFIG);
 			logger.info("[Nacos初始化] 导入失败，请登录系统，用户名: {}  密码: {}", USERNAME, adminPassword);
 			logger.warn("[Nacos初始化] 进入菜单：配置管理 -> 配置列表，点击 `导入配置` 按钮，弹出导入配置对话框");
-			logger.warn("[Nacos初始化] 选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传");
+			logger.warn("[Nacos初始化] 选择 `/nacos/db/config/jeesite-cloud-yml.zip` 上传");
 			logger.info("[Nacos初始化] ========================================");
 			return;
 		}

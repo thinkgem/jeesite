@@ -89,8 +89,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud 2025.1 + Alibaba 2025.1
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 3
-* 分布式统一配置中心：Spring Cloud Config / Nacos 3
+* 服务治理注册与发现和分布式统一配置中心：Alibaba Nacos 3.x
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
@@ -122,9 +121,7 @@ git submodule update --init
 
 ## 子项目介绍
 
-* 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
-* 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
-* **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8849>
+* 服务注册和配置中心 Nacos ：<http://127.0.0.1:8849>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js>
 * 核心模块（**统一授权认证服务、平台基础数据服务**）：
     - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
@@ -210,8 +207,6 @@ Redis 地址：127.0.0.1；端口：6379；密码：1234
 Nacos 致力于帮助您发现、配置和管理微服务。 Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
 Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。
 
-如果使用 Nacos 就不用部署 `jeesite-cloud-eureka` 和 `jeesite-cloud-config` 了。
-
 JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启动，也可以下载 zip 运行：
 
 **src 方式：**
@@ -263,13 +258,12 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 **启动完成后：**
 
-浏览器访问（src方式会自动导入，如已导入，请忽略这一步）：
+浏览器访问（src方式会自动导入，如已导入，请忽略上传文件）：
 
-* <http://127.0.0.1:8849> 
+- 地址：<http://127.0.0.1:8849>
+- 初始用户名和密码均为：nacos
 
-初始化用户名和密码均为：nacos
-
-登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
+登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/nacos/db/config/jeesite-cloud-yml.zip` 上传文件。
 
 然后编辑 Data Id 为 `application.yml` 的文件里的 JDBC 和 Redis 信息。
 
@@ -321,7 +315,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=
 
 2、浏览器访问 `http://127.0.0.1:8849` 初始化用户名和密码均为 nacos
 
-3、系统会自动初始化 Nacos 数据，入未初始化，可登录 Nacos，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-yml.zip` 上传文件。
+3、系统会自动初始化 Nacos 数据，入未初始化，可登录 Nacos，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/nacos/db/config/jeesite-cloud-yml.zip` 上传文件。
 
 ### 构建并运行 JeeSite 服务
 
@@ -429,73 +423,6 @@ Sentinel 是面向分布式服务架构的流量控制组件，主要以流量�
 浏览器访问：<http://127.0.0.1:9411>
 
 如果使用 SkyWalking，安装文档见：<https://jeesite.com/docs/skywalking/>
-
-### 切换到 Eureka
-
-1、修改 /jeesite-cloud/parent/web/pom.xml 文件，添加 Eureka，注释掉 Nacos、Sentinel 依赖
-
-```xml
-<!-- 服务发现和配置中心 Eureka、Config -->
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-config</artifactId>
-</dependency>
-
-<!-- 服务发现 Consul
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-consul-discovery</artifactId>
-</dependency> -->
-
-<!-- 服务发现和配置中心 Nacos
-<dependency>
-    <groupId>com.alibaba.cloud</groupId>
-    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.alibaba.cloud</groupId>
-    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.alibaba.nacos</groupId>
-    <artifactId>nacos-client</artifactId>
-</dependency> -->
-
-<!-- <dependency>
-    <groupId>com.alibaba.csp</groupId>
-    <artifactId>sentinel-datasource-nacos</artifactId>
-</dependency> -->
-```
-
-2、修改 /jeesite-cloud/gateway/pom.xml 文件，注释掉 Sentinel Nacos 依赖
-
-```xml
-<!-- <dependency>
-    <groupId>com.alibaba.csp</groupId>
-    <artifactId>sentinel-datasource-nacos</artifactId>
-</dependency> -->
-```
-
-3、全局替换 application.yml 文件的，添加 optional: 注释掉 nacos:
-
-```yml
-spring:
-  # 加载的配置文件
-  config:
-    import:
-      - 'optional:configserver:'
-#    import:
-#      - 'nacos:application.yml'
-#      - 'nacos:application-${spring.profiles.active}.yml'
-#      - 'nacos:${spring.application.name}.yml'
-#      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
-```
-
-4、替换完成。
 
 ## 新增微服务工程
 

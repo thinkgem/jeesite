@@ -6,26 +6,6 @@
 server:
 
   port: 8981
-    
-#======================================#
-#========== Cloud settings ============#
-#======================================#
-
-# 服务注册
-eureka:
-
-  # 实例设置
-  instance:
-    # 实例主机名称
-    hostname: 127.0.0.1
-    # 实例是否允许使用IP
-    preferIpAddress: false
-
-  # 客户端设置
-  client:
-    # 注册中心地址（集群时指定另外一个注册中心地址）
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8970/eureka/
 
 #======================================#
 #========== Spring settings ===========#
@@ -40,32 +20,10 @@ spring:
   # 当前环境名称，支持 JVM 参数设置，如: -Dspring.profiles.active=prod
   profiles:
     active: default
-
-  # 加载的配置文件
-  config:
-#    import:
-#      - 'optional:configserver:'
-    import:
-      - 'nacos:application.yml'
-      - 'nacos:application-${spring.profiles.active}.yml'
-      - 'nacos:${spring.application.name}.yml'
-      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
     
-  # 分布式配置中心
+  # 微服务组件配置
   cloud:
-    config:
-      discovery:
-        enabled: true
-        serviceId: jeesite-cloud-config
-        
-    # Consul 服务发现
-    consul:
-      host: 127.0.0.1
-      port: 8500
-      discovery:
-        hostname: 127.0.0.1
-        preferIpAddress: false
-        
+    
     # 服务注册和配置
     nacos:
       server-addr: 127.0.0.1:8848
@@ -79,8 +37,16 @@ spring:
         group: jeesite-cloud-yml
 
     # 服务发现与注册优选IP前缀
-    #inetutils:
-    #  preferred-networks: 192.168.56.
+    inetutils:
+      preferred-networks: ${PREFERRED_NETWORKS:}
+
+  # 加载云配置文件
+  config:
+    import:
+      - 'nacos:application.yml'
+      - 'nacos:application-${spring.profiles.active}.yml'
+      - 'nacos:${spring.application.name}.yml'
+      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
 
   # 打印横幅
   main:
