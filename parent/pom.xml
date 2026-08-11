@@ -24,37 +24,37 @@
 		<!-- Dependencies tools version -->
 		<commons-lang3.version>3.20.0</commons-lang3.version>
 		<commons-text.version>1.14.0</commons-text.version>
-		<commons-io.version>2.21.0</commons-io.version>
+		<commons-io.version>2.22.0</commons-io.version>
 		<commons-email2.version>2.0.0-M1</commons-email2.version>
 
-		<metadata-extractor.version>2.19.0</metadata-extractor.version>
+		<metadata-extractor.version>2.21.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.21</thumbnailator.version>
-		<twelvemonkeys.version>3.13.1</twelvemonkeys.version>
+		<twelvemonkeys.version>3.14.0</twelvemonkeys.version>
 		<blade-patchca.version>1.1.2</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.5.4</zxing.version>
 
-		<poi.version>5.4.1</poi.version>
+		<poi.version>5.5.1</poi.version>
 		<fory.version>0.16.0</fory.version>
-		<bcprov.version>1.80</bcprov.version>
+		<bcprov.version>1.85.2</bcprov.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<snakeyaml.version>2.6</snakeyaml.version>
-		<fastjson.version>2.0.63</fastjson.version>
+		<fastjson.version>2.0.64</fastjson.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
-		<joda-time.version>2.12.7</joda-time.version>
+		<joda-time.version>2.14.3</joda-time.version>
 
 		<!-- Dependencies framework version -->
 		<mybatis.version>3.5.19</mybatis.version>
-		<mybatis-spring.version>3.0.5</mybatis-spring.version>
+		<mybatis-spring.version>4.1.0</mybatis-spring.version>
 		<jsqlparser.version>4.9</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
 		<druid.version>1.2.28</druid.version>
-		<shiro.version>2.1.0</shiro.version>
+		<shiro.version>3.0.0</shiro.version>
 		<quartz.version>2.5.2</quartz.version>
-		<swagger3.version>2.2.36</swagger3.version>
+		<swagger3.version>2.2.53</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
 		<logstash-logback.version>8.1</logstash-logback.version>
-		<logback.version>1.5.32</logback.version>
+		<logback.version>1.6.1</logback.version>
 
 		<!-- JDBC driver for your db version -->
 		<!--<mysql.version>9.3.0</mysql.version>-->
