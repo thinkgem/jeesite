@@ -17,10 +17,10 @@
     "update": "ncu -u"
   },
   "dependencies": {
-    "qs": "6.15.0"
+    "qs": "6.15.3"
   },
   "devDependencies": {
-    "@types/qs": "6.15.0"
+    "@types/qs": "6.15.1"
   },
   "homepage": "https://jeesite.com",
   "repository": {
