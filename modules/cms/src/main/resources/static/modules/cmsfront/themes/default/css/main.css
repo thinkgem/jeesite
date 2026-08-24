@@ -13,6 +13,7 @@ body>.container>.navbar{-webkit-transition:background-color .3s ease-in;transiti
 h1,.h1{font-size:26px}
 h2,.h2{font-size:24px}
 h3,.h3{font-size:22px}
+a:focus{outline:none;}
 p{margin:5px 0 10px;line-height:1.75;}
 .container{padding-top:0}
 .container .navbar-brand{padding:13.5px 15px 12.5px}
