@@ -8,7 +8,7 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V5.18
+productVersion: V5.19
 copyrightYear: 2026
 
 # 是否演示模式
@@ -731,6 +731,8 @@ shiro:
   # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
   # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
   filterChainDefinitions: |
+    /js = anon
+    /vue/* = anon
     ${adminPath}/** = user
 
 #  # URI 权限过滤器定义（以下参考，必须登录user可访问的地址和不需要登录anon可访问地址）
