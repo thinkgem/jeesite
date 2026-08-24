@@ -5,7 +5,7 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V5.18
+productVersion: V5.19
 copyrightYear: 2026
 
 #======================================#
@@ -582,7 +582,7 @@ shiro:
     /oauth2/callback/** = anon
     /oauth2/authorize = user
     /druid/** = perms[sys:state:druid]
-    /bpm/modeler/** = perms[bpm:modeler]
+    /bpm/modeler/** = permsOr[bpm:modeler,bpm:bpmModel]
     /ureport/designer/** = perms[ureport]
     /ureport/datasource/** = perms[ureport]
     ${adminPath}/login-cas = cas
