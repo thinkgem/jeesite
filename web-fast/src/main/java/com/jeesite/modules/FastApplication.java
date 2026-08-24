@@ -70,7 +70,7 @@ public class FastApplication extends SpringBootServletInitializer {
 
 		@RequestMapping(value = "/js/**")
 		public String login() {
-			return REDIRECT + Global.getProperty("defaultPath");
+			return REDIRECT + Global.getProperty("shiro.defaultPath");
 		}
 
 	}
