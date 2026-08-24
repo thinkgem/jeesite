@@ -8,7 +8,7 @@ productName: JeeSite AI CMS
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V5.18
+productVersion: V5.19
 copyrightYear: 2026
 
 # 是否演示模式
@@ -233,6 +233,13 @@ shiro:
   accessControlAllowMethods: GET, POST, OPTIONS
   accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
   accessControlExposeHeaders: x-token, x-remember
+
+  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
+  # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
+  filterChainDefinitions: |
+    /js = anon
+    /vue/* = anon
+    ${adminPath}/** = user
 
 # Session 相关
 session:
