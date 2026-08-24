@@ -112,6 +112,13 @@ public class ShiroAutoConfiguration {
 	}
 
 	/**
+	 * 权限字符串过滤器（OR）
+	 */
+	private PermissionsOrFilter shiroPermsOrFilter() {
+		return new PermissionsOrFilter();
+	}
+
+	/**
 	 * 角色权限过滤器
 	 */
 	private RolesFilter shiroRolesFilter() {
@@ -152,6 +159,7 @@ public class ShiroAutoConfiguration {
 		filters.put("authc", shiroAuthcFilter(authorizingRealm));
 		filters.put("logout", shiroLogoutFilter(authorizingRealm));
 		filters.put("perms", shiroPermsFilter());
+		filters.put("permsOr", shiroPermsOrFilter());
 		filters.put("roles", shiroRolesFilter());
 		filters.put("user", shiroUserFilter());
 		filters.put("invalidRequest", invalidRequestFilter());
