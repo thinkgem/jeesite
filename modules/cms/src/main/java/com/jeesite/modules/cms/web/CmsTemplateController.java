@@ -11,8 +11,8 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.FileTemplate;
-import com.jeesite.modules.cms.service.FileTemplateService;
+import com.jeesite.modules.cms.entity.CmsTemplate;
+import com.jeesite.modules.cms.service.CmsTemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,19 +30,19 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cms/template")
-public class FileTemplateController extends BaseController {
+public class CmsTemplateController extends BaseController {
 	
-	private final FileTemplateService fileTemplateService;
+	private final CmsTemplateService cmsTemplateService;
 
-	public FileTemplateController(FileTemplateService fileTemplateService) {
-		this.fileTemplateService = fileTemplateService;
+	public CmsTemplateController(CmsTemplateService cmsTemplateService) {
+		this.cmsTemplateService = cmsTemplateService;
 	}
 
 	/**
 	 * 模版管理页
 	 */
 	@RequiresPermissions("cms:template:edit")
-	@RequestMapping(value = { "list", "" })
+	@RequestMapping(value = { "index", "list" })
 	public String index() {
 		return "modules/cms/tplIndex";
 	}
@@ -53,7 +53,7 @@ public class FileTemplateController extends BaseController {
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "form")
 	public String form(String name, Model model) throws IOException {
-		model.addAttribute("template", fileTemplateService.getFileTemplate(name));
+		model.addAttribute("template", cmsTemplateService.getFileTemplate(name));
 		return "modules/cms/tplForm";
 	}
 
@@ -69,7 +69,7 @@ public class FileTemplateController extends BaseController {
 		}
 		fileContent = EncodeUtils.decodeBase64String(fileContent);
 		try {
-			fileTemplateService.saveFileTemplate(fileName, fileContent);
+			cmsTemplateService.saveFileTemplate(fileName, fileContent);
 			return renderResult(Global.TRUE, "保存模版成功！");
 		} catch (ServiceException e) {
 			return renderResult(Global.FALSE, text(e.getMessage()));
@@ -87,7 +87,7 @@ public class FileTemplateController extends BaseController {
 			return renderResult(Global.FALSE, "模版编辑功能已禁用，请在配置文件中开启！");
 		}
 		try {
-			fileTemplateService.deleteFileTemplate(fileName);
+			cmsTemplateService.deleteFileTemplate(fileName);
 			return renderResult(Global.TRUE, "删除模版成功！");
 		} catch (ServiceException e) {
 			return renderResult(Global.FALSE, text(e.getMessage()));
@@ -111,7 +111,7 @@ public class FileTemplateController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData() throws IOException {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		for (FileTemplate e : fileTemplateService.getTemplateListForEdit(StringUtils.EMPTY)) {
+		for (CmsTemplate e : cmsTemplateService.getTemplateListForEdit(StringUtils.EMPTY)) {
 			Map<String, Object> map = MapUtils.newHashMap();
 			String path = e.getFilePath();
 			String separator = (StringUtils.isNotBlank(path) ? "/" : "");

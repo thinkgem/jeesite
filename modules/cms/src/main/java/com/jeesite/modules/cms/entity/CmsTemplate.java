@@ -24,9 +24,9 @@ import java.util.Objects;
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2025-12-22
  */
-public class FileTemplate implements Comparable<FileTemplate>, Serializable {
+public class CmsTemplate implements Comparable<CmsTemplate>, Serializable {
 
-	private static final Logger logger = LoggerFactory.getLogger(FileTemplate.class);
+	private static final Logger logger = LoggerFactory.getLogger(CmsTemplate.class);
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class FileTemplate implements Comparable<FileTemplate>, Serializable {
 	private String fileExtension;
 	private boolean isDirectory;
 
-	public FileTemplate(String path) {
+	public CmsTemplate(String path) {
 		int index = path.lastIndexOf('/');
 		if (index == -1) {
 			this.fileName = path;
@@ -49,7 +49,7 @@ public class FileTemplate implements Comparable<FileTemplate>, Serializable {
 		this.isDirectory = !StringUtils.contains(fileName, StringUtils.DOT);
 	}
 
-	public FileTemplate(Resource resource) {
+	public CmsTemplate(Resource resource) {
 		this.resource = resource;
 		this.fileName = resource.getFilename();
 		try {
@@ -115,7 +115,7 @@ public class FileTemplate implements Comparable<FileTemplate>, Serializable {
 	}
 
 	@Override
-	public int compareTo(FileTemplate o) {
+	public int compareTo(CmsTemplate o) {
 		return this.getFileName().compareTo(o.getFileName());
 	}
 	
@@ -127,7 +127,7 @@ public class FileTemplate implements Comparable<FileTemplate>, Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		FileTemplate e = (FileTemplate) o;
+		CmsTemplate e = (CmsTemplate) o;
 		return Objects.equals(this.fileName, e.fileName)
 				&& Objects.equals(this.filePath, e.filePath)
 				&& Objects.equals(this.fileExtension, e.fileExtension)

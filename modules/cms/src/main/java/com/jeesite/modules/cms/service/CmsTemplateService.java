@@ -14,7 +14,7 @@ import com.jeesite.common.io.ResourceUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.common.service.ServiceException;
-import com.jeesite.modules.cms.entity.FileTemplate;
+import com.jeesite.modules.cms.entity.CmsTemplate;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.entity.DictData;
@@ -33,22 +33,22 @@ import java.util.Set;
  * @version 2025-12-22
  */
 @Service
-public class FileTemplateService extends BaseService {
+public class CmsTemplateService extends BaseService {
 
 	/**
 	 * 获取模板文件集合
 	 * @param path 前缀路径
 	 */
-	public List<FileTemplate> getTemplateListByPath(String path) {
+	public List<CmsTemplate> getTemplateListByPath(String path) {
 		if (StringUtils.contains(path, "..")) {
 			throw new ServiceException(Global.getText("非法请求！"));
 		}
-		List<FileTemplate> list = ListUtils.newArrayList();
+		List<CmsTemplate> list = ListUtils.newArrayList();
 		Resource[] resources = ResourceUtils.getResources("classpath*:"
 				+ FileUtils.path(Site.TEMPLATE_BASE_DIRECTION + path + "/**/*.html"));
 		for (Resource resource : resources) {
 			if (resource.exists()) {
-				list.add(new FileTemplate(resource));
+				list.add(new CmsTemplate(resource));
 			}
 		}
 		return list;
@@ -61,8 +61,8 @@ public class FileTemplateService extends BaseService {
 	public List<DictData> getTemplateContentDict(String prefix) {
 		List<DictData> listSite = ListUtils.newArrayList();
 		Site site = CmsUtils.getSite(Site.getCurrentSiteCode());
-		List<FileTemplate> tplList = getTemplateListByPath(site.getTheme());
-		for (FileTemplate tpl : tplList) {
+		List<CmsTemplate> tplList = getTemplateListByPath(site.getTheme());
+		for (CmsTemplate tpl : tplList) {
 			String fileName = tpl.getFileName();
 			if (fileName.startsWith(prefix)) {
 				String value = fileName.substring(0, fileName.indexOf("."));
@@ -76,12 +76,12 @@ public class FileTemplateService extends BaseService {
 	 * 获取模板文件相关属性（含目录）
 	 * @param prefix 前缀路径
 	 */
-	public List<FileTemplate> getTemplateListForEdit(String prefix) {
-		List<FileTemplate> fileList = getTemplateListByPath(prefix);
+	public List<CmsTemplate> getTemplateListForEdit(String prefix) {
+		List<CmsTemplate> fileList = getTemplateListByPath(prefix);
 
 		// 提取所有父目录
 		Set<String> directoryPaths = SetUtils.newLinkedHashSet();
-		for (FileTemplate file : fileList) {
+		for (CmsTemplate file : fileList) {
 			String current = StringUtils.EMPTY;
 			String path = file.getFilePath() + "/" + file.getFileName();
 			String[] parts = path.split("/");
@@ -93,9 +93,9 @@ public class FileTemplateService extends BaseService {
 		}
 
 		// 添加目录
-		Set<FileTemplate> result = SetUtils.newLinkedHashSet();
+		Set<CmsTemplate> result = SetUtils.newLinkedHashSet();
 		for (String dirPath : directoryPaths) {
-			result.add(new FileTemplate(dirPath));
+			result.add(new CmsTemplate(dirPath));
 		}
 
 		// 添加文件
@@ -108,14 +108,14 @@ public class FileTemplateService extends BaseService {
 	 * 获取模版文件
 	 * @param fileName 模板文件
 	 */
-	public FileTemplate getFileTemplate(String fileName) {
+	public CmsTemplate getFileTemplate(String fileName) {
 		if (StringUtils.contains(fileName, "..")
 				|| !StringUtils.endsWith(fileName, ".html")) {
-			return new FileTemplate(StringUtils.EMPTY);
+			return new CmsTemplate(StringUtils.EMPTY);
 		}
 		fileName = Site.TEMPLATE_BASE_DIRECTION + fileName;
 		Resource resource = ResourceUtils.getResource(fileName);
-		return new FileTemplate(resource);
+		return new CmsTemplate(resource);
 	}
 
 	/**
@@ -123,13 +123,13 @@ public class FileTemplateService extends BaseService {
 	 * @param fileName 模板文件
 	 * @author ThinkGem
 	 */
-	private FileTemplate getTemplateWithException(String fileName) {
+	private CmsTemplate getTemplateWithException(String fileName) {
 		Global.assertDemoMode();
 		if (StringUtils.contains(fileName, "..")
 				|| !StringUtils.endsWith(fileName, ".html")) {
 			throw new ServiceException(Global.getText("非法请求！"));
 		}
-		FileTemplate template = this.getFileTemplate(fileName);
+		CmsTemplate template = this.getFileTemplate(fileName);
 		if (template.resource() == null || !template.resource().exists()) {
 			logger.debug("Resource: {} not exists.", fileName);
 			throw new ServiceException(Global.getText("模版文件不存在！")); // 不允许新增文件
@@ -169,7 +169,7 @@ public class FileTemplateService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public void saveFileTemplate(String fileName, String fileContent) throws IOException {
-		FileTemplate template = getTemplateWithException(fileName);
+		CmsTemplate template = getTemplateWithException(fileName);
 		// 资源为文件时
 		if (template.resource().isFile()) {
 			File templateFile = template.resource().getFile();
@@ -210,7 +210,7 @@ public class FileTemplateService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public void deleteFileTemplate(String fileName) throws IOException {
-		FileTemplate template = getTemplateWithException(fileName);
+		CmsTemplate template = getTemplateWithException(fileName);
 		// 资源为文件时
 		if (template.resource().isFile()) {
 			File templateFile = template.resource().getFile();
