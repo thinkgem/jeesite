@@ -14,7 +14,7 @@ import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.service.CategoryService;
-import com.jeesite.modules.cms.service.FileTemplateService;
+import com.jeesite.modules.cms.service.CmsTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,12 +41,12 @@ public class ArticleController extends BaseController {
 
 	private final ArticleService articleService;
 	private final CategoryService categoryService;
-	private final FileTemplateService fileTemplateService;
+	private final CmsTemplateService cmsTemplateService;
 
-	public ArticleController(ArticleService articleService, CategoryService categoryService, FileTemplateService fileTemplateService) {
+	public ArticleController(ArticleService articleService, CategoryService categoryService, CmsTemplateService cmsTemplateService) {
 		this.articleService = articleService;
 		this.categoryService = categoryService;
-		this.fileTemplateService = fileTemplateService;
+		this.cmsTemplateService = cmsTemplateService;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class ArticleController extends BaseController {
 //		}
 		model.addAttribute("isCanUseAuth", ArticleService.isCanUseAuth);
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
-		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("contentViewList", cmsTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
 		model.addAttribute("article", article);
 		CmsUtils.addViewConfigAttribute(model, article.getCategory());

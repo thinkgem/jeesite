@@ -9,7 +9,7 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.FileTemplateService;
+import com.jeesite.modules.cms.service.CmsTemplateService;
 import com.jeesite.modules.cms.service.SiteService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,11 +35,11 @@ import java.io.IOException;
 public class SiteController extends BaseController {
 
 	private final SiteService siteService;
-	private final FileTemplateService fileTemplateService;
+	private final CmsTemplateService cmsTemplateService;
 
-	public SiteController(SiteService siteService, FileTemplateService fileTemplateService) {
+	public SiteController(SiteService siteService, CmsTemplateService cmsTemplateService) {
 		this.siteService = siteService;
-		this.fileTemplateService = fileTemplateService;
+		this.cmsTemplateService = cmsTemplateService;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class SiteController extends BaseController {
 		if (site.getSiteSort() == null) {
 			site.setSiteSort(30);
 		}
-		model.addAttribute("indexViewList", fileTemplateService.getTemplateContentDict(Site.DEFAULT_TEMPLATE));
+		model.addAttribute("indexViewList", cmsTemplateService.getTemplateContentDict(Site.DEFAULT_TEMPLATE));
 		model.addAttribute("site_DEFAULT_TEMPLATE", Site.DEFAULT_TEMPLATE);
 		model.addAttribute("site", site);
 		model.addAttribute("demos", site);

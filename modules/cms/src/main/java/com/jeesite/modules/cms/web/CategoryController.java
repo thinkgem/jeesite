@@ -14,7 +14,7 @@ import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.CategoryService;
-import com.jeesite.modules.cms.service.FileTemplateService;
+import com.jeesite.modules.cms.service.CmsTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.DictUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,11 +42,11 @@ import java.util.Map;
 public class CategoryController extends BaseController {
 
 	private final CategoryService categoryService;
-	private final FileTemplateService fileTemplateService;
+	private final CmsTemplateService cmsTemplateService;
 
-	public CategoryController(CategoryService categoryService, FileTemplateService fileTemplateService) {
+	public CategoryController(CategoryService categoryService, CmsTemplateService cmsTemplateService) {
 		this.categoryService = categoryService;
-		this.fileTemplateService = fileTemplateService;
+		this.cmsTemplateService = cmsTemplateService;
 	}
 
 	/**
@@ -163,8 +163,8 @@ public class CategoryController extends BaseController {
 		}
 		model.addAttribute("category_DEFAULT_TEMPLATE", Category.DEFAULT_TEMPLATE);
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
-		model.addAttribute("listViewList", fileTemplateService.getTemplateContentDict(Category.DEFAULT_TEMPLATE));
-		model.addAttribute("contentViewList", fileTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("listViewList", cmsTemplateService.getTemplateContentDict(Category.DEFAULT_TEMPLATE));
+		model.addAttribute("contentViewList", cmsTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
 		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
 		model.addAttribute("siteList", CmsUtils.getSiteList());
 		model.addAttribute("category", category);
