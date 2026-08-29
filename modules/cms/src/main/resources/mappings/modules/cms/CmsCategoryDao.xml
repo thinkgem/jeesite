@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jeesite.modules.cms.dao.ArticleDataDao">
+<mapper namespace="com.jeesite.modules.cms.dao.CmsCategoryDao">
 	
 	<!-- 查询数据
-	<select id="findList" resultType="ArticleData">
+	<select id="findList" resultType="CmsCategory">
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
 		<where>

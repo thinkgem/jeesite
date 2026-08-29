@@ -9,8 +9,8 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.ArticleService;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsArticleService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,9 +29,9 @@ import java.util.Map;
 @RequestMapping(value = "${frontPath}/search")
 public class FrontSearchController extends BaseController{
 	
-	private final ArticleService articleService;
+	private final CmsArticleService articleService;
 
-	public FrontSearchController(ArticleService articleService) {
+	public FrontSearchController(CmsArticleService articleService) {
 		this.articleService = articleService;
 	}
 
@@ -48,7 +48,7 @@ public class FrontSearchController extends BaseController{
 	public String search(String t, String q, String qand, String qnot, String bd, String ed, 
 			String siteCode, HttpServletRequest request, HttpServletResponse response, Model model) {
 		long start = System.currentTimeMillis();
-		Site site = CmsUtils.getSite(siteCode);
+		CmsSite site = CmsUtils.getSite(siteCode);
 		model.addAttribute("site", site);
 
 		// 执行检索（搜索词长度必须大于或等于两个字符）

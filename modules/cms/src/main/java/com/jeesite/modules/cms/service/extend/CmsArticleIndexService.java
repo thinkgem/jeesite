@@ -5,7 +5,7 @@
 package com.jeesite.modules.cms.service.extend;
 
 import com.jeesite.common.entity.Page;
-import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.entity.CmsArticle;
 
 import java.util.Map;
 
@@ -14,25 +14,25 @@ import java.util.Map;
  * @author ThinkGem
  * @version 2023-4-10
  */
-public interface ArticleIndexService {
+public interface CmsArticleIndexService {
 
 	/**
 	 * 保存索引
 	 * @author ThinkGem
 	 */
-	void save(Article article);
+	void save(CmsArticle article);
 
 	/**
 	 * 删除索引
 	 * @author ThinkGem
 	 */
-	void delete(Article article);
+	void delete(CmsArticle article);
 
 	/**
 	 * 重建索引
 	 * @author ThinkGem
 	 */
-	String rebuild(Article article);
+	String rebuild(CmsArticle article);
 
 	/**
 	 * 文章高级搜索

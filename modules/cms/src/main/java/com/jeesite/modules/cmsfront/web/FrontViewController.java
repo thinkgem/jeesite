@@ -8,11 +8,11 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.ArticleData;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.ArticleService;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsArticleData;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsArticleService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -32,9 +32,9 @@ import java.util.List;
 @RequestMapping(value = "${frontPath}")
 public class FrontViewController extends BaseController {
 
-	private final ArticleService articleService;
+	private final CmsArticleService articleService;
 
-	public FrontViewController(ArticleService articleService) {
+	public FrontViewController(CmsArticleService articleService) {
 		this.articleService = articleService;
 	}
 
@@ -46,9 +46,9 @@ public class FrontViewController extends BaseController {
 			HttpServletRequest request) {
 
 		// 获取栏目信息
-		Category category = CmsUtils.getCategory(categoryCode);
-		if (category == null || !Category.STATUS_NORMAL.equals(category.getStatus())) {
-			Site site = CmsUtils.getSite(Site.MAIN_SITE_CODE);
+		CmsCategory category = CmsUtils.getCategory(categoryCode);
+		if (category == null || !CmsCategory.STATUS_NORMAL.equals(category.getStatus())) {
+			CmsSite site = CmsUtils.getSite(CmsSite.MAIN_SITE_CODE);
 			model.addAttribute("site", site);
 			return "error/404";
 		}
@@ -67,26 +67,26 @@ public class FrontViewController extends BaseController {
 			model.addAttribute("categoryList", categoryList);*/
 
 			// 获取文章
-			Article article = null;
+			CmsArticle article = null;
 			// 设置内容ID，则获取文章内容
 			if (StringUtils.isNotBlank(contentId)) {
-				article = articleService.get(new Article(contentId));
+				article = articleService.get(new CmsArticle(contentId));
 			}
 
 			// 如果没有设置内容ID则获取栏目里的第一篇文章
 			else {
-				Page<Article> page = new Page<>(1, 1, -1);
-				Article entity = new Article(category);
+				Page<CmsArticle> page = new Page<>(1, 1, -1);
+				CmsArticle entity = new CmsArticle(category);
 				entity.setPage(page);
 				page = articleService.findPage(entity);
 				if (!page.getList().isEmpty()) {
 					article = page.getList().get(0);
-					article.setArticleData(articleService.get(new ArticleData(article.getId())));
+					article.setArticleData(articleService.get(new CmsArticleData(article.getId())));
 				}
 			}
 
 			// 如果没有取到文章，则抛到404页面
-			if (article == null || !Article.STATUS_NORMAL.equals(article.getStatus())) {
+			if (article == null || !CmsArticle.STATUS_NORMAL.equals(article.getStatus())) {
 				return "error/404";
 			}
 
@@ -106,7 +106,7 @@ public class FrontViewController extends BaseController {
 			model.addAttribute("category", article.getCategory());
 
 			// 获取栏目所在站点全信息
-			Site site = CmsUtils.getSite(category.getSite().getId());
+			CmsSite site = CmsUtils.getSite(category.getSite().getId());
 			model.addAttribute("site", site);
 
 			// 获取推荐文章列表

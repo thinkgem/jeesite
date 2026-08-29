@@ -4,7 +4,7 @@
  */
 package com.jeesite.modules.cms.service.extend;
 
-import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.entity.CmsArticle;
 
 import java.util.function.Consumer;
 
@@ -13,12 +13,12 @@ import java.util.function.Consumer;
  * @author ThinkGem
  * @version 2025-12-23
  */
-public interface ArticleAuthService {
+public interface CmsArticleAuthService {
 
 	/**
 	 * 提交到流程
 	 * @author ThinkGem
 	 */
-	void submit(Article article, Consumer<Article> consumer);
+	void submit(CmsArticle article, Consumer<CmsArticle> consumer);
 
 }

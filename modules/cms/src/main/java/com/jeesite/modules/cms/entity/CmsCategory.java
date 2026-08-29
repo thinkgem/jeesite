@@ -47,13 +47,13 @@ import java.util.List;
 		@Column(includeEntity = DataEntity.class),
 		@Column(includeEntity = Extend.class, attrName = "extend"),
 	}, joinTable = {
-		@JoinTable(entity = Site.class, alias = "s",
+		@JoinTable(entity = CmsSite.class, alias = "s",
 			on = "s.site_code = a.site_code", columns = {
 				@Column(name = "site_name"),
 			})
 	}, orderBy = "a.tree_sorts, a.category_code"
 )
-public class Category extends TreeEntity<Category> {
+public class CmsCategory extends TreeEntity<CmsCategory> {
 
 	public static final String DEFAULT_TEMPLATE = "list"; // 默认文章列表模板
 	
@@ -65,7 +65,7 @@ public class Category extends TreeEntity<Category> {
 	private static final long serialVersionUID = 1L;
 	private String categoryCode; 	// 栏目编码
 	private String categoryName; 	// 栏目名称
-	private Site site; 				// 归属站点		
+	private CmsSite site; 				// 归属站点		
 	private String moduleType; 		// 模块类型
 	private String image; 			// 栏目图片
 	private String href; 			// 链接
@@ -86,26 +86,26 @@ public class Category extends TreeEntity<Category> {
 	private List<String> categoryCodeList = ListUtils.newArrayList(); 	// 根据分类栏目编号查询栏目列表
 	private List<String> roleCodeList = ListUtils.newArrayList(); 		// 根据角色查询有权限的栏目列表
 
-	public Category() {
+	public CmsCategory() {
 		super();
 	}
 
-	public Category(String id) {
+	public CmsCategory(String id) {
 		super(id);
 	}
 
-	public Category(Site site) {
+	public CmsCategory(CmsSite site) {
 		super();
 		this.setSite(site);
 	}
 
 	@Override
-	public Category getParent() {
+	public CmsCategory getParent() {
 		return parent;
 	}
 
 	@Override
-	public void setParent(Category parent) {
+	public void setParent(CmsCategory parent) {
 		this.parent = parent;
 	}
 
@@ -135,14 +135,14 @@ public class Category extends TreeEntity<Category> {
 		this.categoryName = categoryName;
 	}
 
-	public Site getSite() {
+	public CmsSite getSite() {
 		if (site == null) {
-			site = new Site();
+			site = new CmsSite();
 		}
 		return site;
 	}
 
-	public void setSite(Site site) {
+	public void setSite(CmsSite site) {
 		this.site = site;
 	}
 

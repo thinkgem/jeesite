@@ -32,10 +32,10 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}/cms/template")
 public class CmsTemplateController extends BaseController {
 	
-	private final CmsTemplateService cmsTemplateService;
+	private final CmsTemplateService templateService;
 
-	public CmsTemplateController(CmsTemplateService cmsTemplateService) {
-		this.cmsTemplateService = cmsTemplateService;
+	public CmsTemplateController(CmsTemplateService templateService) {
+		this.templateService = templateService;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class CmsTemplateController extends BaseController {
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "form")
 	public String form(String name, Model model) throws IOException {
-		model.addAttribute("template", cmsTemplateService.getFileTemplate(name));
+		model.addAttribute("template", templateService.getFileTemplate(name));
 		return "modules/cms/tplForm";
 	}
 
@@ -69,7 +69,7 @@ public class CmsTemplateController extends BaseController {
 		}
 		fileContent = EncodeUtils.decodeBase64String(fileContent);
 		try {
-			cmsTemplateService.saveFileTemplate(fileName, fileContent);
+			templateService.saveFileTemplate(fileName, fileContent);
 			return renderResult(Global.TRUE, "保存模版成功！");
 		} catch (ServiceException e) {
 			return renderResult(Global.FALSE, text(e.getMessage()));
@@ -87,7 +87,7 @@ public class CmsTemplateController extends BaseController {
 			return renderResult(Global.FALSE, "模版编辑功能已禁用，请在配置文件中开启！");
 		}
 		try {
-			cmsTemplateService.deleteFileTemplate(fileName);
+			templateService.deleteFileTemplate(fileName);
 			return renderResult(Global.TRUE, "删除模版成功！");
 		} catch (ServiceException e) {
 			return renderResult(Global.FALSE, text(e.getMessage()));
@@ -111,7 +111,7 @@ public class CmsTemplateController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData() throws IOException {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		for (CmsTemplate e : cmsTemplateService.getTemplateListForEdit(StringUtils.EMPTY)) {
+		for (CmsTemplate e : templateService.getTemplateListForEdit(StringUtils.EMPTY)) {
 			Map<String, Object> map = MapUtils.newHashMap();
 			String path = e.getFilePath();
 			String separator = (StringUtils.isNotBlank(path) ? "/" : "");

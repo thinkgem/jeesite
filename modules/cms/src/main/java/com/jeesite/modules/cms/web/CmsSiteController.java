@@ -8,9 +8,9 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Site;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsSiteService;
 import com.jeesite.modules.cms.service.CmsTemplateService;
-import com.jeesite.modules.cms.service.SiteService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,21 +32,21 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cms/site")
-public class SiteController extends BaseController {
+public class CmsSiteController extends BaseController {
 
-	private final SiteService siteService;
-	private final CmsTemplateService cmsTemplateService;
+	private final CmsSiteService siteService;
+	private final CmsTemplateService templateService;
 
-	public SiteController(SiteService siteService, CmsTemplateService cmsTemplateService) {
+	public CmsSiteController(CmsSiteService siteService, CmsTemplateService templateService) {
 		this.siteService = siteService;
-		this.cmsTemplateService = cmsTemplateService;
+		this.templateService = templateService;
 	}
 
 	/**
 	 * 获取数据
 	 */
-	@ModelAttribute
-	public Site get(String siteCode, boolean isNewRecord) {
+	@ModelAttribute("site")
+	public CmsSite get(String siteCode, boolean isNewRecord) {
 		return siteService.get(siteCode, isNewRecord);
 	}
 
@@ -55,8 +55,7 @@ public class SiteController extends BaseController {
 	 */
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = { "list", "" })
-	public String list(Site site, Model model) {
-
+	public String list(@ModelAttribute("site") CmsSite site, Model model) {
 		model.addAttribute("site", site);
 		return "modules/cms/siteList";
 	}
@@ -67,9 +66,9 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public Page<Site> listData(Site site, HttpServletRequest request, HttpServletResponse response) {
+	public Page<CmsSite> listData(@ModelAttribute("site") CmsSite site, HttpServletRequest request, HttpServletResponse response) {
 		site.setPage(new Page<>(request, response));
-		Page<Site> page = siteService.findPage(site);
+		Page<CmsSite> page = siteService.findPage(site);
 		return page;
 	}
 
@@ -79,12 +78,12 @@ public class SiteController extends BaseController {
 	 */
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = "form")
-	public String form(Site site, Model model) throws IOException {
+	public String form(@ModelAttribute("site") CmsSite site, Model model) throws IOException {
 		if (site.getSiteSort() == null) {
 			site.setSiteSort(30);
 		}
-		model.addAttribute("indexViewList", cmsTemplateService.getTemplateContentDict(Site.DEFAULT_TEMPLATE));
-		model.addAttribute("site_DEFAULT_TEMPLATE", Site.DEFAULT_TEMPLATE);
+		model.addAttribute("indexViewList", templateService.getTemplateContentDict(CmsSite.DEFAULT_TEMPLATE));
+		model.addAttribute("site_DEFAULT_TEMPLATE", CmsSite.DEFAULT_TEMPLATE);
 		model.addAttribute("site", site);
 		model.addAttribute("demos", site);
 		return "modules/cms/siteForm";
@@ -96,7 +95,7 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Site site) {
+	public String save(@Validated @ModelAttribute("site") CmsSite site) {
 		siteService.save(site);
 		return renderResult(Global.TRUE, text("保存站点表成功！"));
 	}
@@ -107,8 +106,8 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "disable")
 	@ResponseBody
-	public String disable(Site site) {
-		site.setStatus(Site.STATUS_DISABLE);
+	public String disable(@ModelAttribute("site") CmsSite site) {
+		site.setStatus(CmsSite.STATUS_DISABLE);
 		siteService.updateStatus(site);
 		return renderResult(Global.TRUE, text("停用站点表成功"));
 	}
@@ -119,8 +118,8 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "enable")
 	@ResponseBody
-	public String enable(Site site) {
-		site.setStatus(Site.STATUS_NORMAL);
+	public String enable(@ModelAttribute("site") CmsSite site) {
+		site.setStatus(CmsSite.STATUS_NORMAL);
 		siteService.updateStatus(site);
 		return renderResult(Global.TRUE, text("启用站点表成功"));
 	}
@@ -131,7 +130,7 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
-	public String delete(Site site) {
+	public String delete(@ModelAttribute("site") CmsSite site) {
 		siteService.delete(site);
 		return renderResult(Global.TRUE, text("删除站点表成功！"));
 	}
@@ -143,7 +142,7 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:rebuildIndex")
 	@ResponseBody
 	@RequestMapping(value = "rebuildIndex")
-	public String rebuildIndex(Site site)  {
+	public String rebuildIndex(@ModelAttribute("site") CmsSite site)  {
 		return renderResult(Global.TRUE, siteService.rebuildIndex(site));
 	}
 
@@ -154,7 +153,7 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:rebuildVectorStore")
 	@ResponseBody
 	@RequestMapping(value = "rebuildVectorStore")
-	public String rebuildVectorStore(Site site)  {
+	public String rebuildVectorStore(@ModelAttribute("site") CmsSite site)  {
 		return renderResult(Global.TRUE, siteService.rebuildVectorStore(site));
 	}
 	

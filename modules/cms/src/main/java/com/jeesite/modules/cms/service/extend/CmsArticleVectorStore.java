@@ -4,30 +4,30 @@
  */
 package com.jeesite.modules.cms.service.extend;
 
-import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.entity.CmsArticle;
 
 /**
  * 文章向量存储服务类
  * @author ThinkGem
  */
-public interface ArticleVectorStore {
+public interface CmsArticleVectorStore {
 
 	/**
 	 * 保存索引
 	 * @author ThinkGem
 	 */
-	void save(Article article);
+	void save(CmsArticle article);
 
 	/**
 	 * 删除索引
 	 * @author ThinkGem
 	 */
-	void delete(Article article);
+	void delete(CmsArticle article);
 
 	/**
 	 * 重建向量库
 	 * @author ThinkGem
 	 */
-	String rebuild(Article article);
+	String rebuild(CmsArticle article);
 
 }

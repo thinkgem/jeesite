@@ -7,13 +7,13 @@ package com.jeesite.modules.cms.service;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.cms.dao.SiteDao;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.extend.ArticleIndexService;
-import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
-import com.jeesite.modules.cms.service.extend.PageCacheService;
+import com.jeesite.modules.cms.dao.CmsSiteDao;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.extend.CmsArticleIndexService;
+import com.jeesite.modules.cms.service.extend.CmsArticleVectorStore;
+import com.jeesite.modules.cms.service.extend.CmsPageCacheService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import org.springframework.beans.factory.ObjectProvider;
@@ -28,15 +28,15 @@ import java.util.List;
  * @version 2025-10-12
  */
 @Service
-public class SiteService extends CrudService<SiteDao, Site> {
+public class CmsSiteService extends CrudService<CmsSiteDao, CmsSite> {
 
-	protected final ArticleIndexService articleIndexService;
-	protected final ArticleVectorStore articleVectorStore;
-	protected final PageCacheService pageCacheService;
+	protected final CmsArticleIndexService articleIndexService;
+	protected final CmsArticleVectorStore articleVectorStore;
+	protected final CmsPageCacheService pageCacheService;
 
-	public SiteService(ObjectProvider<ArticleIndexService> articleIndexService,
-					   ObjectProvider<ArticleVectorStore> articleVectorStore,
-					   ObjectProvider<PageCacheService> pageCacheService) {
+	public CmsSiteService(ObjectProvider<CmsArticleIndexService> articleIndexService,
+	                      ObjectProvider<CmsArticleVectorStore> articleVectorStore,
+	                      ObjectProvider<CmsPageCacheService> pageCacheService) {
 		this.articleIndexService = articleIndexService.getIfAvailable();
 		this.articleVectorStore = articleVectorStore.getIfAvailable();
 		this.pageCacheService = pageCacheService.getIfAvailable();
@@ -47,7 +47,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site 主键
 	 */
 	@Override
-	public Site get(Site site) {
+	public CmsSite get(CmsSite site) {
 		return super.get(site);
 	}
 
@@ -56,7 +56,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site 查询条件
 	 */
 	@Override
-	public List<Site> findList(Site entity) {
+	public List<CmsSite> findList(CmsSite entity) {
 		return super.findList(entity);
 	}
 
@@ -66,7 +66,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site page 分页对象
 	 */
 	@Override
-	public Page<Site> findPage(Site site) {
+	public Page<CmsSite> findPage(CmsSite site) {
 		return super.findPage(site);
 	}
 
@@ -76,7 +76,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 */
 	@Override
 	@Transactional
-	public void save(Site site) {
+	public void save(CmsSite site) {
 		super.save(site);
 		FileUploadUtils.saveFileUpload(site, site.getId(), "site_logo");
 		// 清理站点缓存
@@ -89,7 +89,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 */
 	@Override
 	@Transactional
-	public void updateStatus(Site site) {
+	public void updateStatus(CmsSite site) {
 		super.updateStatus(site);
 		// 清理站点缓存
 		clearCache(site);
@@ -101,7 +101,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 */
 	@Override
 	@Transactional
-	public void delete(Site site) {
+	public void delete(CmsSite site) {
 		site.sqlMap().markIdDelete();
 		super.delete(site);
 		// 清理站点缓存
@@ -111,7 +111,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	/**
 	 * 清理站点缓存
 	 */
-	public void clearCache(Site site) {
+	public void clearCache(CmsSite site) {
 		// 清理栏目缓存
 		CmsUtils.removeCacheByKeyPrefix("category_");
 		// 清理栏目列表缓存
@@ -132,24 +132,24 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * 重建索引
 	 * @author ThinkGem
 	 */
-	public String rebuildIndex(Site site) {
+	public String rebuildIndex(CmsSite site) {
 		if (articleIndexService == null) {
 			return text("您好，系统未安装全文检索模块");
 		}
 		Global.assertDemoMode();
-		return articleIndexService.rebuild(new Article(new Category(site)));
+		return articleIndexService.rebuild(new CmsArticle(new CmsCategory(site)));
 	}
 
 	/**
 	 * 重建向量数据库
 	 * @author ThinkGem
 	 */
-	public String rebuildVectorStore(Site site) {
+	public String rebuildVectorStore(CmsSite site) {
 		if (articleVectorStore == null) {
 			return text("您好，系统未配置向量数据库");
 		}
 		Global.assertDemoMode();
-		return articleVectorStore.rebuild(new Article(new Category(site)));
+		return articleVectorStore.rebuild(new CmsArticle(new CmsCategory(site)));
 	}
 	
 }

@@ -14,8 +14,8 @@ import com.jeesite.common.io.ResourceUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.common.service.ServiceException;
+import com.jeesite.modules.cms.entity.CmsSite;
 import com.jeesite.modules.cms.entity.CmsTemplate;
-import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.entity.DictData;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -45,7 +45,7 @@ public class CmsTemplateService extends BaseService {
 		}
 		List<CmsTemplate> list = ListUtils.newArrayList();
 		Resource[] resources = ResourceUtils.getResources("classpath*:"
-				+ FileUtils.path(Site.TEMPLATE_BASE_DIRECTION + path + "/**/*.html"));
+				+ FileUtils.path(CmsSite.TEMPLATE_BASE_DIRECTION + path + "/**/*.html"));
 		for (Resource resource : resources) {
 			if (resource.exists()) {
 				list.add(new CmsTemplate(resource));
@@ -60,7 +60,7 @@ public class CmsTemplateService extends BaseService {
 	 */
 	public List<DictData> getTemplateContentDict(String prefix) {
 		List<DictData> listSite = ListUtils.newArrayList();
-		Site site = CmsUtils.getSite(Site.getCurrentSiteCode());
+		CmsSite site = CmsUtils.getSite(CmsSite.getCurrentSiteCode());
 		List<CmsTemplate> tplList = getTemplateListByPath(site.getTheme());
 		for (CmsTemplate tpl : tplList) {
 			String fileName = tpl.getFileName();
@@ -113,7 +113,7 @@ public class CmsTemplateService extends BaseService {
 				|| !StringUtils.endsWith(fileName, ".html")) {
 			return new CmsTemplate(StringUtils.EMPTY);
 		}
-		fileName = Site.TEMPLATE_BASE_DIRECTION + fileName;
+		fileName = CmsSite.TEMPLATE_BASE_DIRECTION + fileName;
 		Resource resource = ResourceUtils.getResource(fileName);
 		return new CmsTemplate(resource);
 	}
@@ -194,7 +194,7 @@ public class CmsTemplateService extends BaseService {
 			if (saveFileName == null) {
 				throw new ServiceException(Global.getText("模版文件不能保存！"));
 			}
-			saveFileName = new File(saveFileName, Site.TEMPLATE_BASE_DIRECTION + fileName).getAbsolutePath();
+			saveFileName = new File(saveFileName, CmsSite.TEMPLATE_BASE_DIRECTION + fileName).getAbsolutePath();
 			// 备份 classes 下的文件
 			backFileTemplate(saveFileName);
 			// 更新 classes 下的文件
@@ -235,7 +235,7 @@ public class CmsTemplateService extends BaseService {
 			if (saveFileName == null) {
 				throw new ServiceException(Global.getText("模版文件不能删除！"));
 			}
-			saveFileName = new File(saveFileName, Site.TEMPLATE_BASE_DIRECTION + fileName).getAbsolutePath();
+			saveFileName = new File(saveFileName, CmsSite.TEMPLATE_BASE_DIRECTION + fileName).getAbsolutePath();
 			// 备份 classes 下的文件
 			backFileTemplate(saveFileName);
 			// 删除 classes 下的文件
