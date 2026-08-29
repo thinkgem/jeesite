@@ -6,12 +6,12 @@ package com.jeesite.modules.cms.service;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.service.TreeService;
-import com.jeesite.modules.cms.dao.CategoryDao;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.service.extend.ArticleIndexService;
-import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
-import com.jeesite.modules.cms.service.extend.PageCacheService;
+import com.jeesite.modules.cms.dao.CmsCategoryDao;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.service.extend.CmsArticleIndexService;
+import com.jeesite.modules.cms.service.extend.CmsArticleVectorStore;
+import com.jeesite.modules.cms.service.extend.CmsPageCacheService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import org.springframework.beans.factory.ObjectProvider;
@@ -26,15 +26,15 @@ import java.util.List;
  * @version 2025-10-12
  */
 @Service
-public class CategoryService extends TreeService<CategoryDao, Category> {
+public class CmsCategoryService extends TreeService<CmsCategoryDao, CmsCategory> {
 
-	protected final ArticleIndexService articleIndexService;
-	protected final ArticleVectorStore articleVectorStore;
-	protected final PageCacheService pageCacheService;
+	protected final CmsArticleIndexService articleIndexService;
+	protected final CmsArticleVectorStore articleVectorStore;
+	protected final CmsPageCacheService pageCacheService;
 
-	public CategoryService(ObjectProvider<ArticleIndexService> articleIndexService,
-						   ObjectProvider<ArticleVectorStore> articleVectorStore,
-						   ObjectProvider<PageCacheService> pageCacheService) {
+	public CmsCategoryService(ObjectProvider<CmsArticleIndexService> articleIndexService,
+	                          ObjectProvider<CmsArticleVectorStore> articleVectorStore,
+	                          ObjectProvider<CmsPageCacheService> pageCacheService) {
 		this.articleIndexService = articleIndexService.getIfAvailable();
 		this.articleVectorStore = articleVectorStore.getIfAvailable();
 		this.pageCacheService = pageCacheService.getIfAvailable();
@@ -44,7 +44,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 获取单条数据
 	 */
 	@Override
-	public Category get(Category category) {
+	public CmsCategory get(CmsCategory category) {
 		return super.get(category);
 	}
 	
@@ -52,7 +52,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 添加数据权限
 	 */
 	@Override
-	public void addDataScopeFilter(Category entity, String ctrlPermi) {
+	public void addDataScopeFilter(CmsCategory entity, String ctrlPermi) {
 		entity.sqlMap().getDataScope().addFilter("dsfCategory",
 				"Category", "a.category_code", "a.create_by", ctrlPermi);
 	}
@@ -61,7 +61,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 查询列表数据
 	 */
 	@Override
-	public List<Category> findList(Category category) {
+	public List<CmsCategory> findList(CmsCategory category) {
 		return super.findList(category);
 	}
 
@@ -70,7 +70,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 */
 	@Override
 	@Transactional
-	public void save(Category category) {
+	public void save(CmsCategory category) {
 		super.save(category);
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(category, category.getId(), "category_image");
@@ -82,7 +82,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 更新子节点，并设置子节点[sysCode]与父类相同
 	 */
 	@Override
-	protected void updateChildNode(Category childEntity, Category parentEntity) {
+	protected void updateChildNode(CmsCategory childEntity, CmsCategory parentEntity) {
 		childEntity.setSite(parentEntity.getSite());
 		childEntity.sqlMap().updateTreeDataExtSql("site_code = #{site.siteCode}");
 		super.updateChildNode(childEntity, parentEntity);
@@ -93,7 +93,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 */
 	@Override
 	@Transactional
-	public void updateStatus(Category category) {
+	public void updateStatus(CmsCategory category) {
 		super.updateStatus(category);
 		// 清理栏目缓存
 		clearCache(category);
@@ -104,7 +104,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 */
 	@Override
 	@Transactional
-	public void delete(Category category) {
+	public void delete(CmsCategory category) {
 		category.sqlMap().markIdDelete();
 		super.delete(category);
 		// 清理栏目缓存
@@ -114,7 +114,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	/**
 	 * 清理栏目缓存
 	 */
-	public void clearCache(Category category) {
+	public void clearCache(CmsCategory category) {
 		// 清理栏目缓存
 		CmsUtils.removeCache("category_" + category.getId());
 		// 清理栏目列表缓存
@@ -131,24 +131,24 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 重建索引
 	 * @author ThinkGem
 	 */
-	public String rebuildIndex(Category category) {
+	public String rebuildIndex(CmsCategory category) {
 		if (articleIndexService == null) {
 			return text("您好，系统未安装全文检索模块");
 		}
 		Global.assertDemoMode();
-		return articleIndexService.rebuild(new Article(category));
+		return articleIndexService.rebuild(new CmsArticle(category));
 	}
 
 	/**
 	 * 重建向量数据库
 	 * @author ThinkGem
 	 */
-	public String rebuildVectorStore(Category category) {
+	public String rebuildVectorStore(CmsCategory category) {
 		if (articleVectorStore == null) {
 			return text("您好，系统未配置向量数据库");
 		}
 		Global.assertDemoMode();
-		return articleVectorStore.rebuild(new Article(category));
+		return articleVectorStore.rebuild(new CmsArticle(category));
 	}
 
 }

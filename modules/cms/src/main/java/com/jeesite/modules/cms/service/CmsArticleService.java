@@ -11,14 +11,14 @@ import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.common.service.ServiceException;
-import com.jeesite.modules.cms.dao.ArticleDao;
-import com.jeesite.modules.cms.dao.ArticleDataDao;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.ArticleData;
-import com.jeesite.modules.cms.service.extend.ArticleAuthService;
-import com.jeesite.modules.cms.service.extend.ArticleIndexService;
-import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
-import com.jeesite.modules.cms.service.extend.PageCacheService;
+import com.jeesite.modules.cms.dao.CmsArticleDao;
+import com.jeesite.modules.cms.dao.CmsArticleDataDao;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsArticleData;
+import com.jeesite.modules.cms.service.extend.CmsArticleAuthService;
+import com.jeesite.modules.cms.service.extend.CmsArticleIndexService;
+import com.jeesite.modules.cms.service.extend.CmsArticleVectorStore;
+import com.jeesite.modules.cms.service.extend.CmsPageCacheService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import io.netty.util.concurrent.DefaultThreadFactory;
@@ -40,32 +40,32 @@ import java.util.concurrent.TimeUnit;
  * @version 2025-10-12
  */
 @Service
-public class ArticleService extends CrudService<ArticleDao, Article> {
+public class CmsArticleService extends CrudService<CmsArticleDao, CmsArticle> {
 
 	protected static final ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
 			new DefaultThreadFactory("cms-update-expired-weight"));
 
-	protected final ArticleDataDao articleDataDao;
-	protected final ArticleIndexService articleIndexService;
-	protected final ArticleVectorStore articleVectorStore;
-	protected final ArticleAuthService articleAuthService;
-	protected final PageCacheService pageCacheService;
+	protected final CmsArticleDataDao articleDataDao;
+	protected final CmsArticleIndexService articleIndexService;
+	protected final CmsArticleVectorStore articleVectorStore;
+	protected final CmsArticleAuthService articleAuthService;
+	protected final CmsPageCacheService pageCacheService;
 
 	// 是否能使用审核功能
 	public static boolean isCanUseAuth;
 
-	public ArticleService(ArticleDataDao articleDataDao,
-						  ObjectProvider<ArticleIndexService> articleIndexService,
-						  ObjectProvider<ArticleVectorStore> articleVectorStore,
-						  ObjectProvider<ArticleAuthService> bpmArticleService,
-						  ObjectProvider<PageCacheService> pageCacheService) {
+	public CmsArticleService(CmsArticleDataDao articleDataDao,
+	                         ObjectProvider<CmsArticleIndexService> articleIndexService,
+	                         ObjectProvider<CmsArticleVectorStore> articleVectorStore,
+	                         ObjectProvider<CmsArticleAuthService> bpmArticleService,
+	                         ObjectProvider<CmsPageCacheService> pageCacheService) {
 		this.articleDataDao = articleDataDao;
 		this.articleIndexService = articleIndexService.getIfAvailable();
 		this.articleVectorStore = articleVectorStore.getIfAvailable();
 		this.articleAuthService = bpmArticleService.getIfAvailable();
 		this.pageCacheService = pageCacheService.getIfAvailable();
-		ArticleService.isCanUseAuth = articleAuthService != null;
+		CmsArticleService.isCanUseAuth = articleAuthService != null;
 	}
 	
 	/**
@@ -73,10 +73,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article 主键
 	 */
 	@Override
-	public Article get(Article article) {
-		Article entity = super.get(article);
+	public CmsArticle get(CmsArticle article) {
+		CmsArticle entity = super.get(article);
 		if (entity != null && StringUtils.isNotBlank(article.getId())) {
-			entity.setArticleData(get(new ArticleData(article.getId())));
+			entity.setArticleData(get(new CmsArticleData(article.getId())));
 		}
 		return entity;
 	}
@@ -84,7 +84,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	/**
 	 * 获取文章详情内容
 	 */
-	public ArticleData get(ArticleData articleData) {
+	public CmsArticleData get(CmsArticleData articleData) {
 		return articleDataDao.get(articleData);
 	}
 
@@ -92,7 +92,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * 添加数据权限
 	 */
 	@Override
-	public void addDataScopeFilter(Article entity, String ctrlPermi) {
+	public void addDataScopeFilter(CmsArticle entity, String ctrlPermi) {
 		entity.sqlMap().getDataScope().addFilter("dsfCategory",
 				"Category", "a.category_code", "a.create_by", ctrlPermi);
 	}
@@ -102,7 +102,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article 查询条件
 	 */
 	@Override
-	public List<Article> findList(Article article) {
+	public List<CmsArticle> findList(CmsArticle article) {
 		return super.findList(article);
 	}
 	
@@ -112,7 +112,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article page 分页对象
 	 */
 	@Override
-	public Page<Article> findPage(Article article) {
+	public Page<CmsArticle> findPage(CmsArticle article) {
 		updateExpiredWeightThreadPool.submit(() -> updateExpiredWeight(article));
 		return super.findPage(article);
 	}
@@ -127,7 +127,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		if (ids == null) {
 			return list;
 		}
-		Article where = new Article();
+		CmsArticle where = new CmsArticle();
 		where.setId_in(StringUtils.splitComma(ids));
 		dao.findList(where).forEach((e) -> {
 			list.add(new Object[] { e.getCategory().getId(), e.getId(), StringUtils.abbr(e.getTitle(), 50) });
@@ -141,7 +141,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @author ThinkGem
 	 */
 	@Transactional
-	public void updateExpiredWeight(Article article) {
+	public void updateExpiredWeight(CmsArticle article) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate = CmsUtils.getCache("updateExpiredWeightDateByArticle");
 		if (updateExpiredWeightDate == null || updateExpiredWeightDate.getTime() < System.currentTimeMillis()) {
@@ -157,7 +157,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 */
 	@Override
 	@Transactional
-	public void save(Article article) {
+	public void save(CmsArticle article) {
 		Global.assertDemoMode();
 		// 补充栏目信息（全文检索和流程审核需要）
 		if (StringUtils.isNotBlank(article.getCategory().getId())) {
@@ -173,15 +173,15 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 			// 保存文章
 			saveArticle(article);
 			// 发布文章
-			if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+			if (CmsArticle.STATUS_NORMAL.equals(article.getStatus())) {
 				updateStatus(article);
 			}
 		}
 	}
 
-	private void saveArticle(Article article) {
+	private void saveArticle(CmsArticle article) {
 		// 计算内容字数
-		ArticleData articleData = article.getArticleData();
+		CmsArticleData articleData = article.getArticleData();
 		article.setWordCount(StringUtils.stripHtml(articleData.getContent()).length());
 		// 保存详细内容
 		if (article.getIsNewRecord()) {
@@ -196,7 +196,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(article, article.getId(), "article_image");
 		// 文章发布后的一些处理
-		if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+		if (CmsArticle.STATUS_NORMAL.equals(article.getStatus())) {
 			// 保存文章全文检索索引
 			if (articleIndexService != null) {
 				articleIndexService.save(article);
@@ -218,11 +218,11 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 */
 	@Override
 	@Transactional
-	public void updateStatus(Article article) {
+	public void updateStatus(CmsArticle article) {
 		super.updateStatus(article);
 		// 保存文章全文检索索引
 		if (articleIndexService != null) {
-			if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+			if (CmsArticle.STATUS_NORMAL.equals(article.getStatus())) {
 				articleIndexService.save(article);
 			} else {
 				articleIndexService.delete(article);
@@ -230,7 +230,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		}
 		// 保存文章到向量数据库
 		if (articleVectorStore != null) {
-			if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+			if (CmsArticle.STATUS_NORMAL.equals(article.getStatus())) {
 				articleVectorStore.save(article);
 			} else {
 				articleVectorStore.delete(article);
@@ -263,7 +263,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 */
 	@Override
 	@Transactional
-	public void delete(Article article) {
+	public void delete(CmsArticle article) {
 		super.delete(article);
 		// 保存文章全文检索索引
 		if (articleIndexService != null) {

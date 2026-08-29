@@ -39,7 +39,7 @@ import java.util.List;
 		@Column(includeEntity = DataEntity.class),
 	}, orderBy = "a.site_sort, a.update_date DESC"
 )
-public class Site extends DataEntity<Site> {
+public class CmsSite extends DataEntity<CmsSite> {
 	
 	/**
 	 * 获取默认站点编码
@@ -69,13 +69,13 @@ public class Site extends DataEntity<Site> {
 	protected String customIndexView; // 自定义站点首页视图
 	
 	protected List<String> categoryCodes;		//某角色下某站点下授权的栏目id集合
-	protected List<Category> categoryList;	//某站点下所有栏目集合
+	protected List<CmsCategory> categoryList;	//某站点下所有栏目集合
 	
-	public Site() {
+	public CmsSite() {
 		this(null);
 	}
 
-	public Site(String id) {
+	public CmsSite(String id) {
 		super(id);
 	}
 
@@ -186,11 +186,11 @@ public class Site extends DataEntity<Site> {
 		this.categoryCodes = categoryCodes;
 	}
 
-	public List<Category> getCategoryList() {
+	public List<CmsCategory> getCategoryList() {
 		return categoryList;
 	}
 
-	public void setCategoryList(List<Category> categoryList) {
+	public void setCategoryList(List<CmsCategory> categoryList) {
 		this.categoryList = categoryList;
 	}
 

@@ -4,12 +4,11 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import jakarta.validation.constraints.Size;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 
@@ -26,7 +25,7 @@ import java.io.Serial;
 		@Column(includeEntity = Extend.class, attrName = "extend"),
 	}, orderBy = "a.id DESC"
 )
-public class ArticleData extends DataEntity<ArticleData> {
+public class CmsArticleData extends DataEntity<CmsArticleData> {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -35,11 +34,11 @@ public class ArticleData extends DataEntity<ArticleData> {
 	protected String isCanComment; 	// 是否允许评论
 	protected Extend extend; 			// 扩展字段
 
-	public ArticleData() {
+	public CmsArticleData() {
 		this(null);
 	}
 
-	public ArticleData(String id) {
+	public CmsArticleData(String id) {
 		super(id);
 	}
 

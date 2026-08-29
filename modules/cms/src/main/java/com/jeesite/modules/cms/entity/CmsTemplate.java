@@ -55,7 +55,7 @@ public class CmsTemplate implements Comparable<CmsTemplate>, Serializable {
 		try {
 			String filePath = resource.getURI().toString();
 			this.filePath = StringUtils.defaultString(StringUtils.substringBetween(
-					filePath, Site.TEMPLATE_BASE_DIRECTION, "/" + this.fileName));
+					filePath, CmsSite.TEMPLATE_BASE_DIRECTION, "/" + this.fileName));
 		} catch (IOException e) {
 			logger.debug(e.getMessage(), e);
 			this.resource = null;

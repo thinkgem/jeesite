@@ -9,11 +9,11 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.ArticleService;
-import com.jeesite.modules.cms.service.CategoryService;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsArticleService;
+import com.jeesite.modules.cms.service.CmsCategoryService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -33,10 +33,10 @@ import java.util.List;
 @RequestMapping(value = "${frontPath}")
 public class FrontListController extends BaseController {
 
-	private final CategoryService categoryService;
-	private final ArticleService articleService;
+	private final CmsCategoryService categoryService;
+	private final CmsArticleService articleService;
 
-	public FrontListController(CategoryService categoryService, ArticleService articleService) {
+	public FrontListController(CmsCategoryService categoryService, CmsArticleService articleService) {
 		this.categoryService = categoryService;
 		this.articleService = articleService;
 	}
@@ -51,9 +51,9 @@ public class FrontListController extends BaseController {
 			HttpServletRequest request) {
 
 		// 获取栏目信息
-		Category category = CmsUtils.getCategory(categoryCode);
-		if (category == null || !Category.STATUS_NORMAL.equals(category.getStatus())) {
-			Site site = CmsUtils.getSite(Site.MAIN_SITE_CODE);
+		CmsCategory category = CmsUtils.getCategory(categoryCode);
+		if (category == null || !CmsCategory.STATUS_NORMAL.equals(category.getStatus())) {
+			CmsSite site = CmsUtils.getSite(CmsSite.MAIN_SITE_CODE);
 			model.addAttribute("site", site);
 			return "error/404";
 		}
@@ -68,11 +68,11 @@ public class FrontListController extends BaseController {
 		}
 
 		// 获取站点信息
-		Site site = CmsUtils.getSite(category.getSite().getId());
+		CmsSite site = CmsUtils.getSite(category.getSite().getId());
 		model.addAttribute("site", site);
 
 		// 当前栏目展现方式为：3：简介类栏目，栏目第一条内容
-		if (Category.SHOW_MODES_FIRST_CONTENT.equals(category.getShowModes())) {
+		if (CmsCategory.SHOW_MODES_FIRST_CONTENT.equals(category.getShowModes())) {
 			return FORWARD + frontPath + "/view-" + categoryCode + "-.html";
 		}
 
@@ -80,12 +80,12 @@ public class FrontListController extends BaseController {
 		else {
 
 			// 当前栏目的子栏目列表
-			List<Category> categoryList;
+			List<CmsCategory> categoryList;
 
 			// 如果有子节点，则查询子栏目列表
 			if (!category.getIsTreeLeaf()) {
-				Category categoryParam = new Category();
-				categoryParam.setSite(new Site(site.getSiteCode()));
+				CmsCategory categoryParam = new CmsCategory();
+				categoryParam.setSite(new CmsSite(site.getSiteCode()));
 				categoryParam.setParentCode(category.getCategoryCode());
 				categoryList = categoryService.findList(categoryParam);
 				model.addAttribute("categoryList", categoryList);
@@ -94,7 +94,7 @@ public class FrontListController extends BaseController {
 			}
 
 			// 当前栏目展现方式为：2 、无子栏目或公共模型，显示栏目内容列表；1：无子栏目或一个子栏目，显示栏目内容列表
-			if (Category.SHOW_MODES_CONTENT_LIST.equals(category.getShowModes()) || categoryList.size() <= 1) {
+			if (CmsCategory.SHOW_MODES_CONTENT_LIST.equals(category.getShowModes()) || categoryList.size() <= 1) {
 
 				// 有子栏目并展现方式为2，则获取第一个子栏目；无子栏目，则获取同级分类列表。
 				if (!categoryList.isEmpty()) {
@@ -102,7 +102,7 @@ public class FrontListController extends BaseController {
 				}
 
 				// 如果第一个子栏目为简介类栏目，则获取该栏目第一篇文章并展现
-				if (Category.SHOW_MODES_FIRST_CONTENT.equals(category.getShowModes())) {
+				if (CmsCategory.SHOW_MODES_FIRST_CONTENT.equals(category.getShowModes())) {
 					return FORWARD + frontPath + "/view-" + category.getCategoryCode() + "-.html";
 				}
 
@@ -110,8 +110,8 @@ public class FrontListController extends BaseController {
 				else {
 					// 文章模型
 					if ("article".equals(category.getModuleType())) {
-						Page<Article> page = new Page<>(pageNo, pageSize);
-						Article searchArticle= new Article(category);
+						Page<CmsArticle> page = new Page<>(pageNo, pageSize);
+						CmsArticle searchArticle= new CmsArticle(category);
 						searchArticle.setPage(page);
 						page = articleService.findPage(searchArticle);
 						model.addAttribute("page", page);
@@ -121,7 +121,7 @@ public class FrontListController extends BaseController {
 				// 将数据信息传递到视图
 				model.addAttribute("category", category);
 				CmsUtils.addViewConfigAttribute(model, category);
-				String view = Category.DEFAULT_TEMPLATE;
+				String view = CmsCategory.DEFAULT_TEMPLATE;
 				if (StringUtils.isNotBlank(category.getCustomListView())) {
 					view = category.getCustomListView();
 				}
@@ -132,7 +132,7 @@ public class FrontListController extends BaseController {
 			else {
 				model.addAttribute("category", category);
 				CmsUtils.addViewConfigAttribute(model, category);
-				String view = Category.DEFAULT_TEMPLATE + "Category";
+				String view = CmsCategory.DEFAULT_TEMPLATE + "Category";
 				if (StringUtils.isNotBlank(category.getCustomListView())) {
 					view = category.getCustomListView();
 				}
@@ -151,21 +151,21 @@ public class FrontListController extends BaseController {
 			HttpServletRequest request) {
 
 		// 获取栏目信息
-		Category category = CmsUtils.getCategory(categoryCode);
-		if (category == null || !Category.STATUS_NORMAL.equals(category.getStatus())) {
-			Site site = CmsUtils.getSite(Site.MAIN_SITE_CODE);
+		CmsCategory category = CmsUtils.getCategory(categoryCode);
+		if (category == null || !CmsCategory.STATUS_NORMAL.equals(category.getStatus())) {
+			CmsSite site = CmsUtils.getSite(CmsSite.MAIN_SITE_CODE);
 			model.addAttribute("site", site);
 			return "error/404";
 		}
 
 		// 获取站点信息
-		Site site = CmsUtils.getSite(category.getSite().getId());
+		CmsSite site = CmsUtils.getSite(category.getSite().getId());
 		model.addAttribute("site", site);
 
 		// 将数据信息传递到视图
 		model.addAttribute("category", category);
 		CmsUtils.addViewConfigAttribute(model, category);
-		return "modules/cmsfront/themes/" + site.getTheme() + "/" + Category.DEFAULT_TEMPLATE + customView;
+		return "modules/cmsfront/themes/" + site.getTheme() + "/" + CmsCategory.DEFAULT_TEMPLATE + customView;
 	}
 
 }

@@ -4,16 +4,16 @@
  */
 package com.jeesite.modules.cms.dao;
 
-import com.jeesite.common.dao.TreeDao;
+import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.cms.entity.Category;
+import com.jeesite.modules.cms.entity.CmsSite;
 
 /**
- * 栏目表 DAO 接口
+ * 站点表 DAO 接口
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
 @MyBatisDao
-public interface CategoryDao extends TreeDao<Category> {
+public interface CmsSiteDao extends CrudDao<CmsSite> {
 	
 }

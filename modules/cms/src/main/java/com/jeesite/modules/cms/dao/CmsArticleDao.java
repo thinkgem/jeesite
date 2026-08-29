@@ -6,14 +6,20 @@ package com.jeesite.modules.cms.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.cms.entity.ArticleData;
+import com.jeesite.modules.cms.entity.CmsArticle;
 
 /**
- * 文章详情表 DAO 接口
+ * 文章表 DAO 接口
  * @author ThinkGem、长春叭哥、一往无前
  * @version 2018-10-15
  */
 @MyBatisDao
-public interface ArticleDataDao extends CrudDao<ArticleData> {
-	
+public interface CmsArticleDao extends CrudDao<CmsArticle> {
+
+	long updateExpiredWeight(CmsArticle article);
+
+	long updateHitsAddOne(String id);
+
+	long getHits(String id);
+
 }

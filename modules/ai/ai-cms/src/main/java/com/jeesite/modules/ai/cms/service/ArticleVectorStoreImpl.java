@@ -14,9 +14,9 @@ import com.jeesite.common.utils.PageUtils;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.common.web.http.HttpClientUtils;
 import com.jeesite.common.web.http.ServletUtils;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.service.ArticleService;
-import com.jeesite.modules.cms.service.extend.ArticleVectorStore;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.service.CmsArticleService;
+import com.jeesite.modules.cms.service.extend.CmsArticleVectorStore;
 import com.vladsch.flexmark.html.renderer.LinkType;
 import com.vladsch.flexmark.html.renderer.ResolvedLink;
 import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter;
@@ -53,11 +53,11 @@ import java.util.Set;
  * @author ThinkGem
  */
 @Service
-public class ArticleVectorStoreImpl implements ArticleVectorStore {
+public class ArticleVectorStoreImpl implements CmsArticleVectorStore {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	protected final VectorStore vectorStore;
-	protected ArticleService articleService;
+	protected CmsArticleService articleService;
 
 	public ArticleVectorStoreImpl(ObjectProvider<VectorStore> vectorStore) {
 		this.vectorStore = vectorStore.getIfAvailable();
@@ -69,7 +69,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public void save(Article article) {
+	public void save(CmsArticle article) {
 		if (vectorStore == null) return;
 		Map<String, Object> metadata = MapUtils.newHashMap();
 		metadata.put("id", article.getId());
@@ -197,7 +197,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 * @author ThinkGem
 	 */
 	@Override
-	public void delete(Article article) {
+	public void delete(CmsArticle article) {
 		if (vectorStore == null) return;
 		if (StringUtils.isNotBlank(article.getId())) {
 			vectorStore.delete(new FilterExpressionBuilder().eq("id", article.getId()).build());
@@ -208,7 +208,7 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 	 * 重建向量库文章
 	 * @author ThinkGem
 	 */
-	public String rebuild(Article article) {
+	public String rebuild(CmsArticle article) {
 		if (vectorStore == null) return null;
 		logger.debug("开始重建向量库。 siteCode: {}, categoryCode: {}",
 				article.getCategory().getSite().getSiteCode(),
@@ -217,10 +217,10 @@ public class ArticleVectorStoreImpl implements ArticleVectorStore {
 		try{
 			article.setIsQueryArticleData(true); // 查询文章内容
 			if (articleService == null) {
-				articleService = SpringUtils.getBean(ArticleService.class);
+				articleService = SpringUtils.getBean(CmsArticleService.class);
 			}
 			PageUtils.findList(article, null, e -> {
-				List<Article> list = articleService.findList((Article) e);
+				List<CmsArticle> list = articleService.findList((CmsArticle) e);
 				if (!list.isEmpty()) {
 					list.forEach(this::save);
 					return true;

@@ -10,10 +10,10 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.CategoryService;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsCategoryService;
 import com.jeesite.modules.cms.service.CmsTemplateService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.DictUtils;
@@ -39,23 +39,23 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cms/category")
-public class CategoryController extends BaseController {
+public class CmsCategoryController extends BaseController {
 
-	private final CategoryService categoryService;
-	private final CmsTemplateService cmsTemplateService;
+	private final CmsCategoryService categoryService;
+	private final CmsTemplateService templateService;
 
-	public CategoryController(CategoryService categoryService, CmsTemplateService cmsTemplateService) {
+	public CmsCategoryController(CmsCategoryService categoryService, CmsTemplateService templateService) {
 		this.categoryService = categoryService;
-		this.cmsTemplateService = cmsTemplateService;
+		this.templateService = templateService;
 	}
 
 	/**
 	 * 获取数据
 	 */
-	@ModelAttribute
-	public Category get(String categoryCode, boolean isNewRecord, HttpServletRequest request) {
+	@ModelAttribute("category")
+	public CmsCategory get(String categoryCode, boolean isNewRecord, HttpServletRequest request) {
 		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
-			return new Category();
+			return new CmsCategory();
 		}
 		return categoryService.get(categoryCode, isNewRecord);
 	}
@@ -65,7 +65,7 @@ public class CategoryController extends BaseController {
 	 */
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "index")
-	public String index(Category category, Model model) {
+	public String index(@ModelAttribute("category") CmsCategory category, Model model) {
 		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
 		model.addAttribute("siteList", CmsUtils.getSiteList());
 		model.addAttribute("category", category);
@@ -77,9 +77,9 @@ public class CategoryController extends BaseController {
 	 */
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = { "list", "" })
-	public String list(Category category, Model model) {
+	public String list(@ModelAttribute("category") CmsCategory category, Model model) {
 		if (StringUtils.isBlank(category.getSite().getSiteCode())) {
-			category.setSite(new Site(Site.getCurrentSiteCode()));
+			category.setSite(new CmsSite(CmsSite.getCurrentSiteCode()));
 		}
 		category.setSite(CmsUtils.getSite(category.getSite().getSiteCode()));
 		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
@@ -94,12 +94,12 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public List<Category> listData(Category category) {
+	public List<CmsCategory> listData(@ModelAttribute("category") CmsCategory category) {
 		if (StringUtils.isBlank(category.getParentCode())) {
-			category.setParentCode(Category.ROOT_CODE);
+			category.setParentCode(CmsCategory.ROOT_CODE);
 		}
 		if (StringUtils.isBlank(category.getSite().getSiteCode())) {
-			category.setSite(new Site(Site.getCurrentSiteCode()));
+			category.setSite(new CmsSite(CmsSite.getCurrentSiteCode()));
 		}
 		if (StringUtils.isNotBlank(category.getCategoryCode())
 				|| StringUtils.isNotBlank(category.getCategoryCode_like())
@@ -107,7 +107,7 @@ public class CategoryController extends BaseController {
 				|| StringUtils.isNotBlank(category.getRemarks())) {
 			category.setParentCode(null);
 		}
-		List<Category> list = categoryService.findList(category);
+		List<CmsCategory> list = categoryService.findList(category);
 		return list;
 	}
 
@@ -116,15 +116,15 @@ public class CategoryController extends BaseController {
 	 */
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "form")
-	public String form(Category category, Model model) throws IOException {
+	public String form(@ModelAttribute("category") CmsCategory category, Model model) throws IOException {
 		// 创建并初始化下一个节点信息
 		category = createNextNode(category);
 		if (category.getParent() != null && StringUtils.isNotBlank(category.getParent().getId())) {
 			category.setParent(CmsUtils.getCategory(category.getParent().getCategoryCode()));
 			if (category.getIsNewRecord()) {
-				Category categoryChild = new Category();
-				categoryChild.setParent(new Category(category.getParentCode()));
-				List<Category> list = categoryService.findList(category);
+				CmsCategory categoryChild = new CmsCategory();
+				categoryChild.setParent(new CmsCategory(category.getParentCode()));
+				List<CmsCategory> list = categoryService.findList(category);
 				if (!list.isEmpty()) {
 					category.setTreeSort(list.get(list.size() - 1).getTreeSort());
 					if (category.getTreeSort() != null) {
@@ -153,7 +153,7 @@ public class CategoryController extends BaseController {
 			category.setInList(Global.SHOW);
 		}
 		if (category.getShowModes() == null) {
-			category.setShowModes(Category.SHOW_MODES_AUTO);
+			category.setShowModes(CmsCategory.SHOW_MODES_AUTO);
 		}
 		if (category.getIsCanComment() == null) {
 			category.setIsCanComment(Global.NO);
@@ -161,10 +161,10 @@ public class CategoryController extends BaseController {
 		if (category.getIsNeedAudit() == null) {
 			category.setIsNeedAudit(Global.NO);
 		}
-		model.addAttribute("category_DEFAULT_TEMPLATE", Category.DEFAULT_TEMPLATE);
-		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
-		model.addAttribute("listViewList", cmsTemplateService.getTemplateContentDict(Category.DEFAULT_TEMPLATE));
-		model.addAttribute("contentViewList", cmsTemplateService.getTemplateContentDict(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("category_DEFAULT_TEMPLATE", CmsCategory.DEFAULT_TEMPLATE);
+		model.addAttribute("article_DEFAULT_TEMPLATE", CmsArticle.DEFAULT_TEMPLATE);
+		model.addAttribute("listViewList", templateService.getTemplateContentDict(CmsCategory.DEFAULT_TEMPLATE));
+		model.addAttribute("contentViewList", templateService.getTemplateContentDict(CmsArticle.DEFAULT_TEMPLATE));
 		model.addAttribute("currentSite", CmsUtils.getCurrentSite());
 		model.addAttribute("siteList", CmsUtils.getSiteList());
 		model.addAttribute("category", category);
@@ -177,14 +177,14 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "createNextNode")
 	@ResponseBody
-	public Category createNextNode(Category category) {
+	public CmsCategory createNextNode(@ModelAttribute("category") CmsCategory category) {
 		if (StringUtils.isNotBlank(category.getParentCode())) {
 			category.setParent(categoryService.get(category.getParentCode()));
 		}
 		if (category.getIsNewRecord()) {
-			Category where = new Category();
+			CmsCategory where = new CmsCategory();
 			where.setParentCode(category.getParentCode());
-			Category last = categoryService.getLastByParentCode(where);
+			CmsCategory last = categoryService.getLastByParentCode(where);
 			// 获取到下级最后一个节点
 			if (last != null) {
 				category.setTreeSort(last.getTreeSort() + 30);
@@ -195,7 +195,7 @@ public class CategoryController extends BaseController {
 		}
 		// 以下设置表单默认数据
 		if (category.getTreeSort() == null) {
-			category.setTreeSort(Category.DEFAULT_TREE_SORT);
+			category.setTreeSort(CmsCategory.DEFAULT_TREE_SORT);
 		}
 		return category;
 	}
@@ -206,18 +206,18 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Category category) {
+	public String save(@Validated @ModelAttribute("category") CmsCategory category) {
 		// 归属站点，和上级栏目必须一致（忽略前端传参）只允许根节点更改归属站点
 		String parentCode = category.getParentCode();
 		if (StringUtils.isNotBlank(parentCode)) {
-			Category parent = categoryService.get(parentCode);
+			CmsCategory parent = categoryService.get(parentCode);
 			if (parent != null) {
 				category.setSite(parent.getSite());
 			}
 		}
 		// 如果仍没有站点，则设置默认站点
 		if (category.getSite() == null) {
-			category.setSite(new Site(Site.getCurrentSiteCode()));
+			category.setSite(new CmsSite(CmsSite.getCurrentSiteCode()));
 		}
 		categoryService.save(category);
 		return renderResult(Global.TRUE, text("保存栏目表成功！"));
@@ -229,15 +229,15 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "disable")
 	@ResponseBody
-	public String disable(Category category) {
-		Category where = new Category();
-		where.setStatus(Category.STATUS_NORMAL);
+	public String disable(@ModelAttribute("category") CmsCategory category) {
+		CmsCategory where = new CmsCategory();
+		where.setStatus(CmsCategory.STATUS_NORMAL);
 		where.setParentCodes_rightLike(category.getParentCodes() + category.getId() + ",");
 		long count = categoryService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该栏目表包含未停用的子栏目表！"));
 		}
-		category.setStatus(Category.STATUS_DISABLE);
+		category.setStatus(CmsCategory.STATUS_DISABLE);
 		categoryService.updateStatus(category);
 		return renderResult(Global.TRUE, text("停用栏目表成功"));
 	}
@@ -248,8 +248,8 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "enable")
 	@ResponseBody
-	public String enable(Category category) {
-		category.setStatus(Category.STATUS_NORMAL);
+	public String enable(@ModelAttribute("category") CmsCategory category) {
+		category.setStatus(CmsCategory.STATUS_NORMAL);
 		categoryService.updateStatus(category);
 		return renderResult(Global.TRUE, text("启用栏目表成功"));
 	}
@@ -260,7 +260,7 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
-	public String delete(Category category) {
+	public String delete(@ModelAttribute("category") CmsCategory category) {
 		categoryService.delete(category);
 		return renderResult(Global.TRUE, text("删除栏目表成功！"));
 	}
@@ -272,7 +272,7 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:rebuildIndex")
 	@ResponseBody
 	@RequestMapping(value = "rebuildIndex")
-	public String rebuildIndex(Category category)  {
+	public String rebuildIndex(@ModelAttribute("category") CmsCategory category)  {
 		return renderResult(Global.TRUE, categoryService.rebuildIndex(category));
 	}
 
@@ -283,7 +283,7 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:rebuildVectorStore")
 	@ResponseBody
 	@RequestMapping(value = "rebuildVectorStore")
-	public String rebuildVectorStore(Category category)  {
+	public String rebuildVectorStore(@ModelAttribute("category") CmsCategory category)  {
 		return renderResult(Global.TRUE, categoryService.rebuildVectorStore(category));
 	}
 
@@ -297,13 +297,12 @@ public class CategoryController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String siteCode, String module, String excludeCode, Boolean isAll, String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		List<Category> list = null;
-		Category category = new Category();
+		CmsCategory category = new CmsCategory();
 		// 站点条件
 		if (StringUtils.isNotBlank(siteCode)) {
-			category.setSite(new Site(siteCode));
+			category.setSite(new CmsSite(siteCode));
 		} else {
-			category.setSite(new Site(Site.getCurrentSiteCode()));
+			category.setSite(new CmsSite(CmsSite.getCurrentSiteCode()));
 		}
 		// 栏目模型条件
 		if (StringUtils.isNotBlank(module)) {
@@ -313,19 +312,18 @@ public class CategoryController extends BaseController {
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			categoryService.addDataScopeFilter(category);
 		}
-		list = categoryService.findList(category);
-		for (int i = 0; i < list.size(); i++) {
-			Category e = list.get(i);
+		List<CmsCategory> list = categoryService.findList(category);
+		for (CmsCategory e : list) {
 			// 过滤非正常的数据
-			if (!Category.STATUS_NORMAL.equals(e.getStatus())){
+			if (!CmsCategory.STATUS_NORMAL.equals(e.getStatus())) {
 				continue;
 			}
 			// 过滤被排除的编码（包括所有子级）
-			if (StringUtils.isNotBlank(excludeCode)){
-				if (e.getId().equals(excludeCode)){
+			if (StringUtils.isNotBlank(excludeCode)) {
+				if (e.getId().equals(excludeCode)) {
 					continue;
 				}
-				if (e.getParentCodes().contains("," + excludeCode + ",")){
+				if (e.getParentCodes().contains("," + excludeCode + ",")) {
 					continue;
 				}
 			}
@@ -354,7 +352,7 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
-	public String fixTreeData(Category category) {
+	public String fixTreeData(@ModelAttribute("category") CmsCategory category) {
 		if (!category.currentUser().isAdmin()) {
 			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
 		}

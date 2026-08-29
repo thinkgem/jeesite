@@ -6,14 +6,14 @@ package com.jeesite.modules.cms.db;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.tests.BaseInitDataTests;
-import com.jeesite.modules.cms.dao.ArticleDao;
-import com.jeesite.modules.cms.dao.ArticleDataDao;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.ArticleData;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.CategoryService;
-import com.jeesite.modules.cms.service.SiteService;
+import com.jeesite.modules.cms.dao.CmsArticleDao;
+import com.jeesite.modules.cms.dao.CmsArticleDataDao;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsArticleData;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsCategoryService;
+import com.jeesite.modules.cms.service.CmsSiteService;
 import com.jeesite.modules.gen.utils.GenUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitCmsData extends BaseInitDataTests {
 
-	public InitCmsData(SiteService siteService, CategoryService categoryService,
-					   ArticleDao articleDao, ArticleDataDao articleDataDao) {
+	public InitCmsData(CmsSiteService siteService, CmsCategoryService categoryService,
+	                   CmsArticleDao articleDao, CmsArticleDataDao articleDataDao) {
 		this.siteService = siteService;
 		this.categoryService = categoryService;
 		this.articleDao = articleDao;
@@ -51,12 +51,12 @@ public class InitCmsData extends BaseInitDataTests {
 		return true;
 	}
 
-	private final SiteService siteService;
+	private final CmsSiteService siteService;
 	public void initSite() throws Exception {
-		initExcelData(Site.class, params -> {
+		initExcelData(CmsSite.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
-				Site entity = (Site)params[1];
+				CmsSite entity = (CmsSite)params[1];
 				entity.setIsNewRecord(true);
 				siteService.save(entity);
 				return null;
@@ -65,12 +65,12 @@ public class InitCmsData extends BaseInitDataTests {
 		});
 	}
 	
-	private final CategoryService categoryService;
+	private final CmsCategoryService categoryService;
 	public void initCategory() throws Exception {
-		initExcelData(Category.class, params -> {
+		initExcelData(CmsCategory.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
-				Category entity = (Category)params[1];
+				CmsCategory entity = (CmsCategory)params[1];
 				entity.setIsNewRecord(true);
 				categoryService.save(entity);
 				return null;
@@ -79,12 +79,12 @@ public class InitCmsData extends BaseInitDataTests {
 		});
 	}
 	
-	private final ArticleDao articleDao;
+	private final CmsArticleDao articleDao;
 	public void initArticle() throws Exception {
-		initExcelData(Article.class, params -> {
+		initExcelData(CmsArticle.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
-				Article entity = (Article)params[1];
+				CmsArticle entity = (CmsArticle)params[1];
 				entity.setIsNewRecord(true);
 				articleDao.insert(entity);
 				return null;
@@ -93,12 +93,12 @@ public class InitCmsData extends BaseInitDataTests {
 		});
 	}
 	
-	private final ArticleDataDao articleDataDao;
+	private final CmsArticleDataDao articleDataDao;
 	public void initArticleData() throws Exception {
-		initExcelData(ArticleData.class, params -> {
+		initExcelData(CmsArticleData.class, params -> {
 			String action = (String)params[0];
 			if("save".equals(action)){
-				ArticleData entity = (ArticleData)params[1];
+				CmsArticleData entity = (CmsArticleData)params[1];
 				entity.setIsNewRecord(true);
 				articleDataDao.insert(entity);
 				return null;

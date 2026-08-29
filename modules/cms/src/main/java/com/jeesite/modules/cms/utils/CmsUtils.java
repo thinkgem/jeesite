@@ -13,12 +13,12 @@ import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.utils.SpringUtils;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.ArticleService;
-import com.jeesite.modules.cms.service.CategoryService;
-import com.jeesite.modules.cms.service.SiteService;
+import com.jeesite.modules.cms.entity.CmsArticle;
+import com.jeesite.modules.cms.entity.CmsCategory;
+import com.jeesite.modules.cms.entity.CmsSite;
+import com.jeesite.modules.cms.service.CmsArticleService;
+import com.jeesite.modules.cms.service.CmsCategoryService;
+import com.jeesite.modules.cms.service.CmsSiteService;
 import org.springframework.ui.Model;
 
 import java.util.Collections;
@@ -36,28 +36,28 @@ public class CmsUtils {
 	private static final String CMS_CACHE = "cmsCache";
 
 	private static final class Static {
-		private static final SiteService siteService = SpringUtils.getBean(SiteService.class);
-		private static final CategoryService categoryService = SpringUtils.getBean(CategoryService.class);
-		private static final ArticleService articleService = SpringUtils.getBean(ArticleService.class);
+		private static final CmsSiteService siteService = SpringUtils.getBean(CmsSiteService.class);
+		private static final CmsCategoryService categoryService = SpringUtils.getBean(CmsCategoryService.class);
+		private static final CmsArticleService articleService = SpringUtils.getBean(CmsArticleService.class);
 	}
 
 	/**
 	 * 获得当前站点信息
 	 */
-	public static Site getCurrentSite() {
-		return getSite(Site.getCurrentSiteCode());
+	public static CmsSite getCurrentSite() {
+		return getSite(CmsSite.getCurrentSiteCode());
 	}
 	
 	/**
 	 * 获得站点信息
 	 * @param siteCode 站点编号
 	 */
-	public static Site getSite(String siteCode) {
-		String code = StringUtils.isNotBlank(siteCode) ? siteCode : Site.MAIN_SITE_CODE;
+	public static CmsSite getSite(String siteCode) {
+		String code = StringUtils.isNotBlank(siteCode) ? siteCode : CmsSite.MAIN_SITE_CODE;
 		return CmsUtils.computeIfAbsentCache("site_" + code, k -> {
-			Site site = Static.siteService.get(code);
+			CmsSite site = Static.siteService.get(code);
 			if (site == null) {
-				site = new Site(code);
+				site = new CmsSite(code);
 			}
 			return site;
 		});
@@ -66,20 +66,20 @@ public class CmsUtils {
 	/**
 	 * 获得站点列表
 	 */
-	public static List<Site> getSiteList() {
+	public static List<CmsSite> getSiteList() {
 		return CmsUtils.computeIfAbsentCache("siteList", k ->
-				Static.siteService.findList(new Site()));
+				Static.siteService.findList(new CmsSite()));
 	}
 
 	/**
 	 * 获得主导航列表
 	 * @param siteCode 站点编号
 	 */
-	public static List<Category> getMainNavList(String siteCode) {
+	public static List<CmsCategory> getMainNavList(String siteCode) {
 		return CmsUtils.computeIfAbsentCache("mainNavList_" + siteCode, k -> {
-			Category category = new Category();
-			category.setSite(new Site(siteCode));
-			category.setParent(new Category(Category.ROOT_CODE));
+			CmsCategory category = new CmsCategory();
+			category.setSite(new CmsSite(siteCode));
+			category.setParent(new CmsCategory(CmsCategory.ROOT_CODE));
 			category.setInMenu(Global.SHOW);
 			return Static.categoryService.findList(category);
 		});
@@ -89,7 +89,7 @@ public class CmsUtils {
 	 * 获取栏目
 	 * @param categoryCode 栏目编号
 	 */
-	public static Category getCategory(String categoryCode) {
+	public static CmsCategory getCategory(String categoryCode) {
 		return CmsUtils.computeIfAbsentCache("category_" + categoryCode, k ->
 				Static.categoryService.get(categoryCode));
 	}
@@ -108,15 +108,15 @@ public class CmsUtils {
 	 *          ${categoryList(site.siteCode, '0', 200, 'sortGrades:\"0,1\", isChildList:1')}<br>
 	 *        3、获取二级栏目下的两级栏目： ${categoryList(site.siteCode, 'xcl', 200, 'sortGrades:\"1,2\"')}
 	 */
-	public static List<Category> getCategoryList(String siteCode, String parentCode, int number, String params) {
+	public static List<CmsCategory> getCategoryList(String siteCode, String parentCode, int number, String params) {
 		if (StringUtils.isBlank(siteCode) || StringUtils.isBlank(parentCode)) {
 			return ListUtils.newArrayList();
 		}
 		String key = "categoryList_" + siteCode + "_" + parentCode + "_" + Md5Utils.md5(number + "_" + params);
 		return CmsUtils.computeIfAbsentCache(key, k -> {
-			Page<Category> page = new Page<>(1, number, -1);
-			Category category = new Category();
-			category.setSite(new Site(siteCode));
+			Page<CmsCategory> page = new Page<>(1, number, -1);
+			CmsCategory category = new CmsCategory();
+			category.setSite(new CmsSite(siteCode));
 			category.setParentCode(parentCode);
 			boolean isChildList = false; // 是否进行childList转换
 			if (StringUtils.isNotBlank(params)) {
@@ -131,7 +131,7 @@ public class CmsUtils {
 					category.setParentCode(null);
 
 					// 如果是跟节点则不加入条件，代表查询全部，不是跟节点的时候获取指定节点的所有下级
-					if (!Category.ROOT_CODE.equals(parentCode)) {
+					if (!CmsCategory.ROOT_CODE.equals(parentCode)) {
 						category.setParentCodes("%," + parentCode + ",%");
 					}
 
@@ -149,8 +149,8 @@ public class CmsUtils {
 			page = Static.categoryService.findPage(category);
 			// 进行childList转换
 			if (isChildList) {
-				List<Category> sourceList = page.getList();
-				List<Category> targetList = Static.categoryService.convertTreeList(sourceList, parentCode);
+				List<CmsCategory> sourceList = page.getList();
+				List<CmsCategory> targetList = Static.categoryService.convertTreeList(sourceList, parentCode);
 				page.setList(targetList);
 			}
 			return page.getList();
@@ -161,15 +161,15 @@ public class CmsUtils {
 	 * 获取文章
 	 * @param articleId 文章编号
 	 */
-	public static Article getArticle(String articleId) {
+	public static CmsArticle getArticle(String articleId) {
 		return Static.articleService.get(articleId);
 	}
 
 	/**
 	 * 获取文章获取文章并点击数加一
 	 */
-	public static Article getArticleAndHitsAddOne(String articleId) {
-		Article article = Static.articleService.get(articleId);
+	public static CmsArticle getArticleAndHitsAddOne(String articleId) {
+		CmsArticle article = Static.articleService.get(articleId);
 		Static.articleService.updateHitsAddOne(articleId);
 		return article;
 	}
@@ -190,18 +190,18 @@ public class CmsUtils {
 	 *          ${articleList(category.site.siteCode, category.categoryCode, 10, 'posid:2, orderBy: \"hits desc\"')}<br>
 	 *        3、查询当前栏目下的前10篇文章，并且是有图片的文章： ${articleList(category.site.siteCode, category.categoryCode, 10, 'image:1')}
 	 */
-	public static List<Article> getArticleList(String siteCode, String categoryCode, int number, String params) {
+	public static List<CmsArticle> getArticleList(String siteCode, String categoryCode, int number, String params) {
 		if (StringUtils.isBlank(siteCode) || StringUtils.isBlank(categoryCode)) {
 			return ListUtils.newArrayList();
 		}
-		Category category = new Category();
-		category.setSite(new Site(siteCode));
-		Page<Article> page = new Page<Article>(1, number, -1);
-		if (!Category.ROOT_CODE.equals(categoryCode)) {
+		CmsCategory category = new CmsCategory();
+		category.setSite(new CmsSite(siteCode));
+		Page<CmsArticle> page = new Page<CmsArticle>(1, number, -1);
+		if (!CmsCategory.ROOT_CODE.equals(categoryCode)) {
 			category.setCategoryCode(categoryCode);
 			category.setParentCodes(categoryCode);
 		}
-		Article article = new Article(category);
+		CmsArticle article = new CmsArticle(category);
 		if (StringUtils.isNotBlank(params)) {
 			@SuppressWarnings({ "rawtypes" })
 			Map map = JsonMapper.fromJson("{" + params.trim() + "}", Map.class);
@@ -221,7 +221,7 @@ public class CmsUtils {
 				page.setOrderBy(orderBy);
 			}
 		}
-		article.setStatus(Article.STATUS_NORMAL);
+		article.setStatus(CmsArticle.STATUS_NORMAL);
 		article.setPage(page);
 		page = Static.articleService.findPage(article);
 		return page.getList();
@@ -230,7 +230,7 @@ public class CmsUtils {
 	/**
 	 * 获得文章动态 URL 地址
 	 */
-	public static String getUrlDynamic(Article article) {
+	public static String getUrlDynamic(CmsArticle article) {
 		StringBuilder str = new StringBuilder();
 		str.append(Global.getCtxPath());
 		if (StringUtils.isNotBlank(article.getHref())) {
@@ -250,7 +250,7 @@ public class CmsUtils {
 	/**
 	 * 获得栏目动态 URL 地址
 	 */
-	public static String getUrlDynamic(Category category) {
+	public static String getUrlDynamic(CmsCategory category) {
 		StringBuilder str = new StringBuilder();
 		str.append(Global.getCtxPath()).append(Global.getFrontPath());
 		if (StringUtils.isNotBlank(category.getHref())) {
@@ -268,7 +268,7 @@ public class CmsUtils {
 	/**
 	 * 获得站点动态 URL 地址
 	 */
-	public static String getUrlDynamic(Site site) {
+	public static String getUrlDynamic(CmsSite site) {
 		StringBuilder str = new StringBuilder();
 		str.append(Global.getCtxPath()).append(Global.getFrontPath());
 		if (StringUtils.isNotBlank(site.getDomain())) {
@@ -286,7 +286,7 @@ public class CmsUtils {
 	/**
 	 * 获得栏目动态URL地址
 	 */
-	public static String getAdminUrlDynamic(Category category) {
+	public static String getAdminUrlDynamic(CmsCategory category) {
 		StringBuilder str = new StringBuilder();
 		str.append(Global.getCtxPath()).append(Global.getAdminPath());
 		String adminUrlParam = null; // 管理地址的参数
@@ -394,10 +394,10 @@ public class CmsUtils {
 	/**
 	 * 获取文章视图
 	 */
-	public static String getArticleView(Article article) {
+	public static String getArticleView(CmsArticle article) {
 		if (StringUtils.isBlank(article.getCustomContentView())) {
 			String view = null;
-			Category c = article.getCategory();
+			CmsCategory c = article.getCategory();
 			while (c != null) {
 				if (StringUtils.isNotBlank(c.getCustomContentView())) {
 					view = c.getCustomContentView();
@@ -411,7 +411,7 @@ public class CmsUtils {
 					break;
 				}
 			}
-			return StringUtils.isBlank(view) ? Article.DEFAULT_TEMPLATE : view;
+			return StringUtils.isBlank(view) ? CmsArticle.DEFAULT_TEMPLATE : view;
 		} else {
 			return article.getCustomContentView();
 		}
@@ -435,9 +435,9 @@ public class CmsUtils {
 	/**
 	 * 视图配置属性设置
 	 */
-	public static void addViewConfigAttribute(Model model, Category category) {
-		List<Category> categoryList = ListUtils.newArrayList();
-		Category c = category;
+	public static void addViewConfigAttribute(Model model, CmsCategory category) {
+		List<CmsCategory> categoryList = ListUtils.newArrayList();
+		CmsCategory c = category;
 		while (c != null) {
 			categoryList.add(c);
 			if (!c.getIsRoot()) {
@@ -450,7 +450,7 @@ public class CmsUtils {
 			}
 		}
 		Collections.reverse(categoryList); // 顺序逆反，子集高优先级。
-		for (Category ca : categoryList) {
+		for (CmsCategory ca : categoryList) {
 			addViewConfigAttribute(model, ca.getViewConfig());
 		}
 	}

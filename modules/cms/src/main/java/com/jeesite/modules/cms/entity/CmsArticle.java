@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import com.jeesite.modules.cms.service.ArticleService;
+import com.jeesite.modules.cms.service.CmsArticleService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 
 import jakarta.validation.constraints.NotBlank;
@@ -52,25 +52,25 @@ import java.util.Date;
 		@Column(includeEntity = DataEntity.class),
 		@Column(includeEntity = BaseEntity.class),
 	}, joinTable = {
-		@JoinTable(entity = Category.class, alias = "c",
+		@JoinTable(entity = CmsCategory.class, alias = "c",
 			on = "c.category_code = a.category_code", columns = {
 				@Column(name = "category_code", isPK = true),
 				@Column(name = "category_name"),
 			}),
-		@JoinTable(entity = Site.class, attrName = "category.site", alias = "s",
+		@JoinTable(entity = CmsSite.class, attrName = "category.site", alias = "s",
 			on = "s.site_code = c.site_code", columns = {
 				@Column(name = "site_code"),
 				@Column(name = "site_name"),
 			})
 	}, orderBy = "a.weight DESC, a.update_date DESC"
 )
-public class Article extends DataEntity<Article> implements BpmEntityApi<Article> {
+public class CmsArticle extends DataEntity<CmsArticle> implements BpmEntityApi<CmsArticle> {
 	
 	public static final String DEFAULT_TEMPLATE = "viewArticle"; // 默认文章内容模板
 	@Serial
 	private static final long serialVersionUID = 1L;
 	
-	protected Category category; 	// 栏目编码
+	protected CmsCategory category; 	// 栏目编码
 	protected String moduleType; 	// 模块类型
 	protected String title; 		// 内容标题
 	protected String href; 		// 外部链接
@@ -90,7 +90,7 @@ public class Article extends DataEntity<Article> implements BpmEntityApi<Article
 	protected String customContentView; 	// 自定义内容视图
 	protected String viewConfig; 			// 视图配置
 
-	protected ArticleData articleData; 	//文章副表
+	protected CmsArticleData articleData; 	//文章副表
 	protected Boolean isQueryArticleData; // 是否查询文章内容
 
 	protected Date beginDate; 			// 开始时间
@@ -98,30 +98,30 @@ public class Article extends DataEntity<Article> implements BpmEntityApi<Article
 
 	protected BpmParamsApi bpm;		// 流程相关参数
 
-	public Article() {
+	public CmsArticle() {
 		super();
 		//this.weight = 0;
 		//this.hits = 0l;
 	}
 
-	public Article(String id) {
+	public CmsArticle(String id) {
 		super(id);
 	}
 
-	public Article(Category category) {
+	public CmsArticle(CmsCategory category) {
 		this();
 		this.category = category;
 	}
 
 	@NotNull
-	public Category getCategory() {
+	public CmsCategory getCategory() {
 		if (category == null) {
-			category = new Category();
+			category = new CmsCategory();
 		}
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(CmsCategory category) {
 		this.category = category;
 	}
 
@@ -274,14 +274,14 @@ public class Article extends DataEntity<Article> implements BpmEntityApi<Article
 		this.viewConfig = viewConfig;
 	}
 
-	public ArticleData getArticleData() {
+	public CmsArticleData getArticleData() {
 		if (articleData == null) {
-			articleData = new ArticleData();
+			articleData = new CmsArticleData();
 		}
 		return articleData;
 	}
 
-	public void setArticleData(ArticleData articleData) {
+	public void setArticleData(CmsArticleData articleData) {
 		this.articleData = articleData;
 	}
 
@@ -322,7 +322,7 @@ public class Article extends DataEntity<Article> implements BpmEntityApi<Article
 
 	@Override
 	public BpmParamsApi getBpm() {
-		if (ArticleService.isCanUseAuth && bpm == null){
+		if (CmsArticleService.isCanUseAuth && bpm == null){
 			bpm = createBpmParams();
 		}
 		return bpm;
