@@ -25,3 +25,16 @@
 .DS_Store
 Thumbs.db
 rebel.xml
+
+# AI agents
+.agents
+.claude
+.codebuddy
+.codex
+.comate
+.copilot
+.cursor
+.trae
+.windsurf
+.freebuff
+.arts
