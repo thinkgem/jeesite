@@ -426,6 +426,7 @@ shiro:
     /inner/api/** = inner
     /api/** = user
     ${adminPath}/** = user
+    /** = anon
   
 # Web 相关
 web:
