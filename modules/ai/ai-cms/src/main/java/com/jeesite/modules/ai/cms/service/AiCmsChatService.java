@@ -9,11 +9,11 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
-import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.service.BaseService;
+import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.tools.context.AiToolContextProvider;
@@ -103,7 +103,10 @@ public class AiCmsChatService extends BaseService {
 	 */
 	public Map<String, Object> saveChatConversation(String conversationId, String title) {
 		if (StringUtils.isBlank(conversationId)) {
-			conversationId = IdGen.nextId();
+			conversationId = CacheChatMemoryRepository.genUserConversationId();
+		}
+		if (CacheChatMemoryRepository.checkPermiByConversationId(conversationId)){
+			throw new ServiceException("越权操作！");
 		}
 		if (StringUtils.isBlank(title)) {
 			title = "新对话 " + DateUtils.getTime();
@@ -122,6 +125,9 @@ public class AiCmsChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public void deleteChatConversation(String conversationId) {
+		if (CacheChatMemoryRepository.checkPermiByConversationId(conversationId)){
+			throw new ServiceException("越权操作！");
+		}
 		Map<String, Map<String, Object>> cache = getChatCacheMap();
 		cache.remove(conversationId);
 		CacheUtils.put(CMS_CHAT_CACHE, getChatCacheKey(), cache);
@@ -133,6 +139,9 @@ public class AiCmsChatService extends BaseService {
 	 * @author ThinkGem
 	 */
 	public Flux<ChatResponse> chatStream(String conversationId, String message, HttpServletRequest request) {
+		if (CacheChatMemoryRepository.checkPermiByConversationId(conversationId)){
+			throw new ServiceException("越权操作！");
+		}
 		String text = StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE);
 		List<Media> media = ListUtils.newArrayList();
 //		List<FileUpload> fileUploadList = FileUploadUtils.findFileUpload(conversationId, "cms-chat");
