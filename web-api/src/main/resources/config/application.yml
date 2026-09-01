@@ -726,6 +726,7 @@ shiro:
   # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
   filterChainDefinitions: |
     ${adminPath}/** = user
+    /** = anon
 
 #  # URI 权限过滤器定义（以下参考，必须登录user可访问的地址和不需要登录anon可访问地址）
 #  filterChainDefinitions: |
@@ -741,6 +742,7 @@ shiro:
 #    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/${spring.application.name}/swagger/** = anon
 #    ${adminPath}/** = user
+#    /** = anon
     
 # Session 相关
 session:

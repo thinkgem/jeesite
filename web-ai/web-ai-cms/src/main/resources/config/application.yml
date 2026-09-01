@@ -240,6 +240,7 @@ shiro:
     /js = anon
     /vue/* = anon
     ${adminPath}/** = user
+    /** = anon
 
 # Session 相关
 session:
