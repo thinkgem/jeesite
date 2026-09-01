@@ -136,6 +136,7 @@ shiro:
   filterChainDefinitions: |
     /api/v1/mcp/** = anon
     ${adminPath}/** = user
+    /** = anon
 
 # 日志配置
 logging:
