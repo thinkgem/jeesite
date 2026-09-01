@@ -70,6 +70,8 @@ public class JsonMapper extends ObjectMapper {
 		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		// 启用严格校验，不允许JSON字符串后携带其它字符
 		this.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+		// 基本类型处理，如 int、double、byte 为空值的时候，自动进行转化
+		this.disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES);
 		// Spring ObjectMapper 初始化配置，支持 @JsonView
 		new Jackson2ObjectMapperBuilder().configure(this);
 	}
