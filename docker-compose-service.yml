@@ -82,6 +82,8 @@ services:
     depends_on:
       jeesite-cloud-core:
         condition: service_healthy
+    ports:
+      - "8982:8982"
     environment:
       <<: *common-env
       JAVA_OPTS: >
@@ -103,6 +105,8 @@ services:
     depends_on:
       jeesite-cloud-core:
         condition: service_healthy
+    ports:
+      - "8983:8983"
     environment:
       <<: *common-env
       JAVA_OPTS: >
@@ -124,6 +128,8 @@ services:
     depends_on:
       jeesite-cloud-core:
         condition: service_healthy
+    ports:
+      - "8985:8985"
     environment:
       <<: *common-env
       JAVA_OPTS: >
@@ -142,16 +148,6 @@ services:
   jeesite-cloud-gateway:
     <<: *service-base
     container_name: jeesite-cloud-gateway
-    ports:
-      - "8980:8980"
-    environment:
-      <<: *common-env
-      JAVA_OPTS: >
-        -Dspring.profiles.active=prod -DcustomLogPath=/data
-        -Dserver.port=8980
-    volumes:
-      - ./.docker/gateway:/data
-      - ./gateway/target:/app
     depends_on:
       jeesite-cloud-core:
         condition: service_healthy
@@ -163,6 +159,16 @@ services:
         condition: service_healthy
       jeesite-cloud-test3:
         condition: service_healthy
+    ports:
+      - "8980:8980"
+    environment:
+      <<: *common-env
+      JAVA_OPTS: >
+        -Dspring.profiles.active=prod -DcustomLogPath=/data
+        -Dserver.port=8980
+    volumes:
+      - ./.docker/gateway:/data
+      - ./gateway/target:/app
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8980/js"]
       interval: 5s

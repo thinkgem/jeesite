@@ -82,6 +82,11 @@ services:
   jeesite-cloud-nacos:
     <<: *service-base
     container_name: jeesite-cloud-nacos
+    depends_on:
+      jeesite-cloud-mysql:
+        condition: service_healthy
+      jeesite-cloud-redis:
+        condition: service_healthy
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -93,11 +98,6 @@ services:
       - ./.docker/nacos:/nacos
       - ./nacos/target:/app
       - ./nacos/db/config/jeesite-cloud-yml.zip:/app/jeesite-cloud-yml.zip
-    depends_on:
-      jeesite-cloud-mysql:
-        condition: service_healthy
-      jeesite-cloud-redis:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8849"]
       interval: 5s
