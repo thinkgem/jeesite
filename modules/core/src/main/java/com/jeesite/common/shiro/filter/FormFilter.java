@@ -427,9 +427,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		if (ServletUtils.isAjaxRequest(request)) {
 			Session session = UserUtils.getSession();
 			data.put("sessionid", session.getId());
-			Cookie cookie = new SimpleCookie(sessionIdCookie);
-			cookie.setValue((String)session.getId());
-			cookie.saveTo(request, response);
+			sessionIdCookieSaveTo(request, response, session);
 		}
 		if (paramMap.get("lang") != null){
 			Global.setLang((String)paramMap.get("lang"), request, response);
@@ -452,11 +450,6 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	public static Map<String, Object> getLoginSuccessData(HttpServletRequest request, HttpServletResponse response,
 														  User user, Session session) {
 		Map<String, Object> data = MapUtils.newHashMap();
-		if (ServletUtils.isAjaxRequest(request)) {
-			Cookie cookie = new SimpleCookie(sessionIdCookie);
-			cookie.setValue((String)session.getId());
-			cookie.saveTo(request, response);
-		}
 		data.put("user", user); // 设置当前用户信息
 		data.put("demoMode", Global.isDemoMode());
 		data.put("useCorpModel", Global.isUseCorpModel());
@@ -521,6 +514,12 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
 		return data;
+	}
+
+	public static void sessionIdCookieSaveTo(HttpServletRequest request, HttpServletResponse response, Session session) {
+		Cookie cookie = new SimpleCookie(sessionIdCookie);
+		cookie.setValue((String) session.getId());
+		cookie.saveTo(request, response);
 	}
 	
 	public void setAuthorizingRealm(BaseAuthorizingRealm authorizingRealm) {
