@@ -200,6 +200,15 @@
 					<jeeversion>6.0</jeeversion>
 				</configuration>
 			</plugin>
+			
+			<!-- JavaScript CSS Compress -->
+			<plugin>
+				<groupId>com.jeesite.maven</groupId>
+				<artifactId>compressor-maven-plugin</artifactId>
+				<configuration>
+					<threadCount>1</threadCount>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
