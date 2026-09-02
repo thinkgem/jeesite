@@ -232,7 +232,8 @@ public class LoginController extends BaseController{
 			}else{
 				model.addAttribute("message", text("sys.login.getInfo"));
 			}
-			model.addAttribute("sessionid", (String)session.getId());
+			model.addAttribute("sessionid", session.getId());
+			FormFilter.sessionIdCookieSaveTo(request, response, session);
 			if (!StringUtils.contains(successUrl, "://")){
 				successUrl = Global.getCtxPath() + successUrl;
 			}
