@@ -54,7 +54,13 @@ public class CmsArticleController extends BaseController {
 	 */
 	@ModelAttribute("article")
 	public CmsArticle get(String id, boolean isNewRecord) {
-		return articleService.get(id, isNewRecord);
+		CmsArticle article = new CmsArticle();
+		article.setId(id);
+		article.setIsNewRecord(isNewRecord);
+		if (StringUtils.isNotBlank(id)){
+			articleService.addDataScopeFilter(article);
+		}
+		return articleService.getAndValid(article);
 	}
 
 	/**
@@ -62,7 +68,7 @@ public class CmsArticleController extends BaseController {
 	 */
 	@RequiresPermissions("cms:article:view")
 	@RequestMapping(value = { "list", "" })
-	public String list(@ModelAttribute("article") CmsArticle article, Boolean isAll, Model model) throws IOException {
+	public String list(@ModelAttribute("article") CmsArticle article, boolean isAll, Model model) throws IOException {
 		if (StringUtils.isNotBlank(article.getCategory().getCategoryCode())
 				&& !CmsCategory.ROOT_CODE.equals(article.getCategory().getCategoryCode())) {
 			article.setCategory(CmsUtils.getCategory(article.getCategory().getCategoryCode()));
@@ -90,7 +96,7 @@ public class CmsArticleController extends BaseController {
 	@RequiresPermissions("cms:article:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public Page<CmsArticle> listData(@ModelAttribute("article") CmsArticle article, Boolean isAll, HttpServletRequest request, HttpServletResponse response) {
+	public Page<CmsArticle> listData(@ModelAttribute("article") CmsArticle article, boolean isAll, HttpServletRequest request, HttpServletResponse response) {
 		article.setPage(new Page<>(request, response));
 		if (StringUtils.isBlank(article.getCategory().getSite().getSiteCode())) {
 			article.getCategory().setSite(new CmsSite(CmsSite.getCurrentSiteCode()));
@@ -100,7 +106,7 @@ public class CmsArticleController extends BaseController {
 			article.getCategory().setIsQueryChildren(true);
 		}
 		// 是否查询全部，不过滤权限
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			articleService.addDataScopeFilter(article);
 		}
 //		if (!article.currentUser().isAdmin()) {

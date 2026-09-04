@@ -61,11 +61,17 @@ public class OfficeController extends BaseController {
 	 * 获取机构
 	 */
 	@ModelAttribute
-	public Office get(String officeCode, boolean isNewRecord, HttpServletRequest request) {
+	public Office get(String officeCode, boolean isNewRecord, String ctrlPermi, HttpServletRequest request) {
 		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
 			return new Office();
 		}
-		return officeService.get(officeCode, isNewRecord);
+		Office office = new Office();
+		office.setOfficeCode(officeCode);
+		office.setIsNewRecord(isNewRecord);
+		if (StringUtils.isNotBlank(officeCode)) {
+			officeService.addDataScopeFilter(office, ctrlPermi);
+		}
+		return officeService.getAndValid(office);
 	}
 
 	/**
@@ -203,8 +209,8 @@ public class OfficeController extends BaseController {
 	 */
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "exportData")
-	public void exportData(Office office, Boolean isAll, String ctrlPermi, HttpServletResponse response) {
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+	public void exportData(Office office, boolean isAll, String ctrlPermi, HttpServletResponse response) {
+		if (!isAll || Global.isStrictMode()){
 			officeService.addDataScopeFilter(office, ctrlPermi);
 		}
 		office.sqlMap().getOrder().setOrderBy("a.tree_sorts");
@@ -311,14 +317,14 @@ public class OfficeController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, Boolean isAll,
+	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, boolean isAll,
 			String officeTypes, String companyCode, String isShowCode, String isShowFullName,
 			String isLoadUser, String userIdPrefix, String postCode, String roleCode, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		Office where = new Office();
 		where.setStatus(Office.STATUS_NORMAL);
 		where.setCompanyCode(companyCode);
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			officeService.addDataScopeFilter(where, ctrlPermi);
 		}
 		// 根据父节点过滤数据

@@ -76,12 +76,11 @@ public class EmpUserController extends BaseController {
 	}
 
 	@ModelAttribute
-	public EmpUser get(String userCode, boolean isNewRecord, Boolean isAll, String ctrlPermi) {
+	public EmpUser get(String userCode, boolean isNewRecord, String ctrlPermi) {
 		EmpUser empUser = new EmpUser();
 		empUser.setUserCode(userCode);
 		empUser.setIsNewRecord(isNewRecord);
-		// 更严格的权限控制，对单条数据进行数据权限过滤（isAll 是一个开关，正常不需要添加）
-		if (StringUtils.isNotBlank(userCode) && !(isAll != null && isAll) || Global.isStrictMode()) {
+		if (StringUtils.isNotBlank(userCode)) {
 			empUserService.addFieldScopeFilter(empUser);
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
@@ -116,12 +115,12 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<EmpUser> listData(EmpUser empUser,
-								  @Parameter(description = "查询全部数据") @RequestParam(required = false) Boolean isAll,
+								  @Parameter(description = "查询全部数据") @RequestParam(required = false) boolean isAll,
 								  @Parameter(description = "数据控制权限") @RequestParam(required = false) String ctrlPermi,
 								  HttpServletRequest request, HttpServletResponse response) {
 		empUser.getEmployee().getOffice().setIsQueryChildren(true);
 		empUser.getEmployee().getCompany().setIsQueryChildren(true);
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			empUserService.addFieldScopeFilter(empUser);
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
@@ -234,10 +233,10 @@ public class EmpUserController extends BaseController {
 	 */
 	@RequiresPermissions("sys:empUser:view")
 	@RequestMapping(value = "exportData")
-	public void exportData(EmpUser empUser, Boolean isAll, String ctrlPermi, HttpServletResponse response) {
+	public void exportData(EmpUser empUser, boolean isAll, String ctrlPermi, HttpServletResponse response) {
 		empUser.getEmployee().getOffice().setIsQueryChildren(true);
 		empUser.getEmployee().getCompany().setIsQueryChildren(true);
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		List<EmpUser> list = empUserService.findList(empUser);
@@ -416,7 +415,7 @@ public class EmpUserController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String idPrefix,
 			String[] officeCode, String companyCode, String postCode, String roleCode, 
-			Boolean isAll, String isShowCode, String ctrlPermi) {
+			boolean isAll, String isShowCode, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		EmpUser empUser = new EmpUser();
 		Employee employee = empUser.getEmployee();
@@ -432,14 +431,14 @@ public class EmpUserController extends BaseController {
 		empUser.setRoleCode(roleCode);
 		empUser.setStatus(User.STATUS_NORMAL);
 		empUser.setUserType(User.USER_TYPE_EMPLOYEE);
-		if (!(isAll != null && isAll) || Global.isStrictMode()) {
+		if (!isAll || Global.isStrictMode()) {
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		List<EmpUser> list = empUserService.findList(empUser);
 		for (int i = 0; i < list.size(); i++) {
 			EmpUser e = list.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
-			map.put("id", ObjectUtils.defaultIfNull(idPrefix, "u_") + e.getId());
+			map.put("id", ObjectUtils.getIfNull(idPrefix, "u_") + e.getId());
 			map.put("pId", StringUtils.defaultIfBlank(e.getEmployee().getOffice().getOfficeCode(), "0"));
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getLoginCode(), e.getUserName()));
 			mapList.add(map);
