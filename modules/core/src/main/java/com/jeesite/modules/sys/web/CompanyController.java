@@ -56,11 +56,17 @@ public class CompanyController extends BaseController {
 	 * 获取公司
 	 */
 	@ModelAttribute
-	public Company get(String companyCode, boolean isNewRecord, HttpServletRequest request) {
+	public Company get(String companyCode, boolean isNewRecord, String ctrlPermi, HttpServletRequest request) {
 		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
 			return new Company();
 		}
-		return companyService.get(companyCode, isNewRecord);
+		Company company = new Company();
+		company.setCompanyCode(companyCode);
+		company.setIsNewRecord(isNewRecord);
+		if (StringUtils.isNotBlank(companyCode)) {
+			companyService.addDataScopeFilter(company, ctrlPermi);
+		}
+		return companyService.getAndValid(company);
 	}
 	
 	/**
@@ -234,7 +240,7 @@ public class CompanyController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, Boolean isAll, String isShowCode,
+	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, boolean isAll, String isShowCode,
 			String isShowFullName, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		Company where = new Company();
@@ -242,7 +248,7 @@ public class CompanyController extends BaseController {
 		if (StringUtils.isNotBlank(parentCode)){
 			where.setParentCode(parentCode);
 		}
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			companyService.addDataScopeFilter(where, ctrlPermi);
 		}
 		List<Company> list = companyService.findList(where);

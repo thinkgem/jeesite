@@ -49,8 +49,15 @@ public class RoleController extends BaseController {
 	}
 
 	@ModelAttribute
-	public Role get(String roleCode, boolean isNewRecord) {
-		return roleService.get(roleCode, isNewRecord);
+	public Role get(String roleCode, boolean isNewRecord, String ctrlPermi) {
+		Role role = new Role();
+		role.setRoleCode(roleCode);
+		role.setIsNewRecord(isNewRecord);
+		// 不是超级管理员，则添加数据权限过滤
+		if (StringUtils.isNotBlank(roleCode) && !role.currentUser().isSuperAdmin()){
+			roleService.addDataScopeFilter(role, ctrlPermi);
+		}
+		return roleService.getAndValid(role);
 	}
 
 	@RequiresPermissions("sys:role:view")
@@ -209,11 +216,11 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String userType, Boolean isAll, String isShowCode, String ctrlPermi) {
+	public List<Map<String, Object>> treeData(String userType, boolean isAll, String isShowCode, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		Role where = new Role();
 		where.setStatus(Role.STATUS_NORMAL);
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			if (!"__all".equals(userType)) {
 				where.setUserType(StringUtils.defaultIfBlank(userType, User.USER_TYPE_EMPLOYEE));
 			}

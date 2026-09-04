@@ -57,7 +57,13 @@ public class CmsCategoryController extends BaseController {
 		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
 			return new CmsCategory();
 		}
-		return categoryService.get(categoryCode, isNewRecord);
+		CmsCategory category = new CmsCategory();
+		category.setCategoryCode(categoryCode);
+		category.setIsNewRecord(isNewRecord);
+		if (StringUtils.isNotBlank(categoryCode)){
+			categoryService.addDataScopeFilter(category);
+		}
+		return categoryService.getAndValid(category);
 	}
 
 	/**
@@ -295,7 +301,7 @@ public class CmsCategoryController extends BaseController {
 	@RequiresPermissions(value = {"cms:category:view", "cms:article:view"}, logical = Logical.OR)
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String siteCode, String module, String excludeCode, Boolean isAll, String isShowCode) {
+	public List<Map<String, Object>> treeData(String siteCode, String module, String excludeCode, boolean isAll, String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		CmsCategory category = new CmsCategory();
 		// 站点条件
@@ -309,7 +315,7 @@ public class CmsCategoryController extends BaseController {
 			category.setModuleType(module);
 		}
 		// 是否查询全部，不过滤权限
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (!isAll || Global.isStrictMode()){
 			categoryService.addDataScopeFilter(category);
 		}
 		List<CmsCategory> list = categoryService.findList(category);
