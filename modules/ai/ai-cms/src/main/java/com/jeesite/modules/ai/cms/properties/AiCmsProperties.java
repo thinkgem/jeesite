@@ -28,6 +28,11 @@ public class AiCmsProperties {
 	 */
 	private String defaultPromptTemplate = "";
 
+	/**
+	 * 对话每轮携带的最大图片数量（取最近的图片，0 表示不限制）
+	 */
+	private Integer mediaLimit = 3;
+
 	public Vectorstore getVectorstore() {
 		return vectorstore;
 	}
@@ -50,6 +55,14 @@ public class AiCmsProperties {
 
 	public void setDefaultPromptTemplate(String defaultPromptTemplate) {
 		this.defaultPromptTemplate = defaultPromptTemplate;
+	}
+
+	public Integer getMediaLimit() {
+		return mediaLimit;
+	}
+
+	public void setMediaLimit(Integer mediaLimit) {
+		this.mediaLimit = mediaLimit;
 	}
 
 	public static class Vectorstore {

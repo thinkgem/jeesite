@@ -11,15 +11,24 @@ import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.cms.service.CacheChatMemoryRepository;
 import com.jeesite.modules.ai.tools.annotation.AiTools;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.ai.openai.OpenAiImageModel;
+import org.springframework.ai.openai.OpenAiImageOptions;
+import org.springframework.ai.openai.api.OpenAiImageApi;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.convert.DurationStyle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.retry.support.RetryTemplate;
+import org.springframework.web.client.RestClient;
+
+import java.time.Duration;
 
 import java.util.Map;
 
@@ -37,7 +46,7 @@ public class AiCmsChatConfig {
 	 */
 	@Bean("chatClient")
 	@ConditionalOnProperty(name = "spring.ai.mcp.client.enabled", havingValue = "false", matchIfMissing = true)
-	public ChatClient chatClient(ChatClient.Builder builder, AiCmsProperties properties, ChatMemory chatMemory) {
+	public ChatClient chatClient(ChatClient.Builder builder, AiCmsProperties properties) {
 		if (StringUtils.isNotBlank(properties.getDefaultSystem())) {
 			builder.defaultSystem(properties.getDefaultSystem());
 		}
@@ -47,8 +56,41 @@ public class AiCmsChatConfig {
 				builder.defaultTools(tools.values().toArray());
 			}
 		}
-		builder.defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build());
 		return builder.build();
+	}
+
+	/**
+	 * 生图模型：手动构建 OpenAI 客户端，显式设置请求超时
+	 * （Spring AI 自动装配的客户端默认 60 秒超时且图像客户端还会自动重试，
+	 * 本地生图往往需要数分钟），配置见 spring.ai.openai.image.*
+	 * 注意：返回类型必须为具体类型 OpenAiImageModel，
+	 * 自动装配按该类型做 @ConditionalOnMissingBean 检查，避免 Bean 定义冲突。
+	 * @author ThinkGem
+	 */
+	@Bean
+	@ConditionalOnProperty(name = "spring.ai.model.image", havingValue = "openai")
+	public OpenAiImageModel openAiImageModel(Environment env) {
+		// 生图超时：优先 spring.ai.openai.image.timeout，其次 spring.ai.openai.timeout，默认 15 分钟
+		Duration timeout = DurationStyle.detectAndParse(env.getProperty("spring.ai.openai.image.timeout",
+				env.getProperty("spring.ai.openai.timeout", "15m")));
+		// 手动构建 RestClient，显式设置连接和读取超时（默认 60 秒超时且自动重试，
+		// 本地生图往往需要数分钟），配置见 spring.ai.openai.image.*
+		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+		requestFactory.setConnectTimeout(timeout);
+		requestFactory.setReadTimeout(timeout);
+		OpenAiImageApi imageApi = OpenAiImageApi.builder()
+				.baseUrl(env.getProperty("spring.ai.openai.image.base-url", "https://api.openai.com/v1"))
+				.apiKey(env.getProperty("spring.ai.openai.image.api-key", "sk-xxx"))
+				.imagesPath(env.getProperty("spring.ai.openai.image.images-path", "/v1/images/generations"))
+				.restClientBuilder(RestClient.builder().requestFactory(requestFactory))
+				.build();
+		OpenAiImageOptions.Builder optionsBuilder = OpenAiImageOptions.builder()
+				.model(env.getProperty("spring.ai.openai.image.options.model", ""));
+		String width = env.getProperty("spring.ai.openai.image.options.width", "1024");
+		String height = env.getProperty("spring.ai.openai.image.options.width", "1024");
+		optionsBuilder.width(Integer.valueOf(width)).height(Integer.valueOf(height));
+		OpenAiImageOptions imageOptions = optionsBuilder.build();
+		return new OpenAiImageModel(imageApi, imageOptions, RetryTemplate.builder().maxAttempts(1).build());
 	}
 
 	/**
