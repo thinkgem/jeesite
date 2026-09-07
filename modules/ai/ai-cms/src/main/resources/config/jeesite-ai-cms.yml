@@ -28,6 +28,7 @@ spring:
         temperature: 0.6
         top-p: 0.7
         frequency-penalty: 0
+        timeout: 15m
       # 嵌入向量模型使用硅基流动
       embedding:
         base-url: https://api.siliconflow.cn/v1
@@ -79,6 +80,23 @@ spring:
 #      embedding:
 #        model: text-embedding-v3
 #        dimensions: 1024
+
+#      # 智普对话模型
+#      chat:
+#        base-url: https://open.bigmodel.cn/api/paas/v4
+#        api-key: ${ZHIPUAI_APP_KEY}
+#        model: glm-4.6v-flash
+#        max-tokens: 8192
+#        temperature: 0.6
+#        top-p: 0.9
+#        frequency-penalty: 0
+#      # 智普生图模型
+#      image:
+#        base-url: https://open.bigmodel.cn/api/paas/v4
+#        api-key: ${ZHIPUAI_APP_KEY}
+#        model: cogview-3-flash
+#        timeout: 15m
+#        size: 1024x1024
 
     # 本地大模型配置【请在 pom.xml 中打开 ollama 的注释，并注释上其它模型】
     ollama:

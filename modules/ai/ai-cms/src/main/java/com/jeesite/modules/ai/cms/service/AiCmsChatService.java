@@ -9,6 +9,7 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
@@ -17,11 +18,14 @@ import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.cms.properties.AiCmsProperties;
 import com.jeesite.modules.ai.tools.context.AiToolContextProvider;
+import com.jeesite.modules.file.entity.FileUpload;
+import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.AssistantMessage;
@@ -39,12 +43,16 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
 import org.springframework.messaging.converter.JacksonJsonMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
+import java.io.File;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -144,15 +152,26 @@ public class AiCmsChatService extends BaseService {
 		}
 		String text = StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE);
 		List<Media> media = ListUtils.newArrayList();
-//		List<FileUpload> fileUploadList = FileUploadUtils.findFileUpload(conversationId, "cms-chat");
-//		for (FileUpload fileUpload : fileUploadList) {
-//			File file = new File(fileUpload.getFileEntity().getFileRealPath());
-//			MediaType mediaType = MediaType.parseMediaType(FileUtils.getContentType(file.getName()));
-//			media.add(Media.builder().mimeType(mediaType).data(file).build());
-//		}
+		// 识图：将对话上传的图片文件转换为多模态消息（注意：chat.model 需设置为多模态模型，如 qwen-vl-plus、gpt-4o）
+		List<FileUpload> fileUploadList = FileUploadUtils.findFileUpload(conversationId, "cms-chat");
+		// 只携带最近的图片（spring.ai.media-limit，默认 3 张，0 表示不限制），避免会话图片过多导致 token 消耗过大
+		Integer mediaLimit = properties.getMediaLimit();
+		if (mediaLimit == null || mediaLimit < 0) {
+			mediaLimit = 3;
+		}
+		fileUploadList.sort(Comparator.comparing(FileUpload::getId, Comparator.nullsLast(Comparator.reverseOrder())));
+		if (mediaLimit > 0 && fileUploadList.size() > mediaLimit) {
+			fileUploadList = fileUploadList.subList(0, mediaLimit);
+		}
+		for (FileUpload fileUpload : fileUploadList) {
+			File file = new File(fileUpload.getFileEntity().getFileRealPath());
+			MediaType mediaType = MediaType.parseMediaType(FileUtils.getContentType(file.getName()));
+			media.add(Media.builder().mimeType(mediaType).data(new FileSystemResource(file)).build());
+		}
 		UserMessage userMessage = UserMessage.builder().text(text).media(media).build();
 		ChatClient.ChatClientRequestSpec spec = chatClient.prompt().messages(userMessage)
-				.advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId));
+				.advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))
+				.advisors(MessageChatMemoryAdvisor.builder(chatMemory).build());
 		if (vectorStore != null) {
 			spec.advisors(QuestionAnswerAdvisor.builder(vectorStore)
 					.searchRequest(SearchRequest.builder().similarityThreshold(0.6F).topK(6).build())
@@ -233,7 +252,8 @@ public class AiCmsChatService extends BaseService {
 	public Map<String, Object> chatJson(String message) {
 		return chatClient.prompt()
 			.messages(
-				new SystemMessage("[{name:'张三', sex:'男', age:'17'}, {name:'李四', sex:'女', age:'18'}]" + SYSTEM_MESSAGE_TO_JSON),
+				// 注意：示例必须是 JSON 对象（不能是数组），否则严格的模型会跟随示例返回数组，
+				new SystemMessage("{name:'张三', sex:'男', age:'17'}" + SYSTEM_MESSAGE_TO_JSON),
 				new UserMessage(StringUtils.replaceEach(message, USER_MESSAGE_SEARCH, USER_MESSAGE_REPLACE))
 			)
 			.call()
