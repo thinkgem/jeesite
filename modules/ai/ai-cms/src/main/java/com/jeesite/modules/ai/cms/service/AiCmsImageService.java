@@ -10,6 +10,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.common.service.ServiceException;
+import com.jeesite.modules.ai.tools.service.ImageGenerateService;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.file.entity.FileUploadParams;
 import com.jeesite.modules.file.utils.FileUploadUtils;
@@ -43,7 +44,7 @@ import java.util.Map;
  * @author ThinkGem
  */
 @Service
-public class AiCmsImageService extends BaseService {
+public class AiCmsImageService extends BaseService implements ImageGenerateService {
 
 	/** 下载图片地址的超时时间 */
 	private static final Duration DOWNLOAD_TIMEOUT = Duration.ofMinutes(5);
