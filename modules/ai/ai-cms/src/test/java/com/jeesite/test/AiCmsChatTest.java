@@ -4,13 +4,17 @@
  */
 package com.jeesite.test;
 
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.ai.cms.service.AiCmsChatService;
 import com.jeesite.modules.ai.cms.service.CacheChatMemoryRepository;
+import com.jeesite.modules.ai.cms.utils.AiRetryUtils;
+import com.jeesite.modules.ai.cms.utils.AiThinkUtils;
 import com.jeesite.modules.sys.entity.Area;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -58,17 +62,23 @@ public class AiCmsChatTest extends BaseSpringContextTests {
 	}
 
 	private AiCmsChatService aiCmsChatService;
+	private AiRetryUtils aiRetryUtils;
 
 	@Autowired
-	public void setAiChatServiceTest(AiCmsChatService aiCmsChatService) {
+	public void setAiCmsChatService(AiCmsChatService aiCmsChatService) {
 		this.aiCmsChatService = aiCmsChatService;
+	}
+
+	@Autowired
+	public void setAiRetryUtils(AiRetryUtils aiRetryUtils) {
+		this.aiRetryUtils = aiRetryUtils;
 	}
 
 	@Test
 	public void test01Text() {
 		logger.info("===== 聊天对话，文本输出");
 		String message = "你好";
-		String text = aiCmsChatService.chatText(message);
+		String text = aiRetryUtils.execute(() -> aiCmsChatService.chatText(message));
 		System.out.println(text);
 	}
 
@@ -76,67 +86,54 @@ public class AiCmsChatTest extends BaseSpringContextTests {
 	public void test02Json() {
 		logger.info("===== 聊天对话，结构化输出 JSON");
 		String message = "张三";
-		Map<String, Object> map = callWithRetry(() -> aiCmsChatService.chatJson(message));
+		Map<String, Object> map = aiRetryUtils.execute(() -> aiCmsChatService.chatJson(message));
 		System.out.println(JsonMapper.toJson(map));
 	}
 
 	@Test
 	public void test03Tool() {
 		logger.info("===== 聊天对话，结构化输出 Tool Calling");
-		Map<String, Object> map = callWithRetry(() -> aiCmsChatService.chatJson("打开客厅的灯"));
+		Map<String, Object> map = aiRetryUtils.execute(() -> aiCmsChatService.chatJson("打开客厅的灯"));
 		System.out.println(JsonMapper.toJson(map));
-		map = callWithRetry(() -> aiCmsChatService.chatJson("关闭客厅的灯"));
+		map = aiRetryUtils.execute(() -> aiCmsChatService.chatJson("关闭客厅的灯"));
 		System.out.println(JsonMapper.toJson(map));
-	}
-
-	/**
-	 * 免费模型有限流（429），失败时等待后重试
-	 */
-	private <T> T callWithRetry(java.util.function.Supplier<T> call) {
-		RuntimeException last = null;
-		for (int i = 0; i < 5; i++) {
-			try {
-				return call.get();
-			} catch (RuntimeException e) {
-				last = e;
-				logger.warn("调用失败（第 " + (i + 1) + " 次）：" + e.getMessage() + "，15 秒后重试");
-				try {
-					Thread.sleep(15000);
-				} catch (InterruptedException ie) {
-					Thread.currentThread().interrupt();
-					throw new RuntimeException(ie);
-				}
-			}
-		}
-		throw last;
 	}
 
 	@Test
 	public void test04Entity() {
 		logger.info("===== 聊天对话，结构化输出 Entity");
 		String message = "北京";
-		List<Area> list = callWithRetry(() -> aiCmsChatService.chatArea(message));
+		List<Area> list = aiRetryUtils.execute(() -> aiCmsChatService.chatArea(message));
 		System.out.println(JsonMapper.toJson(list));
 	}
 
 	/**
-	 * 聊天对话，流输出，验证 WebClientThinkConfig 的思考内容处理：
-	 * 流式返回的 reasoning_content 应被包裹在 &lt;think&gt;...&lt;/think&gt; 标签中，
-	 * 而不是以原始 reasoning_content 字段泄漏到正文里。
+	 * 聊天对话，流输出，验证原生深度思考字段：
+	 * 模型返回的 reasoning_content / thinking 等思考内容，应被归一化到
+	 * AssistantMessage.metadata.reasoningContent 字段中独立下发，
+	 * 而不是混在正文里，也不是以 &lt;think&gt; 标签的形式注入正文。
 	 */
 	@Test
 	public void test05ChatStream() {
-		logger.info("===== 聊天对话，流输出（验证 <think> 思考标签）");
+		logger.info("===== 聊天对话，流输出（验证原生思考字段 reasoningContent）");
 		String conversationId = CacheChatMemoryRepository.genUserConversationId();
 		// 触发模型推理的问题
 		String message = "9.11 和 9.8 哪个大？请一步步推理后回答。";
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		StringBuilder text = new StringBuilder();
+		// OpenAI 系返回累计值，Ollama 系返回增量值，这里统一累计
+		StringBuilder reasoning = new StringBuilder();
 		aiCmsChatService.chatStream(conversationId, message, request)
 				.doOnNext(response -> {
-					if (response.getResult() != null && response.getResult().getOutput() != null
-							&& response.getResult().getOutput().getText() != null) {
-						text.append(response.getResult().getOutput().getText());
+					if (response.getResult() != null && response.getResult().getOutput() != null) {
+						AssistantMessage output = response.getResult().getOutput();
+						if (output.getText() != null) {
+							text.append(output.getText());
+						}
+						String curr = AiThinkUtils.getReasoningContent(output);
+						String merged = AiThinkUtils.mergeReasoningContent(reasoning.toString(), curr);
+						reasoning.setLength(0);
+						reasoning.append(merged);
 					}
 				})
 				.blockLast(Duration.ofMinutes(3));
@@ -145,15 +142,14 @@ public class AiCmsChatTest extends BaseSpringContextTests {
 		assertNotNull(result);
 		assertTrue(result.length() >= 2);
 
-		// 验证思考标签：如果模型产生了思考内容，必须被 <think>...</think> 包裹
-		boolean hasThinkOpen = result.contains("<think>");
-		boolean hasThinkClose = result.contains("</think>");
-		System.out.println("思考标签检测：<think> 开始=" + hasThinkOpen + "，</think> 闭合=" + hasThinkClose);
-		if (hasThinkOpen) {
-			assertTrue(hasThinkClose, "流式结果有 <think> 开始标签，但缺少 </think> 闭合标签");
+		// 思考内容应通过独立字段下发，不能混在正文中
+		String thinkResult = reasoning.toString();
+		System.out.println("思考内容（原生字段 reasoningContent）：" + thinkResult);
+		assertFalse(result.contains("reasoning_content"), "流式结果泄漏了原始 reasoning_content 字段");
+		// 若模型返回了思考内容，则正文不应再包含 <think> 标签（原生字段与标签二选一）
+		if (StringUtils.isNotBlank(thinkResult)) {
+			assertFalse(result.contains("<think>"), "模型已返回原生思考字段，正文中不应再出现 <think> 标签");
 		}
-		// 验证没有原始 reasoning_content 字段泄漏到正文
-		assertFalse(result.contains("reasoning_content"), "流式结果泄漏了原始 reasoning_content 字段，WebClientThinkConfig 未生效");
 	}
 
 }

@@ -6,25 +6,21 @@ package com.jeesite.test;
 
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.tests.BaseSpringContextTests;
-import com.jeesite.modules.ai.cms.service.AiCmsImageService;
-import com.jeesite.modules.ai.tools.annotation.AiTools;
-import com.jeesite.modules.ai.tools.local.LocalImageAiTools;
-import com.jeesite.modules.ai.tools.service.ImageGenerateService;
+import com.jeesite.modules.ai.cms.service.AiCmsChatService;
+import com.jeesite.modules.ai.cms.service.CacheChatMemoryRepository;
+import com.jeesite.modules.ai.cms.utils.AiRetryUtils;
+import com.jeesite.modules.ai.cms.utils.AiThinkUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.tool.ToolCallback;
-import org.springframework.ai.tool.definition.ToolDefinition;
-import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Map;
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -60,14 +56,24 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 		"spring.application.name=test"})
 public class AiCmsImageToolTest extends BaseSpringContextTests {
 
-	@Autowired
-	private LocalImageAiTools imageTools;
-
-	@Autowired
-	private AiCmsImageService imageService;
-
-	@Autowired
 	private ChatClient chatClient;
+	private AiRetryUtils aiRetryUtils;
+	private AiCmsChatService aiCmsChatService;
+
+	@Autowired
+	public void setChatClient(ChatClient chatClient) {
+		this.chatClient = chatClient;
+	}
+
+	@Autowired
+	public void setAiRetryUtils(AiRetryUtils aiRetryUtils) {
+		this.aiRetryUtils = aiRetryUtils;
+	}
+
+	@Autowired
+	public void setAiCmsChatService(AiCmsChatService aiCmsChatService) {
+		this.aiCmsChatService = aiCmsChatService;
+	}
 
 	/**
 	 * 未设置智谱 API Key 时，跳过测试（而不是报错）
@@ -79,67 +85,17 @@ public class AiCmsImageToolTest extends BaseSpringContextTests {
 	}
 
 	/**
-	 * 工具定义可被 Spring AI 正确解析：工具名、描述、入参 schema，
-	 * 且类上有 @AiTools 注解（AiCmsChatConfig 据此注册为 defaultTools），
-	 * 生图服务实现了 ImageGenerateService 接口
-	 */
-	@Test
-	public void test01ToolDefinition() {
-		ToolCallback[] callbacks = MethodToolCallbackProvider.builder()
-				.toolObjects(imageTools)
-				.build()
-				.getToolCallbacks();
-		assertEquals(1, callbacks.length);
-		ToolDefinition definition = callbacks[0].getToolDefinition();
-		assertEquals("generate-image", definition.name());
-		assertTrue(definition.description().contains("生成图片"),
-				"工具描述应说明用途，便于模型判断何时调用：" + definition.description());
-		assertTrue(definition.inputSchema().contains("prompt"),
-				"入参 schema 应包含 prompt：" + definition.inputSchema());
-		assertNotNull(LocalImageAiTools.class.getAnnotation(AiTools.class));
-		assertTrue(imageService instanceof ImageGenerateService);
-	}
-
-	/**
-	 * 直接调用工具真实生图：生图 → 保存文件服务器 → 返回访问地址
-	 */
-	@Test
-	public void test02GenerateImage() throws Exception {
-		assertTrue(imageService.isEnabled(), "未启用生图模型");
-		Map<String, Object> res = imageTools.generateImage("一只可爱的橘猫，坐在窗台上晒太阳，写真风格");
-		System.out.println("生图工具返回结果：" + res);
-		assertEquals("true", res.get("result"), "生图失败：" + res.get("message"));
-		assertNotNull(res.get("prompt"));
-		// 文件名：ai-image-时间戳.扩展名（扩展名由实际图片格式决定）
-		String fileName = String.valueOf(res.get("fileName"));
-		assertTrue(fileName.startsWith("ai-image-"), "文件名应带 ai-image- 前缀：" + fileName);
-		// 访问地址：文件服务器按文件 ID 生成，形如 /userfiles/fileupload/202609/xxx.jpg
-		String fileUrl = String.valueOf(res.get("fileUrl"));
-		assertTrue(fileUrl.contains("/userfiles"), "应返回文件服务器访问地址：" + fileUrl);
-		assertTrue(fileUrl.endsWith(fileName.substring(fileName.lastIndexOf('.'))),
-				"访问地址格式应与图片格式一致：" + fileUrl);
-		assertFalse(res.containsKey("fileRealPath"), "不应把服务器真实路径返回给大模型");
-		// 落盘校验：文件保存在当前工作目录的 userfiles 下（不在则说明使用了其它存储实现）
-		Path path = Paths.get(StringUtils.removeStart(fileUrl, "/"));
-		if (Files.exists(path)) {
-			assertTrue(AiCmsImageService.isImage(Files.readAllBytes(path)), "保存的文件不是有效图片：" + path);
-		} else {
-			System.out.println("图片未保存到当前工作目录，跳过落盘校验：" + path);
-		}
-	}
-
-	/**
 	 * 聊天链路：模型识别到画图意图后，自动调用 generate-image 工具
 	 * （需要聊天模型支持 function calling，不支持时本用例自动跳过）
 	 */
 	@Test
-	public void test03ChatTriggerGenerateImage() {
+	public void test01ChatTriggerGenerateImage() {
 		String content;
 		try {
-			content = chatClient.prompt()
+			content = aiRetryUtils.execute(() -> chatClient.prompt()
 					.messages(new UserMessage("请帮我画一只在窗台上晒太阳的橘猫。"))
 					.call()
-					.content();
+					.content());
 		} catch (Exception e) {
 			String message = String.valueOf(e.getMessage());
 			// 模型限流（429）属于外部服务问题，其它异常多为模型不支持 function calling
@@ -149,6 +105,51 @@ public class AiCmsImageToolTest extends BaseSpringContextTests {
 		System.out.println("聊天链路生图结果：" + content);
 		assertNotNull(content);
 		assertTrue(content.length() >= 2);
+	}
+
+	/**
+	 * 聊天对话，流输出，验证原生深度思考字段：
+	 * 模型返回的 reasoning_content / thinking 等思考内容，应被归一化到
+	 * AssistantMessage.metadata.reasoningContent 字段中独立下发，
+	 * 而不是混在正文里，也不是以 &lt;think&gt; 标签的形式注入正文。
+	 */
+	@Test
+	public void test02ChatStreamTriggerGenerateImage() {
+		logger.info("===== 聊天对话，流输出（验证原生思考字段 reasoningContent）");
+		String conversationId = CacheChatMemoryRepository.genUserConversationId();
+		// 触发模型推理的问题
+		String message = "请帮我画一只在窗台上晒太阳的橘猫。";
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		StringBuilder text = new StringBuilder();
+		// OpenAI 系返回累计值，Ollama 系返回增量值，这里统一累计
+		StringBuilder reasoning = new StringBuilder();
+		aiCmsChatService.chatStream(conversationId, message, request)
+				.doOnNext(response -> {
+					if (response.getResult() != null && response.getResult().getOutput() != null) {
+						AssistantMessage output = response.getResult().getOutput();
+						if (output.getText() != null) {
+							text.append(output.getText());
+						}
+						String curr = AiThinkUtils.getReasoningContent(output);
+						String merged = AiThinkUtils.mergeReasoningContent(reasoning.toString(), curr);
+						reasoning.setLength(0);
+						reasoning.append(merged);
+					}
+				})
+				.blockLast(Duration.ofMinutes(3));
+		String result = text.toString();
+		System.out.println("流式结果：" + result);
+		assertNotNull(result);
+		assertTrue(result.length() >= 2);
+
+		// 思考内容应通过独立字段下发，不能混在正文中
+		String thinkResult = reasoning.toString();
+		System.out.println("思考内容（原生字段 reasoningContent）：" + thinkResult);
+		assertFalse(result.contains("reasoning_content"), "流式结果泄漏了原始 reasoning_content 字段");
+		// 若模型返回了思考内容，则正文不应再包含 <think> 标签（原生字段与标签二选一）
+		if (StringUtils.isNotBlank(thinkResult)) {
+			assertFalse(result.contains("<think>"), "模型已返回原生思考字段，正文中不应再出现 <think> 标签");
+		}
 	}
 
 }

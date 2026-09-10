@@ -12,7 +12,7 @@ spring:
       audio.transcription: none
       audio.speech: none
       moderation: none
-      image: none
+      image: openai
 
 # ========= 聊天对话 相关配置 =========
 
@@ -28,8 +28,14 @@ spring:
         temperature: 0.6
         top-p: 0.7
         frequency-penalty: 0
+      # 硅基流动生图免费模型（效果一般，仅用于测试）
+      image:
+        base-url: https://api.siliconflow.cn/v1
+        api-key: ${SFLOW_APP_KEY}
+        model: Kwai-Kolors/Kolors
         timeout: 15m
-      # 嵌入向量模型使用硅基流动
+        size: 1024x1024
+      # 硅基流动免费嵌入向量模型
       embedding:
         base-url: https://api.siliconflow.cn/v1
         api-key: ${SFLOW_APP_KEY}
@@ -103,9 +109,7 @@ spring:
       base-url: http://localhost:11434
       # 聊天对话模型
       chat:
-        model: qwen3:8b
-        #model: deepseek-r1:7b
-        max-tokens: 1024
+        model: qwen3-vl:4b
         temperature: 0.6
         top-p: 0.7
         frequency-penalty: 0
@@ -115,6 +119,12 @@ spring:
         #model: all-minilm:33m
         # 维度 dimensions 设置为 1024
         model: bge-m3
+
+# ========= 本地工具调用 相关配置 =========
+
+    # 工具调用 Tool calling 例子详见 TestAiTools.java、UserAiTools.java 】
+    tools:
+      enabled: false
 
 # ========= 向量数据库 相关配置 =========
 
@@ -168,12 +178,6 @@ spring:
         index-type: HNSW
         metric-type: COSINE
 
-# ========= 本地工具调用 相关配置 =========
-
-    # 是否启用 Tool calling 工具调用【例子详见 TestAiTools.java、UserAiTools.java 】
-    tools:
-      enabled: false
-
 # ========= MPC 远程工具调用 相关配置 =========
 
     # https://docs.spring.io/spring-ai/reference/api/mcp/mcp-client-boot-starter-docs.html
@@ -209,6 +213,23 @@ spring:
       {query}
       请根据知识库和提供的历史信息作答。如果知识库中没有答案，请自我发挥。
       以下是知识库信息：{question_answer_context}
+
+# ========= 模型调用失败重试 相关配置 =========
+
+    # AiRetryUtils 统一重试配置（唯一重试入口），字段名 autoRetry 用于避开 Spring AI 内置的 spring.ai.retry，
+    # 仅对模型限流（429）、服务端错误（5xx）、网络超时（SocketTimeout）等临时错误退避重试；
+    # 正常返回的调用不会重试。
+    autoRetry:
+      # 最大尝试次数（含首次请求），设置为 1 表示不重试
+      max-attempts: 3
+      # 指数退避参数
+      backoff:
+        # 首次重试的等待时间
+        initial-interval: 2s
+        # 等待时间的递增倍数（指数退避）
+        multiplier: 2
+        # 等待时间的上限
+        max-interval: 60s
 
 # ========= Postgresql 向量数据库数据源 =========
 

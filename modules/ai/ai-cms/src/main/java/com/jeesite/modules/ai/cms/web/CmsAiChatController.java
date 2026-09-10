@@ -6,11 +6,12 @@ package com.jeesite.modules.ai.cms.web;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.ai.cms.entity.AiChatCompletion;
 import com.jeesite.modules.ai.cms.service.AiCmsChatService;
+import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.entity.Area;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,13 +79,23 @@ public class CmsAiChatController extends BaseController {
 	}
 
 	/**
-	 * 聊天对话，流输出
+	 * 保存上传图片与聊天会话的关系，供后端多模态识图读取、以及切换会话时回显
 	 * @author ThinkGem
-	 * http://127.0.0.1:8980/js/a/cms/chat/stream?id=1&message=你好
 	 */
-	@RequestMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<ChatResponse> stream(@RequestParam String id, @RequestParam String message, HttpServletRequest request) {
-		return aiCmsChatService.chatStream(id, message, request);
+	@RequestMapping("file/save")
+	public String fileSave(@RequestParam String id, String fileUploadIds, String delFileUploadIds) {
+		FileUploadUtils.saveFileUpload(id, AiCmsChatService.BIZ_TYPE_CHAT, fileUploadIds, delFileUploadIds);
+		return renderResult(Global.TRUE, "保存成功", id);
+	}
+
+	/**
+	 * 聊天对话，流输出（OpenAI v1 兼容，对应官方 POST /v1/chat/completions）
+	 * @author ThinkGem
+	 * http://127.0.0.1:8980/js/a/cms/chat/completions?id=1&message=你好
+	 */
+	@RequestMapping(value = "completions", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<AiChatCompletion> completions(@RequestParam String id, @RequestParam String message, HttpServletRequest request) {
+		return AiChatCompletion.streamOf(aiCmsChatService.chatStream(id, message, request));
 	}
 
 	/**

@@ -10,15 +10,14 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.common.service.ServiceException;
+import com.jeesite.modules.ai.cms.utils.AiRetryUtils;
 import com.jeesite.modules.ai.tools.service.ImageGenerateService;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.file.entity.FileUploadParams;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.messages.AssistantMessage;
-import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.image.*;
+import org.springframework.ai.openai.metadata.OpenAiImageGenerationMetadata;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,9 +32,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.time.Duration;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * AI 生图服务类，使用 Spring AI 的 ImageModel 生图。
@@ -55,12 +52,11 @@ public class AiCmsImageService extends BaseService implements ImageGenerateServi
 			.build();
 
 	private final ImageModel imageModel;
+	private final AiRetryUtils aiRetryUtils;
 
-	private final ChatMemory chatMemory;
-
-	public AiCmsImageService(ObjectProvider<ImageModel> imageModel, ObjectProvider<ChatMemory> chatMemory) {
+	public AiCmsImageService(ObjectProvider<ImageModel> imageModel, AiRetryUtils aiRetryUtils) {
 		this.imageModel = imageModel.getIfAvailable();
-		this.chatMemory = chatMemory.getIfAvailable();
+		this.aiRetryUtils = aiRetryUtils;
 	}
 
 	/**
@@ -78,95 +74,118 @@ public class AiCmsImageService extends BaseService implements ImageGenerateServi
 	 * @author ThinkGem
 	 */
 	public Map<String, Object> generateImage(String bizKey, String bizType, String prompt) {
+		return generateImage(bizKey, bizType, prompt, null);
+	}
+
+	/**
+	 * 文生图，生成图片并保存到文件服务器，返回图片访问地址等信息（可指定生图参数）
+	 * @param bizKey 业务关联键（如聊天会话 ID conversationId，为空时归属到当前用户）
+	 * @param bizType 业务类型（如 "cms-chat"，为空时默认 "ai-image"）
+	 * @param prompt 图片描述提示词
+	 * @param options 生图参数（模型、数量、尺寸、质量、风格等），为空时使用 spring.ai.openai.image 默认配置
+	 * @author ThinkGem
+	 */
+	public Map<String, Object> generateImage(String bizKey, String bizType, String prompt, ImageOptions options) {
+		return generateImages(bizKey, bizType, prompt, options).get(0);
+	}
+
+	/**
+	 * 文生图，按 n 生成多张图片并保存到文件服务器，返回每张图片的访问地址等信息
+	 * @param bizKey 业务关联键（如聊天会话 ID conversationId，为空时归属到当前用户）
+	 * @param bizType 业务类型（如 "cms-chat"，为空时默认 "ai-image"）
+	 * @param prompt 图片描述提示词
+	 * @param options 生图参数（模型、数量、尺寸、质量、风格等），为空时使用 spring.ai.openai.image 默认配置
+	 * @return 每张图片的信息：created（生成时间，秒）、prompt、fileName、fileUrl、fileRealPath，
+	 *         response_format 为 b64_json 时附加 b64Json，模型改写提示词时附加 revisedPrompt
+	 * @author ThinkGem
+	 */
+	public List<Map<String, Object>> generateImages(String bizKey, String bizType, String prompt, ImageOptions options) {
 		if (StringUtils.isBlank(prompt)) {
 			throw new ServiceException("图片描述不能为空");
 		}
 		if (!isEnabled()) {
 			throw new ServiceException("未启用图片生成模型，请配置 spring.ai.model.image: openai");
 		}
-		// 调用 Spring AI 生图 API，模型参数（模型名、图片尺寸等）在 spring.ai.openai.image 配置中设置
-		// 免费模型有并发限流（429），失败时等待后重试
-		ImageResponse response = null;
-		RuntimeException last = null;
-		for (int i = 0; i < 3; i++) {
-			try {
-				response = imageModel.call(new ImagePrompt(prompt));
-				last = null;
-				break;
-			} catch (RuntimeException e) {
-				last = e;
-				if (e.getMessage() != null && e.getMessage().contains("429") && i < 2) {
-					logger.warn("生图模型限流（第 " + (i + 1) + " 次调用），10 秒后重试");
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException ie) {
-						Thread.currentThread().interrupt();
-						throw new ServiceException("生图模型限流，请稍后再试");
-					}
-				} else {
-					throw e;
-				}
-			}
-		}
-		if (last != null) {
-			throw last;
-		}
-		ImageGeneration generation = response.getResult();
-		Image image = generation != null ? generation.getOutput() : null;
-		if (image == null) {
+		// 调用 Spring AI 生图 API，模型参数（模型名、图片尺寸等）在 spring.ai.openai.image 配置中设置，
+		// 请求参数（model、n、size、quality、style 等）非空时覆盖默认配置
+		ImagePrompt imagePrompt = options != null ? new ImagePrompt(prompt, options) : new ImagePrompt(prompt);
+		ImageResponse response = aiRetryUtils.execute(() -> imageModel.call(imagePrompt));
+		List<ImageGeneration> generations = response.getResults();
+		if (generations == null || generations.isEmpty()) {
 			throw new ServiceException("生图失败，模型未返回图片数据");
 		}
-		byte[] imageBytes = getImageBytes(image);
-		if (imageBytes == null) {
-			throw new ServiceException("生图失败，未获取到有效的图片数据（详见后台日志）");
-		}
-		// 按实际图片格式确定文件名和类型
-		String ext = getImageExtension(imageBytes);
 		// 业务关联键：为空时归属到当前用户（未登录时归属到 system 用户）
 		if (StringUtils.isBlank(bizKey)) {
-			bizKey = "system";
-			try {
-				String userId = UserUtils.getUser().getId();
-				if (StringUtils.isNotBlank(userId)) {
-					bizKey = userId;
-				}
-			} catch (Exception e) {
-				// 忽略，未登录场景
-			}
+			bizKey = getCurrentUserBizKey();
 		}
 		// 业务类型：为空时默认 ai-image
 		if (StringUtils.isBlank(bizType)) {
 			bizType = "ai-image";
 		}
-		FileUploadParams params = new FileUploadParams();
-		params.setFileMd5(EncodeUtils.encodeHex(Md5Utils.md5(imageBytes)));
-		params.setFileName("ai-image-" + System.currentTimeMillis() + ext);
-		params.setBizKey(bizKey);
-		params.setBizType(bizType);
-		params.setFile(new ByteArrayMultipartFile(params.getFileName(), "image/" + ext.replace(".", ""), imageBytes));
-		Map<String, Object> res = FileUploadUtils.saveFileUpload(params);
-		if (Global.FALSE.equals(res.get("result"))) {
-			throw new ServiceException((String) res.get("message"));
-		}
-		FileUpload fileUpload = (FileUpload) res.get("fileUpload");
-		// 写入会话记忆：聊天场景（bizType=cms-chat）下，记录生图动作，
-		// 让后续对话的模型知道“用户要画什么、图片已生成”，实现追问衔接
-		if ("cms-chat".equals(bizType) && chatMemory != null && bizKey.contains(":")) {
-			try {
-				chatMemory.add(bizKey, List.of(
-						new UserMessage(prompt),
-						new AssistantMessage("已为您生成图片：" + prompt + "，图片已保存到会话附件（"
-								+ params.getFileName() + "），用户可以在对话中继续查看或追问该图片。")));
-			} catch (Exception e) {
-				logger.error("Write image to chat memory error: {}", e.getMessage());
+		// 是否返回 Base64 图片数据（OpenAI response_format: b64_json）
+		boolean b64Json = options != null && "b64_json".equalsIgnoreCase(options.getResponseFormat());
+		// 生成时间（秒），OpenAI images 响应的 created 为 Unix 时间戳
+		Long created = response.getMetadata() != null && response.getMetadata().getCreated() != null
+				? response.getMetadata().getCreated() / 1000 : System.currentTimeMillis() / 1000;
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (ImageGeneration generation : generations) {
+			Image image = generation.getOutput();
+			if (image == null) {
+				continue;
 			}
+			byte[] imageBytes = getImageBytes(image);
+			if (imageBytes == null) {
+				continue;
+			}
+			// 按实际图片格式确定文件名和类型
+			String ext = getImageExtension(imageBytes);
+			FileUploadParams params = new FileUploadParams();
+			params.setFileMd5(EncodeUtils.encodeHex(Md5Utils.md5(imageBytes)));
+			params.setFileName("ai-image-" + System.currentTimeMillis() + "-" + (list.size() + 1) + ext);
+			params.setBizKey(bizKey);
+			params.setBizType(bizType);
+			params.setFile(new ByteArrayMultipartFile(params.getFileName(), "image/" + ext.replace(".", ""), imageBytes));
+			Map<String, Object> res = FileUploadUtils.saveFileUpload(params);
+			if (Global.FALSE.equals(res.get("result"))) {
+				throw new ServiceException((String) res.get("message"));
+			}
+			FileUpload fileUpload = (FileUpload) res.get("fileUpload");
+			Map<String, Object> result = new LinkedHashMap<>();
+			result.put("created", created);
+			result.put("prompt", prompt);
+			result.put("fileName", params.getFileName());
+			result.put("fileUrl", Global.getCtxPath() + fileUpload.getFileUrl());
+			result.put("fileRealPath", fileUpload.getFileEntity().getFileRealPath());
+			if (b64Json) {
+				result.put("b64Json", Base64.getEncoder().encodeToString(imageBytes));
+			}
+			// 模型改写后的提示词（如 OpenAI dall-e-3、gpt-image-1）
+			if (generation.getMetadata() instanceof OpenAiImageGenerationMetadata meta
+					&& StringUtils.isNotBlank(meta.getRevisedPrompt())) {
+				result.put("revisedPrompt", meta.getRevisedPrompt());
+			}
+			list.add(result);
+			logger.info("Generate image: fileName=" + params.getFileName() + ", fileUrl=" + result.get("fileUrl"));
 		}
-		return Map.of(
-				"prompt", prompt,
-				"fileName", params.getFileName(),
-				"fileUrl", Global.getCtxPath() + fileUpload.getFileUrl(),
-				"fileRealPath", fileUpload.getFileEntity().getFileRealPath()
-		);
+		if (list.isEmpty()) {
+			throw new ServiceException("生图失败，未获取到有效的图片数据（详见后台日志）");
+		}
+		return list;
+	}
+
+	/**
+	 * 获取当前用户作为业务关联键（未登录时归属到 system 用户）
+	 */
+	private static String getCurrentUserBizKey() {
+		try {
+			String userId = UserUtils.getUser().getId();
+			if (StringUtils.isNotBlank(userId)) {
+				return userId;
+			}
+		} catch (Exception e) {
+			// 忽略，未登录场景
+		}
+		return "system";
 	}
 
 	/**
