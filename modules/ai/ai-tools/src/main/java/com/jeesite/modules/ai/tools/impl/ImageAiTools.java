@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.ai.tools.impl;
 
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.ai.tools.service.ImageGenerateService;
 
@@ -20,24 +21,31 @@ import java.util.Map;
 public class ImageAiTools {
 
 	/**
-	 * 根据文字描述生成图片，返回图片访问地址
+	 * 根据文字描述生成图片，返回 Markdown 图片语法字符串（![描述](图片地址)），
+	 * 便于聊天模型直接输出、前端 markdown-it 直接渲染展示图片。
 	 * @param prompt 图片内容的详细描述
 	 */
-	public Map<String, Object> generateImage(String prompt) {
+	public String generateImage(String prompt) {
 		ImageGenerateService imageService = getImageService();
 		if (imageService == null || !imageService.isEnabled()) {
-			return Map.of("result", "false",
-					"message", "未启用图片生成模型，请配置 spring.ai.model.image: openai");
+			return "未启用图片生成模型，请配置 spring.ai.model.image: openai";
 		}
 		try {
 			Map<String, Object> data = imageService.generateImage(null, "ai-image", prompt);
-			return Map.of("result", "true",
-					"prompt", data.get("prompt"),
-					"fileName", data.get("fileName"),
-					"fileUrl", data.get("fileUrl"));
+			return buildMarkdownImage(String.valueOf(data.get("prompt")),
+					String.valueOf(data.get("fileUrl")));
 		} catch (Exception e) {
-			return Map.of("result", "false", "message", String.valueOf(e.getMessage()));
+			return "生成图片失败：" + e.getMessage();
 		}
+	}
+
+	/**
+	 * 构建 Markdown 图片语法：![描述](图片地址)，并对 alt 中的特殊字符转义，避免破坏语法
+	 */
+	private static String buildMarkdownImage(String alt, String url) {
+		String safeAlt = StringUtils.replaceEach(StringUtils.defaultString(alt),
+				new String[]{"\\", "]", "("}, new String[]{"\\\\", "\\]", "\\("});
+		return "![" + safeAlt + "](" + url + ")";
 	}
 
 	/**

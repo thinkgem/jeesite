@@ -10,7 +10,7 @@
 	<!-- Project level setting -->
 	<!-- <logger name="your.package" level="DEBUG" /> -->
 <!--	<logger name="org.springframework.ai" level="TRACE" />-->
-<!--	<logger name="com.jeesite.modules.ai.cms.config.WebClientThinkConfig" level="TRACE" />-->
+<!--	<logger name="com.jeesite.modules.ai.cms.utils.AiThinkUtils" level="TRACE" />-->
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

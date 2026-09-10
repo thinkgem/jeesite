@@ -8,6 +8,7 @@ import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.ai.cms.service.AiCmsChatService;
 import com.jeesite.modules.ai.cms.service.AiCmsImageService;
 import com.jeesite.modules.ai.cms.service.CacheChatMemoryRepository;
+import com.jeesite.modules.ai.cms.utils.AiRetryUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ai.chat.client.ChatClient;
@@ -15,21 +16,20 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.content.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.MimeTypeUtils;
 
 import java.nio.file.Files;
-import java.time.Duration;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-
 
 
 /**
@@ -63,14 +63,30 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 		"spring.application.name=test"})
 public class AiCmsImageTest extends BaseSpringContextTests {
 
-	@Autowired
 	private AiCmsImageService aiCmsImageService;
-
-	@Autowired
 	private AiCmsChatService aiCmsChatService;
+	private ChatClient chatClient;
+	private AiRetryUtils aiRetryUtils;
 
 	@Autowired
-	private ChatClient chatClient;
+	public void setAiCmsImageService(AiCmsImageService aiCmsImageService) {
+		this.aiCmsImageService = aiCmsImageService;
+	}
+
+	@Autowired
+	public void setAiCmsChatService(AiCmsChatService aiCmsChatService) {
+		this.aiCmsChatService = aiCmsChatService;
+	}
+
+	@Autowired
+	public void setChatClient(ChatClient chatClient) {
+		this.chatClient = chatClient;
+	}
+
+	@Autowired
+	public void setAiRetryUtils(AiRetryUtils aiRetryUtils) {
+		this.aiRetryUtils = aiRetryUtils;
+	}
 
 	/**
 	 * 未设置智谱 API Key 时，跳过测试（而不是报错）
@@ -117,7 +133,7 @@ public class AiCmsImageTest extends BaseSpringContextTests {
 			.text("这张图片里画的是什么？请简要描述图片内容。")
 			.media(java.util.List.of(media))
 			.build();
-		String content = chatClient.prompt().messages(userMessage).call().content();
+		String content = aiRetryUtils.execute(() -> chatClient.prompt().messages(userMessage).call().content());
 		System.out.println("识图结果：" + content);
 		assertNotNull(content);
 		assertTrue(content.length() >= 2);
