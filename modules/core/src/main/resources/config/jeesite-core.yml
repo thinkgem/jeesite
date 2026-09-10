@@ -101,7 +101,7 @@ spring:
     prefixWithDsName: false
     # 指定全局缓存名，当prefixWithDsName设置为true时有效 v5.18.1
     globalNames: sessionCache,sysCache
-    # 给缓存Key增加DsName数据源名称前缀 v5.6.1
+    # 给缓存Key增加DsName数据源名称前缀（default默认缓存除外）v5.6.1
     keyPrefixWithDsName: false
     # 指定全局Key，不加DsName前缀，当keyPrefixWithDsName设置为true时有效（cacheName:key|*）v5.12.1
     globalKeyNames: sysCache:configMap,sysCache:moduleMap,sysCache:areaAllList
@@ -649,10 +649,12 @@ j2cache:
   # 一级缓存
   caffeine:
     region:
-      #[cacheName]: size, xxxx[s|m|h|d]
-      default: 10000, 1h
-      sysCache: 100000, 365d
-      sessionCache: 100000, 12h
+      #[cacheName]: size, xxx[s|m|h|d]
+      "default": 10000, 1h
+      "sysCache": 100000, 365d
+      "sessionCache": 100000, 12h
+      "*userCache*": 10000, 12h
+      "*corpCache": 10000, 12h
     
   # 二级缓存
   redis:
@@ -675,7 +677,7 @@ j2cache:
   # 通知订阅
   broadcast:
     # 缓存清理模式
-    # passive -> 被动清除，一级缓存过期进行通知各节点清除一二级缓存
+    # passive -> 被动清除，一级缓存过期进行通知各节点清除一二级缓存（默认）
     # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
     # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
     cache_clean_mode: passive
