@@ -83,10 +83,11 @@
             class="mb-0.5"
             size="small"
             uploadType="image"
-            :uploadText="''"
+            :showUploadText="false"
+            uploadButtonType="default"
             :showPreview="true"
             :emptyHidePreview="true"
-            :readonly="loading"
+            :disabled="loading"
             :maxNumber="3"
             :accept="['jpg', 'jpeg', 'png']"
             @click="handleUploadClick"
@@ -100,8 +101,20 @@
             @input="handleInput"
             @keypress="handleEnter"
           ></textarea>
-          <a-button class="ml-2 shrink-0" type="primary" shape="circle" :loading="loading" @click="handleSend">
-            <Icon v-if="!loading" icon="i-ant-design:arrow-up-outlined" />
+          <a-button
+            class="ml-2 shrink-0"
+            type="primary"
+            shape="circle"
+            :loading="loading && !sendBtnHover"
+            :title="loading ? t('停止响应') : ''"
+            @mouseenter="sendBtnHover = true"
+            @mouseleave="sendBtnHover = false"
+            @click="handleSendOrStop"
+          >
+            <Icon
+              v-if="!loading || sendBtnHover"
+              :icon="loading ? 'i-ant-design:x-filled' : 'i-ant-design:arrow-up-outlined'"
+            />
           </a-button>
         </div>
       </div>
@@ -148,6 +161,8 @@
   // 上传组件当前的文件列表，用于判断是否出现新上传的图片
   const uploadFileList = ref<Recordable[]>([]);
   const editInputRefs = ref<Recordable>({});
+  // 发送按钮的悬停状态，AI 输出中悬停时切换为停止按钮
+  const sendBtnHover = ref(false);
 
   onMounted(async () => {
     chatList.value = await cmsChatList();
@@ -259,6 +274,15 @@
         handleSend();
       }
     }
+  }
+
+  // AI 输出中点击为停止响应，否则为发送消息
+  function handleSendOrStop() {
+    if (loading.value) {
+      messageRef.value?.stopLoading();
+      return;
+    }
+    handleSend();
   }
 
   async function handleSend() {
