@@ -163,6 +163,16 @@ export const uploadContainerProps = {
     type: Boolean as PropType<boolean>,
     default: true,
   },
+  // 是否显示上传按钮的文字
+  showUploadText: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
+  // 上传按钮的类型（primary、default、dashed、link、text）
+  uploadButtonType: {
+    type: String as PropType<string>,
+    default: 'primary',
+  },
   // 加载时间戳，此为监听属性，方便刷新文件列表数据
   loadTime: {
     type: Number as PropType<number>,

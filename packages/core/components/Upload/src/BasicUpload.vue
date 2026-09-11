@@ -2,13 +2,14 @@
   <div class="jeesite-basic-upload">
     <Space>
       <a-button
-        v-if="!(readonly || disabled)"
-        type="primary"
+        v-if="!readonly"
+        :type="uploadButtonType"
+        :disabled="disabled"
         @click="openUploadModal"
         preIcon="i-carbon:cloud-upload"
         :size="props.size"
       >
-        {{ uploadText || t('component.upload.upload') }}
+        <template v-if="showUploadText">{{ uploadText || t('component.upload.upload') }}</template>
       </a-button>
       <Tooltip placement="bottom" v-if="getShowPreview">
         <template #title>
