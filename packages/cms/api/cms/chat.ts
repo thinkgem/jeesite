@@ -21,13 +21,17 @@ export const cmsChatSave = (params?: Recordable | any) =>
 export const cmsChatDelete = (params?: Recordable | any) =>
   defHttp.get<Recordable>({ url: adminPath + '/cms/chat/delete', params });
 
-export const cmsChatStream = (
+// 保存上传图片与聊天会话的关联关系，供后端多模态识图读取、以及切换会话时回显
+export const cmsChatFileSave = (params?: Recordable | any) =>
+  defHttp.post<Recordable>({ url: adminPath + '/cms/chat/file/save', params });
+
+export const cmsChatCompletions = (
   params?: Recordable | any,
   signal?: GenericAbortSignal,
   onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void,
 ) =>
   defHttp.post<Recordable>({
-    url: adminPath + '/cms/chat/stream',
+    url: adminPath + '/cms/chat/completions',
     params,
     signal,
     onDownloadProgress,

@@ -69,16 +69,32 @@
       <ChatMessage
         ref="messageRef"
         v-model:value="messages"
-        :chatStreamApi="cmsChatStream"
+        :chatCompletionsApi="cmsChatCompletions"
         :conversationId="conversationIds[0]"
         :inputMessage="inputMessageRef?.value"
         v-model:loading="loading"
       />
       <div class="pl-14 pr-16 w-full flex justify-end mt-3">
         <div class="flex items-end flex-1 rounded-2 p-2 bg-white text-[15px] leading-7">
+          <BasicUpload
+            v-model:value="uploadDataMap"
+            :bizKey="conversationIds[0]"
+            bizType="cms-chat"
+            class="mb-0.5"
+            size="small"
+            uploadType="image"
+            :uploadText="''"
+            :showPreview="true"
+            :emptyHidePreview="true"
+            :readonly="loading"
+            :maxNumber="3"
+            :accept="['jpg', 'jpeg', 'png']"
+            @click="handleUploadClick"
+            @change="handleUploadChange"
+          />
           <textarea
             ref="inputMessageRef"
-            class="flex-auto ml-1 outline-none no-scrollbar resize-none w-full h-full border-none bg-transparent"
+            class="flex-auto ml-2 outline-none no-scrollbar resize-none w-full h-full border-none bg-transparent"
             rows="1"
             :placeholder="t('你有什么想知道的，快来问问我，Shift+Enter 换行，Enter 发送。')"
             @input="handleInput"
@@ -104,7 +120,15 @@
   import { useUserStore } from '@jeesite/core/store/modules/user';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { ScrollContainer } from '@jeesite/core/components/Container';
-  import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
+  import {
+    cmsChatDelete,
+    cmsChatFileSave,
+    cmsChatList,
+    cmsChatMessage,
+    cmsChatSave,
+    cmsChatCompletions,
+  } from '@jeesite/cms/api/cms/chat';
+  import { BasicUpload } from '@jeesite/core/components/Upload';
   import { ChatMessage } from '@jeesite/cms';
 
   const { t } = useI18n('cms.chat');
@@ -119,6 +143,10 @@
   const messageRef = shallowRef<InstanceType<typeof ChatMessage>>();
   const inputMessageRef = ref<HTMLTextAreaElement>();
   const messages = ref<Recordable[]>([]);
+  // 识图上传：上传的图片以会话ID为业务主键、cms-chat 为业务类型，供后端多模态识图读取
+  const uploadDataMap = ref<Recordable>({});
+  // 上传组件当前的文件列表，用于判断是否出现新上传的图片
+  const uploadFileList = ref<Recordable[]>([]);
   const editInputRefs = ref<Recordable>({});
 
   onMounted(async () => {
@@ -137,6 +165,38 @@
     const res = await cmsChatSave();
     chatList.value.unshift(res);
     await handleSelect(chatList.value[0]);
+  }
+
+  // 上传图片前，若还没有会话则先创建，保证图片关联到会话ID，供后端多模态识图读取
+  async function handleUploadClick() {
+    if (conversationIds.value[0]) {
+      return;
+    }
+    const res = await cmsChatSave();
+    chatList.value.unshift(res);
+    await handleSelect(chatList.value[0]);
+  }
+
+  // 上传图片保存后，将图片与当前会话建立关联，供后端多模态识图读取、以及切换会话时回显
+  async function handleUploadChange(dataMap: Recordable, records: Recordable[] = []) {
+    const ids = (records || []).map((item) => item.id).filter(Boolean);
+    const prevIds = uploadFileList.value.map((item) => item.id);
+    uploadFileList.value = records || [];
+    const conversationId = conversationIds.value[0];
+    if (!conversationId) {
+      return;
+    }
+    // 本次删除了图片：使用上传组件的 __del 判断（仅由删除操作写入，切换会话不会触发），解除图片与会话的关联
+    const delFileUploadIds = dataMap?.['cms-chat__del'];
+    if (delFileUploadIds) {
+      dataMap['cms-chat__del'] = '';
+      await cmsChatFileSave({ id: conversationId, delFileUploadIds });
+      return;
+    }
+    // 本次新增了图片：建立图片与会话的关联（切换会话时文件集合互不包含，不会误关联）
+    if (ids.length > prevIds.length && prevIds.every((id) => ids.includes(id))) {
+      await cmsChatFileSave({ id: conversationId, fileUploadIds: ids.join(',') });
+    }
   }
 
   async function handleSelect(item: Recordable) {
