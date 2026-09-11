@@ -3,7 +3,7 @@
     v-if="!props.showPreviewList"
     width="80%"
     :title="t('component.upload.view')"
-    :cancelText="t('component.modal.okText')"
+    :cancelText="t('component.modal.close')"
     wrapClassName="upload-preview-modal"
     v-bind="$attrs"
     @register="register"
