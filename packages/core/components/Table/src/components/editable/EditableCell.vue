@@ -602,7 +602,8 @@
         border-radius: 0;
       }
 
-      .ant-input-search {
+      .ant-input-search,
+      .ant-space-compact {
         > .ant-input-affix-wrapper {
           > .ant-input-suffix {
             display: none;
