@@ -610,11 +610,11 @@
         }
       }
 
-      .ant-table-placeholder {
-        .ant-empty-normal {
-          margin: 10px;
-        }
-      }
+      //.ant-table-placeholder {
+      //  .ant-empty-normal {
+      //    margin: 10px;
+      //  }
+      //}
 
       //.ant-table-row-expand-icon {
       //  margin-left: 7px;

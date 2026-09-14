@@ -158,7 +158,7 @@ export function useTableScroll(
 
       const contentEl = tableEl.querySelector('.ant-table-content') as HTMLElement;
       const hasScrollBarX = contentEl ? contentEl.scrollWidth > contentEl.clientWidth : false;
-      const emptyOffset = (titleIncluded ? 0 : titleHeight) + (hasScrollBarX ? 10 : 0) + 10;
+      const emptyOffset = (titleIncluded ? 0 : titleHeight) + (hasScrollBarX ? 10 : 0) + 50;
       emptyDataEl.style.height = `${height - emptyOffset}px`;
 
       const td = emptyDataEl.parentElement as HTMLElement;
