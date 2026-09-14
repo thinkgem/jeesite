@@ -101,9 +101,22 @@ export async function downloadByUrl({
         { isReturnNativeResponse: true, joinPrefix: false },
       );
       let name = res.headers['content-disposition'];
-      name = name && name.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-      name = name && name.length >= 1 && name[1].replace("utf-8'zh_cn'", '');
-      name = (name && decodeURIComponent(name)) || fileName || 'jeesite';
+      if (name) {
+        // 优先解析 RFC 5987 格式 filename*=UTF-8''xxx
+        const filenameStar = name.match(/filename\*=([^;]*'[^']*')?([^;]+)/i);
+        if (filenameStar) {
+          name = filenameStar[2];
+        } else {
+          // 再解析普通 filename="xxx" 或 filename=xxx
+          const filename = name.match(/filename=["']?([^";\n]+)["']?/i);
+          name = filename ? filename[1] : '';
+        }
+        // 去掉两端引号及 RFC 5987 语言标记（如 utf-8'zh_cn'）
+        name = name.replace(/^(?:["']|[a-zA-Z0-9_-]+'[a-zA-Z0-9_-]+')+|(?:["'])$/g, '');
+        name = decodeURIComponent(name) || '';
+      }
+      // 调用方显式传入 fileName 时，优先使用调用方文件名，避免后端临时/转义文件名被直接使用
+      name = fileName || name || 'jeesite';
       downloadByData(res.data, name);
       return true;
     } finally {
