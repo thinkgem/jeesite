@@ -19,6 +19,14 @@ export function isImgTypeByName(name: string) {
   return name.startsWith('data:image/') || /\.(jpg|jpeg|png|gif)$/i.test(name);
 }
 
+/**
+ * 获取文件的主键，支持已上传文件和本次上传成功的文件
+ * @author ThinkGem
+ */
+export function getFileUploadId(record: any): string {
+  return record?.fileUpload?.id || record?.responseData?.fileUpload?.id || '';
+}
+
 export function getBase64WithFile(file: File) {
   return new Promise<{
     result: string;

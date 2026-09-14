@@ -28,12 +28,11 @@
         bizType: 'article_image',
         uploadType: 'image',
         maxNumber: 1,
-        // imageMaxWidth: 1024,
-        // imageMaxHeight: 768,
+        maxSize: 5,
+        imageMaxWidth: 1024,
+        imageMaxHeight: 768,
         // imageThumbName: '150x150.jpg',
-        showPreviewNumber: false,
         showPreviewList: true,
-        emptyHidePreview: true,
         onChange: (dataMap, fileList) => {
           fileList.forEach((e) => {
             record.value.image = e.fileUrl;

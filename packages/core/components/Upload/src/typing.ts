@@ -3,7 +3,7 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
-import { UploadApiResult } from '@jeesite/core/api/sys/upload';
+import { FileEntity, FileUpload, UploadApiResult } from '@jeesite/core/api/sys/upload';
 
 export enum UploadResultStatus {
   SUCCESS = 'success',
@@ -31,6 +31,13 @@ export interface FileItem {
   imageMaxHeight?: string | number;
   fileUrl?: string;
   uploadInfo?: string;
+  // 服务端已存在的文件（上传弹窗中合并显示已上传文件时使用）
+  fileUpload?: FileUpload;
+  fileEntity?: FileEntity;
+  // 服务端已存在文件的上传时间
+  createDate?: string;
+  // 是否本次会话新上传的文件（用于区分回显文件，beforeUpload 时设置为 true）
+  newUpload?: boolean;
 }
 
 // export interface PreviewFileItem extends FileItem {

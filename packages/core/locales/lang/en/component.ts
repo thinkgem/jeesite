@@ -108,6 +108,11 @@ export default {
     preview: 'Preview',
     choose: 'Select the file',
 
+    openNewWindow: 'Open in new window',
+    previewPrev: 'Previous',
+    previewNext: 'Next',
+    close: 'Close',
+
     accept: 'Support {0} format',
     acceptUpload: 'Only upload files in {0} format',
     maxSize: 'A single file does not exceed {0}MB ',
@@ -118,16 +123,18 @@ export default {
     legend: 'Icon',
     fileName: 'File name',
     fileSize: 'File size',
-    fileStatue: 'File status',
-    createDate: 'Upload time',
+    fileStatue: 'Status',
+    createDate: 'Time',
 
     startUpload: 'Start upload',
+    waitUpload: 'Pending',
     uploadSuccess: 'Upload successfully',
     uploadError: 'Upload failed',
     uploading: 'Uploading',
     uploadWait: 'Please wait for the file upload to finish',
     reUploadFailed: 'Re-upload failed files',
     fileListEmpty: 'No file has been uploaded yet.',
+    imageListEmpty: 'No image has been uploaded yet.',
   },
   verify: {
     error: 'verification failed！',

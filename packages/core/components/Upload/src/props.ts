@@ -14,6 +14,10 @@ type UploadType = 'image' | 'media' | 'file' | 'all';
  */
 const { ctxAdminPath } = useGlobSetting();
 
+/**
+ * 公共基础配置：所有上传相关组件共享
+ * - 上传限制、API 地址、业务参数、图片处理、分片/秒传等
+ */
 export const basicProps = {
   uploadText: {
     type: String as PropType<string>,
@@ -135,14 +139,19 @@ export const basicProps = {
     type: String as PropType<SizeType>,
     default: DEFAULT_SIZE,
   },
+  // 是否允许拖拽排序
+  dragSort: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
 };
 
-export const uploadContainerProps = {
-  ...basicProps,
-  value: {
-    type: Object as PropType<any>,
-    default: {},
-  },
+/**
+ * 展示控制配置：控制上传按钮、预览区域、加载行为等
+ * BasicUpload 通过 bindValue 透传给 UploadModal / UploadPreview，
+ * 因此这些属性也需要在 uploadPreviewProps 中声明，避免落入 attrs。
+ */
+const showProps = {
   // 是否显示预览按钮
   showPreview: {
     type: Boolean as PropType<boolean>,
@@ -153,15 +162,10 @@ export const uploadContainerProps = {
     type: Boolean as PropType<boolean>,
     default: true,
   },
-  // 直接在表单里显示预览文件列表
+  // 直接在表单里显示预览文件列表（嵌入模式）
   showPreviewList: {
     type: Boolean as PropType<boolean>,
     default: false,
-  },
-  // 预览表格为空的时候，是否不显示预览框
-  emptyHidePreview: {
-    type: Boolean as PropType<boolean>,
-    default: true,
   },
   // 是否显示上传按钮的文字
   showUploadText: {
@@ -180,37 +184,29 @@ export const uploadContainerProps = {
   },
 };
 
-export const uploadProps = {
+/**
+ * BasicUpload 容器组件属性
+ * 用于表单场景，包含 v-model value 及完整的展示控制配置
+ */
+export const uploadContainerProps = {
   ...basicProps,
+  ...showProps,
+  value: {
+    type: Object as PropType<any>,
+    default: {},
+  },
+};
+
+/**
+ * UploadModal / UploadPreview 组件属性
+ * 通过 BasicUpload 的 bindValue 接收 basicProps + showProps，
+ * 并额外接收已上传文件列表 previewFileList
+ */
+export const uploadPreviewProps = {
+  ...basicProps,
+  ...showProps,
   previewFileList: {
     type: Array as PropType<FileUpload[]>,
     default: () => [],
-  },
-};
-
-export const previewProps = {
-  ...uploadContainerProps,
-  value: {
-    type: Array as PropType<FileUpload[]>,
-    default: () => [],
-  },
-};
-
-export const fileListProps = {
-  columns: {
-    type: [Array] as PropType<FileBasicColumn[]>,
-    default: null,
-  },
-  actionColumn: {
-    type: Object as PropType<FileBasicColumn>,
-    default: null,
-  },
-  dataSource: {
-    type: Array as PropType<any[]>,
-    default: null,
-  },
-  emptyText: {
-    type: String,
-    default: '',
   },
 };

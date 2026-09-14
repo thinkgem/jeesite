@@ -22,6 +22,15 @@ export function useUpload(props: any) {
     if (props.imageMaxHeight) {
       params.imageMaxHeight = props.imageMaxHeight;
     }
+    if (props.chunked != null) {
+      params.chunked = props.chunked;
+    }
+    if (props.chunkSize != null) {
+      params.chunkSize = props.chunkSize;
+    }
+    if (props.threads != null) {
+      params.threads = props.threads;
+    }
     return params;
   });
 
@@ -45,16 +54,26 @@ export function useUpload(props: any) {
     if (accept && accept.length > 0) {
       return accept;
     }
-    const { imageAllowSuffixes, mediaAllowSuffixes, fileAllowSuffixes } = unref(uploadParamsRef);
+    const params = unref(uploadParamsRef);
+    // 上传参数尚未加载完成时，不限制文件类型
+    if (!params || !params.imageAllowSuffixes) {
+      return [];
+    }
+    const { imageAllowSuffixes, mediaAllowSuffixes, fileAllowSuffixes } = params;
     const uploadType = props.uploadType;
+    const splitSuffixes = (v: string | undefined) => (v ? v.split(',') : []);
     if (uploadType == 'image') {
-      return imageAllowSuffixes.split(',');
+      return splitSuffixes(imageAllowSuffixes);
     } else if (uploadType == 'media') {
-      return mediaAllowSuffixes.split(',');
+      return splitSuffixes(mediaAllowSuffixes);
     } else if (uploadType == 'file') {
-      return fileAllowSuffixes.split(',');
+      return splitSuffixes(fileAllowSuffixes);
     } else {
-      return [...imageAllowSuffixes.split(','), ...mediaAllowSuffixes.split(','), ...fileAllowSuffixes.split(',')];
+      return [
+        ...splitSuffixes(imageAllowSuffixes),
+        ...splitSuffixes(mediaAllowSuffixes),
+        ...splitSuffixes(fileAllowSuffixes),
+      ];
     }
   });
 

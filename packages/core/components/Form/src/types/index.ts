@@ -87,6 +87,7 @@ export type ComponentType =
   | 'InputSearch'
   | 'InputTextArea'
   | 'InputNumber'
+  | 'InputMoney'
   | 'InputCountDown'
   | 'Text'
   | 'Select'

@@ -107,6 +107,11 @@ export default {
     preview: '预览',
     choose: '选择文件',
 
+    openNewWindow: '新窗口打开',
+    previewPrev: '上一个',
+    previewNext: '下一个',
+    close: '关闭',
+
     accept: '支持{0}格式',
     acceptUpload: '只能上传{0}格式文件',
     maxSize: '单个文件不超过{0}MB',
@@ -118,15 +123,17 @@ export default {
     fileName: '文件名',
     fileSize: '文件大小',
     fileStatue: '状态',
-    createDate: '上传时间',
+    createDate: '时间',
 
     startUpload: '开始上传',
+    waitUpload: '待上传',
     uploadSuccess: '上传成功',
     uploadError: '上传失败',
     uploading: '上传中',
     uploadWait: '请等待文件上传结束后操作',
     reUploadFailed: '重新上传失败文件',
     fileListEmpty: '还没有上传文件。',
+    imageListEmpty: '还没有上传图片。',
   },
   verify: {
     error: '验证失败！',

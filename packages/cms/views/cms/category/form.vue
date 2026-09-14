@@ -132,12 +132,11 @@
         bizType: 'category_image',
         uploadType: 'image',
         maxNumber: 1,
-        // imageMaxWidth: 1024,
-        // imageMaxHeight: 768,
+        maxSize: 5,
+        imageMaxWidth: 1024,
+        imageMaxHeight: 768,
         // imageThumbName: '150x150.jpg',
-        showPreviewNumber: false,
         showPreviewList: true,
-        emptyHidePreview: true,
         onChange: (dataMap, fileList) => {
           fileList.forEach((e) => {
             record.value.image = e.fileUrl;
@@ -216,7 +215,6 @@
     },
     {
       label: t('是否需要审核'),
-      helpMessage: '如果需要审核，则启动 BPM 申请流程（专业版）',
       field: 'isNeedAudit',
       component: 'RadioGroup',
       componentProps: {

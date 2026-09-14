@@ -2,25 +2,25 @@
   <div class="jeesite-basic-upload">
     <Space>
       <a-button
-        v-if="!readonly"
-        :type="uploadButtonType"
-        :disabled="disabled"
-        @click="openUploadModal"
-        preIcon="i-carbon:cloud-upload"
+        v-if="!props.showPreviewList && !props.readonly"
+        :type="getButtonType"
+        :disabled="props.disabled"
         :size="props.size"
+        @click="openUploadModal"
       >
-        <template v-if="showUploadText">{{ uploadText || t('component.upload.upload') }}</template>
+        <Icon :icon="getButtonIcon" />
+        <span v-if="showUploadText" class="pl-1">{{ getButtonText }}</span>
       </a-button>
-      <Tooltip placement="bottom" v-if="getShowPreview">
+      <Tooltip placement="bottom" v-if="!props.showPreviewList && getShowNumber">
         <template #title>
           {{ t('component.upload.uploaded') }}
-          <template v-if="fileList.length >= 0 && props.showPreviewNumber">
+          <template v-if="props.showPreviewNumber">
             <span class="ml-1">{{ fileList.length }}</span>
           </template>
         </template>
-        <a-button @click="props.showPreviewList ? null : openPreviewModal()" :size="props.size">
+        <a-button @click="openUploadModal" :size="props.size">
           <Icon icon="i-bi:eye" />
-          <template v-if="fileList.length >= 0 && props.showPreviewNumber">
+          <template v-if="props.showPreviewNumber">
             <span class="ml-1">{{ fileList.length }}</span>
           </template>
         </a-button>
@@ -31,34 +31,35 @@
       :previewFileList="fileList"
       :apiUploadUrl="apiUploadUrl"
       :apiDownloadUrl="apiDownloadUrl"
+      :readonly="previewOnly"
       @register="registerUploadModal"
       @change="handleChange"
       @delete="handleDelete"
     />
-    <UploadPreviewModal
+    <UploadPreview
+      v-if="props.showPreviewList"
       v-bind="bindValue"
-      :value="fileList"
-      :readonly="readonly || disabled"
+      :previewFileList="fileList"
+      :readonly="previewOnly"
       :imageThumbName="imageThumbName"
       :apiDownloadUrl="apiDownloadUrl"
-      @register="registerPreviewModal"
       @change="handlePreviewChange"
       @delete="handleDelete"
     />
   </div>
 </template>
 <script lang="ts" setup name="BasicUpload">
-  import { defineComponent, ref, watch, unref, computed, useAttrs } from 'vue';
-  import UploadModal from './UploadModal.vue';
-  import UploadPreviewModal from './UploadPreviewModal.vue';
-  import { Icon } from '@jeesite/core/components/Icon';
+  import { ref, watch, computed, useAttrs } from 'vue';
   import { Tooltip, Space } from 'antdv-next';
+  import { Icon } from '@jeesite/core/components/Icon';
   import { useModal } from '@jeesite/core/components/Modal';
   import { uploadContainerProps } from './props';
   import { omit } from 'lodash-es';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { isArray } from '@jeesite/core/utils/is';
   import { FileUpload, uploadFileList } from '@jeesite/core/api/sys/upload';
+  import UploadModal from './UploadModal.vue';
+  import UploadPreview from './UploadPreview.vue';
 
   const props = defineProps(uploadContainerProps);
   const emit = defineEmits(['change', 'delete', 'update:value', 'click']);
@@ -66,10 +67,9 @@
 
   const { t } = useI18n();
   const [registerUploadModal, { openModal }] = useModal();
-  const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
 
   function openUploadModal() {
-    openModal();
+    openModal(true, { loadTime: new Date().getTime() });
     emit('click');
   }
 
@@ -77,12 +77,24 @@
   const fileList = ref<FileUpload[]>([]);
   const fileListDel = ref<FileUpload[]>([]);
 
-  const getShowPreview = computed(() => {
-    const { showPreview, emptyHidePreview, showPreviewList, showPreviewNumber } = props;
+  // 只读或禁用时，只能预览，不能上传
+  const previewOnly = computed(() => props.readonly || props.disabled);
+
+  // 只读时，上传按钮显示为预览样式
+  const getButtonIcon = computed(() => (props.readonly ? 'i-bi:eye' : 'i-carbon:cloud-upload'));
+
+  const getButtonType = computed(() => (props.readonly ? 'default' : props.uploadButtonType));
+
+  const getButtonText = computed(() => {
+    if (props.uploadText) return props.uploadText;
+    return props.readonly ? t('component.upload.view') : t('component.upload.upload');
+  });
+
+  // 上传按钮后面显示上传个数
+  const getShowNumber = computed(() => {
+    const { showPreview, showPreviewList, showPreviewNumber } = props;
     if (showPreviewList && !showPreviewNumber) return false;
-    if (!showPreview) return false;
-    if (!emptyHidePreview) return true;
-    return emptyHidePreview ? fileList.value.length > 0 : true;
+    return showPreview && fileList.value.length;
   });
 
   const bindValue = computed(() => {
@@ -128,16 +140,16 @@
     }
   }
 
-  // 上传modal保存操作
+  // 上传modal保存操作（记录完整顺序，含已上传文件与本次上传成功文件，替换而非追加）
   function handleChange(records: FileUpload[]) {
-    fileList.value = [...unref(fileList), ...(records || [])];
+    fileList.value = [...(records || [])];
     dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
     dataMap.value[props.bizType + '__len'] = fileList.value.length;
     emit('update:value', dataMap.value);
     emit('change', dataMap.value, fileList.value);
   }
 
-  // 预览modal保存操作
+  // 预览列表保存操作
   function handlePreviewChange(records: FileUpload[]) {
     fileList.value = [...(records || [])];
     dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
@@ -147,6 +159,10 @@
   }
 
   function handleDelete(record: FileUpload) {
+    const index = fileList.value.findIndex((item) => item.id === record.id);
+    if (index !== -1) {
+      fileList.value.splice(index, 1);
+    }
     fileListDel.value.push(record);
     dataMap.value[props.bizType + '__del'] = fileListDel.value.map((item) => item.id).join(',');
     dataMap.value[props.bizType + '__len'] = fileList.value.length;

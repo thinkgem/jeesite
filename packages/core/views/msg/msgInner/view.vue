@@ -84,7 +84,6 @@
         bizKey: computed(() => record.value.id),
         bizType: 'msgInner_file',
         uploadType: 'all',
-        emptyHidePreview: false,
         readonly: true,
       },
       colProps: { md: 24, lg: 24 },
