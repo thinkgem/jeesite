@@ -55,7 +55,10 @@ export function openWindow(
   window.open(url, target, feature.join(','));
 }
 
-export function openWindowLayer(url: string, opt?: { width?: number; height?: number }) {
+export function openWindowLayer(
+  url: string,
+  opt?: { width?: number; height?: number; method?: 'get' | 'post'; contentFormData?: Record<string, string> },
+) {
   const win = window as any;
   let layerWidth = opt?.width || win.$(win).width();
   if (layerWidth < 800) {
@@ -69,15 +72,21 @@ export function openWindowLayer(url: string, opt?: { width?: number; height?: nu
   } else {
     layerHeight -= 25 * 2;
   }
-  win.layer.open({
+  const options: Record<string, unknown> = {
     type: 2,
     maxmin: true,
     shadeClose: true, // 点击背景关闭
     title: false,
     area: [layerWidth + 'px', layerHeight + 'px'],
-    method: 'get',
+    method: opt?.method || 'get',
     content: url,
-  });
+  };
+  // 传递表单数据时使用 POST 方式提交到 iframe
+  if (opt?.contentFormData) {
+    options.method = 'post';
+    options.contentFormData = opt.contentFormData;
+  }
+  win.layer.open(options);
 }
 
 // dynamic use hook props
