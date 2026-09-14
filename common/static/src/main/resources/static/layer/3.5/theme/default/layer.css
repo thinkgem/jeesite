@@ -8,7 +8,7 @@ html #layuicss-layer{display:none;position:absolute;width:1989px;}
 .layui-layer-content{position:relative;overflow:hidden;}
 .layui-layer-border{border:1px solid #B2B2B2;border:1px solid rgba(0,0,0,.1);box-shadow:1px 1px 5px rgba(0,0,0,.2);}
 .layui-layer-load{background:url(loading-1.gif) #eee center center no-repeat;}
-.layui-layer-ico{ background:url(icon.png) no-repeat;}
+.layui-layer-ico{background:url(icon.png) no-repeat;}
 .layui-layer-dialog .layui-layer-ico,
 .layui-layer-setwin a,
 .layui-layer-btn a{display:inline-block;*display:inline;*zoom:1;vertical-align:top;}
