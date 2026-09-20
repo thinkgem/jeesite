@@ -28,6 +28,7 @@ rebel.xml
 .agents
 .claude
 .codebuddy
+.codegraph
 .codex
 .comate
 .copilot
