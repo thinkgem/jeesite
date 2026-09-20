@@ -603,10 +603,10 @@ job:
 #  jobStore:
 #    isClustered: true
 #    dataSourceName: job
-#    clusterCheckinInterval: 1000
+#    clusterCheckinInterval: 15000
 #    driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 #    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
-#    misfireThreshold: 1000
+#    misfireThreshold: 10000
 
 #  # 调度日志
 #  log:
