@@ -19,10 +19,14 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class BinaryUploader {
 
 	private static final Logger logger = LoggerFactory.getLogger(BinaryUploader.class);
+
+	/** 文件名中不允许出现的字符：控制字符、路径分隔符、命令行元字符，防止路径穿越和命令注入攻击 */
+	private static final Pattern ILLEGAL_FILENAME_CHARS = Pattern.compile("[\\\\/:*?\"<>|\\x00-\\x1f\\x7f&%!^`]");
 
     public static final State save(HttpServletRequest request, Map<String, Object> conf) {
         String contentType = request.getContentType();
@@ -35,12 +39,11 @@ public class BinaryUploader {
             if (request instanceof MultipartHttpServletRequest) {
                 MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
                 Iterator<String> it = multiRequest.getFileNames();
-                while (it.hasNext()) {
+                while (it.hasNext() && file == null) {
                     MultipartFile f = multiRequest.getFile(it.next());
                     if (f != null && !f.isEmpty() && f.getOriginalFilename() != null) {
                         file = f;
                     }
-                    break;
                 }
             }
             if (file == null) {
@@ -48,7 +51,12 @@ public class BinaryUploader {
             }
 
             String savePath = (String) conf.get("savePath");
-            String originFileName = file.getOriginalFilename();
+            // 清理文件名中的非法字符，防止路径穿越及命令注入攻击
+            String originFileName = cleanFileName(file.getOriginalFilename());
+            // 必须包含后缀，防止无后缀文件名导致取后缀异常
+            if (originFileName.indexOf(".") == -1) {
+                return new BaseState(false, AppInfo.NOT_ALLOW_FILE_TYPE);
+            }
             String suffix = FileType.getSuffixByFilename(originFileName);
 
             originFileName = originFileName.substring(0,
@@ -131,6 +139,21 @@ public class BinaryUploader {
         } catch (IOException e) {
             return new BaseState(false, AppInfo.IO_ERROR);
         }
+    }
+
+    /**
+     * 清理文件名中的非法字符，防止路径穿越及命令注入攻击
+     * （同时去掉 IE 等浏览器可能带上的文件路径，如 C:\fakepath\xxx.mp4）
+     * @param fileName 原始文件名（含后缀）
+     * @return 清理后的文件名，可能为空串
+     */
+    private static String cleanFileName(String fileName) {
+        if (fileName == null) {
+            return "";
+        }
+        // 删除非法字符，并把连续的点合并为一个点，避免出现 .. 路径穿越片段
+        return ILLEGAL_FILENAME_CHARS.matcher(fileName).replaceAll("")
+                .replaceAll("\\.{2,}", ".");
     }
 
     private static boolean validType(String type, String[] allowTypes) {

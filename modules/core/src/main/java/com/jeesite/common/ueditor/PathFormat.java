@@ -1,15 +1,13 @@
 package com.jeesite.common.ueditor;
 
+import com.jeesite.common.web.http.ServletUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.jeesite.common.web.http.ServletUtils;
 
 public class PathFormat {
 
@@ -57,8 +55,10 @@ public class PathFormat {
         while (matcher.find()) {
             matchStr = matcher.group(1);
             if (matchStr.indexOf("filename") != -1) {
-                filename = filename.replace("$", "\\$").replaceAll("[\\/:*?\"<>|]", "");
-                matcher.appendReplacement(sb, filename);
+                // 过滤文件名中的非法字符和控制字符，防止路径穿越；使用 quoteReplacement 转义 $ 和 \ 字符，
+                // 防止 $ 被当作分组引用，导致替换异常或结果被篡改
+                filename = filename.replaceAll("[\\\\/:*?\"<>|\\x00-\\x1f\\x7f]", "");
+                matcher.appendReplacement(sb, Matcher.quoteReplacement(filename));
             } else {
                 matcher.appendReplacement(sb, PathFormat.getString(matchStr));
             }
