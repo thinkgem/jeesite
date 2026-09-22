@@ -22,6 +22,10 @@ import java.util.List;
 public class VideoUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(VideoUtils.class);
+
+	/** 命令参数中禁止出现的元字符，防止命令注入攻击 */
+	private static final String[] UNSAFE_COMMAND_CHARS = {"\"", "&", "|", "^", "<", ">", "%", "!", "`", "\r", "\n"};
+
 	private static String ffmpegFile; 		// ffmpeg.exe所放的路径
 	private static String mencoderFile;		//  mencoder.exe所放的路径
 	private static String qtFaststartFile;	//  qt-faststart.exe所放的路径
@@ -275,10 +279,17 @@ public class VideoUtils {
 	 * @return boolean
 	 */
 	private boolean process(List<String> command) {
+		// 防止命令注入：命令参数中不允许出现命令行元字符
+		for (String arg : command) {
+			if (StringUtils.containsAny(arg, UNSAFE_COMMAND_CHARS)) {
+				logger.error("执行的命令参数包含非法字符，已拒绝执行：{}", arg);
+				return false;
+			}
+		}
 		try {
 			logger.debug(StringUtils.join(command, StringUtils.SPACE));
 //			Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
-			Process process = Runtime.getRuntime().exec(command.toArray(new String[0]));
+			Process process = new ProcessBuilder(command).start();
 			new PrintErrorReader(process.getErrorStream()).start();
 			new PrintInputStream(process.getInputStream()).start();
 			process.waitFor();
