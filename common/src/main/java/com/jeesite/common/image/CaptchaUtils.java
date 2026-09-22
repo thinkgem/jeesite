@@ -17,7 +17,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Random;
+import java.security.SecureRandom;
 
 /**
  * 验证码工具
@@ -26,7 +26,7 @@ import java.util.Random;
  */
 public class CaptchaUtils {
 
-	private static final Random random = new Random();
+	private static final SecureRandom random = new SecureRandom();
 	private volatile static ConfigurableCaptchaService ccs;
 	private static WobbleRippleFilterFactory wrff; 	// 摆波纹
 	private static DoubleRippleFilterFactory doff; 	// 双波纹
@@ -45,8 +45,21 @@ public class CaptchaUtils {
 	        		ccs.setWidth(100);
 	        		ccs.setHeight(28);
 	        		
-	            	// 设置文字数量
-	        		RandomWordFactory wf = new RandomWordFactory();
+	            	// 设置文字数量（使用 SecureRandom 生成验证码字符，防止验证码被预测）
+	        		RandomWordFactory wf = new RandomWordFactory() {
+	        			@Override
+	        			public String getNextWord() {
+	        				int length = minLength;
+	        				if (maxLength > minLength) {
+	        					length += random.nextInt(maxLength - minLength);
+	        				}
+	        				StringBuilder word = new StringBuilder(length);
+	        				for (int i = 0; i < length; i++) {
+	        					word.append(characters.charAt(random.nextInt(characters.length())));
+	        				}
+	        				return word.toString();
+	        			}
+	        		};
 	        		wf.setCharacters("ABDEFGHKMNRSWX2345689");
 	        		wf.setMinLength(4);
 	        		wf.setMaxLength(4);

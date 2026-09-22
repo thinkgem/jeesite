@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(StringUtils.class);
+
+	private static final SecureRandom random = new SecureRandom();
 
 	public static final String DOT = ".";
 	public static final String COMMA = ",";
@@ -540,7 +542,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @param codeSeq 因子
 	 */
 	private static String getRandom(int count, char[] codeSeq) {
-		Random random = new Random();
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < count; i++) {
 			String r = String.valueOf(codeSeq[random.nextInt(codeSeq.length)]);

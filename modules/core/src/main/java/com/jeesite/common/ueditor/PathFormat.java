@@ -4,6 +4,7 @@ import com.jeesite.common.web.http.ServletUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -23,6 +24,8 @@ public class PathFormat {
     private static final String USERID = "userid"; // ThinkGem 添加自定义变量，获取当前用户ID
 
     private static Date currentDate = null;
+
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     private static Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}", Pattern.CASE_INSENSITIVE);
 
@@ -130,7 +133,11 @@ public class PathFormat {
         int length = 0;
         pattern = pattern.split(":")[1].trim();
         length = Integer.parseInt(pattern);
-        return (Math.random() + "").replace(".", "").substring(0, length);
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(RANDOM.nextInt(10));
+        }
+        return sb.toString();
     }
 
     private static String getUserid(String pattern) {
