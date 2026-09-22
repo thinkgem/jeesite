@@ -6,7 +6,7 @@ package com.jeesite.common.idgen;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 /**
  * 来自于twitter项目snowflake的id产生方案，全局唯一，时间有序。
@@ -37,6 +37,8 @@ public class IdWorker {
 
 	private final static long sequenceMask = -1L ^ (-1L << sequenceBits);
 
+	private static final SecureRandom RANDOM = new SecureRandom();
+
 	private static long lastTimestamp = -1L;
 
 	private long sequence = 0L;
@@ -63,10 +65,10 @@ public class IdWorker {
 			}
 		}
 		if (workerId == -1){
-			workerId = new Random().nextInt((int)maxWorkerId);
+			workerId = RANDOM.nextInt((int)maxWorkerId);
 		}
 		if (datacenterId == -1){
-			datacenterId = new Random().nextInt((int)maxDatacenterId);
+			datacenterId = RANDOM.nextInt((int)maxDatacenterId);
 		}
 		if (workerId > maxWorkerId || workerId < 0) {
 			throw new IllegalArgumentException(
