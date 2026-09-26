@@ -41,6 +41,7 @@ vite.config.ts.timestamp*
 .agents
 .claude
 .codebuddy
+.codegraph
 .codex
 .comate
 .copilot
