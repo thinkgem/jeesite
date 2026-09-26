@@ -2,7 +2,7 @@ import type { BasicTableProps, TableActionType, FetchParams, BasicColumn } from 
 import type { PaginationProps } from '../types/pagination';
 import type { DynamicProps } from '@jeesite/types/utils';
 import type { FormActionType } from '@jeesite/core/components/Form';
-import type { DefineComponent } from 'vue';
+import type { ComputedRef, DefineComponent } from 'vue';
 import { WatchStopHandle, defineComponent, h } from 'vue';
 import { getDynamicProps } from '@jeesite/core/utils';
 import { ref, onUnmounted, unref, watch, toRaw } from 'vue';
@@ -189,7 +189,9 @@ export function useTable<T = Recordable>(
   return [register, methods];
 }
 
-export function useBasicTable<T = Recordable>(tableProps?: Props<T>): [DefineComponent, UseTableMethod] {
+export function useBasicTable<T = Recordable>(
+  tableProps?: Props<T> & ComputedRef<Props<T>>,
+): [DefineComponent, UseTableMethod] {
   const [register, methods] = useTable(tableProps);
   const Table = defineComponent({
     render() {
@@ -197,7 +199,7 @@ export function useBasicTable<T = Recordable>(tableProps?: Props<T>): [DefineCom
         BasicTable as any,
         {
           onRegister: register,
-          ...tableProps,
+          ...unref(tableProps),
           ...this.$attrs,
         },
         { ...this.$slots },
