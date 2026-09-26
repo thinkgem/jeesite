@@ -21,7 +21,7 @@ public class SM2UtilsTest {
 	public static void main(String[] args) {
 
 		String s = "Hello word! 你好，中文！";
-		System.out.println(s);
+		System.out.println("原文：" + s);
 
 		String[] keys = SM2Utils.genKeys();
 		System.out.println("公钥：" + keys[0]);

@@ -10,7 +10,9 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.*;
+import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 
 /**
  * 不可逆加密工具类
@@ -23,7 +25,7 @@ public class DigestUtils {
 	public static final String MD5 = "MD5";
 	public static final String SM3 = "SM3";
 
-	private static final SecureRandom random = new SecureRandom();
+	private static final SecureRandom RANDOM = new SecureRandom();
 
 	/**
 	 * 生成随机的 Byte[] 作为 salt 密钥.
@@ -32,7 +34,7 @@ public class DigestUtils {
 	public static byte[] genSalt(int numBytes) {
 		Validate.isTrue(numBytes > 0, "numBytes argument must be a positive integer (1 or larger)", numBytes);
 		byte[] bytes = new byte[numBytes];
-		random.nextBytes(bytes);
+		RANDOM.nextBytes(bytes);
 		return bytes;
 	}
 
