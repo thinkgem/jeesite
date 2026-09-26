@@ -2,8 +2,6 @@
   "recommendations": [
     "vue.volar",
     "oxc.oxc-vscode",
-    "dbaeumer.vscode-eslint",
-    "stylelint.vscode-stylelint",
     "esbenp.prettier-vscode",
     "mrmlnc.vscode-less",
     "lokalise.i18n-ally",

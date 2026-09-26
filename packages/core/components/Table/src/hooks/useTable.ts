@@ -17,7 +17,7 @@ export type UseTableMethod = TableActionType & {
 };
 
 export function useTable<T = Recordable>(
-  tableProps?: Props<T>,
+  tableProps?: Props<T> | ComputedRef<Props<T>>,
 ): [(instance: TableActionType, formInstance: UseTableMethod) => void, UseTableMethod] {
   const tableRef = ref<Nullable<TableActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
@@ -35,15 +35,15 @@ export function useTable<T = Recordable>(
 
     tableRef.value = instance;
     formRef.value = formInstance;
-    tableProps && instance.setProps(getDynamicProps(tableProps));
+    tableProps && instance.setProps(getDynamicProps(unref(tableProps)));
     loadedRef.value = true;
 
     stopWatch?.();
 
     stopWatch = watch(
-      () => tableProps,
+      () => unref(tableProps),
       () => {
-        tableProps && instance.setProps(getDynamicProps(tableProps));
+        tableProps && instance.setProps(getDynamicProps(unref(tableProps)));
       },
       {
         immediate: true,
@@ -190,7 +190,7 @@ export function useTable<T = Recordable>(
 }
 
 export function useBasicTable<T = Recordable>(
-  tableProps?: Props<T> & ComputedRef<Props<T>>,
+  tableProps?: Props<T> | ComputedRef<Props<T>>,
 ): [DefineComponent, UseTableMethod] {
   const [register, methods] = useTable(tableProps);
   const Table = defineComponent({

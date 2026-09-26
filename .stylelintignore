@@ -1,6 +1,0 @@
-dist
-public
-node_modules
-
-*.sh
-*.md
