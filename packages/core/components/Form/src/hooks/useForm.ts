@@ -1,7 +1,7 @@
 import { FormProps, FormActionType, FormSchema } from '../types/form';
 import type { NamePath } from 'antdv-next/dist/form/types';
 import type { DynamicProps } from '@jeesite/types/utils';
-import type { DefineComponent } from 'vue';
+import type { ComputedRef, DefineComponent } from 'vue';
 import { ref, onUnmounted, unref, nextTick, watch, defineComponent, h } from 'vue';
 import { isProdMode } from '@jeesite/core/utils/env';
 import { error } from '@jeesite/core/utils/log';
@@ -127,7 +127,9 @@ export function useForm<T = Recordable>(
   return [register, methods];
 }
 
-export function useBasicForm<T = Recordable>(formProps?: Props<T>): [DefineComponent, FormActionType] {
+export function useBasicForm<T = Recordable>(
+  formProps?: Props<T> & ComputedRef<Props<T>>,
+): [DefineComponent, FormActionType] {
   const [register, methods] = useForm(formProps);
   const Form = defineComponent({
     render() {
@@ -135,7 +137,7 @@ export function useBasicForm<T = Recordable>(formProps?: Props<T>): [DefineCompo
         BasicForm as any,
         {
           onRegister: register,
-          ...formProps,
+          ...unref(formProps),
           ...this.$attrs,
         },
         { ...this.$slots },
