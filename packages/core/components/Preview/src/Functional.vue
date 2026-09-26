@@ -333,7 +333,7 @@
         const { imageList } = props;
         return (
           <div class={`${prefixCls}__index`}>
-            {currentIndex + 1} / {imageList.length}
+            {currentIndex + 1}/{imageList.length}
           </div>
         );
       };

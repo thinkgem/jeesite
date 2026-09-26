@@ -341,7 +341,9 @@
         const colonText = colon && props.formProps.colon && label != '　' ? '：' : '';
         const renderLabel = subLabel ? (
           <span>
-            {label} <span class="text-secondary">{subLabel}</span> {colonText}
+            {label}
+            <span class="text-secondary">{subLabel}</span>
+            {colonText}
           </span>
         ) : (
           label + colonText
