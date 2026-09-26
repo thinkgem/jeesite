@@ -16,19 +16,19 @@ public class SM3UtilsTest {
 	public static void main(String[] args) {
 
 		String s = "Hello word! 你好，中文！";
-		System.out.println(s);
+		System.out.println("原文：" + s);
 
 		String s1 = SM3Utils.sm3(s);
-        System.out.println(s1);
+        System.out.println("密文：" + s1);
 
 		String key = SM3Utils.genSaltString(8);
-        System.out.println(key);
+        System.out.println("加盐：" + key);
 
         String s3 = SM3Utils.sm3(s, key);
-        System.out.println(s3);
+        System.out.println("带盐密文：" + s3);
 
         String s4 = SM3Utils.hmacSm3(s, key);
-        System.out.println(s4);
+        System.out.println("带key密文：" + s4);
 	}
 
 }

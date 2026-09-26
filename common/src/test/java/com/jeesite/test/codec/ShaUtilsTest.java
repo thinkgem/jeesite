@@ -19,17 +19,17 @@ public class ShaUtilsTest {
 	public static void main(String[] args) {
 
 		String s = "Hello word! 你好，中文！";
-		System.out.println(s);
+		System.out.println("原文：" + s);
 
 		String salt = ShaUtils.genSaltString(SALT_SIZE);
-		System.out.println(salt);
+		System.out.println("加盐：" + salt);
 		String data = ShaUtils.sha1(s, salt, HASH_ITERATIONS);
-		System.out.println(data);
+		System.out.println("带盐密文：" + data);
 
 		String salt2 = ShaUtils.genSaltString(SALT_SIZE);
-		System.out.println(salt2);
+		System.out.println("加盐256：" + salt2);
 		String data2 = ShaUtils.sha256(s, salt2, HASH_ITERATIONS);
-		System.out.println(data2);
+		System.out.println("带盐256密文：" + data2);
 
 	}
 	

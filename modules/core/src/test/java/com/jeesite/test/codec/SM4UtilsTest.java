@@ -19,21 +19,21 @@ public class SM4UtilsTest {
 	public static void main(String[] args) {
 
 		String s = "Hello word! 你好，中文！";
-		System.out.println(s);
+		System.out.println("原文：" + s);
 
 		String k = SM4Utils.genKeyString();
-		System.out.println(k);
+		System.out.println("秘钥：" + k);
 		String s1 = SM4Utils.encode(s, k);
-		System.out.println(s1);
+		System.out.println("加密数据：" + s1);
 		String s2 = SM4Utils.decode(s1, k);
-		System.out.println(s2);
+		System.out.println("解密数据：" + s2);
 
 		byte[] key = SM4Utils.genKey();
 		byte[] iv = SM4Utils.genIV();
 		byte[] data = SM4Utils.encode(s.getBytes(StandardCharsets.UTF_8), key, iv);
-		System.out.println(EncodeUtils.encodeBase64(data));
+		System.out.println("加密byte数据：" + EncodeUtils.encodeBase64(data));
 		byte[] data2 = SM4Utils.decode(data, key, iv);
-		System.out.println(new String(data2, StandardCharsets.UTF_8));
+		System.out.println("解密byte数据：" + new String(data2, StandardCharsets.UTF_8));
 	}
 
 }
