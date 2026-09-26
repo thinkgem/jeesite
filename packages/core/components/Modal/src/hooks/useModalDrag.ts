@@ -96,12 +96,19 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
     }
   };
 
+  // 注意：useTimeoutFn 内部通过 tryOnUnmounted 注册卸载钩子，必须在 setup 同步阶段调用；
+  // 若放在 watchEffect 回调中执行，回调触发时已无活跃组件实例，会丢失钩子并产生 Vue 警告。
+  const { start } = useTimeoutFn(() => {
+    if (!unref(context.open) || !unref(context.draggable)) {
+      return;
+    }
+    handleDrag();
+  }, 30);
+
   watchEffect(() => {
     if (!unref(context.open) || !unref(context.draggable)) {
       return;
     }
-    useTimeoutFn(() => {
-      handleDrag();
-    }, 30);
+    start();
   });
 }
