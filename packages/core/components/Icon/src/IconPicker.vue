@@ -7,7 +7,7 @@
   <div class="jeesite-icon-picker">
     <SpaceCompact block>
       <a-input
-        :placeholder="t('component.icon.placeholder')"
+        :placeholder="props.placeholder || t('component.icon.placeholder')"
         class="jeesite-icon-picker-input"
         v-model:value="currentSelect"
       />
@@ -91,6 +91,7 @@
     width: propTypes.string.def('100%'),
     pageSize: propTypes.number.def(70),
     copy: propTypes.bool.def(false),
+    placeholder: propTypes.string.def(''),
   });
 
   const emit = defineEmits(['change', 'update:value']);
