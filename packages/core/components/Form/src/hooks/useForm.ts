@@ -11,7 +11,7 @@ import BasicForm from '../BasicForm.vue';
 type Props<T> = Partial<DynamicProps<FormProps<T>>>;
 
 export function useForm<T = Recordable>(
-  formProps?: Props<T>,
+  formProps?: Props<T> | ComputedRef<Props<T>>,
 ): [(formInstance: FormActionType, uuid: string) => void, FormActionType] {
   const formRef = ref<Nullable<FormActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
@@ -40,9 +40,9 @@ export function useForm<T = Recordable>(
     // console.log('register', formRef.value);
 
     watch(
-      () => formProps,
+      () => unref(formProps),
       () => {
-        formProps && instance.setProps(getDynamicProps(formProps));
+        formProps && instance.setProps(getDynamicProps(unref(formProps)));
       },
       {
         immediate: true,
@@ -128,7 +128,7 @@ export function useForm<T = Recordable>(
 }
 
 export function useBasicForm<T = Recordable>(
-  formProps?: Props<T> & ComputedRef<Props<T>>,
+  formProps?: Props<T> | ComputedRef<Props<T>>,
 ): [DefineComponent, FormActionType] {
   const [register, methods] = useForm(formProps);
   const Form = defineComponent({
