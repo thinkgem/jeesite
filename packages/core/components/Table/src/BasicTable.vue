@@ -6,10 +6,10 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
     <TableHeader v-bind="getHeaderProps" :showSelectionBar="false">
-      <template #tableTitle v-if="$slots.tableTitle">
+      <template v-if="$slots.tableTitle" #tableTitle>
         <slot name="tableTitle"></slot>
       </template>
-      <template #toolbar v-if="$slots.tableTitle || $slots.toolbar">
+      <template v-if="$slots.tableTitle || $slots.toolbar" #toolbar>
         <a-button
           v-if="getProps.useSearchForm"
           :class="{ active: getProps.showSearchForm }"
@@ -20,15 +20,24 @@
         </a-button>
         <slot v-if="$slots.toolbar" name="toolbar"></slot>
       </template>
-      <template #headerTop v-if="$slots.headerTop">
+      <template v-if="$slots.headerTop" #headerTop>
         <slot name="headerTop"></slot>
       </template>
     </TableHeader>
+    <slot
+      v-if="$slots.searchForm"
+      ref="formRef"
+      name="searchForm"
+      v-bind="getFormProps"
+      :tableAction="tableAction"
+      @register="registerForm"
+      @submit="handleSearchInfoChange"
+    ></slot>
     <BasicForm
+      v-else-if="getProps.useSearchForm"
       ref="formRef"
       submitOnReset
       v-bind="getFormProps"
-      v-if="getProps.useSearchForm"
       v-show="getProps.showSearchForm"
       :tableAction="tableAction"
       @register="registerForm"
