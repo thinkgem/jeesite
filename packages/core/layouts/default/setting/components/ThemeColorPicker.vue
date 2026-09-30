@@ -52,7 +52,7 @@
       width: 20px;
       height: 20px;
       cursor: pointer;
-      border: 1px solid #ddd;
+      border: 1px solid @border-color-base;
       border-radius: 2px;
 
       svg {
@@ -70,7 +70,7 @@
           display: inline-block;
           margin: 0 0 3px 3px;
           font-size: 12px;
-          fill: #ddd !important;
+          fill: @white !important;
         }
       }
     }

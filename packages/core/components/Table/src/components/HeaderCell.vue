@@ -43,7 +43,7 @@
   .jeesite-basic-table-header-cell {
     &__help {
       margin-left: 8px;
-      color: rgb(0 0 0 / 65%) !important;
+      color: var(--ant-color-text-secondary) !important;
     }
   }
 </style>

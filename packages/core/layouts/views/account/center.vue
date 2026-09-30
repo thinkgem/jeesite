@@ -56,7 +56,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 16px 20px;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--ant-color-border-secondary);
 
         &:last-child {
           border-bottom: none;
@@ -87,7 +87,7 @@
               justify-content: space-between;
               font-size: 14px;
               font-weight: 500;
-              color: rgb(0 0 0 / 85%);
+              color: var(--ant-color-text);
               margin-bottom: 4px;
 
               .extra {
@@ -104,7 +104,7 @@
 
             .meta-description {
               font-size: 13px;
-              color: rgb(0 0 0 / 45%);
+              color: var(--ant-color-text-tertiary);
             }
           }
         }

@@ -535,6 +535,11 @@
         &-close {
           border: 1px solid #555;
           background: transparent;
+          color: rgb(255 255 255 / 50%);
+
+          &:hover {
+            color: rgb(255 255 255 / 80%);
+          }
         }
 
         &-open {

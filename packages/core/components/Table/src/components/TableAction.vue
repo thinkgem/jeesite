@@ -32,7 +32,7 @@
           <span :title="action.iconTitle">{{ action.label }}</span>
         </template>
       </PopConfirmButton>
-      <!--<Divider type="vertical" class="action-divider" v-if="props.divider && index < getActions.length - 1" />-->
+      <Divider v-if="action.divider && index < getActions.length - 1" type="vertical" class="action-divider" />
     </template>
     <Popover
       v-if="props.dropDownActions && getDropdownList.length > 0"

@@ -35,6 +35,14 @@ html[data-theme='dark'] {
   }
 }
 
+// 分页数字锚点：vc-pagination 渲染的是 <a tabindex="-1" aria-hidden="true" rel="nofollow">，
+// 点击时浏览器会把焦点落在该锚点上（tabindex=-1 只挡 Tab 键，不挡鼠标聚焦），
+// 于是触发 Chrome 的无障碍警告：“Blocked aria-hidden on an element because its descendant retained focus”。
+// 这里禁用该锚点的指针事件，让点击和焦点都落到外层 li[role='button']（点击事件、aria-label 均由 li 承担）。
+.ant-pagination-item > a[aria-hidden='true'] {
+  pointer-events: none;
+}
+
 .ant-pagination.ant-pagination {
   &-mini {
     .ant-pagination-prev,

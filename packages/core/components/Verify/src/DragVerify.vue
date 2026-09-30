@@ -359,6 +359,34 @@
     }
   }
 
+  html[data-theme='dark'] {
+    .darg-verify {
+      background-color: #1f1f1f;
+      border-color: #303030;
+
+      &-action {
+        background-color: #434343;
+      }
+
+      &-content {
+        background-color: -webkit-gradient(
+          linear,
+          left top,
+          right top,
+          color-stop(0, #c9d1d9),
+          color-stop(0.4, #c9d1d9),
+          color-stop(0.5, #fff),
+          color-stop(0.6, #c9d1d9),
+          color-stop(1, #c9d1d9)
+        );
+      }
+
+      &-content > * {
+        -webkit-text-fill-color: #c9d1d9;
+      }
+    }
+  }
+
   @keyframes slidetounlock {
     0% {
       background-position: -120px 0;

@@ -115,6 +115,11 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
         'button-cancel-hover-bg-color': '#4a4a4a',
         'button-cancel-hover-border-color': '#4a4a4a',
         'header-light-bottom-border-color': '#303030',
+        // 补齐自有设计变量：避免表头/树头文字、次要文字与边框在深色背景上不可读或过亮
+        'text-color-call-out': '#c9d1d9',
+        'text-color-help-dark': '#8b949e',
+        'breadcrumb-item-normal-color': '#8b949e',
+        'border-color-light': '#303030',
       },
     } as any),
   ];

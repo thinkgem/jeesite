@@ -250,7 +250,7 @@
       width: 24px;
       height: 24px;
       margin-right: 10px;
-      background: #eee;
+      background: @item-hover-bg;
     }
 
     &__header {

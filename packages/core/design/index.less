@@ -6,7 +6,8 @@
 @import './entry.less';
 
 input:-webkit-autofill {
-  box-shadow: 0 0 0 1000px white inset !important;
+  box-shadow: 0 0 0 1000px @component-background inset !important;
+  -webkit-text-fill-color: @text-color !important;
 }
 
 :-webkit-autofill {

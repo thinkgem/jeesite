@@ -65,7 +65,7 @@
             justify-content: space-between;
             font-size: 14px;
             font-weight: 500;
-            color: rgb(0 0 0 / 85%);
+            color: var(--ant-color-text);
             margin-bottom: 4px;
 
             .extra {
@@ -82,7 +82,7 @@
 
           .meta-description {
             font-size: 13px;
-            color: rgb(0 0 0 / 45%);
+            color: var(--ant-color-text-tertiary);
           }
         }
       }
