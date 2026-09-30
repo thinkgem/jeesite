@@ -59,7 +59,7 @@
   import { set, get } from 'lodash-es';
 
   import { useFormValues } from './hooks/useFormValues';
-  import useAdvanced from './hooks/useAdvanced';
+  import { useAdvanced } from './hooks/useAdvanced';
   import { useFormEvents } from './hooks/useFormEvents';
   import { createFormContext } from './hooks/useFormContext';
   import { useAutoFocus } from './hooks/useAutoFocus';

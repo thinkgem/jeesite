@@ -2,9 +2,12 @@ import BasicForm from './src/BasicForm.vue';
 
 export * from './src/types/form';
 export * from './src/types/formItem';
+export * from './src/types/hooks';
 
+export { createFormContext, useFormContext } from './src/hooks/useFormContext';
 export { useComponentRegister } from './src/hooks/useComponentRegister';
 export { useForm, useBasicForm } from './src/hooks/useForm';
+export { useAdvanced } from './src/hooks/useAdvanced';
 
 export { Checkbox } from 'antdv-next';
 export { default as Select } from './src/components/JeeSiteSelect.vue';
@@ -14,5 +17,6 @@ export { default as RadioButtonGroup } from './src/components/JeeSiteRadioButton
 export { default as CheckboxGroup } from './src/components/JeeSiteCheckboxGroup.vue';
 export { default as FormGroup } from './src/components/FormGroup.vue';
 export { default as FormExtend } from './src/components/FormExtend.vue';
+export { default as FormAction } from './src/components/FormAction.vue';
 
 export { BasicForm };

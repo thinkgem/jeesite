@@ -16,7 +16,14 @@ interface UseAdvancedContext {
   defaultValueRef: Ref<Recordable>;
 }
 
-export default function ({ advanceState, emit, getProps, getSchema, formModel, defaultValueRef }: UseAdvancedContext) {
+export function useAdvanced({
+  advanceState,
+  emit,
+  getProps,
+  getSchema,
+  formModel,
+  defaultValueRef,
+}: UseAdvancedContext) {
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint();
 
   function BASIC_COL_LEN(): number {
