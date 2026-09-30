@@ -6,7 +6,7 @@
   </component>
 </template>
 <script lang="ts" setup>
-  import { computed, shallowRef } from 'vue';
+  import { computed, shallowRef, unref } from 'vue';
   import { BasicModal, ModalProps } from '@jeesite/core/components/Modal';
   import { BasicDrawer, DrawerProps } from '@jeesite/core/components/Drawer';
   import { propTypes } from '@jeesite/core/utils/propTypes';
@@ -38,7 +38,7 @@
 
   const getAttrs = computed(() => {
     return {
-      ...attrs,
+      ...unref(attrs),
       ...props,
     };
   });
