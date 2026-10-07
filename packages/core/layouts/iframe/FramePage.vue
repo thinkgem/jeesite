@@ -173,7 +173,7 @@
       background-color: @component-background;
       border: 0;
       box-sizing: border-box;
-      border-radius: 5px;
+      border-radius: 10px;
     }
   }
 </style>
