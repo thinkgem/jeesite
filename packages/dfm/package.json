@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/dfm",
-  "version": "5.19.0",
+  "version": "5.19.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "update:ncu": "ncu -u"
   },
   "dependencies": {
-    "@jeesite/framework-dfm": "5.19.0-next-rc.1",
+    "@jeesite/framework-dfm": "5.19.1-next-rc.1",
     "qs": "6.15.3"
   },
   "devDependencies": {

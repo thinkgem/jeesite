@@ -172,8 +172,8 @@ importers:
   packages/cms:
     dependencies:
       '@jeesite/framework-cms':
-        specifier: 5.19.0-next-rc.1
-        version: 5.19.0-next-rc.1(vue@3.5.41(typescript@6.0.3))
+        specifier: 5.19.1-next-rc.1
+        version: 5.19.1-next-rc.1(vue@3.5.41(typescript@6.0.3))
       qs:
         specifier: 6.15.3
         version: 6.15.3
@@ -218,8 +218,8 @@ importers:
         specifier: 6.43.8
         version: 6.43.8
       '@jeesite/framework-core':
-        specifier: 5.19.0-next-rc.1
-        version: 5.19.0-next-rc.1(vue@3.5.41(typescript@6.0.3))
+        specifier: 5.19.1-next-rc.1
+        version: 5.19.1-next-rc.1(vue@3.5.41(typescript@6.0.3))
       '@uppy/core':
         specifier: 2.1.5
         version: 2.1.5
@@ -324,8 +324,8 @@ importers:
   packages/dbm:
     dependencies:
       '@jeesite/framework-dbm':
-        specifier: 5.19.0-next-rc.1
-        version: 5.19.0-next-rc.1(vue@3.5.41(typescript@6.0.3))
+        specifier: 5.19.1-next-rc.1
+        version: 5.19.1-next-rc.1(vue@3.5.41(typescript@6.0.3))
       qs:
         specifier: 6.15.3
         version: 6.15.3
@@ -337,8 +337,8 @@ importers:
   packages/dfm:
     dependencies:
       '@jeesite/framework-dfm':
-        specifier: 5.19.0-next-rc.1
-        version: 5.19.0-next-rc.1(@types/sortablejs@1.15.9)(supports-color@10.2.2)(vue@3.5.41(typescript@6.0.3))
+        specifier: 5.19.1-next-rc.1
+        version: 5.19.1-next-rc.1(@types/sortablejs@1.15.9)(supports-color@10.2.2)(vue@3.5.41(typescript@6.0.3))
       qs:
         specifier: 6.15.3
         version: 6.15.3
@@ -1428,17 +1428,17 @@ packages:
     resolution: {integrity: sha512-XbRgrv+XEuvDr7UCY55oibVrh+o4u+A0VB6nSL0F5Z8LcZxE/8j573LYG6bCrOigIcHdGpSNI7Rh5UpC5/B/eg==}
     engines: {node: '>= 22'}
 
-  '@jeesite/framework-cms@5.19.0-next-rc.1':
-    resolution: {integrity: sha512-u8y2GC8sfnjZIBJmKwG5eVVYfV/O+FjQQPMvz3DqOe+mLickSEP6N/YePNtYhDUqzyQ5aXjgUj1isjkymXZGHw==}
+  '@jeesite/framework-cms@5.19.1-next-rc.1':
+    resolution: {integrity: sha512-wqmi6OZLEXYjccmDyDeG5NtlcCaAFHns3OlvpdvLczsPONXuxR8NH2nRtD1Ar49BXMGEM2YXEPjNipESXParyQ==}
 
-  '@jeesite/framework-core@5.19.0-next-rc.1':
-    resolution: {integrity: sha512-xFh85Si0LUKy4+5pBqMjthZdHpcBWF9ikVbSguRfBWmDYRseW+OMD+6EmJ4mcO35/6N8ypu42SUsKdlm1AQLGA==}
+  '@jeesite/framework-core@5.19.1-next-rc.1':
+    resolution: {integrity: sha512-nAMHhxF9RYATK0Wpqct9pNtb3epvPTILkJ6udl72UQk4iWUEKrlCJ7XQWlehRR2Is2dH0wdzENvKR/qsaYJSsw==}
 
-  '@jeesite/framework-dbm@5.19.0-next-rc.1':
-    resolution: {integrity: sha512-JjumojBMmFZKYXl2uTMLTIXatBdNBnB8cZttLBQRlWbXo1lW4CmTOVwRubfAyCZj8psPURrNISaszf0qCvkayQ==}
+  '@jeesite/framework-dbm@5.19.1-next-rc.1':
+    resolution: {integrity: sha512-r6DZ5hHU+3oHZartyTXFPgBcIOZFX2spxlObgvSuOawgCvuEQ8/8ZT8H7MwfK6Z/d4gKExWDaD0K7ZtNarjLhQ==}
 
-  '@jeesite/framework-dfm@5.19.0-next-rc.1':
-    resolution: {integrity: sha512-E386aAeB4binTfelGoE8SrAV4/McDqnYFC+HPIcOXTZyGWbZiF7HZsd1kNYzURRWTP4LK8JsF8cTuawMbqdpnQ==}
+  '@jeesite/framework-dfm@5.19.1-next-rc.1':
+    resolution: {integrity: sha512-ZJ7EADEJnCeciJ8mNozAqh6zD2GIoUTkC3mJWPACKmsK7uZh7I/dp3MAsRcltQ/09W5zoPk02q7u6ndTwVoPTQ==}
 
   '@jridgewell/gen-mapping@0.3.12':
     resolution: {integrity: sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==}
@@ -6288,7 +6288,7 @@ snapshots:
 
   '@intlify/shared@11.4.8': {}
 
-  '@jeesite/framework-cms@5.19.0-next-rc.1(vue@3.5.41(typescript@6.0.3))':
+  '@jeesite/framework-cms@5.19.1-next-rc.1(vue@3.5.41(typescript@6.0.3))':
     dependencies:
       '@traptitech/markdown-it-katex': 3.6.0
       highlight.js: 11.12.0
@@ -6301,7 +6301,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/framework-core@5.19.0-next-rc.1(vue@3.5.41(typescript@6.0.3))':
+  '@jeesite/framework-core@5.19.1-next-rc.1(vue@3.5.41(typescript@6.0.3))':
     dependencies:
       qs: 6.15.3
       vue-i18n: 11.4.8(vue@3.5.41(typescript@6.0.3))
@@ -6309,7 +6309,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/framework-dbm@5.19.0-next-rc.1(vue@3.5.41(typescript@6.0.3))':
+  '@jeesite/framework-dbm@5.19.1-next-rc.1(vue@3.5.41(typescript@6.0.3))':
     dependencies:
       qs: 6.15.3
       vue-i18n: 11.4.8(vue@3.5.41(typescript@6.0.3))
@@ -6317,7 +6317,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@jeesite/framework-dfm@5.19.0-next-rc.1(@types/sortablejs@1.15.9)(supports-color@10.2.2)(vue@3.5.41(typescript@6.0.3))':
+  '@jeesite/framework-dfm@5.19.1-next-rc.1(@types/sortablejs@1.15.9)(supports-color@10.2.2)(vue@3.5.41(typescript@6.0.3))':
     dependencies:
       '@vueuse/core': 14.4.0(vue@3.5.41(typescript@6.0.3))
       dayjs: 1.11.21
@@ -8108,7 +8108,7 @@ snapshots:
     dependencies:
       domelementtype: 2.3.0
       domhandler: 5.0.3
-      entities: 4.5.0
+      entities: 4.4.0
 
   dom7@3.0.0:
     dependencies:
