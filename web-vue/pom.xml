@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.19.0.springboot4-SNAPSHOT</version>
+		<version>5.19.1.springboot4-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -45,13 +45,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 测试模块 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-test</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -59,17 +52,17 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理模块 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-app</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 内容管理模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
@@ -87,6 +80,13 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
+		<!-- 测试模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-test</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- 热部署工具
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -98,7 +98,7 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-vue-dist</artifactId>
-			<version>5.19.0-SNAPSHOT</version>
+			<version>5.19.1-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
