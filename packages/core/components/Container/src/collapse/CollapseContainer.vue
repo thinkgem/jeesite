@@ -99,11 +99,11 @@
       height: 32px;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid @border-color-light;
+      border-bottom: 1px solid @header-light-bottom-border-color;
     }
 
     &__footer {
-      border-top: 1px solid @border-color-light;
+      border-top: 1px solid @header-light-bottom-border-color;
     }
 
     &__action {
