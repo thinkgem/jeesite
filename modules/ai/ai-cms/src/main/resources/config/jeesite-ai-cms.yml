@@ -19,16 +19,16 @@ spring:
     # 云端模型【请在 pom.xml 中打开 openai 的注释，并注释上其它模型】
     openai:
 
-      # 聊天对话模型使用阿里百炼
+      # 硅基流动文本生成（默认使用免费模型，效果一般，仅用于测试）
       chat:
-        base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
-        api-key: ${BAILIAN_APP_KEY}
-        model: deepseek-r1-distill-llama-8b
+        base-url: https://api.siliconflow.cn/v1
+        api-key: ${SFLOW_APP_KEY}
+        model: Qwen/Qwen3-8B
         max-tokens: 1024
         temperature: 0.6
         top-p: 0.7
         frequency-penalty: 0
-      # 硅基流动生图免费模型（效果一般，仅用于测试）
+      # 硅基流动文本生图（默认使用免费模型，效果一般，仅用于测试）
       image:
         base-url: https://api.siliconflow.cn/v1
         api-key: ${SFLOW_APP_KEY}
