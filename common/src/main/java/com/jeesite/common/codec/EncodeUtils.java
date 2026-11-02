@@ -204,14 +204,35 @@ public class EncodeUtils {
 		return current;
 	}
 
+	// 危险标签：脚本、外链、内嵌对象，以及 SVG 动画标签（可通过 attributeName、values、from、to
+	// 动态写入 href 或事件属性，如 <svg><animate attributeName=href values=javascript:alert(1)></animate></svg>）
+	private static final String XSS_DANGEROUS_TAGS = "script|link|style|iframe|embed|object"
+			+ "|animatetransform|animatemotion|animatecolor|animate|set";
+
 	// 预编译XSS过滤正则表达式
 	private static final List<Pattern> xssPatterns = ListUtils.newArrayList(
-			Pattern.compile("(<\\s*(script|link|style|iframe|embed|object)([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(script|link|style|iframe|embed|object)\\s*>)", Pattern.CASE_INSENSITIVE),
-			Pattern.compile("\\s*(href|src|data)\\s*=\\s*(\"\\s*(javascript|vbscript|data):[^\"]+\"|'\\s*(javascript|vbscript|data):[^']+'|(javascript|vbscript|data):[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
-			Pattern.compile("\\s*/?\\s*on[a-zA-Z]+\\s*=\\s*(['\"]?)(.*?)\\1(?=\\s|>|/>)", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("(<\\s*(" + XSS_DANGEROUS_TAGS + ")([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(" + XSS_DANGEROUS_TAGS + ")\\s*>)", Pattern.CASE_INSENSITIVE),
+			// 危险协议属性，无引号的值不依赖 > 结尾，防止 <a href=javascript:... 这类无标签结束符的载荷绕过；
+			// data: 不在此处一刀切，只按具体类型（text/html、image/svg 等）判断，见 isDangerousUrl，
+			// 避免把 data:image/png 等正常内联资源误删
+			Pattern.compile("\\s*(href|src|data)\\s*=\\s*(\"\\s*(javascript|vbscript):[^\"]*\"|'\\s*(javascript|vbscript):[^']*'|(javascript|vbscript):[^\\s>]*(?=\\s|>|$))", Pattern.CASE_INSENSITIVE),
+			// 事件属性，末尾无 > 时（浏览器会自动闭合标签）同样需要匹配，防止 <img onerror=alert(1) 这类载荷绕过；
+			// 前导断言避免把 content=、data-onclick= 等普通属性误判为事件属性
+			Pattern.compile("(?<![\\w-])\\s*/?\\s*on[a-zA-Z]+\\s*=\\s*(['\"]?)(.*?)\\1(?=\\s|>|/>|$)", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("(eval\\((.*?)\\)|expression\\((.*?)\\))", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("^(javascript:|vbscript:)", Pattern.CASE_INSENSITIVE)
 	);
+
+	// 用于识别可能携带协议的 URL 属性，例如 href="jav&#x61;script:alert(1)"、style="url(javascript:...)"
+	private static final Pattern xssUrlAttrPattern = Pattern.compile(
+			"\\s*(href|src|action|formaction|xlink:href|srcset|poster|background|style|content)"
+					+ "\\s*=\\s*(\"([^\"]*)\"|'([^']*)'|([^\\s>]+))",
+			Pattern.CASE_INSENSITIVE);
+
+	// HTML5 新增的命名字符实体（HTML4 不包含），浏览器在属性值中同样会解码，如 href=javascript&colon;alert(1)
+	private static final Pattern xssHtmlEntityPattern = Pattern.compile(
+			"&(colon|tab|newline|sol|bsol|num|period|percnt|lpar|rpar|quest|commat|nbsp);",
+			Pattern.CASE_INSENSITIVE);
 
 	/**
 	 * XSS 非法字符过滤，内容以<!--HTML-->开头的用以下规则（保留标签）
@@ -235,10 +256,19 @@ public class EncodeUtils {
 		}
 		String oriValue = StringUtils.trim(text);
 		String value = oriValue;
-		for (Pattern pattern : xssPatterns) {
-			Matcher matcher = pattern.matcher(value);
-			if (matcher.find()) {
-				value = matcher.replaceAll(StringUtils.EMPTY);
+		// 多次过滤，避免嵌套标签移除后重新拼接出危险标签（如 <scr<script>ipt>）
+		for (int i = 0; i < 3; i++) {
+			String before = value;
+			for (Pattern pattern : xssPatterns) {
+				Matcher matcher = pattern.matcher(value);
+				if (matcher.find()) {
+					value = matcher.replaceAll(StringUtils.EMPTY);
+				}
+			}
+			// 过滤 HTML 实体编码的危险协议属性
+			value = xssUrlAttrFilter(value);
+			if (value.equals(before)) {
+				break;
 			}
 		}
 		// 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
@@ -275,6 +305,82 @@ public class EncodeUtils {
 					request != null ? request.getRequestURL() : "common");
 		}
 		return value;
+	}
+
+	/**
+	 * 过滤 URL 属性中带 HTML 实体编码、空白干扰或内嵌在 style/url() 中的危险协议，
+	 * 例如 href="jav&#x61;script:alert(1)"、href=java\t script:alert(1)，
+	 * 浏览器会还原为 javascript 协议后执行。
+	 * @author ThinkGem
+	 */
+	private static String xssUrlAttrFilter(String value) {
+		Matcher matcher = xssUrlAttrPattern.matcher(value);
+		StringBuffer sb = new StringBuffer();
+		while (matcher.find()) {
+			String url = matcher.group(3) != null ? matcher.group(3)
+					: matcher.group(4) != null ? matcher.group(4) : matcher.group(5);
+			if (isDangerousUrl(url)) {
+				matcher.appendReplacement(sb, StringUtils.EMPTY);
+			}
+		}
+		matcher.appendTail(sb);
+		return sb.toString();
+	}
+
+	/**
+	 * 属性值中是否包含危险协议（先去掉 HTML 实体与空白，避免 jav&#x61;script:、java\t script: 等变形）
+	 * @param value 属性值
+	 */
+	private static boolean isDangerousUrl(String value) {
+		// 绝大多数正常属性值不含这些关键字，一次查找即可短路
+		if (!StringUtils.containsAnyIgnoreCase(value, "&", "script", "data", "vbscript")) {
+			return false;
+		}
+		String decoded = StringUtils.deleteWhitespace(decodeHtmlEntity(value)).toLowerCase();
+		if (StringUtils.contains(decoded, "javascript:") || StringUtils.contains(decoded, "vbscript:")) {
+			return true;
+		}
+		// data: 只在可执行类型时视为危险，data:image/png、data:application/pdf 等正常内联资源保留
+		return StringUtils.contains(decoded, "data:text/html")
+				|| StringUtils.contains(decoded, "data:image/svg")
+				|| StringUtils.contains(decoded, "data:application/xhtml")
+				|| StringUtils.contains(decoded, "data:text/javascript")
+				|| StringUtils.contains(decoded, "data:application/javascript");
+	}
+
+	/**
+	 * 解码 URL 属性中的字符实体，除 HTML4 实体外，同时解码 HTML5 新增的命名字符实体，
+	 * 例如 href="javascript&colon;alert(1)"，避免浏览器解码实体后还原出危险协议。
+	 * @author ThinkGem
+	 */
+	private static String decodeHtmlEntity(String value) {
+		String decoded = decodeHtml(value);
+		if (!StringUtils.contains(decoded, "&")) {
+			return decoded;
+		}
+		Matcher matcher = xssHtmlEntityPattern.matcher(decoded);
+		StringBuffer sb = new StringBuffer();
+		while (matcher.find()) {
+			String replacement;
+			switch (matcher.group(1).toLowerCase()) {
+				case "colon": replacement = ":"; break;
+				case "sol": replacement = "/"; break;
+				case "bsol": replacement = "\\"; break;
+				case "num": replacement = "#"; break;
+				case "period": replacement = "."; break;
+				case "percnt": replacement = "%"; break;
+				case "lpar": replacement = "("; break;
+				case "rpar": replacement = ")"; break;
+				case "quest": replacement = "?"; break;
+				case "commat": replacement = "@"; break;
+				case "tab": replacement = "\t"; break;
+				case "newline": replacement = "\n"; break;
+				default: replacement = " "; break;
+			}
+			matcher.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+		}
+		matcher.appendTail(sb);
+		return sb.toString();
 	}
 
 	// 预编译SQL过滤正则表达式
