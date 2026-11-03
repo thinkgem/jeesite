@@ -53,7 +53,7 @@
 		<quartz.version>2.5.2</quartz.version>
 		<swagger3.version>2.2.55</swagger3.version>
 		<liquibase.version>4.31.1</liquibase.version>
-		<logstash-logback.version>8.1</logstash-logback.version>
+		<logstash-logback.version>9.0</logstash-logback.version>
 		<logback.version>1.6.5</logback.version>
 
 		<!-- JDBC driver for your db version -->
