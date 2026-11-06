@@ -31,7 +31,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
+import java.math.RoundingMode;
 import java.util.*;
 
 /**
@@ -298,11 +298,7 @@ public class ExcelImport implements Closeable {
 					if (DateUtil.isCellDateFormatted(cell)) {
 						val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
 					}else{
-						if (Math.abs((double)val % 1) > 1E-10){
-							val = new DecimalFormat("0.00").format(val);
-						}else{
-							val = new DecimalFormat("0").format(val);
-						}
+						val = getNumberValue((Double) val);
 					}
 				}else if (cell.getCellType() == CellType.STRING) {
 					val = cell.getStringCellValue();
@@ -316,7 +312,7 @@ public class ExcelImport implements Closeable {
 						CellValue cellValue = evaluator.evaluate(cell);
 						switch (cellValue.getCellType()) {
 						case NUMERIC:
-							val = cellValue.getNumberValue();
+							val = getNumberValue(cellValue.getNumberValue());
 							break;
 						case STRING:
 							val = cellValue.getStringValue();
@@ -342,7 +338,25 @@ public class ExcelImport implements Closeable {
 		}
 		return val;
 	}
-	
+
+	/**
+	 * 数字单元格的值转换为普通十进制字符串
+	 * <p>
+	 * 避免直接使用 Double.toString 输出科学计数法（如：2.026102E7、2.5960686E7），
+	 * 批次号、单据名称、编码等字段在 Excel 中被存成数字类型时，导入后就不会出现科学计数法；
+	 * 同时避免浮点误差（如：0.1+0.2=0.30000000000000004），小数保留 2 位。
+	 * </p>
+	 * @param val 单元格的数字值
+	 * @return 普通十进制字符串（如：20261020、12.34）
+	 */
+	public static String getNumberValue(double val){
+		BigDecimal bd = BigDecimal.valueOf(val);
+		if (Math.abs(val % 1) > 1E-10){
+			return bd.setScale(2, RoundingMode.HALF_UP).toPlainString();
+		}
+		return bd.setScale(0, RoundingMode.HALF_UP).toPlainString();
+	}
+
 	/**
 	 * 获取导入数据列表
 	 * @param cls 导入对象类型
@@ -493,6 +507,10 @@ public class ExcelImport implements Closeable {
 						}else{
 							if (val != null){
 								if (valType == String.class){
+									// 数字类型统一转为普通十进制字符串，避免输出科学计数法（如：2.026102E7）
+									if (val instanceof Number){
+										val = getNumberValue(((Number)val).doubleValue());
+									}
 									String s = String.valueOf(val.toString());
 									if(StringUtils.endsWith(s, ".0")){
 										val = StringUtils.substringBefore(s, ".0");
