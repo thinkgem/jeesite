@@ -105,10 +105,11 @@ public class AiThinkUtils {
 			return response;
 		}
 		String previous = reasoning.toString();
+		String current = getReasoningContent(output);
 		// 累积后的完整思考内容，用于写入会话存储
-		String merged = mergeReasoningContent(previous, getReasoningContent(output));
+		String merged = mergeReasoningContent(previous, current);
 		// 本分片的增量，随流下发给前端
-		String delta = deltaReasoningContent(previous, getReasoningContent(output));
+		String delta = deltaReasoningContent(previous, current);
 		reasoning.setLength(0);
 		reasoning.append(merged);
 		if (StringUtils.isEmpty(delta) && !hasReasoningKey(output.getMetadata())) {
