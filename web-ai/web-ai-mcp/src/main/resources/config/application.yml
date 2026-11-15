@@ -118,11 +118,16 @@ spring:
         name: jeesite-mcp-server
         version: 1.0.0
         type: SYNC
+        
+#        # MCP 规范中，废弃了 SSE 传输方式，建议使用 STREAMABLE
+#        protocol: SSE
 #        sse-endpoint: /api/v1/sse
 #        sse-message-endpoint: /api/v1/mcp
+        
         protocol: STREAMABLE
         streamable-http:
           mcp-endpoint: /api/v1/mcp
+        
         capabilities:
           tool: true
           resource: true
