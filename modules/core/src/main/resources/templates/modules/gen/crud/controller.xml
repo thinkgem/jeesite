@@ -289,7 +289,7 @@ public class ${ClassName}Controller extends BaseController {
 		<% } %>
 		${className}.setStatus(${ClassName}.STATUS_DISABLE);
 		${className}Service.updateStatus(${className});
-		return renderResult(Global.TRUE, text("停用${functionNameSimple}成功"));
+		return renderResult(Global.TRUE, text("停用${functionNameSimple}成功！"));
 	}
 	
 	/**
@@ -301,7 +301,7 @@ public class ${ClassName}Controller extends BaseController {
 	public String enable(${ClassName} ${className}) {
 		${className}.setStatus(${ClassName}.STATUS_NORMAL);
 		${className}Service.updateStatus(${className});
-		return renderResult(Global.TRUE, text("启用${functionNameSimple}成功"));
+		return renderResult(Global.TRUE, text("启用${functionNameSimple}成功！"));
 	}
 	<% } %>
 	<% if(toBoolean(table.optionMap['isHaveDelete'])){ %>

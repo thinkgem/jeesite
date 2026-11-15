@@ -80,7 +80,7 @@ for (c in table.columnList){
     <% } %>
     <% if ((isNotBlank(c.optionMap['dictType']) || @StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long'))){ %>
       align: 'center',
-    <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){ %>
+    <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double', 'java.math.BigDecimal')){ %>
       align: 'right',
     <% }else{ %>
       align: 'left',

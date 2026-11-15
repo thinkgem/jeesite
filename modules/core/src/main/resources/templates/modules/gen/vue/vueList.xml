@@ -324,7 +324,7 @@ for(c in table.columnList){
     <% } %>
     <% if ((isNotBlank(c.optionMap['dictType']) || @StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')) && !firstColumn){ %>
       align: 'center',
-    <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double') && !firstColumn){ %>
+    <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double', 'java.math.BigDecimal') && !firstColumn){ %>
       align: 'right',
     <% }else{ %>
       align: 'left',

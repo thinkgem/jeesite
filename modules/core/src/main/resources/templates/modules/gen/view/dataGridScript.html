@@ -55,7 +55,7 @@ $('#dataGrid').dataGrid({
 				%>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center"},
 				<%
-						}else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){
+						}else if (@StringUtils.inString(c.attrType, 'Float', 'Double', 'java.math.BigDecimal')){
 				%>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"right", formatter: function(val, obj, row, act){
 			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
