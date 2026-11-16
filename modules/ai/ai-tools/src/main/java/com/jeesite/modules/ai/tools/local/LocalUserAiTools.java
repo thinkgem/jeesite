@@ -12,7 +12,11 @@ import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
- * AI MCP 工具调用
+ * AI 本地工具调用（当前用户、用户查询）
+ * <p>
+ * 本地工具由 ChatClient 的 defaultTools 直接调用，不经过 MCP 服务，
+ * 流式对话时执行在异步线程上，当前会话用户由 {@code AiToolSubjectAspect} 执行前注入线程变量，
+ * 工具内直接使用 {@code UserUtils.getUser()} 即可获取当前登录用户。
  * @author ThinkGem
  */
 @AiTools

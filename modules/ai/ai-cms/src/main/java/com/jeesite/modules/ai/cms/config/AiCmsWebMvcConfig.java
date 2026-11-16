@@ -29,7 +29,7 @@ public class AiCmsWebMvcConfig implements WebMvcConfigurer {
 		bean.setCorePoolSize(Global.getPropertyToInteger("web.taskPool.corePoolSize", "8"));
 		bean.setMaxPoolSize(Global.getPropertyToInteger("web.taskPool.maxPoolSize", "20"));
 		bean.setKeepAliveSeconds(Global.getPropertyToInteger("web.taskPool.keepAliveSeconds", "60"));
-		bean.setQueueCapacity(Global.getPropertyToInteger("web.taskPool.queueCapacity", String.valueOf(Integer.MAX_VALUE)));
+		bean.setQueueCapacity(Global.getPropertyToInteger("web.taskPool.queueCapacity", "1000"));
 		bean.setThreadNamePrefix("web-async-");
 		return bean;
 	}
