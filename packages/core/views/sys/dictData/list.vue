@@ -18,6 +18,9 @@
         <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="i-bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
+        <a-button @click="handleUpdateTreeSort" :title="t('保存排序')">
+          <Icon icon="ant-design:sort-ascending-outlined" /> {{ t('保存排序') }}
+        </a-button>
         <a-button type="primary" @click="handleForm({ dictType })" v-auth="'sys:dictData:edit'">
           <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
@@ -33,18 +36,27 @@
           {{ record.dictLabelRaw }}
         </a>
       </template>
+      <template #treeSort="{ record }">
+        <Input
+          v-model:value="record.treeSort"
+          @change="handleTreeSort($event, record)"
+          class="text-center"
+          size="small"
+        />
+      </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysDictDataList">
   import { watch, nextTick, ref, unref } from 'vue';
+  import { Input } from 'antdv-next';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
-  import { dictDataDelete, dictDataListData } from '@jeesite/core/api/sys/dictData';
+  import { dictDataDelete, dictDataListData, dictDataUpdateTreeSort } from '@jeesite/core/api/sys/dictData';
   import { dictDataDisable, dictDataEnable } from '@jeesite/core/api/sys/dictData';
   import { useDrawer } from '@jeesite/core/components/Drawer';
   import { FormProps } from '@jeesite/core/components/Form';
@@ -118,12 +130,13 @@
     {
       title: t('选项键值'),
       dataIndex: 'dictValue',
-      width: 110,
+      width: 150,
     },
     {
       title: t('排序号'),
       dataIndex: 'treeSort',
-      width: 60,
+      width: 80,
+      slot: 'treeSort',
     },
     {
       title: t('系统内置'),
@@ -280,5 +293,20 @@
 
   function handleSuccess(record: Recordable) {
     reload({ record });
+  }
+
+  const treeSortRef = ref({});
+  function handleTreeSort(event: any, record: Recordable) {
+    treeSortRef.value[record.id] = record.treeSort;
+  }
+
+  async function handleUpdateTreeSort() {
+    const data = await dictDataUpdateTreeSort({
+      ids: Object.keys(treeSortRef.value).join(','),
+      sorts: Object.values(treeSortRef.value).join(','),
+    });
+    showMessage(data.message);
+    treeSortRef.value = {};
+    handleSuccess({});
   }
 </script>

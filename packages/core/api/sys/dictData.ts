@@ -51,5 +51,8 @@ export const dictDataEnable = (params?: DictData | any) =>
 export const dictDataDelete = (params?: DictData | any) =>
   defHttp.get<DictData>({ url: adminPath + '/sys/dictData/delete', params });
 
+export const dictDataUpdateTreeSort = (params: { ids: string; sorts: string }) =>
+  defHttp.get<DictData>({ url: adminPath + '/sys/dictData/updateTreeSort', params });
+
 export const dictDataTreeData = (params?: any) =>
   defHttp.get<DictDataTree[]>({ url: adminPath + '/sys/dictData/treeData', params });
