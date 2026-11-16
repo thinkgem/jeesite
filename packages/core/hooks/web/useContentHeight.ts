@@ -1,4 +1,5 @@
 import { ComputedRef, isRef, nextTick, Ref, ref, unref, watch } from 'vue';
+import { useDebounceFn, useResizeObserver } from '@vueuse/core';
 import { onMountedOrActivated } from '@jeesite/core/hooks/core/onMountedOrActivated';
 import { useWindowSizeFn } from '@jeesite/core/hooks/event/useWindowSizeFn';
 import { useLayoutHeight } from '@jeesite/core/layouts/default/content/useContentViewHeight';
@@ -162,6 +163,12 @@ export function useContentHeight(
 
     contentHeight.value = height + fixHeight;
   }
+
+  // 页头、页脚的高度依赖异步数据（如标题区数据未就绪时高度为 0），数据到达后高度会变化，
+  // 需在其尺寸变化后重新计算内容高度，否则首次进入页面会漏算这部分高度（需刷新页面后才正确）
+  subtractHeightRefs.forEach((item) => {
+    useResizeObserver(item, useDebounceFn(calcContentHeight, 50));
+  });
 
   onMountedOrActivated(() => {
     nextTick(() => {
