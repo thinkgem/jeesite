@@ -15,6 +15,7 @@ import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.service.DictDataService;
 import com.jeesite.modules.sys.service.DictTypeService;
 import com.jeesite.modules.sys.utils.DictUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -248,6 +249,33 @@ public class DictDataController extends BaseController {
 		return renderResult(Global.TRUE, text("删除字典成功"));
 	}
 	
+	/**
+	 * 批量修改字典排序
+	 */
+	@RequiresPermissions("sys:dictData:edit")
+	@RequestMapping(value = "updateTreeSort")
+	@ResponseBody
+	public String updateTreeSort(String[] ids, Integer[] sorts) {
+		if (ids == null || sorts == null || ids.length != sorts.length){
+			return renderResult(Global.FALSE, text("提交的排序数据不正确！"));
+		}
+		// 系统内置数据，必须超级管理员才能修改
+		if (!UserUtils.getUser().isSuperAdmin()){
+			for (String id : ids){
+				DictData old = dictDataService.get(new DictData(id));
+				if (old != null && Global.YES.equals(old.getIsSys())){
+					return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
+				}
+			}
+		}
+		for (int i = 0; i < ids.length; i++) {
+			DictData dictData = new DictData(ids[i]);
+			dictData.setTreeSort(sorts[i]);
+			dictDataService.updateTreeSort(dictData);
+		}
+		return renderResult(Global.TRUE, text("保存字典排序成功"));
+	}
+
 	/**
 	 * 获取树结构数据。
 	 * @param dictType 字典类型，加 __all（双下划线+all） 后缀，则返回停用的字典 v4.2.0
