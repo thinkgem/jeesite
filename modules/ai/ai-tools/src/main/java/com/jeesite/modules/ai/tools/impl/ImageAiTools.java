@@ -17,7 +17,7 @@ import java.util.Map;
  * AI 生图工具：聊天模型识别到“画图、生成图片”等意图后自动调用，
  * 生图后保存到文件服务器并返回图片访问地址。
  * <p>
- * 生图能力由业务模块实现 {@link ImageGenerateService} 并注册为 Spring Bean（如 web-ai-pro 模块），
+ * 生图能力由 {@link ImageGenerateService} 实现并注册为 Spring Bean（默认实现为 ai-tools 的 AiImageGenerateService），
  * 生图模型取「工具管理」中该工具配置的模型（{@code options.image.modelCode}），
  * 未配置时由实现选择默认模型。
  * <p>

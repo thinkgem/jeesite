@@ -30,6 +30,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- AI 核心模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-ai-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- 内容管理模块
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -41,6 +48,12 @@
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-model</artifactId>
+		</dependency>
+
+		<!-- OpenAI 生图元数据 -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-openai</artifactId>
 		</dependency>
 
 		<!-- AI MCP -->

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-module-ai-parent</artifactId>
+		<version>5.20.0.springboot4-SNAPSHOT</version>
+		<relativePath>../ai-parent/pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>jeesite-module-ai-core</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>JeeSite Module AI核心模块</name>
+	<url>https://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+
+	<properties>
+
+	</properties>
+	
+	<dependencies>
+
+		<!-- 核心模块 --><!--suppress VulnerableLibrariesLocal -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-framework-ai</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- Spring Chat -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-client-chat</artifactId>
+		</dependency>
+
+		<!-- Spring AI auto configurations -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-autoconfigure-model-tool</artifactId>
+		</dependency>
+
+		<!-- 向量库（VectorStore、QuestionAnswerAdvisor） -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-vector-store-advisor</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-autoconfigure-retry</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-autoconfigure-model-chat-observation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-autoconfigure-model-embedding-observation</artifactId>
+		</dependency>
+		
+	</dependencies>
+	
+	<developers>
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>JeeSite</name>
+		<url>https://jeesite.com</url>
+	</organization>
+	
+</project>

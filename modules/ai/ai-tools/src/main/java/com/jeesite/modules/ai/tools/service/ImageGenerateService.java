@@ -8,13 +8,9 @@ import java.util.Map;
 
 /**
  * AI 生图服务接口（生图工具的 SPI）。
- * 由具体业务模块实现并注册为 Spring Bean（例如 AI CMS 模块的 AiCmsImageService），
- * 生图工具（LocalImageAiTools、McpImageAiTools）通过该接口生图，
- * 这样 ai-tools 模块无需依赖任何业务模块。
- * <p>
- * 若运行环境装有 ai-core 模块（模型注册、工具管理），生图工具会优先调用
- * ai-core 的生图服务（按类名反射调用，不产生模块依赖），使用工具管理里配置的生图模型；
- * 未安装时回退到本接口的实现。
+ * 默认由本模块的 AiImageGenerateService 实现并注册为 Spring Bean，
+ * 生图工具（LocalImageAiTools、McpImageAiTools）通过该接口生图；
+ * 业务模块也可以提供自己的实现替换默认生图服务。
  * @author ThinkGem
  */
 public interface ImageGenerateService {
@@ -36,7 +32,7 @@ public interface ImageGenerateService {
 	 * 文生图（指定模型编码，用于「工具管理」里给本地工具选择生图模型）
 	 * <p>
 	 * 默认忽略模型编码、走三参实现；需要按模型生图的实现请覆盖本方法
-	 * （如 web-ai-pro 模块的 AiImageGenerateService，按「AI模型」注册的模型生图）。
+	 * （如 ai-tools 模块的 AiImageGenerateService，按「AI模型」注册的模型生图）。
 	 * @param bizKey 业务关联键（如聊天会话 ID，为空时归属到当前用户）
 	 * @param bizType 业务类型（如 cms-chat，为空时默认 ai-image）
 	 * @param prompt 图片描述提示词

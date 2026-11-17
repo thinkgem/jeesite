@@ -1,0 +1,35 @@
+# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
+
+#ai:
+#  enabled: true
+#
+#  # ==========================================================================
+#  # AI 危险功能安全配置
+#  # HTTP 工具：让模型访问任意地址（SSRF、数据外泄风险）
+#  # STDIO 进程：让模型在本机执行命令（等同命令执行权限，风险最高）
+#  # 校验实现见 AiSecurityUtils
+#  # ==========================================================================
+#  tool:
+#    http:
+#      # 是否允许使用 HTTP 工具，关闭后 http 类型工具加载、调试、调用都会报错
+#      enabled: true
+#      # 允许访问的域名白名单，逗号分隔，支持后缀匹配（配置 jeesite.com 则允许 api.jeesite.com）
+#      # 为空表示不限制域名，生产环境建议按实际业务配置
+#      allowHosts: jeesite.com,demo.jeesite.com
+#      # 是否允许访问内网、本机、链路本地地址（127.0.0.1、10.x、192.168.x、169.254.169.254 等）
+#      # 默认禁止，防止 SSRF 探测内网与云元数据；确需访问内网接口时再开启
+#      allowPrivateAddress: false
+#      # 是否允许 http 协议，默认允许以兼容存量配置；生产环境建议改为 false，只允许 https
+#      allowHttpProtocol: true
+#      # 响应内容最大字符数，超出部分截断，防止大响应占用模型上下文
+#      maxResponseSize: 262144
+#  mcp:
+#    stdio:
+#      # 是否允许使用 STDIO（本地进程）传输的 MCP 服务
+#      # 默认关闭：stdio 等于让配置人执行本机命令，开启前请确认仅可信管理员可编辑 MCP 服务
+#      enabled: false
+#      # 允许执行的命令白名单，取命令行第一个参数的文件名（npx.cmd 视为 npx），逗号分隔
+#      # 为空时使用内置默认白名单：npx,uvx,node,java,python,python3
+#      allowCommands: npx,uvx,node,java,python,python3
+#      # 是否禁止命令行中的 shell 元字符（; | & $ ` > < 及换行），防止命令注入
+#      denyShellChars: true

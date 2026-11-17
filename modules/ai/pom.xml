@@ -20,6 +20,7 @@
 	<modules>
 		<module>ai-cms</module>
 		<module>ai-parent</module>
+		<module>ai-core</module>
 		<module>ai-tools</module>
 	</modules>
 
