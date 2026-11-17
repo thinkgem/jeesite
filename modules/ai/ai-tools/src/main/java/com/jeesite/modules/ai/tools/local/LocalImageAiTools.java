@@ -6,6 +6,7 @@ package com.jeesite.modules.ai.tools.local;
 
 import com.jeesite.modules.ai.tools.annotation.AiTools;
 import com.jeesite.modules.ai.tools.impl.ImageAiTools;
+import org.springframework.ai.chat.model.ToolContext;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,8 +29,8 @@ public class LocalImageAiTools extends ImageAiTools {
 	@Override
 	public String generateImage(
 			@ToolParam(description = "图片内容的详细描述，尽量包含主体、风格、构图、光线、色彩等要素，中文即可")
-			String prompt) {
-		return super.generateImage(prompt);
+			String prompt, ToolContext toolContext) {
+		return super.generateImage(prompt, toolContext);
 	}
 
 }

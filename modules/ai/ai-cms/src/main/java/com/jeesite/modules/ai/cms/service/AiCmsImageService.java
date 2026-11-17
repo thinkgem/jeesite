@@ -35,9 +35,12 @@ import java.time.Duration;
 import java.util.*;
 
 /**
- * AI 生图服务类，使用 Spring AI 的 ImageModel 生图。
+ * AI 生图服务类（CMS 模块专用），使用 Spring AI 自动装配的 ImageModel 生图，
+ * 服务于 OpenAI 兼容接口 {@code /cms/images/generations}，支持一次生成多张图片。
  * <p>生图模型的超时等客户端参数见 AiCmsChatConfig#openAiImageModel，
  * 模型名、图片尺寸等在 spring.ai.openai.image.options 中配置。
+ * <p>注意：生图工具的 SPI 实现为 ai-tools 模块的 AiImageGenerateService（按「AI模型」注册的模型生图），
+ * 本类不实现 {@code ImageGenerateService}，避免同一接口出现多个 Bean 导致注入歧义。
  * @author ThinkGem
  */
 @Service
@@ -74,7 +77,7 @@ public class AiCmsImageService extends BaseService implements ImageGenerateServi
 	 * @author ThinkGem
 	 */
 	public Map<String, Object> generateImage(String bizKey, String bizType, String prompt) {
-		return generateImage(bizKey, bizType, prompt, null);
+		return generateImage(bizKey, bizType, prompt, (ImageOptions) null);
 	}
 
 	/**
