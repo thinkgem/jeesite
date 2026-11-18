@@ -74,28 +74,27 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 			问题：{query}
 			""";
 
-	protected final AiVectorBizService aiVectorBizService;
 	protected final AiAgentToolService aiAgentToolService;
 	protected final AiAgentMcpService aiAgentMcpService;
 	protected final AiAgentVectorService aiAgentVectorService;
+	protected final AiVectorBizService aiVectorBizService;
 
 	/**
 	 * 构造注入
 	 * <p>
 	 * 模型、工具、MCP、向量库均通过对应的 Utils 静态调用，不再注入 Service，
 	 * 避免与 Utils 中的懒加载 Bean 重复依赖。
-	 * @param aiVectorBizService 业务向量库绑定 Service
 	 * @param aiAgentToolService 智能体与工具关联 Service
 	 * @param aiAgentMcpService 智能体与MCP服务关联 Service
 	 * @param aiAgentVectorService 智能体与向量库绑定关联 Service
+	 * @param aiVectorBizService 业务向量库绑定 Service
 	 */
-	public AiAgentService(AiVectorBizService aiVectorBizService,
-			AiAgentToolService aiAgentToolService, AiAgentMcpService aiAgentMcpService,
-			AiAgentVectorService aiAgentVectorService) {
-		this.aiVectorBizService = aiVectorBizService;
+	public AiAgentService(AiAgentToolService aiAgentToolService, AiAgentMcpService aiAgentMcpService,
+			AiAgentVectorService aiAgentVectorService,AiVectorBizService aiVectorBizService) {
 		this.aiAgentToolService = aiAgentToolService;
 		this.aiAgentMcpService = aiAgentMcpService;
 		this.aiAgentVectorService = aiAgentVectorService;
+		this.aiVectorBizService = aiVectorBizService;
 	}
 
 	/**

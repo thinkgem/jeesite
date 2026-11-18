@@ -4,13 +4,7 @@
  */
 package com.jeesite.autoconfigure.ai;
 
-import com.jeesite.modules.ai.service.AiAgentMcpService;
-import com.jeesite.modules.ai.service.AiAgentService;
-import com.jeesite.modules.ai.service.AiAgentToolService;
-import com.jeesite.modules.ai.service.AiAgentVectorService;
-import com.jeesite.modules.ai.service.AiChatMessageService;
-import com.jeesite.modules.ai.service.AiChatService;
-import com.jeesite.modules.ai.service.AiVectorBizService;
+import com.jeesite.modules.ai.service.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -60,11 +54,10 @@ public class AiCoreAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public AiAgentService aiAgentService(AiVectorBizService aiVectorBizService,
-			AiAgentToolService aiAgentToolService, AiAgentMcpService aiAgentMcpService,
-			AiAgentVectorService aiAgentVectorService) {
-		return new AiAgentService(aiVectorBizService, aiAgentToolService, aiAgentMcpService,
-				aiAgentVectorService);
+	public AiAgentService aiAgentService(AiAgentToolService aiAgentToolService, AiAgentMcpService aiAgentMcpService,
+			AiAgentVectorService aiAgentVectorService, AiVectorBizService aiVectorBizService) {
+		return new AiAgentService(aiAgentToolService, aiAgentMcpService,
+				aiAgentVectorService, aiVectorBizService);
 	}
 
 	/**

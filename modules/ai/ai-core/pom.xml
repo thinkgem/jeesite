@@ -30,47 +30,41 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- Spring AI Model、Tool、MCP、Vector -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-framework-ai</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- Spring Chat -->
+		<!-- PG 向量库（按需引入） -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-model</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-client-chat</artifactId>
+			<artifactId>spring-ai-pgvector-store</artifactId>
 		</dependency>
 
-		<!-- Spring AI auto configurations -->
+		<!-- Redis 向量库（按需引入） -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-autoconfigure-model-tool</artifactId>
+			<artifactId>spring-ai-redis-store</artifactId>
 		</dependency>
 
-		<!-- 向量库（VectorStore、QuestionAnswerAdvisor） -->
+		<!-- Elasticsearch 向量库（按需引入） -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-vector-store-advisor</artifactId>
+			<artifactId>spring-ai-elasticsearch-store</artifactId>
 		</dependency>
 
+		<!-- Chroma 向量库（按需引入） -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-autoconfigure-retry</artifactId>
+			<artifactId>spring-ai-chroma-store</artifactId>
 		</dependency>
 
+		<!-- Milvus 向量库（按需引入） -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-autoconfigure-model-chat-observation</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-autoconfigure-model-embedding-observation</artifactId>
+			<artifactId>spring-ai-milvus-store</artifactId>
 		</dependency>
 		
 	</dependencies>
