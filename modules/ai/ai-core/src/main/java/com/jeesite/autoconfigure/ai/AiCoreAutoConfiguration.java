@@ -14,7 +14,9 @@ import org.springframework.context.annotation.Bean;
  * AI 智能体与对话 Service 自动配置
  * <p>
  * 模型、工具、MCP、向量库等通用 Service 由 framework-ai 的
- * {@code Ai0AutoConfiguration} 注册；本类注册 ai-core 保留的智能体、对话、聊天消息 Service。
+ * {@code AiModelAutoConfiguration}、{@code AiToolAutoConfiguration}、
+ * {@code AiMcpAutoConfiguration}、{@code AiVectorAutoConfiguration} 注册；
+ * 本类注册 ai-core 保留的智能体、对话、聊天消息 Service。
  * @author ThinkGem
  * @version 2026-11-17
  */

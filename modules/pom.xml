@@ -16,6 +16,7 @@
 		<module>ai</module>
 		<module>app</module>
 		<module>cms</module>
+		<module>cms/vector</module>
 		<module>core</module>
 		<module>core/static</module>
 		<module>test</module>

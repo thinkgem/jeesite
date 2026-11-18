@@ -5,7 +5,6 @@
 package com.jeesite.modules.msg.send;
 
 import org.apache.commons.mail2.jakarta.HtmlEmail;
-import org.springframework.stereotype.Service;
 
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
@@ -20,7 +19,6 @@ import com.jeesite.modules.msg.entity.content.EmailMsgContent;
  * @author ThinkGem
  * @version 2018年5月13日
  */
-@Service
 public class EmailSendService extends BaseService implements MsgSendService{
 
 	@Override

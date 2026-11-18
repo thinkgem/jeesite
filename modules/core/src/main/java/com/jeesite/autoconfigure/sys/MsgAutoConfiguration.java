@@ -8,6 +8,8 @@ import com.jeesite.common.mybatis.MyBatisFactoryBean;
 import com.jeesite.modules.msg.dao.MsgInnerRecordDao;
 import com.jeesite.modules.msg.service.MsgInnerService;
 import com.jeesite.modules.msg.service.support.MsgInnerServiceSupport;
+import com.jeesite.modules.msg.send.EmailSendService;
+import com.jeesite.modules.msg.send.SmsSendService;
 import com.jeesite.modules.sys.service.EmpUserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -29,6 +31,18 @@ public class MsgAutoConfiguration {
 	@ConditionalOnMissingBean
 	public MsgInnerService msgInnerService(EmpUserService empUserService, MsgInnerRecordDao msgInnerRecordDao){
 		return new MsgInnerServiceSupport(empUserService, msgInnerRecordDao);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public EmailSendService emailSendService(){
+		return new EmailSendService();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public SmsSendService smsSendService(){
+		return new SmsSendService();
 	}
 
 }

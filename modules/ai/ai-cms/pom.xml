@@ -13,7 +13,10 @@
 	<artifactId>jeesite-module-ai-cms</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>JeeSite Module AI + CMS + RAG</name>
+	<name>
+		JeeSite Module AI CMS 基于 jeesite-ai-cms.yml 配置方式
+		该包从 v5.20.0 后仅作为示例工程使用，新版本已切换到 AiAgent
+	</name>
 	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 

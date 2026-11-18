@@ -45,13 +45,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 在线文档接口 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -72,6 +65,13 @@
 			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
+
+		<!-- 文件管理 - 向量库模块 AI + RAG
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filemanager-vector</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
 		
 		<!-- 文件在线预览（标准版）
 		<dependency>
@@ -84,6 +84,13 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-test</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 在线文档接口 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 

@@ -52,13 +52,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 在线文档接口 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -91,6 +84,13 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-test</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 在线文档接口 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 

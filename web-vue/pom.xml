@@ -65,11 +65,25 @@
 			<artifactId>jeesite-module-cms</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+
+		<!-- 内容管理 - 向量库模块 AI + RAG
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms-vector</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
 		
 		<!-- 文件管理共享（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
+		<!-- 文件管理 - 向量库模块 AI + RAG
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filemanager-vector</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 		

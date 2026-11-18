@@ -37,30 +37,7 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理模块
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency> -->
-		
-		<!-- AI Model -->
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-model</artifactId>
-		</dependency>
-
-		<!-- OpenAI 生图元数据 -->
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-openai</artifactId>
-		</dependency>
-
-		<!-- AI MCP -->
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-mcp</artifactId>
-		</dependency>
+		<!-- AI MCP 注解 -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-mcp-annotations</artifactId>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-module-ai-parent</artifactId>
+		<version>5.20.0.springboot4-SNAPSHOT</version>
+		<relativePath>../../../modules/ai/ai-parent/pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>jeesite-module-cms-vector</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>JeeSite Module CMS Vector + AI + RAG</name>
+	<url>https://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+
+	<properties>
+
+	</properties>
+
+	<dependencies>
+
+		<!-- 核心模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 内容管理模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- AI 核心模块（复用向量库写入、检索等通用能力） -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-ai-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- HTML 转 Markdown -->
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark-html2md-converter</artifactId>
+			<version>0.64.8</version>
+		</dependency>
+
+		<!-- Office、zip 等文件内容解析 -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers-standard-package</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-compress</artifactId>
+		  <version>1.27.1</version>
+		</dependency>
+
+	</dependencies>
+	
+	<developers>
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>JeeSite</name>
+		<url>https://jeesite.com</url>
+	</organization>
+	
+</project>

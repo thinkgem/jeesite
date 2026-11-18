@@ -45,13 +45,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 在线文档接口 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -66,21 +59,21 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理 AI + RAG 模块
+		<!-- 内容管理 - 向量库模块 AI + RAG
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-ai-cms</artifactId>
+			<artifactId>jeesite-module-cms-vector</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
-		<!-- 内容管理-页面静态化（标准版）
+		<!-- 内容管理 - 页面静态化（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-cms-pagecache</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
-		<!-- 内容管理-网站全文检索（专业版）
+		<!-- 内容管理 - 网站全文检索（专业版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-cms-elasticsearch</artifactId>
@@ -105,6 +98,13 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-test</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 在线文档接口 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 

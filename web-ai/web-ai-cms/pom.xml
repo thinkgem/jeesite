@@ -38,13 +38,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 测试模块 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-test</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-
 		<!-- 内容管理模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -52,10 +45,18 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理 AI + RAG 模块 -->
+		<!-- 内容管理 AI + RAG 模块，基于 jeesite-ai-cms.yml 配置方式
+			 该包从 v5.20.0 后仅作为示例工程使用，新版本已切换到 AiAgent -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-ai-cms</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 测试模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-test</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 

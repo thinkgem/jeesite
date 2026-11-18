@@ -7,8 +7,6 @@ package com.jeesite.modules.msg.send;
 import java.util.Date;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.mapper.JsonMapper;
@@ -22,7 +20,6 @@ import com.jeesite.modules.msg.entity.content.SmsMsgContent;
  * @author ThinkGem
  * @version 2018年5月13日
  */
-@Service
 public class SmsSendService extends BaseService implements MsgSendService{
 
 	@Override

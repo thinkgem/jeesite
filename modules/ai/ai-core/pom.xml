@@ -13,7 +13,7 @@
 	<artifactId>jeesite-module-ai-core</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>JeeSite Module AI核心模块</name>
+	<name>JeeSite Module AI Core</name>
 	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
