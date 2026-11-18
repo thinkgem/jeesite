@@ -151,11 +151,16 @@
       }
     }
 
+    const component = unref(getComponent);
     return {
       // size: 'small',
       getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
-      placeholder: createPlaceholderMessage(unref(getComponent)),
+      placeholder: createPlaceholderMessage(component),
       popupMatchSelectWidth: false,
+      // 浏览器自带的输入历史弹层绘制在页面最上层，会盖住下拉与校验提示，这里默认关闭
+      autocomplete: 'off',
+      autoComplete: 'off',
+      'data-form-type': 'other',
       ...omit(compProps, ['onChange']),
       [valueField]: value,
       labelValue: labelVal,

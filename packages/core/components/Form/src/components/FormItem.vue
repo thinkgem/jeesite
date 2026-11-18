@@ -251,9 +251,16 @@
         // console.log('getComponent', field);
 
         const { autoSetPlaceHolder, size } = props.formProps;
+        // 浏览器自带的输入历史（自动填充）弹层绘制在页面最上层，能盖住下拉面板，这里默认关闭。
+        // autocomplete：普通输入框（属性透传到 input）；autoComplete：Select/AutoComplete 等
+        // 组件内部的搜索输入框（antdv-select 默认值为 new-password，必须显式覆盖）。
+        // 如需某字段保留自动填充，可在 schema.componentProps 中显式指定。
         const propsData: Recordable = {
           // allowClear: true, // 默认不显示清除按钮
           getPopupContainer: () => document.body, //(trigger: Element) => trigger.parentNode,
+          autocomplete: 'off',
+          autoComplete: 'off',
+          'data-form-type': 'other',
           size,
           ...unref(getComponentsProps),
           disabled: unref(getDisable),
