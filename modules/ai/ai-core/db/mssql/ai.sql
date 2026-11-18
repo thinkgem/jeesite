@@ -29,15 +29,6 @@ CREATE TABLE [js_ai_agent]
 );
 
 
--- 智能体与知识库关联表
-CREATE TABLE [js_ai_agent_knowledge]
-(
-	[agent_id] varchar(64) NOT NULL,
-	[knowledge_id] varchar(64) NOT NULL,
-	PRIMARY KEY ([agent_id], [knowledge_id])
-);
-
-
 -- 智能体与MCP服务关联表
 CREATE TABLE [js_ai_agent_mcp]
 (
@@ -61,7 +52,7 @@ CREATE TABLE [js_ai_agent_vector]
 (
 	[agent_id] varchar(64) NOT NULL,
 	[vector_biz_type] varchar(64) NOT NULL,
-	PRIMARY KEY ([agent_id], [vector_biz_type])
+	CONSTRAINT pk_ai_agent_vector PRIMARY KEY ([agent_id], [vector_biz_type])
 );
 
 
@@ -107,55 +98,6 @@ CREATE TABLE [js_ai_chat_message]
 	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
 	[model_code] varchar(64),
 	CONSTRAINT pk_ai_chat_message PRIMARY KEY ([id])
-);
-
-
--- AI知识库
-CREATE TABLE [js_ai_knowledge]
-(
-	[id] varchar(64) NOT NULL,
-	[office_code] varchar(64),
-	[know_title] nvarchar(100) NOT NULL,
-	[know_type] char(1),
-	[know_desc] nvarchar(500),
-	[know_icon] varchar(100),
-	[vector_code] varchar(64),
-	[model_code] varchar(64),
-	[weight] decimal(10) DEFAULT 0,
-	[status] char(1) DEFAULT '0' NOT NULL,
-	[create_by] varchar(64) NOT NULL,
-	[create_date] datetime NOT NULL,
-	[update_by] varchar(64) NOT NULL,
-	[update_date] datetime NOT NULL,
-	[remarks] nvarchar(500),
-	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
-	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
-	[vector_status] char(1) DEFAULT '0',
-	[chunk_count] decimal(10),
-	[result_msg] nvarchar(500),
-	CONSTRAINT pk_ai_knowledge PRIMARY KEY ([id])
-);
-
-
--- AI知识库文件上传表
-CREATE TABLE [js_ai_knowledge_upload]
-(
-	[id] varchar(64) NOT NULL,
-	[file_id] varchar(64) NOT NULL,
-	[file_name] nvarchar(500) NOT NULL,
-	[file_type] varchar(20) NOT NULL,
-	[file_sort] decimal(10),
-	[biz_key] varchar(64),
-	[biz_type] varchar(64),
-	[status] char(1) DEFAULT '0' NOT NULL,
-	[create_by] varchar(64) NOT NULL,
-	[create_date] datetime NOT NULL,
-	[update_by] varchar(64) NOT NULL,
-	[update_date] datetime NOT NULL,
-	[remarks] nvarchar(500),
-	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
-	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
-	CONSTRAINT pk_ai_knowledge_upload PRIMARY KEY ([id])
 );
 
 
@@ -239,6 +181,9 @@ CREATE TABLE [js_ai_vector]
 	[vector_name] varchar(100),
 	[vector_desc] nvarchar(500),
 	[vector_provider] varchar(64),
+	[base_url] varchar(255),
+	[username] varchar(100),
+	[password] varchar(255),
 	[options] text,
 	[weight] decimal(10) NOT NULL,
 	[status] char(1) DEFAULT '0' NOT NULL,
@@ -249,9 +194,6 @@ CREATE TABLE [js_ai_vector]
 	[remarks] nvarchar(500),
 	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
 	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
-	[base_url] varchar(255),
-	[username] varchar(100),
-	[password] varchar(255),
 	CONSTRAINT pk_ai_vector PRIMARY KEY ([vector_code])
 );
 

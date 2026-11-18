@@ -33,7 +33,7 @@ import java.util.Objects;
 public class ArticleVectorStoreImpl implements CmsArticleVectorStore {
 
 	/** 内容管理业务类型（对应「AI 向量库管理」中维护的绑定业务类型） */
-	public static final String BIZ_TYPE = "cms";
+	public static final String BIZ_TYPE = "cms-article";
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	protected CmsArticleService articleService;

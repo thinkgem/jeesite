@@ -30,15 +30,6 @@ CREATE TABLE js_ai_agent
 ) COMMENT = 'AI智能体';
 
 
--- 智能体与知识库关联表
-CREATE TABLE js_ai_agent_knowledge
-(
-	agent_id varchar(64) NOT NULL COMMENT '智能体编号',
-	knowledge_id varchar(64) NOT NULL COMMENT '知识库编号',
-	PRIMARY KEY (agent_id, knowledge_id)
-) COMMENT = '智能体与知识库关联表';
-
-
 -- 智能体与MCP服务关联表
 CREATE TABLE js_ai_agent_mcp
 (
@@ -61,8 +52,8 @@ CREATE TABLE js_ai_agent_tool
 CREATE TABLE js_ai_agent_vector
 (
 	agent_id varchar(64) NOT NULL COMMENT '智能体编号',
-	vector_biz_type varchar(64) NOT NULL COMMENT '向量库业务类型',
-	PRIMARY KEY (agent_id, vector_biz_type)
+	vector_biz_type varchar(64) NOT NULL COMMENT '业务类型',
+	CONSTRAINT pk_ai_agent_vector PRIMARY KEY (agent_id, vector_biz_type)
 ) COMMENT = '智能体与向量库关联表';
 
 
@@ -109,55 +100,6 @@ CREATE TABLE js_ai_chat_message
 	model_code varchar(64) COMMENT '模型编码',
 	CONSTRAINT pk_ai_chat_message PRIMARY KEY (id)
 ) COMMENT = 'AI聊天消息内容';
-
-
--- AI知识库
-CREATE TABLE js_ai_knowledge
-(
-	id varchar(64) NOT NULL COMMENT '编号',
-	office_code varchar(64) COMMENT '部门编码',
-	know_title varchar(100) NOT NULL COMMENT '知识库标题',
-	know_type char(1) COMMENT '知识库类型',
-	know_desc varchar(500) COMMENT '知识库描述',
-	know_icon varchar(100) COMMENT '知识库图标',
-	vector_code varchar(64) COMMENT '向量库编码',
-	model_code varchar(64) COMMENT '向量模型编码',
-	weight decimal(10) DEFAULT 0 COMMENT '权重',
-	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
-	create_by varchar(64) NOT NULL COMMENT '创建者',
-	create_date datetime NOT NULL COMMENT '创建时间',
-	update_by varchar(64) NOT NULL COMMENT '更新者',
-	update_date datetime NOT NULL COMMENT '更新时间',
-	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
-	vector_status char(1) DEFAULT '0' COMMENT '向量化状态（0未处理 1处理中 2已完成 3失败）',
-	chunk_count decimal(10) COMMENT '切片数量',
-	result_msg varchar(500) COMMENT '处理结果信息',
-	CONSTRAINT pk_ai_knowledge PRIMARY KEY (id)
-) COMMENT = 'AI知识库';
-
-
--- AI知识库文件上传表
-CREATE TABLE js_ai_knowledge_upload
-(
-	id varchar(64) NOT NULL COMMENT '编号',
-	file_id varchar(64) NOT NULL COMMENT '文件编号',
-	file_name varchar(500) NOT NULL COMMENT '文件名称',
-	file_type varchar(20) NOT NULL COMMENT '文件分类（image、media、file）',
-	file_sort decimal(10) COMMENT '文件排序（升序）',
-	biz_key varchar(64) COMMENT '业务主键',
-	biz_type varchar(64) COMMENT '业务类型',
-	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
-	create_by varchar(64) NOT NULL COMMENT '创建者',
-	create_date datetime NOT NULL COMMENT '创建时间',
-	update_by varchar(64) NOT NULL COMMENT '更新者',
-	update_date datetime NOT NULL COMMENT '更新时间',
-	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
-	CONSTRAINT pk_ai_knowledge_upload PRIMARY KEY (id)
-) COMMENT = 'AI知识库文件上传表';
 
 
 -- AI MCP服务表
@@ -240,6 +182,9 @@ CREATE TABLE js_ai_vector
 	vector_name varchar(100) COMMENT '向量库名称',
 	vector_desc varchar(500) COMMENT '向量库描述',
 	vector_provider varchar(64) COMMENT '向量库提供商',
+	base_url varchar(255) COMMENT '服务地址',
+	username varchar(100) COMMENT '用户名',
+	password varchar(255) COMMENT '密码或密钥',
 	options longtext COMMENT '配置选项（JSON）',
 	weight decimal(10) NOT NULL COMMENT '权重',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
@@ -250,9 +195,6 @@ CREATE TABLE js_ai_vector
 	remarks varchar(500) COMMENT '备注信息',
 	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
-	base_url varchar(255) COMMENT '服务地址',
-	username varchar(100) COMMENT '用户名',
-	password varchar(255) COMMENT '密码或密钥',
 	CONSTRAINT pk_ai_vector PRIMARY KEY (vector_code)
 ) COMMENT = 'AI向量库';
 
@@ -270,7 +212,7 @@ CREATE TABLE js_ai_vector_biz
 	similarity_threshold decimal(4,2) NOT NULL COMMENT '相似度阈值',
 	options longtext COMMENT '配置选项（JSON）',
 	weight decimal(10) NOT NULL COMMENT '权重',
-	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
+	status char(1) DEFAULT '0' NOT NULL COMMENT '状态',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',
 	update_by varchar(64) NOT NULL COMMENT '更新者',

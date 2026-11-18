@@ -50,12 +50,6 @@ import java.util.Set;
  *   <li>options.qaPromptTemplate：知识库问答提示词模板，须包含 {question_answer_context} 占位符，
  *       可用 {query} 引用用户问题，为空则使用 {@link #DEFAULT_QA_PROMPT_TEMPLATE}</li>
  * </ul>
- * 历史数据（关联表为空时自动回退读取）：
- * <ul>
- *   <li>options.tools、options.mcp：工具、MCP 服务编码</li>
- *   <li>options.vectors：知识库（向量库）编号列表，options.embeddingModelCode：检索模型，
- *       options.topK、options.similarityThreshold：检索条数与相似度阈值</li>
- * </ul>
  * @author ThinkGem
  * @version 2026-11-14
  */
@@ -186,38 +180,29 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	}
 
 	/**
-	 * 获取智能体关联的工具编码
-	 * <p>
-	 * 优先取关联表 ai_agent_tool；关联表为空（历史数据）时回退 options.tools。
+	 * 获取智能体关联的工具编码（关联表 ai_agent_tool）
 	 * @param aiAgent 智能体
 	 */
 	public List<String> getAgentToolCodes(AiAgent aiAgent) {
 		if (aiAgent == null) {
 			return ListUtils.newArrayList();
 		}
-		List<String> toolCodes = aiAgentToolService.findToolCodes(aiAgent.getId());
-		return ListUtils.isNotEmpty(toolCodes) ? toolCodes : getOptionStrings(aiAgent, "tools");
+		return aiAgentToolService.findToolCodes(aiAgent.getId());
 	}
 
 	/**
-	 * 获取智能体关联的 MCP 服务编码
-	 * <p>
-	 * 优先取关联表 ai_agent_mcp；关联表为空（历史数据）时回退 options.mcp。
+	 * 获取智能体关联的 MCP 服务编码（关联表 ai_agent_mcp）
 	 * @param aiAgent 智能体
 	 */
 	public List<String> getAgentMcpCodes(AiAgent aiAgent) {
 		if (aiAgent == null) {
 			return ListUtils.newArrayList();
 		}
-		List<String> mcpCodes = aiAgentMcpService.findMcpCodes(aiAgent.getId());
-		return ListUtils.isNotEmpty(mcpCodes) ? mcpCodes : getOptionStrings(aiAgent, "mcp");
+		return aiAgentMcpService.findMcpCodes(aiAgent.getId());
 	}
 
 	/**
-	 * 获取智能体关联的向量库业务类型
-	 * <p>
-	 * 取关联表 ai_agent_vector；历史数据可能是 options.vectors（向量库编码列表），
-	 * 由 {@link #getAgentAdvisors(AiAgent)} 在关联表为空时回退读取。
+	 * 获取智能体关联的向量库业务类型（关联表 ai_agent_vector）
 	 * @param aiAgent 智能体
 	 */
 	public List<String> getAgentVectorBizTypes(AiAgent aiAgent) {
@@ -361,46 +346,18 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	/**
 	 * 获取知识库检索增强（按绑定的向量库生成 RAG 顾问）
 	 * <p>
-	 * 优先使用关联表中的向量库绑定，检索条数、相似度阈值、向量模型均取绑定自身的配置；
-	 * 关联表为空（历史数据）时回退 options.vectors 与 options 中的检索参数。
+	 * 检索条数、相似度阈值、向量模型均取关联表对应的向量库绑定配置。
 	 * @param aiAgent 智能体
 	 */
 	public List<Advisor> getAgentAdvisors(AiAgent aiAgent) {
 		List<Advisor> advisors = ListUtils.newArrayList();
-		List<AiVectorBiz> vectorBizList = getAgentVectorBizList(aiAgent);
-		if (ListUtils.isNotEmpty(vectorBizList)) {
-			for (AiVectorBiz vectorBiz : vectorBizList) {
-				try {
-					VectorStore vectorStore = AiVectorUtils.getVectorStore(vectorBiz);
-					advisors.add(buildVectorAdvisor(aiAgent, vectorStore, buildSearchRequest(vectorBiz)));
-				} catch (Exception e) {
-					logger.warn("知识库加载失败：{}（{}），{}", vectorBiz.getBizType(),
-							vectorBiz.getVectorCode(), e.getMessage());
-				}
-			}
-			return advisors;
-		}
-		// 兼容历史数据：options.vectors 直接配置向量库编码
-		List<String> vectorCodes = getOptionStrings(aiAgent, "vectors");
-		if (ListUtils.isEmpty(vectorCodes)) {
-			return advisors;
-		}
-		Map<String, Object> options = aiAgent.getOptionMap() == null ? MapUtils.newHashMap() : aiAgent.getOptionMap();
-		String modelCode = ObjectUtils.toString(options.get("embeddingModelCode"));
-		Integer topK = ObjectUtils.toInteger(options.get("topK"));
-		SearchRequest.Builder searchBuilder = SearchRequest.builder()
-				.topK(topK != null && topK > 0 ? topK : AiVectorBiz.DEFAULT_TOP_K);
-		Object threshold = options.get("similarityThreshold");
-		if (threshold != null && StringUtils.isNotBlank(ObjectUtils.toString(threshold))) {
-			searchBuilder.similarityThreshold(ObjectUtils.toDouble(threshold));
-		}
-		SearchRequest searchRequest = searchBuilder.build();
-		for (String vectorCode : vectorCodes) {
+		for (AiVectorBiz vectorBiz : getAgentVectorBizList(aiAgent)) {
 			try {
-				VectorStore vectorStore = AiVectorUtils.getVectorStore(vectorCode, modelCode);
-				advisors.add(buildVectorAdvisor(aiAgent, vectorStore, searchRequest));
+				VectorStore vectorStore = AiVectorUtils.getVectorStore(vectorBiz);
+				advisors.add(buildVectorAdvisor(aiAgent, vectorStore, buildSearchRequest(vectorBiz)));
 			} catch (Exception e) {
-				logger.warn("知识库加载失败：{}，{}", vectorCode, e.getMessage());
+				logger.warn("知识库加载失败：{}（{}），{}", vectorBiz.getBizType(),
+						vectorBiz.getVectorCode(), e.getMessage());
 			}
 		}
 		return advisors;
@@ -453,34 +410,6 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	}
 
 	/**
-	 * 读取 options 中的字符串列表配置
-	 */
-	protected List<String> getOptionStrings(AiAgent aiAgent, String key) {
-		List<String> result = ListUtils.newArrayList();
-		Map<String, Object> options = aiAgent == null ? null : aiAgent.getOptionMap();
-		if (options == null) {
-			return result;
-		}
-		Object value = options.get(key);
-		if (value instanceof List<?> list) {
-			for (Object item : list) {
-				String text = StringUtils.trimToNull(ObjectUtils.toString(item));
-				if (text != null) {
-					result.add(text);
-				}
-			}
-		} else if (value != null) {
-			for (String item : StringUtils.split(ObjectUtils.toString(value), ",")) {
-				String text = StringUtils.trimToNull(item);
-				if (text != null) {
-					result.add(text);
-				}
-			}
-		}
-		return result;
-	}
-
-	/**
 	 * 获取单条数据
 	 * @param aiAgent 主键
 	 */
@@ -515,16 +444,10 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	@Override
 	@Transactional
 	public void save(AiAgent aiAgent) {
-		// 表单选择的关联工具/MCP（逗号分隔）：回写 options（兼容历史读取方式），保存后重建关联表
+		// 表单选择的关联工具、MCP、向量库（逗号分隔）：保存后重建关联表
 		List<String> toolCodes = splitCodes(aiAgent.getToolCodes());
 		List<String> mcpCodes = splitCodes(aiAgent.getMcpCodes());
 		List<String> vectorBizTypes = splitCodes(aiAgent.getVectorBizTypes());
-		if (aiAgent.getToolCodes() != null) {
-			aiAgent.getOptionMap().put("tools", toolCodes);
-		}
-		if (aiAgent.getMcpCodes() != null) {
-			aiAgent.getOptionMap().put("mcp", mcpCodes);
-		}
 		super.save(aiAgent);
 		// 新增时主键在插入时生成，关联表须在保存之后写入
 		if (aiAgent.getToolCodes() != null) {

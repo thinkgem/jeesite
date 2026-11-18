@@ -29,15 +29,6 @@ CREATE TABLE js_ai_agent
 );
 
 
--- 智能体与知识库关联表
-CREATE TABLE js_ai_agent_knowledge
-(
-	agent_id varchar2(64) NOT NULL,
-	knowledge_id varchar2(64) NOT NULL,
-	PRIMARY KEY (agent_id, knowledge_id)
-);
-
-
 -- 智能体与MCP服务关联表
 CREATE TABLE js_ai_agent_mcp
 (
@@ -61,7 +52,7 @@ CREATE TABLE js_ai_agent_vector
 (
 	agent_id varchar2(64) NOT NULL,
 	vector_biz_type varchar2(64) NOT NULL,
-	PRIMARY KEY (agent_id, vector_biz_type)
+	CONSTRAINT pk_ai_agent_vector PRIMARY KEY (agent_id, vector_biz_type)
 );
 
 
@@ -107,55 +98,6 @@ CREATE TABLE js_ai_chat_message
 	corp_name nvarchar2(100) DEFAULT 'JeeSite' NOT NULL,
 	model_code varchar2(64),
 	CONSTRAINT pk_ai_chat_message PRIMARY KEY (id)
-);
-
-
--- AI知识库
-CREATE TABLE js_ai_knowledge
-(
-	id varchar2(64) NOT NULL,
-	office_code varchar2(64),
-	know_title nvarchar2(100) NOT NULL,
-	know_type char(1),
-	know_desc nvarchar2(500),
-	know_icon varchar2(100),
-	vector_code varchar2(64),
-	model_code varchar2(64),
-	weight number(10) DEFAULT 0,
-	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar2(64) NOT NULL,
-	create_date timestamp NOT NULL,
-	update_by varchar2(64) NOT NULL,
-	update_date timestamp NOT NULL,
-	remarks nvarchar2(500),
-	corp_code varchar2(64) DEFAULT '0' NOT NULL,
-	corp_name nvarchar2(100) DEFAULT 'JeeSite' NOT NULL,
-	vector_status char(1) DEFAULT '0',
-	chunk_count number(10),
-	result_msg nvarchar2(500),
-	CONSTRAINT pk_ai_knowledge PRIMARY KEY (id)
-);
-
-
--- AI知识库文件上传表
-CREATE TABLE js_ai_knowledge_upload
-(
-	id varchar2(64) NOT NULL,
-	file_id varchar2(64) NOT NULL,
-	file_name nvarchar2(500) NOT NULL,
-	file_type varchar2(20) NOT NULL,
-	file_sort number(10),
-	biz_key varchar2(64),
-	biz_type varchar2(64),
-	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar2(64) NOT NULL,
-	create_date timestamp NOT NULL,
-	update_by varchar2(64) NOT NULL,
-	update_date timestamp NOT NULL,
-	remarks nvarchar2(500),
-	corp_code varchar2(64) DEFAULT '0' NOT NULL,
-	corp_name nvarchar2(100) DEFAULT 'JeeSite' NOT NULL,
-	CONSTRAINT pk_ai_knowledge_upload PRIMARY KEY (id)
 );
 
 
@@ -239,6 +181,9 @@ CREATE TABLE js_ai_vector
 	vector_name varchar2(100),
 	vector_desc nvarchar2(500),
 	vector_provider varchar2(64),
+	base_url varchar2(255),
+	username varchar2(100),
+	password varchar2(255),
 	options clob,
 	weight number(10) NOT NULL,
 	status char(1) DEFAULT '0' NOT NULL,
@@ -249,9 +194,6 @@ CREATE TABLE js_ai_vector
 	remarks nvarchar2(500),
 	corp_code varchar2(64) DEFAULT '0' NOT NULL,
 	corp_name nvarchar2(100) DEFAULT 'JeeSite' NOT NULL,
-	base_url varchar2(255),
-	username varchar2(100),
-	password varchar2(255),
 	CONSTRAINT pk_ai_vector PRIMARY KEY (vector_code)
 );
 
@@ -312,19 +254,15 @@ COMMENT ON COLUMN js_ai_agent.update_date IS '更新时间';
 COMMENT ON COLUMN js_ai_agent.remarks IS '备注信息';
 COMMENT ON COLUMN js_ai_agent.corp_code IS '租户代码';
 COMMENT ON COLUMN js_ai_agent.corp_name IS '租户名称';
-COMMENT ON TABLE js_ai_agent_knowledge IS '智能体与知识库关联表';
-COMMENT ON COLUMN js_ai_agent_knowledge.agent_id IS '智能体编号';
-COMMENT ON COLUMN js_ai_agent_knowledge.knowledge_id IS '知识库编号';
 COMMENT ON TABLE js_ai_agent_mcp IS '智能体与MCP服务关联表';
 COMMENT ON COLUMN js_ai_agent_mcp.agent_id IS '智能体编号';
 COMMENT ON COLUMN js_ai_agent_mcp.mcp_code IS 'MCP编码';
 COMMENT ON TABLE js_ai_agent_tool IS '智能体与工具关联表';
 COMMENT ON COLUMN js_ai_agent_tool.agent_id IS '智能体编号';
 COMMENT ON COLUMN js_ai_agent_tool.tool_code IS '工具编码';
-
-COMMENT ON TABLE js_ai_agent_vector IS '智能体与向量库绑定关联表';
+COMMENT ON TABLE js_ai_agent_vector IS '智能体与向量库关联表';
 COMMENT ON COLUMN js_ai_agent_vector.agent_id IS '智能体编号';
-COMMENT ON COLUMN js_ai_agent_vector.vector_biz_type IS '向量库业务类型';
+COMMENT ON COLUMN js_ai_agent_vector.vector_biz_type IS '业务类型';
 COMMENT ON TABLE js_ai_chat IS 'AI聊天对话';
 COMMENT ON COLUMN js_ai_chat.id IS '编号';
 COMMENT ON COLUMN js_ai_chat.agent_id IS '智能体编码';
@@ -358,43 +296,6 @@ COMMENT ON COLUMN js_ai_chat_message.remarks IS '备注信息';
 COMMENT ON COLUMN js_ai_chat_message.corp_code IS '租户代码';
 COMMENT ON COLUMN js_ai_chat_message.corp_name IS '租户名称';
 COMMENT ON COLUMN js_ai_chat_message.model_code IS '模型编码';
-COMMENT ON TABLE js_ai_knowledge IS 'AI知识库';
-COMMENT ON COLUMN js_ai_knowledge.id IS '编号';
-COMMENT ON COLUMN js_ai_knowledge.office_code IS '部门编码';
-COMMENT ON COLUMN js_ai_knowledge.know_title IS '知识库标题';
-COMMENT ON COLUMN js_ai_knowledge.know_type IS '知识库类型';
-COMMENT ON COLUMN js_ai_knowledge.know_desc IS '知识库描述';
-COMMENT ON COLUMN js_ai_knowledge.know_icon IS '知识库图标';
-COMMENT ON COLUMN js_ai_knowledge.vector_code IS '向量库编码';
-COMMENT ON COLUMN js_ai_knowledge.model_code IS '向量模型编码';
-COMMENT ON COLUMN js_ai_knowledge.weight IS '权重';
-COMMENT ON COLUMN js_ai_knowledge.status IS '状态（0正常 1删除 2停用）';
-COMMENT ON COLUMN js_ai_knowledge.create_by IS '创建者';
-COMMENT ON COLUMN js_ai_knowledge.create_date IS '创建时间';
-COMMENT ON COLUMN js_ai_knowledge.update_by IS '更新者';
-COMMENT ON COLUMN js_ai_knowledge.update_date IS '更新时间';
-COMMENT ON COLUMN js_ai_knowledge.remarks IS '备注信息';
-COMMENT ON COLUMN js_ai_knowledge.corp_code IS '租户代码';
-COMMENT ON COLUMN js_ai_knowledge.corp_name IS '租户名称';
-COMMENT ON COLUMN js_ai_knowledge.vector_status IS '向量化状态（0未处理 1处理中 2已完成 3失败）';
-COMMENT ON COLUMN js_ai_knowledge.chunk_count IS '切片数量';
-COMMENT ON COLUMN js_ai_knowledge.result_msg IS '处理结果信息';
-COMMENT ON TABLE js_ai_knowledge_upload IS 'AI知识库文件上传表';
-COMMENT ON COLUMN js_ai_knowledge_upload.id IS '编号';
-COMMENT ON COLUMN js_ai_knowledge_upload.file_id IS '文件编号';
-COMMENT ON COLUMN js_ai_knowledge_upload.file_name IS '文件名称';
-COMMENT ON COLUMN js_ai_knowledge_upload.file_type IS '文件分类（image、media、file）';
-COMMENT ON COLUMN js_ai_knowledge_upload.file_sort IS '文件排序（升序）';
-COMMENT ON COLUMN js_ai_knowledge_upload.biz_key IS '业务主键';
-COMMENT ON COLUMN js_ai_knowledge_upload.biz_type IS '业务类型';
-COMMENT ON COLUMN js_ai_knowledge_upload.status IS '状态（0正常 1删除 2停用）';
-COMMENT ON COLUMN js_ai_knowledge_upload.create_by IS '创建者';
-COMMENT ON COLUMN js_ai_knowledge_upload.create_date IS '创建时间';
-COMMENT ON COLUMN js_ai_knowledge_upload.update_by IS '更新者';
-COMMENT ON COLUMN js_ai_knowledge_upload.update_date IS '更新时间';
-COMMENT ON COLUMN js_ai_knowledge_upload.remarks IS '备注信息';
-COMMENT ON COLUMN js_ai_knowledge_upload.corp_code IS '租户代码';
-COMMENT ON COLUMN js_ai_knowledge_upload.corp_name IS '租户名称';
 COMMENT ON TABLE js_ai_mcp IS 'AI MCP服务表';
 COMMENT ON COLUMN js_ai_mcp.mcp_code IS 'MCP编码';
 COMMENT ON COLUMN js_ai_mcp.mcp_name IS 'MCP名称';
@@ -455,6 +356,9 @@ COMMENT ON COLUMN js_ai_vector.vector_code IS '向量库编码';
 COMMENT ON COLUMN js_ai_vector.vector_name IS '向量库名称';
 COMMENT ON COLUMN js_ai_vector.vector_desc IS '向量库描述';
 COMMENT ON COLUMN js_ai_vector.vector_provider IS '向量库提供商';
+COMMENT ON COLUMN js_ai_vector.base_url IS '服务地址';
+COMMENT ON COLUMN js_ai_vector.username IS '用户名';
+COMMENT ON COLUMN js_ai_vector.password IS '密码或密钥';
 COMMENT ON COLUMN js_ai_vector.options IS '配置选项（JSON）';
 COMMENT ON COLUMN js_ai_vector.weight IS '权重';
 COMMENT ON COLUMN js_ai_vector.status IS '状态（0正常 1删除 2停用）';
@@ -465,11 +369,7 @@ COMMENT ON COLUMN js_ai_vector.update_date IS '更新时间';
 COMMENT ON COLUMN js_ai_vector.remarks IS '备注信息';
 COMMENT ON COLUMN js_ai_vector.corp_code IS '租户代码';
 COMMENT ON COLUMN js_ai_vector.corp_name IS '租户名称';
-COMMENT ON COLUMN js_ai_vector.base_url IS '服务地址';
-COMMENT ON COLUMN js_ai_vector.username IS '用户名';
-COMMENT ON COLUMN js_ai_vector.password IS '密码或密钥';
-COMMENT ON TABLE js_ai_vector_biz IS 'AI业务向量库绑定';
-COMMENT ON COLUMN js_ai_vector_biz.id IS '编号';
+COMMENT ON TABLE js_ai_vector_biz IS 'AI向量库业务配置';
 COMMENT ON COLUMN js_ai_vector_biz.biz_type IS '业务类型';
 COMMENT ON COLUMN js_ai_vector_biz.biz_name IS '业务名称';
 COMMENT ON COLUMN js_ai_vector_biz.vector_code IS '向量库编码';
@@ -480,7 +380,7 @@ COMMENT ON COLUMN js_ai_vector_biz.top_k IS '检索条数';
 COMMENT ON COLUMN js_ai_vector_biz.similarity_threshold IS '相似度阈值';
 COMMENT ON COLUMN js_ai_vector_biz.options IS '配置选项（JSON）';
 COMMENT ON COLUMN js_ai_vector_biz.weight IS '权重';
-COMMENT ON COLUMN js_ai_vector_biz.status IS '状态（0正常 1删除 2停用）';
+COMMENT ON COLUMN js_ai_vector_biz.status IS '状态';
 COMMENT ON COLUMN js_ai_vector_biz.create_by IS '创建者';
 COMMENT ON COLUMN js_ai_vector_biz.create_date IS '创建时间';
 COMMENT ON COLUMN js_ai_vector_biz.update_by IS '更新者';
