@@ -16,6 +16,7 @@ import com.jeesite.modules.ai.entity.AiChat;
 import com.jeesite.modules.ai.entity.AiChatMessage;
 import com.jeesite.modules.ai.entity.AiModel;
 import com.jeesite.modules.ai.utils.AiThinkUtils;
+import com.jeesite.modules.file.entity.FileUpload;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
@@ -44,6 +45,8 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	public static final String ROLE_ASSISTANT = "assistant";
 	/** 消息角色：系统 */
 	public static final String ROLE_SYSTEM = "system";
+	/** 消息元数据：本轮提交的图片或文件列表 */
+	public static final String METADATA_FILES = "files";
 
 	/**
 	 * 获取单条数据
@@ -274,6 +277,64 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	}
 
 	/**
+	 * 设置消息携带的图片或文件（消息元数据 JSON）
+	 * <p>
+	 * 前端提交后不再保留会话上的图片关联，历史消息按消息上的记录回显提交过的图片或文件。
+	 * @param aiChatMessage 消息
+	 * @param fileUploadList 本轮提交的文件列表，可为空
+	 */
+	public void setChatMessageFiles(AiChatMessage aiChatMessage, List<FileUpload> fileUploadList) {
+		if (aiChatMessage == null || fileUploadList == null || fileUploadList.isEmpty()) {
+			return;
+		}
+		List<Map<String, Object>> files = ListUtils.newArrayList();
+		for (FileUpload fileUpload : fileUploadList) {
+			if (fileUpload == null || StringUtils.isBlank(fileUpload.getId())) {
+				continue;
+			}
+			Map<String, Object> item = MapUtils.newHashMap();
+			item.put("id", fileUpload.getId());
+			item.put("fileName", fileUpload.getFileName());
+			item.put("fileUrl", fileUpload.getFileUrl());
+			files.add(item);
+		}
+		if (files.isEmpty()) {
+			return;
+		}
+		Map<String, Object> metadata = MapUtils.newLinkedHashMap();
+		metadata.put(METADATA_FILES, files);
+		try {
+			aiChatMessage.setMsgMetadata(JsonMapper.getInstance().writeValueAsString(metadata));
+		} catch (Exception e) {
+			logger.debug("序列化消息文件列表失败：{}", e.getMessage());
+		}
+	}
+
+	/**
+	 * 获取消息携带的图片或文件（消息元数据 JSON）
+	 * @param aiChatMessage 消息
+	 */
+	public List<Map<String, Object>> getChatMessageFiles(AiChatMessage aiChatMessage) {
+		Map<String, Object> metadata = getChatMessageMetadata(aiChatMessage);
+		if (metadata == null) {
+			return null;
+		}
+		Object files = metadata.get(METADATA_FILES);
+		if (files instanceof List<?> fileList) {
+			List<Map<String, Object>> result = ListUtils.newArrayList();
+			for (Object item : fileList) {
+				if (item instanceof Map<?, ?> fileMap) {
+					Map<String, Object> file = MapUtils.newHashMap();
+					fileMap.forEach((key, value) -> file.put(String.valueOf(key), value));
+					result.add(file);
+				}
+			}
+			return result.isEmpty() ? null : result;
+		}
+		return null;
+	}
+
+	/**
 	 * 获取模型的价格配置（options.price）
 	 * <p>
 	 * 格式示例：{@code {"input":0.002,"output":0.008,"cache":0.0005,"unit":"1K","currency":"CNY"}}，
@@ -448,8 +509,9 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 			usageMap.forEach((key, value) -> result.put(String.valueOf(key), value));
 			return result;
 		}
-		// 兼容早期直接平铺用量、且可能混入思考内容的元数据
+		// 兼容早期直接平铺用量、且可能混入思考内容、文件列表的元数据
 		metadata.remove(AiThinkUtils.REASONING_CONTENT);
+		metadata.remove(METADATA_FILES);
 		return metadata.isEmpty() ? null : metadata;
 	}
 

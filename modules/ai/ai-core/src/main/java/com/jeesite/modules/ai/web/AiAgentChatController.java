@@ -91,6 +91,11 @@ public class AiAgentChatController extends BaseController {
 			if (StringUtils.isNotBlank(reasoningContent)) {
 				item.put("reasoningContent", reasoningContent);
 			}
+			// 本轮提交的图片或文件（元数据 JSON），前端显示在消息气泡中
+			List<Map<String, Object>> fileList = aiChatService.getChatMessageFiles(aiChatMessage);
+			if (fileList != null) {
+				item.put("fileList", fileList);
+			}
 			list.add(item);
 		}
 		return list;

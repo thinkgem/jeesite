@@ -381,10 +381,13 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	public Flux<ChatResponse> chatStream(AiAgent aiAgent, AiChatMessage aiChatMessage) {
 		AiChat aiChat = new AiChat(aiChatMessage.getConvId());
 		List<Message> messages = getChatMessages(aiChat);
+		// 本轮提交的图片：先取出，用于多模态识图，并记录到消息上供历史回显（前端提交后会清空会话上的图片关联）
+		List<FileUpload> fileUploadList = findChatFileUploadList(aiChat);
 		// 识图：将对话上传的图片转换为多模态消息（注意：智能体使用的模型需支持多模态，如 qwen-vl-plus、gpt-4o）
-		messages.add(UserMessage.builder().text(aiChatMessage.getMsgText()).media(getChatMedia(aiChat)).build());
+		messages.add(UserMessage.builder().text(aiChatMessage.getMsgText()).media(toChatMedia(fileUploadList)).build());
 		// 用户消息在流结束时保存（含取消、异常），保存后回填编号，作为助手回复的父消息编号
 		aiChatMessage.setMsgType(AiChatMessageService.ROLE_USER);
+		aiChatMessageService.setChatMessageFiles(aiChatMessage, fileUploadList);
 		return streamChat(aiAgent, messages, aiChatMessage, null);
 	}
 
@@ -630,21 +633,37 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	}
 
 	/**
+	 * 获取对话上传的图片文件（按上传倒序，最多取最近 {@link #MAX_MEDIA_SIZE} 张，避免 token 消耗过大）
+	 * @param aiChat 会话（id 为会话编号）
+	 */
+	protected List<FileUpload> findChatFileUploadList(AiChat aiChat) {
+		List<FileUpload> fileUploadList = new ArrayList<>();
+		if (aiChat == null || StringUtils.isBlank(aiChat.getId())) {
+			return fileUploadList;
+		}
+		fileUploadList.addAll(FileUploadUtils.findFileUpload(aiChat.getId(), BIZ_TYPE_CHAT));
+		fileUploadList.sort(Comparator.comparing(FileUpload::getId,
+				Comparator.nullsLast(Comparator.reverseOrder())));
+		if (fileUploadList.size() > MAX_MEDIA_SIZE) {
+			return new ArrayList<>(fileUploadList.subList(0, MAX_MEDIA_SIZE));
+		}
+		return fileUploadList;
+	}
+
+	/**
 	 * 获取对话上传的图片（按上传倒序，最多取最近 {@link #MAX_MEDIA_SIZE} 张，避免 token 消耗过大）
 	 * @param aiChat 会话（id 为会话编号）
 	 */
 	protected List<Media> getChatMedia(AiChat aiChat) {
+		return toChatMedia(findChatFileUploadList(aiChat));
+	}
+
+	/**
+	 * 图片文件转换为多模态媒体
+	 * @param fileUploadList 图片文件列表
+	 */
+	protected List<Media> toChatMedia(List<FileUpload> fileUploadList) {
 		List<Media> media = ListUtils.newArrayList();
-		if (aiChat == null || StringUtils.isBlank(aiChat.getId())) {
-			return media;
-		}
-		List<FileUpload> fileUploadList = new ArrayList<>(
-				FileUploadUtils.findFileUpload(aiChat.getId(), BIZ_TYPE_CHAT));
-		fileUploadList.sort(Comparator.comparing(FileUpload::getId,
-				Comparator.nullsLast(Comparator.reverseOrder())));
-		if (fileUploadList.size() > MAX_MEDIA_SIZE) {
-			fileUploadList = fileUploadList.subList(0, MAX_MEDIA_SIZE);
-		}
 		for (FileUpload fileUpload : fileUploadList) {
 			if (fileUpload.getFileEntity() == null) {
 				continue;
@@ -654,6 +673,14 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 			media.add(Media.builder().mimeType(mediaType).data(new FileSystemResource(file)).build());
 		}
 		return media;
+	}
+
+	/**
+	 * 获取消息携带的图片或文件（消息元数据 JSON，记录本轮提交的文件，供历史消息回显）
+	 * @param aiChatMessage 消息
+	 */
+	public List<Map<String, Object>> getChatMessageFiles(AiChatMessage aiChatMessage) {
+		return aiChatMessageService.getChatMessageFiles(aiChatMessage);
 	}
 
 	// ==================== 私有方法 ====================
