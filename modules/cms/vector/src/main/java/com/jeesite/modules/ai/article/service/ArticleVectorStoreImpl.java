@@ -132,7 +132,14 @@ public class ArticleVectorStoreImpl implements CmsArticleVectorStore {
 			PageUtils.findList(article, null, e -> {
 				List<CmsArticle> list = articleService.findList((CmsArticle) e);
 				if (!list.isEmpty()) {
-					list.forEach(this::save);
+					list.forEach(a -> {
+						// 单篇文章失败不影响其它文章的重建
+						try {
+							save(a);
+						} catch (Exception ex) {
+							logger.warn("文章向量存储失败，已跳过。articleId: {}，{}", a.getId(), ex.toString());
+						}
+					});
 					return true;
 				}
 				return false;

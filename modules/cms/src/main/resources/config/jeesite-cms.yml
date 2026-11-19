@@ -6,6 +6,13 @@ cms:
   template:
     edit: false
 
+  # 向量库
+  vector:
+    # 附件内容提取（如文章向量化时，提取正文链接的附件内容）
+    attachment:
+      # 提取的最大文件大小（字节），默认 50MB，超过则忽略
+      maxFileSize: 52428800
+
   # 页面缓存
   pageCache:
     # 是否开启页面静态化缓存

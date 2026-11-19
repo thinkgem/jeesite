@@ -365,16 +365,23 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 
 	/**
 	 * 按向量库绑定的配置构建检索请求（未配置时取推荐默认值）
+	 * <p>
+	 * 强制附加业务类型（bizType）过滤：同一索引（集合/表）可能被多个业务共用，
+	 * 不隔离会把其它业务的数据一起检索出来，导致回答串联到无关内容。
 	 * @param bind 向量库绑定
 	 */
 	protected SearchRequest buildSearchRequest(AiVectorBiz bind) {
 		Integer topK = bind.getTopK();
 		Double threshold = bind.getSimilarityThreshold();
-		return SearchRequest.builder()
+		SearchRequest.Builder builder = SearchRequest.builder()
 				.topK(topK != null && topK > 0 ? topK : AiVectorBiz.DEFAULT_TOP_K)
 				.similarityThreshold(threshold != null ? threshold.floatValue()
-						: AiVectorBiz.DEFAULT_SIMILARITY_THRESHOLD.floatValue())
-				.build();
+						: AiVectorBiz.DEFAULT_SIMILARITY_THRESHOLD.floatValue());
+		String filterExpression = AiVectorUtils.buildFilterExpression("bizType", bind.getBizType(), null);
+		if (StringUtils.isNotBlank(filterExpression)) {
+			builder.filterExpression(filterExpression);
+		}
+		return builder.build();
 	}
 
 	/**
