@@ -184,7 +184,7 @@
       }
       // 接口未返回数组时保留当前列表，避免把刚上传成功的文件清空
       if (isArray(list)) {
-        fileList.value = list;
+        fileList.value = (list as FileUpload[]).filter((item) => !!item);
       }
     } catch {
       return;
@@ -198,7 +198,8 @@
 
   // 上传modal保存操作（记录完整顺序，含已上传文件与本次上传成功文件，替换而非追加）
   function handleChange(records: FileUpload[]) {
-    fileList.value = [...(records || [])];
+    // 过滤空值，避免脏数据导致后续取值报错
+    fileList.value = (records || []).filter((item) => !!item);
     if (dataMap.value) {
       dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
       dataMap.value[props.bizType + '__len'] = fileList.value.length;
@@ -209,7 +210,7 @@
 
   // 预览列表保存操作
   function handlePreviewChange(records: FileUpload[]) {
-    fileList.value = [...(records || [])];
+    fileList.value = (records || []).filter((item) => !!item);
     dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
     dataMap.value[props.bizType + '__len'] = fileList.value.length;
     emit('update:value', dataMap.value);
@@ -258,8 +259,9 @@
       return;
     }
     // 上传成功：合并到当前文件列表（内嵌区域的粘贴上传走 beforeUpload 流程，不经过这里）
-    if (res.fileUploads.length > 0) {
-      handleChange([...fileList.value, ...res.fileUploads]);
+    const uploaded = (res.fileUploads || []).filter((item) => !!item);
+    if (uploaded.length > 0) {
+      handleChange([...fileList.value, ...uploaded]);
     }
     innerLoadTime.value += 1;
     return res;

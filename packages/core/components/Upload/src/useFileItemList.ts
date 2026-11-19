@@ -6,7 +6,7 @@
 import { ref, unref, computed, watch } from 'vue';
 import { useUpload } from './useUpload';
 import { useMessage } from '@jeesite/core/hooks/web/useMessage';
-import { FileItem, UploadResultStatus } from './typing';
+import { FileItem, UploadResultStatus, ChunkItem } from './typing';
 import { createTableColumns, createActionColumn, getListType } from './data';
 import { checkImgType, getBase64WithFile, getFileUploadId, formatSize } from './helper';
 import { buildUUID } from '@jeesite/core/utils/uuid';
@@ -43,14 +43,19 @@ export function useFileItemList(props: any, emit: (event: any, ...args: any[]) =
     return (isArray(list) ? list : []) as FileUpload[];
   }
 
-  // 获取服务端已上传的文件列表
+  // 获取服务端已上传的文件列表（忽略空值，避免脏数据导致渲染报错）
   function getPreviewFileItems(): FileItem[] {
     // if (!props.showPreview) return [];
-    return getPreviewList().map((fileUpload) => toFileItem(fileUpload));
+    return getPreviewList()
+      .filter((fileUpload) => !!fileUpload)
+      .map((fileUpload) => toFileItem(fileUpload));
   }
 
   // 已上传的文件转换为文件列表项，与本次上传的文件合并显示
   function toFileItem(fileUpload: FileUpload): FileItem {
+    if (!fileUpload) {
+      return undefined as unknown as FileItem;
+    }
     const fileEntity = (fileUpload.fileEntity || {}) as any;
     return {
       id: fileUpload.id,
@@ -334,14 +339,17 @@ export function useFileItemList(props: any, emit: (event: any, ...args: any[]) =
   function getSaveFileList(): FileUpload[] {
     const fileList: FileUpload[] = [];
     for (const item of fileItemList.value) {
+      if (!item) {
+        continue;
+      }
       const { status, responseData, fileUpload } = item;
-      if (fileUpload) {
-        fileList.push(fileUpload);
-      } else if (status === UploadResultStatus.SUCCESS && responseData) {
-        fileList.push(responseData.fileUpload);
+      // 服务端未返回文件信息时跳过，避免把空值提交给调用方
+      const record = fileUpload || (status === UploadResultStatus.SUCCESS ? responseData?.fileUpload : undefined);
+      if (record) {
+        fileList.push(record);
       }
     }
-    return fileList;
+    return fileList.filter((item) => !!item);
   }
 
   // 内嵌模式：删除/排序/上传完成后立即同步当前列表
