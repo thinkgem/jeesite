@@ -4,15 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.jeesite</groupId>
-	<artifactId>jeesite-module-web-ai</artifactId>
+	<artifactId>jeesite-ai</artifactId>
 	<version>5.20.0.springboot4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>JeeSite Web AI MCP</name>
+	<name>JeeSite AI</name>
 	<url>https://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
 	<modules>
+		<module>web-ai</module>
 		<module>web-ai-cms</module>
 		<module>web-ai-mcp</module>
 	</modules>
