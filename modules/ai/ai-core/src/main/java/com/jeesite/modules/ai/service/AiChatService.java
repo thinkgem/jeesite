@@ -735,7 +735,11 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	@Override
 	@Transactional
 	public void save(AiChat aiChat) {
-		super.save(aiChat);
+		if (aiChat.getIsNewRecord()){
+			dao.insert(aiChat);
+		}else{
+			dao.update(aiChat);
+		}
 	}
 
 	/**
@@ -745,7 +749,10 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	@Override
 	@Transactional
 	public void updateStatus(AiChat aiChat) {
-		super.updateStatus(aiChat);
+		if (StringUtils.isBlank(aiChat.getId())){
+			return;
+		}
+		dao.updateStatus(aiChat);
 	}
 
 	/**
@@ -755,7 +762,10 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	@Override
 	@Transactional
 	public void delete(AiChat aiChat) {
-		super.delete(aiChat);
+		if (StringUtils.isBlank(aiChat.getId())){
+			return;
+		}
+		dao.delete(aiChat);
 	}
 
 }

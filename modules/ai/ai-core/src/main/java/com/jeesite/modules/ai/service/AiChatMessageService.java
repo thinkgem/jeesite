@@ -83,7 +83,11 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	@Override
 	@Transactional
 	public void save(AiChatMessage aiChatMessage) {
-		super.save(aiChatMessage);
+		if (aiChatMessage.getIsNewRecord()){
+			dao.insert(aiChatMessage);
+		}else{
+			dao.update(aiChatMessage);
+		}
 	}
 
 	/**
@@ -93,7 +97,10 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	@Override
 	@Transactional
 	public void updateStatus(AiChatMessage aiChatMessage) {
-		super.updateStatus(aiChatMessage);
+		if (StringUtils.isBlank(aiChatMessage.getId())){
+			return;
+		}
+		dao.updateStatus(aiChatMessage);
 	}
 
 	/**
@@ -103,7 +110,10 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	@Override
 	@Transactional
 	public void delete(AiChatMessage aiChatMessage) {
-		super.delete(aiChatMessage);
+		if (StringUtils.isBlank(aiChatMessage.getId())){
+			return;
+		}
+		dao.delete(aiChatMessage);
 	}
 
 	// ==================== 消息存储 ====================

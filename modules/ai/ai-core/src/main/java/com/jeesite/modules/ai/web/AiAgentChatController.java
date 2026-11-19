@@ -114,7 +114,7 @@ public class AiAgentChatController extends BaseController {
 	 */
 	@PostMapping("save")
 	public AiChat save(AiChat aiChat) {
-		Global.assertDemoMode();
+		// 演示模式下也允许对话（会话、消息均为当前用户自己的数据）
 		return aiChatService.saveChatConversation(aiChat);
 	}
 
@@ -123,7 +123,6 @@ public class AiAgentChatController extends BaseController {
 	 */
 	@GetMapping("delete")
 	public String delete(String id) {
-		Global.assertDemoMode();
 		if (aiChatService.getChatConversation(id) == null) {
 			throw new ServiceException("对话不存在或无权访问：" + id);
 		}
@@ -136,7 +135,6 @@ public class AiAgentChatController extends BaseController {
 	 */
 	@PostMapping("file/save")
 	public String fileSave(@RequestParam String id, String fileUploadIds, String delFileUploadIds) {
-		Global.assertDemoMode();
 		aiChatService.saveChatFile(id, fileUploadIds, delFileUploadIds);
 		return renderResult(Global.TRUE, text("保存成功"), id);
 	}
@@ -164,7 +162,7 @@ public class AiAgentChatController extends BaseController {
 	 */
 	@PostMapping("saveModel")
 	public String saveModel(String id, String modelCode) {
-		Global.assertDemoMode();
+		// 演示模式下也允许切换模型，保证对话界面可正常使用
 		if (StringUtils.isBlank(modelCode)) {
 			throw new ServiceException("请选择模型");
 		}
@@ -215,7 +213,6 @@ public class AiAgentChatController extends BaseController {
 	@PostMapping(value = "regenerate", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<AiChatCompletion> regenerate(@RequestParam String id,
 			@RequestParam String agentId, String messageId) {
-		Global.assertDemoMode();
 		if (StringUtils.isBlank(agentId)) {
 			throw new ServiceException("请选择智能体");
 		}
