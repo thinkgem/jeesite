@@ -321,7 +321,12 @@
       }
 
       &-header {
-        padding: 14px;
+        display: flex;
+        align-items: center;
+        // 与抽屉统一：标题栏高度 52px
+        height: 52px;
+        padding: 0 16px;
+        box-sizing: border-box;
         margin-bottom: 0;
         border-bottom: 1px solid fade(@border-color-base, 50%);
         border-radius: 10px 10px 0 0;
@@ -341,8 +346,11 @@
         position: absolute;
         top: 0;
         right: 0;
+        display: flex;
+        align-items: center;
+        // 与标题栏等高，图标靠 flex 垂直居中
+        height: 52px;
         width: auto;
-        height: auto;
         font-weight: normal;
         outline: none;
 
@@ -417,19 +425,71 @@
   //   }
   // }
 
+  // 右下角拖拽缩放手柄（basicProps.resizable 为 true 时由 useModalResize 动态插入）
+  .jeesite-modal-resizer {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    z-index: 9;
+    width: 16px;
+    height: 16px;
+    pointer-events: auto;
+    cursor: nwse-resize;
+    touch-action: none;
+  }
+
+  // 拖拽缩放后的尺寸：antd 的 Panel 每次渲染都会用 props 的 width/height 重写内联样式，
+  // 因此改用标记属性 + CSS 变量 + !important 接管，避免关闭/重渲染时闪回原始尺寸
+  .ant-modal[data-resized='true'] {
+    width: var(--jeesite-modal-width, auto) !important;
+    height: var(--jeesite-modal-height, auto) !important;
+    max-width: none !important;
+  }
+
+  // 最大化时卡片与视口之间的边距
+  @fullscreen-gap: 8px;
+
   .fullscreen-modal {
     overflow: hidden;
+
+    // 全屏已铺满视口，不再提供缩放手柄
+    .jeesite-modal-resizer {
+      display: none;
+    }
 
     .ant-modal {
       top: 0 !important; /* stylelint-disable-line */
       right: 0 !important; /* stylelint-disable-line */
       bottom: 0 !important; /* stylelint-disable-line */
       left: 0 !important; /* stylelint-disable-line */
-      width: 100% !important;
-      max-width: calc(100vw - 15px) !important;
+      // 四周留出边距：居中布局会把差额平均分配到上下、左右
+      width: calc(100% - @fullscreen-gap * 2) !important;
+      max-width: calc(100vw - @fullscreen-gap * 2) !important;
+      height: calc(100% - @fullscreen-gap * 2) !important;
+    }
 
-      &-content {
+    // antdv-next 的内容层类名是 -container（-content 已不存在），撑满后由 flex 分配高度
+    .ant-modal-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .ant-modal-body {
+      flex: 1;
+      min-height: 0;
+
+      > .scrollbar,
+      > .scrollbar > .scrollbar__wrap,
+      > .scrollbar > .scrollbar__wrap > .scrollbar__view {
         height: 100%;
+      }
+
+      // 全屏时 ModalWrapper 会写内联高度（按页头/页脚估算），这里统一改成撑满
+      .spinDiv {
+        height: 100% !important;
+        max-height: none !important;
       }
     }
   }

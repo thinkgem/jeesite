@@ -53,6 +53,13 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
       }
 
       document.onmousemove = function (e) {
+        // 鼠标在浏览器窗口外松开时收不到 mouseup，按键状态兜底结束拖拽，
+        // 否则 mousemove 会残留，之后随便动鼠标都会把弹窗拖走（看起来像弹窗消失了）
+        if (e.buttons === 0) {
+          document.onmousemove = null;
+          document.onmouseup = null;
+          return;
+        }
         // 通过事件委托，计算移动的距离
         let left = e.clientX - disX;
         let top = e.clientY - disY;

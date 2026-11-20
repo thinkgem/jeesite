@@ -50,12 +50,15 @@
 </script>
 <style lang="less">
   .jeesite-basic-modal-close {
-    float: right;
+    // 父级 .ant-modal-close 已是 52px 高的 flex 容器，这里只负责水平排布与垂直居中
+    display: flex;
+    align-items: center;
+    height: 100%;
     text-align: right;
     margin-right: 10px;
 
     .jeesite-icon {
-      padding: 16px 9px;
+      padding: 0 9px;
       font-size: 18px;
       color: @text-color-base !important;
       cursor: pointer;

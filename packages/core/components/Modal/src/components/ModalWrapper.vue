@@ -20,7 +20,8 @@
   const props = defineProps({
     loading: { type: Boolean },
     useWrapper: { type: Boolean, default: true },
-    modalHeaderHeight: { type: Number, default: 57 },
+    // 与 BasicModal 的标题栏高度（52px）保持一致，避免内容高度被多算/少算
+    modalHeaderHeight: { type: Number, default: 52 },
     modalFooterHeight: { type: Number, default: 74 },
     minHeight: { type: Number, default: 100 },
     height: { type: Number },

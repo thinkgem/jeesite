@@ -9,6 +9,8 @@ export const modalProps = {
   minHeight: { type: Number },
   // open drag
   draggable: { type: Boolean, default: true },
+  // 是否允许在右下角拖拽改变大小
+  resizable: { type: Boolean, default: true },
   centered: { type: Boolean, default: true },
   cancelText: { type: String },
   okText: { type: String },

@@ -6,7 +6,7 @@
 import { ref, unref, computed, watch } from 'vue';
 import { useUpload } from './useUpload';
 import { useMessage } from '@jeesite/core/hooks/web/useMessage';
-import { FileItem, UploadResultStatus, ChunkItem } from './typing';
+import { FileItem, UploadResultStatus } from './typing';
 import { createTableColumns, createActionColumn, getListType } from './data';
 import { checkImgType, getBase64WithFile, getFileUploadId, formatSize } from './helper';
 import { buildUUID } from '@jeesite/core/utils/uuid';
