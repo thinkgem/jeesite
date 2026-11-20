@@ -264,7 +264,8 @@
   });
 </script>
 <style lang="less">
-  @header-height: 60px;
+  // 标题栏高度：与对话框（BasicModal）保持统一
+  @header-height: 52px;
   @detail-header-height: 40px;
   @prefix-cls-detail: ~'jeesite-basic-drawer__detail';
 
@@ -286,6 +287,16 @@
     }
 
     .ant-drawer {
+      &-header {
+        // 与对话框统一：标题栏高度 52px
+        // 注意：antd 默认 flex: 0（flex-basis: 0），而内容是纵向 flex 布局，主轴尺寸优先取 flex-basis，
+        // 只写 height 会被忽略（去掉上下 padding 后高度直接变 0），必须把 basis 改回 auto
+        flex: 0 0 auto;
+        height: @header-height;
+        padding: 0 24px;
+        box-sizing: border-box;
+      }
+
       &-body {
         height: calc(100% - @header-height);
         padding: 0;
@@ -364,6 +375,8 @@
       }
 
       &-header {
+        // 同上：纵向 flex 下需把 flex-basis 改为 auto，height 才生效
+        flex: 0 0 auto;
         width: 100%;
         height: @detail-header-height;
         padding: 0;
