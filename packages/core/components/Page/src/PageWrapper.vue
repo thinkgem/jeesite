@@ -165,6 +165,9 @@
     },
     contentBackground: propTypes.bool.def(true),
     contentFullHeight: propTypes.bool,
+    // 高度完全交给 CSS（flex 自适应），不做 JS 高度计算：
+    // 用于需要「首帧就是最终高度」的页面，避免 JS 计算完成前后内容位置跳动
+    cssFullHeight: propTypes.bool.def(false),
     contentMinHeight: propTypes.number.def(300),
     contentMinWidth: propTypes.number.def(300), // 防止侧边栏拖拽过大，导致内容宽度过小
     contentClass: propTypes.string,
@@ -236,6 +239,7 @@
       'jeesite-page-wrapper',
       {
         ['jeesite-page-wrapper--dense']: props.dense || sidebar.value || sidebarRight.value,
+        ['jeesite-page-wrapper--css-full-height']: props.cssFullHeight,
       },
       attrs.class ?? {},
     ];
@@ -256,6 +260,10 @@
 
   const getContentStyle = computed((): CSSProperties => {
     const { contentFullHeight, contentMinHeight, contentStyle, fixedHeight } = props;
+    // cssFullHeight：高度由 CSS flex 决定，不设 minHeight，避免首帧与计算后的高度差造成内容位置跳动
+    if (props.cssFullHeight) {
+      return { ...contentStyle, marginBottom: 0 };
+    }
     const h = (unref(contentHeight) || 800) - (!(sidebar.value || sidebarRight.value) ? -13 : 0);
     const height = `${h < contentMinHeight ? contentMinHeight : h}px`;
 
@@ -279,6 +287,8 @@
 
   const sidebarContentHeight = ref(0);
   const getSidebarContentStyle = computed((): CSSProperties => {
+    // cssFullHeight 由 CSS 撑满，不用 JS 计算的高度，避免出现两套高度
+    if (props.cssFullHeight) return {};
     if (sidebarContentHeight.value <= 0) return {};
     return {
       height: `${sidebarContentHeight.value}px`,
@@ -288,6 +298,8 @@
 
   // 自适应侧边栏高度 by think gem
   function calcSidebarContentHeight() {
+    // cssFullHeight 页面不参与 JS 高度计算
+    if (props.cssFullHeight) return;
     const { contentFullHeight, contentMinHeight } = props;
     if (contentFullHeight && contentHeight.value) {
       const height = contentHeight.value - 4;
@@ -482,6 +494,31 @@
         margin: 0;
         padding: 0;
         //border-radius: 0;
+      }
+    }
+
+    // 高度完全交给 CSS：占满可用高度，内容区用 flex 自适应。
+    // 首帧即为最终高度，不再等 JS 计算完再调整，避免内容位置闪一下
+    &.jeesite-page-wrapper--css-full-height {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+
+      .jeesite-page-wrapper-content {
+        flex: 1 1 auto;
+        height: auto;
+        min-height: 0;
+      }
+
+      // 侧栏容器与内容列一起撑满内容区
+      .jeesite-page-wrapper-content > .ant-layout {
+        height: 100%;
+        min-height: 0;
+      }
+
+      .jeesite-page-wrapper-content > .ant-layout > .ant-layout-content {
+        min-height: 0;
       }
     }
 
