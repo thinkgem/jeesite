@@ -61,6 +61,13 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 
 	/** 聊天会话上传图片的业务类型，用于关联、读取多模态识图文件 */
 	public static final String BIZ_TYPE_CHAT = "ai-agent-chat";
+	/**
+	 * 隐藏上下文的起始标记（如前端附带的可填写表单字段结构）。
+	 * 标记独占一行，前端以「换行 + 标记」拼接，后端按同样形式裁剪，
+	 * 不会像「两个换行」那样误伤用户正文里的空行；
+	 * 与前端 AI_HIDDEN_CONTEXT_MARK（ai-lib/components/ChatMessage/agentStream.ts）保持一致。
+	 */
+	public static final String HIDDEN_CONTEXT_MARK = "=== AI_HIDDEN_CONTEXT ===";
 	/** 对话类型：文本 */
 	public static final String CHAT_TYPE_TEXT = "text";
 	/** 参与上下文的历史消息最大条数 */
@@ -403,7 +410,10 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		// 本轮提交的图片：先取出，用于多模态识图，并记录到消息上供历史回显（前端提交后会清空会话上的图片关联）
 		List<FileUpload> fileUploadList = findChatFileUploadList(aiChat);
 		// 识图：将对话上传的图片转换为多模态消息（注意：智能体使用的模型需支持多模态，如 qwen-vl-plus、gpt-4o）
-		messages.add(UserMessage.builder().text(aiChatMessage.getMsgText()).media(toChatMedia(fileUploadList)).build());
+		// 完整内容（含隐藏上下文）优先用于模型推理；消息内容只保存用户原文
+		String modelText = StringUtils.isNotEmpty(aiChatMessage.getMsgFullText())
+				? aiChatMessage.getMsgFullText() : aiChatMessage.getMsgText();
+		messages.add(UserMessage.builder().text(modelText).media(toChatMedia(fileUploadList)).build());
 		// 用户消息在流结束时保存（含取消、异常），保存后回填编号，作为助手回复的父消息编号
 		aiChatMessage.setMsgType(AiChatMessageService.ROLE_USER);
 		aiChatMessageService.setChatMessageFiles(aiChatMessage, fileUploadList);
@@ -494,7 +504,15 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message) {
 		AiChatMessage aiChatMessage = new AiChatMessage();
 		aiChatMessage.setConvId(conversationId);
-		aiChatMessage.setMsgText(message);
+		// 前端可能在消息末尾附加隐藏上下文（如可填写表单的字段结构），用特殊标记分隔：
+		// 只把标记之前的用户原文保存为消息内容，完整内容用于模型推理，避免说明文字入库
+		int markIndex = message.indexOf("\n" + HIDDEN_CONTEXT_MARK);
+		if (markIndex > -1) {
+			aiChatMessage.setMsgText(StringUtils.trim(message.substring(0, markIndex)));
+			aiChatMessage.setMsgFullText(message);
+		} else {
+			aiChatMessage.setMsgText(message);
+		}
 		return chatStream(aiAgent, aiChatMessage);
 	}
 

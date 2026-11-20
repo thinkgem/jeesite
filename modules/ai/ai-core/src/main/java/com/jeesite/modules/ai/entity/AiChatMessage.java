@@ -42,6 +42,7 @@ public class AiChatMessage extends DataEntity<AiChatMessage> {
 	protected String msgType;		// 消息类型
 	protected String modelCode;		// 模型编码
 	protected String msgText;		// 消息内容
+	protected String msgFullText;	// 完整消息内容（含隐藏上下文，仅用于模型推理，不入库）
 	protected String msgThink;		// 思考内容
 	protected String msgMetadata;		// 消息元数据
 	protected Integer totalTokens;		// 消耗Token数
@@ -97,6 +98,18 @@ public class AiChatMessage extends DataEntity<AiChatMessage> {
 
 	public void setMsgText(String msgText) {
 		this.msgText = msgText;
+	}
+
+	/**
+	 * 完整消息内容：含前端附加的隐藏上下文（如可填写表单的字段结构），仅用于模型推理，不入库。
+	 * 消息内容 msgText 只保存用户原文。
+	 */
+	public String getMsgFullText() {
+		return msgFullText;
+	}
+
+	public void setMsgFullText(String msgFullText) {
+		this.msgFullText = msgFullText;
 	}
 	
 	public String getMsgThink() {
