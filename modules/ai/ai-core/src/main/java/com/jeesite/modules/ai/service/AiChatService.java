@@ -553,8 +553,10 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 			})
 			.doOnNext(response -> {
 				String text = getText(response);
-				// 工具事件分片的正文是带标记的事件载荷，不能计入回答内容
-				if (StringUtils.isNotBlank(text) && !AiToolEventUtils.isEventText(text)) {
+				// 工具事件分片的正文是带标记的事件载荷，不能计入回答内容。
+				// 注意：只能用 isNotEmpty，不能用 isNotBlank：流式输出中换行常单独成为一个分片
+				// （如 "\n"），按空白过滤会把正文里的单个换行整片丢掉，保存后消息被压成一行。
+				if (StringUtils.isNotEmpty(text) && !AiToolEventUtils.isEventText(text)) {
 					answer.append(text);
 				}
 				Map<String, Object> usage = aiChatMessageService.getChatUsage(response);
