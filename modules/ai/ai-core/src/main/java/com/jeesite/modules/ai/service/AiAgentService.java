@@ -15,6 +15,8 @@ import com.jeesite.common.service.ServiceException;
 import com.jeesite.modules.ai.dao.AiAgentDao;
 import com.jeesite.modules.ai.entity.*;
 import com.jeesite.modules.ai.factory.tool.AiToolCallbackWrapper;
+import com.jeesite.modules.ai.factory.tool.callback.AiAskUserTool;
+import com.jeesite.modules.ai.factory.tool.callback.AiTodoWriteTool;
 import com.jeesite.modules.ai.utils.AiMcpUtils;
 import com.jeesite.modules.ai.utils.AiModelUtils;
 import com.jeesite.modules.ai.utils.AiToolUtils;
@@ -49,11 +51,52 @@ import java.util.Set;
  * <ul>
  *   <li>options.qaPromptTemplate：知识库问答提示词模板，须包含 {question_answer_context} 占位符，
  *       可用 {query} 引用用户问题，为空则使用 {@link #DEFAULT_QA_PROMPT_TEMPLATE}</li>
+ *   <li>options.todoWrite：是否开启任务计划工具（把多步骤任务拆成任务清单并实时下发进度）</li>
  * </ul>
  * @author ThinkGem
  * @version 2026-11-14
  */
 public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
+
+	/**
+	 * 开启任务计划工具（options.todoWrite）时追加的系统提示词
+	 * <p>
+	 * 模型默认很少主动调用 {@code todo_write}，不引导则前端任务清单始终为空。
+	 */
+	public static final String TODO_WRITE_PROMPT = """
+
+			任务规划要求：
+			1. 需求需要 3 个以上步骤、或涉及多个文件 / 多个子任务时，先调用 todo_write 建立任务清单，再开始执行；
+			2. 任务是「工作单元」，不等于一次工具调用：一个任务可能包含多次工具调用、分析推理、查询确认，
+			   也可能不需要调用任何工具（例如梳理方案、汇总结论），不要为每次工具调用新建任务；
+			3. 任务之间可以有先后依赖和中断（例如中途等用户选择方向、等待确认），中断恢复后继续推进未完成的任务；
+			4. 开始某项任务前，调用 todo_write 把该任务改为 in_progress，同一时刻最多只保留一个 in_progress；
+			5. 该任务的全部工作都完成后再改为 completed，不要因为调用了一次工具就标记完成，也不要把多项攒到最后一次性更新；
+			6. 任务受阻或不再需要时标记 cancelled，并在回答里说明原因；
+			7. 每次提交完整的任务列表（含已完成项），不要只提交本次变更的项；
+			8. 简单的单步问答不要建任务清单。
+			""";
+
+	/**
+	 * 任务方向确认的引导提示词（模型可调用 ask_user 向用户提问时追加）
+	 */
+	public static final String ASK_USER_PROMPT = """
+
+			任务方向确认：遇到下列任一情况，必须先用 ask_user 与用户确认，不得自行假设后直接执行：
+			1. 存在多个明显不同的方向或方案（改哪个对象、做哪个范围、用哪种实现），选错代价明显；
+			2. 缺少推进必需的关键信息（对象、范围、环境、数据源、时间范围），且无法从上下文或历史消息推断；
+			3. 操作有破坏性或不可逆（删除、覆盖、批量修改、发布上线、变更权限）；
+			4. 需求内部矛盾，或与现有实现冲突，需要用户取舍。
+
+			以下情况不要提问：能从上下文推断、有明确默认值、单步且影响很小的改动。
+
+			提问方式：
+			- 必须调用 ask_user 工具，不要在回答正文里直接向用户发问，否则界面无法显示可选项；
+			- header 用一句话说清要用户决定什么；question 简要说明各选项差异；
+			- options 给 2-4 个，label 必填且互斥，description 说明该选项的影响或后果；
+			- allowCustom 保持 true，允许用户自由补充；
+			- 用户回答后按选择执行，不要重复询问同一个问题。
+			""";
 
 	/**
 	 * 知识库问答默认提示词模板（{question_answer_context} 为检索到的参考资料，{query} 为用户问题）
@@ -108,11 +151,29 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	 * @param aiAgent 智能体
 	 */
 	public ChatClient getChatClient(AiAgent aiAgent) {
+		return getChatClient(aiAgent, null);
+	}
+
+	/**
+	 * 按智能体构建 ChatClient，并绑定本轮运行的事件流
+	 * @param aiAgent 智能体
+	 * @param runId 本轮对话运行编号（工具调用事件按它回传，为空则不推送事件）
+	 */
+	public ChatClient getChatClient(AiAgent aiAgent, String runId) {
 		ChatClient.Builder builder = AiModelUtils.chatClientBuilder(getAgentModel(aiAgent));
-		if (StringUtils.isNotBlank(aiAgent.getSystemPrompt())) {
-			builder.defaultSystem(aiAgent.getSystemPrompt());
+		String systemPrompt = StringUtils.defaultString(aiAgent.getSystemPrompt());
+		// 开启任务计划工具时追加引导：模型默认很少主动调用 todo_write，不引导则任务清单永远是空的
+		if (isTodoWriteEnabled(aiAgent)) {
+			systemPrompt = systemPrompt + TODO_WRITE_PROMPT;
 		}
-		List<ToolCallback> toolCallbacks = getAgentToolCallbacks(aiAgent);
+		// 流式对话注册了提问工具，追加引导，避免模型在方向不明时直接猜测执行
+		if (StringUtils.isNotBlank(runId)) {
+			systemPrompt = systemPrompt + ASK_USER_PROMPT;
+		}
+		if (StringUtils.isNotBlank(systemPrompt)) {
+			builder.defaultSystem(systemPrompt);
+		}
+		List<ToolCallback> toolCallbacks = getAgentToolCallbacks(aiAgent, runId);
 		if (ListUtils.isNotEmpty(toolCallbacks)) {
 			builder.defaultTools(toolCallbacks);
 		}
@@ -124,16 +185,17 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	}
 
 	/**
-	 * 获取智能体绑定的工具回调（工具 + MCP 服务）
+	 * 获取智能体绑定的工具回调（工具 + MCP 服务），并绑定本轮运行编号
 	 * @param aiAgent 智能体
+	 * @param runId 本轮对话运行编号（工具调用事件按它回传）
 	 */
-	public List<ToolCallback> getAgentToolCallbacks(AiAgent aiAgent) {
+	public List<ToolCallback> getAgentToolCallbacks(AiAgent aiAgent, String runId) {
 		List<ToolCallback> callbacks = ListUtils.newArrayList();
 		// 工具名称统一使用工具编码（模型侧函数名），编码为主键，天然不会重名
 		Set<String> usedNames = new HashSet<>();
 		for (String toolCode : getAgentToolCodes(aiAgent)) {
 			for (ToolCallback callback : AiToolUtils.getToolCallbacks(ListUtils.newArrayList(toolCode))) {
-				addToolCallback(callbacks, usedNames, callback, toolCode);
+				addToolCallback(callbacks, usedNames, callback, toolCode, runId);
 			}
 		}
 		// MCP 服务挂载的工具：按与同步一致的编码规则（mcpCode_工具名）命名，
@@ -146,18 +208,39 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 						continue;
 					}
 					addToolCallback(callbacks, usedNames, callback,
-							AiToolUtils.buildMcpToolCode(mcpCode, definition.name()));
+							AiToolUtils.buildMcpToolCode(mcpCode, definition.name()), runId);
 				}
 			} catch (Exception e) {
 				// MCP 服务异常不影响对话，记录日志后跳过
 				logger.warn("MCP 服务加载失败：{}，{}", mcpCode, e.getMessage());
 			}
 		}
+		// 任务计划工具：仅在流式对话（有 runId）时注册，事件随流下发，前端渲染任务进度
+		if (StringUtils.isNotBlank(runId) && isTodoWriteEnabled(aiAgent)) {
+			callbacks.add(new AiTodoWriteTool(runId));
+		}
+		// 任务方向确认工具：方向不明确时向用户提问，阻塞等待选择后继续
+		if (StringUtils.isNotBlank(runId)) {
+			callbacks.add(new AiAskUserTool(runId));
+		}
 		return callbacks;
 	}
 
 	/**
-	 * 以工具编码作为模型侧函数名包装工具回调。
+	 * 是否开启任务计划工具（智能体选项 options.todoWrite）
+	 * @param aiAgent 智能体
+	 */
+	protected boolean isTodoWriteEnabled(AiAgent aiAgent) {
+		Map<String, Object> options = aiAgent == null ? null : aiAgent.getOptionMap();
+		Object value = options == null ? null : options.get(AiTodoWriteTool.OPTION_ENABLED);
+		if (value instanceof Boolean bool) {
+			return bool;
+		}
+		return "true".equalsIgnoreCase(StringUtils.defaultString(value == null ? null : value.toString()));
+	}
+
+	/**
+	 * 以工具编码作为模型侧函数名包装工具回调，并绑定本轮运行的事件流
 	 * <p>
 	 * 仅修改工具定义中的名称，执行仍委托原回调，因此不影响本地 Bean/HTTP 工具的调用逻辑，
 	 * 也不影响 MCP 工具按远端原始名称调用；工具编码相同即同一工具，重复的跳过。
@@ -165,9 +248,10 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	 * @param usedNames 已注册的工具名称（即工具编码）
 	 * @param callback 工具回调
 	 * @param toolCode 工具编码
+	 * @param runId 本轮对话运行编号（为空则只变更名称、不推送事件）
 	 */
 	protected void addToolCallback(List<ToolCallback> callbacks, Set<String> usedNames,
-			ToolCallback callback, String toolCode) {
+			ToolCallback callback, String toolCode, String runId) {
 		if (callback.getToolDefinition() == null) {
 			return;
 		}
@@ -176,7 +260,7 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 			// 名称为空或同一工具（编码相同）已注册，跳过
 			return;
 		}
-		callbacks.add(new AiToolCallbackWrapper(callback, toolName));
+		callbacks.add(new AiToolCallbackWrapper(callback, toolName, runId));
 	}
 
 	/**

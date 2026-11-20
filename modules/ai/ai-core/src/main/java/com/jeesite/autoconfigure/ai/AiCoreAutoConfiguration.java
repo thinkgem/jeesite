@@ -70,15 +70,18 @@ public class AiCoreAutoConfiguration {
 	public AiChatMessageService aiChatMessageService() {
 		return new AiChatMessageService();
 	}
-
+	
 	/**
 	 * AI聊天对话 Service
 	 */
 	@Bean
 	@ConditionalOnMissingBean
 	public AiChatService aiChatService(AiAgentService aiAgentService,
-			AiChatMessageService aiChatMessageService) {
-		return new AiChatService(aiAgentService, aiChatMessageService);
+			AiChatMessageService aiChatMessageService, AiToolConfirmService aiToolConfirmService) {
+		AiChatService aiChatService = new AiChatService(aiAgentService, aiChatMessageService);
+		// 注入工具执行确认处理器：由 ai.tool.confirmMode 配置决定是否需要确认
+		aiChatService.setToolConfirmService(aiToolConfirmService);
+		return aiChatService;
 	}
 
 }

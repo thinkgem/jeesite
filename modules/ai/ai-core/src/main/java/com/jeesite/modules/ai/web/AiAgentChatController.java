@@ -18,6 +18,7 @@ import com.jeesite.modules.ai.entity.AiModel;
 import com.jeesite.modules.ai.service.AiAgentService;
 import com.jeesite.modules.ai.service.AiChatMessageService;
 import com.jeesite.modules.ai.service.AiChatService;
+import com.jeesite.modules.ai.service.AiToolConfirmService;
 import com.jeesite.modules.ai.utils.AiModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -45,6 +46,9 @@ public class AiAgentChatController extends BaseController {
 
 	@Autowired
 	private AiChatService aiChatService;
+
+	@Autowired
+	private AiToolConfirmService aiToolConfirmService;
 
 	/**
 	 * 对话消息列表（消息表）
@@ -95,6 +99,15 @@ public class AiAgentChatController extends BaseController {
 			List<Map<String, Object>> fileList = aiChatService.getChatMessageFiles(aiChatMessage);
 			if (fileList != null) {
 				item.put("fileList", fileList);
+			}
+			// 已执行的工具步骤与任务列表（元数据 JSON），前端回显工具卡片与任务进度
+			List<Map<String, Object>> steps = aiChatService.getChatMessageToolSteps(aiChatMessage);
+			if (steps != null) {
+				item.put("steps", steps);
+			}
+			List<Map<String, Object>> taskList = aiChatService.getChatMessageTaskList(aiChatMessage);
+			if (taskList != null) {
+				item.put("taskList", taskList);
 			}
 			list.add(item);
 		}
@@ -200,6 +213,71 @@ public class AiAgentChatController extends BaseController {
 			throw new ServiceException("智能体不存在：" + agentId);
 		}
 		return AiChatCompletion.streamOf(aiChatService.chatStream(agent, id, message));
+	}
+
+	/**
+	 * 工具执行确认（用户对「等待确认」的工具调用提交决策）
+	 * <p>
+	 * 工具执行在流式响应的异步线程中挂起等待，本接口只负责唤醒，SSE 连接保持不中断，
+	 * 因此返回 {@code continue: false}（表示前端无需再发起新的对话请求）。
+	 * @param runId 本轮运行编号（confirm_required 事件下发）
+	 * @param toolCallId 工具调用编号
+	 * @param decision 决策：once 本次运行、always 始终运行、deny 拒绝
+	 */
+	@PostMapping("confirm")
+	public String confirm(String runId, String toolCallId, String decision) {
+		if (StringUtils.isBlank(runId) || StringUtils.isBlank(toolCallId)) {
+			throw new ServiceException("确认参数不完整");
+		}
+		if (!aiToolConfirmService.confirm(runId, toolCallId, decision)) {
+			throw new ServiceException("该确认已超时或已处理，请等待本轮对话结束");
+		}
+		Map<String, Object> data = MapUtils.newHashMap();
+		data.put("continue", Boolean.FALSE);
+		return renderResult(Global.TRUE, text("已提交"), data);
+	}
+
+	/**
+	 * 工具确认配置：是否开启执行前确认（ai.tool.confirmMode 不为 none）
+	 * <p>
+	 * 未开启时工具调用不会产生确认请求，「工具确认设置」入口没有意义，前端不显示。
+	 */
+	@GetMapping("toolConfirm/config")
+	public String toolConfirmConfig() {
+		Map<String, Object> data = MapUtils.newHashMap();
+		data.put("confirmMode", aiToolConfirmService.getConfirmMode());
+		data.put("confirmEnabled", aiToolConfirmService.isConfirmEnabled());
+		return renderResult(Global.TRUE, text(""), data);
+	}
+
+	/**
+	 * 当前用户已允许「始终运行」的工具编码列表
+	 */
+	@GetMapping("toolConfirm/list")
+	public List<String> toolConfirmList() {
+		return aiToolConfirmService.getAlwaysAllowTools();
+	}
+
+	/**
+	 * 撤销某个工具的「始终运行」，恢复为执行前确认
+	 * @param toolCode 工具编码
+	 */
+	@PostMapping("toolConfirm/remove")
+	public String toolConfirmRemove(String toolCode) {
+		if (StringUtils.isBlank(toolCode)) {
+			throw new ServiceException("请指定工具编码");
+		}
+		boolean removed = aiToolConfirmService.removeAlwaysAllow(toolCode);
+		return renderResult(Global.TRUE, text(removed ? "已恢复执行前确认" : "该工具未设置始终运行"), removed);
+	}
+
+	/**
+	 * 撤销当前用户全部「始终运行」
+	 */
+	@PostMapping("toolConfirm/clear")
+	public String toolConfirmClear() {
+		int count = aiToolConfirmService.clearAlwaysAllow();
+		return renderResult(Global.TRUE, text("已恢复执行前确认：" + count + " 个工具"), count);
 	}
 
 	/**

@@ -47,6 +47,10 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	public static final String ROLE_SYSTEM = "system";
 	/** 消息元数据：本轮提交的图片或文件列表 */
 	public static final String METADATA_FILES = "files";
+	/** 消息元数据：已执行的工具步骤 */
+	public static final String METADATA_STEPS = "steps";
+	/** 消息元数据：任务列表 */
+	public static final String METADATA_TASKS = "taskList";
 
 	/**
 	 * 获取单条数据
@@ -345,6 +349,98 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 	}
 
 	/**
+	 * 设置消息的已执行工具步骤（消息元数据 JSON，历史消息回显工具卡片）
+	 * @param aiChatMessage 消息
+	 * @param steps 工具步骤（stepId、title、toolName、args、status、result 等）
+	 */
+	public void setChatMessageToolSteps(AiChatMessage aiChatMessage, List<Map<String, Object>> steps) {
+		if (steps == null || steps.isEmpty()) {
+			return;
+		}
+		appendChatMessageMetadata(aiChatMessage, METADATA_STEPS, steps);
+	}
+
+	/**
+	 * 设置消息的任务列表（消息元数据 JSON，历史消息回显任务进度）
+	 * @param aiChatMessage 消息
+	 * @param tasks 任务项（id、title、status）
+	 */
+	public void setChatMessageTaskList(AiChatMessage aiChatMessage, List<Map<String, Object>> tasks) {
+		if (tasks == null || tasks.isEmpty()) {
+			return;
+		}
+		appendChatMessageMetadata(aiChatMessage, METADATA_TASKS, tasks);
+	}
+
+	/**
+	 * 获取消息的已执行工具步骤（消息元数据 JSON）
+	 * @param aiChatMessage 消息
+	 */
+	public List<Map<String, Object>> getChatMessageToolSteps(AiChatMessage aiChatMessage) {
+		return getChatMessageList(aiChatMessage, METADATA_STEPS);
+	}
+
+	/**
+	 * 获取消息的任务列表（消息元数据 JSON）
+	 * @param aiChatMessage 消息
+	 */
+	public List<Map<String, Object>> getChatMessageTaskList(AiChatMessage aiChatMessage) {
+		return getChatMessageList(aiChatMessage, METADATA_TASKS);
+	}
+
+	/**
+	 * 追加消息元数据（保留已有的用量、价格等字段）
+	 */
+	protected void appendChatMessageMetadata(AiChatMessage aiChatMessage, String key, Object value) {
+		if (aiChatMessage == null || StringUtils.isBlank(key) || value == null) {
+			return;
+		}
+		Map<String, Object> metadata = getChatMessageMetadata(aiChatMessage);
+		if (metadata == null) {
+			metadata = MapUtils.newLinkedHashMap();
+		}
+		metadata.put(key, value);
+		try {
+			aiChatMessage.setMsgMetadata(JsonMapper.getInstance().writeValueAsString(metadata));
+		} catch (Exception e) {
+			logger.debug("序列化消息元数据失败：{}", e.getMessage());
+		}
+	}
+
+	/**
+	 * 读取元数据中的列表字段（JSON 转 List）
+	 */
+	protected List<Map<String, Object>> getChatMessageList(AiChatMessage aiChatMessage, String key) {
+		Map<String, Object> metadata = getChatMessageMetadata(aiChatMessage);
+		if (metadata == null) {
+			return null;
+		}
+		Object value = metadata.get(key);
+		List<?> list;
+		if (value instanceof List<?> valueList) {
+			list = valueList;
+		} else if (value instanceof String text && StringUtils.isNotBlank(text)) {
+			// 兼容被序列化为 JSON 字符串的列表
+			try {
+				list = JsonMapper.getInstance().readValue(text, List.class);
+			} catch (Exception e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+		List<Map<String, Object>> result = ListUtils.newArrayList();
+		for (Object item : list) {
+			if (item instanceof Map<?, ?> itemMap) {
+				Map<String, Object> row = MapUtils.newHashMap();
+				itemMap.forEach((mapKey, mapValue) -> row.put(String.valueOf(mapKey), mapValue));
+				result.add(row);
+			}
+		}
+		return result.isEmpty() ? null : result;
+	}
+
+	/**
 	 * 获取模型的价格配置（options.price）
 	 * <p>
 	 * 格式示例：{@code {"input":0.002,"output":0.008,"cache":0.0005,"unit":"1K","currency":"CNY"}}，
@@ -519,9 +615,11 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 			usageMap.forEach((key, value) -> result.put(String.valueOf(key), value));
 			return result;
 		}
-		// 兼容早期直接平铺用量、且可能混入思考内容、文件列表的元数据
+		// 兼容早期直接平铺用量、且可能混入思考内容、文件列表、工具步骤的元数据
 		metadata.remove(AiThinkUtils.REASONING_CONTENT);
 		metadata.remove(METADATA_FILES);
+		metadata.remove(METADATA_STEPS);
+		metadata.remove(METADATA_TASKS);
 		return metadata.isEmpty() ? null : metadata;
 	}
 

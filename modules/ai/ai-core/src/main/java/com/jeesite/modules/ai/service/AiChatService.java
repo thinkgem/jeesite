@@ -6,6 +6,7 @@ package com.jeesite.modules.ai.service;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -17,6 +18,10 @@ import com.jeesite.modules.ai.entity.AiAgent;
 import com.jeesite.modules.ai.entity.AiChat;
 import com.jeesite.modules.ai.entity.AiChatMessage;
 import com.jeesite.modules.ai.entity.AiModel;
+import com.jeesite.modules.ai.factory.tool.AiToolConfirmHandler;
+import com.jeesite.modules.ai.factory.tool.AiToolEventContext;
+import com.jeesite.modules.ai.factory.tool.AiToolEventRegistry;
+import com.jeesite.modules.ai.factory.tool.AiToolEventUtils;
 import com.jeesite.modules.ai.utils.AiModelUtils;
 import com.jeesite.modules.ai.utils.AiThinkUtils;
 import com.jeesite.modules.ai.utils.AiToolContextUtils;
@@ -33,7 +38,9 @@ import org.springframework.ai.content.Media;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,11 +65,23 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	public static final String CHAT_TYPE_TEXT = "text";
 	/** 参与上下文的历史消息最大条数 */
 	public static final int MAX_HISTORY_SIZE = 20;
+
 	/** 单次对话携带的最大图片数 */
 	public static final int MAX_MEDIA_SIZE = 3;
 
 	protected final AiAgentService aiAgentService;
 	protected final AiChatMessageService aiChatMessageService;
+
+	/**
+	 * 工具执行确认处理器（为空表示不需要确认）
+	 * <p>
+	 * 由 {@code AiCoreAutoConfiguration} 注入；未注入时工具事件照常下发，只是不产生 confirm_required。
+	 */
+	protected AiToolConfirmHandler toolConfirmService;
+
+	public void setToolConfirmService(AiToolConfirmHandler toolConfirmService) {
+		this.toolConfirmService = toolConfirmService;
+	}
 
 	/**
 	 * 构造注入
@@ -501,8 +520,10 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	protected Flux<ChatResponse> streamChat(AiAgent aiAgent, List<Message> messages,
 			AiChatMessage userMessage, List<AiChatMessage> discardMessages) {
 		AiModel aiModel = aiAgentService.getAgentModel(aiAgent);
-		// 按智能体构建 ChatClient（含工具调用与知识库检索）
-		ChatClient chatClient = aiAgentService.getChatClient(aiAgent);
+		// 本轮运行编号：工具执行线程可能不在当前 Reactor 上下文内，工具事件按它回传
+		String runId = IdGen.nextId();
+		// 按智能体构建 ChatClient（含工具调用与知识库检索），工具回调绑定本轮运行编号
+		ChatClient chatClient = aiAgentService.getChatClient(aiAgent, runId);
 		// 记录本次调用实际使用的模型（智能体后续切换模型不影响历史消息的成本核算）
 		String modelCode = getModelCode(aiModel);
 		String conversationId = userMessage != null ? userMessage.getConvId() : null;
@@ -511,6 +532,8 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		AtomicReference<Map<String, Object>> usageRef = new AtomicReference<>();
 		// 深度思考内容（跨分片累积），流结束时保存到消息的思考内容字段，供历史消息回显
 		AtomicReference<String> reasoningRef = new AtomicReference<>(StringUtils.EMPTY);
+		// 工具事件上下文（工具步骤、任务列表），流结束时随消息保存，供历史消息回显
+		AtomicReference<AiToolEventContext> eventRef = new AtomicReference<>();
 		// 累积器放 defer 内，保证每次订阅（含重新订阅）都从空开始
 		Flux<ChatResponse> flux = Flux.defer(() -> {
 			StringBuilder reasoning = new StringBuilder();
@@ -519,7 +542,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 				.map(response -> AiThinkUtils.normalize(response, reasoning))
 				.doOnNext(response -> reasoningRef.set(reasoning.toString()));
 		});
-		return flux
+		return mergeToolEvents(flux, runId, eventRef)
 			// 配置类异常转为可读提示（如工具名称重复），避免前端只显示通用错误
 			.onErrorMap(e -> {
 				String message = e.getMessage();
@@ -530,7 +553,8 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 			})
 			.doOnNext(response -> {
 				String text = getText(response);
-				if (StringUtils.isNotBlank(text)) {
+				// 工具事件分片的正文是带标记的事件载荷，不能计入回答内容
+				if (StringUtils.isNotBlank(text) && !AiToolEventUtils.isEventText(text)) {
 					answer.append(text);
 				}
 				Map<String, Object> usage = aiChatMessageService.getChatUsage(response);
@@ -554,6 +578,12 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 							assistantMessage.setMsgText(answer.toString());
 							aiChatMessageService.setChatUsage(assistantMessage, aiModel,
 									usageRef.get(), reasoningRef.get());
+							// 工具步骤与任务列表随消息保存，历史消息据此回显已执行的工具与任务进度
+							AiToolEventContext eventContext = eventRef.get();
+							if (eventContext != null) {
+								aiChatMessageService.setChatMessageToolSteps(assistantMessage, eventContext.getSteps());
+								aiChatMessageService.setChatMessageTaskList(assistantMessage, eventContext.getTaskList());
+							}
 							aiChatMessageService.saveChatMessage(assistantMessage);
 							// 重新生成成功：删除被替换的旧回复及其之后的对话
 							if (discardMessages != null) {
@@ -572,6 +602,45 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 			// 工具调用的会话同步：流式输出在异步线程执行，工具方法无法取到当前登录用户，
 			// 这里（请求线程）把当前会话用户写入 Reactor 上下文，供 AiToolSubjectAspect 绑定
 			.contextWrite(AiToolContextUtils.contextWrite());
+	}
+
+	/**
+	 * 把工具调用事件与模型输出汇聚为同一条有序流，并回传事件上下文
+	 * <p>
+	 * 工具在模型流的异步线程中执行，无法直接把事件写进 SSE 流；这里为每轮对话创建一个
+	 * {@link Sinks.Many} 作为唯一出口，模型分片与工具事件（tool_call / tool_result /
+	 * confirm_required / task_list）都写入该 sink，前端据此按实际发生顺序渲染
+	 * （思考 → 工具调用 → 工具结果 → 正文）。
+	 * <p>
+	 * 事件上下文按运行编号注册，工具执行时由回调包装器查表获取
+	 * （工具调用可能被调度到独立线程池，Reactor 上下文不保证可达）。
+	 * @param source 模型输出流
+	 * @param runId 本轮运行编号
+	 * @param eventRef 事件上下文引用（流结束时用于读取工具步骤与任务列表）
+	 */
+	protected Flux<ChatResponse> mergeToolEvents(Flux<ChatResponse> source, String runId,
+			AtomicReference<AiToolEventContext> eventRef) {
+		return Flux.defer(() -> {
+			Sinks.Many<ChatResponse> sink = Sinks.many().unicast().onBackpressureBuffer();
+			AiToolEventContext eventContext = new AiToolEventContext(runId, sink, toolConfirmService);
+			eventRef.set(eventContext);
+			// 注册事件上下文：工具回调据此下发 tool_call / tool_result / confirm_required
+			AiToolEventRegistry.register(runId, eventContext);
+			if (logger.isDebugEnabled()) {
+				logger.debug("工具事件通道已建立：runId={}，确认处理器={}", runId,
+						toolConfirmService != null ? "已注入" : "未注入（不会出现确认框）");
+			}
+			// 手动订阅：模型流在异步线程执行，需把事件上下文与登录会话一起写入上游上下文；
+			// 分片统一通过 emitResponse 串行写入，与工具事件共用同一把锁避免并发丢数据
+			Disposable disposable = source
+					.contextWrite(AiToolContextUtils.contextWrite())
+					.contextWrite(AiToolEventUtils.eventWrite(eventContext))
+					.subscribe(eventContext::emitResponse, sink::tryEmitError, sink::tryEmitComplete);
+			// 流结束（完成、异常、取消）时移除注册，避免内存泄漏
+			return sink.asFlux()
+					.doOnCancel(disposable::dispose)
+					.doFinally(signal -> AiToolEventRegistry.remove(runId));
+		});
 	}
 
 	/**
@@ -681,6 +750,22 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 */
 	public List<Map<String, Object>> getChatMessageFiles(AiChatMessage aiChatMessage) {
 		return aiChatMessageService.getChatMessageFiles(aiChatMessage);
+	}
+
+	/**
+	 * 获取消息的已执行工具步骤（元数据 JSON，历史消息回显）
+	 * @param aiChatMessage 消息
+	 */
+	public List<Map<String, Object>> getChatMessageToolSteps(AiChatMessage aiChatMessage) {
+		return aiChatMessageService.getChatMessageToolSteps(aiChatMessage);
+	}
+
+	/**
+	 * 获取消息的任务列表（元数据 JSON，历史消息回显）
+	 * @param aiChatMessage 消息
+	 */
+	public List<Map<String, Object>> getChatMessageTaskList(AiChatMessage aiChatMessage) {
+		return aiChatMessageService.getChatMessageTaskList(aiChatMessage);
 	}
 
 	// ==================== 私有方法 ====================
