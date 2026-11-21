@@ -179,8 +179,17 @@ public class HttpClientUtils {
 	 * 执行一个 http 请求，传递 HttpRequest 参数
 	 */
 	public static String executeRequest(HttpRequest request) {
+		return executeResponse(request).body();
+	}
+
+	/**
+	 * 执行一个 http 请求，传递 HttpRequest 参数，返回完整响应（含状态码与响应头）
+	 * <p>
+	 * 需要按状态码判断成功失败的场景使用；异常处理与 {@link #executeRequest(HttpRequest)} 一致。
+	 */
+	public static HttpResponse<String> executeResponse(HttpRequest request) {
 		try {
-			return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+			return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

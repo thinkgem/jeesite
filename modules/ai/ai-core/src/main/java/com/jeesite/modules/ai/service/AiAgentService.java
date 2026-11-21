@@ -14,9 +14,9 @@ import com.jeesite.common.service.CrudService;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.modules.ai.dao.AiAgentDao;
 import com.jeesite.modules.ai.entity.*;
-import com.jeesite.modules.ai.factory.tool.AiToolCallbackWrapper;
 import com.jeesite.modules.ai.factory.tool.callback.AiAskUserTool;
 import com.jeesite.modules.ai.factory.tool.callback.AiTodoWriteTool;
+import com.jeesite.modules.ai.factory.tool.callback.AiToolCallbackWrapper;
 import com.jeesite.modules.ai.utils.AiMcpUtils;
 import com.jeesite.modules.ai.utils.AiModelUtils;
 import com.jeesite.modules.ai.utils.AiToolUtils;
@@ -114,7 +114,6 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	protected final AiAgentToolService aiAgentToolService;
 	protected final AiAgentMcpService aiAgentMcpService;
 	protected final AiAgentVectorService aiAgentVectorService;
-	protected final AiVectorBizService aiVectorBizService;
 
 	/**
 	 * 构造注入
@@ -124,14 +123,12 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	 * @param aiAgentToolService 智能体与工具关联 Service
 	 * @param aiAgentMcpService 智能体与MCP服务关联 Service
 	 * @param aiAgentVectorService 智能体与向量库绑定关联 Service
-	 * @param aiVectorBizService 业务向量库绑定 Service
 	 */
 	public AiAgentService(AiAgentToolService aiAgentToolService, AiAgentMcpService aiAgentMcpService,
-			AiAgentVectorService aiAgentVectorService,AiVectorBizService aiVectorBizService) {
+			AiAgentVectorService aiAgentVectorService) {
 		this.aiAgentToolService = aiAgentToolService;
 		this.aiAgentMcpService = aiAgentMcpService;
 		this.aiAgentVectorService = aiAgentVectorService;
-		this.aiVectorBizService = aiVectorBizService;
 	}
 
 	/**
@@ -310,7 +307,7 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 		AiVectorBiz where = new AiVectorBiz();
 		where.setStatus(AiVectorBiz.STATUS_NORMAL);
 		where.sqlMap().getWhere().and("biz_type", QueryType.IN, vectorBizTypes);
-		for (AiVectorBiz vectorBiz : aiVectorBizService.findList(where)) {
+		for (AiVectorBiz vectorBiz : AiVectorUtils.getAiVectorBizService().findList(where)) {
 			vectorBizMap.put(vectorBiz.getBizType(), vectorBiz);
 		}
 		for (String vectorBizType : vectorBizTypes) {
@@ -402,7 +399,7 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 		}
 		AiVectorBiz where = new AiVectorBiz();
 		where.sqlMap().getWhere().and("biz_type", QueryType.IN, vectorBizTypes);
-		for (AiVectorBiz vectorBiz : aiVectorBizService.findList(where)) {
+		for (AiVectorBiz vectorBiz : AiVectorUtils.getAiVectorBizService().findList(where)) {
 			nameMap.put(vectorBiz.getBizType(),
 					StringUtils.defaultIfBlank(vectorBiz.getBizName(), vectorBiz.getBizType()));
 		}

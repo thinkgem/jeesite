@@ -57,9 +57,9 @@ public class AiCoreAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public AiAgentService aiAgentService(AiAgentToolService aiAgentToolService, AiAgentMcpService aiAgentMcpService,
-			AiAgentVectorService aiAgentVectorService, AiVectorBizService aiVectorBizService) {
+			AiAgentVectorService aiAgentVectorService) {
 		return new AiAgentService(aiAgentToolService, aiAgentMcpService,
-				aiAgentVectorService, aiVectorBizService);
+				aiAgentVectorService);
 	}
 
 	/**

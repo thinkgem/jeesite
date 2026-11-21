@@ -18,12 +18,12 @@ import com.jeesite.modules.ai.entity.AiAgent;
 import com.jeesite.modules.ai.entity.AiChat;
 import com.jeesite.modules.ai.entity.AiChatMessage;
 import com.jeesite.modules.ai.entity.AiModel;
-import com.jeesite.modules.ai.factory.tool.AiToolConfirmHandler;
-import com.jeesite.modules.ai.factory.tool.AiToolEventContext;
-import com.jeesite.modules.ai.factory.tool.AiToolEventRegistry;
-import com.jeesite.modules.ai.factory.tool.AiToolEventUtils;
+import com.jeesite.modules.ai.factory.tool.event.AiToolConfirmHandler;
+import com.jeesite.modules.ai.factory.tool.event.AiToolEventContext;
+import com.jeesite.modules.ai.factory.tool.event.AiToolEventRegistry;
+import com.jeesite.modules.ai.factory.tool.event.AiToolEventUtils;
+import com.jeesite.modules.ai.response.AiReasoningContent;
 import com.jeesite.modules.ai.utils.AiModelUtils;
-import com.jeesite.modules.ai.utils.AiThinkUtils;
 import com.jeesite.modules.ai.utils.AiToolContextUtils;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.file.utils.FileUploadUtils;
@@ -557,7 +557,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 			StringBuilder reasoning = new StringBuilder();
 			return chatClient.prompt().messages(messages).stream().chatResponse()
 				// 深度思考：将各模型原生的思考字段统一归一化为本分片增量，随流下发给前端
-				.map(response -> AiThinkUtils.normalize(response, reasoning))
+				.map(response -> AiReasoningContent.normalize(response, reasoning))
 				.doOnNext(response -> reasoningRef.set(reasoning.toString()));
 		});
 		return mergeToolEvents(flux, runId, eventRef)
@@ -701,7 +701,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		if (response == null || response.getResult() == null) {
 			return StringUtils.EMPTY;
 		}
-		return AiThinkUtils.getReasoningContent(response.getResult().getOutput());
+		return AiReasoningContent.getReasoningContent(response.getResult().getOutput());
 	}
 
 	// ==================== 对话图片（多模态识图） ====================

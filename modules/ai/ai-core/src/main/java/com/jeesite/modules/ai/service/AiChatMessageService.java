@@ -15,7 +15,7 @@ import com.jeesite.modules.ai.dao.AiChatMessageDao;
 import com.jeesite.modules.ai.entity.AiChat;
 import com.jeesite.modules.ai.entity.AiChatMessage;
 import com.jeesite.modules.ai.entity.AiModel;
-import com.jeesite.modules.ai.utils.AiThinkUtils;
+import com.jeesite.modules.ai.response.AiReasoningContent;
 import com.jeesite.modules.file.entity.FileUpload;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
@@ -264,7 +264,7 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 			aiChatMessage.setMsgThink(reasoningContent);
 		}
 		// 清理各模型的原生思考字段，保留厂商原始用量
-		Map<String, Object> cleanUsage = AiThinkUtils.cleanMetadata(usage, null);
+		Map<String, Object> cleanUsage = AiReasoningContent.cleanMetadata(usage, null);
 		Map<String, Object> metadata = MapUtils.newLinkedHashMap();
 		if (!cleanUsage.isEmpty()) {
 			metadata.put("usage", cleanUsage);
@@ -616,7 +616,7 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 			return result;
 		}
 		// 兼容早期直接平铺用量、且可能混入思考内容、文件列表、工具步骤的元数据
-		metadata.remove(AiThinkUtils.REASONING_CONTENT);
+		metadata.remove(AiReasoningContent.REASONING_CONTENT);
 		metadata.remove(METADATA_FILES);
 		metadata.remove(METADATA_STEPS);
 		metadata.remove(METADATA_TASKS);
@@ -654,7 +654,7 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 		if (metadata == null) {
 			return StringUtils.EMPTY;
 		}
-		return StringUtils.defaultString(ObjectUtils.toString(metadata.get(AiThinkUtils.REASONING_CONTENT)));
+		return StringUtils.defaultString(ObjectUtils.toString(metadata.get(AiReasoningContent.REASONING_CONTENT)));
 	}
 
 	/**

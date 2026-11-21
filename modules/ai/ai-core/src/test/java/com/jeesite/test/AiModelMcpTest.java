@@ -183,7 +183,7 @@ public class AiModelMcpTest extends BaseSpringContextTests {
 		aiMcp.setMcpName(MCP_CODE);
 		aiMcp.setMcpType(AiMcp.TYPE_STREAMABLE_HTTP);
 		aiMcp.setMcpUrl(MCP_URL);
-		AiMcpFactory factory = AiMcpUtils.getAiMcpService().getAiMcpFactory(aiMcp);
+		AiMcpFactory factory = AiMcpUtils.getAiMcpFactory(aiMcp);
 		try {
 			mcpClient = factory.getMcpClient(aiMcp);
 			mcpClientFactory = factory;

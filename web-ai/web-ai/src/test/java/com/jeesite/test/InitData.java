@@ -5,7 +5,7 @@
 package com.jeesite.test;
 
 import com.jeesite.common.tests.BaseInitDataTests;
-import com.jeesite.modules.ProAiApplication;
+import com.jeesite.modules.AiApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
  * @author ThinkGem
  */
 @ActiveProfiles("unit_test")
-@SpringBootTest(classes = ProAiApplication.class)
+@SpringBootTest(classes = AiApplication.class)
 public class InitData extends BaseInitDataTests {
 	
 	@Test
