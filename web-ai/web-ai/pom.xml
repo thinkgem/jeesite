@@ -45,14 +45,14 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 人工智能 AI 核心模块 -->
+		<!-- AI 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-ai-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 人工智能 AI 工具模块 -->
+		<!-- AI 工具模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-ai-tools</artifactId>

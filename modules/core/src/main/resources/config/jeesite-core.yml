@@ -719,6 +719,13 @@ web:
   resultParamName: __data
   resultHeaderName: x-header
 
+  # MVC 异步任务池（流式输出如 AI 对话 SSE、DeferredResult、Callable 等异步请求共用）
+  taskPool:
+    corePoolSize: 8
+    maxPoolSize: 20
+    keepAliveSeconds: 60
+    queueCapacity: 1000
+
   # MVC 视图相关
   view:
     
