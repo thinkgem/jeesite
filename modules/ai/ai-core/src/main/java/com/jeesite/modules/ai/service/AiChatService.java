@@ -34,6 +34,7 @@ import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.content.Media;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -48,6 +49,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * AI聊天对话 Service
@@ -75,6 +78,12 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 
 	/** 单次对话携带的最大图片数 */
 	public static final int MAX_MEDIA_SIZE = 3;
+
+	/** 工具结果中的 Markdown 图片语法：![描述](图片地址) */
+	public static final Pattern TOOL_IMAGE_PATTERN = Pattern.compile("!\\[[^\\]\\r\\n]*\\]\\(([^)\\r\\n\\s]+)\\)");
+
+	/** 单次回复最多补发到正文的工具图片数（避免一次生成过多图片刷屏） */
+	public static final int MAX_TOOL_IMAGE_SIZE = 5;
 
 	protected final AiAgentService aiAgentService;
 	protected final AiChatMessageService aiChatMessageService;
@@ -552,6 +561,8 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		AtomicReference<String> reasoningRef = new AtomicReference<>(StringUtils.EMPTY);
 		// 工具事件上下文（工具步骤、任务列表），流结束时随消息保存，供历史消息回显
 		AtomicReference<AiToolEventContext> eventRef = new AtomicReference<>();
+		// 最后一个模型分片：补发的正文分片沿用它，保证尾块仍携带 Token 用量等元数据
+		AtomicReference<ChatResponse> lastResponseRef = new AtomicReference<>();
 		// 累积器放 defer 内，保证每次订阅（含重新订阅）都从空开始
 		Flux<ChatResponse> flux = Flux.defer(() -> {
 			StringBuilder reasoning = new StringBuilder();
@@ -577,11 +588,26 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 				if (StringUtils.isNotEmpty(text) && !AiToolEventUtils.isEventText(text)) {
 					answer.append(text);
 				}
+				// 记录最后一个模型分片（事件分片除外），补发分片沿用它保留用量元数据
+				if (!AiToolEventUtils.isEventText(text)) {
+					lastResponseRef.set(response);
+				}
 				Map<String, Object> usage = aiChatMessageService.getChatUsage(response);
 				if (usage != null) {
 					usageRef.set(usage);
 				}
 			})
+			// 工具生成的图片强制回显：模型常把工具结果当数据做总结，不原样输出 Markdown 图片，
+			// 导致图片只出现在工具卡片里。这里在流结束前把工具结果中的图片补进正文，
+			// 已由模型输出过的图片不重复补发（保存消息时正文也包含补发内容）。
+			.concatWith(Flux.defer(() -> {
+				String images = buildToolImageText(eventRef.get(), answer.toString());
+				if (StringUtils.isEmpty(images)) {
+					return Flux.<ChatResponse>empty();
+				}
+				answer.append(images);
+				return Flux.just(buildTextResponse(images, lastResponseRef.get()));
+			}))
 			.doFinally(signalType -> {
 				if (StringUtils.isNotBlank(conversationId)) {
 					try {
@@ -702,6 +728,78 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 			return StringUtils.EMPTY;
 		}
 		return AiReasoningContent.getReasoningContent(response.getResult().getOutput());
+	}
+
+	/**
+	 * 把普通文本包装为一条模型响应分片（用于后端补发正文，如工具生成的图片）
+	 * @param text 要下发的正文增量
+	 * @param base 参照分片（沿用其元数据，如 Token 用量；可为空）
+	 */
+	protected ChatResponse buildTextResponse(String text, ChatResponse base) {
+		AssistantMessage message = AssistantMessage.builder().content(text).build();
+		ChatResponse.Builder builder = ChatResponse.builder();
+		if (base != null) {
+			// 补发分片位于流末尾，会成为尾块：沿用上一分片的元数据，避免 Token 用量丢失
+			builder = builder.from(base);
+		}
+		return builder.generations(ListUtils.newArrayList(new Generation(message))).build();
+	}
+
+	/**
+	 * 收集本轮工具结果中的图片 Markdown，供补发到正文
+	 * <p>
+	 * 生图等工具返回的是 {@code ![描述](地址)}，需要模型原样输出才能显示；模型经常只做文字总结，
+	 * 图片就只能停留在工具卡片里。这里在流结束前统一补发，已由模型输出过的图片不重复补发。
+	 * @param eventContext 本轮工具事件上下文（为空表示没有工具步骤）
+	 * @param answer 模型已输出的正文
+	 * @return 需要补发的图片 Markdown（每张图片独占一行，无图片时为空串）
+	 */
+	protected String buildToolImageText(AiToolEventContext eventContext, String answer) {
+		if (eventContext == null) {
+			return StringUtils.EMPTY;
+		}
+		StringBuilder text = new StringBuilder();
+		int count = 0;
+		for (Map<String, Object> step : eventContext.getSteps()) {
+			Object result = step.get("result");
+			if (!(result instanceof String) || StringUtils.isBlank((String) result)) {
+				continue;
+			}
+			Matcher matcher = TOOL_IMAGE_PATTERN.matcher((String) result);
+			while (matcher.find()) {
+				if (count >= MAX_TOOL_IMAGE_SIZE) {
+					return text.toString();
+				}
+				String url = matcher.group(1);
+				// 正文已有该图片（模型按工具描述原样输出过），或本轮已补发过：跳过
+				if (containsImageUrl(answer, url) || text.indexOf(url) > -1) {
+					continue;
+				}
+				// 首张图片前空一行，保证在 Markdown 中成为独立段落
+				text.append(count == 0 ? "\n\n" : "\n").append(matcher.group());
+				count++;
+			}
+		}
+		return text.length() > 0 ? text.append("\n").toString() : StringUtils.EMPTY;
+	}
+
+	/**
+	 * 正文是否已包含该图片地址
+	 * <p>
+	 * 模型可能改写地址（如补全域名、改为相对路径），因此除完整地址外再按文件名比对
+	 * （文件服务器上的文件名带唯一编码，不会误判）。
+	 * @param answer 模型已输出的正文
+	 * @param url 工具返回的图片地址
+	 */
+	protected boolean containsImageUrl(String answer, String url) {
+		if (StringUtils.isEmpty(answer) || StringUtils.isBlank(url)) {
+			return false;
+		}
+		if (answer.contains(url)) {
+			return true;
+		}
+		String fileName = url.substring(url.lastIndexOf('/') + 1);
+		return StringUtils.isNotEmpty(fileName) && answer.contains(fileName);
 	}
 
 	// ==================== 对话图片（多模态识图） ====================
