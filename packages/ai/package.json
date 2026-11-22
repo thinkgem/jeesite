@@ -1,0 +1,33 @@
+{
+  "name": "@jeesite/ai",
+  "version": "5.20.0-dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "uninstall": "rimraf node_modules",
+    "update:lock": "pnpm update",
+    "update:ncu": "ncu -u"
+  },
+  "dependencies": {
+    "@jeesite/framework-ai": "5.20.0-dev.2",
+    "qs": "6.16.2"
+  },
+  "devDependencies": {
+    "@vueuse/core": "14.4.0",
+    "@types/qs": "6.15.1"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
+  }
+}

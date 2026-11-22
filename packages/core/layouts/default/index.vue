@@ -53,7 +53,8 @@
   .ant-layout.jeesite-default-layout {
     display: flex;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    min-height: 0;
     flex-direction: column;
     background-color: @content-bg;
 

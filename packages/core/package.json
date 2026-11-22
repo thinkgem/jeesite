@@ -10,7 +10,7 @@
     "update:ncu": "ncu -u -x @uppy/core"
   },
   "dependencies": {
-    "@jeesite/framework-core": "5.19.1-next-rc.1",
+    "@jeesite/framework-core": "5.20.0-dev.1",
     "@uppy/core": "2.1.5",
     "@vueuse/core": "14.4.0",
     "@vueuse/shared": "14.4.0",
@@ -36,7 +36,7 @@
     "pinia": "4.0.3",
     "print-js": "1.6.0",
     "qrcode": "1.5.4",
-    "qs": "6.16.0",
+    "qs": "6.16.2",
     "resize-observer-polyfill": "1.5.1",
     "snabbdom": "3.6.4",
     "sortablejs": "1.15.7",

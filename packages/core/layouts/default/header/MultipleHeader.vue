@@ -25,7 +25,7 @@
 
   const { setHeaderHeight } = useLayoutHeight();
 
-  const { getCalcContentWidth, getSplit } = useMenuSetting();
+  const { getCalcContentWidth } = useMenuSetting();
   const { getIsMobile } = useAppInject();
   const { getFixed, getShowInsetHeaderRef, getShowFullHeaderRef, getHeaderTheme, getShowHeader } = useHeaderSetting();
 
@@ -63,7 +63,11 @@
 
   const getPlaceholderDomStyle = computed((): CSSProperties => {
     let height = 0;
-    if ((unref(getShowFullHeaderRef) || !unref(getSplit)) && unref(getShowHeader) && !unref(getFullContent)) {
+    // 顶栏只有脱离文档流（固定定位）时才需要占位：
+    // 全宽顶栏（顶部菜单混合模式）始终固定；内嵌顶栏随 multiple-header 容器一起固定。
+    // 不能用 split 判断，否则顶部菜单/门户等布局在 split=1 时会漏算顶栏高度，导致内容被顶栏遮挡。
+    const needHeaderHeight = unref(getShowFullHeaderRef) || (unref(getShowInsetHeaderRef) && unref(getIsFixed));
+    if (needHeaderHeight && unref(getShowHeader) && !unref(getFullContent)) {
       height += HEADER_HEIGHT;
     }
     if (unref(getShowMultipleTab) && !unref(getFullContent) && unref(getShowTabs2)) {
@@ -76,6 +80,8 @@
     setHeaderHeight(height);
     return {
       height: `${height}px`,
+      // 占位块不允许被弹性布局压缩，避免内容上移被固定顶栏遮挡
+      flexShrink: 0,
     };
   });
 

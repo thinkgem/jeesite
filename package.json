@@ -25,6 +25,7 @@
   "dependencies": {
     "@antdv-next/cssinjs": "1.2.0",
     "@antdv-next/icons": "1.1.2",
+    "@jeesite/ai": "workspace:*",
     "@jeesite/app": "workspace:*",
     "@jeesite/assets": "workspace:*",
     "@jeesite/cms": "workspace:*",

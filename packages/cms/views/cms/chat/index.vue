@@ -162,7 +162,7 @@
   } from '@jeesite/cms/api/cms/chat';
   import { BasicUpload, getClipboardImageFiles } from '@jeesite/core/components/Upload';
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
-  import { ChatMessage } from '@jeesite/cms';
+  import { ChatMessage } from '@jeesite/ai';
 
   const { t } = useI18n('cms.chat');
   const { showMessage } = useMessage();
