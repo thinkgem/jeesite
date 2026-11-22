@@ -3,9 +3,14 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { generateAntColors, primaryColor, darkPrimaryColor } from './themeConfig';
 import { theme } from 'antdv-next';
 import tokenVars from './tokenVars';
+
+// 模块目录（等价 __dirname，兼容 Vite 的 native 配置加载器）
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * less global variable
@@ -22,7 +27,7 @@ export function generateModifyVars(dark = false) {
     ...modifyVars,
     // Used for global import to avoid the need to import each style file separately
     // reference:  Avoid repeated references
-    hack: `true; @import (reference) "${__dirname + '/../../core/design/var/index.less'}";`,
+    hack: `true; @import (reference) "${currentDir + '/../../core/design/var/index.less'}";`,
     'primary-color': primary,
     'link-color': primary,
     'info-color': primary,

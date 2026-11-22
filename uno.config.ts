@@ -1,7 +1,12 @@
 import { defineConfig, UserConfig, presetTypography, presetIcons, transformerDirectives } from 'unocss';
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { presetWind3 } from '@unocss/preset-wind3';
 import { presetAntd } from '@antdv-next/unocss';
+
+// 配置目录（等价 __dirname，兼容 Vite 的 native 配置加载器）
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   inspector: false,
@@ -21,7 +26,7 @@ export default defineConfig({
         'vertical-align': 'middle',
       },
       collections: {
-        svg: FileSystemIconLoader(__dirname + '/packages/assets/icons'),
+        svg: FileSystemIconLoader(currentDir + '/packages/assets/icons'),
       },
     }),
   ],

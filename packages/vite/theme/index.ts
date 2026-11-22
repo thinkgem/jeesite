@@ -5,10 +5,14 @@
  */
 import { type PluginOption } from 'vite';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 import { viteThemePlugin, antdDarkThemePlugin } from './src/index';
 import { mixLighten, mixDarken, tinycolor } from './client/colorUtils';
 import { getThemeColors, generateColors } from './themeConfig';
 import { generateModifyVars } from './modifyVars';
+
+// 模块目录（等价 __dirname，兼容 Vite 的 native 配置加载器）
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Vite plugin for website theme color switching
@@ -27,7 +31,7 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
   // );
   // 抽取出viteThemePlugin插件，下方会根据不同环境设置enforce
   const vite_theme_plugin = viteThemePlugin({
-    injectClientPath: JSON.stringify(path.resolve(__dirname, './client')),
+    injectClientPath: JSON.stringify(path.resolve(currentDir, './client')),
     resolveSelector: (s) => {
       s = s.trim();
       if (s.includes('const __vite__css = "')) {
