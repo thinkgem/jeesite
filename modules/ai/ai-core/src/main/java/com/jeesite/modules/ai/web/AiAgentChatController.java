@@ -23,11 +23,13 @@ import com.jeesite.modules.ai.utils.AiModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * AI智能体对话 Controller
@@ -197,10 +199,11 @@ public class AiAgentChatController extends BaseController {
 	 * <p>
 	 * 分片结构：{@code { id, object: "chat.completion.chunk", created, model, choices: [{ index, delta, finish_reason }], usage }}，
 	 * 正文增量见 {@code choices[0].delta.content}，思考增量见 {@code choices[0].delta.reasoning_content}，
-	 * 尾块携带 {@code finish_reason: "stop"} 与 Token 用量。
+	 * 尾块携带 {@code finish_reason: "stop"}，用量在随后独立的 {@code choices: []} 分片中下发，
+	 * 流以 {@code data: [DONE]} 结束。
 	 */
 	@PostMapping(value = "completions", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<AiChatCompletion> completions(@RequestParam String id,
+	public Flux<ServerSentEvent<?>> completions(@RequestParam String id,
 			String agentId, @RequestParam String message) {
 		if (StringUtils.isBlank(agentId)) {
 			throw new ServiceException("请选择智能体");
@@ -212,7 +215,9 @@ public class AiAgentChatController extends BaseController {
 		if (agent == null) {
 			throw new ServiceException("智能体不存在：" + agentId);
 		}
-		return AiChatCompletion.streamOf(aiChatService.chatStream(agent, id, message));
+		// 本轮回复的费用：流式过程中由 Service 按模型单价算出，随用量分片下发，前端无需等历史消息
+		AtomicReference<AiChatCompletion.Cost> costRef = new AtomicReference<>();
+		return toSse(AiChatCompletion.streamOf(aiChatService.chatStream(agent, id, message, costRef), costRef::get));
 	}
 
 	/**
@@ -289,7 +294,7 @@ public class AiAgentChatController extends BaseController {
 	 * @param messageId 要重新生成的助手消息编号，为空则重新生成最后一条助手回复
 	 */
 	@PostMapping(value = "regenerate", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<AiChatCompletion> regenerate(@RequestParam String id,
+	public Flux<ServerSentEvent<?>> regenerate(@RequestParam String id,
 			@RequestParam String agentId, String messageId) {
 		if (StringUtils.isBlank(agentId)) {
 			throw new ServiceException("请选择智能体");
@@ -301,7 +306,22 @@ public class AiAgentChatController extends BaseController {
 		if (agent == null) {
 			throw new ServiceException("智能体不存在：" + agentId);
 		}
-		return AiChatCompletion.streamOf(aiChatService.regenerateChatStream(agent, id, messageId));
+		// 本轮回复的费用：流式过程中由 Service 按模型单价算出，随用量分片下发，前端无需等历史消息
+		AtomicReference<AiChatCompletion.Cost> costRef = new AtomicReference<>();
+		return toSse(AiChatCompletion.streamOf(
+				aiChatService.regenerateChatStream(agent, id, messageId, costRef), costRef::get));
+	}
+
+	/**
+	 * 包装为 SSE 事件流，并按 OpenAI v1 协议在末尾追加 {@code data: [DONE]} 结束标记
+	 * @param chunks OpenAI 兼容的流式分片
+	 * @author ThinkGem
+	 */
+	private Flux<ServerSentEvent<?>> toSse(Flux<AiChatCompletion> chunks) {
+		Flux<ServerSentEvent<?>> body = chunks.map(chunk -> (ServerSentEvent<?>) ServerSentEvent.builder(chunk).build());
+		// 结束标记为字符串类型，先按通配类型持有，避免 concatWith 泛型下限冲突
+		ServerSentEvent<?> done = ServerSentEvent.builder("[DONE]").build();
+		return body.concatWith(Flux.just(done));
 	}
 
 }

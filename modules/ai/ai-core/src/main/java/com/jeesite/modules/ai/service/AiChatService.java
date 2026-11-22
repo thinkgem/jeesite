@@ -22,6 +22,7 @@ import com.jeesite.modules.ai.factory.tool.event.AiToolConfirmHandler;
 import com.jeesite.modules.ai.factory.tool.event.AiToolEventContext;
 import com.jeesite.modules.ai.factory.tool.event.AiToolEventRegistry;
 import com.jeesite.modules.ai.factory.tool.event.AiToolEventUtils;
+import com.jeesite.modules.ai.response.AiChatCompletion;
 import com.jeesite.modules.ai.response.AiReasoningContent;
 import com.jeesite.modules.ai.utils.AiModelUtils;
 import com.jeesite.modules.ai.utils.AiToolContextUtils;
@@ -414,6 +415,17 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param aiChatMessage 用户消息（convId 为空则不保存对话记录）
 	 */
 	public Flux<ChatResponse> chatStream(AiAgent aiAgent, AiChatMessage aiChatMessage) {
+		return chatStream(aiAgent, aiChatMessage, null);
+	}
+
+	/**
+	 * 流式对话（按智能体配置，保存对话记录），并把本次回复的费用回传
+	 * @param aiAgent 智能体
+	 * @param aiChatMessage 用户消息（convId 为空则不保存对话记录）
+	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
+	 */
+	public Flux<ChatResponse> chatStream(AiAgent aiAgent, AiChatMessage aiChatMessage,
+			AtomicReference<AiChatCompletion.Cost> costRef) {
 		AiChat aiChat = new AiChat(aiChatMessage.getConvId());
 		List<Message> messages = getChatMessages(aiChat);
 		// 本轮提交的图片：先取出，用于多模态识图，并记录到消息上供历史回显（前端提交后会清空会话上的图片关联）
@@ -426,7 +438,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		// 用户消息在流结束时保存（含取消、异常），保存后回填编号，作为助手回复的父消息编号
 		aiChatMessage.setMsgType(AiChatMessageService.ROLE_USER);
 		aiChatMessageService.setChatMessageFiles(aiChatMessage, fileUploadList);
-		return streamChat(aiAgent, messages, aiChatMessage, null);
+		return streamChat(aiAgent, messages, aiChatMessage, null, costRef);
 	}
 
 	/**
@@ -437,6 +449,17 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param aiChatMessage 要重新生成的助手消息（convId 为会话编号，id 为空则取会话最后一条助手消息）
 	 */
 	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, AiChatMessage aiChatMessage) {
+		return regenerateChatStream(aiAgent, aiChatMessage, null);
+	}
+
+	/**
+	 * 重新生成回复（流式），并把本次回复的费用回传
+	 * @param aiAgent 智能体
+	 * @param aiChatMessage 要重新生成的助手消息（convId 为会话编号，id 为空则取会话最后一条助手消息）
+	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
+	 */
+	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, AiChatMessage aiChatMessage,
+			AtomicReference<AiChatCompletion.Cost> costRef) {
 		String conversationId = aiChatMessage.getConvId();
 		// 校验会话归属，避免通过会话编号删除他人消息并重新生成
 		checkChatConversation(conversationId);
@@ -501,7 +524,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 					.text(StringUtils.defaultString(userMessage.getMsgText())).media(media).build());
 		}
 		// 用户消息已存在（有编号），保存助手回复时直接关联该编号
-		return streamChat(aiAgent, messages, userMessage, discardMessages);
+		return streamChat(aiAgent, messages, userMessage, discardMessages, costRef);
 	}
 
 	/**
@@ -511,6 +534,18 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param message 用户消息
 	 */
 	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message) {
+		return chatStream(aiAgent, conversationId, message, null);
+	}
+
+	/**
+	 * 流式对话（按会话编号，保存对话记录），并把本次回复的费用回传
+	 * @param aiAgent 智能体
+	 * @param conversationId 会话编号
+	 * @param message 用户消息
+	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
+	 */
+	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message,
+			AtomicReference<AiChatCompletion.Cost> costRef) {
 		AiChatMessage aiChatMessage = new AiChatMessage();
 		aiChatMessage.setConvId(conversationId);
 		// 前端可能在消息末尾附加隐藏上下文（如可填写表单的字段结构），用特殊标记分隔：
@@ -522,7 +557,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		} else {
 			aiChatMessage.setMsgText(message);
 		}
-		return chatStream(aiAgent, aiChatMessage);
+		return chatStream(aiAgent, aiChatMessage, costRef);
 	}
 
 	/**
@@ -532,9 +567,21 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param messageId 要重新生成的助手消息编号，为空则取会话最后一条助手消息
 	 */
 	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, String conversationId, String messageId) {
+		return regenerateChatStream(aiAgent, conversationId, messageId, null);
+	}
+
+	/**
+	 * 重新生成回复（流式，按会话编号），并把本次回复的费用回传
+	 * @param aiAgent 智能体
+	 * @param conversationId 会话编号
+	 * @param messageId 要重新生成的助手消息编号，为空则取会话最后一条助手消息
+	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
+	 */
+	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, String conversationId, String messageId,
+			AtomicReference<AiChatCompletion.Cost> costRef) {
 		AiChatMessage aiChatMessage = new AiChatMessage(messageId);
 		aiChatMessage.setConvId(conversationId);
-		return regenerateChatStream(aiAgent, aiChatMessage);
+		return regenerateChatStream(aiAgent, aiChatMessage, costRef);
 	}
 
 	/**
@@ -543,9 +590,11 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param messages 发送给模型的消息（含本轮用户消息）
 	 * @param userMessage 本轮用户消息（编号为空则保存；为空则不保存用户消息）
 	 * @param discardMessages 新回复保存成功后需要删除的旧消息（重新生成时传入）
+	 * @param costRef 费用回传（可为空）：用量到达时按模型单价算出后写入
 	 */
 	protected Flux<ChatResponse> streamChat(AiAgent aiAgent, List<Message> messages,
-			AiChatMessage userMessage, List<AiChatMessage> discardMessages) {
+			AiChatMessage userMessage, List<AiChatMessage> discardMessages,
+			AtomicReference<AiChatCompletion.Cost> costRef) {
 		AiModel aiModel = aiAgentService.getAgentModel(aiAgent);
 		// 本轮运行编号：工具执行线程可能不在当前 Reactor 上下文内，工具事件按它回传
 		String runId = IdGen.nextId();
@@ -595,6 +644,10 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 				Map<String, Object> usage = aiChatMessageService.getChatUsage(response);
 				if (usage != null) {
 					usageRef.set(usage);
+					// 金额随流实时下发：按本次调用的模型单价即时计算，口径与保存历史消息时一致
+					if (costRef != null) {
+						costRef.set(aiChatMessageService.getChatCost(usage, aiModel));
+					}
 				}
 			})
 			// 工具生成的图片强制回显：模型常把工具结果当数据做总结，不原样输出 Markdown 图片，

@@ -15,6 +15,7 @@ import com.jeesite.modules.ai.dao.AiChatMessageDao;
 import com.jeesite.modules.ai.entity.AiChat;
 import com.jeesite.modules.ai.entity.AiChatMessage;
 import com.jeesite.modules.ai.entity.AiModel;
+import com.jeesite.modules.ai.response.AiChatCompletion;
 import com.jeesite.modules.ai.response.AiReasoningContent;
 import com.jeesite.modules.file.entity.FileUpload;
 import org.springframework.ai.chat.messages.AssistantMessage;
@@ -288,6 +289,29 @@ public class AiChatMessageService extends CrudService<AiChatMessageDao, AiChatMe
 				logger.debug("序列化消息元数据失败：{}", e.getMessage());
 			}
 		}
+	}
+
+	/**
+	 * 按模型单价计算本次用量的消耗金额（供流式输出实时下发，与保存历史消息时的口径一致）
+	 * @param usage Token 用量（模型原生用量）
+	 * @param aiModel 模型（取 options.price）
+	 * @author ThinkGem
+	 * @return 无用量或未配置有效单价时返回 null，此时不向流中下发金额
+	 */
+	public AiChatCompletion.Cost getChatCost(Map<String, Object> usage, AiModel aiModel) {
+		if (usage == null || usage.isEmpty() || aiModel == null) {
+			return null;
+		}
+		Map<String, Object> price = getModelPrice(aiModel);
+		if (price.isEmpty()) {
+			return null;
+		}
+		BigDecimal cost = calculateCost(AiReasoningContent.cleanMetadata(usage, null), price);
+		if (cost == null) {
+			return null;
+		}
+		return new AiChatCompletion.Cost(cost,
+				StringUtils.trimToNull(ObjectUtils.toString(price.get("currency"))));
 	}
 
 	/**
