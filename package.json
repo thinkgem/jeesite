@@ -23,7 +23,7 @@
     "serve": "pnpm dev"
   },
   "dependencies": {
-    "@antdv-next/cssinjs": "1.1.0",
+    "@antdv-next/cssinjs": "1.2.0",
     "@antdv-next/icons": "1.1.2",
     "@jeesite/app": "workspace:*",
     "@jeesite/assets": "workspace:*",
@@ -35,7 +35,7 @@
     "@jeesite/types": "workspace:*",
     "@jeesite/vite": "workspace:*",
     "@jeesite/web": "workspace:*",
-    "antdv-next": "1.6.0",
+    "antdv-next": "1.8.2",
     "axios": "1.20.0",
     "dayjs": "1.11.23",
     "lodash-es": "4.18.1",
