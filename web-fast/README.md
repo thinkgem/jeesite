@@ -16,10 +16,25 @@ jeesite-web-fast 是 JeeSite 快速体验项目，默认采用 H2 数据库，
 6. 初始登录账号：超级管理员：system  密码：admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
 
+## AI 功能
+
+如果需要体验 AI 智能菜单的功能，需要您再安装 Ollama 或自接云端模型。
+
+1. 下载并安装 [Ollama](https://ollama.com/download)
+
+2. 安装 Ollama 后，终端上运行安装模型命令（下载模型）：
+
+```bash
+ollama pull qwen3:8b
+ollama pull nomic-embed-text:latest
+```
+
 ## 文档
 
 部署文档：https://jeesite.com/docs/install-deploy/
 
 常见问题：https://jeesite.com/docs/faq/
+
+AI 介绍：https://jeesite.com/docs/ai/
 
 更多文档：https://jeesite.com/docs

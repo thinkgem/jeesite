@@ -105,6 +105,32 @@ spring:
 #    pathmatch:
 #      matching-strategy: ANT_PATH_MATCHER
 
+  # JTA XA 事务（spring boot 3）
+  jta:
+    enabled: false
+
+  # Redis 连接参数 （RedisProperties）
+#  data:
+#    redis:
+#      host: 127.0.0.1
+#      port: 6379
+#      ssl:
+#        enabled: false
+#      database: 0
+#      password: 1234
+#      timeout: 20000
+#      lettuce:
+#        pool:
+#          # 最大空闲连接数
+#          maxIdle: 3
+#          # 最大活动连接数
+#          maxActive: 20
+#
+#  # 缓存配置
+#  cache:
+#    # 缓存及会话共享（专业版）
+#    isClusterMode: true
+
 # 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
@@ -240,6 +266,9 @@ error:
 # 文件上传
 file:
   enabled: true
+
+  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+  baseDir: ~
 
 #======================================#
 #========== Message settings ==========#

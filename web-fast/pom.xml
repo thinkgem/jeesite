@@ -43,6 +43,28 @@
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>
 			<version>${project.parent.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>mysql-connector-j</artifactId>
+					<groupId>com.mysql</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mssql-jdbc</artifactId>
+					<groupId>com.microsoft.sqlserver</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ojdbc8</artifactId>
+					<groupId>com.oracle.database.jdbc</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>DmJdbcDriver18</artifactId>
+					<groupId>com.dameng</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>kingbase8</artifactId>
+					<groupId>cn.com.kingbase</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- AI 核心模块 -->
@@ -50,6 +72,28 @@
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-ai-core</artifactId>
 			<version>${project.parent.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-ai-chroma-store</artifactId>
+					<groupId>org.springframework.ai</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-ai-pgvector-store</artifactId>
+					<groupId>org.springframework.ai</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-ai-redis-store</artifactId>
+					<groupId>org.springframework.ai</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-ai-milvus-store</artifactId>
+					<groupId>org.springframework.ai</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-ai-elasticsearch-store</artifactId>
+					<groupId>org.springframework.ai</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- AI 工具模块 -->

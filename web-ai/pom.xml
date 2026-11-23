@@ -13,7 +13,6 @@
 	<inceptionYear>2013-Now</inceptionYear>
 
 	<modules>
-		<module>web-ai</module>
 		<module>web-ai-cms</module>
 		<module>web-ai-mcp</module>
 	</modules>
