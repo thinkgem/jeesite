@@ -70,7 +70,7 @@ export function createPermissionGuard(router: Router) {
     // Jump to the 404 page after processing the login
     if (from.path === LOGIN_PATH && to.name === PAGE_NOT_FOUND_ROUTE.name && to.fullPath !== (homePath || HOME_PATH)) {
       // 如果用户定义的 desktopUrl 是非法路径，就跳转到 404，防止无法进入系统
-      return '/404/' + (homePath || HOME_PATH);
+      return buildNotFoundPath(homePath || HOME_PATH);
     }
 
     // get userinfo while last fetch time is empty
@@ -97,6 +97,10 @@ export function createPermissionGuard(router: Router) {
     }
 
     if (permissionStore.getIsDynamicAddedRoute) {
+      // 动态路由已添加完毕，若仍未匹配到任何路由（命中的是 404 父路由），则跳转到 404 页面
+      if (to.name === PAGE_NOT_FOUND_ROUTE.name) {
+        return { path: buildNotFoundPath(to.path), replace: true, query: to.query, hash: to.hash };
+      }
       return;
     }
 
@@ -136,4 +140,12 @@ export function createPermissionGuard(router: Router) {
           };
     }
   });
+}
+
+/**
+ * 组装 404 页面地址：404 页面使用 /404/ 前缀的子路由定义，确保在 Layout 布局内渲染
+ * @param path 访问的原始路径
+ */
+function buildNotFoundPath(path: string) {
+  return path.startsWith('/') ? `/404${path}` : `/404/${path}`;
 }
