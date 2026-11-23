@@ -31,13 +31,6 @@
 
 	<dependencies>
 
-		<!-- MySql -->
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		
 		<!-- Framework --><!--suppress VulnerableLibrariesLocal -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -109,6 +102,13 @@
 					<artifactId>groovy-jsr223</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<!-- MySql -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>

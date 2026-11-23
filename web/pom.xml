@@ -38,12 +38,19 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 动态数据 -->
+		<!-- AI 核心模块
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-dbm</artifactId>
+			<artifactId>jeesite-module-ai-core</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
+
+		<!-- AI 工具模块
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-ai-tools</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
 
 		<!-- 移动端模块 -->
 		<dependency>
@@ -59,13 +66,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理 - 向量库模块 AI + RAG
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms-vector</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency> -->
-
 		<!-- 内容管理 - 页面静态化（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -73,20 +73,27 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
-		<!-- 内容管理 - 网站全文检索（专业版）
+		<!-- 内容管理 - 向量库模块 AI + RAG
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms-elasticsearch</artifactId>
+			<artifactId>jeesite-module-cms-vector</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
-		
-		<!-- 文件管理共享（标准版）
+
+		<!-- 动态数据 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-dbm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 文件管理模块（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
-		
+
 		<!-- 文件在线预览（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -94,17 +101,24 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
-		<!-- 测试模块 -->
+		<!-- 文件管理 - 向量库模块 AI + RAG
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-test</artifactId>
+			<artifactId>jeesite-module-filemanager-vector</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 测试模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-test</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 

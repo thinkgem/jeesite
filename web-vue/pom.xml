@@ -38,19 +38,19 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 动态数据 -->
+		<!-- AI 核心模块
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-dbm</artifactId>
+			<artifactId>jeesite-module-ai-core</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 
-		<!-- 在线文档接口 -->
+		<!-- AI 工具模块
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
+			<artifactId>jeesite-module-ai-tools</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- 移动端模块 -->
 		<dependency>
@@ -66,33 +66,54 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- 内容管理 - 页面静态化（标准版）
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms-pagecache</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
 		<!-- 内容管理 - 向量库模块 AI + RAG
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-cms-vector</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
-		
-		<!-- 文件管理共享（标准版）
+
+		<!-- 动态数据 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-dbm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 文件管理模块（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
-
+		
 		<!-- 文件管理 - 向量库模块 AI + RAG
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager-vector</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
-		
+
 		<!-- 文件在线预览（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filepreview</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
+		
+		<!-- 在线文档接口 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 
 		<!-- 测试模块 -->
 		<dependency>
@@ -101,19 +122,19 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 热部署工具
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency> -->
-
 		<!-- Vue发布包 https://gitee.com/thinkgem/jeesite-vue -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-vue-dist</artifactId>
 			<version>5.20.0-SNAPSHOT</version>
 		</dependency>
+
+		<!-- 热部署工具
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency> -->
 
 	</dependencies>
 	

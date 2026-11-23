@@ -38,10 +38,9 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms</artifactId>
+			<artifactId>jeesite-module-ai-cms</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
@@ -49,7 +48,7 @@
 			 该包从 v5.20.0 后仅作为示例工程使用，新版本已切换到 AiAgent -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-ai-cms</artifactId>
+			<artifactId>jeesite-module-cms</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
