@@ -153,6 +153,17 @@
       ifShow: () => props.model.modelType == 'chat',
     },
     {
+      label: t('思考模式'),
+      helpMessage: [
+        'think 思考开关，对齐 Ollama 的同名选项，仅 Qwen3、DeepSeek-R1 等支持思考的模型有效。',
+        '通过 extra_body 的 enable_thinking 透传，提供商不识别时自动忽略。',
+        '需要其它私有字段（如 chat_template_kwargs）时，在模型选项 JSON 的 extraBody 中配置。',
+      ],
+      field: 'optionMap.chat.think',
+      component: 'Switch',
+      ifShow: () => props.model.modelType == 'chat',
+    },
+    {
       label: t('推理强度'),
       helpMessage: 'reasoningEffort 推理模型的思考强度，仅部分模型支持，不填使用模型默认值。',
       field: 'optionMap.chat.reasoningEffort',
