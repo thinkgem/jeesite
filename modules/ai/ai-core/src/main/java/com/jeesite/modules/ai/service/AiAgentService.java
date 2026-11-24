@@ -66,15 +66,18 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 	public static final String TODO_WRITE_PROMPT = """
 
 			任务规划要求：
-			1. 需求需要 3 个以上步骤、或涉及多个文件 / 多个子任务时，先调用 todo_write 建立任务清单，再开始执行；
-			2. 任务是「工作单元」，不等于一次工具调用：一个任务可能包含多次工具调用、分析推理、查询确认，
+			1. 需求包含 2 个及以上步骤、或需要连续调用 2 次以上工具、或涉及多个文件 / 多个子任务时，
+			   第一轮回答必须先用 todo_write 建立任务清单，再开始执行；
+			   计划必须通过 todo_write 外化，不要只在深度思考内容里规划；
+			2. 即使多个操作可以在同一轮并行调用（例如同时查用户、查时间、改状态），也要先把它们写成任务清单；
+			3. 任务是「工作单元」，不等于一次工具调用：一个任务可能包含多次工具调用、分析推理、查询确认，
 			   也可能不需要调用任何工具（例如梳理方案、汇总结论），不要为每次工具调用新建任务；
-			3. 任务之间可以有先后依赖和中断（例如中途等用户选择方向、等待确认），中断恢复后继续推进未完成的任务；
-			4. 开始某项任务前，调用 todo_write 把该任务改为 in_progress，同一时刻最多只保留一个 in_progress；
-			5. 该任务的全部工作都完成后再改为 completed，不要因为调用了一次工具就标记完成，也不要把多项攒到最后一次性更新；
-			6. 任务受阻或不再需要时标记 cancelled，并在回答里说明原因；
-			7. 每次提交完整的任务列表（含已完成项），不要只提交本次变更的项；
-			8. 简单的单步问答不要建任务清单。
+			4. 任务之间可以有先后依赖和中断（例如中途等用户选择方向、等待确认），中断恢复后继续推进未完成的任务；
+			5. 开始某项任务前，调用 todo_write 把该任务改为 in_progress，同一时刻最多只保留一个 in_progress；
+			6. 该任务的全部工作都完成后再改为 completed，不要因为调用了一次工具就标记完成，也不要把多项攒到最后一次性更新；
+			7. 任务受阻或不再需要时标记 cancelled，并在回答里说明原因；
+			8. 每次提交完整的任务列表（含已完成项），不要只提交本次变更的项；
+			9. 简单的单步问答不要建任务清单。
 			""";
 
 	/**
@@ -219,6 +222,16 @@ public class AiAgentService extends CrudService<AiAgentDao, AiAgent> {
 		// 任务方向确认工具：方向不明确时向用户提问，阻塞等待选择后继续
 		if (StringUtils.isNotBlank(runId)) {
 			callbacks.add(new AiAskUserTool(runId));
+		}
+		// 排查用：日志级别调为 debug 可确认本轮实际下发给模型的工具清单（含 todo_write 是否注册）
+		if (logger.isDebugEnabled()) {
+			List<String> toolNames = ListUtils.newArrayList();
+			for (ToolCallback callback : callbacks) {
+				if (callback.getToolDefinition() != null) {
+					toolNames.add(callback.getToolDefinition().name());
+				}
+			}
+			logger.debug("本轮下发给模型的工具（{} 个）：{}", toolNames.size(), toolNames);
 		}
 		return callbacks;
 	}
