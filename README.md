@@ -163,19 +163,21 @@
 
 * Linux 或 macOS
 ```sh
-docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker run --name js5 -p 8980:8980 -d -v ~/jeesite-data:/data crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker logs -f js5
+docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker run --name js5 -p 8980:8980 -d -v ~/jeesite/docker:/data crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker logs -f js5
 ```
 
 * Windows
 ```cmd
-cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker run --name js5 -p 8980:8980 -d -v %USERPROFILE%\jeesite-data:/data crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker logs -f js5"
+cmd /c "docker pull crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker run --name js5 -p 8980:8980 -d -v %USERPROFILE%\jeesite/docker:/data crpi-u3zm0t8trv68xpyx.cn-qingdao.personal.cr.aliyuncs.com/thinkgem/jeesite:latest && docker logs -f js5"
 ```
 
-> 容器启动后，系统数据将持久化保存在本地 ~/jeesite-data（Linux/macOS）或 %USERPROFILE%\jeesite-data（Windows）目录中。
+> 容器启动后，系统数据将持久化保存在本地 ~/jeesite/docker（Linux/macOS）或 %USERPROFILE%\jeesite\docker（Windows）目录中。
 
 3. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
 4. 全栈版本地址：<http://127.0.0.1:8980/a/login>
 5. 初始登录账号：（管理员）`system`，密码：`admin`
+
+> 如使用 AI 功能，请在 AI 模型管理 菜单里进行配置您的大模型。
 
 ### 本地编译运行
 
