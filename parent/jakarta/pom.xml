@@ -390,7 +390,7 @@
 									</network>-->
 									<volumes>
 										<bind>
-											<volume>${user.home}/jeesite-data/${project.artifactId}:/data</volume>
+											<volume>${user.home}/jeesite/docker/${project.artifactId}:/data</volume>
 										</bind>
 									</volumes>
 									<!--<restartPolicy>
