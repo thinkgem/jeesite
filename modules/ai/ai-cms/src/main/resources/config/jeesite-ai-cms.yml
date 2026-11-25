@@ -40,7 +40,7 @@ spring:
         base-url: https://api.siliconflow.cn/v1
         api-key: ${SFLOW_APP_KEY}
         model: BAAI/bge-m3
-        #dimensions: 512
+        #dimensions: 1024
 
 #      # 硅基流动
 #      base-url: https://api.siliconflow.cn
@@ -55,7 +55,7 @@ spring:
 #      # 向量库知识库模型（注意：不同的模型维度不同）
 #      embedding:
 #        model: BAAI/bge-m3
-#        #dimensions: 512
+#        #dimensions: 1024
 
 #      # 模力方舟
 #      base-url: https://ai.gitee.com
@@ -118,7 +118,7 @@ spring:
         # 维度 dimensions 设置为 384
         #model: all-minilm:33m
         # 维度 dimensions 设置为 1024
-        model: bge-m3
+        model: bge-m3:latest
 
 # ========= 本地工具调用 相关配置 =========
 

@@ -28,9 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
@@ -40,12 +38,12 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * <ol>
  *   <li>AI 对话（文本输出）</li>
  *   <li>AI 结构化输出（JSON、Java 对象）</li>
- *   <li>AI 向量模型（nomic-embed-text-latest）</li>
+ *   <li>AI 向量模型（bge-m3）</li>
  *   <li>AI Tool 工具调用（本地 @Tool Bean / 「工具管理」配置的工具）</li>
  * </ol>
  * 前置条件：
  * <ul>
- *   <li>数据库中已注册模型：qwen3-8b、nomic-embed-text-latest
+ *   <li>数据库中已注册模型：qwen3-8b、bge-m3-latest
  *       （模型编码见本类常量 MODEL_CODE_CHAT、MODEL_CODE_EMBEDDING；
  *       生图/识图见 {@link AiModelImageTest}，MCP 见 {@link AiModelMcpTest}）</li>
  * </ul>
@@ -70,7 +68,7 @@ public class AiModelChatTest extends BaseSpringContextTests {
 	private static final String MODEL_CODE_CHAT = "qwen3-8b";
 
 	/** 向量模型编码 */
-	private static final String MODEL_CODE_EMBEDDING = "nomic-embed-text-latest";
+	private static final String MODEL_CODE_EMBEDDING = "bge-m3-latest";
 
 	/** 工具编码（「工具管理」ai_tool.tool_code，多个用逗号分隔；为空时使用本地 @Tool Bean） */
 	private static final String TOOL_CODES = "";

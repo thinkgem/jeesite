@@ -26,7 +26,7 @@ jeesite-web-fast 是 JeeSite 快速体验项目，默认采用 H2 数据库，
 
 ```bash
 ollama pull qwen3:8b
-ollama pull nomic-embed-text:latest
+ollama pull bge-m3:latest
 ```
 
 ## 文档
@@ -35,6 +35,6 @@ ollama pull nomic-embed-text:latest
 
 常见问题：https://jeesite.com/docs/faq/
 
-AI 介绍：https://jeesite.com/docs/ai/
+AI 文档：https://jeesite.com/docs/ai/
 
 更多文档：https://jeesite.com/docs
