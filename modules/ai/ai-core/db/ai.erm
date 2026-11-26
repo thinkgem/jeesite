@@ -2092,8 +2092,8 @@
 			<width>380</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>120</x>
-			<y>840</y>
+			<x>219</x>
+			<y>779</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -2456,8 +2456,8 @@
 			<width>356</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>1488</x>
-			<y>72</y>
+			<x>1512</x>
+			<y>69</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -2842,8 +2842,8 @@
 			<width>482</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>1340</x>
-			<y>1308</y>
+			<x>1618</x>
+			<y>792</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -3172,8 +3172,8 @@
 			<width>370</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>1452</x>
-			<y>696</y>
+			<x>1172</x>
+			<y>790</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -3846,8 +3846,8 @@
 			<width>499</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>708</x>
-			<y>1166</y>
+			<x>668</x>
+			<y>1065</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -4110,8 +4110,8 @@
 			<width>534</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>43</x>
-			<y>1164</y>
+			<x>46</x>
+			<y>1060</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -4529,8 +4529,8 @@
 			<width>356</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>576</x>
-			<y>72</y>
+			<x>539</x>
+			<y>69</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -4981,8 +4981,8 @@
 			<width>380</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>647</x>
-			<y>840</y>
+			<x>692</x>
+			<y>768</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -5124,8 +5124,8 @@
 			<width>328</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>1026</x>
-			<y>648</y>
+			<x>1047</x>
+			<y>573</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
