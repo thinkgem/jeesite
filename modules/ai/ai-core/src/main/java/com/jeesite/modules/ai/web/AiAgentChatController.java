@@ -292,10 +292,11 @@ public class AiAgentChatController extends BaseController {
 	 * @param id 会话编号
 	 * @param agentId 智能体编号
 	 * @param messageId 要重新生成的助手消息编号，为空则重新生成最后一条助手回复
+	 * @param context 本轮隐藏上下文（如可填写表单的字段结构），与首次发送一致，保证输出格式不变
 	 */
 	@PostMapping(value = "regenerate", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<ServerSentEvent<?>> regenerate(@RequestParam String id,
-			@RequestParam String agentId, String messageId) {
+			@RequestParam String agentId, String messageId, String context) {
 		if (StringUtils.isBlank(agentId)) {
 			throw new ServiceException("请选择智能体");
 		}
@@ -309,7 +310,7 @@ public class AiAgentChatController extends BaseController {
 		// 本轮回复的费用：流式过程中由 Service 按模型单价算出，随用量分片下发，前端无需等历史消息
 		AtomicReference<AiChatCompletion.Cost> costRef = new AtomicReference<>();
 		return toSse(AiChatCompletion.streamOf(
-				aiChatService.regenerateChatStream(agent, id, messageId, costRef), costRef::get));
+				aiChatService.regenerateChatStream(agent, id, messageId, context, costRef), costRef::get));
 	}
 
 	/**

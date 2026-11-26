@@ -197,13 +197,6 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 
 	/**
 	 * 查询当前用户的对话会话列表
-	 */
-	public List<AiChat> findChatConversationList() {
-		return findChatConversationList(new AiChat());
-	}
-
-	/**
-	 * 查询当前用户的对话会话列表
 	 * @param aiChat 查询条件（agentId 为空则查询全部）
 	 */
 	public List<AiChat> findChatConversationList(AiChat aiChat) {
@@ -387,7 +380,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		List<Message> messages = getChatMessages(new AiChat(conversationId));
 		messages.add(new UserMessage(aiChatMessage.getMsgText()));
 		ChatResponse response = chatClient.prompt().messages(messages).call().chatResponse();
-		String answer = getText(response);
+		String answer = getOutputText(response);
 		if (StringUtils.isNotBlank(conversationId)) {
 			// 保存用户消息，保存后回填编号，作为助手回复的父消息编号
 			aiChatMessage.setMsgType(AiChatMessageService.ROLE_USER);
@@ -442,6 +435,39 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	}
 
 	/**
+	 * 流式对话（按会话编号，保存对话记录）
+	 * @param aiAgent 智能体
+	 * @param conversationId 会话编号
+	 * @param message 用户消息
+	 */
+	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message) {
+		return chatStream(aiAgent, conversationId, message, null);
+	}
+
+	/**
+	 * 流式对话（按会话编号，保存对话记录），并把本次回复的费用回传
+	 * @param aiAgent 智能体
+	 * @param conversationId 会话编号
+	 * @param message 用户消息
+	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
+	 */
+	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message,
+			AtomicReference<AiChatCompletion.Cost> costRef) {
+		AiChatMessage aiChatMessage = new AiChatMessage();
+		aiChatMessage.setConvId(conversationId);
+		// 前端可能在消息末尾附加隐藏上下文（如可填写表单的字段结构），用特殊标记分隔：
+		// 只把标记之前的用户原文保存为消息内容，完整内容用于模型推理，避免说明文字入库
+		int markIndex = message.indexOf("\n" + HIDDEN_CONTEXT_MARK);
+		if (markIndex > -1) {
+			aiChatMessage.setMsgText(StringUtils.trim(message.substring(0, markIndex)));
+			aiChatMessage.setMsgFullText(message);
+		} else {
+			aiChatMessage.setMsgText(message);
+		}
+		return chatStream(aiAgent, aiChatMessage, costRef);
+	}
+
+	/**
 	 * 重新生成回复（流式）：删除该回复及其之后的对话，基于其父用户消息及之前的历史重新生成
 	 * <p>
 	 * 注意：回答内容在流结束时（含取消、异常）保存，调用方无需重复保存。
@@ -449,17 +475,18 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param aiChatMessage 要重新生成的助手消息（convId 为会话编号，id 为空则取会话最后一条助手消息）
 	 */
 	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, AiChatMessage aiChatMessage) {
-		return regenerateChatStream(aiAgent, aiChatMessage, null);
+		return regenerateChatStream(aiAgent, aiChatMessage, null, null);
 	}
 
 	/**
 	 * 重新生成回复（流式），并把本次回复的费用回传
 	 * @param aiAgent 智能体
 	 * @param aiChatMessage 要重新生成的助手消息（convId 为会话编号，id 为空则取会话最后一条助手消息）
+	 * @param context 本轮隐藏上下文（如可填写表单的字段结构），为空时复用首次发送时保存的完整文本
 	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
 	 */
 	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, AiChatMessage aiChatMessage,
-			AtomicReference<AiChatCompletion.Cost> costRef) {
+			String context, AtomicReference<AiChatCompletion.Cost> costRef) {
 		String conversationId = aiChatMessage.getConvId();
 		// 校验会话归属，避免通过会话编号删除他人消息并重新生成
 		checkChatConversation(conversationId);
@@ -518,46 +545,25 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 		// 上下文取该用户消息及之前的对话；图片（多模态识图）随本轮重新生成一并携带
 		List<Message> messages = toChatMessages(list.subList(0, userIndex + 1));
 		List<Media> media = getChatMedia(new AiChat(conversationId));
-		if (!media.isEmpty() && !messages.isEmpty()
-				&& messages.get(messages.size() - 1) instanceof UserMessage) {
-			messages.set(messages.size() - 1, UserMessage.builder()
-					.text(StringUtils.defaultString(userMessage.getMsgText())).media(media).build());
+		// 重新生成时同样要带上隐藏上下文（如可填写表单的字段结构），否则模型不知道按表单字段输出；
+		// 前端未重传时复用首次发送时保存的完整文本（历史消息只保存用户原文，不能直接拿来推理）
+		String userText = StringUtils.defaultString(userMessage.getMsgFullText());
+		if (StringUtils.isBlank(userText)) {
+			userText = StringUtils.defaultString(userMessage.getMsgText());
+		}
+		if (StringUtils.isNotBlank(context)) {
+			userText = StringUtils.defaultString(userMessage.getMsgText())
+					+ "\n" + HIDDEN_CONTEXT_MARK + "\n" + context;
+		}
+		if (!messages.isEmpty() && messages.get(messages.size() - 1) instanceof UserMessage) {
+			UserMessage.Builder builder = UserMessage.builder().text(userText);
+			if (!media.isEmpty()) {
+				builder.media(media);
+			}
+			messages.set(messages.size() - 1, builder.build());
 		}
 		// 用户消息已存在（有编号），保存助手回复时直接关联该编号
 		return streamChat(aiAgent, messages, userMessage, discardMessages, costRef);
-	}
-
-	/**
-	 * 流式对话（按会话编号，保存对话记录）
-	 * @param aiAgent 智能体
-	 * @param conversationId 会话编号
-	 * @param message 用户消息
-	 */
-	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message) {
-		return chatStream(aiAgent, conversationId, message, null);
-	}
-
-	/**
-	 * 流式对话（按会话编号，保存对话记录），并把本次回复的费用回传
-	 * @param aiAgent 智能体
-	 * @param conversationId 会话编号
-	 * @param message 用户消息
-	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
-	 */
-	public Flux<ChatResponse> chatStream(AiAgent aiAgent, String conversationId, String message,
-			AtomicReference<AiChatCompletion.Cost> costRef) {
-		AiChatMessage aiChatMessage = new AiChatMessage();
-		aiChatMessage.setConvId(conversationId);
-		// 前端可能在消息末尾附加隐藏上下文（如可填写表单的字段结构），用特殊标记分隔：
-		// 只把标记之前的用户原文保存为消息内容，完整内容用于模型推理，避免说明文字入库
-		int markIndex = message.indexOf("\n" + HIDDEN_CONTEXT_MARK);
-		if (markIndex > -1) {
-			aiChatMessage.setMsgText(StringUtils.trim(message.substring(0, markIndex)));
-			aiChatMessage.setMsgFullText(message);
-		} else {
-			aiChatMessage.setMsgText(message);
-		}
-		return chatStream(aiAgent, aiChatMessage, costRef);
 	}
 
 	/**
@@ -567,7 +573,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param messageId 要重新生成的助手消息编号，为空则取会话最后一条助手消息
 	 */
 	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, String conversationId, String messageId) {
-		return regenerateChatStream(aiAgent, conversationId, messageId, null);
+		return regenerateChatStream(aiAgent, conversationId, messageId, null, null);
 	}
 
 	/**
@@ -575,13 +581,14 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * @param aiAgent 智能体
 	 * @param conversationId 会话编号
 	 * @param messageId 要重新生成的助手消息编号，为空则取会话最后一条助手消息
+	 * @param context 本轮隐藏上下文（如可填写表单的字段结构），为空时复用首次发送时保存的完整文本
 	 * @param costRef 费用回传（可为空）：流式过程中按模型单价算出后写入，供 SSE 分片实时下发
 	 */
 	public Flux<ChatResponse> regenerateChatStream(AiAgent aiAgent, String conversationId, String messageId,
-			AtomicReference<AiChatCompletion.Cost> costRef) {
+			String context, AtomicReference<AiChatCompletion.Cost> costRef) {
 		AiChatMessage aiChatMessage = new AiChatMessage(messageId);
 		aiChatMessage.setConvId(conversationId);
-		return regenerateChatStream(aiAgent, aiChatMessage, costRef);
+		return regenerateChatStream(aiAgent, aiChatMessage, context, costRef);
 	}
 
 	/**
@@ -630,7 +637,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 				return e;
 			})
 			.doOnNext(response -> {
-				String text = getText(response);
+				String text = getOutputText(response);
 				// 工具事件分片的正文是带标记的事件载荷，不能计入回答内容。
 				// 注意：只能用 isNotEmpty，不能用 isNotBlank：流式输出中换行常单独成为一个分片
 				// （如 "\n"），按空白过滤会把正文里的单个换行整片丢掉，保存后消息被压成一行。
@@ -764,7 +771,7 @@ public class AiChatService extends CrudService<AiChatDao, AiChat> {
 	 * 提取响应文本
 	 * @param response 响应
 	 */
-	protected String getText(ChatResponse response) {
+	protected String getOutputText(ChatResponse response) {
 		if (response != null && response.getResult() != null
 				&& response.getResult().getOutput() != null) {
 			return response.getResult().getOutput().getText();
