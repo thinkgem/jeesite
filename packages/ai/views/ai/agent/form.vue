@@ -177,6 +177,7 @@
     {
       label: t('AI 模型'),
       field: 'model.modelCode',
+      fieldLabel: 'model.modelName',
       component: 'ListSelect',
       componentProps: {
         configFile: import('../model/select'),
@@ -378,6 +379,9 @@
     await resetFields();
     const res = await aiAgentForm(data);
     record.value = (res.aiAgent || {}) as AiAgent;
+    if (record.value.model && !record.value.model.modelName) {
+      record.value.model.modelName = record.value.model.modelCode;
+    }
     record.value.__t = new Date().getTime();
     await fillRelationNames();
     await setFieldsValue(record.value);
