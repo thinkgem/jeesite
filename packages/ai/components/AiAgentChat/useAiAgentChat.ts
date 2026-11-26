@@ -105,10 +105,13 @@ export function useAiAgentChat(options: UseAiAgentChatOptions = {}) {
     },
 
     get modelOptions() {
-      const options = this.modelList.map((item) => ({
-        label: item.modelName || item.modelDesc || item.modelCode,
-        value: item.modelCode,
-      }));
+      // 只保留对话模型（chat），向量、语音、图片等模型不能用于对话
+      const options = this.modelList
+        .filter((item) => item.modelType == 'chat')
+        .map((item) => ({
+          label: item.modelName || item.modelDesc || item.modelCode,
+          value: item.modelCode,
+        }));
       // 当前模型不在可用列表（如已停用）时补一项，避免下拉直接回显模型编码
       const model = this.currentAgent?.model;
       if (model?.modelCode && !options.some((item) => item.value === model.modelCode)) {
