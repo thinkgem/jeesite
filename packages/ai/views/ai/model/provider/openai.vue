@@ -103,16 +103,16 @@
       helpMessage: [
         'maxTokens 用于控制模型在一次请求中最多可以生成多少个 token。',
         '这个参数直接影响生成文本的长度，不能超过模型的最大输出上限。',
-        '推理模型（如 o1、o3）请使用“最大推理回复数”（maxCompletionTokens）。',
+        '不限制填写范围，按模型能力填写即可，例如 131072（128K）；填过大会被服务端拒绝。',
+        '推理模型（如 o1、o3、Qwen3 系列）请使用“最大推理回复数”（maxCompletionTokens）。',
       ],
       field: 'optionMap.chat.maxTokens',
       component: 'InputNumber',
       componentProps: {
         min: 1,
-        max: 32768,
         step: 1,
       },
-      defaultValue: 4096,
+      defaultValue: 32768,
       ifShow: () => props.model.modelType == 'chat',
     },
     {
@@ -125,7 +125,6 @@
       component: 'InputNumber',
       componentProps: {
         min: 1,
-        max: 32768,
         step: 1,
       },
       ifShow: () => props.model.modelType == 'chat',

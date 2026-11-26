@@ -97,16 +97,16 @@
       helpMessage: [
         'maxTokens 对应 Ollama 的 num_predict，控制模型一次最多生成的 token 数。',
         '填 -1 表示不限制，由模型自行决定何时停止。',
+        '不限制填写范围，按模型能力填写即可，例如 131072（128K）。',
         '不能超过模型的上下文长度（numCtx）。',
       ],
       field: 'optionMap.chat.maxTokens',
       component: 'InputNumber',
       componentProps: {
         min: -1,
-        max: 32768,
         step: 1,
       },
-      defaultValue: 4096,
+      defaultValue: 32768,
       ifShow: () => props.model.modelType == 'chat',
     },
     {
