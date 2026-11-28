@@ -13,7 +13,7 @@
       @blur="handleBlur"
       @change="handleTreeChange"
       @click="handleFetch"
-      @input-key-down="handleInputKeyDown"
+      @input-keydown="handleInputKeyDown"
       @search="handleSearch"
     >
       <template #[item]="data" v-for="item in Object.keys(slots)">
